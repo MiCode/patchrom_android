@@ -236,7 +236,7 @@
 
 .field public static final MEASURED_STATE_TOO_SMALL:I = 0x1000000
 
-.field private static final NONZERO_EPSILON:F = 0.0010f
+.field private static final NONZERO_EPSILON:F = 0.001f
 
 .field private static final NOT_FOCUSABLE:I = 0x0
 
