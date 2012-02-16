@@ -4686,6 +4686,10 @@
 
     move-result-object p0
 
+    invoke-static {p0}, Lmiui/telephony/PhoneNumberUtils;->parseNumber(Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object p0
+
     .line 1595
     const-string/jumbo v7, "ril.ecclist"
 

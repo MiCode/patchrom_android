@@ -101,7 +101,7 @@
 
     move-result v2
 
-    if-eqz v2, :cond_0
+    if-eqz v2, :cond_4
 
     .line 145
     const-string v2, "LockPatternUtils"
@@ -140,4 +140,45 @@
     move v0, v1
 
     goto :goto_2
+
+    :cond_4
+    const-string v2, "access_control.key"
+
+    invoke-virtual {v2, p2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v2
+
+    if-eqz v2, :cond_0
+
+    const-string v2, "LockPatternUtils"
+
+    const-string v3, "access control password file changed"
+
+    invoke-static {v2, v3}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    sget-object v2, Lmiui/security/MiuiLockPatternUtils;->sHaveNonZeroACFile:Ljava/util/concurrent/atomic/AtomicBoolean;
+
+    new-instance v3, Ljava/io/File;
+
+    sget-object v4, Lmiui/security/MiuiLockPatternUtils;->sLockACFilename:Ljava/lang/String;
+
+    invoke-direct {v3, v4}, Ljava/io/File;-><init>(Ljava/lang/String;)V
+
+    invoke-virtual {v3}, Ljava/io/File;->length()J
+
+    move-result-wide v3
+
+    cmp-long v3, v3, v5
+
+    if-lez v3, :cond_5
+
+    :goto_3
+    invoke-virtual {v2, v0}, Ljava/util/concurrent/atomic/AtomicBoolean;->set(Z)V
+
+    goto :goto_1
+
+    :cond_5
+    move v0, v1
+
+    goto :goto_3
 .end method

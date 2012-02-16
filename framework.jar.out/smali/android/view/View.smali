@@ -236,7 +236,7 @@
 
 .field public static final MEASURED_STATE_TOO_SMALL:I = 0x1000000
 
-.field private static final NONZERO_EPSILON:F = 0.001f
+.field private static final NONZERO_EPSILON:F = 0.0010f
 
 .field private static final NOT_FOCUSABLE:I = 0x0
 
@@ -597,6 +597,8 @@
 .field private mDrawingCacheBackgroundColor:I
 
 .field private mFloatingTreeObserver:Landroid/view/ViewTreeObserver;
+
+.field mHapticEnabledExplicitly:Z
 
 .field private mHardwareLayer:Landroid/view/HardwareLayer;
 
@@ -2698,6 +2700,20 @@
 
     .line 2936
     :pswitch_23
+    const/16 v38, 0x0
+
+    move/from16 v0, v38
+
+    invoke-virtual {v6, v7, v0}, Landroid/content/res/TypedArray;->getBoolean(IZ)Z
+
+    move-result v38
+
+    move/from16 v0, v38
+
+    move-object/from16 v1, p0
+
+    iput-boolean v0, v1, Landroid/view/View;->mHapticEnabledExplicitly:Z
+
     const/16 v38, 0x1
 
     move/from16 v0, v38
@@ -19970,13 +19986,13 @@
     :cond_9
     iget-boolean v6, p0, Landroid/view/View;->mHasPerformedLongPress:Z
 
-    if-nez v6, :cond_b
+    if-nez v6, :cond_12
 
     .line 6481
     invoke-direct {p0}, Landroid/view/View;->removeLongPressCallback()V
 
     .line 6484
-    if-nez v0, :cond_b
+    if-nez v0, :cond_12
 
     .line 6488
     iget-object v6, p0, Landroid/view/View;->mPerformClick:Landroid/view/View$PerformClick;
@@ -20002,6 +20018,13 @@
 
     .line 6492
     invoke-virtual {p0}, Landroid/view/View;->performClick()Z
+
+    :cond_12
+    const/4 v6, 0x2
+
+    const/4 v9, 0x4
+
+    invoke-virtual {p0, v6, v9}, Landroid/view/View;->performHapticFeedback(II)Z
 
     .line 6497
     :cond_b
@@ -20135,6 +20158,10 @@
 
     .line 6534
     invoke-direct {p0, v6}, Landroid/view/View;->checkForLongClick(I)V
+
+    const/4 v9, 0x4
+
+    invoke-virtual {p0, v7, v9}, Landroid/view/View;->performHapticFeedback(II)Z
 
     goto/16 :goto_1
 
@@ -20969,6 +20996,15 @@
 
     .line 13139
     :cond_1
+    and-int/lit8 v1, p2, 0x4
+
+    if-eqz v1, :cond_4
+
+    iget-boolean v1, p0, Landroid/view/View;->mHapticEnabledExplicitly:Z
+
+    if-eqz v1, :cond_0
+
+    :cond_4
     and-int/lit8 v1, p2, 0x1
 
     if-nez v1, :cond_2
@@ -24285,6 +24321,8 @@
 
     :goto_0
     invoke-virtual {p0, v0, v1}, Landroid/view/View;->setFlags(II)V
+
+    iput-boolean p1, p0, Landroid/view/View;->mHapticEnabledExplicitly:Z
 
     .line 4738
     return-void

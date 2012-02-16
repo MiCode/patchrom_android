@@ -138,6 +138,8 @@
     .line 95
     invoke-static {}, Landroid/content/res/AssetManager;->ensureSystemAssets()V
 
+    invoke-static {p0}, Landroid/app/MiuiThemeHelper;->addExtraAssetPaths(Landroid/content/res/AssetManager;)V
+
     .line 96
     monitor-exit p0
 
@@ -192,6 +194,8 @@
 
     .line 116
     invoke-direct {p0}, Landroid/content/res/AssetManager;->init()V
+
+    invoke-static {p0}, Landroid/app/MiuiThemeHelper;->addExtraAssetPaths(Landroid/content/res/AssetManager;)V
 
     .line 118
     return-void
