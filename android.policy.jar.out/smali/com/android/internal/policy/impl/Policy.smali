@@ -175,9 +175,9 @@
 
     .prologue
     .line 63
-    new-instance v0, Lcom/android/internal/policy/impl/PhoneWindow;
+    invoke-static {p1}, Lcom/android/internal/policy/impl/MiuiClassFactory;->createPhoneWindow(Landroid/content/Context;)Lcom/android/internal/policy/impl/PhoneWindow;
 
-    invoke-direct {v0, p1}, Lcom/android/internal/policy/impl/PhoneWindow;-><init>(Landroid/content/Context;)V
+    move-result-object v0
 
     return-object v0
 .end method
@@ -187,9 +187,9 @@
 
     .prologue
     .line 71
-    new-instance v0, Lcom/android/internal/policy/impl/PhoneWindowManager;
+    invoke-static {}, Lcom/android/internal/policy/impl/MiuiClassFactory;->createPhoneWindowManager()Lcom/android/internal/policy/impl/PhoneWindowManager;
 
-    invoke-direct {v0}, Lcom/android/internal/policy/impl/PhoneWindowManager;-><init>()V
+    move-result-object v0
 
     return-object v0
 .end method

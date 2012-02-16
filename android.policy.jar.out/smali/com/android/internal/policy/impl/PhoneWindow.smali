@@ -1879,6 +1879,12 @@
 
     iput v4, v2, Landroid/view/WindowManager$LayoutParams;->windowAnimations:I
 
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, v16
+
+    invoke-direct {v0, v1, v2}, Lcom/android/internal/policy/impl/PhoneWindow;->handleIcsAppLayoutParams(Landroid/view/WindowManager;Landroid/view/WindowManager$LayoutParams;)V
+
     .line 622
     move-object/from16 v0, p1
 
@@ -7662,4 +7668,92 @@
     .line 1209
     :cond_0
     return-void
+.end method
+
+.method protected handleCameraKeyEvent(Lcom/android/internal/policy/impl/PhoneWindow$DecorView;Landroid/view/KeyEvent;I)Z
+    .locals 1
+    .parameter "decor"
+    .parameter "event"
+    .parameter "featureId"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->CHANGE_CODE:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    const/4 v0, 0x0
+
+    return v0
+.end method
+
+.method private handleIcsAppLayoutParams(Landroid/view/WindowManager;Landroid/view/WindowManager$LayoutParams;)V
+    .locals 5
+    .parameter "wm"
+    .parameter "lp"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    const/4 v0, -0x2
+
+    .local v0, height:I
+    invoke-virtual {p0}, Lcom/android/internal/policy/impl/PhoneWindow;->getContext()Landroid/content/Context;
+
+    move-result-object v3
+
+    invoke-virtual {v3}, Landroid/content/Context;->getApplicationInfo()Landroid/content/pm/ApplicationInfo;
+
+    move-result-object v3
+
+    iget v3, v3, Landroid/content/pm/ApplicationInfo;->targetSdkVersion:I
+
+    const/16 v4, 0xe
+
+    if-lt v3, v4, :cond_2
+
+    const/4 v1, 0x1
+
+    .local v1, isIcsApp:Z
+    :goto_0
+    if-eqz v1, :cond_1
+
+    invoke-interface {p1}, Landroid/view/WindowManager;->getDefaultDisplay()Landroid/view/Display;
+
+    move-result-object v3
+
+    invoke-virtual {v3}, Landroid/view/Display;->getRotation()I
+
+    move-result v2
+
+    .local v2, rotation:I
+    if-eqz v2, :cond_0
+
+    const/4 v3, 0x2
+
+    if-eq v2, v3, :cond_0
+
+    const/4 v0, -0x1
+
+    :cond_0
+    iput v0, p2, Landroid/view/WindowManager$LayoutParams;->height:I
+
+    iget v3, p2, Landroid/view/WindowManager$LayoutParams;->flags:I
+
+    or-int/lit8 v3, v3, 0x2
+
+    iput v3, p2, Landroid/view/WindowManager$LayoutParams;->flags:I
+
+    const v3, 0x3f333333
+
+    iput v3, p2, Landroid/view/WindowManager$LayoutParams;->dimAmount:F
+
+    .end local v2           #rotation:I
+    :cond_1
+    return-void
+
+    .end local v1           #isIcsApp:Z
+    :cond_2
+    const/4 v1, 0x0
+
+    goto :goto_0
 .end method

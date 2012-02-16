@@ -487,7 +487,7 @@
 
     .line 118
     .local v8, stretch:I
-    const v4, 0x10100800
+    const v4, 0x10100900
 
     .line 123
     .local v4, flags:I
@@ -587,6 +587,10 @@
 
     .line 141
     :cond_4
+    const/4 v1, 0x1
+
+    iput v1, v0, Landroid/view/WindowManager$LayoutParams;->screenOrientation:I
+
     iget v1, v0, Landroid/view/WindowManager$LayoutParams;->privateFlags:I
 
     or-int/lit8 v1, v1, 0x8

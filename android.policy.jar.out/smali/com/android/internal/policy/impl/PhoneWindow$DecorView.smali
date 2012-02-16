@@ -12,7 +12,7 @@
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
-    accessFlags = 0x12
+    accessFlags = 0x10
     name = "DecorView"
 .end annotation
 
@@ -597,6 +597,16 @@
     .restart local v2       #handled:Z
     :goto_2
     if-nez v2, :cond_0
+
+    iget-object v6, p0, Lcom/android/internal/policy/impl/PhoneWindow$DecorView;->this$0:Lcom/android/internal/policy/impl/PhoneWindow;
+
+    iget v7, p0, Lcom/android/internal/policy/impl/PhoneWindow$DecorView;->mFeatureId:I
+
+    invoke-virtual {v6, p0, p1, v7}, Lcom/android/internal/policy/impl/PhoneWindow;->handleCameraKeyEvent(Lcom/android/internal/policy/impl/PhoneWindow$DecorView;Landroid/view/KeyEvent;I)Z
+
+    move-result v6
+
+    if-nez v6, :cond_0
 
     .line 1813
     .end local v1           #cb:Landroid/view/Window$Callback;
