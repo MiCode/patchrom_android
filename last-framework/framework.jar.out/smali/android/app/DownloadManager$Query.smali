@@ -25,9 +25,9 @@
 
 .field private mOnlyIncludeVisibleInDownloadsUi:Z
 
-.field private mOrderByColumn:Ljava/lang/String;
+.field mOrderByColumn:Ljava/lang/String;
 
-.field private mOrderDirection:I
+.field mOrderDirection:I
 
 .field private mStatusFlags:Ljava/lang/Integer;
 
@@ -185,6 +185,25 @@
 
 
 # virtual methods
+.method addExtraSelectionParts(Ljava/util/List;)V
+    .locals 0
+    .parameter
+
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(",
+            "Ljava/util/List",
+            "<",
+            "Ljava/lang/String;",
+            ">;)V"
+        }
+    .end annotation
+
+    .prologue
+    .local p1, selectionParts:Ljava/util/List;,"Ljava/util/List<Ljava/lang/String;>;"
+    return-void
+.end method
+
 .method public orderBy(Ljava/lang/String;I)Landroid/app/DownloadManager$Query;
     .locals 3
     .parameter "column"
@@ -536,9 +555,33 @@
 
     .line 815
     :cond_5
-    const-string v0, " OR "
+    new-instance v0, Ljava/lang/StringBuilder;
 
-    invoke-direct {p0, v0, v7}, Landroid/app/DownloadManager$Query;->joinStrings(Ljava/lang/String;Ljava/lang/Iterable;)Ljava/lang/String;
+    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v2, "("
+
+    invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    const-string v2, " OR "
+
+    invoke-direct {p0, v2, v7}, Landroid/app/DownloadManager$Query;->joinStrings(Ljava/lang/String;Ljava/lang/Iterable;)Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    const-string v2, ")"
+
+    invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
     move-result-object v0
 
@@ -558,6 +601,8 @@
 
     .line 823
     :cond_7
+    invoke-virtual {p0, v8}, Landroid/app/DownloadManager$Query;->addExtraSelectionParts(Ljava/util/List;)V
+
     const-string v0, "deleted != \'1\'"
 
     invoke-interface {v8, v0}, Ljava/util/List;->add(Ljava/lang/Object;)Z

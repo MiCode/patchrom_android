@@ -7294,6 +7294,16 @@
 
     if-nez v3, :cond_4
 
+    const-string v3, "miui"
+
+    move-object/from16 v0, v25
+
+    invoke-virtual {v3, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v3
+
+    if-nez v3, :cond_4
+
     .line 854
     const/4 v3, 0x0
 
@@ -9479,6 +9489,14 @@
 
     if-nez v9, :cond_6
 
+    const-string v9, "miui"
+
+    invoke-virtual {v9, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v9
+
+    if-nez v9, :cond_6
+
     .line 765
     const/4 v9, 0x0
 
@@ -10120,6 +10138,14 @@
     if-eqz v0, :cond_6
 
     const-string v4, "android"
+
+    invoke-virtual {v4, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v4
+
+    if-nez v4, :cond_6
+
+    const-string v4, "miui"
 
     invoke-virtual {v4, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
@@ -14034,15 +14060,13 @@
     if-eqz v25, :cond_4
 
     .line 422
-    new-instance v32, Landroid/content/res/Resources;
-
     const/4 v6, 0x0
-
-    move-object/from16 v0, v32
 
     move-object/from16 v1, p3
 
-    invoke-direct {v0, v5, v1, v6}, Landroid/content/res/Resources;-><init>(Landroid/content/res/AssetManager;Landroid/util/DisplayMetrics;Landroid/content/res/Configuration;)V
+    invoke-static {v5, v1, v6}, Landroid/content/res/MiuiClassFactory;->newResources(Landroid/content/res/AssetManager;Landroid/util/DisplayMetrics;Landroid/content/res/Configuration;)Landroid/content/res/Resources;
+
+    move-result-object v32
     :try_end_1
     .catch Ljava/lang/Exception; {:try_start_1 .. :try_end_1} :catch_0
 

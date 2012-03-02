@@ -2776,10 +2776,22 @@
     move-result v3
 
     iput v3, v2, Lcom/android/server/pm/PackageSettingBase;->enabled:I
+
+    iget v3, v2, Lcom/android/server/pm/PackageSettingBase;->enabled:I
+
+    const/4 v5, 0x2
+
+    if-ne v3, v5, :cond_20
+
+    const/4 v3, 0x0
+
+    iput v3, v2, Lcom/android/server/pm/PackageSettingBase;->enabled:I
+
     :try_end_b
     .catch Ljava/lang/NumberFormatException; {:try_start_b .. :try_end_b} :catch_1
 
     .line 1684
+    :cond_20
     :goto_7
     const/4 v3, 0x0
 

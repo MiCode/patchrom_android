@@ -2152,11 +2152,11 @@
 
     iget v4, v1, Landroid/content/pm/RegisteredServicesCache$ServiceInfo;->uid:I
 
-    invoke-virtual {v2, v4, p2}, Landroid/content/pm/PackageManager;->checkSignatures(II)I
+    invoke-static {v2, p1, v4, p2}, Lmiui/content/pm/ExtraPackageManager;->isTrustedAccountSignature(Landroid/content/pm/PackageManager;Ljava/lang/String;II)Z
 
     move-result v2
 
-    if-nez v2, :cond_2
+    if-eqz v2, :cond_2
 
     :cond_1
     const/4 v2, 0x1

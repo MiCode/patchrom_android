@@ -2223,6 +2223,81 @@
 
     .line 412
     .restart local v9       #height:I
+    div-int/lit8 v28, v9, 0x2
+
+    sub-int v24, v14, v28
+
+    .restart local v24       #t:I
+    invoke-virtual/range {v25 .. v25}, Landroid/view/View;->getLayoutParams()Landroid/view/ViewGroup$LayoutParams;
+
+    move-result-object v28
+
+    check-cast v28, Lcom/android/internal/view/menu/ActionMenuView$LayoutParams;
+
+    move-object/from16 v0, v28
+
+    iget v0, v0, Lcom/android/internal/view/menu/ActionMenuView$LayoutParams;->gravity:I
+
+    move/from16 v28, v0
+
+    and-int/lit8 v28, v28, 0x5
+
+    if-eqz v28, :cond_c
+
+    sub-int v28, p4, v26
+
+    add-int v29, v24, v9
+
+    move-object/from16 v0, v25
+
+    move/from16 v1, v28
+
+    move/from16 v2, v24
+
+    move/from16 v3, p4
+
+    move/from16 v4, v29
+
+    invoke-virtual {v0, v1, v2, v3, v4}, Landroid/view/View;->layout(IIII)V
+
+    goto/16 :goto_0
+
+    :cond_c
+    invoke-virtual/range {v25 .. v25}, Landroid/view/View;->getLayoutParams()Landroid/view/ViewGroup$LayoutParams;
+
+    move-result-object v28
+
+    check-cast v28, Lcom/android/internal/view/menu/ActionMenuView$LayoutParams;
+
+    move-object/from16 v0, v28
+
+    iget v0, v0, Lcom/android/internal/view/menu/ActionMenuView$LayoutParams;->gravity:I
+
+    move/from16 v28, v0
+
+    and-int/lit8 v28, v28, 0x3
+
+    if-eqz v28, :cond_d
+
+    add-int v28, p2, v26
+
+    add-int v29, v24, v9
+
+    move-object/from16 v0, v25
+
+    move/from16 v1, p2
+
+    move/from16 v2, v24
+
+    move/from16 v3, v28
+
+    move/from16 v4, v29
+
+    invoke-virtual {v0, v1, v2, v3, v4}, Landroid/view/View;->layout(IIII)V
+
+    goto/16 :goto_0
+
+    :cond_d
     sub-int v28, p4, p2
 
     div-int/lit8 v13, v28, 0x2
@@ -2235,12 +2310,7 @@
 
     .line 414
     .restart local v11       #l:I
-    div-int/lit8 v28, v9, 0x2
 
-    sub-int v24, v14, v28
-
-    .line 415
-    .restart local v24       #t:I
     add-int v28, v11, v26
 
     add-int v29, v24, v9

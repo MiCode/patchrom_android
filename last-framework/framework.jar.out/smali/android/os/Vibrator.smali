@@ -242,3 +242,14 @@
 
     throw v1
 .end method
+
+.method public vibrateEx([B)V
+    .locals 0
+    .parameter "params"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    return-void
+.end method
