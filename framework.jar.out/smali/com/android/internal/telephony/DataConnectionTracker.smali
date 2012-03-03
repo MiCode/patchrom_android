@@ -2709,7 +2709,7 @@
 
     move-result v1
 
-    if-nez v1, :cond_0
+    if-eqz v1, :cond_0
 
     iget-object v1, p0, Lcom/android/internal/telephony/DataConnectionTracker;->mPhone:Lcom/android/internal/telephony/PhoneBase;
 
@@ -2727,13 +2727,12 @@
 
     move-result v1
 
-    if-ne v1, v0, :cond_1
+    if-ne v1, v0, :cond_0
 
-    :cond_0
     :goto_0
     return v0
 
-    :cond_1
+    :cond_0
     const/4 v0, 0x0
 
     goto :goto_0
