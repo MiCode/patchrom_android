@@ -126,6 +126,13 @@
 
 .field private static final LAST_VIDEO_FILE_TYPE2:I = 0xc8
 
+.field public static final FILE_TYPE_APE:I = 0x3e9
+
+.field private static final FIRST_FFMPEG_AUDIO_FILE_TYPE:I = 0x3e9
+
+.field private static final LAST_FFMPEG_AUDIO_FILE_TYPE:I = 0x3e9
+
+
 .field private static sFileTypeMap:Ljava/util/HashMap;
     .annotation system Ldalvik/annotation/Signature;
         value = {
@@ -287,11 +294,6 @@
     invoke-static {v0, v1, v2}, Landroid/media/MediaFile;->addFileType(Ljava/lang/String;ILjava/lang/String;)V
 
     .line 179
-    invoke-static {}, Landroid/media/MediaFile;->isWMAEnabled()Z
-
-    move-result v0
-
-    if-eqz v0, :cond_0
 
     .line 180
     const-string v0, "WMA"
@@ -305,7 +307,7 @@
     invoke-static {v0, v1, v2, v3}, Landroid/media/MediaFile;->addFileType(Ljava/lang/String;ILjava/lang/String;I)V
 
     .line 182
-    :cond_0
+   
     const-string v0, "OGG"
 
     const/4 v1, 0x7
@@ -424,6 +426,18 @@
     const-string v1, "audio/midi"
 
     invoke-static {v0, v4, v1}, Landroid/media/MediaFile;->addFileType(Ljava/lang/String;ILjava/lang/String;)V
+
+
+
+    const-string v0, "APE"
+
+    const/16 v1, 0x3e9
+
+    const-string v2, "audio/x-monkeys-audio"
+
+    invoke-static {v0, v1, v2}, Landroid/media/MediaFile;->addFileType(Ljava/lang/String;ILjava/lang/String;)V
+
+
 
     .line 198
     const-string v0, "MPEG"
@@ -1160,10 +1174,12 @@
 .end method
 
 .method public static isAudioFileType(I)Z
-    .locals 2
+    .locals 3
     .parameter "fileType"
 
     .prologue
+    const/16 v2, 0x3e9
+
     const/4 v0, 0x1
 
     .line 248
@@ -1171,22 +1187,27 @@
 
     const/16 v1, 0xa
 
-    if-le p0, v1, :cond_1
+    if-le p0, v1, :cond_2
 
     :cond_0
     const/16 v1, 0xb
 
-    if-lt p0, v1, :cond_2
+    if-lt p0, v1, :cond_1
 
     const/16 v1, 0xd
 
-    if-gt p0, v1, :cond_2
+    if-le p0, v1, :cond_2
 
     :cond_1
+    if-lt p0, v2, :cond_3
+
+    if-gt p0, v2, :cond_3
+
+    :cond_2
     :goto_0
     return v0
 
-    :cond_2
+    :cond_3
     const/4 v0, 0x0
 
     goto :goto_0
