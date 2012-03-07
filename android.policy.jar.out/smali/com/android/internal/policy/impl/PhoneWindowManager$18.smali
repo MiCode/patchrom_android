@@ -43,7 +43,7 @@
 
 # virtual methods
 .method public run()V
-    .locals 5
+    .locals 6
 
     .prologue
     const/4 v4, 0x0
@@ -64,7 +64,9 @@
 
     iget-object v3, v3, Lcom/android/internal/policy/impl/PhoneWindowManager;->mContext:Landroid/content/Context;
 
-    invoke-direct {v2, p0, v3}, Lcom/android/internal/policy/impl/PhoneWindowManager$18$1;-><init>(Lcom/android/internal/policy/impl/PhoneWindowManager$18;Landroid/content/Context;)V
+    const/4 v5, 0x3
+
+    invoke-direct {v2, p0, v3, v5}, Lcom/android/internal/policy/impl/PhoneWindowManager$18$1;-><init>(Lcom/android/internal/policy/impl/PhoneWindowManager$18;Landroid/content/Context;)V
 
     iput-object v2, v1, Lcom/android/internal/policy/impl/PhoneWindowManager;->mBootMsgDialog:Landroid/app/ProgressDialog;
 
