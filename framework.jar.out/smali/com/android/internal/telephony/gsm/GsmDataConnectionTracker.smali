@@ -10725,7 +10725,7 @@
     .prologue
     const/4 v1, 0x1
 
-    invoke-virtual {p0, p1}, Lcom/android/internal/telephony/gsm/GsmDataConnectionTracker;->apnIdToType(I)Ljava/lang/String;
+    invoke-direct {p0, p2, p1}, Lcom/android/internal/telephony/gsm/GsmDataConnectionTracker;->getApnType(II)Ljava/lang/String;
 
     move-result-object v2
 
@@ -11570,4 +11570,33 @@
 
     .line 1363
     return-void
+.end method
+
+.method private getApnType(II)Ljava/lang/String;
+    .locals 2
+    .parameter "enabled"
+    .parameter "apnId"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    const/4 v1, 0x1
+
+    if-ne p1, v1, :cond_0
+
+    invoke-virtual {p0, p2}, Lcom/android/internal/telephony/gsm/GsmDataConnectionTracker;->apnIdToType(I)Ljava/lang/String;
+
+    move-result-object v0
+
+    .local v0, requestedApnType:Ljava/lang/String;
+    :goto_0
+    return-object v0
+
+    .end local v0           #requestedApnType:Ljava/lang/String;
+    :cond_0
+    const-string v0, "default"
+
+    .restart local v0       #requestedApnType:Ljava/lang/String;
+    goto :goto_0
 .end method
