@@ -48,9 +48,9 @@
 
 
 # instance fields
-.field protected mActiveTarget:I
+.field mActiveTarget:I
 
-.field protected mAnimatingTargets:Z
+.field mAnimatingTargets:Z
 
 .field private mChevronAnimationInterpolator:Landroid/animation/TimeInterpolator;
 
@@ -65,7 +65,7 @@
     .end annotation
 .end field
 
-.field protected mChevronDrawables:Ljava/util/ArrayList;
+.field mChevronDrawables:Ljava/util/ArrayList;
     .annotation system Ldalvik/annotation/Signature;
         value = {
             "Ljava/util/ArrayList",
@@ -89,37 +89,37 @@
 
 .field private mDirectionDescriptionsResourceId:I
 
-.field protected mDragging:Z
+.field mDragging:Z
 
 .field private mFeedbackCount:I
 
 .field private mGrabbedState:I
 
-.field protected mHandleAnimation:Lcom/android/internal/widget/multiwaveview/Tweener;
+.field mHandleAnimation:Lcom/android/internal/widget/multiwaveview/Tweener;
 
-.field protected mHandleDrawable:Lcom/android/internal/widget/multiwaveview/TargetDrawable;
+.field mHandleDrawable:Lcom/android/internal/widget/multiwaveview/TargetDrawable;
 
-.field protected mHitRadius:F
+.field mHitRadius:F
 
-.field protected mHorizontalOffset:F
+.field mHorizontalOffset:F
 
-.field protected mNewTargetResources:I
+.field mNewTargetResources:I
 
 .field private mOnTriggerListener:Lcom/android/internal/widget/multiwaveview/MultiWaveView$OnTriggerListener;
 
-.field protected mOuterRadius:F
+.field mOuterRadius:F
 
-.field protected mOuterRing:Lcom/android/internal/widget/multiwaveview/TargetDrawable;
+.field mOuterRing:Lcom/android/internal/widget/multiwaveview/TargetDrawable;
 
-.field public mResetListener:Landroid/animation/Animator$AnimatorListener;
+.field mResetListener:Landroid/animation/Animator$AnimatorListener;
 
-.field public mResetListenerWithPing:Landroid/animation/Animator$AnimatorListener;
+.field mResetListenerWithPing:Landroid/animation/Animator$AnimatorListener;
 
-.field protected mSnapMargin:F
+.field mSnapMargin:F
 
 .field private mTapRadius:F
 
-.field protected mTargetAnimations:Ljava/util/ArrayList;
+.field mTargetAnimations:Ljava/util/ArrayList;
     .annotation system Ldalvik/annotation/Signature;
         value = {
             "Ljava/util/ArrayList",
@@ -143,7 +143,7 @@
 
 .field private mTargetDescriptionsResourceId:I
 
-.field protected mTargetDrawables:Ljava/util/ArrayList;
+.field mTargetDrawables:Ljava/util/ArrayList;
     .annotation system Ldalvik/annotation/Signature;
         value = {
             "Ljava/util/ArrayList",
@@ -156,19 +156,19 @@
 
 .field private mTargetResourceId:I
 
-.field protected mTargetUpdateListener:Landroid/animation/Animator$AnimatorListener;
+.field mTargetUpdateListener:Landroid/animation/Animator$AnimatorListener;
 
-.field protected mUpdateListener:Landroid/animation/ValueAnimator$AnimatorUpdateListener;
+.field mUpdateListener:Landroid/animation/ValueAnimator$AnimatorUpdateListener;
 
-.field protected mVerticalOffset:F
+.field mVerticalOffset:F
 
 .field private mVibrationDuration:I
 
 .field private mVibrator:Landroid/os/Vibrator;
 
-.field protected mWaveCenterX:F
+.field mWaveCenterX:F
 
-.field protected mWaveCenterY:F
+.field mWaveCenterY:F
 
 
 # direct methods
@@ -733,7 +733,7 @@
     return p1
 .end method
 
-.method protected announceTargets()V
+.method announceTargets()V
     .locals 8
 
     .prologue
@@ -829,7 +829,7 @@
     return-void
 .end method
 
-.method protected announceText(Ljava/lang/String;)V
+.method announceText(Ljava/lang/String;)V
     .locals 1
     .parameter "text"
 
@@ -851,7 +851,7 @@
     return-void
 .end method
 
-.method protected deactivateTargets()V
+.method deactivateTargets()V
     .locals 3
 
     .prologue
@@ -895,7 +895,7 @@
     return-void
 .end method
 
-.method protected dispatchGrabbedEvent(I)V
+.method dispatchGrabbedEvent(I)V
     .locals 1
     .parameter "whichHandler"
 
@@ -918,7 +918,7 @@
     return-void
 .end method
 
-.method protected dispatchTriggerEvent(I)V
+.method dispatchTriggerEvent(I)V
     .locals 1
     .parameter "whichHandle"
 
@@ -941,7 +941,7 @@
     return-void
 .end method
 
-.method protected dist2(FF)F
+.method dist2(FF)F
     .locals 2
     .parameter "dx"
     .parameter "dy"
@@ -957,7 +957,7 @@
     return v0
 .end method
 
-.method protected doFinish()V
+.method doFinish()V
     .locals 12
 
     .prologue
@@ -1633,7 +1633,7 @@
     goto :goto_0
 .end method
 
-.method protected getTargetDescription(I)Ljava/lang/String;
+.method getTargetDescription(I)Ljava/lang/String;
     .locals 2
     .parameter "index"
 
@@ -1730,7 +1730,7 @@
     return-void
 .end method
 
-.method protected handleMove(Landroid/view/MotionEvent;)V
+.method handleMove(Landroid/view/MotionEvent;)V
     .locals 30
     .parameter "event"
 
@@ -2456,7 +2456,7 @@
     return-void
 .end method
 
-.method protected hideTargets(Z)V
+.method hideTargets(Z)V
     .locals 14
     .parameter "animate"
 
@@ -2749,7 +2749,7 @@
     return-void
 .end method
 
-.method protected internalSetTargetResources(I)V
+.method internalSetTargetResources(I)V
     .locals 7
     .parameter "resourceId"
 
@@ -2895,7 +2895,7 @@
     return-object v4
 .end method
 
-.method protected moveHandleTo(FFZ)V
+.method moveHandleTo(FFZ)V
     .locals 1
     .parameter "x"
     .parameter "y"
@@ -3082,7 +3082,7 @@
     .end sparse-switch
 .end method
 
-.method protected setGrabbedState(I)V
+.method setGrabbedState(I)V
     .locals 2
     .parameter "newState"
 
@@ -3119,7 +3119,7 @@
     return-void
 .end method
 
-.method protected showTargets(Z)V
+.method showTargets(Z)V
     .locals 13
     .parameter "animate"
 
@@ -3904,7 +3904,7 @@
     .end array-data
 .end method
 
-.method protected stopChevronAnimation()V
+.method stopChevronAnimation()V
     .locals 3
 
     .prologue
@@ -3948,7 +3948,7 @@
     return-void
 .end method
 
-.method protected stopHandleAnimation()V
+.method stopHandleAnimation()V
     .locals 1
 
     .prologue
@@ -3974,7 +3974,7 @@
     return-void
 .end method
 
-.method protected stopTargetAnimation()V
+.method stopTargetAnimation()V
     .locals 3
 
     .prologue
@@ -4018,7 +4018,7 @@
     return-void
 .end method
 
-.method protected switchToState(IFF)V
+.method switchToState(IFF)V
     .locals 3
     .parameter "state"
     .parameter "x"
@@ -4106,7 +4106,7 @@
     .end packed-switch
 .end method
 
-.method protected trySwitchToFirstTouchState(Landroid/view/MotionEvent;)Z
+.method trySwitchToFirstTouchState(Landroid/view/MotionEvent;)Z
     .locals 8
     .parameter "event"
 
@@ -4405,7 +4405,7 @@
     return v0
 .end method
 
-.method protected invalidateGlobalRegion(Lcom/android/internal/widget/multiwaveview/TargetDrawable;)V
+.method invalidateGlobalRegion(Lcom/android/internal/widget/multiwaveview/TargetDrawable;)V
     .locals 9
     .parameter "drawable"
 
