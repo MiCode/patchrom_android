@@ -216,7 +216,9 @@
     .line 150
     .end local v2           #state:Lcom/android/internal/telephony/IccCard$State;
     :cond_7
-    sget-object v2, Lcom/android/internal/telephony/IccCard$State;->UNKNOWN:Lcom/android/internal/telephony/IccCard$State;
+    invoke-static {v3}, Lcom/android/internal/policy/impl/KeyguardUpdateMonitor$SimArgs;->getIccCardState(Ljava/lang/String;)Lcom/android/internal/telephony/IccCard$State;
+
+    move-result-object v2
 
     .restart local v2       #state:Lcom/android/internal/telephony/IccCard$State;
     goto :goto_0
@@ -236,4 +238,49 @@
     move-result-object v0
 
     return-object v0
+.end method
+
+.method private static getIccCardState(Ljava/lang/String;)Lcom/android/internal/telephony/IccCard$State;
+    .locals 2
+    .parameter "stateExtra"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    const-string v1, "IMSI"
+
+    invoke-virtual {v1, p0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_0
+
+    sget-object v0, Lcom/android/internal/telephony/IccCard$State;->READY:Lcom/android/internal/telephony/IccCard$State;
+
+    .local v0, state:Lcom/android/internal/telephony/IccCard$State;
+    :goto_0
+    return-object v0
+
+    .end local v0           #state:Lcom/android/internal/telephony/IccCard$State;
+    :cond_0
+    const-string v1, "LOADED"
+
+    invoke-virtual {v1, p0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_1
+
+    sget-object v0, Lcom/android/internal/telephony/IccCard$State;->READY:Lcom/android/internal/telephony/IccCard$State;
+
+    .restart local v0       #state:Lcom/android/internal/telephony/IccCard$State;
+    goto :goto_0
+
+    .end local v0           #state:Lcom/android/internal/telephony/IccCard$State;
+    :cond_1
+    sget-object v0, Lcom/android/internal/telephony/IccCard$State;->UNKNOWN:Lcom/android/internal/telephony/IccCard$State;
+
+    .restart local v0       #state:Lcom/android/internal/telephony/IccCard$State;
+    goto :goto_0
 .end method
