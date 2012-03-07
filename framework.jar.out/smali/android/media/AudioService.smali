@@ -256,7 +256,7 @@
 
 .field private mVoiceCapable:Z
 
-.field private mVolumePanel:Landroid/view/VolumePanel;
+.field private mVolumePanel:Lmiui/view/VolumePanel;
 
 
 # direct methods
@@ -591,12 +591,11 @@
     iput v3, p0, Landroid/media/AudioService;->SOUND_EFFECT_VOLUME_DB:I
 
     .line 346
-    new-instance v3, Landroid/view/VolumePanel;
+    new-instance v3, Lmiui/view/VolumePanel;
 
-    invoke-direct {v3, p1, p0}, Landroid/view/VolumePanel;-><init>(Landroid/content/Context;Landroid/media/AudioService;)V
+    invoke-direct {v3, p1, p0}, Lmiui/view/VolumePanel;-><init>(Landroid/content/Context;Landroid/media/AudioService;)V
 
-    iput-object v3, p0, Landroid/media/AudioService;->mVolumePanel:Landroid/view/VolumePanel;
-
+    iput-object v3, p0, Landroid/media/AudioService;->mVolumePanel:Lmiui/view/VolumePanel;
     .line 347
     iput v6, p0, Landroid/media/AudioService;->mForcedUseForComm:I
 
@@ -5064,10 +5063,9 @@
 
     .line 616
     :cond_0
-    iget-object v1, p0, Landroid/media/AudioService;->mVolumePanel:Landroid/view/VolumePanel;
+    iget-object v1, p0, Landroid/media/AudioService;->mVolumePanel:Lmiui/view/VolumePanel;
 
-    invoke-virtual {v1, p1, p4}, Landroid/view/VolumePanel;->postVolumeChanged(II)V
-
+    invoke-virtual {v1, p1, p4}, Lmiui/view/VolumePanel;->postVolumeChanged(II)V
     .line 618
     add-int/lit8 v1, p2, 0x5
 

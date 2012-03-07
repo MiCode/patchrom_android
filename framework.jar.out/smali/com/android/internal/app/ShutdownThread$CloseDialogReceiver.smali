@@ -53,7 +53,7 @@
 
 # virtual methods
 .method public onDismiss(Landroid/content/DialogInterface;)V
-    .locals 1
+    .locals 2
     .parameter "unused"
 
     .prologue
@@ -62,8 +62,37 @@
 
     invoke-virtual {v0, p0}, Landroid/content/Context;->unregisterReceiver(Landroid/content/BroadcastReceiver;)V
 
+    sget-object v1, Lcom/android/internal/app/ShutdownThread;->sIsStartedGuard:Ljava/lang/Object;
+
+    monitor-enter v1
+
+    :try_start_0
+    sget-boolean v0, Lcom/android/internal/app/ShutdownThread;->sIsStarted:Z
+
+    if-nez v0, :cond_0
+
+    const/4 v0, 0x0
+
+    sput-boolean v0, Lcom/android/internal/app/ShutdownThread;->mReboot:Z
+
+    const/4 v0, 0x0
+
+    sput-object v0, Lcom/android/internal/app/ShutdownThread;->mRebootReason:Ljava/lang/String;
+
     .line 148
+    :cond_0
+    monitor-exit v1
+
     return-void
+
+    :catchall_0
+    move-exception v0
+
+    monitor-exit v1
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    throw v0
 .end method
 
 .method public onReceive(Landroid/content/Context;Landroid/content/Intent;)V

@@ -13982,7 +13982,7 @@
 
     iget-object v3, v0, Lcom/android/server/pm/PackageManagerService;->mResolveActivity:Landroid/content/pm/ActivityInfo;
 
-    const v10, 0x10302fc
+    const v10, 0x30d0020
 
     iput v10, v3, Landroid/content/pm/ActivityInfo;->theme:I
 
