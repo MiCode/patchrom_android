@@ -69,6 +69,10 @@
     #calls: Landroid/widget/TimePicker;->updateAmPmControl()V
     invoke-static {v0}, Landroid/widget/TimePicker;->access$200(Landroid/widget/TimePicker;)V
 
+    iget-object v0, p0, Landroid/widget/TimePicker$4;->this$0:Landroid/widget/TimePicker;
+
+    invoke-virtual {v0}, Landroid/widget/TimePicker;->onTimeChanged()V
+
     .line 215
     return-void
 

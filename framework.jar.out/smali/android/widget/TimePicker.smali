@@ -520,7 +520,7 @@
     return-object v0
 .end method
 
-.method private onTimeChanged()V
+.method onTimeChanged()V
     .locals 3
 
     .prologue
