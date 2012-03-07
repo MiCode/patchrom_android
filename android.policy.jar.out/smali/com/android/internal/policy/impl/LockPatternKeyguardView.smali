@@ -80,9 +80,9 @@
 
 .field private final mLockPatternUtils:Lcom/android/internal/widget/LockPatternUtils;
 
-.field private mLockScreen:Landroid/view/View;
+.field mLockScreen:Landroid/view/View;
 
-.field private mMode:Lcom/android/internal/policy/impl/LockPatternKeyguardView$Mode;
+.field mMode:Lcom/android/internal/policy/impl/LockPatternKeyguardView$Mode;
 
 .field private mRecreateRunnable:Ljava/lang/Runnable;
 
@@ -1302,7 +1302,7 @@
     return-void
 .end method
 
-.method private recreateLockScreen()V
+.method recreateLockScreen()V
     .locals 2
 
     .prologue
@@ -1910,7 +1910,7 @@
 
     .line 856
     :cond_1
-    invoke-direct {p0}, Lcom/android/internal/policy/impl/LockPatternKeyguardView;->recreateLockScreen()V
+    invoke-virtual {p0}, Lcom/android/internal/policy/impl/LockPatternKeyguardView;->recreateLockScreen()V
 
     .line 862
     :cond_2
