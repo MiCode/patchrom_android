@@ -1,4 +1,4 @@
-.class Lcom/android/internal/widget/multiwaveview/Ease;
+.class public Lcom/android/internal/widget/multiwaveview/Ease;
 .super Ljava/lang/Object;
 .source "Ease.java"
 
@@ -25,7 +25,7 @@
 
 
 # direct methods
-.method constructor <init>()V
+.method public constructor <init>()V
     .locals 0
 
     .prologue

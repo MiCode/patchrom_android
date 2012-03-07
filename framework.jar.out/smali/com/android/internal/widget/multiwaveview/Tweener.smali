@@ -1,4 +1,4 @@
-.class Lcom/android/internal/widget/multiwaveview/Tweener;
+.class public Lcom/android/internal/widget/multiwaveview/Tweener;
 .super Ljava/lang/Object;
 .source "Tweener.java"
 
@@ -24,7 +24,7 @@
 
 
 # instance fields
-.field animator:Landroid/animation/ObjectAnimator;
+.field public animator:Landroid/animation/ObjectAnimator;
 
 
 # direct methods

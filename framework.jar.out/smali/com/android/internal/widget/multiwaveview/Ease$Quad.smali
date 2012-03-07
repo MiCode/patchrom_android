@@ -1,4 +1,4 @@
-.class Lcom/android/internal/widget/multiwaveview/Ease$Quad;
+.class public Lcom/android/internal/widget/multiwaveview/Ease$Quad;
 .super Ljava/lang/Object;
 .source "Ease.java"
 
@@ -9,7 +9,7 @@
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
-    accessFlags = 0x8
+    accessFlags = 0x9
     name = "Quad"
 .end annotation
 
@@ -51,7 +51,7 @@
     return-void
 .end method
 
-.method constructor <init>()V
+.method public constructor <init>()V
     .locals 0
 
     .prologue
