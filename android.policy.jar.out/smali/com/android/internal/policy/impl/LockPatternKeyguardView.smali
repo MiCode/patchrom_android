@@ -90,7 +90,7 @@
 
 .field private mSavedState:Landroid/os/Parcelable;
 
-.field private volatile mScreenOn:Z
+.field volatile mScreenOn:Z
 
 .field private mShowLockBeforeUnlock:Z
 
