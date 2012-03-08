@@ -54,7 +54,7 @@
 
 .field private mChevronAnimationInterpolator:Landroid/animation/TimeInterpolator;
 
-.field private mChevronAnimations:Ljava/util/ArrayList;
+.field mChevronAnimations:Ljava/util/ArrayList;
     .annotation system Ldalvik/annotation/Signature;
         value = {
             "Ljava/util/ArrayList",
@@ -91,7 +91,7 @@
 
 .field mDragging:Z
 
-.field private mFeedbackCount:I
+.field mFeedbackCount:I
 
 .field private mGrabbedState:I
 
@@ -3351,7 +3351,7 @@
     return v0
 .end method
 
-.method private startChevronAnimation()V
+.method startChevronAnimation()V
     .locals 20
 
     .prologue
@@ -4972,7 +4972,7 @@
     invoke-virtual {p0}, Lcom/android/internal/widget/multiwaveview/MultiWaveView;->stopChevronAnimation()V
 
     .line 611
-    invoke-direct {p0}, Lcom/android/internal/widget/multiwaveview/MultiWaveView;->startChevronAnimation()V
+    invoke-virtual {p0}, Lcom/android/internal/widget/multiwaveview/MultiWaveView;->startChevronAnimation()V
 
     .line 612
     return-void
