@@ -232,6 +232,12 @@
 
     iput v4, p0, Landroid/graphics/drawable/NinePatchDrawable;->mBitmapHeight:I
 
+    iget-object v4, p0, Landroid/graphics/drawable/NinePatchDrawable;->mNinePatchState:Landroid/graphics/drawable/NinePatchDrawable$NinePatchState;
+
+    iget-object v4, v4, Landroid/graphics/drawable/NinePatchDrawable$NinePatchState;->mPadding:Landroid/graphics/Rect;
+
+    iput-object v4, p0, Landroid/graphics/drawable/NinePatchDrawable;->mPadding:Landroid/graphics/Rect;
+
     .line 185
     :cond_0
     :goto_0
