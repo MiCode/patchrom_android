@@ -485,6 +485,8 @@
 
     if-eqz v22, :goto_1
 
+    move-object/from16 v0, p0
+
     iget-object v0, v0, Lcom/android/internal/telephony/WapPushOverSms;->mSmsDispatcher:Lcom/android/internal/telephony/SMSDispatcher;
 
     move-object/from16 v20, v0
