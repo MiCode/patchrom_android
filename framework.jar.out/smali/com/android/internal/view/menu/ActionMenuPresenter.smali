@@ -1207,23 +1207,8 @@
 
     if-nez v3, :cond_0
 
-    .line 83
-    invoke-static {p1}, Landroid/view/ViewConfiguration;->get(Landroid/content/Context;)Landroid/view/ViewConfiguration;
+    iput-boolean v4, p0, Lcom/android/internal/view/menu/ActionMenuPresenter;->mReserveOverflow:Z
 
-    move-result-object v3
-
-    invoke-virtual {v3}, Landroid/view/ViewConfiguration;->hasPermanentMenuKey()Z
-
-    move-result v3
-
-    if-nez v3, :cond_4
-
-    const/4 v3, 0x1
-
-    :goto_0
-    iput-boolean v3, p0, Lcom/android/internal/view/menu/ActionMenuPresenter;->mReserveOverflow:Z
-
-    .line 86
     :cond_0
     iget-boolean v3, p0, Lcom/android/internal/view/menu/ActionMenuPresenter;->mWidthLimitSet:Z
 
@@ -1326,15 +1311,6 @@
     .line 113
     return-void
 
-    .end local v2           #width:I
-    :cond_4
-    move v3, v4
-
-    .line 83
-    goto :goto_0
-
-    .line 104
-    .restart local v2       #width:I
     :cond_5
     iput-object v6, p0, Lcom/android/internal/view/menu/ActionMenuPresenter;->mOverflowButton:Landroid/view/View;
 
