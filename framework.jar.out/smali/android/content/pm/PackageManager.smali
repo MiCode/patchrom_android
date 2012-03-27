@@ -14,6 +14,8 @@
 # static fields
 .field public static final ACTION_CLEAN_EXTERNAL_STORAGE:Ljava/lang/String; = "android.content.pm.CLEAN_EXTERNAL_STORAGE"
 
+.field public static final COMPONENT_ENABLED_STATE_ACCESS_CONTROL:I = -0x80000000
+
 .field public static final COMPONENT_ENABLED_STATE_DEFAULT:I = 0x0
 
 .field public static final COMPONENT_ENABLED_STATE_DISABLED:I = 0x2

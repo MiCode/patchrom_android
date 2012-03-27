@@ -4998,22 +4998,49 @@
 .end method
 
 .method protected onResume()V
-    .locals 1
+    .locals 7
 
     .prologue
-    .line 1057
+    .line 1061
     invoke-virtual {p0}, Landroid/app/Activity;->getApplication()Landroid/app/Application;
 
     move-result-object v0
 
     invoke-virtual {v0, p0}, Landroid/app/Application;->dispatchActivityResumed(Landroid/app/Activity;)V
 
-    .line 1058
+    .line 1062
     const/4 v0, 0x1
 
     iput-boolean v0, p0, Landroid/app/Activity;->mCalled:Z
 
-    .line 1059
+    .line 1063
+    iget-object v0, p0, Landroid/app/Activity;->mParent:Landroid/app/Activity;
+
+    invoke-virtual {p0}, Landroid/app/Activity;->getContentResolver()Landroid/content/ContentResolver;
+
+    move-result-object v1
+
+    invoke-virtual {p0}, Landroid/app/Activity;->getPackageName()Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-virtual {p0}, Landroid/app/Activity;->getPackageManager()Landroid/content/pm/PackageManager;
+
+    move-result-object v3
+
+    iget-object v4, p0, Landroid/app/Activity;->mMainThread:Landroid/app/ActivityThread;
+
+    invoke-virtual {v4}, Landroid/app/ActivityThread;->getApplicationThread()Landroid/app/ActivityThread$ApplicationThread;
+
+    move-result-object v4
+
+    iget-object v5, p0, Landroid/app/Activity;->mToken:Landroid/os/IBinder;
+
+    iget-object v6, p0, Landroid/app/Activity;->mEmbeddedID:Ljava/lang/String;
+
+    invoke-static/range {v0 .. v6}, Lmiui/net/FirewallManager;->checkAccessControl(Landroid/app/Activity;Landroid/content/ContentResolver;Ljava/lang/String;Landroid/content/pm/PackageManager;Landroid/app/IApplicationThread;Landroid/os/IBinder;Ljava/lang/String;)V
+
+    .line 1065
     return-void
 .end method
 

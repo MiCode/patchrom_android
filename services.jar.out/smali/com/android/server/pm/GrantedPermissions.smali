@@ -103,7 +103,7 @@
 
     .prologue
     .line 45
-    const v0, 0x20040001
+    const v0, -0x5ffbffff
 
     and-int/2addr v0, p1
 
