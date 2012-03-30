@@ -5,7 +5,7 @@ APKTOOL=$PORT_ROOT/tools/apktool
 
 rm -rf temp
 mkdir -p temp/android
-mkdir -o temp/miui
+mkdir -p temp/miui
 
 cp -r *.jar.out temp/android
 
@@ -21,3 +21,5 @@ $APKTOOL d android.policy.jar
 cd -
 
 $RMLINE temp
+cd temp
+find . -name "*.diff" -exec rm {} \;
