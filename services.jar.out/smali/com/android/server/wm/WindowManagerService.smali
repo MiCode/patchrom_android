@@ -38683,7 +38683,7 @@
 
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
 
-    const/16 v4, 0x7d0
+    const/16 v4, 0x7e6
 
     invoke-interface {v3, v4}, Landroid/view/WindowManagerPolicy;->windowTypeToLayerLw(I)I
 
