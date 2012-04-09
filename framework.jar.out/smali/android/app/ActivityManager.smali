@@ -145,7 +145,9 @@
     if-ge v1, v4, :cond_0
 
     .line 234
-    const/4 v3, 0x0
+    invoke-static {p0}, Landroid/app/ExtraActivityManager;->isHighEndGfx(Landroid/view/Display;)Z
+
+    move-result v3
 
     goto :goto_0
 .end method
