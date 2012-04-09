@@ -6284,6 +6284,19 @@
 
     .line 12365
     :cond_2e
+
+    invoke-virtual/range {p0 .. p0}, Lcom/android/server/am/ActivityManagerService;->getRunningAppProcesses()Ljava/util/List;
+
+    move-result-object v3
+
+    invoke-virtual/range {v42 .. v42}, Landroid/content/Intent;->getAction()Ljava/lang/String;
+
+    move-result-object v5
+
+    move-object/from16 v0, v22
+
+    invoke-static {v0, v3, v5}, Lcom/android/server/am/ExtraActivityManagerService;->adjustMediaButtonReceivers(Ljava/util/List;Ljava/util/List;Ljava/lang/String;)V
+
     new-instance v7, Lcom/android/server/am/BroadcastRecord;
 
     const/16 v29, 0x0
