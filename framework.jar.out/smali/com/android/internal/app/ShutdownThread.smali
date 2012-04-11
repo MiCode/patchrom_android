@@ -159,20 +159,31 @@
     .line 177
     new-instance v1, Landroid/app/ProgressDialog;
 
-    const/4 v2, 0x3
-
-    invoke-direct {v1, p0, v2}, Landroid/app/ProgressDialog;-><init>(Landroid/content/Context;I)V
+    invoke-direct {v1, p0}, Landroid/app/ProgressDialog;-><init>(Landroid/content/Context;)V
+    
     .line 178
     .local v1, pd:Landroid/app/ProgressDialog;
 
-    invoke-static {v1, p0}, Lcom/android/internal/app/ShutdownThread;->setMessage(Landroid/app/ProgressDialog;Landroid/content/Context;)V
+    const v2, 0x1040124
+
+    invoke-virtual {p0, v2}, Landroid/content/Context;->getText(I)Ljava/lang/CharSequence;
+
+    move-result-object v2
+
+    invoke-virtual {v1, v2}, Landroid/app/ProgressDialog;->setTitle(Ljava/lang/CharSequence;)V
+
+    const v2, 0x1040128
+
+    invoke-virtual {p0, v2}, Landroid/content/Context;->getText(I)Ljava/lang/CharSequence;
+
+    move-result-object v2
+
+    invoke-virtual {v1, v2}, Landroid/app/ProgressDialog;->setMessage(Ljava/lang/CharSequence;)V
 
     invoke-virtual {v1, v5}, Landroid/app/ProgressDialog;->setIndeterminate(Z)V
 
-    .line 181
     invoke-virtual {v1, v4}, Landroid/app/ProgressDialog;->setCancelable(Z)V
 
-    .line 182
     invoke-virtual {v1}, Landroid/app/ProgressDialog;->getWindow()Landroid/view/Window;
 
     move-result-object v2
@@ -182,7 +193,7 @@
     invoke-virtual {v2, v3}, Landroid/view/Window;->setType(I)V
 
     .line 184
-    invoke-virtual {v1}, Landroid/app/ProgressDialog;->show()V
+    invoke-static {p0}, Lcom/android/internal/app/ShutdownThread;->createShutDownDialog(Landroid/content/Context;)V
 
     .line 186
     sget-object v2, Lcom/android/internal/app/ShutdownThread;->sInstance:Lcom/android/internal/app/ShutdownThread;
@@ -1477,38 +1488,98 @@
     goto :goto_0
 .end method
 
-.method private static setMessage(Landroid/app/ProgressDialog;Landroid/content/Context;)V
-    .locals 1
-    .parameter "pd"
+.method private static createShutDownDialog(Landroid/content/Context;)V
+    .locals 8
     .parameter "context"
     .annotation build Landroid/annotation/MiuiHook;
         value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
     .end annotation
 
     .prologue
-    sget-boolean v0, Lcom/android/internal/app/ShutdownThread;->mReboot:Z
+    new-instance v2, Landroid/app/Dialog;
 
-    if-eqz v0, :cond_0
+    const v6, 0x10300f1
 
-    const v0, 0x30c0001
+    invoke-direct {v2, p0, v6}, Landroid/app/Dialog;-><init>(Landroid/content/Context;I)V
 
-    invoke-virtual {p1, v0}, Landroid/content/Context;->getText(I)Ljava/lang/CharSequence;
+    .local v2, bootMsgDialog:Landroid/app/Dialog;
+    invoke-virtual {v2}, Landroid/app/Dialog;->getContext()Landroid/content/Context;
 
-    move-result-object v0
+    move-result-object v6
 
-    invoke-virtual {p0, v0}, Landroid/app/ProgressDialog;->setMessage(Ljava/lang/CharSequence;)V
+    invoke-static {v6}, Landroid/view/LayoutInflater;->from(Landroid/content/Context;)Landroid/view/LayoutInflater;
+
+    move-result-object v3
+
+    .local v3, layoutInflater:Landroid/view/LayoutInflater;
+    const v6, 0x303002e
+
+    const/4 v7, 0x0
+
+    invoke-virtual {v3, v6, v7}, Landroid/view/LayoutInflater;->inflate(ILandroid/view/ViewGroup;)Landroid/view/View;
+
+    move-result-object v5
+
+    .local v5, view:Landroid/view/View;
+    const v6, 0x30b0016
+
+    invoke-virtual {v5, v6}, Landroid/view/View;->findViewById(I)Landroid/view/View;
+
+    move-result-object v4
+
+    check-cast v4, Landroid/widget/TextView;
+
+    .local v4, msgText:Landroid/widget/TextView;
+    const v6, 0x30b0015
+
+    invoke-virtual {v5, v6}, Landroid/view/View;->findViewById(I)Landroid/view/View;
+
+    move-result-object v1
+
+    check-cast v1, Landroid/widget/ImageView;
+
+    .local v1, animationView:Landroid/widget/ImageView;
+    sget-boolean v6, Lcom/android/internal/app/ShutdownThread;->mReboot:Z
+
+    if-eqz v6, :cond_0
+
+    const v6, 0x30c0001
+
+    invoke-virtual {v4, v6}, Landroid/widget/TextView;->setText(I)V
 
     :goto_0
-    return-void
+    invoke-virtual {v2, v5}, Landroid/app/Dialog;->setContentView(Landroid/view/View;)V
 
-    :cond_0
-    const v0, 0x1040128
+    const/4 v6, 0x0
 
-    invoke-virtual {p1, v0}, Landroid/content/Context;->getText(I)Ljava/lang/CharSequence;
+    invoke-virtual {v2, v6}, Landroid/app/Dialog;->setCancelable(Z)V
+
+    invoke-virtual {v2}, Landroid/app/Dialog;->getWindow()Landroid/view/Window;
+
+    move-result-object v6
+
+    const/16 v7, 0x7e5
+
+    invoke-virtual {v6, v7}, Landroid/view/Window;->setType(I)V
+
+    invoke-virtual {v2}, Landroid/app/Dialog;->show()V
+
+    invoke-virtual {v1}, Landroid/widget/ImageView;->getDrawable()Landroid/graphics/drawable/Drawable;
 
     move-result-object v0
 
-    invoke-virtual {p0, v0}, Landroid/app/ProgressDialog;->setMessage(Ljava/lang/CharSequence;)V
+    check-cast v0, Landroid/graphics/drawable/AnimationDrawable;
+
+    .local v0, animationDrawable:Landroid/graphics/drawable/AnimationDrawable;
+    invoke-virtual {v0}, Landroid/graphics/drawable/AnimationDrawable;->start()V
+
+    return-void
+
+    .end local v0           #animationDrawable:Landroid/graphics/drawable/AnimationDrawable;
+    :cond_0
+    const v6, 0x1040128
+
+    invoke-virtual {v4, v6}, Landroid/widget/TextView;->setText(I)V
 
     goto :goto_0
 .end method
