@@ -509,106 +509,109 @@
 .end method
 
 .method protected onDraw(Landroid/graphics/Canvas;)V
-    .locals 5
+    .locals 6
     .parameter "canvas"
 
     .prologue
-    const/4 v4, 0x0
+    const/4 v5, 0x0
 
-    .line 109
     invoke-super {p0, p1}, Landroid/widget/ImageView;->onDraw(Landroid/graphics/Canvas;)V
 
-    .line 111
     invoke-virtual {p0}, Landroid/widget/QuickContactBadge;->isEnabled()Z
 
-    move-result v1
+    move-result v2
 
-    if-nez v1, :cond_1
+    if-nez v2, :cond_1
 
-    .line 133
     :cond_0
     :goto_0
     return-void
 
-    .line 116
     :cond_1
-    iget-object v1, p0, Landroid/widget/QuickContactBadge;->mOverlay:Landroid/graphics/drawable/Drawable;
+    iget-object v2, p0, Landroid/widget/QuickContactBadge;->mOverlay:Landroid/graphics/drawable/Drawable;
 
-    if-eqz v1, :cond_0
+    if-eqz v2, :cond_0
 
-    iget-object v1, p0, Landroid/widget/QuickContactBadge;->mOverlay:Landroid/graphics/drawable/Drawable;
+    iget-object v2, p0, Landroid/widget/QuickContactBadge;->mOverlay:Landroid/graphics/drawable/Drawable;
 
-    invoke-virtual {v1}, Landroid/graphics/drawable/Drawable;->getIntrinsicWidth()I
+    invoke-virtual {v2}, Landroid/graphics/drawable/Drawable;->getIntrinsicWidth()I
 
-    move-result v1
+    move-result v2
 
-    if-eqz v1, :cond_0
+    if-eqz v2, :cond_0
 
-    iget-object v1, p0, Landroid/widget/QuickContactBadge;->mOverlay:Landroid/graphics/drawable/Drawable;
+    iget-object v2, p0, Landroid/widget/QuickContactBadge;->mOverlay:Landroid/graphics/drawable/Drawable;
 
-    invoke-virtual {v1}, Landroid/graphics/drawable/Drawable;->getIntrinsicHeight()I
+    invoke-virtual {v2}, Landroid/graphics/drawable/Drawable;->getIntrinsicHeight()I
 
-    move-result v1
+    move-result v2
 
-    if-eqz v1, :cond_0
+    if-eqz v2, :cond_0
 
-    .line 122
-    iget-object v1, p0, Landroid/widget/QuickContactBadge;->mOverlay:Landroid/graphics/drawable/Drawable;
+    iget-object v2, p0, Landroid/widget/QuickContactBadge;->mOverlay:Landroid/graphics/drawable/Drawable;
 
+    invoke-virtual {p0}, Landroid/widget/QuickContactBadge;->getWidth()I
+
+    move-result v3
+
+    invoke-virtual {p0}, Landroid/widget/QuickContactBadge;->getHeight()I
+
+    move-result v4
+
+    invoke-virtual {v2, v5, v5, v3, v4}, Landroid/graphics/drawable/Drawable;->setBounds(IIII)V
+
+    iget v2, p0, Landroid/widget/QuickContactBadge;->mPaddingTop:I
+
+    if-nez v2, :cond_2
+
+    iget v2, p0, Landroid/widget/QuickContactBadge;->mPaddingLeft:I
+
+    if-nez v2, :cond_2
+
+    iget v2, p0, Landroid/widget/QuickContactBadge;->mPaddingBottom:I
+
+    if-nez v2, :cond_2
+
+    iget v2, p0, Landroid/widget/QuickContactBadge;->mPaddingRight:I
+
+    if-nez v2, :cond_2
+
+    iget-object v2, p0, Landroid/widget/QuickContactBadge;->mOverlay:Landroid/graphics/drawable/Drawable;
+
+    invoke-virtual {v2, p1}, Landroid/graphics/drawable/Drawable;->draw(Landroid/graphics/Canvas;)V
+
+    goto :goto_0
+
+    :cond_2
     invoke-virtual {p0}, Landroid/widget/QuickContactBadge;->getWidth()I
 
     move-result v2
 
+    iget v3, p0, Landroid/widget/QuickContactBadge;->mPaddingRight:I
+
+    sub-int v1, v2, v3
+
+    .local v1, right:I
     invoke-virtual {p0}, Landroid/widget/QuickContactBadge;->getHeight()I
 
-    move-result v3
+    move-result v2
 
-    invoke-virtual {v1, v4, v4, v2, v3}, Landroid/graphics/drawable/Drawable;->setBounds(IIII)V
+    iget v3, p0, Landroid/widget/QuickContactBadge;->mPaddingBottom:I
 
-    .line 124
-    iget v1, p0, Landroid/widget/QuickContactBadge;->mPaddingTop:I
+    sub-int v0, v2, v3
 
-    if-nez v1, :cond_2
+    .local v0, bottom:I
+    iget-object v2, p0, Landroid/widget/QuickContactBadge;->mOverlay:Landroid/graphics/drawable/Drawable;
 
-    iget v1, p0, Landroid/widget/QuickContactBadge;->mPaddingLeft:I
+    iget v3, p0, Landroid/widget/QuickContactBadge;->mPaddingLeft:I
 
-    if-nez v1, :cond_2
+    iget v4, p0, Landroid/widget/QuickContactBadge;->mPaddingTop:I
 
-    .line 125
-    iget-object v1, p0, Landroid/widget/QuickContactBadge;->mOverlay:Landroid/graphics/drawable/Drawable;
+    invoke-virtual {v2, v3, v4, v1, v0}, Landroid/graphics/drawable/Drawable;->setBounds(IIII)V
 
-    invoke-virtual {v1, p1}, Landroid/graphics/drawable/Drawable;->draw(Landroid/graphics/Canvas;)V
+    iget-object v2, p0, Landroid/widget/QuickContactBadge;->mOverlay:Landroid/graphics/drawable/Drawable;
 
-    goto :goto_0
-
-    .line 127
-    :cond_2
-    invoke-virtual {p1}, Landroid/graphics/Canvas;->getSaveCount()I
-
-    move-result v0
-
-    .line 128
-    .local v0, saveCount:I
-    invoke-virtual {p1}, Landroid/graphics/Canvas;->save()I
-
-    .line 129
-    iget v1, p0, Landroid/widget/QuickContactBadge;->mPaddingLeft:I
-
-    int-to-float v1, v1
-
-    iget v2, p0, Landroid/widget/QuickContactBadge;->mPaddingTop:I
-
-    int-to-float v2, v2
-
-    invoke-virtual {p1, v1, v2}, Landroid/graphics/Canvas;->translate(FF)V
-
-    .line 130
-    iget-object v1, p0, Landroid/widget/QuickContactBadge;->mOverlay:Landroid/graphics/drawable/Drawable;
-
-    invoke-virtual {v1, p1}, Landroid/graphics/drawable/Drawable;->draw(Landroid/graphics/Canvas;)V
-
-    .line 131
-    invoke-virtual {p1, v0}, Landroid/graphics/Canvas;->restoreToCount(I)V
+    invoke-virtual {v2, p1}, Landroid/graphics/drawable/Drawable;->draw(Landroid/graphics/Canvas;)V
 
     goto :goto_0
 .end method
