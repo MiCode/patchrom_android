@@ -303,7 +303,9 @@
 
 .field mWidthMeasureSpec:I
 
-.field mTouchPadding:I
+.field mTouchPaddingLeft:I
+
+.field mTouchPaddingRight:I
 
 
 # direct methods
@@ -15816,15 +15818,18 @@
     goto :goto_0
 .end method
 
-.method public setTouchPadding(I)V
+.method public setTouchPadding(II)V
     .locals 0
-    .parameter "padding"
+    .parameter "paddingLeft"
+    .parameter "paddingRight"
     .annotation build Landroid/annotation/MiuiHook;
         value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
     .end annotation
 
     .prologue
-    iput p1, p0, Landroid/widget/AbsListView;->mTouchPadding:I
+    iput p1, p0, Landroid/widget/AbsListView;->mTouchPaddingLeft:I
+
+    iput p2, p0, Landroid/widget/AbsListView;->mTouchPaddingRight:I
 
     return-void
 .end method
@@ -15843,7 +15848,7 @@
 
     iget v1, p0, Landroid/widget/AbsListView;->mPaddingLeft:I
 
-    iget v2, p0, Landroid/widget/AbsListView;->mTouchPadding:I
+    iget v2, p0, Landroid/widget/AbsListView;->mTouchPaddingLeft:I
 
     add-int/2addr v1, v2
 
@@ -15861,11 +15866,11 @@
 
     move-result v1
 
-    iget v2, p0, Landroid/widget/AbsListView;->mPaddingLeft:I
+    iget v2, p0, Landroid/widget/AbsListView;->mPaddingRight:I
 
     sub-int/2addr v1, v2
 
-    iget v2, p0, Landroid/widget/AbsListView;->mTouchPadding:I
+    iget v2, p0, Landroid/widget/AbsListView;->mTouchPaddingRight:I
 
     sub-int/2addr v1, v2
 
