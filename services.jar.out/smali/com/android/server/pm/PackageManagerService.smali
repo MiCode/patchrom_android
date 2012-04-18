@@ -26910,7 +26910,7 @@
     :goto_3
     if-eqz v8, :cond_5
 
-    invoke-virtual {v4, v8}, Landroid/content/pm/ParceledListSlice;->append(Landroid/os/Parcelable;)Z
+    invoke-direct {p0, v4, v8, p1}, Lcom/android/server/pm/PackageManagerService;->addPackageToSlice(Landroid/content/pm/ParceledListSlice;Landroid/content/pm/PackageInfo;I)Z
 
     move-result v10
 
@@ -33842,4 +33842,71 @@
 
     .line 4950
     return-void
+.end method
+
+.method private addPackageToSlice(Landroid/content/pm/ParceledListSlice;Landroid/content/pm/PackageInfo;I)Z
+    .locals 1
+    .parameter
+    .parameter "pi"
+    .parameter "flags"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(",
+            "Landroid/content/pm/ParceledListSlice",
+            "<",
+            "Landroid/content/pm/PackageInfo;",
+            ">;",
+            "Landroid/content/pm/PackageInfo;",
+            "I)Z"
+        }
+    .end annotation
+
+    .prologue
+    .local p1, list:Landroid/content/pm/ParceledListSlice;,"Landroid/content/pm/ParceledListSlice<Landroid/content/pm/PackageInfo;>;"
+    and-int/lit8 v0, p3, 0x1
+
+    if-eqz v0, :cond_1
+
+    const/high16 v0, 0x2
+
+    and-int/2addr v0, p3
+
+    if-eqz v0, :cond_1
+
+    iget-object v0, p2, Landroid/content/pm/PackageInfo;->activities:[Landroid/content/pm/ActivityInfo;
+
+    if-eqz v0, :cond_0
+
+    iget-object v0, p2, Landroid/content/pm/PackageInfo;->activities:[Landroid/content/pm/ActivityInfo;
+
+    array-length v0, v0
+
+    if-lez v0, :cond_0
+
+    const/4 v0, 0x0
+
+    iput-object v0, p2, Landroid/content/pm/PackageInfo;->activities:[Landroid/content/pm/ActivityInfo;
+
+    invoke-virtual {p1, p2}, Landroid/content/pm/ParceledListSlice;->append(Landroid/os/Parcelable;)Z
+
+    move-result v0
+
+    :goto_0
+    return v0
+
+    :cond_0
+    const/4 v0, 0x1
+
+    goto :goto_0
+
+    :cond_1
+    invoke-virtual {p1, p2}, Landroid/content/pm/ParceledListSlice;->append(Landroid/os/Parcelable;)Z
+
+    move-result v0
+
+    goto :goto_0
 .end method

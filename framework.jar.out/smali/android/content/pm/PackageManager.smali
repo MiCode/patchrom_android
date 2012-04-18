@@ -274,6 +274,8 @@
 
 .field public static final VERIFICATION_REJECT:I = -0x1
 
+.field public static final HAS_ACTIVITY:I = 0x20000
+
 
 # direct methods
 .method public constructor <init>()V
