@@ -457,7 +457,7 @@
     .end annotation
 .end field
 
-.field mRoundedCorners:Lcom/miui/server/wm/RoundedCornersSurface;
+.field mRoundedCorners:Lcom/android/server/wm/RoundedCornersSurface;
 
 .field mSafeMode:Z
 
@@ -7363,14 +7363,25 @@
     .end local v49           #e:Ljava/lang/RuntimeException;
     :cond_49
     :goto_1e
-    invoke-static {}, Landroid/view/Surface;->closeTransaction()V
-
-    .line 8669
     move-object/from16 v0, p0
 
-    iget-object v5, v0, Lcom/android/server/wm/WindowManagerService;->mRoundedCorners:Lcom/miui/server/wm/RoundedCornersSurface;
+    iget-object v5, v0, Lcom/android/server/wm/WindowManagerService;->mRoundedCorners:Lcom/android/server/wm/RoundedCornersSurface;
 
-    invoke-virtual {v5}, Lcom/miui/server/wm/RoundedCornersSurface;->drawIfNeeded()V
+    move-object/from16 v0, p0
+
+    iget-object v8, v0, Lcom/android/server/wm/WindowManagerService;->mWindows:Ljava/util/ArrayList;
+
+    move-object/from16 v0, p0
+
+    iget v10, v0, Lcom/android/server/wm/WindowManagerService;->mRotation:I
+
+    move/from16 v0, v48
+
+    move/from16 v1, v44
+
+    invoke-virtual {v5, v0, v1, v8, v10}, Lcom/android/server/wm/RoundedCornersSurface;->draw(IILjava/util/ArrayList;I)V
+
+    invoke-static {}, Landroid/view/Surface;->closeTransaction()V
 
     move-object/from16 v0, p0
 
@@ -38671,11 +38682,11 @@
     .end annotation
 
     .prologue
-    iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mRoundedCorners:Lcom/miui/server/wm/RoundedCornersSurface;
+    iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mRoundedCorners:Lcom/android/server/wm/RoundedCornersSurface;
 
     if-nez v0, :cond_0
 
-    new-instance v0, Lcom/miui/server/wm/RoundedCornersSurface;
+    new-instance v0, Lcom/android/server/wm/RoundedCornersSurface;
 
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mContext:Landroid/content/Context;
 
@@ -38683,7 +38694,7 @@
 
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
 
-    const/16 v4, 0x7e6
+    const/16 v4, 0x7e1
 
     invoke-interface {v3, v4}, Landroid/view/WindowManagerPolicy;->windowTypeToLayerLw(I)I
 
@@ -38697,19 +38708,11 @@
 
     iget v5, p0, Lcom/android/server/wm/WindowManagerService;->mInitialDisplayHeight:I
 
-    invoke-direct/range {v0 .. v5}, Lcom/miui/server/wm/RoundedCornersSurface;-><init>(Landroid/content/Context;Landroid/view/SurfaceSession;III)V
+    invoke-direct/range {v0 .. v5}, Lcom/android/server/wm/RoundedCornersSurface;-><init>(Landroid/content/Context;Landroid/view/SurfaceSession;III)V
 
-    iput-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mRoundedCorners:Lcom/miui/server/wm/RoundedCornersSurface;
+    iput-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mRoundedCorners:Lcom/android/server/wm/RoundedCornersSurface;
 
     :cond_0
-    iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mRoundedCorners:Lcom/miui/server/wm/RoundedCornersSurface;
-
-    if-eqz v0, :cond_1
-
-    iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mRoundedCorners:Lcom/miui/server/wm/RoundedCornersSurface;
-
-    invoke-virtual {v0, p1, p2}, Lcom/miui/server/wm/RoundedCornersSurface;->positionSurface(II)V
-
-    :cond_1
     return-void
 .end method
+
