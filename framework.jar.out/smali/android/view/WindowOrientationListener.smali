@@ -42,7 +42,7 @@
 
     .prologue
     .line 65
-    const/4 v0, 0x2
+    const/4 v0, 0x3
 
     invoke-direct {p0, p1, v0}, Landroid/view/WindowOrientationListener;-><init>(Landroid/content/Context;I)V
 
