@@ -54,6 +54,8 @@
 
 .field final synthetic this$0:Lcom/android/internal/policy/impl/PhoneWindow;
 
+.field private mRoundedCorners:Lcom/android/internal/policy/impl/RoundedCorners;
+
 
 # direct methods
 .method public constructor <init>(Lcom/android/internal/policy/impl/PhoneWindow;Landroid/content/Context;I)V
@@ -2627,4 +2629,106 @@
     const/4 v0, 0x0
 
     goto :goto_0
+.end method
+
+.method private drawRoundedCorners(Landroid/graphics/Canvas;)V
+    .locals 6
+    .parameter "c"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindow$DecorView;->this$0:Lcom/android/internal/policy/impl/PhoneWindow;
+
+    invoke-virtual {v0}, Lcom/android/internal/policy/impl/PhoneWindow;->getAttributes()Landroid/view/WindowManager$LayoutParams;
+
+    move-result-object v0
+
+    iget v0, v0, Landroid/view/WindowManager$LayoutParams;->type:I
+
+    const/16 v1, 0x63
+
+    if-gt v0, v1, :cond_0
+
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindow$DecorView;->mFrameOffsets:Landroid/graphics/Rect;
+
+    iget v0, v0, Landroid/graphics/Rect;->left:I
+
+    if-nez v0, :cond_0
+
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindow$DecorView;->mFrameOffsets:Landroid/graphics/Rect;
+
+    iget v0, v0, Landroid/graphics/Rect;->right:I
+
+    if-nez v0, :cond_0
+
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindow$DecorView;->mFrameOffsets:Landroid/graphics/Rect;
+
+    iget v0, v0, Landroid/graphics/Rect;->bottom:I
+
+    if-eqz v0, :cond_1
+
+    :cond_0
+    :goto_0
+    return-void
+
+    :cond_1
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindow$DecorView;->mRoundedCorners:Lcom/android/internal/policy/impl/RoundedCorners;
+
+    if-nez v0, :cond_2
+
+    new-instance v0, Lcom/android/internal/policy/impl/RoundedCorners;
+
+    iget-object v1, p0, Lcom/android/internal/policy/impl/PhoneWindow$DecorView;->mContext:Landroid/content/Context;
+
+    invoke-direct {v0, v1}, Lcom/android/internal/policy/impl/RoundedCorners;-><init>(Landroid/content/Context;)V
+
+    iput-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindow$DecorView;->mRoundedCorners:Lcom/android/internal/policy/impl/RoundedCorners;
+
+    :cond_2
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindow$DecorView;->mRoundedCorners:Lcom/android/internal/policy/impl/RoundedCorners;
+
+    iget-object v1, p0, Lcom/android/internal/policy/impl/PhoneWindow$DecorView;->mDrawingBounds:Landroid/graphics/Rect;
+
+    iget v2, v1, Landroid/graphics/Rect;->left:I
+
+    iget-object v1, p0, Lcom/android/internal/policy/impl/PhoneWindow$DecorView;->mDrawingBounds:Landroid/graphics/Rect;
+
+    iget v1, v1, Landroid/graphics/Rect;->top:I
+
+    iget-object v3, p0, Lcom/android/internal/policy/impl/PhoneWindow$DecorView;->mFrameOffsets:Landroid/graphics/Rect;
+
+    iget v3, v3, Landroid/graphics/Rect;->top:I
+
+    add-int/2addr v3, v1
+
+    iget-object v1, p0, Lcom/android/internal/policy/impl/PhoneWindow$DecorView;->mDrawingBounds:Landroid/graphics/Rect;
+
+    iget v4, v1, Landroid/graphics/Rect;->right:I
+
+    iget-object v1, p0, Lcom/android/internal/policy/impl/PhoneWindow$DecorView;->mDrawingBounds:Landroid/graphics/Rect;
+
+    iget v5, v1, Landroid/graphics/Rect;->bottom:I
+
+    move-object v1, p1
+
+    invoke-virtual/range {v0 .. v5}, Lcom/android/internal/policy/impl/RoundedCorners;->draw(Landroid/graphics/Canvas;IIII)V
+
+    goto :goto_0
+.end method
+
+.method protected dispatchDraw(Landroid/graphics/Canvas;)V
+    .locals 0
+    .parameter "canvas"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    invoke-super {p0, p1}, Landroid/widget/FrameLayout;->dispatchDraw(Landroid/graphics/Canvas;)V
+
+    invoke-direct {p0, p1}, Lcom/android/internal/policy/impl/PhoneWindow$DecorView;->drawRoundedCorners(Landroid/graphics/Canvas;)V
+
+    return-void
 .end method

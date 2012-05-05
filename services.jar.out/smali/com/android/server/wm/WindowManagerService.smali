@@ -615,6 +615,7 @@
 
 .field mWindowsFreezingScreen:Z
 
+.field mRoundedCorners:Lcom/android/server/wm/RoundedCornersSurface;
 
 # direct methods
 .method static constructor <clinit>()V
@@ -5235,14 +5236,6 @@
     :cond_4
     invoke-static {}, Landroid/view/Surface;->openTransaction()V
 
-    move-object/from16 v0, p0
-
-    move/from16 v1, v48
-
-    move/from16 v2, v44
-
-    invoke-direct {v0, v1, v2}, Lcom/android/server/wm/WindowManagerService;->createRoundCorners(II)V
-
     .line 7570
     if-eqz v41, :cond_5
 
@@ -7363,24 +7356,6 @@
     .end local v49           #e:Ljava/lang/RuntimeException;
     :cond_49
     :goto_1e
-    move-object/from16 v0, p0
-
-    iget-object v5, v0, Lcom/android/server/wm/WindowManagerService;->mRoundedCorners:Lcom/android/server/wm/RoundedCornersSurface;
-
-    move-object/from16 v0, p0
-
-    iget-object v8, v0, Lcom/android/server/wm/WindowManagerService;->mWindows:Ljava/util/ArrayList;
-
-    move-object/from16 v0, p0
-
-    iget v10, v0, Lcom/android/server/wm/WindowManagerService;->mRotation:I
-
-    move/from16 v0, v48
-
-    move/from16 v1, v44
-
-    invoke-virtual {v5, v0, v1, v8, v10}, Lcom/android/server/wm/RoundedCornersSurface;->draw(IILjava/util/ArrayList;I)V
-
     invoke-static {}, Landroid/view/Surface;->closeTransaction()V
 
     move-object/from16 v0, p0
@@ -13461,10 +13436,6 @@
     iput v3, v2, Landroid/content/res/Configuration;->fontScale:F
 
     .line 3444
-    iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mTempConfiguration:Landroid/content/res/Configuration;
-
-    invoke-static {p1, v2}, Landroid/app/MiuiThemeHelper;->copyExtraConfigurations(Landroid/content/res/Configuration;Landroid/content/res/Configuration;)V
-
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mTempConfiguration:Landroid/content/res/Configuration;
 
     invoke-virtual {p0, v2}, Lcom/android/server/wm/WindowManagerService;->computeNewConfigurationLocked(Landroid/content/res/Configuration;)Z
@@ -38671,48 +38642,5 @@
     move-result-object v0
 
     return-object v0
-.end method
-
-.method private createRoundCorners(II)V
-    .locals 6
-    .parameter "dw"
-    .parameter "dh"
-    .annotation build Landroid/annotation/MiuiHook;
-        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
-    .end annotation
-
-    .prologue
-    iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mRoundedCorners:Lcom/android/server/wm/RoundedCornersSurface;
-
-    if-nez v0, :cond_0
-
-    new-instance v0, Lcom/android/server/wm/RoundedCornersSurface;
-
-    iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mContext:Landroid/content/Context;
-
-    iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mFxSession:Landroid/view/SurfaceSession;
-
-    iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
-
-    const/16 v4, 0x7e1
-
-    invoke-interface {v3, v4}, Landroid/view/WindowManagerPolicy;->windowTypeToLayerLw(I)I
-
-    move-result v3
-
-    mul-int/lit16 v3, v3, 0x2710
-
-    add-int/lit16 v3, v3, 0x3e8
-
-    iget v4, p0, Lcom/android/server/wm/WindowManagerService;->mInitialDisplayWidth:I
-
-    iget v5, p0, Lcom/android/server/wm/WindowManagerService;->mInitialDisplayHeight:I
-
-    invoke-direct/range {v0 .. v5}, Lcom/android/server/wm/RoundedCornersSurface;-><init>(Landroid/content/Context;Landroid/view/SurfaceSession;III)V
-
-    iput-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mRoundedCorners:Lcom/android/server/wm/RoundedCornersSurface;
-
-    :cond_0
-    return-void
 .end method
 
