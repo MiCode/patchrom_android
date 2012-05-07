@@ -1521,7 +1521,7 @@
     move-result-object v5
 
     .local v5, view:Landroid/view/View;
-    const v6, 0x30b0016
+    const v6, 0x30b0021
 
     invoke-virtual {v5, v6}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -1530,7 +1530,7 @@
     check-cast v4, Landroid/widget/TextView;
 
     .local v4, msgText:Landroid/widget/TextView;
-    const v6, 0x30b0015
+    const v6, 0x30b0022
 
     invoke-virtual {v5, v6}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
