@@ -7670,21 +7670,6 @@
     return-void
 .end method
 
-.method protected handleCameraKeyEvent(Lcom/android/internal/policy/impl/PhoneWindow$DecorView;Landroid/view/KeyEvent;I)Z
-    .locals 1
-    .parameter "decor"
-    .parameter "event"
-    .parameter "featureId"
-    .annotation build Landroid/annotation/MiuiHook;
-        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->CHANGE_CODE:Landroid/annotation/MiuiHook$MiuiHookType;
-    .end annotation
-
-    .prologue
-    const/4 v0, 0x0
-
-    return v0
-.end method
-
 .method private handleIcsAppLayoutParams(Landroid/view/WindowManager;Landroid/view/WindowManager$LayoutParams;)V
     .locals 5
     .parameter "wm"
