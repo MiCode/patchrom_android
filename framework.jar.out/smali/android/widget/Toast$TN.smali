@@ -109,7 +109,7 @@
     iput v1, v0, Landroid/view/WindowManager$LayoutParams;->windowAnimations:I
 
     .line 341
-    const/16 v1, 0x7d5
+    const/16 v1, 0x7d6
 
     iput v1, v0, Landroid/view/WindowManager$LayoutParams;->type:I
 
