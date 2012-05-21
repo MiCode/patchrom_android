@@ -109,7 +109,7 @@
     iput v1, v0, Landroid/view/WindowManager$LayoutParams;->windowAnimations:I
 
     .line 341
-    const/16 v1, 0x7d6
+    const/16 v1, 0x7d5
 
     iput v1, v0, Landroid/view/WindowManager$LayoutParams;->type:I
 
@@ -385,4 +385,14 @@
 
     .line 351
     return-void
+.end method
+
+.method static synthetic access$000(Landroid/widget/Toast$TN;)Landroid/view/WindowManager$LayoutParams;
+    .locals 1
+    .parameter "x0"
+
+    .prologue
+    iget-object v0, p0, Landroid/widget/Toast$TN;->mParams:Landroid/view/WindowManager$LayoutParams;
+
+    return-object v0
 .end method
