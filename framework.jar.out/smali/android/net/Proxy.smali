@@ -282,7 +282,7 @@
 .end method
 
 .method public static final getPreferredHttpHost(Landroid/content/Context;Ljava/lang/String;)Lorg/apache/http/HttpHost;
-    .locals 6
+    .locals 3
     .parameter "context"
     .parameter "url"
 
@@ -319,19 +319,10 @@
 
     .line 223
     .local v1, sa:Ljava/net/InetSocketAddress;
-    new-instance v2, Lorg/apache/http/HttpHost;
 
-    invoke-virtual {v1}, Ljava/net/InetSocketAddress;->getHostName()Ljava/lang/String;
+    invoke-static {v1}, Landroid/net/ExtraProxy;->getPreferredHttpHost(Ljava/net/InetSocketAddress;)Lorg/apache/http/HttpHost;
 
-    move-result-object v3
-
-    invoke-virtual {v1}, Ljava/net/InetSocketAddress;->getPort()I
-
-    move-result v4
-
-    const-string v5, "http"
-
-    invoke-direct {v2, v3, v4, v5}, Lorg/apache/http/HttpHost;-><init>(Ljava/lang/String;ILjava/lang/String;)V
+    move-result-object v2
 
     goto :goto_0
 .end method
