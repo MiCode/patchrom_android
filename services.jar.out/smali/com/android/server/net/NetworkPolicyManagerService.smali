@@ -1144,9 +1144,6 @@
 
     .line 534
     .local v7, builder:Landroid/app/Notification$Builder;
-    const/4 v0, 0x1
-
-    invoke-virtual {v7, v0}, Landroid/app/Notification$Builder;->setOnlyAlertOnce(Z)Landroid/app/Notification$Builder;
 
     .line 535
     const/4 v0, 0x1
