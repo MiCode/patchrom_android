@@ -490,13 +490,19 @@
 
     :try_start_0
     invoke-virtual {p1, v2, v3}, Landroid/content/Context;->createPackageContext(Ljava/lang/String;I)Landroid/content/Context;
-    :try_end_0
-    .catch Landroid/content/pm/PackageManager$NameNotFoundException; {:try_start_0 .. :try_end_0} :catch_0
 
     move-result-object v0
 
     .line 1625
     .local v0, c:Landroid/content/Context;
+    invoke-virtual {p1}, Landroid/content/Context;->getThemeResId()I
+
+    move-result v3
+
+    invoke-virtual {v0, v3}, Landroid/content/Context;->setTheme(I)V
+    :try_end_0
+    .catch Landroid/content/pm/PackageManager$NameNotFoundException; {:try_start_0 .. :try_end_0} :catch_0
+   
     :goto_0
     return-object v0
 
