@@ -12313,7 +12313,7 @@
 
     move-object/from16 v0, v17
 
-    invoke-static {v0, v4}, Lmiui/text/util/Linkify;->addLinks(Landroid/text/Spannable;I)Z
+    invoke-static {v0, v4}, Landroid/text/util/Linkify;->addLinks(Landroid/text/Spannable;I)Z
 
     move-result v4
 
