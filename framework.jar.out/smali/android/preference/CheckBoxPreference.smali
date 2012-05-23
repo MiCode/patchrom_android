@@ -124,8 +124,40 @@
 
     .line 67
     :cond_0
+    invoke-direct {p0, v0}, Landroid/preference/CheckBoxPreference;->setSlidingButtonListener(Landroid/view/View;)V
+    
     invoke-virtual {p0, p1}, Landroid/preference/CheckBoxPreference;->syncSummaryView(Landroid/view/View;)V
 
     .line 68
+    return-void
+.end method
+
+.method private setSlidingButtonListener(Landroid/view/View;)V
+    .locals 2
+    .parameter "checkboxView"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    if-eqz p1, :cond_0
+
+    instance-of v1, p1, Lmiui/widget/SlidingButton;
+
+    if-eqz v1, :cond_0
+
+    move-object v0, p1
+
+    check-cast v0, Lmiui/widget/SlidingButton;
+
+    .local v0, slidingButton:Lmiui/widget/SlidingButton;
+    new-instance v1, Landroid/preference/CheckBoxPreference$1;
+
+    invoke-direct {v1, p0}, Landroid/preference/CheckBoxPreference$1;-><init>(Landroid/preference/CheckBoxPreference;)V
+
+    invoke-virtual {v0, v1}, Lmiui/widget/SlidingButton;->setOnCheckedChangedListener(Lmiui/widget/SlidingButton$OnCheckedChangedListener;)V
+
+    .end local v0           #slidingButton:Lmiui/widget/SlidingButton;
+    :cond_0
     return-void
 .end method
