@@ -200,6 +200,17 @@
 
     .line 484
     .local v19, params:Lcom/android/server/pm/PackageManagerService$HandlerParams;
+
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, v19
+
+    invoke-direct {v0, v1}, Lcom/android/server/pm/PackageManagerService$PackageHandler;->checkApk(Lcom/android/server/pm/PackageManagerService$HandlerParams;)Z
+
+    move-result v31
+
+    if-eqz v31, :cond_0
+    
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/pm/PackageManagerService$PackageHandler;->mPendingInstalls:Ljava/util/ArrayList;
@@ -2278,4 +2289,68 @@
     invoke-static {v1}, Landroid/os/Process;->setThreadPriority(I)V
 
     throw v0
+.end method
+
+.method private checkApk(Lcom/android/server/pm/PackageManagerService$HandlerParams;)Z
+    .locals 4
+    .parameter "params"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    instance-of v1, p1, Lcom/android/server/pm/PackageManagerService$InstallParams;
+
+    if-eqz v1, :cond_1
+
+    move-object v0, p1
+
+    check-cast v0, Lcom/android/server/pm/PackageManagerService$InstallParams;
+
+    .local v0, insallParams:Lcom/android/server/pm/PackageManagerService$InstallParams;
+    iget-object v1, p0, Lcom/android/server/pm/PackageManagerService$PackageHandler;->this$0:Lcom/android/server/pm/PackageManagerService;
+
+    iget-object v1, v1, Lcom/android/server/pm/PackageManagerService;->mContext:Landroid/content/Context;
+
+    iget-object v2, v0, Lcom/android/server/pm/PackageManagerService$InstallParams;->packageURI:Landroid/net/Uri;
+
+    invoke-static {v1, v2}, Lmiui/provider/ExtraGuard;->checkApk(Landroid/content/Context;Landroid/net/Uri;)Z
+
+    move-result v1
+
+    if-nez v1, :cond_1
+
+    iget-object v1, v0, Lcom/android/server/pm/PackageManagerService$InstallParams;->observer:Landroid/content/pm/IPackageInstallObserver;
+
+    if-eqz v1, :cond_0
+
+    :try_start_0
+    iget-object v1, v0, Lcom/android/server/pm/PackageManagerService$InstallParams;->observer:Landroid/content/pm/IPackageInstallObserver;
+
+    const/4 v2, 0x0
+
+    const/16 v3, -0x16
+
+    invoke-interface {v1, v2, v3}, Landroid/content/pm/IPackageInstallObserver;->packageInstalled(Ljava/lang/String;I)V
+    :try_end_0
+    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
+
+    :cond_0
+    :goto_0
+    const/4 v1, 0x0
+
+    .end local v0           #insallParams:Lcom/android/server/pm/PackageManagerService$InstallParams;
+    :goto_1
+    return v1
+
+    :cond_1
+    const/4 v1, 0x1
+
+    goto :goto_1
+
+    .restart local v0       #insallParams:Lcom/android/server/pm/PackageManagerService$InstallParams;
+    :catch_0
+    move-exception v1
+
+    goto :goto_0
 .end method
