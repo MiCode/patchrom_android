@@ -153,7 +153,7 @@
     .local v0, slidingButton:Lmiui/widget/SlidingButton;
     new-instance v1, Landroid/preference/CheckBoxPreference$1;
 
-    invoke-direct {v1, p0}, Landroid/preference/CheckBoxPreference$1;-><init>(Landroid/preference/CheckBoxPreference;)V
+    invoke-direct {v1, p0, v0}, Landroid/preference/CheckBoxPreference$1;-><init>(Landroid/preference/CheckBoxPreference;Lmiui/widget/SlidingButton;)V
 
     invoke-virtual {v0, v1}, Lmiui/widget/SlidingButton;->setOnCheckedChangedListener(Lmiui/widget/SlidingButton$OnCheckedChangedListener;)V
 
