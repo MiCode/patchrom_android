@@ -1122,7 +1122,7 @@
     return-void
 .end method
 
-.method private enqueueNotification(Landroid/net/NetworkPolicy;IJ)V
+.method protected enqueueNotification(Landroid/net/NetworkPolicy;IJ)V
     .locals 14
     .parameter "policy"
     .parameter "type"
@@ -2818,7 +2818,7 @@
     goto :goto_0
 .end method
 
-.method private setNetworkTemplateEnabled(Landroid/net/NetworkTemplate;Z)V
+.method protected setNetworkTemplateEnabled(Landroid/net/NetworkTemplate;Z)V
     .locals 2
     .parameter "template"
     .parameter "enabled"
