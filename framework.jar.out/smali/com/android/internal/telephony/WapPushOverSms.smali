@@ -84,8 +84,8 @@
 
 
 # virtual methods
-.method public dispatchWapPdu([B)I
-    .locals 24
+.method public dispatchWapPdu([BLjava/lang/String;)I
+    .locals 26
     .parameter "pdu"
 
     .prologue
@@ -694,6 +694,14 @@
     move-object/from16 v1, v23
 
     invoke-virtual {v12, v0, v1}, Landroid/content/Intent;->putExtra(Ljava/lang/String;Ljava/io/Serializable;)Landroid/content/Intent;
+
+    const-string v22, "address"
+
+    move-object/from16 v0, v22
+
+    move-object/from16 v1, p2
+
+    invoke-virtual {v12, v0, v1}, Landroid/content/Intent;->putExtra(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;
 
     .line 271
     move-object/from16 v0, p0
