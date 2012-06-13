@@ -3760,7 +3760,7 @@
 .end method
 
 .method final init(Landroid/app/LoadedApk;Landroid/os/IBinder;Landroid/app/ActivityThread;Landroid/content/res/Resources;Ljava/lang/String;)V
-    .locals 2
+    .locals 3
     .parameter "packageInfo"
     .parameter "activityToken"
     .parameter "mainThread"
@@ -3815,15 +3815,19 @@
     .line 1502
     iget-object v0, p0, Landroid/app/ContextImpl;->mPackageInfo:Landroid/app/LoadedApk;
 
-    invoke-virtual {v0}, Landroid/app/LoadedApk;->getResDir()Ljava/lang/String;
+    iget-object v0, v0, Landroid/app/LoadedApk;->mPackageName:Ljava/lang/String;
 
-    move-result-object v0
+    iget-object v1, p0, Landroid/app/ContextImpl;->mPackageInfo:Landroid/app/LoadedApk;
 
-    invoke-virtual {p4}, Landroid/content/res/Resources;->getCompatibilityInfo()Landroid/content/res/CompatibilityInfo;
+    invoke-virtual {v1}, Landroid/app/LoadedApk;->getResDir()Ljava/lang/String;
 
     move-result-object v1
 
-    invoke-virtual {p3, v0, v1}, Landroid/app/ActivityThread;->getTopLevelResources(Ljava/lang/String;Landroid/content/res/CompatibilityInfo;)Landroid/content/res/Resources;
+    invoke-virtual {p4}, Landroid/content/res/Resources;->getCompatibilityInfo()Landroid/content/res/CompatibilityInfo;
+
+    move-result-object v2
+
+    invoke-virtual {p3, v0, v1, v2}, Landroid/app/ActivityThread;->getTopLevelResources(Ljava/lang/String;Ljava/lang/String;Landroid/content/res/CompatibilityInfo;)Landroid/content/res/Resources;
 
     move-result-object v0
 
