@@ -1562,6 +1562,14 @@
 
     invoke-virtual {v6, v7}, Landroid/view/Window;->setType(I)V
 
+    invoke-virtual {v2}, Landroid/app/Dialog;->getWindow()Landroid/view/Window;
+
+    move-result-object v6
+
+    const v7, 0x60201e4
+
+    invoke-virtual {v6, v7}, Landroid/view/Window;->setBackgroundDrawableResource(I)V
+
     invoke-virtual {v2}, Landroid/app/Dialog;->show()V
 
     invoke-virtual {v1}, Landroid/widget/ImageView;->getDrawable()Landroid/graphics/drawable/Drawable;
