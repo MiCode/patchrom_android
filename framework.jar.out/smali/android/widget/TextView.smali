@@ -32948,3 +32948,16 @@
     :cond_0
     return-void
 .end method
+
+.method public setCursorDrawableRes(I)V
+    .locals 0
+    .parameter "cursorDrawableRes"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    iput p1, p0, Landroid/widget/TextView;->mCursorDrawableRes:I
+
+    return-void
+.end method
