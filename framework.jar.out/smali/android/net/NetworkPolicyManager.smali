@@ -149,9 +149,9 @@
     const/4 v4, 0x1
 
     .line 160
-    new-instance v2, Landroid/text/format/Time;
-
     invoke-direct {v2}, Landroid/text/format/Time;-><init>()V
+
+    invoke-direct {v2, v3}, Landroid/text/format/Time;-><init>(Ljava/lang/String;)V
 
     .line 161
     .local v2, now:Landroid/text/format/Time;
