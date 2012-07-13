@@ -50098,52 +50098,108 @@
 .end method
 
 .method public getCallingPackage(Landroid/os/IBinder;)Ljava/lang/String;
-    .locals 2
+    .locals 5
     .parameter "token"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->CHANGE_CODE:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
 
     .prologue
-    .line 4097
+    const/4 v3, 0x0
+
+    const/4 v0, 0x0
+
+    .local v0, callingUid:I
     monitor-enter p0
 
-    .line 4098
     :try_start_0
-    invoke-direct {p0, p1}, Lcom/android/server/am/ActivityManagerService;->getCallingRecordLocked(Landroid/os/IBinder;)Lcom/android/server/am/ActivityRecord;
+    iget-object v4, p0, Lcom/android/server/am/ActivityManagerService;->mMainStack:Lcom/android/server/am/ActivityStack;
 
-    move-result-object v0
+    invoke-virtual {v4, p1}, Lcom/android/server/am/ActivityStack;->isInStackLocked(Landroid/os/IBinder;)Lcom/android/server/am/ActivityRecord;
 
-    .line 4099
-    .local v0, r:Lcom/android/server/am/ActivityRecord;
-    if-eqz v0, :cond_0
+    move-result-object v2
 
-    iget-object v1, v0, Lcom/android/server/am/ActivityRecord;->app:Lcom/android/server/am/ProcessRecord;
+    .local v2, r:Lcom/android/server/am/ActivityRecord;
+    if-nez v2, :cond_1
 
-    if-eqz v1, :cond_0
-
-    iget-object v1, v0, Lcom/android/server/am/ActivityRecord;->info:Landroid/content/pm/ActivityInfo;
-
-    iget-object v1, v1, Landroid/content/pm/ActivityInfo;->packageName:Ljava/lang/String;
-
-    :goto_0
     monitor-exit p0
 
-    return-object v1
-
     :cond_0
-    const/4 v1, 0x0
+    :goto_0
+    return-object v3
+
+    :cond_1
+    iget-object v4, v2, Lcom/android/server/am/ActivityRecord;->resultTo:Lcom/android/server/am/ActivityRecord;
+
+    if-eqz v4, :cond_3
+
+    iget-object v2, v2, Lcom/android/server/am/ActivityRecord;->resultTo:Lcom/android/server/am/ActivityRecord;
+
+    if-eqz v2, :cond_2
+
+    iget-object v4, v2, Lcom/android/server/am/ActivityRecord;->app:Lcom/android/server/am/ProcessRecord;
+
+    if-eqz v4, :cond_2
+
+    iget-object v3, v2, Lcom/android/server/am/ActivityRecord;->info:Landroid/content/pm/ActivityInfo;
+
+    iget-object v3, v3, Landroid/content/pm/ActivityInfo;->packageName:Ljava/lang/String;
+
+    :cond_2
+    monitor-exit p0
 
     goto :goto_0
 
-    .line 4100
-    .end local v0           #r:Lcom/android/server/am/ActivityRecord;
+    .end local v2           #r:Lcom/android/server/am/ActivityRecord;
     :catchall_0
-    move-exception v1
+    move-exception v3
 
     monitor-exit p0
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    throw v1
+    throw v3
+
+    .restart local v2       #r:Lcom/android/server/am/ActivityRecord;
+    :cond_3
+    :try_start_1
+    iget v0, v2, Lcom/android/server/am/ActivityRecord;->launchedFromUid:I
+
+    monitor-exit p0
+    :try_end_1
+    .catchall {:try_start_1 .. :try_end_1} :catchall_0
+
+    if-lez v0, :cond_0
+
+    :try_start_2
+    invoke-static {}, Landroid/app/AppGlobals;->getPackageManager()Landroid/content/pm/IPackageManager;
+
+    move-result-object v4
+
+    invoke-interface {v4, v0}, Landroid/content/pm/IPackageManager;->getPackagesForUid(I)[Ljava/lang/String;
+
+    move-result-object v1
+
+    .local v1, packages:[Ljava/lang/String;
+    array-length v4, v1
+
+    if-lez v4, :cond_0
+
+    const/4 v4, 0x0
+
+    aget-object v3, v1, v4
+    :try_end_2
+    .catch Landroid/os/RemoteException; {:try_start_2 .. :try_end_2} :catch_0
+
+    goto :goto_0
+
+    .end local v1           #packages:[Ljava/lang/String;
+    :catch_0
+    move-exception v4
+
+    goto :goto_0
 .end method
+
 
 .method public getConfiguration()Landroid/content/res/Configuration;
     .locals 2
