@@ -182,6 +182,13 @@
 
 .field public userSetLocale:Z
 
+.field public static final UI_MODE_TYPE_SCALE_HUGE:I = 0xf
+
+.field public static final UI_MODE_TYPE_SCALE_LARGE:I = 0xe
+
+.field public static final UI_MODE_TYPE_SCALE_MEDIUM:I = 0xd
+
+.field public static final UI_MODE_TYPE_SCALE_SMALL:I = 0xc
 
 # direct methods
 .method static constructor <clinit>()V

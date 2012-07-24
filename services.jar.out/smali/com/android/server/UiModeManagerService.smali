@@ -3,6 +3,14 @@
 .source "UiModeManagerService.java"
 
 
+# annotations
+.annotation system Ldalvik/annotation/MemberClasses;
+    value = {
+        Lcom/android/server/UiModeManagerService$UIModeScaleChangedObserver;
+    }
+.end annotation
+
+
 # static fields
 .field private static final ACTION_UPDATE_NIGHT_MODE:Ljava/lang/String; = "com.android.server.action.UPDATE_NIGHT_MODE"
 
@@ -93,6 +101,10 @@
 .field private final mUpdateLocationReceiver:Landroid/content/BroadcastReceiver;
 
 .field private final mWakeLock:Landroid/os/PowerManager$WakeLock;
+
+.field mNormalType:I
+
+.field final mUIModeScaleChangedObserver:Lcom/android/server/UiModeManagerService$UIModeScaleChangedObserver;
 
 
 # direct methods
@@ -196,6 +208,18 @@
     invoke-direct {v2, p0}, Lcom/android/server/UiModeManagerService$5;-><init>(Lcom/android/server/UiModeManagerService;)V
 
     iput-object v2, p0, Lcom/android/server/UiModeManagerService;->mUpdateLocationReceiver:Landroid/content/BroadcastReceiver;
+
+    iput v3, p0, Lcom/android/server/UiModeManagerService;->mNormalType:I
+
+    new-instance v2, Lcom/android/server/UiModeManagerService$UIModeScaleChangedObserver;
+
+    new-instance v5, Landroid/os/Handler;
+
+    invoke-direct {v5}, Landroid/os/Handler;-><init>()V
+
+    invoke-direct {v2, p0, v5}, Lcom/android/server/UiModeManagerService$UIModeScaleChangedObserver;-><init>(Lcom/android/server/UiModeManagerService;Landroid/os/Handler;)V
+
+    iput-object v2, p0, Lcom/android/server/UiModeManagerService;->mUIModeScaleChangedObserver:Lcom/android/server/UiModeManagerService$UIModeScaleChangedObserver;
 
     .line 254
     new-instance v2, Lcom/android/server/UiModeManagerService$6;
@@ -310,6 +334,8 @@
     iget-object v5, p0, Lcom/android/server/UiModeManagerService;->mUpdateLocationReceiver:Landroid/content/BroadcastReceiver;
 
     invoke-virtual {v2, v5, v0}, Landroid/content/Context;->registerReceiver(Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;)Landroid/content/Intent;
+
+    invoke-direct {p0}, Lcom/android/server/UiModeManagerService;->registerUIModeScaleChangedObserver()V
 
     .line 345
     const-string v2, "power"
@@ -1335,7 +1361,7 @@
 
     .prologue
     .line 455
-    const/4 v1, 0x1
+    iget v1, p0, Lcom/android/server/UiModeManagerService;->mNormalType:I
 
     .line 456
     .local v1, uiMode:I
@@ -2110,4 +2136,36 @@
     add-long/2addr v12, v4
 
     goto :goto_2
+.end method
+
+.method private registerUIModeScaleChangedObserver()V
+    .locals 4
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    const/4 v3, 0x0
+
+    iget-object v0, p0, Lcom/android/server/UiModeManagerService;->mContext:Landroid/content/Context;
+
+    invoke-virtual {v0}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
+
+    move-result-object v0
+
+    const-string v1, "ui_mode_scale"
+
+    invoke-static {v1}, Landroid/provider/Settings$System;->getUriFor(Ljava/lang/String;)Landroid/net/Uri;
+
+    move-result-object v1
+
+    iget-object v2, p0, Lcom/android/server/UiModeManagerService;->mUIModeScaleChangedObserver:Lcom/android/server/UiModeManagerService$UIModeScaleChangedObserver;
+
+    invoke-virtual {v0, v1, v3, v2}, Landroid/content/ContentResolver;->registerContentObserver(Landroid/net/Uri;ZLandroid/database/ContentObserver;)V
+
+    iget-object v0, p0, Lcom/android/server/UiModeManagerService;->mUIModeScaleChangedObserver:Lcom/android/server/UiModeManagerService$UIModeScaleChangedObserver;
+
+    invoke-virtual {v0, v3}, Lcom/android/server/UiModeManagerService$UIModeScaleChangedObserver;->onChange(Z)V
+
+    return-void
 .end method
