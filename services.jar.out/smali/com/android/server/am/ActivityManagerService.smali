@@ -69550,7 +69550,7 @@
     .line 13437
     and-int/lit8 v2, v22, 0x4
 
-    if-eqz v2, :cond_b
+    if-eqz v2, :cond_mi1
 
     .line 13438
     const/4 v7, 0x0
@@ -69587,7 +69587,7 @@
 
     invoke-direct/range {v6 .. v19}, Lcom/android/server/am/ActivityManagerService;->broadcastIntentLocked(Lcom/android/server/am/ProcessRecord;Ljava/lang/String;Landroid/content/Intent;Ljava/lang/String;Landroid/content/IIntentReceiver;ILjava/lang/String;Landroid/os/Bundle;Ljava/lang/String;ZZII)I
 
-    :cond_b
+    :cond_mi1
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/am/ActivityManagerService;->mContext:Landroid/content/Context;
