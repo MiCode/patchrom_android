@@ -3638,6 +3638,8 @@
 
     invoke-virtual {v2, v7, v9}, Landroid/content/Intent;->putExtra(Ljava/lang/String;Z)Landroid/content/Intent;
 
+    invoke-direct {p0, v2}, Lcom/android/server/location/GpsLocationProvider;->appendUidExtra(Landroid/content/Intent;)V
+
     .line 1195
     iget-object v7, p0, Lcom/android/server/location/GpsLocationProvider;->mContext:Landroid/content/Context;
 
@@ -5666,3 +5668,40 @@
     .line 484
     return-void
 .end method
+
+.method private appendUidExtra(Landroid/content/Intent;)V
+    .locals 3
+    .parameter "intent"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    iget-boolean v0, p0, Lcom/android/server/location/GpsLocationProvider;->mNavigating:Z
+
+    if-eqz v0, :cond_0
+
+    iget-object v0, p0, Lcom/android/server/location/GpsLocationProvider;->mClientUids:Landroid/util/SparseIntArray;
+
+    invoke-virtual {v0}, Landroid/util/SparseIntArray;->size()I
+
+    move-result v0
+
+    if-lez v0, :cond_0
+
+    const-string v0, "android.intent.extra.UID"
+
+    iget-object v1, p0, Lcom/android/server/location/GpsLocationProvider;->mClientUids:Landroid/util/SparseIntArray;
+
+    const/4 v2, 0x0
+
+    invoke-virtual {v1, v2}, Landroid/util/SparseIntArray;->keyAt(I)I
+
+    move-result v1
+
+    invoke-virtual {p1, v0, v1}, Landroid/content/Intent;->putExtra(Ljava/lang/String;I)Landroid/content/Intent;
+
+    :cond_0
+    return-void
+.end method
+
