@@ -3764,29 +3764,24 @@
 .end method
 
 .method public getPowerButtonInstantlyLocks()Z
-    .locals 2
+    .locals 1
 
     .prologue
-    const-string v0, "lockscreen.power_button_instantly_locks"
 
-    const/4 v1, 0x1
-
-    invoke-direct {p0, v0, v1}, Lcom/android/internal/widget/LockPatternUtils;->getBoolean(Ljava/lang/String;Z)Z
-
-    move-result v0
+    const/4 v0, 0x0
 
     return v0
+
 .end method
 
 .method public setPowerButtonInstantlyLocks(Z)V
-    .locals 1
-    .parameter "enabled"
+    .locals 0
+    .parameter "value"
 
     .prologue
-    const-string v0, "lockscreen.power_button_instantly_locks"
-
-    invoke-direct {p0, v0, p1}, Lcom/android/internal/widget/LockPatternUtils;->setBoolean(Ljava/lang/String;Z)V
 
     return-void
+
 .end method
+
 
