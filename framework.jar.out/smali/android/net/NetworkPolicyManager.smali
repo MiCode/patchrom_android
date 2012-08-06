@@ -63,9 +63,7 @@
     .line 134
     new-instance v2, Landroid/text/format/Time;
 
-    const-string v3, "UTC"
-
-    invoke-direct {v2, v3}, Landroid/text/format/Time;-><init>(Ljava/lang/String;)V
+    invoke-direct {v2}, Landroid/text/format/Time;-><init>()V
 
     .line 135
     .local v2, now:Landroid/text/format/Time;
@@ -153,9 +151,7 @@
     .line 160
     new-instance v2, Landroid/text/format/Time;
 
-    const-string v3, "UTC"
-
-    invoke-direct {v2, v3}, Landroid/text/format/Time;-><init>(Ljava/lang/String;)V
+    invoke-direct {v2}, Landroid/text/format/Time;-><init>()V
 
     .line 161
     .local v2, now:Landroid/text/format/Time;
