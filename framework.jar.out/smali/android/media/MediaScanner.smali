@@ -63,7 +63,7 @@
 
 .field private mClient:Landroid/media/MediaScanner$MyMediaScannerClient;
 
-.field private mContext:Landroid/content/Context;
+.field mContext:Landroid/content/Context;
 
 .field private mDefaultAlarmAlertFilename:Ljava/lang/String;
 
