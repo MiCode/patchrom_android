@@ -1739,7 +1739,7 @@
 .end method
 
 .method public static compareLoosely(Ljava/lang/String;Ljava/lang/String;)Z
-    .locals 11
+    .locals 13
     .parameter "a"
     .parameter "b"
 
@@ -1800,12 +1800,18 @@
 
     .line 465
     .local v4, ia:I
+    add-int/lit8 v11, v4, 0x1
+
+    .local v11, lena:I
     invoke-static {p1}, Landroid/telephony/PhoneNumberUtils;->indexOfLastNetworkChar(Ljava/lang/String;)I
 
     move-result v5
 
     .line 466
     .local v5, ib:I
+    add-int/lit8 v12, v5, 0x1
+
+    .local v12, lenb:I
     const/4 v6, 0x0
 
     .line 468
@@ -1889,20 +1895,11 @@
 
     if-ge v6, v10, :cond_b
 
-    .line 497
-    invoke-virtual {p0}, Ljava/lang/String;->length()I
-
-    move-result v10
-
-    sub-int v2, v10, v7
+    sub-int v2, v11, v7
 
     .line 498
     .local v2, effectiveALen:I
-    invoke-virtual {p1}, Ljava/lang/String;->length()I
-
-    move-result v10
-
-    sub-int v3, v10, v8
+    sub-int v3, v12, v8
 
     .line 503
     .local v3, effectiveBLen:I
@@ -6167,7 +6164,7 @@
     if-eq v0, v4, :cond_1
 
     :cond_0
-    invoke-static {v0}, Landroid/telephony/PhoneNumberUtils;->isISODigit(C)Z
+    invoke-static {v0}, Landroid/telephony/PhoneNumberUtils;->isNonSeparator(C)Z
 
     move-result v4
 
