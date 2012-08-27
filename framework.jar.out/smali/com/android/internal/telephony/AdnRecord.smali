@@ -286,6 +286,8 @@
 
     .line 293
     .local v2, numberLength:I
+    goto :cond_0
+
     const/16 v3, 0xb
 
     if-le v2, v3, :cond_0
