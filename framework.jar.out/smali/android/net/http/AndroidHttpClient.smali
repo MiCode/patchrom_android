@@ -552,7 +552,11 @@
     .line 131
     .local v3, sessionCache:Landroid/net/SSLSessionCache;
     :goto_0
-    invoke-static {v1, p0}, Lorg/apache/http/params/HttpProtocolParams;->setUserAgent(Lorg/apache/http/params/HttpParams;Ljava/lang/String;)V
+    invoke-static {p0}, Landroid/net/http/AndroidHttpClient;->getUserAgent(Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v4
+
+    invoke-static {v1, v4}, Lorg/apache/http/params/HttpProtocolParams;->setUserAgent(Lorg/apache/http/params/HttpParams;Ljava/lang/String;)V
 
     .line 132
     new-instance v2, Lorg/apache/http/conn/scheme/SchemeRegistry;
@@ -1315,4 +1319,27 @@
     move-result-object v0
 
     return-object v0
+.end method
+
+.method private static getUserAgent(Ljava/lang/String;)Ljava/lang/String;
+    .locals 0
+    .parameter "userAgent"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    if-eqz p0, :cond_0
+
+    .end local p0
+    :goto_0
+    return-object p0
+
+    .restart local p0
+    :cond_0
+    invoke-static {}, Lcom/android/internal/os/RuntimeInit;->getDefaultUserAgent()Ljava/lang/String;
+
+    move-result-object p0
+
+    goto :goto_0
 .end method

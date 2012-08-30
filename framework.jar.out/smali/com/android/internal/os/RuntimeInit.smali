@@ -343,7 +343,7 @@
     .line 169
     .end local v1           #model:Ljava/lang/String;
     :cond_0
-    sget-object v0, Landroid/os/Build;->ID:Ljava/lang/String;
+    sget-object v0, Landroid/os/Build$VERSION;->INCREMENTAL:Ljava/lang/String;
 
     .line 170
     .local v0, id:Ljava/lang/String;
@@ -353,8 +353,7 @@
 
     if-lez v4, :cond_1
 
-    .line 171
-    const-string v4, " Build/"
+    const-string v4, " MIUI/"
 
     invoke-virtual {v2, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
