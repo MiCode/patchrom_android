@@ -12,7 +12,6 @@
     value = {
         Lcom/android/server/PowerManagerService$LockList;,
         Lcom/android/server/PowerManagerService$BrightnessState;,
-        Lcom/android/server/PowerManagerService$SendReleaseProximitySensorBroadCast;,
         Lcom/android/server/PowerManagerService$TimeoutTask;,
         Lcom/android/server/PowerManagerService$PokeLock;,
         Lcom/android/server/PowerManagerService$WakeLock;,
@@ -326,8 +325,6 @@
 
 .field private mWarningSpewThrottleTime:J
 
-.field private mReleaseProximitySensorRunnable:Ljava/lang/Runnable;
-
 
 # direct methods
 .method constructor <init>()V
@@ -540,12 +537,6 @@
     invoke-direct {v2, p0}, Lcom/android/server/PowerManagerService$8;-><init>(Lcom/android/server/PowerManagerService;)V
 
     iput-object v2, p0, Lcom/android/server/PowerManagerService;->mForceReenableScreenTask:Ljava/lang/Runnable;
-
-    new-instance v2, Lcom/android/server/PowerManagerService$SendReleaseProximitySensorBroadCast;
-
-    invoke-direct {v2, p0}, Lcom/android/server/PowerManagerService$SendReleaseProximitySensorBroadCast;-><init>(Lcom/android/server/PowerManagerService;)V
-
-    iput-object v2, p0, Lcom/android/server/PowerManagerService;->mReleaseProximitySensorRunnable:Ljava/lang/Runnable;
 
     new-instance v2, Lcom/android/server/PowerManagerService$9;
 
@@ -10774,45 +10765,4 @@
 
     .line 2341
     return-void
-.end method
-
-.method private releaseProximitySensor(II)V
-    .locals 2
-    .parameter "newState"
-    .parameter "reason"
-    .annotation build Landroid/annotation/MiuiHook;
-        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
-    .end annotation
-
-    .prologue
-    and-int/lit8 v0, p1, 0x1
-
-    if-eqz v0, :cond_1
-
-    iget-object v0, p0, Lcom/android/server/PowerManagerService;->mHandler:Landroid/os/Handler;
-
-    iget-object v1, p0, Lcom/android/server/PowerManagerService;->mReleaseProximitySensorRunnable:Ljava/lang/Runnable;
-
-    invoke-virtual {v0, v1}, Landroid/os/Handler;->removeCallbacks(Ljava/lang/Runnable;)V
-
-    :cond_0
-    :goto_0
-    return-void
-
-    :cond_1
-    iget-boolean v0, p0, Lcom/android/server/PowerManagerService;->mBootCompleted:Z
-
-    if-eqz v0, :cond_0
-
-    const/4 v0, 0x4
-
-    if-eq v0, p2, :cond_0
-
-    iget-object v0, p0, Lcom/android/server/PowerManagerService;->mHandler:Landroid/os/Handler;
-
-    iget-object v1, p0, Lcom/android/server/PowerManagerService;->mReleaseProximitySensorRunnable:Ljava/lang/Runnable;
-
-    invoke-virtual {v0, v1}, Landroid/os/Handler;->post(Ljava/lang/Runnable;)Z
-
-    goto :goto_0
 .end method
