@@ -530,6 +530,13 @@
 
     .line 169
     .local v1, retVal:Ljava/lang/String;
+    const/4 v2, 0x1
+
+    if-gt v0, v2, :cond_miui_add1
+
+    return-object v1
+
+    :cond_miui_add1
     const/4 v2, 0x0
 
     invoke-virtual {p1, v2}, Ljava/lang/String;->charAt(I)C
