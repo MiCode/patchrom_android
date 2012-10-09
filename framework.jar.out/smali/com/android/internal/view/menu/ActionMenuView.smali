@@ -2242,7 +2242,7 @@
 
     and-int/lit8 v28, v28, 0x5
 
-    if-eqz v28, :cond_c
+    if-eqz v28, :cond_miui_add1
 
     sub-int v28, p4, v26
 
@@ -2262,7 +2262,7 @@
 
     goto/16 :goto_0
 
-    :cond_c
+    :cond_miui_add1
     invoke-virtual/range {v25 .. v25}, Landroid/view/View;->getLayoutParams()Landroid/view/ViewGroup$LayoutParams;
 
     move-result-object v28
@@ -2277,7 +2277,7 @@
 
     and-int/lit8 v28, v28, 0x3
 
-    if-eqz v28, :cond_d
+    if-eqz v28, :cond_miui_add2
 
     add-int v28, p2, v26
 
@@ -2297,7 +2297,7 @@
 
     goto/16 :goto_0
 
-    :cond_d
+    :cond_miui_add2
     sub-int v28, p4, p2
 
     div-int/lit8 v13, v28, 0x2

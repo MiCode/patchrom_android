@@ -7389,16 +7389,16 @@
     .line 2721
     const/4 v10, 0x0
 
-    if-eqz v1, :cond_21
+    if-eqz v1, :cond_miui_add1
 
     const/4 v11, 0x1
 
-    goto :goto_e
+    goto :goto_miui_add1
 
-    :cond_21
+    :cond_miui_add1
     const/4 v11, 0x2
 
-    :goto_e
+    :goto_miui_add1
     const/4 v12, 0x0
 
     invoke-virtual {p0, v10, v11, v12}, Lcom/android/internal/policy/impl/PhoneWindowManager;->performHapticFeedbackLw(Landroid/view/WindowManagerPolicy$WindowState;IZ)Z

@@ -209,16 +209,6 @@
     return-object v0
 .end method
 
-.method protected handleCameraKeyEvent()V
-    .locals 0
-    .annotation build Landroid/annotation/MiuiHook;
-        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
-    .end annotation
-
-    .prologue
-    return-void
-.end method
-
 .method onKeyDown(ILandroid/view/KeyEvent;)Z
     .locals 9
     .parameter "keyCode"
@@ -860,4 +850,14 @@
     invoke-static {v2, v3}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
     goto :goto_0
+.end method
+
+.method protected handleCameraKeyEvent()V
+    .locals 0
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    return-void
 .end method

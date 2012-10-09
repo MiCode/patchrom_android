@@ -10606,7 +10606,7 @@
 
     move-result-object v1
 
-    if-eqz v1, :cond_a
+    if-eqz v1, :cond_miui_add_1
 
     invoke-static {}, Lmiui/net/FirewallManager;->getInstance()Lmiui/net/FirewallManager;
 
@@ -10625,7 +10625,7 @@
     invoke-virtual {v1, v2, v3}, Lmiui/net/FirewallManager;->onDataDisconnected(ILjava/lang/String;)V
 
     .line 1994
-    :cond_a
+    :cond_miui_add_1
     iget-object v1, p0, Lcom/android/internal/telephony/gsm/GsmDataConnectionTracker;->mPhone:Lcom/android/internal/telephony/PhoneBase;
 
     invoke-virtual {v0}, Lcom/android/internal/telephony/ApnContext;->getReason()Ljava/lang/String;

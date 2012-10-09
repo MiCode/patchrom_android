@@ -1173,6 +1173,9 @@
     return-object v0
 .end method
 
+#######################################################
+#NOTE: Be careful the condition lables in this method
+#######################################################
 .method public static isAudioFileType(I)Z
     .locals 3
     .parameter "fileType"

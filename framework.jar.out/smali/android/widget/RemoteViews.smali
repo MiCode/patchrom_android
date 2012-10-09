@@ -499,7 +499,6 @@
 
     .line 1625
     .local v0, c:Landroid/content/Context;
-   
     :goto_0
     return-object v0
 

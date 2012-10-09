@@ -558,7 +558,7 @@
 
     iget-object v8, p0, Lcom/android/internal/widget/ActionBarContainer;->mBackground:Landroid/graphics/drawable/Drawable;
 
-    if-eqz v8, :cond_b
+    if-eqz v8, :cond_miui_add1
 
     iget-object v8, p0, Lcom/android/internal/widget/ActionBarContainer;->mActionBarView:Lcom/android/internal/widget/ActionBarView;
 
@@ -566,7 +566,7 @@
 
     move-result v8
 
-    if-nez v8, :cond_b
+    if-nez v8, :cond_miui_add1
 
     iget-object v8, p0, Lcom/android/internal/widget/ActionBarContainer;->mBackground:Landroid/graphics/drawable/Drawable;
 
@@ -611,7 +611,7 @@
     goto :goto_5
 
     .line 233
-    :cond_b
+    :cond_miui_add1
     iget-object v8, p0, Lcom/android/internal/widget/ActionBarContainer;->mStackedBackground:Landroid/graphics/drawable/Drawable;
 
     iget-object v9, p0, Lcom/android/internal/widget/ActionBarContainer;->mTabContainer:Landroid/view/View;

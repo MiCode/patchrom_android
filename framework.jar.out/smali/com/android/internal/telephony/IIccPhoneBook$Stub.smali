@@ -341,7 +341,7 @@
 
     .end local v1           #_arg0:I
     .end local v7           #_result:[I
-    :sswitch_5
+    :sswitch_miui_add1
     const-string v0, "com.android.internal.telephony.IIccPhoneBook"
 
     invoke-virtual {p2, v0}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
@@ -358,7 +358,7 @@
     goto/16 :goto_0
 
     .end local v7           #_result:I
-    :sswitch_6
+    :sswitch_miui_add2
     const-string v0, "com.android.internal.telephony.IIccPhoneBook"
 
     invoke-virtual {p2, v0}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
@@ -383,8 +383,8 @@
         0x2 -> :sswitch_2
         0x3 -> :sswitch_3
         0x4 -> :sswitch_4
-        0x5 -> :sswitch_5
-        0x6 -> :sswitch_6
+        0x5 -> :sswitch_miui_add1
+        0x6 -> :sswitch_miui_add2
         0x5f4e5446 -> :sswitch_0
     .end sparse-switch
 .end method

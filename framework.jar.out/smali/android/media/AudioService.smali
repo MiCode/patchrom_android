@@ -596,6 +596,7 @@
     invoke-direct {v3, p1, p0}, Lmiui/view/VolumePanel;-><init>(Landroid/content/Context;Landroid/media/AudioService;)V
 
     iput-object v3, p0, Landroid/media/AudioService;->mVolumePanel:Lmiui/view/VolumePanel;
+
     .line 347
     iput v6, p0, Landroid/media/AudioService;->mForcedUseForComm:I
 
@@ -5066,6 +5067,7 @@
     iget-object v1, p0, Landroid/media/AudioService;->mVolumePanel:Lmiui/view/VolumePanel;
 
     invoke-virtual {v1, p1, p4}, Lmiui/view/VolumePanel;->postVolumeChanged(II)V
+
     .line 618
     add-int/lit8 v1, p2, 0x5
 

@@ -269,51 +269,6 @@
     return-void
 .end method
 
-.method private loadDrawableFromTheme(Landroid/content/pm/PackageManager;Ljava/lang/String;Landroid/content/pm/ApplicationInfo;)Landroid/graphics/drawable/Drawable;
-    .locals 6
-    .parameter "pm"
-    .parameter "packageName"
-    .parameter "ai"
-    .annotation build Landroid/annotation/MiuiHook;
-        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
-    .end annotation
-
-    .prologue
-    iget-object v0, p0, Landroid/content/pm/ResolveInfo;->activityInfo:Landroid/content/pm/ActivityInfo;
-
-    if-eqz v0, :cond_0
-
-    iget-object v4, p0, Landroid/content/pm/ResolveInfo;->activityInfo:Landroid/content/pm/ActivityInfo;
-
-    .local v4, ci:Landroid/content/pm/ComponentInfo;
-    :goto_0
-    iget v2, p0, Landroid/content/pm/ResolveInfo;->icon:I
-
-    iget-object v0, p0, Landroid/content/pm/ResolveInfo;->filter:Landroid/content/IntentFilter;
-
-    invoke-static {v0}, Landroid/app/MiuiThemeHelper;->isCustomizedIcon(Landroid/content/IntentFilter;)Z
-
-    move-result v5
-
-    move-object v0, p1
-
-    move-object v1, p2
-
-    move-object v3, p3
-
-    invoke-static/range {v0 .. v5}, Landroid/app/MiuiThemeHelper;->getDrawable(Landroid/content/pm/PackageManager;Ljava/lang/String;ILandroid/content/pm/ApplicationInfo;Landroid/content/pm/PackageItemInfo;Z)Landroid/graphics/drawable/Drawable;
-
-    move-result-object v0
-
-    return-object v0
-
-    .end local v4           #ci:Landroid/content/pm/ComponentInfo;
-    :cond_0
-    iget-object v4, p0, Landroid/content/pm/ResolveInfo;->serviceInfo:Landroid/content/pm/ServiceInfo;
-
-    goto :goto_0
-.end method
-
 # virtual methods
 .method public describeContents()I
     .locals 1
@@ -1167,4 +1122,49 @@
 
     .line 269
     goto :goto_2
+.end method
+
+.method private loadDrawableFromTheme(Landroid/content/pm/PackageManager;Ljava/lang/String;Landroid/content/pm/ApplicationInfo;)Landroid/graphics/drawable/Drawable;
+    .locals 6
+    .parameter "pm"
+    .parameter "packageName"
+    .parameter "ai"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    iget-object v0, p0, Landroid/content/pm/ResolveInfo;->activityInfo:Landroid/content/pm/ActivityInfo;
+
+    if-eqz v0, :cond_0
+
+    iget-object v4, p0, Landroid/content/pm/ResolveInfo;->activityInfo:Landroid/content/pm/ActivityInfo;
+
+    .local v4, ci:Landroid/content/pm/ComponentInfo;
+    :goto_0
+    iget v2, p0, Landroid/content/pm/ResolveInfo;->icon:I
+
+    iget-object v0, p0, Landroid/content/pm/ResolveInfo;->filter:Landroid/content/IntentFilter;
+
+    invoke-static {v0}, Landroid/app/MiuiThemeHelper;->isCustomizedIcon(Landroid/content/IntentFilter;)Z
+
+    move-result v5
+
+    move-object v0, p1
+
+    move-object v1, p2
+
+    move-object v3, p3
+
+    invoke-static/range {v0 .. v5}, Landroid/app/MiuiThemeHelper;->getDrawable(Landroid/content/pm/PackageManager;Ljava/lang/String;ILandroid/content/pm/ApplicationInfo;Landroid/content/pm/PackageItemInfo;Z)Landroid/graphics/drawable/Drawable;
+
+    move-result-object v0
+
+    return-object v0
+
+    .end local v4           #ci:Landroid/content/pm/ComponentInfo;
+    :cond_0
+    iget-object v4, p0, Landroid/content/pm/ResolveInfo;->serviceInfo:Landroid/content/pm/ServiceInfo;
+
+    goto :goto_0
 .end method

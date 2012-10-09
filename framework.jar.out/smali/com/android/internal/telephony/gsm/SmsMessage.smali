@@ -1364,7 +1364,7 @@
     :goto_0
     return-void
 
-    :pswitch_add1
+    :pswitch_miui_add1
     invoke-direct {p0, v1, v0}, Lcom/android/internal/telephony/gsm/SmsMessage;->parseSmsSubmit(Lcom/android/internal/telephony/gsm/SmsMessage$PduParser;I)V
 
     goto :goto_0
@@ -1378,7 +1378,7 @@
     :pswitch_data_0
     .packed-switch 0x0
         :pswitch_1
-        :pswitch_add1
+        :pswitch_miui_add1
         :pswitch_2
         :pswitch_1
     .end packed-switch

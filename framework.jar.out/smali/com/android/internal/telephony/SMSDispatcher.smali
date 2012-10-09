@@ -1017,7 +1017,7 @@
 
     move-result v1
 
-    if-eqz v1, :cond_0
+    if-eqz v1, :cond_miui_add1
 
     const/4 v1, 0x1
 
@@ -1027,9 +1027,9 @@
 
     invoke-virtual {p0, v1, v2, v3}, Lcom/android/internal/telephony/SMSDispatcher;->acknowledgeLastIncomingSms(ZILandroid/os/Message;)V
 
-    goto :goto_0
+    goto :goto_miui_add1
 
-    :cond_0
+    :cond_miui_add1
     new-instance v0, Landroid/content/Intent;
 
     const-string v1, "android.provider.Telephony.SMS_RECEIVED"
@@ -1057,7 +1057,7 @@
     invoke-virtual {p0, v0, v1}, Lcom/android/internal/telephony/SMSDispatcher;->dispatch(Landroid/content/Intent;Ljava/lang/String;)V
 
     .line 673
-    :goto_0
+    :goto_miui_add1
     return-void
 .end method
 
@@ -1074,7 +1074,7 @@
 
     move-result v2
 
-    if-eqz v2, :cond_0
+    if-eqz v2, :cond_miui_add1
 
     const/4 v2, 0x1
 
@@ -1084,9 +1084,9 @@
 
     invoke-virtual {p0, v2, v3, v4}, Lcom/android/internal/telephony/SMSDispatcher;->acknowledgeLastIncomingSms(ZILandroid/os/Message;)V
 
-    goto :goto_0
+    goto :goto_miui_add1
 
-    :cond_0
+    :cond_miui_add1
     new-instance v2, Ljava/lang/StringBuilder;
 
     invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
@@ -1138,7 +1138,7 @@
     invoke-virtual {p0, v0, v2}, Lcom/android/internal/telephony/SMSDispatcher;->dispatch(Landroid/content/Intent;Ljava/lang/String;)V
 
     .line 687
-    :goto_0
+    :goto_miui_add1
     return-void
 .end method
 

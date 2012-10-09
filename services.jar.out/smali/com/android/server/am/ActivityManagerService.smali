@@ -50099,6 +50099,9 @@
     throw v1
 .end method
 
+##########################################################
+#replace this method with miui's
+#########################################################
 .method public getCallingPackage(Landroid/os/IBinder;)Ljava/lang/String;
     .locals 5
     .parameter "token"
@@ -50201,7 +50204,6 @@
 
     goto :goto_0
 .end method
-
 
 .method public getConfiguration()Landroid/content/res/Configuration;
     .locals 2
@@ -69552,7 +69554,7 @@
     .line 13437
     and-int/lit8 v2, v22, 0x4
 
-    if-eqz v2, :cond_mi1
+    if-eqz v2, :cond_miui_add1
 
     .line 13438
     const/4 v7, 0x0
@@ -69589,7 +69591,7 @@
 
     invoke-direct/range {v6 .. v19}, Lcom/android/server/am/ActivityManagerService;->broadcastIntentLocked(Lcom/android/server/am/ProcessRecord;Ljava/lang/String;Landroid/content/Intent;Ljava/lang/String;Landroid/content/IIntentReceiver;ILjava/lang/String;Landroid/os/Bundle;Ljava/lang/String;ZZII)I
 
-    :cond_mi1
+    :cond_miui_add1
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/am/ActivityManagerService;->mContext:Landroid/content/Context;

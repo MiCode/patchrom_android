@@ -292,7 +292,7 @@
 
     and-int/2addr v0, p0
 
-    if-nez v0, :cond_1
+    if-nez v0, :cond_miui_add1
 
     invoke-static {p0}, Lmiui/content/res/ExtraConfiguration;->needNewResources(I)Z
 
@@ -300,7 +300,7 @@
 
     if-eqz v0, :cond_0
 
-    :cond_1
+    :cond_miui_add1
     const/4 v0, 0x1
 
     :goto_0

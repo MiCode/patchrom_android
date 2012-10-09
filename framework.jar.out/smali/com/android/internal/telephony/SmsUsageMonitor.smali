@@ -350,13 +350,13 @@
 
     move-result v1
 
-    if-eqz v1, :cond_1
+    if-eqz v1, :cond_miui_add1
 
     const/4 v1, 0x1
 
     return v1
 
-    :cond_1
+    :cond_miui_add1
     iget-object v2, p0, Lcom/android/internal/telephony/SmsUsageMonitor;->mSmsStamp:Ljava/util/HashMap;
 
     monitor-enter v2

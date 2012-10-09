@@ -75,7 +75,7 @@
 
     move-result v15
 
-    if-eqz v15, :cond_z
+    if-eqz v15, :cond_miui_add1
 
     move-object/from16 v0, p0
 
@@ -95,7 +95,7 @@
 
     goto :goto_0
 
-    :cond_z
+    :cond_miui_add1
     const-string v15, "android.intent.action.CONFIGURATION_CHANGED"
 
     invoke-virtual {v15, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z

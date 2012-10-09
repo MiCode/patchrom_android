@@ -1934,13 +1934,13 @@
 
     move-result v4
 
-    if-eqz v4, :cond_4
+    if-eqz v4, :cond_miui_add1
 
     move v2, v3
 
     goto :goto_0
 
-    :cond_4
+    :cond_miui_add1
     iget-object v4, p0, Lcom/android/internal/telephony/gsm/SIMRecords;->spdiNetworks:Ljava/util/ArrayList;
 
     if-eqz v4, :cond_0

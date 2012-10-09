@@ -198,7 +198,7 @@
 
     cmp-long v5, v0, v5
 
-    if-nez v5, :cond_3
+    if-nez v5, :cond_miui_add1
 
     const-string v5, "hint"
 
@@ -212,7 +212,7 @@
 
     goto :goto_0
 
-    :cond_3
+    :cond_miui_add1
     const-wide/16 v5, 0x0
 
     cmp-long v5, v0, v5

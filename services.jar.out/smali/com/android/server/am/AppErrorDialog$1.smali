@@ -49,7 +49,7 @@
 
     move-result-object v1
 
-    if-eqz v1, :cond_3
+    if-eqz v1, :cond_miui_add1
 
     iget-object v1, p0, Lcom/android/server/am/AppErrorDialog$1;->this$0:Lcom/android/server/am/AppErrorDialog;
 
@@ -58,7 +58,7 @@
 
     move-result-object v1
 
-    if-eqz v1, :cond_3
+    if-eqz v1, :cond_miui_add1
 
     iget-object v1, p0, Lcom/android/server/am/AppErrorDialog$1;->this$0:Lcom/android/server/am/AppErrorDialog;
 
@@ -82,12 +82,12 @@
 
     iget v4, p1, Landroid/os/Message;->what:I
 
-    if-ne v4, v0, :cond_2
+    if-ne v4, v0, :cond_miui_add2
 
-    :goto_0
+    :goto_miui_add1
     invoke-static {v1, v2, v3, v0}, Lcom/android/server/am/MiuiErrorReport;->sendFcErrorReport(Landroid/content/Context;Lcom/android/server/am/ProcessRecord;Landroid/app/ApplicationErrorReport$CrashInfo;Z)V
 
-    :cond_3
+    :cond_miui_add1
     iget-object v0, p0, Lcom/android/server/am/AppErrorDialog$1;->this$0:Lcom/android/server/am/AppErrorDialog;
 
     #getter for: Lcom/android/server/am/AppErrorDialog;->mProc:Lcom/android/server/am/ProcessRecord;
@@ -157,10 +157,10 @@
 
     return-void
 
-    :cond_2
+    :cond_miui_add2
     const/4 v0, 0x0
 
-    goto :goto_0
+    goto :goto_miui_add1
 
     :catchall_0
     move-exception v0

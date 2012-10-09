@@ -508,6 +508,9 @@
     goto :goto_0
 .end method
 
+################################################################
+#replace this method with miui's
+################################################################
 .method protected onDraw(Landroid/graphics/Canvas;)V
     .locals 6
     .parameter "canvas"

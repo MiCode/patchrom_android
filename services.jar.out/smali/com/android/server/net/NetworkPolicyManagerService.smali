@@ -2110,7 +2110,7 @@
 
     const/4 v1, 0x1
 
-    if-ne v0, v1, :cond_0
+    if-ne v0, v1, :cond_miui_add1
 
     iget-object v0, p0, Lcom/android/server/net/NetworkPolicyManagerService;->mContext:Landroid/content/Context;
 
@@ -2129,11 +2129,11 @@
     .local v6, adjustingTime:J
     cmp-long v0, v6, p2
 
-    if-ltz v0, :cond_0
+    if-ltz v0, :cond_miui_add1
 
     cmp-long v0, v6, p4
 
-    if-gtz v0, :cond_0
+    if-gtz v0, :cond_miui_add1
 
     iget-object v0, p0, Lcom/android/server/net/NetworkPolicyManagerService;->mContext:Landroid/content/Context;
 
@@ -2160,7 +2160,7 @@
 
     .end local v6           #adjustingTime:J
     .end local v8           #adjustment:J
-    :cond_0
+    :cond_miui_add1
     return-wide v10
 
     :catch_0

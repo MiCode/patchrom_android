@@ -2781,7 +2781,7 @@
 
     const/4 v5, 0x2
 
-    if-ne v3, v5, :cond_20
+    if-ne v3, v5, :cond_miui_add1
 
     const/4 v3, 0x0
 
@@ -2791,7 +2791,7 @@
     .catch Ljava/lang/NumberFormatException; {:try_start_b .. :try_end_b} :catch_1
 
     .line 1684
-    :cond_20
+    :cond_miui_add1
     :goto_7
     const/4 v3, 0x0
 
