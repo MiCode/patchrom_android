@@ -1265,7 +1265,13 @@
     invoke-direct {v0, v1, v2, v12}, Landroid/view/ScaleGestureDetector;->findNewActiveIndex(Landroid/view/MotionEvent;II)I
 
     move-result v12
+#####################################################################################
+#some phones has fixed this bug, if so, you don't need to merge this change
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    invoke-static {v12, v13}, Landroid/view/ScaleGestureDetector;->adjustIndex(II)I
 
+    move-result v12
+#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     .line 224
     move-object/from16 v0, p1
 
@@ -3063,4 +3069,29 @@
         :pswitch_8
         :pswitch_9
     .end packed-switch
+.end method
+
+.method private static adjustIndex(II)I
+    .locals 0
+    .parameter "index0"
+    .parameter "index1"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    if-gez p0, :cond_0
+
+    if-nez p1, :cond_1
+
+    const/4 p0, 0x1
+
+    :cond_0
+    :goto_0
+    return p0
+
+    :cond_1
+    const/4 p0, 0x0
+
+    goto :goto_0
 .end method
