@@ -4846,6 +4846,20 @@
 
     move-object/from16 v0, p0
 
+    move/from16 v1, v22
+
+    invoke-direct {v0, v1}, Lcom/android/server/AppWidgetService;->isDuplicateWidgetId(I)Z
+
+    move-result v22
+
+    if-nez v22, :cond_3
+
+    iget v0, v9, Lcom/android/server/AppWidgetService$AppWidgetId;->appWidgetId:I
+
+    move/from16 v22, v0
+
+    move-object/from16 v0, p0
+
     iget v0, v0, Lcom/android/server/AppWidgetService;->mNextAppWidgetId:I
 
     move/from16 v23, v0
@@ -7304,4 +7318,96 @@
     const/4 v8, 0x0
 
     goto :goto_3
+.end method
+
+.method private isDuplicateWidgetId(I)Z
+    .locals 3
+    .parameter "appWidgetId"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    iget-object v2, p0, Lcom/android/server/AppWidgetService;->mAppWidgetIds:Ljava/util/ArrayList;
+
+    invoke-virtual {v2}, Ljava/util/ArrayList;->iterator()Ljava/util/Iterator;
+
+    move-result-object v0
+
+    .local v0, i$:Ljava/util/Iterator;
+    :cond_0
+    invoke-interface {v0}, Ljava/util/Iterator;->hasNext()Z
+
+    move-result v2
+
+    if-eqz v2, :cond_1
+
+    invoke-interface {v0}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+
+    move-result-object v1
+
+    check-cast v1, Lcom/android/server/AppWidgetService$AppWidgetId;
+
+    .local v1, widgetId:Lcom/android/server/AppWidgetService$AppWidgetId;
+    iget v2, v1, Lcom/android/server/AppWidgetService$AppWidgetId;->appWidgetId:I
+
+    if-ne v2, p1, :cond_0
+
+    const/4 v2, 0x1
+
+    .end local v1           #widgetId:Lcom/android/server/AppWidgetService$AppWidgetId;
+    :goto_0
+    return v2
+
+    :cond_1
+    const/4 v2, 0x0
+
+    goto :goto_0
+.end method
+
+.method reload()V
+    .locals 2
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    iget-object v1, p0, Lcom/android/server/AppWidgetService;->mAppWidgetIds:Ljava/util/ArrayList;
+
+    monitor-enter v1
+
+    :try_start_0
+    iget-object v0, p0, Lcom/android/server/AppWidgetService;->mAppWidgetIds:Ljava/util/ArrayList;
+
+    invoke-virtual {v0}, Ljava/util/ArrayList;->clear()V
+
+    iget-object v0, p0, Lcom/android/server/AppWidgetService;->mHosts:Ljava/util/ArrayList;
+
+    invoke-virtual {v0}, Ljava/util/ArrayList;->clear()V
+
+    iget-object v0, p0, Lcom/android/server/AppWidgetService;->mInstalledProviders:Ljava/util/ArrayList;
+
+    invoke-virtual {v0}, Ljava/util/ArrayList;->clear()V
+
+    const/4 v0, 0x0
+
+    iput-boolean v0, p0, Lcom/android/server/AppWidgetService;->mStateLoaded:Z
+
+    monitor-exit v1
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    invoke-virtual {p0}, Lcom/android/server/AppWidgetService;->sendInitialBroadcasts()V
+
+    return-void
+
+    :catchall_0
+    move-exception v0
+
+    :try_start_1
+    monitor-exit v1
+    :try_end_1
+    .catchall {:try_start_1 .. :try_end_1} :catchall_0
+
+    throw v0
 .end method
