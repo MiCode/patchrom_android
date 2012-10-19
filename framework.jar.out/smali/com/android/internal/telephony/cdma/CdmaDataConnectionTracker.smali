@@ -1116,78 +1116,82 @@
 .end method
 
 .method private notifyFirewallDataSetupComplete()V
-    .locals 7
+    .locals 8
     .annotation build Landroid/annotation/MiuiHook;
         value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
     .end annotation
 
     .prologue
-    const/4 v0, 0x0
+    const/4 v1, 0x0
 
-    .local v0, current:Lcom/android/internal/telephony/DataConnectionAc;
-    iget-object v3, p0, Lcom/android/internal/telephony/cdma/CdmaDataConnectionTracker;->mDataConnectionAsyncChannels:Ljava/util/HashMap;
+    .local v1, current:Lcom/android/internal/telephony/DataConnectionAc;
+    iget-object v0, p0, Lcom/android/internal/telephony/cdma/CdmaDataConnectionTracker;->mActiveApn:Lcom/android/internal/telephony/ApnSetting;
 
-    invoke-virtual {v3}, Ljava/util/HashMap;->values()Ljava/util/Collection;
+    .local v0, apn:Lcom/android/internal/telephony/ApnSetting;
+    iget-object v4, p0, Lcom/android/internal/telephony/cdma/CdmaDataConnectionTracker;->mDataConnectionAsyncChannels:Ljava/util/HashMap;
+
+    invoke-virtual {v4}, Ljava/util/HashMap;->values()Ljava/util/Collection;
+
+    move-result-object v4
+
+    invoke-interface {v4}, Ljava/util/Collection;->iterator()Ljava/util/Iterator;
 
     move-result-object v3
 
-    invoke-interface {v3}, Ljava/util/Collection;->iterator()Ljava/util/Iterator;
+    .local v3, i$:Ljava/util/Iterator;
+    :cond_0
+    invoke-interface {v3}, Ljava/util/Iterator;->hasNext()Z
+
+    move-result v4
+
+    if-eqz v4, :cond_1
+
+    invoke-interface {v3}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
     move-result-object v2
 
-    .local v2, i$:Ljava/util/Iterator;
-    :cond_0
-    invoke-interface {v2}, Ljava/util/Iterator;->hasNext()Z
+    check-cast v2, Lcom/android/internal/telephony/DataConnectionAc;
 
-    move-result v3
+    .local v2, dcac:Lcom/android/internal/telephony/DataConnectionAc;
+    invoke-virtual {v2}, Lcom/android/internal/telephony/DataConnectionAc;->getApnSettingSync()Lcom/android/internal/telephony/ApnSetting;
 
-    if-eqz v3, :cond_1
+    move-result-object v4
 
-    invoke-interface {v2}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+    invoke-virtual {v4, v0}, Lcom/android/internal/telephony/ApnSetting;->equals(Ljava/lang/Object;)Z
 
-    move-result-object v1
+    move-result v4
 
-    check-cast v1, Lcom/android/internal/telephony/DataConnectionAc;
+    if-eqz v4, :cond_0
 
-    .local v1, dcac:Lcom/android/internal/telephony/DataConnectionAc;
-    invoke-virtual {v1}, Lcom/android/internal/telephony/DataConnectionAc;->getApnSettingSync()Lcom/android/internal/telephony/ApnSetting;
+    move-object v1, v2
 
-    move-result-object v3
-
-    iget-object v4, p0, Lcom/android/internal/telephony/cdma/CdmaDataConnectionTracker;->mActiveApn:Lcom/android/internal/telephony/ApnSetting;
-
-    invoke-virtual {v3, v4}, Lcom/android/internal/telephony/ApnSetting;->equals(Ljava/lang/Object;)Z
-
-    move-result v3
-
-    if-eqz v3, :cond_0
-
-    move-object v0, v1
-
-    .end local v1           #dcac:Lcom/android/internal/telephony/DataConnectionAc;
+    .end local v2           #dcac:Lcom/android/internal/telephony/DataConnectionAc;
     :cond_1
+    if-eqz v1, :cond_2
+
+    if-eqz v0, :cond_2
+
     invoke-static {}, Lmiui/net/FirewallManager;->getInstance()Lmiui/net/FirewallManager;
 
-    move-result-object v3
+    move-result-object v4
 
-    const/4 v4, 0x0
+    const/4 v5, 0x0
 
-    iget-object v5, p0, Lcom/android/internal/telephony/cdma/CdmaDataConnectionTracker;->mActiveApn:Lcom/android/internal/telephony/ApnSetting;
-
-    invoke-static {v5}, Lmiui/net/FirewallManager;->encodeApnSetting(Lcom/android/internal/telephony/ApnSetting;)Ljava/lang/String;
-
-    move-result-object v5
-
-    invoke-virtual {v0}, Lcom/android/internal/telephony/DataConnectionAc;->getLinkPropertiesSync()Landroid/net/LinkProperties;
+    invoke-static {v0}, Lmiui/net/FirewallManager;->encodeApnSetting(Lcom/android/internal/telephony/ApnSetting;)Ljava/lang/String;
 
     move-result-object v6
 
-    invoke-virtual {v6}, Landroid/net/LinkProperties;->getInterfaceName()Ljava/lang/String;
+    invoke-virtual {v1}, Lcom/android/internal/telephony/DataConnectionAc;->getLinkPropertiesSync()Landroid/net/LinkProperties;
 
-    move-result-object v6
+    move-result-object v7
 
-    invoke-virtual {v3, v4, v5, v6}, Lmiui/net/FirewallManager;->onDataConnected(ILjava/lang/String;Ljava/lang/String;)V
+    invoke-virtual {v7}, Landroid/net/LinkProperties;->getInterfaceName()Ljava/lang/String;
 
+    move-result-object v7
+
+    invoke-virtual {v4, v5, v6, v7}, Lmiui/net/FirewallManager;->onDataConnected(ILjava/lang/String;Ljava/lang/String;)V
+
+    :cond_2
     return-void
 .end method
 
