@@ -9,7 +9,8 @@
         Lcom/android/server/AppWidgetServiceImpl$ServiceConnectionProxy;,
         Lcom/android/server/AppWidgetServiceImpl$AppWidgetId;,
         Lcom/android/server/AppWidgetServiceImpl$Host;,
-        Lcom/android/server/AppWidgetServiceImpl$Provider;
+        Lcom/android/server/AppWidgetServiceImpl$Provider;,
+        Lcom/android/server/AppWidgetServiceImpl$Injector;
     }
 .end annotation
 
@@ -4550,6 +4551,9 @@
 .method readStateFromFileLocked(Ljava/io/FileInputStream;)V
     .locals 26
     .parameter "stream"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->CHANGE_CODE:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
 
     .prologue
     const/16 v20, 0x0
@@ -5242,6 +5246,20 @@
 
     move-object/from16 v0, p0
 
+    move/from16 v1, v23
+
+    invoke-static {v0, v1}, Lcom/android/server/AppWidgetServiceImpl$Injector;->isDuplicateWidgetId(Lcom/android/server/AppWidgetServiceImpl;I)Z
+
+    move-result v23
+
+    if-nez v23, :cond_3
+
+    iget v0, v9, Lcom/android/server/AppWidgetServiceImpl$AppWidgetId;->appWidgetId:I
+
+    move/from16 v23, v0
+
+    move-object/from16 v0, p0
+
     iget v0, v0, Lcom/android/server/AppWidgetServiceImpl;->mNextAppWidgetId:I
 
     move/from16 v24, v0
@@ -5662,6 +5680,53 @@
     move-exception v0
 
     invoke-static {v9, v10}, Landroid/os/Binder;->restoreCallingIdentity(J)V
+
+    throw v0
+.end method
+
+.method reload()V
+    .locals 2
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    iget-object v1, p0, Lcom/android/server/AppWidgetServiceImpl;->mAppWidgetIds:Ljava/util/ArrayList;
+
+    monitor-enter v1
+
+    :try_start_0
+    iget-object v0, p0, Lcom/android/server/AppWidgetServiceImpl;->mAppWidgetIds:Ljava/util/ArrayList;
+
+    invoke-virtual {v0}, Ljava/util/ArrayList;->clear()V
+
+    iget-object v0, p0, Lcom/android/server/AppWidgetServiceImpl;->mHosts:Ljava/util/ArrayList;
+
+    invoke-virtual {v0}, Ljava/util/ArrayList;->clear()V
+
+    iget-object v0, p0, Lcom/android/server/AppWidgetServiceImpl;->mInstalledProviders:Ljava/util/ArrayList;
+
+    invoke-virtual {v0}, Ljava/util/ArrayList;->clear()V
+
+    const/4 v0, 0x0
+
+    iput-boolean v0, p0, Lcom/android/server/AppWidgetServiceImpl;->mStateLoaded:Z
+
+    monitor-exit v1
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    invoke-virtual {p0}, Lcom/android/server/AppWidgetServiceImpl;->sendInitialBroadcasts()V
+
+    return-void
+
+    :catchall_0
+    move-exception v0
+
+    :try_start_1
+    monitor-exit v1
+    :try_end_1
+    .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
     throw v0
 .end method

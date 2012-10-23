@@ -3,6 +3,14 @@
 .source "UiModeManagerService.java"
 
 
+# annotations
+.annotation system Ldalvik/annotation/MemberClasses;
+    value = {
+        Lcom/android/server/UiModeManagerService$Injector;
+    }
+.end annotation
+
+
 # static fields
 .field private static final ACTION_UPDATE_NIGHT_MODE:Ljava/lang/String; = "com.android.server.action.UPDATE_NIGHT_MODE"
 
@@ -80,6 +88,12 @@
 
 .field private mNightMode:I
 
+.field mNormalType:I
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_FIELD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+.end field
+
 .field private mNotificationManager:Landroid/app/NotificationManager;
 
 .field private final mResultReceiver:Landroid/content/BroadcastReceiver;
@@ -118,6 +132,9 @@
 .method public constructor <init>(Landroid/content/Context;)V
     .locals 8
     .parameter "context"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->CHANGE_CODE:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
 
     .prologue
     const/4 v3, 0x1
@@ -125,6 +142,8 @@
     const/4 v4, 0x0
 
     invoke-direct {p0}, Landroid/app/IUiModeManager$Stub;-><init>()V
+
+    iput v3, p0, Lcom/android/server/UiModeManagerService;->mNormalType:I
 
     new-instance v2, Ljava/lang/Object;
 
@@ -284,6 +303,10 @@
     iget-object v5, p0, Lcom/android/server/UiModeManagerService;->mUpdateLocationReceiver:Landroid/content/BroadcastReceiver;
 
     invoke-virtual {v2, v5, v0}, Landroid/content/Context;->registerReceiver(Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;)Landroid/content/Intent;
+
+    iget-object v2, p0, Lcom/android/server/UiModeManagerService;->mContext:Landroid/content/Context;
+
+    invoke-static {p0, v2}, Lcom/android/server/UiModeManagerService$Injector;->registerUIModeScaleChangedOjbserver(Lcom/android/server/UiModeManagerService;Landroid/content/Context;)V
 
     const-string v2, "power"
 
@@ -1218,6 +1241,9 @@
 .method final updateConfigurationLocked(Z)V
     .locals 4
     .parameter "sendIt"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->CHANGE_CODE:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
 
     .prologue
     iget-boolean v2, p0, Lcom/android/server/UiModeManagerService;->mTelevision:Z
@@ -1291,7 +1317,7 @@
 
     .end local v1           #uiMode:I
     :cond_2
-    iget v1, p0, Lcom/android/server/UiModeManagerService;->mDefaultUiModeType:I
+    iget v1, p0, Lcom/android/server/UiModeManagerService;->mNormalType:I
 
     goto :goto_0
 

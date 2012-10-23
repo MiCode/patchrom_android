@@ -9,7 +9,8 @@
         Lcom/android/server/AppWidgetService$ServiceConnectionProxy;,
         Lcom/android/server/AppWidgetService$AppWidgetId;,
         Lcom/android/server/AppWidgetService$Host;,
-        Lcom/android/server/AppWidgetService$Provider;
+        Lcom/android/server/AppWidgetService$Provider;,
+        Lcom/android/server/AppWidgetService$Injector;
     }
 .end annotation
 
@@ -720,6 +721,9 @@
 .method public systemReady(Z)V
     .locals 8
     .parameter "safeMode"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->CHANGE_CODE:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
 
     .prologue
     const/4 v7, 0x0
@@ -737,6 +741,8 @@
     check-cast v3, Lcom/android/server/AppWidgetServiceImpl;
 
     invoke-virtual {v3, p1}, Lcom/android/server/AppWidgetServiceImpl;->systemReady(Z)V
+
+    invoke-static {p0}, Lcom/android/server/AppWidgetService$Injector;->receiveRestoreFinish(Lcom/android/server/AppWidgetService;)V
 
     iget-object v3, p0, Lcom/android/server/AppWidgetService;->mContext:Landroid/content/Context;
 

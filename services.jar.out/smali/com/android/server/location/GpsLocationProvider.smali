@@ -11,7 +11,8 @@
     value = {
         Lcom/android/server/location/GpsLocationProvider$GpsLocationProviderThread;,
         Lcom/android/server/location/GpsLocationProvider$ProviderHandler;,
-        Lcom/android/server/location/GpsLocationProvider$Listener;
+        Lcom/android/server/location/GpsLocationProvider$Listener;,
+        Lcom/android/server/location/GpsLocationProvider$Injector;
     }
 .end annotation
 
@@ -3094,6 +3095,9 @@
 .method private reportStatus(I)V
     .locals 10
     .parameter "status"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->CHANGE_CODE:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
 
     .prologue
     iget-object v8, p0, Lcom/android/server/location/GpsLocationProvider;->mListeners:Ljava/util/ArrayList;
@@ -3312,6 +3316,8 @@
     iget-boolean v9, p0, Lcom/android/server/location/GpsLocationProvider;->mNavigating:Z
 
     invoke-virtual {v2, v7, v9}, Landroid/content/Intent;->putExtra(Ljava/lang/String;Z)Landroid/content/Intent;
+
+    invoke-static {p0, v2}, Lcom/android/server/location/GpsLocationProvider$Injector;->appendUidExtra(Lcom/android/server/location/GpsLocationProvider;Landroid/content/Intent;)V
 
     iget-object v7, p0, Lcom/android/server/location/GpsLocationProvider;->mContext:Landroid/content/Context;
 
@@ -4333,6 +4339,18 @@
     return v0
 .end method
 
+.method getClientUids()Landroid/util/SparseIntArray;
+    .locals 1
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    iget-object v0, p0, Lcom/android/server/location/GpsLocationProvider;->mClientUids:Landroid/util/SparseIntArray;
+
+    return-object v0
+.end method
+
 .method public getGpsStatusProvider()Landroid/location/IGpsStatusProvider;
     .locals 1
 
@@ -4476,6 +4494,18 @@
     const-string v0, "gps"
 
     return-object v0
+.end method
+
+.method getNavigating()Z
+    .locals 1
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    iget-boolean v0, p0, Lcom/android/server/location/GpsLocationProvider;->mNavigating:Z
+
+    return v0
 .end method
 
 .method public getNetInitiatedListener()Landroid/location/INetInitiatedListener;

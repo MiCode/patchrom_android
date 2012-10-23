@@ -13,11 +13,14 @@
 .method public constructor <init>(Landroid/content/Context;)V
     .locals 3
     .parameter "context"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->CHANGE_CODE:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
 
     .prologue
     const/high16 v2, 0x2
 
-    const v0, 0x10302f2
+    const v0, 0x60d0020
 
     invoke-direct {p0, p1, v0}, Landroid/app/AlertDialog;-><init>(Landroid/content/Context;I)V
 

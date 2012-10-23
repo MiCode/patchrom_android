@@ -89,9 +89,12 @@
 .method setFlags(I)V
     .locals 1
     .parameter "pkgFlags"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->CHANGE_CODE:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
 
     .prologue
-    const v0, 0x20040001
+    const v0, -0x5ffbffff
 
     and-int/2addr v0, p1
 

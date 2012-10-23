@@ -164,6 +164,18 @@
 
     if-nez v3, :cond_2
 
+    move-object/from16 v0, p0
+
+    iget-object v3, v0, Lcom/android/server/am/ActivityManagerService$2;->this$0:Lcom/android/server/am/ActivityManagerService;
+
+    move-object/from16 v0, v22
+
+    invoke-static {v3, v0}, Lcom/android/server/am/ActivityManagerService$Injector;->showAppCrashDialog(Lcom/android/server/am/ActivityManagerService;Ljava/util/HashMap;)Z
+
+    move-result v3
+
+    if-nez v3, :goto_1
+
     new-instance v21, Lcom/android/server/am/AppErrorDialog;
 
     move-object/from16 v0, p0
