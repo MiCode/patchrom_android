@@ -35,6 +35,19 @@
 
 
 # virtual methods
+.method public getAdnCapacity()I
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManagerProxy;->mIccPhoneBookInterfaceManager:Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;
+
+    invoke-virtual {v0}, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->getAdnCapacity()I
+
+    move-result v0
+
+    return v0
+.end method
+
 .method public getAdnRecordsInEf(I)Ljava/util/List;
     .locals 1
     .parameter "efid"
@@ -81,6 +94,19 @@
     move-result-object v0
 
     return-object v0
+.end method
+
+.method public getFreeAdn()I
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManagerProxy;->mIccPhoneBookInterfaceManager:Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;
+
+    invoke-virtual {v0}, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->getFreeAdn()I
+
+    move-result v0
+
+    return v0
 .end method
 
 .method public setmIccPhoneBookInterfaceManager(Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;)V

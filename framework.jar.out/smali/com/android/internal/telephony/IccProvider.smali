@@ -228,6 +228,18 @@
     goto :goto_0
 .end method
 
+.method static getURL_MATCHER()Landroid/content/UriMatcher;
+    .locals 1
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    sget-object v0, Lcom/android/internal/telephony/IccProvider;->URL_MATCHER:Landroid/content/UriMatcher;
+
+    return-object v0
+.end method
+
 .method private loadFromEf(I)Landroid/database/MatrixCursor;
     .locals 7
     .parameter "efType"
@@ -473,6 +485,13 @@
     move-object v1, p1
 
     .local v1, retVal:Ljava/lang/String;
+	const/4 v2, 0x1
+
+	if-gt v0, v2, :cond_ff
+
+	return-object v1
+
+	:cond_ff
     const/4 v2, 0x0
 
     invoke-virtual {p1, v2}, Ljava/lang/String;->charAt(I)C

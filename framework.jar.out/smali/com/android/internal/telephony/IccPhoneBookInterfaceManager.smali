@@ -140,6 +140,19 @@
     return-void
 .end method
 
+.method public getAdnCapacity()I
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->adnCache:Lcom/android/internal/telephony/AdnRecordCache;
+
+    invoke-virtual {v0}, Lcom/android/internal/telephony/AdnRecordCache;->getAdnCapacity()I
+
+    move-result v0
+
+    return v0
+.end method
+
 .method public getAdnRecordsInEf(I)Ljava/util/List;
     .locals 5
     .parameter "efid"
@@ -258,6 +271,19 @@
 .end method
 
 .method public abstract getAdnRecordsSize(I)[I
+.end method
+
+.method public getFreeAdn()I
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->adnCache:Lcom/android/internal/telephony/AdnRecordCache;
+
+    invoke-virtual {v0}, Lcom/android/internal/telephony/AdnRecordCache;->getFreeAdn()I
+
+    move-result v0
+
+    return v0
 .end method
 
 .method protected abstract logd(Ljava/lang/String;)V
