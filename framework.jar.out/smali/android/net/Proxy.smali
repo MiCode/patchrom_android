@@ -6,7 +6,8 @@
 # annotations
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
-        Landroid/net/Proxy$AndroidProxySelectorRoutePlanner;
+        Landroid/net/Proxy$AndroidProxySelectorRoutePlanner;,
+        Landroid/net/Proxy$Injector;
     }
 .end annotation
 
@@ -257,6 +258,9 @@
     .locals 6
     .parameter "context"
     .parameter "url"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->CHANGE_CODE:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
 
     .prologue
     invoke-static {p0, p1}, Landroid/net/Proxy;->getProxy(Landroid/content/Context;Ljava/lang/String;)Ljava/net/Proxy;
@@ -287,7 +291,7 @@
     .local v1, sa:Ljava/net/InetSocketAddress;
     new-instance v2, Lorg/apache/http/HttpHost;
 
-    invoke-virtual {v1}, Ljava/net/InetSocketAddress;->getHostName()Ljava/lang/String;
+    invoke-static {v1}, Landroid/net/Proxy$Injector;->getHostName(Ljava/net/InetSocketAddress;)Ljava/lang/String;
 
     move-result-object v3
 

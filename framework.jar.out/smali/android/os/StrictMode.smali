@@ -67,6 +67,10 @@
 
 #the value of this static final field might be set in the static constructor
 .field private static final IS_USER_BUILD:Z = false
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->CHANGE_CODE:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+.end field
 
 #the value of this static final field might be set in the static constructor
 .field private static final LOG_V:Z = false
@@ -219,6 +223,10 @@
     const-string v0, "user"
 
     sget-object v1, Landroid/os/Build;->TYPE:Ljava/lang/String;
+
+    invoke-static {v1}, Landroid/os/StrictMode;->ignoreDebugBuild(Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v1
 
     invoke-virtual {v0, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
@@ -1392,6 +1400,29 @@
     const/4 v0, 0x0
 
     goto :goto_0
+.end method
+
+.method static ignoreDebugBuild(Ljava/lang/String;)Ljava/lang/String;
+    .locals 1
+    .parameter "build"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    const-string v0, "userdebug"
+
+    invoke-virtual {v0, p0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_0
+
+    const-string p0, "user"
+
+    .end local p0
+    :cond_0
+    return-object p0
 .end method
 
 .method public static incrementExpectedActivityCount(Ljava/lang/Class;)V

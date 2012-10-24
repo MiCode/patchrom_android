@@ -64,6 +64,10 @@
     .parameter "context"
     .parameter "layoutId"
     .parameter "fieldId"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->CHANGE_CODE:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
     .annotation system Ldalvik/annotation/Signature;
         value = {
             "(",
@@ -384,6 +388,8 @@
 
     :cond_4
     invoke-static {v12}, Ljava/util/Arrays;->sort([Ljava/lang/Object;)V
+
+    invoke-static {v12}, Lmiui/util/ExtraLocalePicker;->adjustLocaleOrder([Lcom/android/internal/app/LocalePicker$LocaleInfo;)V
 
     new-instance v20, Landroid/widget/ArrayAdapter;
 

@@ -11,7 +11,8 @@
     value = {
         Lcom/android/internal/app/ResolverActivity$ItemLongClickListener;,
         Lcom/android/internal/app/ResolverActivity$ResolveListAdapter;,
-        Lcom/android/internal/app/ResolverActivity$DisplayResolveInfo;
+        Lcom/android/internal/app/ResolverActivity$DisplayResolveInfo;,
+        Lcom/android/internal/app/ResolverActivity$Injector;
     }
 .end annotation
 

@@ -258,6 +258,9 @@
 .method protected onPrepareRingtonePickerIntent(Landroid/content/Intent;)V
     .locals 2
     .parameter "ringtonePickerIntent"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->CHANGE_CODE:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
 
     .prologue
     const-string v0, "android.intent.extra.ringtone.EXISTING_URI"
@@ -310,6 +313,12 @@
     move-result-object v1
 
     invoke-virtual {p1, v0, v1}, Landroid/content/Intent;->putExtra(Ljava/lang/String;Ljava/lang/CharSequence;)Landroid/content/Intent;
+
+    const-string v0, "com.android.thememanager"
+
+    const-string v1, "com.android.thememanager.ThemeResourceTabActivity"
+
+    invoke-virtual {p1, v0, v1}, Landroid/content/Intent;->setClassName(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;
 
     return-void
 .end method

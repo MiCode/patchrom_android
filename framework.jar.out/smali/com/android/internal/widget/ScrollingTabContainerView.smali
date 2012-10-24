@@ -176,9 +176,12 @@
 
 .method private createTabLayout()Landroid/widget/LinearLayout;
     .locals 4
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->CHANGE_CODE:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
 
     .prologue
-    new-instance v0, Landroid/widget/LinearLayout;
+    new-instance v0, Lcom/android/internal/widget/MiuiTabLayout;
 
     invoke-virtual {p0}, Lcom/android/internal/widget/ScrollingTabContainerView;->getContext()Landroid/content/Context;
 
@@ -188,7 +191,7 @@
 
     const v3, 0x10102f4
 
-    invoke-direct {v0, v1, v2, v3}, Landroid/widget/LinearLayout;-><init>(Landroid/content/Context;Landroid/util/AttributeSet;I)V
+    invoke-direct {v0, v1, v2, v3}, Lcom/android/internal/widget/MiuiTabLayout;-><init>(Landroid/content/Context;Landroid/util/AttributeSet;I)V
 
     .local v0, tabLayout:Landroid/widget/LinearLayout;
     const/4 v1, 0x1

@@ -1139,7 +1139,9 @@
     if-le p0, v2, :cond_0
 
     :cond_a
-    move v0, v1
+    invoke-static {p0, p1}, Landroid/text/StaticLayout$Injector;->isIdeographic(CZ)Z
+
+    move-result v0
 
     goto :goto_0
 
@@ -2384,6 +2386,20 @@
     move/from16 v42, v101
 
     :cond_d
+    move/from16 v0, v94
+
+    move-object/from16 v1, v27
+
+    move/from16 v2, v106
+
+    move/from16 v3, v120
+
+    move/from16 v4, v29
+
+    invoke-static {v0, v1, v2, v3, v4}, Landroid/text/StaticLayout$Injector;->validateCJKCharAsSpace(C[CIII)C
+
+    move-result v94
+
     const/16 v5, 0x20
 
     move/from16 v0, v94

@@ -27,7 +27,8 @@
         Landroid/view/ViewRootImpl$QueuedInputEvent;,
         Landroid/view/ViewRootImpl$ViewRootHandler;,
         Landroid/view/ViewRootImpl$SystemUiVisibilityInfo;,
-        Landroid/view/ViewRootImpl$ResizedInfo;
+        Landroid/view/ViewRootImpl$ResizedInfo;,
+        Landroid/view/ViewRootImpl$Injector;
     }
 .end annotation
 
@@ -374,6 +375,12 @@
 
 .field mSeq:I
 
+.field mSkipResizedMsg:Z
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_FIELD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+.end field
+
 .field mSoftInputMode:I
 
 .field mStopped:Z
@@ -512,6 +519,8 @@
     const/4 v4, 0x0
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    iput-boolean v4, p0, Landroid/view/ViewRootImpl;->mSkipResizedMsg:Z
 
     const-wide/16 v2, 0x0
 
@@ -14066,6 +14075,20 @@
     const/4 v0, 0x0
 
     return v0
+.end method
+
+.method public skipNextResizedMsg()V
+    .locals 1
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    const/4 v0, 0x1
+
+    iput-boolean v0, p0, Landroid/view/ViewRootImpl;->mSkipResizedMsg:Z
+
+    return-void
 .end method
 
 .method public startActionModeForChild(Landroid/view/View;Landroid/view/ActionMode$Callback;)Landroid/view/ActionMode;

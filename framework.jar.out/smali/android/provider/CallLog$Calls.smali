@@ -74,12 +74,22 @@
 
 .field public static final VOICEMAIL_URI:Ljava/lang/String; = "voicemail_uri"
 
+.field static sExtraCallLogValues:Landroid/content/ContentValues;
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_FIELD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+.end field
+
 
 # direct methods
 .method static constructor <clinit>()V
     .locals 3
 
     .prologue
+    const/4 v0, 0x0
+
+    sput-object v0, Landroid/provider/CallLog$Calls;->sExtraCallLogValues:Landroid/content/ContentValues;
+
     const-string v0, "content://call_log/calls"
 
     invoke-static {v0}, Landroid/net/Uri;->parse(Ljava/lang/String;)Landroid/net/Uri;
@@ -137,6 +147,9 @@
     .parameter "callType"
     .parameter "start"
     .parameter "duration"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->CHANGE_CODE:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
 
     .prologue
     invoke-virtual/range {p1 .. p1}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
@@ -160,11 +173,15 @@
 
     :cond_0
     :goto_0
-    new-instance v12, Landroid/content/ContentValues;
+    new-instance v2, Landroid/content/ContentValues;
 
-    const/4 v2, 0x5
+    const/4 v3, 0x5
 
-    invoke-direct {v12, v2}, Landroid/content/ContentValues;-><init>(I)V
+    invoke-direct {v2, v3}, Landroid/content/ContentValues;-><init>(I)V
+
+    invoke-static {v2}, Landroid/provider/CallLog$Injector;->getExtraCallLogValues(Landroid/content/ContentValues;)Landroid/content/ContentValues;
+
+    move-result-object v12
 
     .local v12, values:Landroid/content/ContentValues;
     const-string v2, "number"
@@ -380,7 +397,7 @@
     move-result-object v11
 
     .local v11, result:Landroid/net/Uri;
-    invoke-static/range {p1 .. p1}, Landroid/provider/CallLog$Calls;->removeExpiredEntries(Landroid/content/Context;)V
+    invoke-static/range {p1 .. p1}, Landroid/provider/CallLog$Injector;->removeExpiredEntries(Landroid/content/Context;)V
 
     return-object v11
 
@@ -599,6 +616,19 @@
     const/4 v3, 0x0
 
     invoke-virtual {v0, v1, v2, v3}, Landroid/content/ContentResolver;->delete(Landroid/net/Uri;Ljava/lang/String;[Ljava/lang/String;)I
+
+    return-void
+.end method
+
+.method public static setExtraCallLogValues(Landroid/content/ContentValues;)V
+    .locals 0
+    .parameter "extraCallLogValues"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    sput-object p0, Landroid/provider/CallLog$Calls;->sExtraCallLogValues:Landroid/content/ContentValues;
 
     return-void
 .end method

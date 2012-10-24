@@ -1,15 +1,19 @@
-.class final Landroid/graphics/drawable/AnimationDrawable$AnimationState;
+.class public final Landroid/graphics/drawable/AnimationDrawable$AnimationState;
 .super Landroid/graphics/drawable/DrawableContainer$DrawableContainerState;
 .source "AnimationDrawable.java"
 
 
 # annotations
+.annotation build Landroid/annotation/MiuiHook;
+    value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->CHANGE_ACCESS:Landroid/annotation/MiuiHook$MiuiHookType;
+.end annotation
+
 .annotation system Ldalvik/annotation/EnclosingClass;
     value = Landroid/graphics/drawable/AnimationDrawable;
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
-    accessFlags = 0x1a
+    accessFlags = 0x1c
     name = "AnimationState"
 .end annotation
 
@@ -170,4 +174,20 @@
     invoke-direct {v0, p0, p1, v1}, Landroid/graphics/drawable/AnimationDrawable;-><init>(Landroid/graphics/drawable/AnimationDrawable$AnimationState;Landroid/content/res/Resources;Landroid/graphics/drawable/AnimationDrawable$1;)V
 
     return-object v0
+.end method
+
+.method setDuration(II)V
+    .locals 1
+    .parameter "frame"
+    .parameter "value"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    iget-object v0, p0, Landroid/graphics/drawable/AnimationDrawable$AnimationState;->mDurations:[I
+
+    aput p2, v0, p1
+
+    return-void
 .end method

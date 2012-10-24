@@ -9,7 +9,8 @@
 # annotations
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
-        Landroid/widget/SuggestionsAdapter$ChildViewCache;
+        Landroid/widget/SuggestionsAdapter$ChildViewCache;,
+        Landroid/widget/SuggestionsAdapter$Injector;
     }
 .end annotation
 
@@ -277,6 +278,9 @@
 .method private getActivityIcon(Landroid/content/ComponentName;)Landroid/graphics/drawable/Drawable;
     .locals 10
     .parameter "component"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->CHANGE_CODE:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
 
     .prologue
     const/4 v6, 0x0
@@ -338,9 +342,7 @@
     move-result-object v4
 
     .local v4, pkg:Ljava/lang/String;
-    iget-object v7, v0, Landroid/content/pm/ActivityInfo;->applicationInfo:Landroid/content/pm/ApplicationInfo;
-
-    invoke-virtual {v5, v4, v3, v7}, Landroid/content/pm/PackageManager;->getDrawable(Ljava/lang/String;ILandroid/content/pm/ApplicationInfo;)Landroid/graphics/drawable/Drawable;
+    invoke-static {v5, v4, v3, v0}, Landroid/widget/SuggestionsAdapter$Injector;->getDrawable(Landroid/content/pm/PackageManager;Ljava/lang/String;ILandroid/content/pm/ActivityInfo;)Landroid/graphics/drawable/Drawable;
 
     move-result-object v1
 

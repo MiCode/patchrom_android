@@ -10,7 +10,8 @@
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
         Landroid/net/http/AndroidHttpClient$CurlLogger;,
-        Landroid/net/http/AndroidHttpClient$LoggingConfiguration;
+        Landroid/net/http/AndroidHttpClient$LoggingConfiguration;,
+        Landroid/net/http/AndroidHttpClient$Injector;
     }
 .end annotation
 
@@ -469,6 +470,9 @@
     .locals 9
     .parameter "userAgent"
     .parameter "context"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->CHANGE_CODE:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
 
     .prologue
     const/4 v5, 0x0
@@ -498,7 +502,11 @@
 
     .local v3, sessionCache:Landroid/net/SSLSessionCache;
     :goto_0
-    invoke-static {v1, p0}, Lorg/apache/http/params/HttpProtocolParams;->setUserAgent(Lorg/apache/http/params/HttpParams;Ljava/lang/String;)V
+    invoke-static {p0}, Landroid/net/http/AndroidHttpClient$Injector;->getUserAgent(Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v4
+
+    invoke-static {v1, v4}, Lorg/apache/http/params/HttpProtocolParams;->setUserAgent(Lorg/apache/http/params/HttpParams;Ljava/lang/String;)V
 
     new-instance v2, Lorg/apache/http/conn/scheme/SchemeRegistry;
 

@@ -429,7 +429,7 @@
     :cond_1
     iget-object v3, p0, Lcom/android/internal/widget/SizeAdaptiveLayout;->mModestyPanel:Landroid/view/View;
 
-    const/high16 v4, -0x100
+    const/high16 v4, 0x0
 
     invoke-virtual {v3, v4}, Landroid/view/View;->setBackgroundColor(I)V
 

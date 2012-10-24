@@ -391,6 +391,25 @@
     return-void
 .end method
 
+.method public setType(I)V
+    .locals 1
+    .parameter "type"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    iget-object v0, p0, Landroid/widget/Toast;->mTN:Landroid/widget/Toast$TN;
+
+    invoke-virtual {v0}, Landroid/widget/Toast$TN;->getParams()Landroid/view/WindowManager$LayoutParams;
+
+    move-result-object v0
+
+    iput p1, v0, Landroid/view/WindowManager$LayoutParams;->type:I
+
+    return-void
+.end method
+
 .method public setView(Landroid/view/View;)V
     .locals 0
     .parameter "view"

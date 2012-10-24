@@ -15,7 +15,8 @@
         Lcom/android/internal/view/menu/ActionMenuPresenter$ActionButtonSubmenu;,
         Lcom/android/internal/view/menu/ActionMenuPresenter$OverflowPopup;,
         Lcom/android/internal/view/menu/ActionMenuPresenter$OverflowMenuButton;,
-        Lcom/android/internal/view/menu/ActionMenuPresenter$SavedState;
+        Lcom/android/internal/view/menu/ActionMenuPresenter$SavedState;,
+        Lcom/android/internal/view/menu/ActionMenuPresenter$Injector;
     }
 .end annotation
 
@@ -1047,6 +1048,9 @@
     .locals 8
     .parameter "context"
     .parameter "menu"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->CHANGE_CODE:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
 
     .prologue
     const/4 v7, 0x0
@@ -1069,7 +1073,7 @@
 
     if-nez v4, :cond_0
 
-    invoke-virtual {v0}, Lcom/android/internal/view/ActionBarPolicy;->showsOverflowMenuButton()Z
+    invoke-static {v0}, Lcom/android/internal/view/menu/ActionMenuPresenter$Injector;->showsOverflowMenuButton(Lcom/android/internal/view/ActionBarPolicy;)Z
 
     move-result v4
 

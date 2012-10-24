@@ -40,6 +40,9 @@
 .method private showDialog(Landroid/os/Bundle;)V
     .locals 7
     .parameter "state"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->CHANGE_CODE:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
 
     .prologue
     const/4 v6, 0x0
@@ -93,13 +96,13 @@
     move-result-object v4
 
     .local v4, title:Ljava/lang/CharSequence;
-    new-instance v2, Landroid/app/Dialog;
+    new-instance v2, Landroid/app/PreferenceDialog;
 
     invoke-virtual {v1}, Landroid/content/Context;->getThemeResId()I
 
     move-result v5
 
-    invoke-direct {v2, v1, v5}, Landroid/app/Dialog;-><init>(Landroid/content/Context;I)V
+    invoke-direct {v2, v1, v5}, Landroid/app/PreferenceDialog;-><init>(Landroid/content/Context;I)V
 
     iput-object v2, p0, Landroid/preference/PreferenceScreen;->mDialog:Landroid/app/Dialog;
 

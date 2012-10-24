@@ -17,7 +17,7 @@
 
 
 # instance fields
-.field private final mAnimationState:Landroid/graphics/drawable/AnimationDrawable$AnimationState;
+.field private mAnimationState:Landroid/graphics/drawable/AnimationDrawable$AnimationState;
 
 .field private mCurFrame:I
 
@@ -209,6 +209,18 @@
 
     :cond_0
     return-void
+.end method
+
+.method getAnimationState()Landroid/graphics/drawable/AnimationDrawable$AnimationState;
+    .locals 1
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    iget-object v0, p0, Landroid/graphics/drawable/AnimationDrawable;->mAnimationState:Landroid/graphics/drawable/AnimationDrawable$AnimationState;
+
+    return-object v0
 .end method
 
 .method public getDuration(I)I

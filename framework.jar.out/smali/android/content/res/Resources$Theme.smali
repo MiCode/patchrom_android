@@ -1,15 +1,19 @@
-.class public final Landroid/content/res/Resources$Theme;
+.class public Landroid/content/res/Resources$Theme;
 .super Ljava/lang/Object;
 .source "Resources.java"
 
 
 # annotations
+.annotation build Landroid/annotation/MiuiHook;
+    value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->CHANGE_ACCESS:Landroid/annotation/MiuiHook$MiuiHookType;
+.end annotation
+
 .annotation system Ldalvik/annotation/EnclosingClass;
     value = Landroid/content/res/Resources;
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
-    accessFlags = 0x11
+    accessFlags = 0x1
     name = "Theme"
 .end annotation
 

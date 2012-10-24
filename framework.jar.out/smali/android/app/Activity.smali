@@ -16,7 +16,8 @@
         Landroid/app/Activity$1;,
         Landroid/app/Activity$ManagedCursor;,
         Landroid/app/Activity$NonConfigurationInstances;,
-        Landroid/app/Activity$ManagedDialog;
+        Landroid/app/Activity$ManagedDialog;,
+        Landroid/app/Activity$Injector;
     }
 .end annotation
 
@@ -2490,6 +2491,18 @@
     return v0
 .end method
 
+.method getToken()Landroid/os/IBinder;
+    .locals 1
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    iget-object v0, p0, Landroid/app/Activity;->mToken:Landroid/os/IBinder;
+
+    return-object v0
+.end method
+
 .method public final getVolumeControlStream()I
     .locals 1
 
@@ -4832,6 +4845,9 @@
 
 .method protected onResume()V
     .locals 1
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->CHANGE_CODE:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
 
     .prologue
     invoke-virtual {p0}, Landroid/app/Activity;->getApplication()Landroid/app/Application;
@@ -4843,6 +4859,8 @@
     const/4 v0, 0x1
 
     iput-boolean v0, p0, Landroid/app/Activity;->mCalled:Z
+
+    invoke-static {p0}, Landroid/app/Activity$Injector;->checkAccessControl(Landroid/app/Activity;)V
 
     return-void
 .end method
