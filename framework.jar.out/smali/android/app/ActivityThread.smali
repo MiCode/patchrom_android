@@ -10854,12 +10854,15 @@
     move-result-object v0
 
     .local v0, r:Landroid/content/res/Resources;
+    if-eqz v0, :cond_miui_0
+
     move-object v1, v0
 
     check-cast v1, Landroid/content/res/MiuiResources;
 
     invoke-virtual {v1, p1}, Landroid/content/res/MiuiResources;->init(Ljava/lang/String;)V
 
+    :cond_miui_0
     return-object v0
 .end method
 
