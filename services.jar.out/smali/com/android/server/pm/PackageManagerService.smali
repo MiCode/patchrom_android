@@ -15074,6 +15074,36 @@
     iput v4, v3, Landroid/content/pm/ApplicationInfo;->flags:I
 
     .line 3335
+    move-object/from16 v0, p1
+
+    iget-object v3, v0, Landroid/content/pm/PackageParser$Package;->applicationInfo:Landroid/content/pm/ApplicationInfo;
+
+    iget v4, v3, Landroid/content/pm/ApplicationInfo;->flags:I
+
+    move-object/from16 v0, v41
+
+    iget v10, v0, Lcom/android/server/pm/PackageSetting;->pkgFlags:I
+
+    const/high16 v11, 0x4000
+
+    and-int/2addr v10, v11
+
+    or-int/2addr v4, v10
+
+    iput v4, v3, Landroid/content/pm/ApplicationInfo;->flags:I
+
+    .line 3398
+    move-object/from16 v0, p1
+
+    iget-object v3, v0, Landroid/content/pm/PackageParser$Package;->applicationInfo:Landroid/content/pm/ApplicationInfo;
+
+    move-object/from16 v0, p0
+
+    iget-object v4, v0, Lcom/android/server/pm/PackageManagerService;->mSettings:Lcom/android/server/pm/Settings;
+
+    invoke-static {v3, v4}, Lcom/android/server/pm/ExtraPackageManagerServices;->blockAutoStartedApp(Landroid/content/pm/ApplicationInfo;Lcom/android/server/pm/Settings;)V
+
+    .line 3400
     move-object/from16 v0, v41
 
     iget-object v3, v0, Lcom/android/server/pm/PackageSetting;->origPackage:Lcom/android/server/pm/PackageSettingBase;
@@ -33794,7 +33824,7 @@
 .end method
 
 .method private setAccessControl(Ljava/lang/String;II)Z
-    .locals 7
+    .locals 9
     .parameter "packageName"
     .parameter "newState"
     .parameter "flags"
@@ -33803,28 +33833,35 @@
     .end annotation
 
     .prologue
-    const v6, 0x7fffffff
+    const v8, 0x7fffffff
+
+    const v7, -0x40000001
+
+    const/high16 v6, 0x4000
 
     const/high16 v5, -0x8000
 
-    .line 8680
+    .line 8745
     iget-object v3, p0, Lcom/android/server/pm/PackageManagerService;->mPackages:Ljava/util/HashMap;
 
     monitor-enter v3
 
-    .line 8681
+    .line 8746
     if-eq p2, v5, :cond_0
 
+    if-eq p2, v6, :cond_0
+
+    .line 8747
     const/4 v2, 0x0
 
     :try_start_0
     monitor-exit v3
 
-    .line 8694
+    .line 8770
     :goto_0
     return v2
 
-    .line 8682
+    .line 8748
     :cond_0
     iget-object v2, p0, Lcom/android/server/pm/PackageManagerService;->mPackages:Ljava/util/HashMap;
 
@@ -33834,7 +33871,7 @@
 
     check-cast v0, Landroid/content/pm/PackageParser$Package;
 
-    .line 8683
+    .line 8749
     .local v0, pkg:Landroid/content/pm/PackageParser$Package;
     iget-object v2, p0, Lcom/android/server/pm/PackageManagerService;->mSettings:Lcom/android/server/pm/Settings;
 
@@ -33846,23 +33883,26 @@
 
     check-cast v1, Lcom/android/server/pm/PackageSetting;
 
-    .line 8684
+    .line 8750
     .local v1, pkgSetting:Lcom/android/server/pm/PackageSetting;
-    if-eqz v0, :cond_1
+    if-eqz v0, :cond_2
 
-    if-eqz v1, :cond_1
+    if-eqz v1, :cond_2
 
-    .line 8685
-    if-ne p3, v5, :cond_2
+    .line 8751
+    if-ne p2, v5, :cond_4
 
-    .line 8686
+    .line 8752
+    if-ne p3, v5, :cond_3
+
+    .line 8753
     iget v2, v1, Lcom/android/server/pm/PackageSetting;->pkgFlags:I
 
     or-int/2addr v2, v5
 
     iput v2, v1, Lcom/android/server/pm/PackageSetting;->pkgFlags:I
 
-    .line 8687
+    .line 8754
     iget-object v2, v0, Landroid/content/pm/PackageParser$Package;->applicationInfo:Landroid/content/pm/ApplicationInfo;
 
     iget v4, v2, Landroid/content/pm/ApplicationInfo;->flags:I
@@ -33871,21 +33911,22 @@
 
     iput v4, v2, Landroid/content/pm/ApplicationInfo;->flags:I
 
-    .line 8692
+    .line 8768
+    :cond_1
     :goto_1
     iget-object v2, p0, Lcom/android/server/pm/PackageManagerService;->mSettings:Lcom/android/server/pm/Settings;
 
     invoke-virtual {v2}, Lcom/android/server/pm/Settings;->writeLPr()V
 
-    .line 8694
-    :cond_1
+    .line 8770
+    :cond_2
     const/4 v2, 0x1
 
     monitor-exit v3
 
     goto :goto_0
 
-    .line 8695
+    .line 8771
     .end local v0           #pkg:Landroid/content/pm/PackageParser$Package;
     .end local v1           #pkgSetting:Lcom/android/server/pm/PackageSetting;
     :catchall_0
@@ -33897,23 +33938,67 @@
 
     throw v2
 
-    .line 8689
+    .line 8756
     .restart local v0       #pkg:Landroid/content/pm/PackageParser$Package;
     .restart local v1       #pkgSetting:Lcom/android/server/pm/PackageSetting;
-    :cond_2
+    :cond_3
     :try_start_1
     iget v2, v1, Lcom/android/server/pm/PackageSetting;->pkgFlags:I
 
-    and-int/2addr v2, v6
+    and-int/2addr v2, v8
 
     iput v2, v1, Lcom/android/server/pm/PackageSetting;->pkgFlags:I
 
-    .line 8690
+    .line 8757
     iget-object v2, v0, Landroid/content/pm/PackageParser$Package;->applicationInfo:Landroid/content/pm/ApplicationInfo;
 
     iget v4, v2, Landroid/content/pm/ApplicationInfo;->flags:I
 
-    and-int/2addr v4, v6
+    and-int/2addr v4, v8
+
+    iput v4, v2, Landroid/content/pm/ApplicationInfo;->flags:I
+
+    goto :goto_1
+
+    .line 8759
+    :cond_4
+    if-ne p2, v6, :cond_1
+
+    .line 8760
+    if-ne p3, v6, :cond_5
+
+    .line 8761
+    iget v2, v1, Lcom/android/server/pm/PackageSetting;->pkgFlags:I
+
+    or-int/2addr v2, v6
+
+    iput v2, v1, Lcom/android/server/pm/PackageSetting;->pkgFlags:I
+
+    .line 8762
+    iget-object v2, v0, Landroid/content/pm/PackageParser$Package;->applicationInfo:Landroid/content/pm/ApplicationInfo;
+
+    iget v4, v2, Landroid/content/pm/ApplicationInfo;->flags:I
+
+    or-int/2addr v4, v6
+
+    iput v4, v2, Landroid/content/pm/ApplicationInfo;->flags:I
+
+    goto :goto_1
+
+    .line 8764
+    :cond_5
+    iget v2, v1, Lcom/android/server/pm/PackageSetting;->pkgFlags:I
+
+    and-int/2addr v2, v7
+
+    iput v2, v1, Lcom/android/server/pm/PackageSetting;->pkgFlags:I
+
+    .line 8765
+    iget-object v2, v0, Landroid/content/pm/PackageParser$Package;->applicationInfo:Landroid/content/pm/ApplicationInfo;
+
+    iget v4, v2, Landroid/content/pm/ApplicationInfo;->flags:I
+
+    and-int/2addr v4, v7
 
     iput v4, v2, Landroid/content/pm/ApplicationInfo;->flags:I
     :try_end_1
