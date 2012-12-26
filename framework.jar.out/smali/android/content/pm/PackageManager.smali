@@ -26,6 +26,7 @@
 
 .field public static final COMPONENT_ENABLED_STATE_DISABLED_USER:I = 0x3
 
+.field public static final COMPONENT_ENABLED_STATE_DISABLE_AUTOSTART:I = 0x40000000
 .field public static final COMPONENT_ENABLED_STATE_ENABLED:I = 0x1
 
 .field public static final DELETE_FAILED_DEVICE_POLICY_MANAGER:I = -0x2
