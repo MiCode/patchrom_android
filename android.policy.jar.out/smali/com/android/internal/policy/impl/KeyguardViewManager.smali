@@ -177,7 +177,7 @@
 
     invoke-direct {v2, p0, v0}, Lcom/android/internal/policy/impl/KeyguardViewManager$2;-><init>(Lcom/android/internal/policy/impl/KeyguardViewManager;Lcom/android/internal/policy/impl/KeyguardViewBase;)V
 
-    const-wide/16 v3, 0x1f4
+    const-wide/16 v3, 0x0
 
     invoke-virtual {v1, v2, v3, v4}, Landroid/widget/FrameLayout;->postDelayed(Ljava/lang/Runnable;J)Z
     :try_end_0
