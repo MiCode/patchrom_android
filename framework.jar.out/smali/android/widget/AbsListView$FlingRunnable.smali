@@ -70,6 +70,33 @@
     return-object v0
 .end method
 
+.method private endFling2()V
+    .locals 1
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    iget-object v0, p0, Landroid/widget/AbsListView$FlingRunnable;->this$0:Landroid/widget/AbsListView;
+
+    #getter for: Landroid/widget/AbsListView;->mScrollY:I
+    invoke-static {v0}, Landroid/widget/AbsListView;->access$2100(Landroid/widget/AbsListView;)I
+
+    move-result v0
+
+    if-eqz v0, :cond_0
+
+    invoke-virtual {p0}, Landroid/widget/AbsListView$FlingRunnable;->startSpringback()V
+
+    :goto_0
+    return-void
+
+    :cond_0
+    invoke-virtual {p0}, Landroid/widget/AbsListView$FlingRunnable;->endFling()V
+
+    goto :goto_0
+.end method
+
 
 # virtual methods
 .method edgeReached(I)V

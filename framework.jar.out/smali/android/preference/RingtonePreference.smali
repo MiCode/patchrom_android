@@ -316,7 +316,7 @@
 
     const-string v0, "com.android.thememanager"
 
-    const-string v1, "com.android.thememanager.ThemeResourceTabActivity"
+    const-string v1, "com.android.thememanager.activity.ThemeTabActivity"
 
     invoke-virtual {p1, v0, v1}, Landroid/content/Intent;->setClassName(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;
 

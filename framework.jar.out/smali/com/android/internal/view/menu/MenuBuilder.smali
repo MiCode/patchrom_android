@@ -2475,6 +2475,54 @@
     return v0
 .end method
 
+.method public miuiGetActionItems()Ljava/util/ArrayList;
+    .locals 1
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "()",
+            "Ljava/util/ArrayList",
+            "<",
+            "Lcom/android/internal/view/menu/MenuItemImpl;",
+            ">;"
+        }
+    .end annotation
+
+    .prologue
+    invoke-virtual {p0}, Lcom/android/internal/view/menu/MenuBuilder;->getActionItems()Ljava/util/ArrayList;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public miuiGetVisibleItems()Ljava/util/ArrayList;
+    .locals 1
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "()",
+            "Ljava/util/ArrayList",
+            "<",
+            "Lcom/android/internal/view/menu/MenuItemImpl;",
+            ">;"
+        }
+    .end annotation
+
+    .prologue
+    invoke-virtual {p0}, Lcom/android/internal/view/menu/MenuBuilder;->getVisibleItems()Ljava/util/ArrayList;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
 .method onItemActionRequestChanged(Lcom/android/internal/view/menu/MenuItemImpl;)V
     .locals 1
     .parameter "item"

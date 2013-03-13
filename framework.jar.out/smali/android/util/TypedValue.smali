@@ -88,6 +88,12 @@
 
 .field public static final TYPE_STRING:I = 0x3
 
+.field public static miui_font_scale:F
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_FIELD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+.end field
+
 
 # instance fields
 .field public assetCookie:I
@@ -117,6 +123,10 @@
     const/4 v4, 0x1
 
     const/4 v3, 0x0
+
+    const/high16 v0, 0x3f80
+
+    sput v0, Landroid/util/TypedValue;->miui_font_scale:F
 
     new-array v0, v6, [F
 
@@ -221,9 +231,9 @@
     goto :goto_0
 
     :pswitch_2
-    iget v0, p2, Landroid/util/DisplayMetrics;->scaledDensity:F
+    invoke-static {p1, p2}, Landroid/util/TypedValue;->miuiScale(FLandroid/util/DisplayMetrics;)F
 
-    mul-float/2addr p1, v0
+    move-result p1
 
     goto :goto_0
 
@@ -777,6 +787,40 @@
         :pswitch_0
         :pswitch_1
     .end packed-switch
+.end method
+
+.method private static miuiScale(FLandroid/util/DisplayMetrics;)F
+    .locals 2
+    .parameter "value"
+    .parameter "metrics"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    const/high16 v0, 0x41a0
+
+    cmpl-float v0, p0, v0
+
+    if-ltz v0, :cond_0
+
+    iget v0, p1, Landroid/util/DisplayMetrics;->density:F
+
+    mul-float/2addr v0, p0
+
+    :goto_0
+    return v0
+
+    :cond_0
+    iget v0, p1, Landroid/util/DisplayMetrics;->scaledDensity:F
+
+    mul-float/2addr v0, p0
+
+    sget v1, Landroid/util/TypedValue;->miui_font_scale:F
+
+    mul-float/2addr v0, v1
+
+    goto :goto_0
 .end method
 
 

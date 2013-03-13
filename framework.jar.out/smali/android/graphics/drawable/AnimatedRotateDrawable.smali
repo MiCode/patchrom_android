@@ -476,6 +476,14 @@
 
     invoke-virtual {v0, v14}, Landroid/graphics/drawable/AnimatedRotateDrawable;->setFramesDuration(I)V
 
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, p1
+
+    move-object/from16 v2, p3
+
+    invoke-static {v0, v1, v2}, Landroid/graphics/drawable/AnimatedRotateDrawable$Injector;->init(Landroid/graphics/drawable/AnimatedRotateDrawable;Landroid/content/res/Resources;Landroid/util/AttributeSet;)V
+
     const/4 v14, 0x1
 
     const/4 v15, 0x0

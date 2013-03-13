@@ -1400,15 +1400,23 @@
     invoke-direct {v2, v4, v0}, Landroid/widget/FrameLayout$LayoutParams;-><init>(II)V
 
     .local v2, listParams:Landroid/widget/FrameLayout$LayoutParams;
-    iget-object v4, p0, Landroid/widget/PopupWindow;->mBackground:Landroid/graphics/drawable/Drawable;
-
-    invoke-virtual {v3, v4}, Landroid/widget/PopupWindow$PopupViewContainer;->setBackgroundDrawable(Landroid/graphics/drawable/Drawable;)V
-
     iget-object v4, p0, Landroid/widget/PopupWindow;->mContentView:Landroid/view/View;
 
     invoke-virtual {v3, v4, v2}, Landroid/widget/PopupWindow$PopupViewContainer;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
     iput-object v3, p0, Landroid/widget/PopupWindow;->mPopupView:Landroid/view/View;
+
+    iget-object v0, p0, Landroid/widget/PopupWindow;->mPopupView:Landroid/view/View;
+
+    iget-boolean v1, p0, Landroid/widget/PopupWindow;->mAboveAnchor:Z
+
+    iget-object v2, p0, Landroid/widget/PopupWindow;->mBackground:Landroid/graphics/drawable/Drawable;
+
+    iget-object v3, p0, Landroid/widget/PopupWindow;->mAboveAnchorBackgroundDrawable:Landroid/graphics/drawable/Drawable;
+
+    iget-object v4, p0, Landroid/widget/PopupWindow;->mBelowAnchorBackgroundDrawable:Landroid/graphics/drawable/Drawable;
+
+    invoke-static {v0, v1, v2, v3, v4}, Landroid/widget/PopupWindow$Injector;->updateBackground(Landroid/view/View;ZLandroid/graphics/drawable/Drawable;Landroid/graphics/drawable/Drawable;Landroid/graphics/drawable/Drawable;)V
 
     .end local v0           #height:I
     .end local v1           #layoutParams:Landroid/view/ViewGroup$LayoutParams;
@@ -1876,10 +1884,16 @@
 .end method
 
 .method public getBackground()Landroid/graphics/drawable/Drawable;
-    .locals 1
+    .locals 2
 
     .prologue
-    iget-object v0, p0, Landroid/widget/PopupWindow;->mBackground:Landroid/graphics/drawable/Drawable;
+    iget-object v0, p0, Landroid/widget/PopupWindow;->mPopupView:Landroid/view/View;
+
+    iget-object v1, p0, Landroid/widget/PopupWindow;->mBackground:Landroid/graphics/drawable/Drawable;
+
+    invoke-static {v0, v1}, Landroid/widget/PopupWindow$Injector;->getBackground(Landroid/view/View;Landroid/graphics/drawable/Drawable;)Landroid/graphics/drawable/Drawable;
+
+    move-result-object v0
 
     return-object v0
 .end method

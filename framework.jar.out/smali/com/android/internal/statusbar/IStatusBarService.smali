@@ -163,6 +163,14 @@
     .end annotation
 .end method
 
+.method public abstract setStatus(ILandroid/os/IBinder;Ljava/lang/String;Landroid/os/Bundle;)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
 .method public abstract setSystemUiVisibility(II)V
     .annotation system Ldalvik/annotation/Throws;
         value = {

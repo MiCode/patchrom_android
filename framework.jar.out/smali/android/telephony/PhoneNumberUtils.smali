@@ -2143,7 +2143,7 @@
     :cond_14
     move-object/from16 v0, p1
 
-    invoke-static {v0, v10, v4}, Landroid/telephony/PhoneNumberUtils;->checkPrefixIsIgnorable(Ljava/lang/String;II)Z
+    invoke-static {v0, v11, v4}, Landroid/telephony/PhoneNumberUtils;->checkPrefixIsIgnorable(Ljava/lang/String;II)Z
 
     move-result v18
 

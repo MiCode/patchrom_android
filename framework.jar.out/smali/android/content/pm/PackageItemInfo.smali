@@ -349,10 +349,6 @@
     .end annotation
 
     .prologue
-    iget v1, p0, Landroid/content/pm/PackageItemInfo;->icon:I
-
-    if-eqz v1, :cond_0
-
     iget-object v1, p0, Landroid/content/pm/PackageItemInfo;->packageName:Ljava/lang/String;
 
     iget v2, p0, Landroid/content/pm/PackageItemInfo;->icon:I

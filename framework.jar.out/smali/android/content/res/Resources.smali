@@ -128,7 +128,7 @@
 
 .field private mPluralRule:Llibcore/icu/NativePluralRules;
 
-.field mPreloading:Z
+.field private mPreloading:Z
 
 .field final mTmpConfig:Landroid/content/res/Configuration;
 
@@ -3793,6 +3793,17 @@
     return-object v0
 .end method
 
+.method loadOverlayTypedArray(Landroid/content/res/TypedArray;)Landroid/content/res/TypedArray;
+    .locals 0
+    .parameter "array"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    return-object p1
+.end method
+
 .method loadXmlResourceParser(ILjava/lang/String;)Landroid/content/res/XmlResourceParser;
     .locals 5
     .parameter "id"
@@ -4142,11 +4153,8 @@
     throw v7
 .end method
 
-.method public newTheme()Landroid/content/res/Resources$Theme;
+.method public final newTheme()Landroid/content/res/Resources$Theme;
     .locals 1
-    .annotation build Landroid/annotation/MiuiHook;
-        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->CHANGE_ACCESS:Landroid/annotation/MiuiHook$MiuiHookType;
-    .end annotation
 
     .prologue
     new-instance v0, Landroid/content/res/Resources$Theme;
@@ -4189,7 +4197,11 @@
 
     iput-object v2, v0, Landroid/content/res/TypedArray;->mXml:Landroid/content/res/XmlBlock$Parser;
 
-    return-object v0
+    invoke-virtual {p0, v0}, Landroid/content/res/Resources;->loadOverlayTypedArray(Landroid/content/res/TypedArray;)Landroid/content/res/TypedArray;
+
+    move-result-object v3
+
+    return-object v3
 .end method
 
 .method public obtainTypedArray(I)Landroid/content/res/TypedArray;
@@ -4261,7 +4273,11 @@
 
     aput v4, v2, v4
 
-    return-object v0
+    invoke-virtual {p0, v0}, Landroid/content/res/Resources;->loadOverlayTypedArray(Landroid/content/res/TypedArray;)Landroid/content/res/TypedArray;
+
+    move-result-object v2
+
+    return-object v2
 .end method
 
 .method public openRawResource(I)Ljava/io/InputStream;

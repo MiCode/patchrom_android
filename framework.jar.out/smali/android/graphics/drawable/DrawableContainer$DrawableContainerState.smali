@@ -809,6 +809,18 @@
     goto :goto_0
 .end method
 
+.method public final getVariablePadding()Z
+    .locals 1
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    iget-boolean v0, p0, Landroid/graphics/drawable/DrawableContainer$DrawableContainerState;->mVariablePadding:Z
+
+    return v0
+.end method
+
 .method public growArray(II)V
     .locals 3
     .parameter "oldSize"

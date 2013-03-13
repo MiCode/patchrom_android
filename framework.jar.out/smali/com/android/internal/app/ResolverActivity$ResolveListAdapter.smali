@@ -208,6 +208,16 @@
 
     invoke-virtual {v0, v3}, Landroid/widget/ImageView;->setImageDrawable(Landroid/graphics/drawable/Drawable;)V
 
+    iget-object v3, p0, Lcom/android/internal/app/ResolverActivity$ResolveListAdapter;->this$0:Lcom/android/internal/app/ResolverActivity;
+
+    iget-object v4, p0, Lcom/android/internal/app/ResolverActivity$ResolveListAdapter;->mList:Ljava/util/List;
+
+    invoke-interface {v4, p2}, Ljava/util/List;->indexOf(Ljava/lang/Object;)I
+
+    move-result v4
+
+    invoke-static {v0, v3, p0, v4}, Lcom/android/internal/app/ResolverActivity$Injector;->addListener(Landroid/view/View;Lcom/android/internal/app/ResolverActivity;Lcom/android/internal/app/ResolverActivity$ResolveListAdapter;I)V
+
     return-void
 
     :cond_1
@@ -1124,6 +1134,15 @@
     move-result-object v1
 
     .local v1, lp:Landroid/view/ViewGroup$LayoutParams;
+    iget v3, v1, Landroid/view/ViewGroup$LayoutParams;->width:I
+
+    if-eqz v3, :cond_miui_0
+
+    iget v3, v1, Landroid/view/ViewGroup$LayoutParams;->height:I
+
+    if-nez v3, :cond_miui_1
+
+    :cond_miui_0
     iget-object v3, p0, Lcom/android/internal/app/ResolverActivity$ResolveListAdapter;->this$0:Lcom/android/internal/app/ResolverActivity;
 
     #getter for: Lcom/android/internal/app/ResolverActivity;->mIconSize:I
@@ -1137,6 +1156,7 @@
 
     .end local v0           #icon:Landroid/widget/ImageView;
     .end local v1           #lp:Landroid/view/ViewGroup$LayoutParams;
+    :cond_miui_1
     :goto_0
     iget-object v3, p0, Lcom/android/internal/app/ResolverActivity$ResolveListAdapter;->mList:Ljava/util/List;
 

@@ -441,11 +441,15 @@
 
     move-result v22
 
-    if-eqz v22, :goto_1
+    if-eqz v22, :cond_miui_0
 
     const/16 v22, -0x1
 
-    goto/16 :goto_0
+    return v22
+    ########### method end
+
+    :cond_miui_0
+    goto :goto_1
 
     .end local v6           #dataIndex:I
     .restart local v20       #wapAppId:Ljava/lang/String;

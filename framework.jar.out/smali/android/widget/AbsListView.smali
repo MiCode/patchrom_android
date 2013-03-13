@@ -124,6 +124,12 @@
 
 .field mAdapterHasStableIds:Z
 
+.field mBottomLineDrawable:Landroid/graphics/drawable/Drawable;
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_FIELD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+.end field
+
 .field private mCacheColorHint:I
 
 .field mCachingActive:Z
@@ -1177,6 +1183,27 @@
     return-object v0
 .end method
 
+.method private calcFirstPosition(ZI)V
+    .locals 1
+    .parameter "down"
+    .parameter "count"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    if-eqz p1, :cond_0
+
+    iget v0, p0, Landroid/widget/AbsListView;->mFirstPosition:I
+
+    add-int/2addr v0, p2
+
+    iput v0, p0, Landroid/widget/AbsListView;->mFirstPosition:I
+
+    :cond_0
+    return-void
+.end method
+
 .method private clearScrollingCache()V
     .locals 1
 
@@ -1789,6 +1816,8 @@
     iget v1, v1, Landroid/util/DisplayMetrics;->density:F
 
     iput v1, p0, Landroid/widget/AbsListView;->mDensityScale:F
+
+    invoke-static {p0}, Landroid/widget/AbsListView$Injector;->setChildSequenceStateTaggingListener(Landroid/widget/AbsListView;)V
 
     return-void
 .end method
@@ -4329,6 +4358,8 @@
     .end local v6           #scrollY:I
     :cond_4
     :goto_0
+    invoke-static {p0, p1}, Landroid/widget/AbsListView$Injector;->drawBorder(Landroid/widget/AbsListView;Landroid/graphics/Canvas;)V
+
     return-void
 
     .restart local v6       #scrollY:I
@@ -8285,13 +8316,17 @@
 
     move-result v26
 
-    if-eqz v26, :cond_ff
+    if-eqz v26, :cond_miui_0
 
-    const/16 v26, 0x1
+    const/16 v26, 0x3
 
-    return v26
+    move-object/from16 v0, p1
 
-    :cond_ff
+    move/from16 v1, v26
+
+    invoke-virtual {v0, v1}, Landroid/view/MotionEvent;->setAction(I)V
+
+    :cond_miui_0
     invoke-virtual/range {p0 .. p0}, Landroid/widget/AbsListView;->isEnabled()Z
 
     move-result v26
@@ -14251,6 +14286,10 @@
 
     iput-boolean v0, v1, Landroid/widget/AbsListView;->mBlockLayoutRequests:Z
 
+    move-object/from16 v0, p0
+
+    invoke-direct {v0, v11, v10}, Landroid/widget/AbsListView;->calcFirstPosition(ZI)V
+
     if-lez v10, :cond_e
 
     move-object/from16 v0, p0
@@ -14283,7 +14322,9 @@
 
     invoke-virtual {v0, v1}, Landroid/widget/AbsListView;->offsetChildrenTopAndBottom(I)V
 
-    if-eqz v11, :cond_10
+    sget-boolean v29, Landroid/widget/AbsListView$Injector;->FALSE:Z
+
+    if-eqz v29, :cond_10
 
     move-object/from16 v0, p0
 

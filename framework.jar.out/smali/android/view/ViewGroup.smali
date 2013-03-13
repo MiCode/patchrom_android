@@ -116,6 +116,12 @@
     .end annotation
 .end field
 
+.field mChildSequenceStateTaggingListener:Landroid/view/ViewGroup$ChildSequenceStateTaggingListener;
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_FIELD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+.end field
+
 .field final mChildTransformation:Landroid/view/animation/Transformation;
 
 .field private mChildren:[Landroid/view/View;
@@ -205,6 +211,12 @@
 .field protected mOnHierarchyChangeListener:Landroid/view/ViewGroup$OnHierarchyChangeListener;
 
 .field protected mPersistentDrawingCache:I
+
+.field mTagChildrenSequenceState:Z
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_FIELD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+.end field
 
 .field private mTransition:Landroid/animation/LayoutTransition;
 
@@ -545,6 +557,8 @@
 
     :cond_1
     :goto_0
+    invoke-static {p0}, Landroid/view/ViewGroup$Injector;->tagChildSequenceState(Landroid/view/ViewGroup;)V
+
     return-void
 
     :cond_2
@@ -1998,6 +2012,12 @@
     .end local v2           #animateLayoutChanges:Z
     .end local v3           #attr:I
     :cond_1
+    invoke-static {p1, p2}, Landroid/view/ViewGroup$Injector;->initTagChildSequenceState(Landroid/content/Context;Landroid/util/AttributeSet;)Z
+
+    move-result v6
+
+    iput-boolean v6, p0, Landroid/view/ViewGroup;->mTagChildrenSequenceState:Z
+
     invoke-virtual {v1}, Landroid/content/res/TypedArray;->recycle()V
 
     return-void
@@ -2345,6 +2365,8 @@
 
     :cond_2
     :goto_1
+    invoke-static {p0}, Landroid/view/ViewGroup$Injector;->tagChildSequenceState(Landroid/view/ViewGroup;)V
+
     return-void
 
     :cond_3
@@ -2484,6 +2506,8 @@
     sub-int/2addr v4, v5
 
     iput v4, p0, Landroid/view/ViewGroup;->mChildrenCount:I
+
+    invoke-static {p0}, Landroid/view/ViewGroup$Injector;->tagChildSequenceState(Landroid/view/ViewGroup;)V
 
     goto :goto_0
 .end method
@@ -10820,6 +10844,8 @@
     invoke-virtual {p0, p1}, Landroid/view/ViewGroup;->notifyChildOfDrag(Landroid/view/View;)Z
 
     :cond_1
+    invoke-static {p0}, Landroid/view/ViewGroup$Injector;->tagChildSequenceState(Landroid/view/ViewGroup;)V
+
     return-void
 
     :cond_2
@@ -12197,6 +12223,19 @@
     const/16 v0, 0x40
 
     invoke-direct {p0, v0, p1}, Landroid/view/ViewGroup;->setBooleanFlag(IZ)V
+
+    return-void
+.end method
+
+.method public setChildSequenceStateTaggingListener(Landroid/view/ViewGroup$ChildSequenceStateTaggingListener;)V
+    .locals 0
+    .parameter "listener"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    iput-object p1, p0, Landroid/view/ViewGroup;->mChildSequenceStateTaggingListener:Landroid/view/ViewGroup$ChildSequenceStateTaggingListener;
 
     return-void
 .end method

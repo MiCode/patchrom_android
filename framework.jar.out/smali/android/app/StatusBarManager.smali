@@ -334,3 +334,42 @@
 
     throw v2
 .end method
+
+.method public setStatus(ILjava/lang/String;Landroid/os/Bundle;)V
+    .locals 3
+    .parameter "what"
+    .parameter "action"
+    .parameter "ext"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    :try_start_0
+    invoke-direct {p0}, Landroid/app/StatusBarManager;->getService()Lcom/android/internal/statusbar/IStatusBarService;
+
+    move-result-object v1
+
+    .local v1, svc:Lcom/android/internal/statusbar/IStatusBarService;
+    if-eqz v1, :cond_0
+
+    iget-object v2, p0, Landroid/app/StatusBarManager;->mToken:Landroid/os/IBinder;
+
+    invoke-interface {v1, p1, v2, p2, p3}, Lcom/android/internal/statusbar/IStatusBarService;->setStatus(ILandroid/os/IBinder;Ljava/lang/String;Landroid/os/Bundle;)V
+    :try_end_0
+    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
+
+    :cond_0
+    return-void
+
+    .end local v1           #svc:Lcom/android/internal/statusbar/IStatusBarService;
+    :catch_0
+    move-exception v0
+
+    .local v0, ex:Landroid/os/RemoteException;
+    new-instance v2, Ljava/lang/RuntimeException;
+
+    invoke-direct {v2, v0}, Ljava/lang/RuntimeException;-><init>(Ljava/lang/Throwable;)V
+
+    throw v2
+.end method

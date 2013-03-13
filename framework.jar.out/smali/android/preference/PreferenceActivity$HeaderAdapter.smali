@@ -81,11 +81,13 @@
 
     if-nez p2, :cond_0
 
-    iget-object v4, p0, Landroid/preference/PreferenceActivity$HeaderAdapter;->mInflater:Landroid/view/LayoutInflater;
+    invoke-virtual {p0}, Landroid/preference/PreferenceActivity$HeaderAdapter;->getContext()Landroid/content/Context;
 
-    const v5, 0x1090083
+    move-result-object v4
 
-    invoke-virtual {v4, v5, p3, v6}, Landroid/view/LayoutInflater;->inflate(ILandroid/view/ViewGroup;Z)Landroid/view/View;
+    iget-object v5, p0, Landroid/preference/PreferenceActivity$HeaderAdapter;->mInflater:Landroid/view/LayoutInflater;
+
+    invoke-static {v4, p3, v5}, Landroid/preference/PreferenceActivity$Injector;->getItemView(Landroid/content/Context;Landroid/view/ViewGroup;Landroid/view/LayoutInflater;)Landroid/view/View;
 
     move-result-object v3
 
@@ -142,6 +144,12 @@
     iget v5, v0, Landroid/preference/PreferenceActivity$Header;->iconRes:I
 
     invoke-virtual {v4, v5}, Landroid/widget/ImageView;->setImageResource(I)V
+
+    iget-object v4, v1, Landroid/preference/PreferenceActivity$HeaderAdapter$HeaderViewHolder;->icon:Landroid/widget/ImageView;
+
+    iget v5, v0, Landroid/preference/PreferenceActivity$Header;->iconRes:I
+
+    invoke-static {v4, v5}, Landroid/preference/PreferenceActivity$Injector;->setIconVisible(Landroid/widget/ImageView;I)V
 
     iget-object v4, v1, Landroid/preference/PreferenceActivity$HeaderAdapter$HeaderViewHolder;->title:Landroid/widget/TextView;
 

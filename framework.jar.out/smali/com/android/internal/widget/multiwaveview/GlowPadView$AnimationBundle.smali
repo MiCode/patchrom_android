@@ -38,7 +38,7 @@
 
 
 # direct methods
-.method private constructor <init>(Lcom/android/internal/widget/multiwaveview/GlowPadView;)V
+.method constructor <init>(Lcom/android/internal/widget/multiwaveview/GlowPadView;)V
     .locals 0
     .parameter
 

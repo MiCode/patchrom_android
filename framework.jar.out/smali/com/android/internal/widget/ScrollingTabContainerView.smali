@@ -181,7 +181,7 @@
     .end annotation
 
     .prologue
-    new-instance v0, Lcom/android/internal/widget/MiuiTabLayout;
+    new-instance v0, Landroid/widget/LinearLayout;
 
     invoke-virtual {p0}, Lcom/android/internal/widget/ScrollingTabContainerView;->getContext()Landroid/content/Context;
 
@@ -191,7 +191,7 @@
 
     const v3, 0x10102f4
 
-    invoke-direct {v0, v1, v2, v3}, Lcom/android/internal/widget/MiuiTabLayout;-><init>(Landroid/content/Context;Landroid/util/AttributeSet;I)V
+    invoke-direct {v0, v1, v2, v3}, Landroid/widget/LinearLayout;-><init>(Landroid/content/Context;Landroid/util/AttributeSet;I)V
 
     .local v0, tabLayout:Landroid/widget/LinearLayout;
     const/4 v1, 0x1
@@ -668,6 +668,30 @@
     invoke-virtual {v0}, Landroid/animation/ObjectAnimator;->start()V
 
     goto :goto_0
+.end method
+
+.method protected getSelectedTabIndex()I
+    .locals 1
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    iget v0, p0, Lcom/android/internal/widget/ScrollingTabContainerView;->mSelectedTabIndex:I
+
+    return v0
+.end method
+
+.method protected getTabLayout()Landroid/widget/LinearLayout;
+    .locals 1
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    iget-object v0, p0, Lcom/android/internal/widget/ScrollingTabContainerView;->mTabLayout:Landroid/widget/LinearLayout;
+
+    return-object v0
 .end method
 
 .method public onAttachedToWindow()V
