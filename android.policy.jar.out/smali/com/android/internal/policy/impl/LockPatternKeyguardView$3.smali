@@ -466,7 +466,7 @@
 
     .local v4, showTimeout:Z
     :goto_3
-    if-eqz v5, :cond_5
+    #if-eqz v5, :cond_5
 
     iget-object v8, p0, Lcom/android/internal/policy/impl/LockPatternKeyguardView$3;->this$0:Lcom/android/internal/policy/impl/LockPatternKeyguardView;
 

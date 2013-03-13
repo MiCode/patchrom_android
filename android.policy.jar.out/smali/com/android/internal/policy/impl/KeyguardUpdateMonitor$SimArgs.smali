@@ -1,4 +1,4 @@
-.class Lcom/android/internal/policy/impl/KeyguardUpdateMonitor$SimArgs;
+.class public Lcom/android/internal/policy/impl/KeyguardUpdateMonitor$SimArgs;
 .super Ljava/lang/Object;
 .source "KeyguardUpdateMonitor.java"
 

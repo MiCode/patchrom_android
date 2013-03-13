@@ -32,7 +32,7 @@
 
 .field private final mAccountManager:Landroid/accounts/AccountManager;
 
-.field private final mAccounts:[Landroid/accounts/Account;
+.field private mAccounts:[Landroid/accounts/Account;
 
 .field final synthetic this$0:Lcom/android/internal/policy/impl/LockPatternKeyguardView;
 
@@ -58,6 +58,8 @@
 
     iput-object v0, p0, Lcom/android/internal/policy/impl/LockPatternKeyguardView$AccountAnalyzer;->mAccounts:[Landroid/accounts/Account;
 
+    invoke-direct {p0, p2}, Lcom/android/internal/policy/impl/LockPatternKeyguardView$AccountAnalyzer;->checkAccounts(Landroid/accounts/AccountManager;)V
+
     return-void
 .end method
 
@@ -70,6 +72,37 @@
     .prologue
     invoke-direct {p0, p1, p2}, Lcom/android/internal/policy/impl/LockPatternKeyguardView$AccountAnalyzer;-><init>(Lcom/android/internal/policy/impl/LockPatternKeyguardView;Landroid/accounts/AccountManager;)V
 
+    return-void
+.end method
+
+.method private checkAccounts(Landroid/accounts/AccountManager;)V
+    .locals 1
+    .parameter "accountManager"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    iget-object v0, p0, Lcom/android/internal/policy/impl/LockPatternKeyguardView$AccountAnalyzer;->mAccounts:[Landroid/accounts/Account;
+
+    if-eqz v0, :cond_0
+
+    iget-object v0, p0, Lcom/android/internal/policy/impl/LockPatternKeyguardView$AccountAnalyzer;->mAccounts:[Landroid/accounts/Account;
+
+    array-length v0, v0
+
+    if-nez v0, :cond_1
+
+    :cond_0
+    const-string v0, "com.xiaomi"
+
+    invoke-virtual {p1, v0}, Landroid/accounts/AccountManager;->getAccountsByType(Ljava/lang/String;)[Landroid/accounts/Account;
+
+    move-result-object v0
+
+    iput-object v0, p0, Lcom/android/internal/policy/impl/LockPatternKeyguardView$AccountAnalyzer;->mAccounts:[Landroid/accounts/Account;
+
+    :cond_1
     return-void
 .end method
 
@@ -118,7 +151,7 @@
 
     move-result-object v0
 
-    instance-of v0, v0, Lcom/android/internal/policy/impl/PatternUnlockScreen;
+    instance-of v0, v0, Lcom/android/internal/policy/impl/MiuiCommonUnlockScreen;
 
     if-eqz v0, :cond_1
 
@@ -129,7 +162,7 @@
 
     move-result-object v0
 
-    check-cast v0, Lcom/android/internal/policy/impl/PatternUnlockScreen;
+    check-cast v0, Lcom/android/internal/policy/impl/MiuiCommonUnlockScreen;
 
     iget-object v1, p0, Lcom/android/internal/policy/impl/LockPatternKeyguardView$AccountAnalyzer;->this$0:Lcom/android/internal/policy/impl/LockPatternKeyguardView;
 
@@ -138,7 +171,7 @@
 
     move-result v1
 
-    invoke-virtual {v0, v1}, Lcom/android/internal/policy/impl/PatternUnlockScreen;->setEnableFallback(Z)V
+    invoke-virtual {v0, v1}, Lcom/android/internal/policy/impl/MiuiCommonUnlockScreen;->setEnableFallback(Z)V
 
     goto :goto_0
 
