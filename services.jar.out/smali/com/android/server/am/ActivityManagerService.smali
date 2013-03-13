@@ -1351,7 +1351,7 @@
     .local v1, systemDir:Ljava/io/File;
     invoke-virtual {v1}, Ljava/io/File;->mkdirs()Z
 
-    invoke-static {v1, v0}, Lmiui/os/Environment;->init(Ljava/io/File;Ljava/io/File;)V
+    invoke-static {}, Lcom/android/server/am/ExtraActivityManagerService;->init()V
 
     new-instance v2, Lcom/android/server/am/BatteryStatsService;
 
@@ -5846,17 +5846,21 @@
     move-result-object v8
 
     .restart local v8       #queue:Lcom/android/server/am/BroadcastQueue;
+    move-object/from16 v0, p0
+
+    iget-object v3, v0, Lcom/android/server/am/ActivityManagerService;->mContext:Landroid/content/Context;
+
     invoke-virtual/range {p0 .. p0}, Lcom/android/server/am/ActivityManagerService;->getRunningAppProcesses()Ljava/util/List;
-
-    move-result-object v3
-
-    invoke-virtual/range {v44 .. v44}, Landroid/content/Intent;->getAction()Ljava/lang/String;
 
     move-result-object v5
 
+    invoke-virtual/range {v44 .. v44}, Landroid/content/Intent;->getAction()Ljava/lang/String;
+
+    move-result-object v9
+
     move-object/from16 v0, v24
 
-    invoke-static {v0, v3, v5}, Lcom/android/server/am/ExtraActivityManagerService;->adjustMediaButtonReceivers(Ljava/util/List;Ljava/util/List;Ljava/lang/String;)V
+    invoke-static {v3, v0, v5, v9}, Lcom/android/server/am/ExtraActivityManagerService;->adjustMediaButtonReceivers(Landroid/content/Context;Ljava/util/List;Ljava/util/List;Ljava/lang/String;)V
 
     new-instance v7, Lcom/android/server/am/BroadcastRecord;
 
@@ -8436,11 +8440,17 @@
     const/16 v23, 0x0
 
     .local v23, interesting:Z
-    move-object/from16 v0, p1
+    move-object/from16 v0, p0
 
-    move-object/from16 v1, p3
+    move-object/from16 v1, p1
 
-    if-ne v0, v1, :cond_16
+    move-object/from16 v2, p3
+
+    invoke-static {v0, v1, v2}, Lcom/android/server/am/ActivityManagerService$Injector;->isForegroudApp(Lcom/android/server/am/ActivityManagerService;Lcom/android/server/am/ProcessRecord;Lcom/android/server/am/ProcessRecord;)Z
+
+    move-result v2
+
+    if-eqz v2, :cond_16
 
     const/4 v11, 0x0
 
@@ -20031,7 +20041,7 @@
     move-result-object v1
 
     .local v1, context:Landroid/content/Context;
-    const v4, 0x103006e
+    const v4, 0x60d003a
 
     invoke-virtual {v1, v4}, Landroid/content/Context;->setTheme(I)V
 
@@ -43894,6 +43904,12 @@
     move-object/from16 v2, p0
 
     invoke-direct/range {v2 .. v16}, Lcom/android/server/am/ActivityManagerService;->broadcastIntentLocked(Lcom/android/server/am/ProcessRecord;Ljava/lang/String;Landroid/content/Intent;Ljava/lang/String;Landroid/content/IIntentReceiver;ILjava/lang/String;Landroid/os/Bundle;Ljava/lang/String;ZZIII)I
+
+    move-object/from16 v0, p0
+
+    iget-object v2, v0, Lcom/android/server/am/ActivityManagerService;->mContext:Landroid/content/Context;
+
+    invoke-static {v2}, Lcom/android/server/am/ExtraActivityManagerService;->finishBooting(Landroid/content/Context;)V
 
     .end local v19           #nmsg:Landroid/os/Message;
     :cond_1

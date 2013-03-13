@@ -1745,23 +1745,9 @@
     check-cast v19, Landroid/content/pm/PackageInfo;
 
     .restart local v19       #pkg:Landroid/content/pm/PackageInfo;
-    move-object/from16 v0, v19
+    sget-boolean v21, Lcom/android/server/BackupManagerService$Injector;->FALSE:Z
 
-    iget-object v0, v0, Landroid/content/pm/PackageInfo;->applicationInfo:Landroid/content/pm/ApplicationInfo;
-
-    move-object/from16 v21, v0
-
-    move-object/from16 v0, v21
-
-    iget v0, v0, Landroid/content/pm/ApplicationInfo;->flags:I
-
-    move/from16 v21, v0
-
-    const v22, 0x8000
-
-    and-int v21, v21, v22
-
-    if-eqz v21, :cond_3
+    if-nez v21, :cond_3
 
     move-object/from16 v0, v19
 

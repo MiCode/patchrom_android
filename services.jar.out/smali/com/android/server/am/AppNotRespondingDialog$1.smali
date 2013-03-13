@@ -51,8 +51,7 @@
 
     iget-object v4, p0, Lcom/android/server/am/AppNotRespondingDialog$1;->this$0:Lcom/android/server/am/AppNotRespondingDialog;
 
-    #getter for: Lcom/android/server/am/AppNotRespondingDialog;->mProc:Lcom/android/server/am/ProcessRecord;
-    invoke-static {v4}, Lcom/android/server/am/AppNotRespondingDialog;->access$000(Lcom/android/server/am/AppNotRespondingDialog;)Lcom/android/server/am/ProcessRecord;
+    invoke-virtual {v4}, Lcom/android/server/am/AppNotRespondingDialog;->getProc()Lcom/android/server/am/ProcessRecord;
 
     move-result-object v4
 
