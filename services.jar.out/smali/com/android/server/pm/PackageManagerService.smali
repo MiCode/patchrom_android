@@ -5039,7 +5039,7 @@
     goto :goto_0
 .end method
 
-.method private dealFlags(Landroid/content/pm/PackageParser$Package;Lcom/android/server/pm/PackageSetting;)V
+.method private appendExtendedFlags(Landroid/content/pm/PackageParser$Package;Lcom/android/server/pm/PackageSetting;)V
     .locals 4
     .parameter "pkg"
     .parameter "pkgSetting"
@@ -14757,7 +14757,7 @@
 
     move-object/from16 v2, v41
 
-    invoke-direct {v0, v1, v2}, Lcom/android/server/pm/PackageManagerService;->dealFlags(Landroid/content/pm/PackageParser$Package;Lcom/android/server/pm/PackageSetting;)V
+    invoke-direct {v0, v1, v2}, Lcom/android/server/pm/PackageManagerService;->appendExtendedFlags(Landroid/content/pm/PackageParser$Package;Lcom/android/server/pm/PackageSetting;)V
 
     move-object/from16 v0, v41
 
