@@ -21,7 +21,7 @@ fi
 if [ $# -eq 0 ]
 then
 	echo "update miui-all"
-	rm -rf android.jar.out framework.jar.out services.jar.out
+	rm -rf android.policy.jar.out framework.jar.out services.jar.out
 	cp  $ANDROID_OUT/system/framework/android.policy.jar .
 	cp  $ANDROID_OUT/system/framework/framework.jar .
 	cp  $ANDROID_OUT/system/framework/services.jar .
@@ -43,7 +43,7 @@ else
 		case $1 in
 			android.policy*)
 				echo "update miui-android"
-				rm -rf android.jar.out
+				rm -rf android.policy.jar.out
 				cp  $ANDROID_OUT/system/framework/android.policy.jar .
 				disassemble_and_remove_lines android.policy.jar
 				shift
