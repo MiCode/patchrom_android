@@ -548,6 +548,21 @@
 .method public abstract isFloating()Z
 .end method
 
+.method public isHardwareAccelerated()Z
+    .locals 1
+
+    .prologue
+    invoke-virtual {p0}, Landroid/view/Window;->getWindowManager()Landroid/view/WindowManager;
+
+    move-result-object v0
+
+    invoke-interface {v0}, Landroid/view/WindowManager;->isHardwareAccelerated()Z
+
+    move-result v0
+
+    return v0
+.end method
+
 .method public abstract isShortcutKey(ILandroid/view/KeyEvent;)Z
 .end method
 
