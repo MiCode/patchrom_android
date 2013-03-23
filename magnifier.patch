@@ -2110,7 +2110,7 @@ Change-Id: Ie292174b8790c84ce3701a1e6aadec2355e583d2
  
      if-eqz v1, :cond_0
  
-+    invoke-direct {p0}, Landroid/widget/Editor;->longClickFeedback()V
++    invoke-direct {p0}, Landroid/widget/TextView;->longClickFeedback()V
 +
      const/4 v0, 0x1
  
