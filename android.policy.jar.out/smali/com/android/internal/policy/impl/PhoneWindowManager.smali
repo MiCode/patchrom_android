@@ -5319,7 +5319,7 @@
     :goto_0
     iget-object v5, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mStatusBar:Landroid/view/WindowManagerPolicy$WindowState;
 
-    if-eqz v5, :cond_cond_miui_1
+    if-eqz v5, :cond_miui_1
 
     iget-boolean v5, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mForceStatusBar:Z
 
