@@ -64,3 +64,16 @@
 
     return-object v0
 .end method
+
+.method public setPollDuration(I)I
+    .locals 1
+    .parameter "pollDurationMs"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    const/4 v0, 0x0
+
+    return v0
+.end method
