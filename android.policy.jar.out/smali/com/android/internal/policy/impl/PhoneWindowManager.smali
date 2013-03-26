@@ -464,6 +464,12 @@
 
 .field mStatusBar:Landroid/view/WindowManagerPolicy$WindowState;
 
+.field mStatusBarDisableToken:Landroid/os/IBinder;
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_FIELD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+.end field
+
 .field mStatusBarHeight:I
 
 .field mStatusBarLayer:I
