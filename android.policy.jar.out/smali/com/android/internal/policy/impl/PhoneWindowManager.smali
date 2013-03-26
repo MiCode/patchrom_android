@@ -5415,7 +5415,7 @@
     :cond_5
     iget-object v5, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mTopFullscreenOpaqueWindowState:Landroid/view/WindowManagerPolicy$WindowState;
 
-    if-eqz v5, :cond_cond_miui_2
+    if-eqz v5, :cond_miui_2
 
     iget v5, v1, Landroid/view/WindowManager$LayoutParams;->flags:I
 
