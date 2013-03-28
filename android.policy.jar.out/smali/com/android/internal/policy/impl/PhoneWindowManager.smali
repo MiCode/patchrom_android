@@ -5337,9 +5337,7 @@
 
     if-eqz v5, :cond_5
 
-    iget-object v5, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mStatusBar:Landroid/view/WindowManagerPolicy$WindowState;
-
-    invoke-interface {v5, v4}, Landroid/view/WindowManagerPolicy$WindowState;->showLw(Z)Z
+    invoke-static {p0, v4}, Lcom/android/internal/policy/impl/PhoneWindowManager$Injector;->statusBarShowingOrHideing(Lcom/android/internal/policy/impl/PhoneWindowManager;Z)Z
 
     move-result v5
 
@@ -5349,6 +5347,8 @@
 
     :cond_0
     :goto_1
+    invoke-static {p0}, Lcom/android/internal/policy/impl/PhoneWindowManager$Injector;->checkStatusBarVisibility(Lcom/android/internal/policy/impl/PhoneWindowManager;)V
+
     iput-boolean v2, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mTopIsFullscreen:Z
 
     iget-object v5, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguard:Landroid/view/WindowManagerPolicy$WindowState;
@@ -5441,9 +5441,7 @@
     :goto_3
     if-eqz v2, :cond_8
 
-    iget-object v5, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mStatusBar:Landroid/view/WindowManagerPolicy$WindowState;
-
-    invoke-interface {v5, v4}, Landroid/view/WindowManagerPolicy$WindowState;->hideLw(Z)Z
+    invoke-static {p0, v3}, Lcom/android/internal/policy/impl/PhoneWindowManager$Injector;->statusBarShowingOrHideing(Lcom/android/internal/policy/impl/PhoneWindowManager;Z)Z
 
     move-result v5
 
@@ -5467,9 +5465,7 @@
     goto :goto_3
 
     :cond_8
-    iget-object v5, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mStatusBar:Landroid/view/WindowManagerPolicy$WindowState;
-
-    invoke-interface {v5, v4}, Landroid/view/WindowManagerPolicy$WindowState;->showLw(Z)Z
+    invoke-static {p0, v4}, Lcom/android/internal/policy/impl/PhoneWindowManager$Injector;->statusBarShowingOrHideing(Lcom/android/internal/policy/impl/PhoneWindowManager;Z)Z
 
     move-result v5
 
