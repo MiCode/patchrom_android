@@ -97,6 +97,36 @@
     goto :goto_0
 .end method
 
+.method private scaleOverScrollDeltaY(II)I
+    .locals 2
+    .parameter "deltaY"
+    .parameter "scrollY"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    move v0, p1
+
+    .local v0, retval:I
+    iget-object v1, p0, Landroid/widget/AbsListView$FlingRunnable;->mScroller:Landroid/widget/OverScroller;
+
+    invoke-virtual {v1}, Landroid/widget/OverScroller;->checkSpringBackState()Z
+
+    move-result v1
+
+    if-nez v1, :cond_0
+
+    iget-object v1, p0, Landroid/widget/AbsListView$FlingRunnable;->this$0:Landroid/widget/AbsListView;
+
+    invoke-static {v1, p1, p2}, Landroid/widget/AbsListView$Injector;->scaleOverScrollDeltaY(Landroid/widget/AbsListView;II)I
+
+    move-result v0
+
+    :cond_0
+    return v0
+.end method
+
 
 # virtual methods
 .method edgeReached(I)V
@@ -296,6 +326,18 @@
     invoke-virtual {v0, v1, v2, v3}, Landroid/widget/AbsListView;->postDelayed(Ljava/lang/Runnable;J)Z
 
     return-void
+.end method
+
+.method protected getScroller()Landroid/widget/OverScroller;
+    .locals 1
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .prologue
+    iget-object v0, p0, Landroid/widget/AbsListView$FlingRunnable;->mScroller:Landroid/widget/OverScroller;
+
+    return-object v0
 .end method
 
 .method public run()V
@@ -525,6 +567,7 @@
 
     if-eqz v24, :cond_5
 
+
     invoke-virtual/range {v24 .. v24}, Landroid/view/View;->getTop()I
 
     move-result v2
@@ -533,7 +576,23 @@
 
     sub-int v2, v20, v2
 
-    neg-int v4, v2
+    neg-int v2, v2
+
+    move-object/from16 v0, p0
+
+    iget-object v3, v0, Landroid/widget/AbsListView$FlingRunnable;->this$0:Landroid/widget/AbsListView;
+
+    move-object/from16 v0, p0
+
+    iget-object v5, v0, Landroid/widget/AbsListView$FlingRunnable;->this$0:Landroid/widget/AbsListView;
+
+    invoke-virtual {v5}, Landroid/widget/AbsListView;->getScrollY()I
+
+    move-result v5
+
+    invoke-static {v3, v2, v5}, Landroid/widget/AbsListView$Injector;->scaleOverScrollDeltaY(Landroid/widget/AbsListView;II)I
+
+    move-result v4
 
     .local v4, overshoot:I
     move-object/from16 v0, p0
@@ -758,7 +817,13 @@
     move-result v19
 
     .local v19, currY:I
-    sub-int v7, v19, v9
+    sub-int v2, v19, v9
+
+    move-object/from16 v0, p0
+
+    invoke-direct {v0, v2, v9}, Landroid/widget/AbsListView$FlingRunnable;->scaleOverScrollDeltaY(II)I
+
+    move-result v7
 
     .local v7, deltaY:I
     move-object/from16 v0, p0
