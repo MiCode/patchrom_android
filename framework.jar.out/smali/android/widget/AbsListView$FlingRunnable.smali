@@ -79,8 +79,7 @@
     .prologue
     iget-object v0, p0, Landroid/widget/AbsListView$FlingRunnable;->this$0:Landroid/widget/AbsListView;
 
-    #getter for: Landroid/widget/AbsListView;->mScrollY:I
-    invoke-static {v0}, Landroid/widget/AbsListView;->access$2100(Landroid/widget/AbsListView;)I
+    invoke-virtual {v0}, Landroid/widget/AbsListView;->getScrollY()I
 
     move-result v0
 
@@ -947,7 +946,7 @@
     .end local v9           #scrollY:I
     .end local v19           #currY:I
     :cond_11
-    invoke-virtual/range {p0 .. p0}, Landroid/widget/AbsListView$FlingRunnable;->endFling()V
+    invoke-direct/range {p0 .. p0}, Landroid/widget/AbsListView$FlingRunnable;->endFling2()V
 
     goto/16 :goto_0
 
