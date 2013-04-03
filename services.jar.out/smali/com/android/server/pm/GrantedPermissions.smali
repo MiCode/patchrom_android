@@ -94,7 +94,7 @@
     .end annotation
 
     .prologue
-    const v0, -0x1ffbffff
+    const v0, -0x17fbffff
 
     and-int/2addr v0, p1
 

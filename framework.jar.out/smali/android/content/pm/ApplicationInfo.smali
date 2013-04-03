@@ -61,6 +61,8 @@
 
 .field public static final FLAG_RESTORE_ANY_VERSION:I = 0x20000
 
+.field public static final FLAG_SHOW_FLOATING_WINDOW:I = 0x8000000
+
 .field public static final FLAG_STOPPED:I = 0x200000
 
 .field public static final FLAG_SUPPORTS_LARGE_SCREENS:I = 0x800

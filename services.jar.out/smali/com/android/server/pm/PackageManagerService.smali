@@ -5029,46 +5029,6 @@
     goto :goto_0
 .end method
 
-.method private appendExtendedFlags(Landroid/content/pm/PackageParser$Package;Lcom/android/server/pm/PackageSetting;)V
-    .locals 4
-    .parameter "pkg"
-    .parameter "pkgSetting"
-    .annotation build Landroid/annotation/MiuiHook;
-        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
-    .end annotation
-
-    .prologue
-    iget-object v0, p1, Landroid/content/pm/PackageParser$Package;->applicationInfo:Landroid/content/pm/ApplicationInfo;
-
-    iget v1, v0, Landroid/content/pm/ApplicationInfo;->flags:I
-
-    iget v2, p2, Lcom/android/server/pm/PackageSetting;->pkgFlags:I
-
-    const/high16 v3, -0x8000
-
-    and-int/2addr v2, v3
-
-    or-int/2addr v1, v2
-
-    iput v1, v0, Landroid/content/pm/ApplicationInfo;->flags:I
-
-    iget-object v0, p1, Landroid/content/pm/PackageParser$Package;->applicationInfo:Landroid/content/pm/ApplicationInfo;
-
-    iget v1, v0, Landroid/content/pm/ApplicationInfo;->flags:I
-
-    iget v2, p2, Lcom/android/server/pm/PackageSetting;->pkgFlags:I
-
-    const/high16 v3, 0x4000
-
-    and-int/2addr v2, v3
-
-    or-int/2addr v1, v2
-
-    iput v1, v0, Landroid/content/pm/ApplicationInfo;->flags:I
-
-    return-void
-.end method
-
 .method private deleteApplicationCacheFilesLI(Ljava/lang/String;I)Z
     .locals 7
     .parameter "packageName"
@@ -14707,47 +14667,9 @@
     :cond_18
     move-object/from16 v0, p1
 
-    iget-object v3, v0, Landroid/content/pm/PackageParser$Package;->applicationInfo:Landroid/content/pm/ApplicationInfo;
+    move-object/from16 v1, v41
 
-    iget v4, v3, Landroid/content/pm/ApplicationInfo;->flags:I
-
-    move-object/from16 v0, v41
-
-    iget v10, v0, Lcom/android/server/pm/PackageSetting;->pkgFlags:I
-
-    const/high16 v11, -0x8000
-
-    and-int/2addr v10, v11
-
-    or-int/2addr v4, v10
-
-    iput v4, v3, Landroid/content/pm/ApplicationInfo;->flags:I
-
-    move-object/from16 v0, p1
-
-    iget-object v3, v0, Landroid/content/pm/PackageParser$Package;->applicationInfo:Landroid/content/pm/ApplicationInfo;
-
-    iget v4, v3, Landroid/content/pm/ApplicationInfo;->flags:I
-
-    move-object/from16 v0, v41
-
-    iget v10, v0, Lcom/android/server/pm/PackageSetting;->pkgFlags:I
-
-    const/high16 v11, 0x4000
-
-    and-int/2addr v10, v11
-
-    or-int/2addr v4, v10
-
-    iput v4, v3, Landroid/content/pm/ApplicationInfo;->flags:I
-
-    move-object/from16 v0, p0
-
-    move-object/from16 v1, p1
-
-    move-object/from16 v2, v41
-
-    invoke-direct {v0, v1, v2}, Lcom/android/server/pm/PackageManagerService;->appendExtendedFlags(Landroid/content/pm/PackageParser$Package;Lcom/android/server/pm/PackageSetting;)V
+    invoke-static {v0, v1}, Lcom/android/server/pm/PackageManagerService$Injector;->addMiuiExtendFlags(Landroid/content/pm/PackageParser$Package;Lcom/android/server/pm/PackageSetting;)V
 
     move-object/from16 v0, v41
 
@@ -33708,7 +33630,7 @@
     return-void
 
     :cond_1
-    invoke-static {p0, p1, p2, p3}, Lcom/android/server/pm/PackageManagerService$Injector;->setAccessControl(Lcom/android/server/pm/PackageManagerService;Ljava/lang/String;II)Z
+    invoke-static {p0, p1, p2, p3}, Lcom/android/server/pm/PackageManagerService$Injector;->setMiuiExtendFlags(Lcom/android/server/pm/PackageManagerService;Ljava/lang/String;II)Z
 
     move-result v0
 
