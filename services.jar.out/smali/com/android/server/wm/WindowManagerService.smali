@@ -25477,6 +25477,8 @@
     return v29
 
     :cond_1
+    invoke-static/range {v27 .. v27}, Lcom/android/server/wm/WindowManagerService$Injector;->restoreFloatingWindowState(Lcom/android/server/wm/WindowState;)V
+
     move-object/from16 v0, v27
 
     iget-object v0, v0, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
@@ -26612,7 +26614,7 @@
 
     invoke-virtual {v0, v1}, Lcom/android/server/wm/InputMonitor;->updateInputWindowsLw(Z)V
 
-    invoke-static/range {v27 .. v27}, Lcom/android/server/wm/WindowManagerService$Injector;->updateFloatingWindow(Lcom/android/server/wm/WindowState;)V
+    invoke-static/range {v27 .. v27}, Lcom/android/server/wm/WindowManagerService$Injector;->saveFloatingWindowState(Lcom/android/server/wm/WindowState;)V
 
     monitor-exit v30
     :try_end_3
@@ -26821,6 +26823,8 @@
     invoke-static {v0, v1, v10}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
 
     invoke-static/range {v17 .. v18}, Landroid/os/Binder;->restoreCallingIdentity(J)V
+
+    invoke-static/range {v27 .. v27}, Lcom/android/server/wm/WindowManagerService$Injector;->saveFloatingWindowState(Lcom/android/server/wm/WindowState;)V
 
     const/16 v29, 0x0
 
