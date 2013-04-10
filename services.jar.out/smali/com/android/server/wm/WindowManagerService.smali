@@ -5403,6 +5403,15 @@
 
     .end local v3           #token:Lcom/android/server/wm/WindowToken;
     :cond_3
+    invoke-static {p0, p2}, Lcom/android/server/wm/WindowManagerService$Injector;->updateFocusAndLayout(Lcom/android/server/wm/WindowManagerService;I)Z
+
+    move-result v4
+
+    if-nez v4, :cond_miui_0
+
+    return-void
+
+    :cond_miui_0
     iget-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mInputMonitor:Lcom/android/server/wm/InputMonitor;
 
     invoke-virtual {v4}, Lcom/android/server/wm/InputMonitor;->setUpdateInputWindowsNeededLw()V
