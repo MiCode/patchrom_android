@@ -36,6 +36,8 @@
 
 .field final mAttachedWindow:Lcom/android/server/wm/WindowState;
 
+.field mAttrFlagsSaved:Z
+
 .field final mAttrs:Landroid/view/WindowManager$LayoutParams;
 
 .field final mBaseLayer:I
