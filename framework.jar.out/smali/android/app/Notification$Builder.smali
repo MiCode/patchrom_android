@@ -44,6 +44,8 @@
 
 .field private mContext:Landroid/content/Context;
 
+.field private mCustomizedIcon:Z
+
 .field private mDefaults:I
 
 .field private mDeleteIntent:Landroid/app/PendingIntent;
@@ -970,6 +972,10 @@
     invoke-virtual {v1, v2}, Ljava/util/ArrayList;->toArray([Ljava/lang/Object;)[Ljava/lang/Object;
 
     :cond_3
+    iget-boolean v1, p0, Landroid/app/Notification$Builder;->mCustomizedIcon:Z
+
+    iput-boolean v1, v0, Landroid/app/Notification;->customizedIcon:Z
+
     return-object v0
 
     :cond_4
@@ -1303,6 +1309,16 @@
 
     .prologue
     iput-object p1, p0, Landroid/app/Notification$Builder;->mContentTitle:Ljava/lang/CharSequence;
+
+    return-object p0
+.end method
+
+.method public setCustomizedIcon(Z)Landroid/app/Notification$Builder;
+    .locals 0
+    .parameter "customizedIcon"
+
+    .prologue
+    iput-boolean p1, p0, Landroid/app/Notification$Builder;->mCustomizedIcon:Z
 
     return-object p0
 .end method
