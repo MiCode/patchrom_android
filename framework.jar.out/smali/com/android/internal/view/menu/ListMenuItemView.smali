@@ -472,7 +472,7 @@
 
     move-result v1
 
-    invoke-static {v4, v1}, Lcom/android/internal/view/menu/ListMenuItemView$Injector;->checkTextColor(Landroid/widget/TextView;Z)V
+    invoke-static {p0, v4, v1}, Lcom/android/internal/view/menu/ListMenuItemView$Injector;->checkTextColor(Lcom/android/internal/view/menu/ListMenuItemView;Landroid/widget/TextView;Z)V
 
     if-eqz p1, :cond_6
 
@@ -574,7 +574,7 @@
 
     iget-object v1, p0, Lcom/android/internal/view/menu/ListMenuItemView;->mTitleView:Landroid/widget/TextView;
 
-    invoke-static {v1, p1}, Lcom/android/internal/view/menu/ListMenuItemView$Injector;->checkTextColor(Landroid/widget/TextView;Z)V
+    invoke-static {p0, v1, p1}, Lcom/android/internal/view/menu/ListMenuItemView$Injector;->checkTextColor(Lcom/android/internal/view/menu/ListMenuItemView;Landroid/widget/TextView;Z)V
 
     return-void
 
