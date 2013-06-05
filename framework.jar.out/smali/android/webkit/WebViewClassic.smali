@@ -22916,3 +22916,10 @@
 
     return v0
 .end method
+
+.method public hideFloatView()V
+    .locals 0
+
+    .prologue
+    return-void
+.end method
