@@ -4117,6 +4117,221 @@
 .method public native extractAlbumArt(Ljava/io/FileDescriptor;)[B
 .end method
 
+.method fastMakeEntryFor(Ljava/lang/String;)Landroid/media/MediaScanner$FileEntry;
+    .locals 14
+    .parameter "path"
+
+    .prologue
+    const/4 v12, 0x0
+
+    .local v12, c:Landroid/database/Cursor;
+    :try_start_0
+    const-string v0, "_"
+
+    invoke-virtual {p1, v0}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
+
+    move-result v0
+
+    if-nez v0, :cond_0
+
+    const-string v0, "%"
+
+    invoke-virtual {p1, v0}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_4
+
+    :cond_0
+    const/4 v13, 0x1
+
+    .local v13, hasWildCards:Z
+    :goto_0
+    if-nez v13, :cond_1
+
+    iget-boolean v0, p0, Landroid/media/MediaScanner;->mCaseInsensitivePaths:Z
+
+    if-nez v0, :cond_5
+
+    :cond_1
+    const-string v3, "_data=?"
+
+    .local v3, where:Ljava/lang/String;
+    const/4 v0, 0x1
+
+    new-array v4, v0, [Ljava/lang/String;
+
+    const/4 v0, 0x0
+
+    aput-object p1, v4, v0
+
+    .local v4, selectionArgs:[Ljava/lang/String;
+    :goto_1
+    iget-object v0, p0, Landroid/media/MediaScanner;->mMediaProvider:Landroid/content/IContentProvider;
+
+    iget-object v1, p0, Landroid/media/MediaScanner;->mFilesUri:Landroid/net/Uri;
+
+    sget-object v2, Landroid/media/MediaScanner;->FILES_PRESCAN_PROJECTION:[Ljava/lang/String;
+
+    const/4 v5, 0x0
+
+    const/4 v6, 0x0
+
+    invoke-interface/range {v0 .. v6}, Landroid/content/IContentProvider;->query(Landroid/net/Uri;[Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;Landroid/os/ICancellationSignal;)Landroid/database/Cursor;
+
+    move-result-object v12
+
+    invoke-interface {v12}, Landroid/database/Cursor;->moveToFirst()Z
+
+    move-result v0
+
+    if-nez v0, :cond_2
+
+    if-eqz v13, :cond_2
+
+    iget-boolean v0, p0, Landroid/media/MediaScanner;->mCaseInsensitivePaths:Z
+
+    if-eqz v0, :cond_2
+
+    const-string v3, "_data LIKE ?1 AND lower(_data)=lower(?1)"
+
+    const/4 v0, 0x1
+
+    new-array v4, v0, [Ljava/lang/String;
+
+    .end local v4           #selectionArgs:[Ljava/lang/String;
+    const/4 v0, 0x0
+
+    aput-object p1, v4, v0
+
+    .restart local v4       #selectionArgs:[Ljava/lang/String;
+    invoke-interface {v12}, Landroid/database/Cursor;->close()V
+
+    iget-object v0, p0, Landroid/media/MediaScanner;->mMediaProvider:Landroid/content/IContentProvider;
+
+    iget-object v1, p0, Landroid/media/MediaScanner;->mFilesUri:Landroid/net/Uri;
+
+    sget-object v2, Landroid/media/MediaScanner;->FILES_PRESCAN_PROJECTION:[Ljava/lang/String;
+
+    const/4 v5, 0x0
+
+    const/4 v6, 0x0
+
+    invoke-interface/range {v0 .. v6}, Landroid/content/IContentProvider;->query(Landroid/net/Uri;[Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;Landroid/os/ICancellationSignal;)Landroid/database/Cursor;
+
+    move-result-object v12
+
+    :cond_2
+    invoke-interface {v12}, Landroid/database/Cursor;->moveToFirst()Z
+
+    move-result v0
+
+    if-eqz v0, :cond_8
+
+    const/4 v0, 0x0
+
+    invoke-interface {v12, v0}, Landroid/database/Cursor;->getLong(I)J
+
+    move-result-wide v6
+
+    .local v6, rowId:J
+    const/4 v0, 0x2
+
+    invoke-interface {v12, v0}, Landroid/database/Cursor;->getInt(I)I
+
+    move-result v11
+
+    .local v11, format:I
+    const/4 v0, 0x3
+
+    invoke-interface {v12, v0}, Landroid/database/Cursor;->getLong(I)J
+
+    move-result-wide v9
+
+    .local v9, lastModified:J
+    new-instance v5, Landroid/media/MediaScanner$FileEntry;
+
+    move-object v8, p1
+
+    invoke-direct/range {v5 .. v11}, Landroid/media/MediaScanner$FileEntry;-><init>(JLjava/lang/String;JI)V
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
+
+    if-eqz v12, :cond_3
+
+    invoke-interface {v12}, Landroid/database/Cursor;->close()V
+
+    .end local v3           #where:Ljava/lang/String;
+    .end local v4           #selectionArgs:[Ljava/lang/String;
+    .end local v6           #rowId:J
+    .end local v9           #lastModified:J
+    .end local v11           #format:I
+    .end local v13           #hasWildCards:Z
+    :cond_3
+    :goto_2
+    return-object v5
+
+    :cond_4
+    const/4 v13, 0x0
+
+    goto :goto_0
+
+    .restart local v13       #hasWildCards:Z
+    :cond_5
+    :try_start_1
+    const-string v3, "_data LIKE ?1 AND lower(_data)=lower(?1)"
+
+    .restart local v3       #where:Ljava/lang/String;
+    const/4 v0, 0x1
+
+    new-array v4, v0, [Ljava/lang/String;
+
+    const/4 v0, 0x0
+
+    aput-object p1, v4, v0
+    :try_end_1
+    .catchall {:try_start_1 .. :try_end_1} :catchall_0
+    .catch Landroid/os/RemoteException; {:try_start_1 .. :try_end_1} :catch_0
+
+    .restart local v4       #selectionArgs:[Ljava/lang/String;
+    goto :goto_1
+
+    .end local v3           #where:Ljava/lang/String;
+    .end local v4           #selectionArgs:[Ljava/lang/String;
+    .end local v13           #hasWildCards:Z
+    :catchall_0
+    move-exception v0
+
+    if-eqz v12, :cond_6
+
+    invoke-interface {v12}, Landroid/database/Cursor;->close()V
+
+    :cond_6
+    throw v0
+
+    :catch_0
+    move-exception v0
+
+    if-eqz v12, :cond_7
+
+    :goto_3
+    invoke-interface {v12}, Landroid/database/Cursor;->close()V
+
+    :cond_7
+    const/4 v5, 0x0
+
+    goto :goto_2
+
+    .restart local v3       #where:Ljava/lang/String;
+    .restart local v4       #selectionArgs:[Ljava/lang/String;
+    .restart local v13       #hasWildCards:Z
+    :cond_8
+    if-eqz v12, :cond_7
+
+    goto :goto_3
+.end method
+
 .method protected finalize()V
     .locals 2
 
@@ -4605,7 +4820,7 @@
 
     invoke-direct {v0, v2, v3}, Landroid/media/MediaScanner;->prescan(Ljava/lang/String;Z)V
 
-    invoke-virtual/range {p0 .. p1}, Landroid/media/MediaScanner;->makeEntryFor(Ljava/lang/String;)Landroid/media/MediaScanner$FileEntry;
+    invoke-virtual/range {p0 .. p1}, Landroid/media/MediaScanner;->fastMakeEntryFor(Ljava/lang/String;)Landroid/media/MediaScanner$FileEntry;
 
     move-result-object v13
 
