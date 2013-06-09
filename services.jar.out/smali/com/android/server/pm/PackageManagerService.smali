@@ -3810,7 +3810,7 @@
 
     move/from16 v4, p5
 
-    invoke-static/range {v0 .. v5}, Lcom/android/server/pm/PackageManagerService$Injector;->checkMiuiHomeIntent(Lcom/android/server/pm/PackageManagerService;Landroid/content/Intent;Ljava/lang/String;IILandroid/content/pm/ResolveInfo;)Landroid/content/pm/ResolveInfo;
+    invoke-static/range {v0 .. v5}, Lcom/android/server/pm/PackageManagerService$Injector;->checkMiuiIntent(Lcom/android/server/pm/PackageManagerService;Landroid/content/Intent;Ljava/lang/String;IILandroid/content/pm/ResolveInfo;)Landroid/content/pm/ResolveInfo;
 
     move-result-object v0
 
