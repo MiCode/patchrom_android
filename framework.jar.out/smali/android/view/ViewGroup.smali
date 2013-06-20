@@ -3920,7 +3920,7 @@
 .end method
 
 .method protected detachViewFromParent(I)V
-    .locals 0
+    .locals 1
     .parameter "index"
 
     .prologue
@@ -3952,7 +3952,7 @@
 .end method
 
 .method protected detachViewsFromParent(II)V
-    .locals 0
+    .locals 1
     .parameter "start"
     .parameter "count"
 
