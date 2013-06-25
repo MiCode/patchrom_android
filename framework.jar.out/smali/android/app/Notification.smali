@@ -91,11 +91,11 @@
 
 .field public contentView:Landroid/widget/RemoteViews;
 
-.field public customizedIcon:Z
-
 .field public defaults:I
 
 .field public deleteIntent:Landroid/app/PendingIntent;
+
+.field public extraNotification:Lmiui/app/ExtraNotification;
 
 .field private extras:Landroid/os/Bundle;
 
@@ -152,6 +152,12 @@
     .prologue
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
+    new-instance v0, Lmiui/app/ExtraNotification;
+
+    invoke-direct {v0}, Lmiui/app/ExtraNotification;-><init>()V
+
+    iput-object v0, p0, Landroid/app/Notification;->extraNotification:Lmiui/app/ExtraNotification;
+
     const/4 v0, -0x1
 
     iput v0, p0, Landroid/app/Notification;->audioStreamType:I
@@ -179,6 +185,12 @@
 
     .prologue
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    new-instance v0, Lmiui/app/ExtraNotification;
+
+    invoke-direct {v0}, Lmiui/app/ExtraNotification;-><init>()V
+
+    iput-object v0, p0, Landroid/app/Notification;->extraNotification:Lmiui/app/ExtraNotification;
 
     const/4 v0, -0x1
 
@@ -208,6 +220,12 @@
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
+    new-instance v0, Lmiui/app/ExtraNotification;
+
+    invoke-direct {v0}, Lmiui/app/ExtraNotification;-><init>()V
+
+    iput-object v0, p0, Landroid/app/Notification;->extraNotification:Lmiui/app/ExtraNotification;
+
     const/4 v0, -0x1
 
     iput v0, p0, Landroid/app/Notification;->audioStreamType:I
@@ -233,6 +251,12 @@
 
     .prologue
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    new-instance v1, Lmiui/app/ExtraNotification;
+
+    invoke-direct {v1}, Lmiui/app/ExtraNotification;-><init>()V
+
+    iput-object v1, p0, Landroid/app/Notification;->extraNotification:Lmiui/app/ExtraNotification;
 
     const/4 v1, -0x1
 
@@ -497,7 +521,9 @@
     iput-object v1, p0, Landroid/app/Notification;->bigContentView:Landroid/widget/RemoteViews;
 
     :cond_9
-    invoke-direct {p0, p1}, Landroid/app/Notification;->readCustomizedIcon(Landroid/os/Parcel;)V
+    iget-object v1, p0, Landroid/app/Notification;->extraNotification:Lmiui/app/ExtraNotification;
+
+    invoke-virtual {v1, p1}, Lmiui/app/ExtraNotification;->readFromParcel(Landroid/os/Parcel;)V
 
     return-void
 .end method
@@ -532,52 +558,6 @@
     iput-object p1, p0, Landroid/app/Notification;->actions:[Landroid/app/Notification$Action;
 
     return-object p1
-.end method
-
-.method private readCustomizedIcon(Landroid/os/Parcel;)V
-    .locals 2
-    .parameter "parcel"
-
-    .prologue
-    const/4 v0, 0x1
-
-    invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
-
-    move-result v1
-
-    if-ne v1, v0, :cond_0
-
-    :goto_0
-    iput-boolean v0, p0, Landroid/app/Notification;->customizedIcon:Z
-
-    return-void
-
-    :cond_0
-    const/4 v0, 0x0
-
-    goto :goto_0
-.end method
-
-.method private writeCustomizedIcon(Landroid/os/Parcel;)V
-    .locals 1
-    .parameter "parcel"
-
-    .prologue
-    iget-boolean v0, p0, Landroid/app/Notification;->customizedIcon:Z
-
-    if-eqz v0, :cond_0
-
-    const/4 v0, 0x1
-
-    :goto_0
-    invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeInt(I)V
-
-    return-void
-
-    :cond_0
-    const/4 v0, 0x0
-
-    goto :goto_0
 .end method
 
 
@@ -802,9 +782,11 @@
     iput-object v7, v2, Landroid/app/Notification;->bigContentView:Landroid/widget/RemoteViews;
 
     :cond_8
-    iget-boolean v7, p0, Landroid/app/Notification;->customizedIcon:Z
+    iget-object v7, v2, Landroid/app/Notification;->extraNotification:Lmiui/app/ExtraNotification;
 
-    iput-boolean v7, v2, Landroid/app/Notification;->customizedIcon:Z
+    iget-object v8, p0, Landroid/app/Notification;->extraNotification:Lmiui/app/ExtraNotification;
+
+    invoke-virtual {v7, v8}, Lmiui/app/ExtraNotification;->setTo(Lmiui/app/ExtraNotification;)V
 
     return-object v2
 .end method
@@ -1417,7 +1399,9 @@
     invoke-virtual {v0, p1, v2}, Landroid/widget/RemoteViews;->writeToParcel(Landroid/os/Parcel;I)V
 
     :goto_9
-    invoke-direct {p0, p1}, Landroid/app/Notification;->writeCustomizedIcon(Landroid/os/Parcel;)V
+    iget-object v0, p0, Landroid/app/Notification;->extraNotification:Lmiui/app/ExtraNotification;
+
+    invoke-virtual {v0, p1, p2}, Lmiui/app/ExtraNotification;->writeToParcel(Landroid/os/Parcel;I)V
 
     return-void
 
