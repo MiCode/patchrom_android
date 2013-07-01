@@ -2871,6 +2871,10 @@
 
     iput-object v9, p0, Lcom/android/internal/telephony/gsm/GSMPhone;->mImei:Ljava/lang/String;
 
+    invoke-virtual {p0}, Lcom/android/internal/telephony/gsm/GSMPhone;->sendDeviceIdReadyBroadcast()V
+
+    invoke-virtual {p0}, Lcom/android/internal/telephony/gsm/GSMPhone;->setDeviceIdSystemProperty()V
+
     goto :goto_0
 
     .end local v0           #ar:Landroid/os/AsyncResult;
