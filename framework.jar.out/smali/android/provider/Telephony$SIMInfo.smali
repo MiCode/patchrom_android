@@ -67,9 +67,7 @@
 
     iput-object v0, p0, Landroid/provider/Telephony$SIMInfo;->mNumber:Ljava/lang/String;
 
-    const/4 v0, 0x1
-
-    iput v0, p0, Landroid/provider/Telephony$SIMInfo;->mDispalyNumberFormat:I
+    iput v1, p0, Landroid/provider/Telephony$SIMInfo;->mDispalyNumberFormat:I
 
     iput v1, p0, Landroid/provider/Telephony$SIMInfo;->mDataRoaming:I
 
@@ -245,6 +243,17 @@
 
     :cond_0
     :goto_0
+    iget v4, v0, Landroid/provider/Telephony$SIMInfo;->mSlot:I
+
+    const/4 v3, 0x0
+    
+    if-nez v4, :cond_miui_0
+
+    const/4 v3, 0x2
+
+    :cond_miui_0
+    iput v3, v0, Landroid/provider/Telephony$SIMInfo;->mColor:I
+
     sget-object v3, Landroid/provider/Telephony;->SIMBackgroundRes:[I
 
     array-length v2, v3

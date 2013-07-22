@@ -402,6 +402,14 @@
 
     invoke-virtual {v0, v1, v3}, Landroid/content/Intent;->putExtra(Ljava/lang/String;I)Landroid/content/Intent;
 
+    const-string v1, "subscriberId"
+
+    invoke-direct {p0}, Lcom/android/internal/telephony/IccCardProxy;->getSubscriberId()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-virtual {v0, v1, v3}, Landroid/content/Intent;->putExtra(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;
+
     new-instance v1, Ljava/lang/StringBuilder;
 
     invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
@@ -642,6 +650,30 @@
         :pswitch_0
         :pswitch_4
     .end packed-switch
+.end method
+
+.method private getSubscriberId()Ljava/lang/String;
+    .locals 3
+
+    .prologue
+    iget-object v1, p0, Lcom/android/internal/telephony/IccCardProxy;->mContext:Landroid/content/Context;
+
+    const-string v2, "phone"
+
+    invoke-virtual {v1, v2}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Landroid/telephony/TelephonyManager;
+
+    .local v0, tm:Landroid/telephony/TelephonyManager;
+    iget v1, p0, Lcom/android/internal/telephony/IccCardProxy;->mSimId:I
+
+    invoke-virtual {v0, v1}, Landroid/telephony/TelephonyManager;->getSubscriberIdGemini(I)Ljava/lang/String;
+
+    move-result-object v1
+
+    return-object v1
 .end method
 
 .method private log(Ljava/lang/String;)V

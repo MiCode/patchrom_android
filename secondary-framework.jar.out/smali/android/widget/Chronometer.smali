@@ -9,7 +9,8 @@
 
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
-        Landroid/widget/Chronometer$OnChronometerTickListener;
+        Landroid/widget/Chronometer$OnChronometerTickListener;,
+        Landroid/widget/Chronometer$Injector;
     }
 .end annotation
 
@@ -247,9 +248,11 @@
 
     div-long/2addr v2, v5
 
-    iget-object v5, p0, Landroid/widget/Chronometer;->mRecycle:Ljava/lang/StringBuilder;
+    iget-object v5, p0, Landroid/widget/Chronometer;->mContext:Landroid/content/Context;
 
-    invoke-static {v5, v2, v3}, Landroid/text/format/DateUtils;->formatElapsedTime(Ljava/lang/StringBuilder;J)Ljava/lang/String;
+    iget-object v6, p0, Landroid/widget/Chronometer;->mRecycle:Ljava/lang/StringBuilder;
+
+    invoke-static {v5, v6, v2, v3}, Landroid/widget/Chronometer$Injector;->formatElapsedTime(Landroid/content/Context;Ljava/lang/StringBuilder;J)Ljava/lang/String;
 
     move-result-object v4
 

@@ -1,4 +1,4 @@
-.class Lcom/android/internal/policy/impl/KeyguardUpdateMonitor$SimArgs;
+.class public Lcom/android/internal/policy/impl/KeyguardUpdateMonitor$SimArgs;
 .super Ljava/lang/Object;
 .source "KeyguardUpdateMonitor.java"
 
@@ -9,7 +9,7 @@
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
-    accessFlags = 0xa
+    accessFlags = 0xc
     name = "SimArgs"
 .end annotation
 
@@ -274,7 +274,9 @@
 
     .end local v3           #state:Lcom/android/internal/telephony/IccCardConstants$State;
     :cond_b
-    sget-object v3, Lcom/android/internal/telephony/IccCardConstants$State;->UNKNOWN:Lcom/android/internal/telephony/IccCardConstants$State;
+    invoke-static {v4}, Lcom/android/internal/policy/impl/KeyguardUpdateMonitor$Injector;->getIccCardState(Ljava/lang/String;)Lcom/android/internal/telephony/IccCardConstants$State;
+
+    move-result-object v3
 
     .restart local v3       #state:Lcom/android/internal/telephony/IccCardConstants$State;
     goto :goto_0

@@ -762,7 +762,7 @@
     return-object p0
 .end method
 
-.method public setUserAgent(Ljava/lang/String;)Landroid/app/DownloadManager$Request;
+.method public setUserAgent(Ljava/lang/String;)V
     .locals 3
     .parameter "userAgent"
 
@@ -791,7 +791,7 @@
 
     invoke-static {v0, v1}, Lcom/mediatek/xlog/Xlog;->v(Ljava/lang/String;Ljava/lang/String;)I
 
-    return-object p0
+    return-void
 .end method
 
 .method public setVisibleInDownloadsUi(Z)Landroid/app/DownloadManager$Request;

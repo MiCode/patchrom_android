@@ -447,9 +447,23 @@
 
     if-ge v2, v6, :cond_0
 
-    move v4, v5
+    invoke-static {v0}, Landroid/app/ExtraActivityManager;->isHighEndGfx(Landroid/view/Display;)Z
+
+    move-result v4
 
     goto :goto_0
+.end method
+
+.method public static isHighEndGfx(Landroid/view/Display;)Z
+    .locals 1
+    .parameter "display"
+
+    .prologue
+    invoke-static {}, Landroid/app/ActivityManager;->isHighEndGfx()Z
+
+    move-result v0
+
+    return v0
 .end method
 
 .method public static isLargeRAM()Z

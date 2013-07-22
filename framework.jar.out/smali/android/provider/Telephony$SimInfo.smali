@@ -50,7 +50,7 @@
 
 .field public static final DEFAULT_SOURCE:I = 0x0
 
-.field public static final DISLPAY_NUMBER_DEFAULT:I = 0x1
+.field public static final DISLPAY_NUMBER_DEFAULT:I = 0x0
 
 .field public static final DISPALY_NUMBER_NONE:I = 0x0
 

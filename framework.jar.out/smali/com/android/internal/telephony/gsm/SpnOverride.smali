@@ -81,7 +81,7 @@
     return-void
 .end method
 
-.method private constructor <init>()V
+.method constructor <init>()V
     .locals 1
 
     .prologue

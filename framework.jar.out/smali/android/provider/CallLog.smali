@@ -6,7 +6,8 @@
 # annotations
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
-        Landroid/provider/CallLog$Calls;
+        Landroid/provider/CallLog$Calls;,
+        Landroid/provider/CallLog$Injector;
     }
 .end annotation
 

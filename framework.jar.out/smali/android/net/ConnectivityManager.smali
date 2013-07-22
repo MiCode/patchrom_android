@@ -130,6 +130,8 @@
 
 .field public static final TYPE_USB:I = 0x28
 
+.field public static final TYPE_USB_SHARE_NET:I = 0xe
+
 .field public static final TYPE_WIFI:I = 0x1
 
 .field public static final TYPE_WIFI_P2P:I = 0xd

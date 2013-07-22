@@ -6,7 +6,8 @@
 # annotations
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
-        Landroid/telephony/PhoneNumberUtils$CountryCallingCodeAndNewIndex;
+        Landroid/telephony/PhoneNumberUtils$CountryCallingCodeAndNewIndex;,
+        Landroid/telephony/PhoneNumberUtils$Injector;
     }
 .end annotation
 
@@ -877,6 +878,18 @@
     .end packed-switch
 .end method
 
+.method static callIndexOfLastNetworkChar(Ljava/lang/String;)I
+    .locals 1
+    .parameter "str"
+
+    .prologue
+    invoke-static {p0}, Landroid/telephony/PhoneNumberUtils;->indexOfLastNetworkChar(Ljava/lang/String;)I
+
+    move-result v0
+
+    return v0
+.end method
+
 .method public static calledPartyBCDFragmentToString([BII)Ljava/lang/String;
     .locals 2
     .parameter "bytes"
@@ -1555,14 +1568,14 @@
 
     if-ge v6, v7, :cond_b
 
-    invoke-virtual {p0}, Ljava/lang/String;->length()I
+    invoke-static {p0}, Landroid/telephony/PhoneNumberUtils$Injector;->getEffectiveLength(Ljava/lang/String;)I
 
     move-result v11
 
     sub-int v2, v11, v8
 
     .local v2, effectiveALen:I
-    invoke-virtual {p1}, Ljava/lang/String;->length()I
+    invoke-static {p1}, Landroid/telephony/PhoneNumberUtils$Injector;->getEffectiveLength(Ljava/lang/String;)I
 
     move-result v11
 
@@ -1909,7 +1922,7 @@
     :cond_c
     const/16 v18, 0x0
 
-    move-object/from16 v0, p1
+    move-object/from16 v0, p0
 
     move/from16 v1, v18
 
@@ -2009,7 +2022,7 @@
     :cond_14
     move-object/from16 v0, p1
 
-    invoke-static {v0, v10, v4}, Landroid/telephony/PhoneNumberUtils;->checkPrefixIsIgnorable(Ljava/lang/String;II)Z
+    invoke-static {v0, v11, v4}, Landroid/telephony/PhoneNumberUtils;->checkPrefixIsIgnorable(Ljava/lang/String;II)Z
 
     move-result v18
 
@@ -3409,6 +3422,10 @@
     .parameter "defaultCountryIso"
 
     .prologue
+    invoke-static {p0}, Lmiui/telephony/PhoneNumberUtils;->removeDashesAndBlanks(Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object p0
+
     invoke-virtual {p0}, Ljava/lang/String;->length()I
 
     move-result v1
@@ -4959,10 +4976,6 @@
 
     invoke-static {v10, v11}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    const/4 v10, 0x0
-
-    goto/16 :goto_0
-
     .end local v0           #arr$:[Ljava/lang/String;
     .end local v5           #i$:I
     .end local v6           #len$:I
@@ -5095,6 +5108,23 @@
     goto/16 :goto_0
 
     :cond_10
+    invoke-static {p0}, Lmiui/telephony/PhoneNumberUtils;->parseNumber(Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object p0
+
+    const/4 v10, 0x0
+
+    invoke-static {p0, v10}, Lmiui/telephony/PhoneNumberUtils;->isMiuiEmergencyNumber(Ljava/lang/String;Z)Z
+
+    move-result v10
+
+    if-eqz v10, :cond_miui_0
+
+    const/4 v10, 0x1
+
+    goto/16 :goto_0
+
+    :cond_miui_0
     const/4 v10, 0x0
 
     goto/16 :goto_0
@@ -6001,17 +6031,22 @@
 .end method
 
 .method public static isSpecialEmergencyNumber(Ljava/lang/String;)Z
-    .locals 1
+    .locals 2
     .parameter "dialString"
 
     .prologue
-    sget-object v0, Landroid/telephony/PhoneNumberUtils;->mPhoneNumberExt:Lcom/mediatek/common/telephony/IPhoneNumberExt;
+    invoke-static {p0}, Lmiui/telephony/PhoneNumberUtils;->parseNumber(Ljava/lang/String;)Ljava/lang/String;
 
-    invoke-interface {v0, p0}, Lcom/mediatek/common/telephony/IPhoneNumberExt;->isSpecialEmergencyNumber(Ljava/lang/String;)Z
+    move-result-object v0
 
-    move-result v0
+    .local v0, number:Ljava/lang/String;
+    const/4 v1, 0x0
 
-    return v0
+    invoke-static {v0, v1}, Lmiui/telephony/PhoneNumberUtils;->isMiuiEmergencyNumber(Ljava/lang/String;Z)Z
+
+    move-result v1
+
+    return v1
 .end method
 
 .method private static isSpecialMmiNumber(Ljava/lang/String;)Z
@@ -9572,6 +9607,8 @@
     move-result v0
 
     .local v0, c:C
+    invoke-static {v4, v0, v2}, Landroid/telephony/PhoneNumberUtils$Injector;->appendNonSeparator(Ljava/lang/StringBuilder;CI)V
+
     const/16 v5, 0xa
 
     invoke-static {v0, v5}, Ljava/lang/Character;->digit(CI)I

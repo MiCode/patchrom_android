@@ -6,7 +6,8 @@
 # annotations
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
-        Landroid/preference/PreferenceFrameLayout$LayoutParams;
+        Landroid/preference/PreferenceFrameLayout$LayoutParams;,
+        Landroid/preference/PreferenceFrameLayout$Injector;
     }
 .end annotation
 

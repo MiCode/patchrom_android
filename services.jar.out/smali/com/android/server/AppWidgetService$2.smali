@@ -44,6 +44,17 @@
     move-result-object v0
 
     .local v0, action:Ljava/lang/String;
+    iget-object v5, p0, Lcom/android/server/AppWidgetService$2;->this$0:Lcom/android/server/AppWidgetService;
+
+    invoke-static {v5, p2}, Lcom/android/server/AppWidgetService$Injector;->handleAction(Lcom/android/server/AppWidgetService;Landroid/content/Intent;)Z
+
+    move-result v5
+
+    if-eqz v5, :cond_miui_0
+
+    return-void
+
+    :cond_miui_0
     const-string v5, "android.intent.action.BOOT_COMPLETED"
 
     invoke-virtual {v5, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z

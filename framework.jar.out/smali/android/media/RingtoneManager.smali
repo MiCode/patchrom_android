@@ -3,6 +3,14 @@
 .source "RingtoneManager.java"
 
 
+# annotations
+.annotation system Ldalvik/annotation/MemberClasses;
+    value = {
+        Landroid/media/RingtoneManager$Injector;
+    }
+.end annotation
+
+
 # static fields
 .field public static final ACTION_RINGTONE_PICKER:Ljava/lang/String; = "android.intent.action.RINGTONE_PICKER"
 
@@ -44,6 +52,10 @@
 
 .field public static final KEY_DEFAULT_RINGTONE:Ljava/lang/String; = "mtk_audioprofile_default_ringtone"
 
+.field public static final KEY_DEFAULT_SMS_DELIVERED:Ljava/lang/String; = "mtk_audioprofile_default_sms_delivered"
+
+.field public static final KEY_DEFAULT_SMS_RECEIVED:Ljava/lang/String; = "mtk_audioprofile_default_sms_received"
+
 .field public static final KEY_DEFAULT_VIDEO_CALL:Ljava/lang/String; = "mtk_audioprofile_default_video_call"
 
 .field private static final MEDIA_COLUMNS:[Ljava/lang/String; = null
@@ -60,7 +72,7 @@
 
 .field public static final TYPE_RINGTONE:I = 0x1
 
-.field public static final TYPE_VIDEO_CALL:I = 0x8
+.field public static final TYPE_VIDEO_CALL:I = 0x10000
 
 .field public static final URI_COLUMN_INDEX:I = 0x2
 
@@ -195,9 +207,7 @@
 
     sput-object v0, Landroid/media/RingtoneManager;->DRM_COLUMNS:[Ljava/lang/String;
 
-    const/4 v0, 0x6
-
-    new-array v0, v0, [Ljava/lang/String;
+    new-array v0, v7, [Ljava/lang/String;
 
     const-string v1, "_id"
 
@@ -238,16 +248,6 @@
     const-string v1, "title_key"
 
     aput-object v1, v0, v6
-
-    const-string v1, "is_drm"
-
-    aput-object v1, v0, v7
-
-    const/4 v1, 0x5
-
-    const-string v2, "drm_method"
-
-    aput-object v2, v0, v1
 
     sput-object v0, Landroid/media/RingtoneManager;->MEDIA_COLUMNS:[Ljava/lang/String;
 
@@ -318,9 +318,9 @@
     .prologue
     const/4 v5, 0x1
 
-    iget-object v3, p0, Landroid/media/RingtoneManager;->mActivity:Landroid/app/Activity;
+    sget-boolean v3, Landroid/media/RingtoneManager$Injector;->TRUE:Z
 
-    if-nez v3, :cond_0
+    if-eqz v3, :cond_0
 
     const-string v3, ""
 
@@ -566,7 +566,16 @@
     move-result-object v1
 
     .local v1, resolver:Landroid/content/ContentResolver;
-    packed-switch p1, :pswitch_data_0
+    const/high16 v5, 0x1
+    
+    move v4, p1
+    
+    if-ne v4, v5, :cond_miui_0
+    
+    const/16 v4, 0x8
+    
+    :cond_miui_0
+    packed-switch v4, :pswitch_data_0
 
     :pswitch_0
     const-string v4, "RingtoneManager"
@@ -586,6 +595,10 @@
     move-result-object v2
 
     :goto_1
+    invoke-static {v1, p1, v2}, Landroid/media/RingtoneManager$Injector;->getDefaultRingtoneUri(Landroid/content/ContentResolver;ILjava/lang/String;)Ljava/lang/String;
+
+    move-result-object v2
+
     if-nez v2, :cond_0
 
     move-object v0, v3
@@ -737,7 +750,7 @@
 
     if-eqz v1, :cond_0
 
-    const/16 v0, 0x8
+    const/high16 v0, 0x1
 
     goto :goto_0
 .end method
@@ -775,7 +788,9 @@
     goto :goto_0
 
     :cond_2
-    and-int/lit8 v0, p0, 0x8
+    const/high16 v0, 0x1
+
+    and-int/2addr v0, p0
 
     if-eqz v0, :cond_3
 
@@ -1050,7 +1065,9 @@
     goto :goto_0
 
     :cond_2
-    and-int/lit8 v0, p0, 0x8
+    const/high16 v0, 0x1
+
+    and-int/2addr v0, p0
 
     if-eqz v0, :cond_3
 
@@ -1408,7 +1425,9 @@
 
     if-nez v1, :cond_0
 
-    and-int/lit8 v1, p1, 0x8
+    const/high16 v1, 0x1
+
+    and-int/2addr v1, p1
 
     if-eqz v1, :cond_1
 

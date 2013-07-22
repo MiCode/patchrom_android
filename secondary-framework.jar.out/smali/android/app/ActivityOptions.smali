@@ -306,6 +306,22 @@
     return-object v0
 .end method
 
+.method public static makeDelayedThumbnailScaleUpAnimation(Landroid/view/View;Landroid/graphics/Bitmap;IILandroid/app/ActivityOptions$OnAnimationStartedListener;)Landroid/app/ActivityOptions;
+    .locals 1
+    .parameter "source"
+    .parameter "thumbnail"
+    .parameter "startX"
+    .parameter "startY"
+    .parameter "listener"
+
+    .prologue
+    invoke-static {p0, p1, p2, p3, p4}, Landroid/app/ActivityOptions;->makeThumbnailScaleUpAnimation(Landroid/view/View;Landroid/graphics/Bitmap;IILandroid/app/ActivityOptions$OnAnimationStartedListener;)Landroid/app/ActivityOptions;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
 .method public static makeScaleUpAnimation(Landroid/view/View;IIII)Landroid/app/ActivityOptions;
     .locals 4
     .parameter "source"

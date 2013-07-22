@@ -478,7 +478,7 @@
 
     const/16 v1, 0x22
 
-    const/high16 v2, 0x4000
+    const/high16 v2, 0x200
 
     invoke-static {v2}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 

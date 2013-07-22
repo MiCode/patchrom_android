@@ -14,13 +14,19 @@
 # static fields
 .field public static final ACTION_CLEAN_EXTERNAL_STORAGE:Ljava/lang/String; = "android.content.pm.CLEAN_EXTERNAL_STORAGE"
 
+.field public static final COMPONENT_ENABLED_STATE_ACCESS_CONTROL:I = -0x80000000
+
 .field public static final COMPONENT_ENABLED_STATE_DEFAULT:I = 0x0
 
 .field public static final COMPONENT_ENABLED_STATE_DISABLED:I = 0x2
 
 .field public static final COMPONENT_ENABLED_STATE_DISABLED_USER:I = 0x3
 
+.field public static final COMPONENT_ENABLED_STATE_DISABLE_AUTOSTART:I = 0x40000000
+
 .field public static final COMPONENT_ENABLED_STATE_ENABLED:I = 0x1
+
+.field public static final COMPONENT_ENABLED_STATE_SHOW_FLOATING_WINDOW:I = 0x8000000
 
 .field public static final DELETE_ALL_USERS:I = 0x2
 
@@ -157,6 +163,10 @@
 .field public static final GET_UNINSTALLED_PACKAGES:I = 0x2000
 
 .field public static final GET_URI_PERMISSION_PATTERNS:I = 0x800
+
+.field public static final HAS_ACTIVITY:I = 0x20000
+
+.field public static final HAS_ACTIVITY_OR_SERVICES:I = 0x40000
 
 .field public static final INSTALL_ALLOW_DOWNGRADE:I = 0x80
 
@@ -798,6 +808,24 @@
             Landroid/content/pm/PackageManager$NameNotFoundException;
         }
     .end annotation
+.end method
+
+.method public getUsers()Ljava/util/List;
+    .locals 1
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "()",
+            "Ljava/util/List",
+            "<",
+            "Landroid/content/pm/UserInfo;",
+            ">;"
+        }
+    .end annotation
+
+    .prologue
+    const/4 v0, 0x0
+
+    return-object v0
 .end method
 
 .method public abstract getVerifierDeviceIdentity()Landroid/content/pm/VerifierDeviceIdentity;

@@ -191,7 +191,9 @@
     move-result v5
 
     .local v5, got:I
-    if-gtz v5, :cond_7
+    const/4 v13, -0x1
+
+    if-ne v5, v13, :cond_7
 
     const-string v13, "FullBackup"
 

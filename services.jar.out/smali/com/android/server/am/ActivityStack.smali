@@ -7,8 +7,10 @@
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
         Lcom/android/server/am/ActivityStack$myThread;,
+        Lcom/android/server/am/ActivityStack$CpuBooster;,
         Lcom/android/server/am/ActivityStack$ScheduleDestroyArgs;,
-        Lcom/android/server/am/ActivityStack$ActivityState;
+        Lcom/android/server/am/ActivityStack$ActivityState;,
+        Lcom/android/server/am/ActivityStack$Injector;
     }
 .end annotation
 
@@ -111,6 +113,8 @@
 .field mConfigWillChange:Z
 
 .field final mContext:Landroid/content/Context;
+
+.field private mCpuBooster:Lcom/android/server/am/ActivityStack$CpuBooster;
 
 .field private mCurrentUser:I
 
@@ -431,6 +435,8 @@
 
     iput-object v2, p0, Lcom/android/server/am/ActivityStack;->mLastStartedActivity:Lcom/android/server/am/ActivityRecord;
 
+    iput-object v2, p0, Lcom/android/server/am/ActivityStack;->mCpuBooster:Lcom/android/server/am/ActivityStack$CpuBooster;
+
     iput-boolean v3, p0, Lcom/android/server/am/ActivityStack;->mUserLeaving:Z
 
     const-wide/16 v1, 0x0
@@ -497,6 +503,16 @@
     iget-object v1, p0, Lcom/android/server/am/ActivityStack;->mLaunchingActivity:Landroid/os/PowerManager$WakeLock;
 
     invoke-virtual {v1, v3}, Landroid/os/PowerManager$WakeLock;->setReferenceCounted(Z)V
+
+    new-instance v1, Lcom/android/server/am/ActivityStack$CpuBooster;
+
+    iget-object v2, p0, Lcom/android/server/am/ActivityStack;->mService:Lcom/android/server/am/ActivityManagerService;
+
+    iget-object v3, p0, Lcom/android/server/am/ActivityStack;->mHandler:Landroid/os/Handler;
+
+    invoke-direct {v1, v2, v3}, Lcom/android/server/am/ActivityStack$CpuBooster;-><init>(Lcom/android/server/am/ActivityManagerService;Landroid/os/Handler;)V
+
+    iput-object v1, p0, Lcom/android/server/am/ActivityStack;->mCpuBooster:Lcom/android/server/am/ActivityStack$CpuBooster;
 
     return-void
 .end method
@@ -8110,7 +8126,9 @@
     check-cast v3, Lcom/android/server/am/ActivityRecord;
 
     .local v3, r:Lcom/android/server/am/ActivityRecord;
-    iget-boolean v4, v3, Lcom/android/server/am/ActivityRecord;->finishing:Z
+    invoke-static {p3, v3}, Lcom/android/server/am/ActivityStack$Injector;->isDestroyHomeReasonAlwaysOrFinishing(Ljava/lang/String;Lcom/android/server/am/ActivityRecord;)Z
+
+    move-result v4
 
     if-eqz v4, :cond_1
 
@@ -9993,6 +10011,16 @@
     if-eqz v5, :cond_1f
 
     :cond_12
+    iget-object v5, p1, Lcom/android/server/am/ActivityRecord;->info:Landroid/content/pm/ActivityInfo;
+
+    iget-object v5, v5, Landroid/content/pm/ActivityInfo;->packageName:Ljava/lang/String;
+
+    invoke-static {v5, v0, v1}, Landroid/app/MiuiThemeHelper;->needRestartActivity(Ljava/lang/String;ILandroid/content/res/Configuration;)Z
+
+    move-result v5
+
+    if-nez v5, :cond_1
+
     iget v5, p1, Lcom/android/server/am/ActivityRecord;->configChangeFlags:I
 
     or-int/2addr v5, v0
@@ -14992,6 +15020,10 @@
 
     move-result v0
 
+    invoke-virtual {p0, v0}, Lcom/android/server/am/ActivityStack;->setForegroundProcess(Z)Z
+
+    move-result v0
+
     return v0
 .end method
 
@@ -15033,6 +15065,8 @@
 
     invoke-static/range {p2 .. p2}, Landroid/app/ActivityOptions;->abort(Landroid/os/Bundle;)V
 
+    goto :goto_miui_0
+    
     invoke-static {}, Lcom/android/server/am/PowerOffAlarmUtility;->isAlarmBoot()Z
 
     move-result v2
@@ -15050,6 +15084,7 @@
     :goto_0
     return v2
 
+    :goto_miui_0
     :cond_0
     move-object/from16 v0, p0
 
@@ -17508,6 +17543,32 @@
     goto :goto_0
 .end method
 
+.method setForegroundProcess(Z)Z
+    .locals 3
+    .parameter "resumed"
+
+    .prologue
+    const/4 v1, 0x0
+
+    invoke-virtual {p0, v1}, Lcom/android/server/am/ActivityStack;->topRunningActivityLocked(Lcom/android/server/am/ActivityRecord;)Lcom/android/server/am/ActivityRecord;
+
+    move-result-object v0
+
+    .local v0, next:Lcom/android/server/am/ActivityRecord;
+    if-eqz v0, :cond_0
+
+    if-eqz p1, :cond_0
+
+    const-string v1, "sys.foreground_process"
+
+    iget-object v2, v0, Lcom/android/server/am/ActivityRecord;->processName:Ljava/lang/String;
+
+    invoke-static {v1, v2}, Landroid/os/SystemProperties;->set(Ljava/lang/String;Ljava/lang/String;)V
+
+    :cond_0
+    return p1
+.end method
+
 .method final showAskCompatModeDialogLocked(Lcom/android/server/am/ActivityRecord;)V
     .locals 2
     .parameter "r"
@@ -17934,6 +17995,12 @@
     .parameter "outActivity"
 
     .prologue
+    move-object/from16 v0, p0
+
+    iget-object v3, v0, Lcom/android/server/am/ActivityStack;->mCpuBooster:Lcom/android/server/am/ActivityStack$CpuBooster;
+
+    invoke-virtual {v3}, Lcom/android/server/am/ActivityStack$CpuBooster;->start()V
+
     const/16 v23, 0x0
 
     .local v23, err:I

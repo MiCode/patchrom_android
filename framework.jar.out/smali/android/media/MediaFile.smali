@@ -6,7 +6,8 @@
 # annotations
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
-        Landroid/media/MediaFile$MediaFileType;
+        Landroid/media/MediaFile$MediaFileType;,
+        Landroid/media/MediaFile$Injector;
     }
 .end annotation
 
@@ -22,7 +23,7 @@
 
 .field public static final FILE_TYPE_AMR:I = 0x68
 
-.field public static final FILE_TYPE_APE:I = 0x6f
+.field public static final FILE_TYPE_APE:I = 0x3e9
 
 .field public static final FILE_TYPE_APK:I = 0x31f
 
@@ -40,7 +41,7 @@
 
 .field public static final FILE_TYPE_FLAC:I = 0x6e
 
-.field public static final FILE_TYPE_FLV:I = 0x18e
+.field public static final FILE_TYPE_FLV:I = 0xca
 
 .field public static final FILE_TYPE_GIF:I = 0x192
 
@@ -138,6 +139,8 @@
 
 .field private static final FIRST_DRM_FILE_TYPE:I = 0x259
 
+.field private static final FIRST_FFMPEG_AUDIO_FILE_TYPE:I = 0x3e9
+
 .field private static final FIRST_IMAGE_FILE_TYPE:I = 0x191
 
 .field private static final FIRST_MIDI_FILE_TYPE:I = 0xc9
@@ -154,6 +157,8 @@
 
 .field private static final LAST_DRM_FILE_TYPE:I = 0x259
 
+.field private static final LAST_FFMPEG_AUDIO_FILE_TYPE:I = 0x3e9
+
 .field private static final LAST_IMAGE_FILE_TYPE:I = 0x196
 
 .field private static final LAST_MIDI_FILE_TYPE:I = 0xcb
@@ -164,7 +169,7 @@
 
 .field private static final LAST_VIDEO_FILE_TYPE:I = 0x18f
 
-.field private static final LAST_VIDEO_FILE_TYPE2:I = 0x320
+.field private static final LAST_VIDEO_FILE_TYPE2:I = 0xca
 
 .field private static final sFileTypeMap:Ljava/util/HashMap;
     .annotation system Ldalvik/annotation/Signature;
@@ -294,7 +299,7 @@
 
     const-string v0, "APE"
 
-    const/16 v1, 0x6f
+    const/16 v1, 0x3e9
 
     const-string v2, "audio/ape"
 
@@ -374,7 +379,7 @@
 
     invoke-static {v0, v1, v2}, Landroid/media/MediaFile;->addFileType(Ljava/lang/String;ILjava/lang/String;)V
 
-    invoke-static {}, Landroid/media/MediaFile;->isWMAEnabled()Z
+    invoke-static {}, Landroid/media/MediaFile$Injector;->isWMAEnabled()Z
 
     move-result v0
 
@@ -502,6 +507,8 @@
     const-string v1, "audio/midi"
 
     invoke-static {v0, v4, v1}, Landroid/media/MediaFile;->addFileType(Ljava/lang/String;ILjava/lang/String;)V
+
+    invoke-static {}, Landroid/media/MediaFile$Injector;->addAPE()V
 
     const-string v0, "MPEG"
 
@@ -633,7 +640,7 @@
 
     const-string v0, "FLV"
 
-    const/16 v1, 0x18e
+    const/16 v1, 0xca
 
     const-string v2, "video/x-flv"
 
@@ -1006,6 +1013,8 @@
 
     invoke-static {v0, v8, v1}, Landroid/media/MediaFile;->addFileType(Ljava/lang/String;ILjava/lang/String;)V
 
+    invoke-static {}, Landroid/media/MediaFile$Injector;->addFLV()V
+
     return-void
 .end method
 
@@ -1360,34 +1369,41 @@
 .end method
 
 .method public static isAudioFileType(I)Z
-    .locals 1
+    .locals 2
     .parameter "fileType"
 
     .prologue
+    const/16 v1, 0x3e9
+
     const/16 v0, 0x65
 
     if-lt p0, v0, :cond_0
 
     const/16 v0, 0xc7
 
-    if-le p0, v0, :cond_1
+    if-le p0, v0, :cond_2
 
     :cond_0
     const/16 v0, 0xc9
 
-    if-lt p0, v0, :cond_2
+    if-lt p0, v0, :cond_1
 
     const/16 v0, 0xcb
 
-    if-gt p0, v0, :cond_2
+    if-le p0, v0, :cond_2
 
     :cond_1
+    if-lt p0, v1, :cond_3
+
+    if-gt p0, v1, :cond_3
+
+    :cond_2
     const/4 v0, 0x1
 
     :goto_0
     return v0
 
-    :cond_2
+    :cond_3
     const/4 v0, 0x0
 
     goto :goto_0
@@ -1520,12 +1536,10 @@
 .end method
 
 .method public static isVideoFileType(I)Z
-    .locals 2
+    .locals 1
     .parameter "fileType"
 
     .prologue
-    const/16 v1, 0x320
-
     const/16 v0, 0x12d
 
     if-lt p0, v0, :cond_0
@@ -1535,9 +1549,13 @@
     if-le p0, v0, :cond_1
 
     :cond_0
-    if-lt p0, v1, :cond_2
+    const/16 v0, 0x320
 
-    if-gt p0, v1, :cond_2
+    if-lt p0, v0, :cond_2
+
+    const/16 v0, 0xca
+
+    if-gt p0, v0, :cond_2
 
     :cond_1
     const/4 v0, 0x1

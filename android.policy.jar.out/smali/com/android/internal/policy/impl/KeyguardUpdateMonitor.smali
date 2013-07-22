@@ -8,7 +8,8 @@
     value = {
         Lcom/android/internal/policy/impl/KeyguardUpdateMonitor$SpnUpdate;,
         Lcom/android/internal/policy/impl/KeyguardUpdateMonitor$BatteryStatus;,
-        Lcom/android/internal/policy/impl/KeyguardUpdateMonitor$SimArgs;
+        Lcom/android/internal/policy/impl/KeyguardUpdateMonitor$SimArgs;,
+        Lcom/android/internal/policy/impl/KeyguardUpdateMonitor$Injector;
     }
 .end annotation
 
@@ -89,6 +90,8 @@
 
 .field private mSimState:Lcom/android/internal/telephony/IccCardConstants$State;
 
+.field private mSkipSimStateChange:Z
+
 .field private mTelephonyPlmn:Ljava/lang/CharSequence;
 
 .field private mTelephonyPlmnGemini:Ljava/lang/CharSequence;
@@ -129,6 +132,8 @@
     const/4 v3, 0x0
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    iput-boolean v3, p0, Lcom/android/internal/policy/impl/KeyguardUpdateMonitor;->mSkipSimStateChange:Z
 
     sget-object v1, Lcom/android/internal/telephony/IccCardConstants$State;->UNKNOWN:Lcom/android/internal/telephony/IccCardConstants$State;
 
@@ -875,6 +880,13 @@
     .parameter "simArgs"
 
     .prologue
+    iget-boolean v4, p0, Lcom/android/internal/policy/impl/KeyguardUpdateMonitor;->mSkipSimStateChange:Z
+
+    if-eqz v4, :cond_miui_0
+
+    return-void
+
+    :cond_miui_0
     iget-object v2, p1, Lcom/android/internal/policy/impl/KeyguardUpdateMonitor$SimArgs;->simState:Lcom/android/internal/telephony/IccCardConstants$State;
 
     .local v2, state:Lcom/android/internal/telephony/IccCardConstants$State;
@@ -1433,6 +1445,15 @@
     iput v0, p0, Lcom/android/internal/policy/impl/KeyguardUpdateMonitor;->mFailedBiometricUnlockAttempts:I
 
     return-void
+.end method
+
+.method public getBatteryStatus()Lcom/android/internal/policy/impl/KeyguardUpdateMonitor$BatteryStatus;
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Lcom/android/internal/policy/impl/KeyguardUpdateMonitor;->mBatteryStatus:Lcom/android/internal/policy/impl/KeyguardUpdateMonitor$BatteryStatus;
+
+    return-object v0
 .end method
 
 .method public getFailedAttempts()I
@@ -2172,6 +2193,17 @@
     goto :goto_0
 .end method
 
+.method isSimPinSecure()Z
+    .locals 1
+
+    .prologue
+    invoke-virtual {p0}, Lcom/android/internal/policy/impl/KeyguardUpdateMonitor;->isSimLocked()Z
+
+    move-result v0
+
+    return v0
+.end method
+
 .method public registerCallback(Lcom/android/internal/policy/impl/KeyguardUpdateMonitorCallback;)V
     .locals 4
     .parameter "callback"
@@ -2446,4 +2478,14 @@
     invoke-static {v0, v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardUtils;->xlogD(Ljava/lang/String;Ljava/lang/String;)V
 
     goto :goto_0
+.end method
+
+.method public setSkipSimStateChange(Z)V
+    .locals 0
+    .parameter "skip"
+
+    .prologue
+    iput-boolean p1, p0, Lcom/android/internal/policy/impl/KeyguardUpdateMonitor;->mSkipSimStateChange:Z
+
+    return-void
 .end method

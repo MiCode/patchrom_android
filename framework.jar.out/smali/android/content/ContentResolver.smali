@@ -2227,6 +2227,15 @@
     throw v0
 .end method
 
+.method public getContext()Landroid/content/Context;
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Landroid/content/ContentResolver;->mContext:Landroid/content/Context;
+
+    return-object v0
+.end method
+
 .method public getResourceId(Landroid/net/Uri;)Landroid/content/ContentResolver$OpenResourceIdResult;
     .locals 11
     .parameter "uri"

@@ -8,7 +8,8 @@
     value = {
         Landroid/app/LauncherActivity$IconResizer;,
         Landroid/app/LauncherActivity$ActivityAdapter;,
-        Landroid/app/LauncherActivity$ListItem;
+        Landroid/app/LauncherActivity$ListItem;,
+        Landroid/app/LauncherActivity$Injector;
     }
 .end annotation
 

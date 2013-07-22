@@ -511,6 +511,38 @@
     return v0
 .end method
 
+.method public getRawHeight()I
+    .locals 2
+
+    .prologue
+    new-instance v0, Landroid/graphics/Point;
+
+    invoke-direct {v0}, Landroid/graphics/Point;-><init>()V
+
+    .local v0, outSize:Landroid/graphics/Point;
+    invoke-virtual {p0, v0}, Landroid/view/Display;->getRealSize(Landroid/graphics/Point;)V
+
+    iget v1, v0, Landroid/graphics/Point;->x:I
+
+    return v1
+.end method
+
+.method public getRawWidth()I
+    .locals 2
+
+    .prologue
+    new-instance v0, Landroid/graphics/Point;
+
+    invoke-direct {v0}, Landroid/graphics/Point;-><init>()V
+
+    .local v0, outSize:Landroid/graphics/Point;
+    invoke-virtual {p0, v0}, Landroid/view/Display;->getRealSize(Landroid/graphics/Point;)V
+
+    iget v1, v0, Landroid/graphics/Point;->y:I
+
+    return v1
+.end method
+
 .method public getRealMetrics(Landroid/util/DisplayMetrics;)V
     .locals 2
     .parameter "outMetrics"

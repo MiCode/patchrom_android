@@ -217,7 +217,12 @@
 
     iput-object v7, p0, Landroid/text/SpanSet;->spanFlags:[I
 
+    goto :goto_miui_0
+    
     :cond_1
+    invoke-virtual {p0}, Landroid/text/SpanSet;->recycle()V
+    
+    :goto_miui_0
     const/4 v7, 0x0
 
     iput v7, p0, Landroid/text/SpanSet;->numberOfSpans:I

@@ -178,6 +178,8 @@
 
 .field public static final DUAL_SIM_MODE_SETTING_DEFAULT:I = 0x3
 
+.field public static final EMERGENCY_TONE:Ljava/lang/String; = "emergency_tone"
+
 .field public static final ENABLE_INTERNET_CALL:Ljava/lang/String; = "enable_internet_call_value"
 
 .field public static final END_BUTTON_BEHAVIOR:Ljava/lang/String; = "end_button_behavior"
@@ -205,6 +207,8 @@
 .field public static final GPRS_CONNECTION_SETTING:Ljava/lang/String; = "gprs_connection_setting"
 
 .field public static final GPRS_CONNECTION_SETTING_DEFAULT:I = -0x4
+
+.field public static final GPRS_CONNECTION_SIM_BACKUP_SETTING:Ljava/lang/String; = "gprs_connection_backup_sim_setting"
 
 .field public static final GPRS_CONNECTION_SIM_SETTING:Ljava/lang/String; = "gprs_connection_sim_setting"
 
@@ -2683,6 +2687,8 @@
 
     invoke-static {v1, v2}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
 
+    invoke-static {p0, p1, p2, p3}, Landroid/provider/Settings$Secure;->putStringForUser(Landroid/content/ContentResolver;Ljava/lang/String;Ljava/lang/String;I)Z
+    move-result v0
     :goto_0
     return v0
 
@@ -2737,6 +2743,9 @@
     move-result-object v2
 
     invoke-static {v1, v2}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {p0, p1, p2, p3}, Landroid/provider/Settings$Global;->putStringForUser(Landroid/content/ContentResolver;Ljava/lang/String;Ljava/lang/String;I)Z
+
+    move-result v0
 
     goto :goto_0
 

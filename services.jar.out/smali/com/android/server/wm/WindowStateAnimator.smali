@@ -6,7 +6,8 @@
 # annotations
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
-        Lcom/android/server/wm/WindowStateAnimator$SurfaceTrace;
+        Lcom/android/server/wm/WindowStateAnimator$SurfaceTrace;,
+        Lcom/android/server/wm/WindowStateAnimator$Injector;
     }
 .end annotation
 
@@ -89,6 +90,8 @@
 .field final mLayerStack:I
 
 .field mLocalAnimating:Z
+
+.field mMiuiHidden:Z
 
 .field mPendingDestroySurface:Landroid/view/Surface;
 
@@ -7658,9 +7661,7 @@
 
     iput-boolean v3, p0, Lcom/android/server/wm/WindowStateAnimator;->mSurfaceShown:Z
 
-    iget-object v3, p0, Lcom/android/server/wm/WindowStateAnimator;->mSurface:Landroid/view/Surface;
-
-    invoke-virtual {v3}, Landroid/view/Surface;->show()V
+    invoke-static {p0}, Lcom/android/server/wm/WindowStateAnimator$Injector;->showSurface(Lcom/android/server/wm/WindowStateAnimator;)V
 
     iget-object v3, p0, Lcom/android/server/wm/WindowStateAnimator;->mWin:Lcom/android/server/wm/WindowState;
 

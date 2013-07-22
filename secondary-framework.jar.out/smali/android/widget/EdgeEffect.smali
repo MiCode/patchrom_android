@@ -3,6 +3,14 @@
 .source "EdgeEffect.java"
 
 
+# annotations
+.annotation system Ldalvik/annotation/MemberClasses;
+    value = {
+        Landroid/widget/EdgeEffect$Injector;
+    }
+.end annotation
+
+
 # static fields
 .field private static final EPSILON:F = 0.0010f
 
@@ -136,17 +144,13 @@
     move-result-object v0
 
     .local v0, res:Landroid/content/res/Resources;
-    const v1, 0x108044a
-
-    invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getDrawable(I)Landroid/graphics/drawable/Drawable;
+    invoke-static {p1}, Landroid/widget/EdgeEffect$Injector;->getOverScrollEdge(Landroid/content/Context;)Landroid/graphics/drawable/Drawable;
 
     move-result-object v1
 
     iput-object v1, p0, Landroid/widget/EdgeEffect;->mEdge:Landroid/graphics/drawable/Drawable;
 
-    const v1, 0x108044b
-
-    invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getDrawable(I)Landroid/graphics/drawable/Drawable;
+    invoke-static {p1}, Landroid/widget/EdgeEffect$Injector;->getOverScrollGlow(Landroid/content/Context;)Landroid/graphics/drawable/Drawable;
 
     move-result-object v1
 

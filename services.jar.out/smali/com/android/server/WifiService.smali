@@ -5758,8 +5758,13 @@
 
     move-result v4
 
+    if-nez v4, :cond_miui_0
+
+    sget-boolean v4, Lmiui/os/Build;->IS_CM_CUSTOMIZATION:Z
+
     if-eqz v4, :cond_0
 
+    :cond_miui_0
     if-eqz p1, :cond_0
 
     iget-object v4, p0, Lcom/android/server/WifiService;->mAirplaneModeOn:Ljava/util/concurrent/atomic/AtomicBoolean;

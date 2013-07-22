@@ -4851,3 +4851,31 @@
 
     return-void
 .end method
+
+.method static synthetic getUpdateMonitor(Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;)Lcom/android/internal/policy/impl/keyguard/KeyguardUpdateMonitor;
+    .locals 1
+    .parameter "x0"
+
+    .prologue
+    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->mUpdateMonitor:Lcom/android/internal/policy/impl/keyguard/KeyguardUpdateMonitor;
+
+    return-object v0
+.end method
+
+.method callDoKeyguardLocked()V
+    .locals 0
+
+    .prologue
+    invoke-direct {p0}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->doKeyguardLocked()V
+
+    return-void
+.end method
+
+.method callResetStateLocked()V
+    .locals 0
+
+    .prologue
+    invoke-direct {p0}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->resetStateLocked()V
+
+    return-void
+.end method

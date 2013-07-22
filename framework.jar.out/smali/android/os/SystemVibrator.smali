@@ -214,3 +214,46 @@
 
     throw v1
 .end method
+
+.method public vibrateEx([B)V
+    .locals 3
+    .parameter "params"
+
+    .prologue
+    iget-object v1, p0, Landroid/os/SystemVibrator;->mService:Landroid/os/IVibratorService;
+
+    if-nez v1, :cond_0
+
+    const-string v1, "Vibrator"
+
+    const-string v2, "Failed to vibrate; no vibrator service."
+
+    invoke-static {v1, v2}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+
+    :goto_0
+    return-void
+
+    :cond_0
+    :try_start_0
+    iget-object v1, p0, Landroid/os/SystemVibrator;->mService:Landroid/os/IVibratorService;
+
+    iget-object v2, p0, Landroid/os/SystemVibrator;->mToken:Landroid/os/Binder;
+
+    invoke-interface {v1, p1, v2}, Landroid/os/IVibratorService;->vibrateEx([BLandroid/os/IBinder;)V
+    :try_end_0
+    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
+
+    goto :goto_0
+
+    :catch_0
+    move-exception v0
+
+    .local v0, e:Landroid/os/RemoteException;
+    const-string v1, "Vibrator"
+
+    const-string v2, "Failed to vibrate."
+
+    invoke-static {v1, v2, v0}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+
+    goto :goto_0
+.end method

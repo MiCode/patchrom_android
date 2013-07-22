@@ -212,7 +212,9 @@
     move-result v0
 
     if-eqz v0, :cond_2
-
+    
+    goto :goto_miui_0
+    
     new-instance v6, Landroid/content/ContentValues;
 
     const/4 v0, 0x1
@@ -284,6 +286,7 @@
 
     invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
+    :goto_miui_0
     const/4 v0, 0x0
 
     invoke-interface {v9, v0}, Landroid/database/Cursor;->getLong(I)J

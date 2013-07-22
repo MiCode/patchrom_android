@@ -9,7 +9,7 @@
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
-    accessFlags = 0x2
+    accessFlags = 0x0
     name = "AnimationBundle"
 .end annotation
 
@@ -34,7 +34,7 @@
 
 
 # direct methods
-.method private constructor <init>(Lcom/android/internal/widget/multiwaveview/GlowPadView;)V
+.method constructor <init>(Lcom/android/internal/widget/multiwaveview/GlowPadView;)V
     .locals 0
     .parameter
 

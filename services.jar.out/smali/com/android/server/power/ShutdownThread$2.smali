@@ -42,6 +42,9 @@
     .parameter "which"
 
     .prologue
+    #calls: Lcom/android/server/power/ShutdownThread;->disableWakeAlarm()V
+    invoke-static {}, Lcom/android/server/power/ShutdownThread;->_disableWakeAlarm()V
+
     iget-object v0, p0, Lcom/android/server/power/ShutdownThread$2;->val$context:Landroid/content/Context;
 
     #calls: Lcom/android/server/power/ShutdownThread;->beginShutdownSequence(Landroid/content/Context;)V

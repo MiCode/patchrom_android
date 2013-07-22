@@ -351,6 +351,18 @@
 
     iget-object v2, v0, Landroid/view/ViewRootImpl$ViewRootHandler;->this$0:Landroid/view/ViewRootImpl;
 
+    move-object/from16 v0, p1
+
+    invoke-static {v2, v7, v0}, Landroid/view/ViewRootImpl$Injector;->tryToSkipResizedMsg(Landroid/view/ViewRootImpl;Lcom/android/internal/os/SomeArgs;Landroid/os/Message;)Z
+
+    move-result v2
+
+    if-nez v2, :cond_0
+
+    move-object/from16 v0, p0
+
+    iget-object v2, v0, Landroid/view/ViewRootImpl$ViewRootHandler;->this$0:Landroid/view/ViewRootImpl;
+
     iget-object v2, v2, Landroid/view/ViewRootImpl;->mWinFrame:Landroid/graphics/Rect;
 
     iget-object v3, v7, Lcom/android/internal/os/SomeArgs;->arg1:Ljava/lang/Object;

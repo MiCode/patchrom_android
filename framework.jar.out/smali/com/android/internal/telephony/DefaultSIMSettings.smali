@@ -30,8 +30,22 @@
 
 .field private static final STATUS_SIM2_INSERTED:I = 0x2
 
+.field private static sSIMInsertStateChanged:[Z
 
 # direct methods
+.method static constructor <clinit>()V
+    .locals 1
+
+    .prologue
+    const/4 v0, 0x2
+
+    new-array v0, v0, [Z
+
+    sput-object v0, Lcom/android/internal/telephony/DefaultSIMSettings;->sSIMInsertStateChanged:[Z
+
+    return-void
+.end method
+
 .method public constructor <init>()V
     .locals 0
 
@@ -270,6 +284,44 @@
     invoke-static {v0, v1, v2}, Landroid/app/ActivityManagerNative;->broadcastStickyIntent(Landroid/content/Intent;Ljava/lang/String;I)V
 
     return-void
+.end method
+
+.method private static isDeviceProvisioned(Landroid/content/Context;)Z
+    .locals 3
+    .parameter "context"
+
+    .prologue
+    const/4 v1, 0x0
+
+    invoke-virtual {p0}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
+
+    move-result-object v0
+
+    .local v0, resolver:Landroid/content/ContentResolver;
+    const-string v2, "device_provisioned"
+
+    invoke-static {v0, v2, v1}, Landroid/provider/Settings$Secure;->getInt(Landroid/content/ContentResolver;Ljava/lang/String;I)I
+
+    move-result v2
+
+    if-eqz v2, :cond_0
+
+    const/4 v1, 0x1
+
+    :cond_0
+    return v1
+.end method
+
+.method public static isSIMInsertStateChanged(I)Z
+    .locals 1
+    .parameter "slot"
+
+    .prologue
+    sget-object v0, Lcom/android/internal/telephony/DefaultSIMSettings;->sSIMInsertStateChanged:[Z
+
+    aget-boolean v0, v0, p0
+
+    return v0
 .end method
 
 .method private static isSIMRemoved(JJJ)Z
@@ -571,6 +623,10 @@
 
     .end local v52           #value:Landroid/content/ContentValues;
     :cond_3
+    const/4 v11, 0x0
+
+    invoke-static {v11}, Lcom/android/internal/telephony/DefaultSIMSettings;->reverseSIMInsertStateChanged(I)V
+
     :goto_3
     const/4 v11, 0x1
 
@@ -695,6 +751,10 @@
 
     .end local v52           #value:Landroid/content/ContentValues;
     :cond_5
+    const/4 v11, 0x1
+
+    invoke-static {v11}, Lcom/android/internal/telephony/DefaultSIMSettings;->reverseSIMInsertStateChanged(I)V
+
     :goto_4
     if-nez v39, :cond_6
 
@@ -993,6 +1053,10 @@
 
     :cond_14
     :goto_a
+    const/4 v11, 0x0
+
+    invoke-static {v11}, Lcom/android/internal/telephony/DefaultSIMSettings;->reverseSIMInsertStateChanged(I)V
+    
     move-object/from16 v0, p2
 
     move-object/from16 v1, v39
@@ -1147,6 +1211,10 @@
 
     :cond_19
     :goto_b
+    const/4 v11, 0x1
+
+    invoke-static {v11}, Lcom/android/internal/telephony/DefaultSIMSettings;->reverseSIMInsertStateChanged(I)V
+    
     move-object/from16 v0, p3
 
     move-object/from16 v1, v40
@@ -1572,6 +1640,8 @@
 
     move-result v11
 
+    const/4 v11, 0x1
+    
     if-eqz v11, :cond_25
 
     const-string v11, "voice_call_sim_setting"
@@ -1590,6 +1660,8 @@
     invoke-static/range {v9 .. v14}, Lcom/android/internal/telephony/DefaultSIMSettings;->isSIMRemoved(JJJ)Z
 
     move-result v11
+    
+    const/4 v11, 0x1
 
     if-eqz v11, :cond_27
 
@@ -1794,6 +1866,9 @@
     move-object/from16 v0, v29
 
     invoke-static {v0, v11, v12}, Landroid/app/ActivityManagerNative;->broadcastStickyIntent(Landroid/content/Intent;Ljava/lang/String;I)V
+
+    invoke-static/range {p0 .. p0}, Lcom/android/internal/telephony/DefaultSIMSettings;->doSIMInsertStateChanged(Landroid/content/Context;)V
+
     :try_end_3
     .catchall {:try_start_3 .. :try_end_3} :catchall_0
 
@@ -3061,4 +3136,57 @@
     .end local v3           #temp:Landroid/provider/Telephony$SIMInfo;
     :cond_4
     return-void
+.end method
+
+.method private static doSIMInsertStateChanged(Landroid/content/Context;)V
+    .locals 3
+    .parameter "context"
+
+    .prologue
+    const/4 v2, 0x1
+    
+    invoke-static {p0}, Lcom/android/internal/telephony/DefaultSIMSettings;->isDeviceProvisioned(Landroid/content/Context;)Z
+
+    move-result v0
+
+    if-nez v0, :cond_0
+    
+    sget-object v0, Lcom/android/internal/telephony/DefaultSIMSettings;->sSIMInsertStateChanged:[Z
+
+    const/4 v1, 0x0
+
+    aput-boolean v2, v0, v1
+
+    sget-object v0, Lcom/android/internal/telephony/DefaultSIMSettings;->sSIMInsertStateChanged:[Z
+
+    aput-boolean v2, v0, v2
+
+    :cond_0
+    return-void
+.end method
+
+.method private static reverseSIMInsertStateChanged(I)V
+    .locals 2
+    .parameter "slot"
+
+    .prologue
+    sget-object v1, Lcom/android/internal/telephony/DefaultSIMSettings;->sSIMInsertStateChanged:[Z
+
+    sget-object v0, Lcom/android/internal/telephony/DefaultSIMSettings;->sSIMInsertStateChanged:[Z
+
+    aget-boolean v0, v0, p0
+
+    if-nez v0, :cond_0
+
+    const/4 v0, 0x1
+
+    :goto_0
+    aput-boolean v0, v1, p0
+
+    return-void
+    
+    :cond_0
+    const/4 v0, 0x0
+
+    goto :goto_0
 .end method

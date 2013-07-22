@@ -34,6 +34,8 @@
 
 .field private mFadeView:Landroid/view/View;
 
+.field mGlowOnTriggerListener:Lcom/android/internal/widget/multiwaveview/MultiGlowView$OnTriggerListener;
+
 .field private mGlowPadView:Lcom/android/internal/policy/impl/keyguard/MediatekGlowPadView;
 
 .field private mHDMI:Lcom/mediatek/common/hdmi/IHDMINative;
@@ -44,15 +46,13 @@
 
 .field private mLockPatternUtils:Lcom/android/internal/widget/LockPatternUtils;
 
-.field private mMultiWaveView:Lcom/android/internal/policy/impl/keyguard/WtMultiWaveView;
+.field private mMultiGlowPadView:Lcom/android/internal/widget/multiwaveview/MultiGlowView;
 
 .field mOnTriggerListener:Lcom/android/internal/policy/impl/keyguard/MediatekGlowPadView$OnTriggerListener;
 
 .field private mSearchDisabled:Z
 
 .field private mSecurityMessageDisplay:Lcom/android/internal/policy/impl/keyguard/SecurityMessageDisplay;
-
-.field mWtOnTriggerListener:Lcom/android/internal/policy/impl/keyguard/WtMultiWaveView$OnTriggerListener;
 
 
 # direct methods
@@ -97,7 +97,7 @@
 
     invoke-direct {v1, p0}, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView$2;-><init>(Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;)V
 
-    iput-object v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->mWtOnTriggerListener:Lcom/android/internal/policy/impl/keyguard/WtMultiWaveView$OnTriggerListener;
+    iput-object v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->mGlowOnTriggerListener:Lcom/android/internal/widget/multiwaveview/MultiGlowView$OnTriggerListener;
 
     new-instance v1, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView$3;
 
@@ -259,12 +259,12 @@
     return-object v0
 .end method
 
-.method static synthetic access$700(Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;)Lcom/android/internal/policy/impl/keyguard/WtMultiWaveView;
+.method static synthetic access$700(Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;)Lcom/android/internal/widget/multiwaveview/MultiGlowView;
     .locals 1
     .parameter "x0"
 
     .prologue
-    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->mMultiWaveView:Lcom/android/internal/policy/impl/keyguard/WtMultiWaveView;
+    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->mMultiGlowPadView:Lcom/android/internal/widget/multiwaveview/MultiGlowView;
 
     return-object v0
 .end method
@@ -575,11 +575,11 @@
     return-object v0
 .end method
 
-.method public getMultiGlowPadView()Lcom/android/internal/policy/impl/keyguard/WtMultiWaveView;
+.method public getMultiGlowPadView()Lcom/android/internal/widget/multiwaveview/MultiGlowView;
     .locals 1
 
     .prologue
-    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->mMultiWaveView:Lcom/android/internal/policy/impl/keyguard/WtMultiWaveView;
+    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->mMultiGlowPadView:Lcom/android/internal/widget/multiwaveview/MultiGlowView;
 
     return-object v0
 .end method
@@ -645,9 +645,9 @@
     .parameter "resId"
 
     .prologue
-    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->mMultiWaveView:Lcom/android/internal/policy/impl/keyguard/WtMultiWaveView;
+    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->mMultiGlowPadView:Lcom/android/internal/widget/multiwaveview/MultiGlowView;
 
-    invoke-virtual {v0, p1}, Lcom/android/internal/policy/impl/keyguard/WtMultiWaveView;->getTargetPosition(I)I
+    invoke-virtual {v0, p1}, Lcom/android/internal/widget/multiwaveview/MultiGlowView;->getTargetPosition(I)I
 
     move-result v0
 
@@ -681,11 +681,11 @@
     .prologue
     invoke-super {p0}, Lcom/android/internal/policy/impl/keyguard/LockScreenLayout;->onDetachedFromWindow()V
 
-    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->mMultiWaveView:Lcom/android/internal/policy/impl/keyguard/WtMultiWaveView;
+    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->mMultiGlowPadView:Lcom/android/internal/widget/multiwaveview/MultiGlowView;
 
     const/4 v1, 0x0
 
-    invoke-virtual {v0, v1}, Lcom/android/internal/policy/impl/keyguard/WtMultiWaveView;->setOnTriggerListener(Lcom/android/internal/policy/impl/keyguard/WtMultiWaveView$OnTriggerListener;)V
+    invoke-virtual {v0, v1}, Lcom/android/internal/widget/multiwaveview/MultiGlowView;->setOnTriggerListener(Lcom/android/internal/widget/multiwaveview/MultiGlowView$OnTriggerListener;)V
 
     return-void
 .end method
@@ -708,15 +708,15 @@
 
     move-result-object v5
 
-    check-cast v5, Lcom/android/internal/policy/impl/keyguard/WtMultiWaveView;
+    check-cast v5, Lcom/android/internal/widget/multiwaveview/MultiGlowView;
 
-    iput-object v5, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->mMultiWaveView:Lcom/android/internal/policy/impl/keyguard/WtMultiWaveView;
+    iput-object v5, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->mMultiGlowPadView:Lcom/android/internal/widget/multiwaveview/MultiGlowView;
 
-    iget-object v5, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->mMultiWaveView:Lcom/android/internal/policy/impl/keyguard/WtMultiWaveView;
+    iget-object v5, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->mMultiGlowPadView:Lcom/android/internal/widget/multiwaveview/MultiGlowView;
 
-    iget-object v8, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->mWtOnTriggerListener:Lcom/android/internal/policy/impl/keyguard/WtMultiWaveView$OnTriggerListener;
+    iget-object v8, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->mGlowOnTriggerListener:Lcom/android/internal/widget/multiwaveview/MultiGlowView$OnTriggerListener;
 
-    invoke-virtual {v5, v8}, Lcom/android/internal/policy/impl/keyguard/WtMultiWaveView;->setOnTriggerListener(Lcom/android/internal/policy/impl/keyguard/WtMultiWaveView$OnTriggerListener;)V
+    invoke-virtual {v5, v8}, Lcom/android/internal/widget/multiwaveview/MultiGlowView;->setOnTriggerListener(Lcom/android/internal/widget/multiwaveview/MultiGlowView$OnTriggerListener;)V
 
     invoke-direct {p0}, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->updateTargets()V
 
@@ -752,14 +752,14 @@
     move-result v1
 
     .local v1, dmLocked:Z
-    iget-object v8, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->mMultiWaveView:Lcom/android/internal/policy/impl/keyguard/WtMultiWaveView;
+    iget-object v8, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->mMultiGlowPadView:Lcom/android/internal/widget/multiwaveview/MultiGlowView;
 
     if-eqz v1, :cond_1
 
     move v5, v6
 
     :goto_0
-    invoke-virtual {v8, v5}, Lcom/android/internal/policy/impl/keyguard/WtMultiWaveView;->setVisibility(I)V
+    invoke-virtual {v8, v5}, Lcom/android/internal/widget/multiwaveview/MultiGlowView;->setVisibility(I)V
 
     invoke-virtual {p0}, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->getContext()Landroid/content/Context;
 
@@ -782,10 +782,6 @@
     const-string v8, "constructor infalte newevent feature related views"
 
     invoke-static {v5, v8}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
-
-    iget-object v5, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->mMultiWaveView:Lcom/android/internal/policy/impl/keyguard/WtMultiWaveView;
-
-    invoke-virtual {v5, p0}, Lcom/android/internal/policy/impl/keyguard/WtMultiWaveView;->setLockScreenView(Lcom/android/internal/policy/impl/keyguard/LockScreenLayout;)V
 
     const v5, 0x10202ff
 
@@ -834,10 +830,6 @@
     invoke-virtual {v4, v5, v6}, Lcom/android/internal/policy/impl/keyguard/UnReadEventView;->updateQueryBaseTimeAndRefreshUnReadNumber(J)V
 
     invoke-virtual {p0, v4}, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->setUnReadEventView(Lcom/android/internal/policy/impl/keyguard/UnReadEventView;)V
-
-    iget-object v5, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->mMultiWaveView:Lcom/android/internal/policy/impl/keyguard/WtMultiWaveView;
-
-    invoke-virtual {v5, v4}, Lcom/android/internal/policy/impl/keyguard/WtMultiWaveView;->syncUnReadEventView(Lcom/android/internal/policy/impl/keyguard/UnReadEventView;)V
 
     .end local v2           #inflater:Landroid/view/LayoutInflater;
     .end local v3           #unLockPanel:Landroid/view/ViewGroup;
@@ -1112,11 +1104,11 @@
     .locals 2
 
     .prologue
-    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->mMultiWaveView:Lcom/android/internal/policy/impl/keyguard/WtMultiWaveView;
+    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->mMultiGlowPadView:Lcom/android/internal/widget/multiwaveview/MultiGlowView;
 
     const/4 v1, 0x0
 
-    invoke-virtual {v0, v1}, Lcom/android/internal/policy/impl/keyguard/WtMultiWaveView;->reset(Z)V
+    invoke-virtual {v0, v1}, Lcom/android/internal/widget/multiwaveview/MultiGlowView;->reset(Z)V
 
     return-void
 .end method
@@ -1181,14 +1173,55 @@
     .locals 1
 
     .prologue
-    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->mMultiWaveView:Lcom/android/internal/policy/impl/keyguard/WtMultiWaveView;
+    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->mMultiGlowPadView:Lcom/android/internal/widget/multiwaveview/MultiGlowView;
 
-    invoke-virtual {v0}, Lcom/android/internal/policy/impl/keyguard/WtMultiWaveView;->ping()V
+    invoke-virtual {v0}, Lcom/android/internal/widget/multiwaveview/MultiGlowView;->ping()V
 
     return-void
 .end method
 
 .method public updateResources()V
+    .locals 2
+
+    .prologue
+    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->mMultiGlowPadView:Lcom/android/internal/widget/multiwaveview/MultiGlowView;
+
+    invoke-virtual {v0}, Lcom/android/internal/widget/multiwaveview/MultiGlowView;->getHandleFocusedStatus()Z
+
+    move-result v0
+
+    iget-boolean v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->mBatteryIsLow:Z
+
+    if-eq v0, v1, :cond_0
+
+    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->mMultiGlowPadView:Lcom/android/internal/widget/multiwaveview/MultiGlowView;
+
+    iget-boolean v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->mBatteryIsLow:Z
+
+    invoke-virtual {v0, v1}, Lcom/android/internal/widget/multiwaveview/MultiGlowView;->setHandleFocusedStatus(Z)V
+
+    :cond_0
+    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->mMultiGlowPadView:Lcom/android/internal/widget/multiwaveview/MultiGlowView;
+
+    invoke-virtual {v0}, Lcom/android/internal/widget/multiwaveview/MultiGlowView;->getChargedStatus()Z
+
+    move-result v0
+
+    iget-boolean v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->mBatteryCharged:Z
+
+    if-eq v0, v1, :cond_1
+
+    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->mMultiGlowPadView:Lcom/android/internal/widget/multiwaveview/MultiGlowView;
+
+    iget-boolean v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->mBatteryCharged:Z
+
+    invoke-virtual {v0, v1}, Lcom/android/internal/widget/multiwaveview/MultiGlowView;->setChargedStatus(Z)V
+
+    :cond_1
+    return-void
+.end method
+
+.method public updateResources_old()V
     .locals 9
 
     .prologue
@@ -1342,4 +1375,13 @@
     move v4, v5
 
     goto :goto_1
+.end method
+
+.method public getActivityLauncher()Lcom/android/internal/policy/impl/keyguard/KeyguardActivityLauncher;
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->mActivityLauncher:Lcom/android/internal/policy/impl/keyguard/KeyguardActivityLauncher;
+
+    return-object v0
 .end method

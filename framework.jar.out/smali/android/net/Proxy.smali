@@ -6,7 +6,8 @@
 # annotations
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
-        Landroid/net/Proxy$AndroidProxySelectorRoutePlanner;
+        Landroid/net/Proxy$AndroidProxySelectorRoutePlanner;,
+        Landroid/net/Proxy$Injector;
     }
 .end annotation
 
@@ -309,7 +310,7 @@
     .local v1, sa:Ljava/net/InetSocketAddress;
     new-instance v2, Lorg/apache/http/HttpHost;
 
-    invoke-virtual {v1}, Ljava/net/InetSocketAddress;->getHostName()Ljava/lang/String;
+    invoke-static {v1}, Landroid/net/Proxy$Injector;->getHostName(Ljava/net/InetSocketAddress;)Ljava/lang/String;
 
     move-result-object v3
 

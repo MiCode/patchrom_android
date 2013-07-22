@@ -12,7 +12,8 @@
         Landroid/provider/Settings$System;,
         Landroid/provider/Settings$NameValueCache;,
         Landroid/provider/Settings$NameValueTable;,
-        Landroid/provider/Settings$SettingNotFoundException;
+        Landroid/provider/Settings$SettingNotFoundException;,
+        Landroid/provider/Settings$Injector;
     }
 .end annotation
 

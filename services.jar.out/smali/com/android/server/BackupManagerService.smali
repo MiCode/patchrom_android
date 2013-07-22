@@ -31,7 +31,8 @@
         Lcom/android/server/BackupManagerService$RestoreParams;,
         Lcom/android/server/BackupManagerService$RestoreGetSetsParams;,
         Lcom/android/server/BackupManagerService$ProvisionedObserver;,
-        Lcom/android/server/BackupManagerService$BackupRequest;
+        Lcom/android/server/BackupManagerService$BackupRequest;,
+        Lcom/android/server/BackupManagerService$Injector;
     }
 .end annotation
 
@@ -117,7 +118,7 @@
 
 .field static final TIMEOUT_FULL_BACKUP_INTERVAL:J = 0x493e0L
 
-.field static final TIMEOUT_FULL_CONFIRMATION:J = 0xea60L
+.field static final TIMEOUT_FULL_CONFIRMATION:J = 0x927c0L
 
 .field static final TIMEOUT_INTERVAL:J = 0x2710L
 
@@ -6997,7 +6998,7 @@
     :try_start_4
     const-string v2, "fullback"
 
-    invoke-virtual {p0, v12, v2}, Lcom/android/server/BackupManagerService;->startConfirmationUi(ILjava/lang/String;)Z
+    invoke-static {p0, v12, v2}, Lcom/android/server/BackupManagerService$Injector;->startConfirmationUi(Lcom/android/server/BackupManagerService;ILjava/lang/String;)Z
 
     move-result v2
 
@@ -7224,7 +7225,7 @@
     :try_start_4
     const-string v6, "fullrest"
 
-    invoke-virtual {p0, v5, v6}, Lcom/android/server/BackupManagerService;->startConfirmationUi(ILjava/lang/String;)Z
+    invoke-static {p0, v5, v6}, Lcom/android/server/BackupManagerService$Injector;->startConfirmationUi(Lcom/android/server/BackupManagerService;ILjava/lang/String;)Z
 
     move-result v6
 
@@ -7582,6 +7583,15 @@
     .catchall {:try_start_2 .. :try_end_2} :catchall_0
 
     throw v2
+.end method
+
+.method getContext()Landroid/content/Context;
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Lcom/android/server/BackupManagerService;->mContext:Landroid/content/Context;
+
+    return-object v0
 .end method
 
 .method public getCurrentTransport()Ljava/lang/String;
@@ -9827,7 +9837,7 @@
     .local v0, msg:Landroid/os/Message;
     iget-object v1, p0, Lcom/android/server/BackupManagerService;->mBackupHandler:Lcom/android/server/BackupManagerService$BackupHandler;
 
-    const-wide/32 v2, 0xea60
+    const-wide/32 v2, 0x927c0
 
     invoke-virtual {v1, v0, v2, v3}, Lcom/android/server/BackupManagerService$BackupHandler;->sendMessageDelayed(Landroid/os/Message;J)Z
 

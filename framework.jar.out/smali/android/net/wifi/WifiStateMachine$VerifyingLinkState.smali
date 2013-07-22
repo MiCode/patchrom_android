@@ -31,7 +31,6 @@
     return-void
 .end method
 
-
 # virtual methods
 .method public enter()V
     .locals 3
@@ -121,6 +120,14 @@
     return v0
 
     :pswitch_0
+    iget-object v0, p0, Landroid/net/wifi/WifiStateMachine$VerifyingLinkState;->this$0:Landroid/net/wifi/WifiStateMachine;
+
+    invoke-static {v0}, Landroid/net/wifi/WifiStateMachine;->access$transitionConnectedState(Landroid/net/wifi/WifiStateMachine;)V
+
+    const/4 v0, 0x1
+
+    goto :goto_0
+
     iget-object v0, p0, Landroid/net/wifi/WifiStateMachine$VerifyingLinkState;->this$0:Landroid/net/wifi/WifiStateMachine;
 
     iget-object v1, p0, Landroid/net/wifi/WifiStateMachine$VerifyingLinkState;->this$0:Landroid/net/wifi/WifiStateMachine;

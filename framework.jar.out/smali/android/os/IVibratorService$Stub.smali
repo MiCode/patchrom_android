@@ -26,13 +26,15 @@
 # static fields
 .field private static final DESCRIPTOR:Ljava/lang/String; = "android.os.IVibratorService"
 
-.field static final TRANSACTION_cancelVibrate:I = 0x4
+.field static final TRANSACTION_cancelVibrate:I = 0x5
 
 .field static final TRANSACTION_hasVibrator:I = 0x1
 
 .field static final TRANSACTION_vibrate:I = 0x2
 
-.field static final TRANSACTION_vibratePattern:I = 0x3
+.field static final TRANSACTION_vibrateEx:I = 0x3
+
+.field static final TRANSACTION_vibratePattern:I = 0x4
 
 
 # direct methods
@@ -183,6 +185,29 @@
 
     invoke-virtual {p2, v5}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
+    invoke-virtual {p2}, Landroid/os/Parcel;->createByteArray()[B
+
+    move-result-object v0
+
+    .local v0, _arg0:[B
+    invoke-virtual {p2}, Landroid/os/Parcel;->readStrongBinder()Landroid/os/IBinder;
+
+    move-result-object v2
+
+    .restart local v2       #_arg1:Landroid/os/IBinder;
+    invoke-virtual {p0, v0, v2}, Landroid/os/IVibratorService$Stub;->vibrateEx([BLandroid/os/IBinder;)V
+
+    invoke-virtual {p3}, Landroid/os/Parcel;->writeNoException()V
+
+    goto :goto_0
+
+    .end local v0           #_arg0:[B
+    .end local v2           #_arg1:Landroid/os/IBinder;
+    :sswitch_4
+    const-string v5, "android.os.IVibratorService"
+
+    invoke-virtual {p2, v5}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
     invoke-virtual {p2}, Landroid/os/Parcel;->createLongArray()[J
 
     move-result-object v0
@@ -207,7 +232,7 @@
     .end local v0           #_arg0:[J
     .end local v2           #_arg1:I
     .end local v3           #_arg2:Landroid/os/IBinder;
-    :sswitch_4
+    :sswitch_5
     const-string v5, "android.os.IVibratorService"
 
     invoke-virtual {p2, v5}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
@@ -229,6 +254,7 @@
         0x2 -> :sswitch_2
         0x3 -> :sswitch_3
         0x4 -> :sswitch_4
+        0x5 -> :sswitch_5
         0x5f4e5446 -> :sswitch_0
     .end sparse-switch
 .end method

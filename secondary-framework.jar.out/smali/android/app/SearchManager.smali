@@ -188,16 +188,24 @@
 
 
 # virtual methods
-.method public getAssistIntent(Landroid/content/Context;)Landroid/content/Intent;
-    .locals 1
+.method public static getAssistIntent(Landroid/content/Context;)Landroid/content/Intent;
+    .locals 2
     .parameter "context"
 
     .prologue
+    const-string v0, "search"
+
+    invoke-virtual {p0, v0}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Landroid/app/SearchManager;
+
     invoke-static {}, Landroid/os/UserHandle;->myUserId()I
 
-    move-result v0
+    move-result v1
 
-    invoke-virtual {p0, p1, v0}, Landroid/app/SearchManager;->getAssistIntent(Landroid/content/Context;I)Landroid/content/Intent;
+    invoke-virtual {v0, p0, v1}, Landroid/app/SearchManager;->getAssistIntent(Landroid/content/Context;I)Landroid/content/Intent;
 
     move-result-object v0
 

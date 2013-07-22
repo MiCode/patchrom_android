@@ -8,7 +8,8 @@
     value = {
         Lcom/android/server/connectivity/Tethering$TetherMasterSM;,
         Lcom/android/server/connectivity/Tethering$TetherInterfaceSM;,
-        Lcom/android/server/connectivity/Tethering$StateReceiver;
+        Lcom/android/server/connectivity/Tethering$StateReceiver;,
+        Lcom/android/server/connectivity/Tethering$Injector;
     }
 .end annotation
 

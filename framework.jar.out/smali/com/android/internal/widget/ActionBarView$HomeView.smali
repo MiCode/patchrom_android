@@ -19,6 +19,10 @@
 
 
 # instance fields
+.field mCompactMode:Z
+
+.field mIconDrawable:Landroid/graphics/drawable/Drawable;
+
 .field private mIconView:Landroid/widget/ImageView;
 
 .field private mUpView:Landroid/view/View;
@@ -88,13 +92,22 @@
     return v0
 .end method
 
+.method getIconView()Landroid/widget/ImageView;
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Lcom/android/internal/widget/ActionBarView$HomeView;->mIconView:Landroid/widget/ImageView;
+
+    return-object v0
+.end method
+
 .method public getStartOffset()I
     .locals 2
 
     .prologue
     iget-object v0, p0, Lcom/android/internal/widget/ActionBarView$HomeView;->mUpView:Landroid/view/View;
 
-    invoke-virtual {v0}, Landroid/view/View;->getVisibility()I
+    invoke-static {p0, v0}, Lcom/android/internal/widget/ActionBarView$Injector;->getUpViewVisibility(Lcom/android/internal/widget/ActionBarView$HomeView;Landroid/view/View;)I
 
     move-result v0
 
@@ -111,6 +124,15 @@
     const/4 v0, 0x0
 
     goto :goto_0
+.end method
+
+.method getUpView()Landroid/view/View;
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Lcom/android/internal/widget/ActionBarView$HomeView;->mUpView:Landroid/view/View;
+
+    return-object v0
 .end method
 
 .method protected onFinishInflate()V
@@ -134,6 +156,8 @@
     check-cast v0, Landroid/widget/ImageView;
 
     iput-object v0, p0, Lcom/android/internal/widget/ActionBarView$HomeView;->mIconView:Landroid/widget/ImageView;
+
+    invoke-static {p0}, Lcom/android/internal/widget/ActionBarView$Injector;->switchToCompactMode(Lcom/android/internal/widget/ActionBarView$HomeView;)V
 
     return-void
 .end method
@@ -677,6 +701,8 @@
 
     invoke-virtual {v0, p1}, Landroid/widget/ImageView;->setImageDrawable(Landroid/graphics/drawable/Drawable;)V
 
+    invoke-static {p0, p1}, Lcom/android/internal/widget/ActionBarView$Injector;->setIcon(Lcom/android/internal/widget/ActionBarView$HomeView;Landroid/graphics/drawable/Drawable;)V
+
     return-void
 .end method
 
@@ -705,6 +731,8 @@
 
     :goto_0
     invoke-virtual {v1, v0}, Landroid/view/View;->setVisibility(I)V
+
+    invoke-static {p0}, Lcom/android/internal/widget/ActionBarView$Injector;->setIcon(Lcom/android/internal/widget/ActionBarView$HomeView;)V
 
     return-void
 

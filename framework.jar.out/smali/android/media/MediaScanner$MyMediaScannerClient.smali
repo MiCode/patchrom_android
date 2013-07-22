@@ -812,6 +812,26 @@
     :goto_5
     if-eqz v20, :cond_12
 
+    move-object/from16 v0, p0
+
+    iget-object v2, v0, Landroid/media/MediaScanner$MyMediaScannerClient;->this$0:Landroid/media/MediaScanner;
+
+    move-object/from16 v4, v27
+
+    move-wide/from16 v5, v25
+
+    move-object/from16 v3, p0
+
+    move-object/from16 v7, p1
+
+    move/from16 v8, p2
+
+    move/from16 v9, p3
+
+    move/from16 v10, p4
+
+    invoke-static/range {v2 .. v10}, Landroid/media/MediaScanner$Injector;->setAllSettingsIfNotSet(Landroid/media/MediaScanner;Landroid/media/MediaScanner$MyMediaScannerClient;Landroid/net/Uri;JLandroid/media/MediaScanner$FileEntry;ZZZ)V
+
     if-eqz p3, :cond_32
 
     const-string v32, "notification_set"
@@ -2542,7 +2562,7 @@
     goto :goto_0
 
     :cond_2
-    const/16 v0, 0x8
+    const/high16 v0, 0x1
 
     if-ne p1, v0, :cond_3
 

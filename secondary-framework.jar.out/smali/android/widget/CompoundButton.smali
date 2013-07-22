@@ -11,7 +11,8 @@
     value = {
         Landroid/widget/CompoundButton$1;,
         Landroid/widget/CompoundButton$SavedState;,
-        Landroid/widget/CompoundButton$OnCheckedChangeListener;
+        Landroid/widget/CompoundButton$OnCheckedChangeListener;,
+        Landroid/widget/CompoundButton$Injector;
     }
 .end annotation
 
@@ -285,7 +286,7 @@
     and-int/lit8 v7, v8, 0x70
 
     .local v7, verticalGravity:I
-    invoke-virtual {v1}, Landroid/graphics/drawable/Drawable;->getIntrinsicHeight()I
+    invoke-static {v1, p0}, Landroid/widget/CompoundButton$Injector;->getDrawableHeight(Landroid/graphics/drawable/Drawable;Landroid/widget/CompoundButton;)I
 
     move-result v2
 

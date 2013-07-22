@@ -22,6 +22,8 @@
 
 .field public static final ACTION_PASS_TO_USER:I = 0x1
 
+.field public static final ACTION_POKE_USER_ACTIVITY:I = 0x2
+
 .field public static final ACTION_WAKE_UP:I = 0x2
 
 .field public static final EXTRA_HDMI_PLUGGED_STATE:Ljava/lang/String; = "state"

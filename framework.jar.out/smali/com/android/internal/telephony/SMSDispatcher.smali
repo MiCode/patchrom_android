@@ -8,7 +8,8 @@
     value = {
         Lcom/android/internal/telephony/SMSDispatcher$ConfirmDialogListener;,
         Lcom/android/internal/telephony/SMSDispatcher$SmsTracker;,
-        Lcom/android/internal/telephony/SMSDispatcher$SettingsObserver;
+        Lcom/android/internal/telephony/SMSDispatcher$SettingsObserver;,
+        Lcom/android/internal/telephony/SMSDispatcher$Injector;
     }
 .end annotation
 
@@ -182,7 +183,9 @@
 
 .field private final mSettingsObserver:Lcom/android/internal/telephony/SMSDispatcher$SettingsObserver;
 
-.field protected mSimId:I
+.field protected final mSimId:I
+
+.field protected final mSlotId:I
 
 .field protected mSmsCapable:Z
 
@@ -369,8 +372,6 @@
     iput-object v8, p0, Lcom/android/internal/telephony/SMSDispatcher;->mDMOperatorFile:Lcom/android/internal/telephony/DMOperatorFile;
 
     iput-boolean v4, p0, Lcom/android/internal/telephony/SMSDispatcher;->mStorageAvailable:Z
-
-    iput v5, p0, Lcom/android/internal/telephony/SMSDispatcher;->mSimId:I
 
     iput-boolean v5, p0, Lcom/android/internal/telephony/SMSDispatcher;->mSmsReady:Z
 
@@ -604,6 +605,18 @@
 
     move-result v3
 
+    iput v3, p0, Lcom/android/internal/telephony/SMSDispatcher;->mSlotId:I
+
+    iget-object v3, p0, Lcom/android/internal/telephony/SMSDispatcher;->mContext:Landroid/content/Context;
+
+    iget v6, p0, Lcom/android/internal/telephony/SMSDispatcher;->mSlotId:I
+
+    invoke-static {v3, v6}, Landroid/provider/Telephony$SIMInfo;->getIdBySlot(Landroid/content/Context;I)J
+
+    move-result-wide v6
+
+    long-to-int v3, v6
+
     iput v3, p0, Lcom/android/internal/telephony/SMSDispatcher;->mSimId:I
 
     new-instance v2, Landroid/content/IntentFilter;
@@ -678,7 +691,7 @@
 
     aput-object v7, v6, v5
 
-    iget v7, p0, Lcom/android/internal/telephony/SMSDispatcher;->mSimId:I
+    iget v7, p0, Lcom/android/internal/telephony/SMSDispatcher;->mSlotId:I
 
     invoke-static {v7}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
@@ -741,7 +754,7 @@
 
     aput-object v7, v6, v5
 
-    iget v5, p0, Lcom/android/internal/telephony/SMSDispatcher;->mSimId:I
+    iget v5, p0, Lcom/android/internal/telephony/SMSDispatcher;->mSlotId:I
 
     invoke-static {v5}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
@@ -800,7 +813,7 @@
 
     iget-object v4, p0, Lcom/android/internal/telephony/SMSDispatcher;->mContext:Landroid/content/Context;
 
-    iget v5, p0, Lcom/android/internal/telephony/SMSDispatcher;->mSimId:I
+    iget v5, p0, Lcom/android/internal/telephony/SMSDispatcher;->mSlotId:I
 
     invoke-direct {v3, v4, v5}, Lcom/android/internal/telephony/ConcatenatedSmsFwkExt;-><init>(Landroid/content/Context;I)V
 
@@ -1472,7 +1485,7 @@
 
     const-string v1, "simId"
 
-    iget v2, p0, Lcom/android/internal/telephony/SMSDispatcher;->mSimId:I
+    iget v2, p0, Lcom/android/internal/telephony/SMSDispatcher;->mSlotId:I
 
     invoke-virtual {v0, v1, v2}, Landroid/content/Intent;->putExtra(Ljava/lang/String;I)Landroid/content/Intent;
 
@@ -1835,6 +1848,10 @@
     .parameter "sentIntent"
 
     .prologue
+    const/4 v1, 0x0
+    
+    return v1
+    
     invoke-static {p3}, Lcom/android/internal/telephony/SMSDispatcher;->getAppNameByIntent(Landroid/app/PendingIntent;)Ljava/lang/String;
 
     move-result-object v4
@@ -2011,7 +2028,7 @@
 
     const-string v0, "simId"
 
-    iget v1, p0, Lcom/android/internal/telephony/SMSDispatcher;->mSimId:I
+    iget v1, p0, Lcom/android/internal/telephony/SMSDispatcher;->mSlotId:I
 
     invoke-virtual {p1, v0, v1}, Landroid/content/Intent;->putExtra(Ljava/lang/String;I)Landroid/content/Intent;
 
@@ -2051,7 +2068,7 @@
 
     const-string v0, "simId"
 
-    iget v1, p0, Lcom/android/internal/telephony/SMSDispatcher;->mSimId:I
+    iget v1, p0, Lcom/android/internal/telephony/SMSDispatcher;->mSlotId:I
 
     invoke-virtual {p1, v0, v1}, Landroid/content/Intent;->putExtra(Ljava/lang/String;I)Landroid/content/Intent;
 
@@ -2628,6 +2645,15 @@
     .parameter "pdus"
 
     .prologue
+    invoke-static {p0, p1}, Lcom/android/internal/telephony/SMSDispatcher$Injector;->checkFireWallForSms(Lcom/android/internal/telephony/SMSDispatcher;[[B)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_miui_0
+
+    return-void
+
+    :cond_miui_0
     new-instance v0, Landroid/content/Intent;
 
     const-string v1, "android.provider.Telephony.SMS_RECEIVED"
@@ -2660,6 +2686,15 @@
     .parameter "port"
 
     .prologue
+    invoke-static {p0, p1}, Lcom/android/internal/telephony/SMSDispatcher$Injector;->checkFireWallForSms(Lcom/android/internal/telephony/SMSDispatcher;[[B)Z
+
+    move-result v2
+
+    if-eqz v2, :cond_miui_0
+
+    return-void
+
+    :cond_miui_0
     new-instance v2, Ljava/lang/StringBuilder;
 
     invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
@@ -3348,7 +3383,7 @@
 
     move-result-object v9
 
-    iget v10, p0, Lcom/android/internal/telephony/SMSDispatcher;->mSimId:I
+    iget v10, p0, Lcom/android/internal/telephony/SMSDispatcher;->mSlotId:I
 
     invoke-virtual {v9, v10}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
@@ -4297,7 +4332,7 @@
 
     move-object/from16 v0, p0
 
-    iget v0, v0, Lcom/android/internal/telephony/SMSDispatcher;->mSimId:I
+    iget v0, v0, Lcom/android/internal/telephony/SMSDispatcher;->mSlotId:I
 
     move/from16 v20, v0
 
@@ -4652,7 +4687,7 @@
 
     move-object/from16 v0, p0
 
-    iget v3, v0, Lcom/android/internal/telephony/SMSDispatcher;->mSimId:I
+    iget v3, v0, Lcom/android/internal/telephony/SMSDispatcher;->mSlotId:I
 
     invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
@@ -4900,7 +4935,7 @@
 
     move-object/from16 v0, p0
 
-    iget v3, v0, Lcom/android/internal/telephony/SMSDispatcher;->mSimId:I
+    iget v3, v0, Lcom/android/internal/telephony/SMSDispatcher;->mSlotId:I
 
     invoke-static {v3}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
@@ -5397,7 +5432,7 @@
     .local v28, seqNumber:Ljava/lang/String;
     move-object/from16 v0, p0
 
-    iget v4, v0, Lcom/android/internal/telephony/SMSDispatcher;->mSimId:I
+    iget v4, v0, Lcom/android/internal/telephony/SMSDispatcher;->mSlotId:I
 
     invoke-static {v4}, Ljava/lang/Integer;->toString(I)Ljava/lang/String;
 
@@ -5830,7 +5865,7 @@
 
     move-object/from16 v0, p0
 
-    iget v5, v0, Lcom/android/internal/telephony/SMSDispatcher;->mSimId:I
+    iget v5, v0, Lcom/android/internal/telephony/SMSDispatcher;->mSlotId:I
 
     invoke-static {v5}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 

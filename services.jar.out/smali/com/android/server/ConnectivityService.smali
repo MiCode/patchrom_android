@@ -14,7 +14,8 @@
         Lcom/android/server/ConnectivityService$FeatureUser;,
         Lcom/android/server/ConnectivityService$DefaultNetworkFactory;,
         Lcom/android/server/ConnectivityService$NetworkFactory;,
-        Lcom/android/server/ConnectivityService$RadioAttributes;
+        Lcom/android/server/ConnectivityService$RadioAttributes;,
+        Lcom/android/server/ConnectivityService$Injector;
     }
 .end annotation
 
@@ -446,6 +447,8 @@
     const-string v2, "ConnectivityService starting up"
 
     invoke-static {v2}, Lcom/android/server/ConnectivityService;->log(Ljava/lang/String;)V
+
+    invoke-static/range {p1 .. p1}, Lcom/miui/server/FirewallService;->setupService(Landroid/content/Context;)V
 
     new-instance v14, Landroid/os/HandlerThread;
 
@@ -1847,6 +1850,8 @@
 
     invoke-virtual {v2, v3}, Lcom/android/server/ConnectivityService$SettingsObserver;->observe(Landroid/content/Context;)V
 
+    goto :goto_miui_0
+    
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/ConnectivityService;->mContext:Landroid/content/Context;
@@ -1861,6 +1866,7 @@
 
     iput-object v2, v0, Lcom/android/server/ConnectivityService;->mCaptivePortalTracker:Landroid/net/CaptivePortalTracker;
 
+    :goto_miui_0
     invoke-direct/range {p0 .. p0}, Lcom/android/server/ConnectivityService;->loadGlobalProxy()V
 
     new-instance v13, Landroid/content/IntentFilter;
@@ -9983,6 +9989,10 @@
     move-result v10
 
     .local v10, usedNetworkType:I
+    move-object/from16 v0, p1
+
+    invoke-static {v0, v10}, Lcom/android/server/ConnectivityService$Injector;->stopUsingNetworkFeature(Lcom/android/server/ConnectivityService$FeatureUser;I)V
+
     move-object/from16 v0, p0
 
     iget-object v13, v0, Lcom/android/server/ConnectivityService;->mNetTrackers:[Landroid/net/NetworkStateTracker;
@@ -10474,6 +10484,10 @@
     move-result v11
 
     .local v11, usedNetworkType:I
+    move-object/from16 v0, p1
+
+    invoke-static {v0, v11}, Lcom/android/server/ConnectivityService$Injector;->stopUsingNetworkFeature(Lcom/android/server/ConnectivityService$FeatureUser;I)V
+
     move-object/from16 v0, p0
 
     iget-object v14, v0, Lcom/android/server/ConnectivityService;->mNetTrackers:[Landroid/net/NetworkStateTracker;
@@ -14854,6 +14868,10 @@
     const/4 v0, 0x0
 
     :goto_1
+    invoke-direct {p0, v0}, Lcom/android/server/ConnectivityService;->getPreSimId(I)I
+    
+    move-result v0
+    
     iget-object v3, p0, Lcom/android/server/ConnectivityService;->mHandler:Lcom/android/server/ConnectivityService$InternalHandler;
 
     iget-object v4, p0, Lcom/android/server/ConnectivityService;->mHandler:Lcom/android/server/ConnectivityService$InternalHandler;
@@ -16014,9 +16032,11 @@
     :try_end_7
     .catchall {:try_start_7 .. :try_end_7} :catchall_2
 
+    :try_start_8
+    invoke-static/range {v20 .. v20}, Lcom/android/server/ConnectivityService$Injector;->startUsingNetworkFeature(I)V
+
     if-ltz v13, :cond_9
 
-    :try_start_8
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/ConnectivityService;->mHandler:Lcom/android/server/ConnectivityService$InternalHandler;
@@ -17178,6 +17198,8 @@
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
+    invoke-static/range {v18 .. v18}, Lcom/android/server/ConnectivityService$Injector;->startUsingNetworkFeature(I)V
+
     if-ltz v16, :cond_8
 
     move-object/from16 v0, p0
@@ -18074,4 +18096,46 @@
     move-result-object v0
 
     goto :goto_0
+.end method
+
+.method private getPreSimId(I)I
+    .locals 7
+    .parameter "curSlotId"
+
+    .prologue
+    iget-object v3, p0, Lcom/android/server/ConnectivityService;->mContext:Landroid/content/Context;
+
+    invoke-virtual {v3}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
+
+    move-result-object v3
+
+    const-string v4, "gprs_connection_backup_sim_setting"
+
+    const-wide/16 v5, -0x5
+
+    invoke-static {v3, v4, v5, v6}, Landroid/provider/Settings$System;->getLong(Landroid/content/ContentResolver;Ljava/lang/String;J)J
+
+    move-result-wide v0
+
+    .local v0, preSimId:J
+    const-wide/16 v3, 0x0
+
+    cmp-long v3, v0, v3
+
+    if-lez v3, :cond_0
+
+    iget-object v3, p0, Lcom/android/server/ConnectivityService;->mContext:Landroid/content/Context;
+
+    invoke-static {v3, v0, v1}, Landroid/provider/Telephony$SIMInfo;->getSlotById(Landroid/content/Context;J)I
+
+    move-result v2
+
+    .local v2, preSlotId:I
+    if-ltz v2, :cond_0
+
+    move p1, v2
+
+    .end local v2           #preSlotId:I
+    :cond_0
+    return p1
 .end method

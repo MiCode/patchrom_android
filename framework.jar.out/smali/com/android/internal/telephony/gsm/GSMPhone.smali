@@ -5260,6 +5260,11 @@
     :try_end_0
     .catch Ljava/lang/NumberFormatException; {:try_start_0 .. :try_end_0} :catch_0
 
+    :goto_miui_0
+    invoke-virtual/range {p0 .. p0}, Lcom/android/internal/telephony/gsm/GSMPhone;->sendDeviceIdReadyBroadcast()V
+
+    invoke-virtual/range {p0 .. p0}, Lcom/android/internal/telephony/gsm/GSMPhone;->setDeviceIdSystemProperty()V
+
     goto/16 :goto_0
 
     :catch_0
@@ -5282,7 +5287,7 @@
 
     invoke-direct {v0, v1}, Lcom/android/internal/telephony/gsm/GSMPhone;->LOGW(Ljava/lang/String;)V
 
-    goto/16 :goto_0
+    goto/16 :goto_miui_0
 
     .end local v4           #ar:Landroid/os/AsyncResult;
     .end local v6           #e:Ljava/lang/NumberFormatException;

@@ -59,6 +59,14 @@
 
     iput-boolean v1, p0, Landroid/preference/PreferenceFrameLayout$LayoutParams;->removeBorders:Z
 
+    iget-boolean v1, p0, Landroid/preference/PreferenceFrameLayout$LayoutParams;->removeBorders:Z
+
+    invoke-static {p1, v1}, Landroid/preference/PreferenceFrameLayout$Injector;->isRemoveBorders(Landroid/content/Context;Z)Z
+
+    move-result v1
+
+    iput-boolean v1, p0, Landroid/preference/PreferenceFrameLayout$LayoutParams;->removeBorders:Z
+
     invoke-virtual {v0}, Landroid/content/res/TypedArray;->recycle()V
 
     return-void

@@ -499,6 +499,37 @@
     return-void
 .end method
 
+.method private isCardPresent()Z
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Lcom/android/internal/telephony/uicc/UiccController;->mUiccCard:Lcom/android/internal/telephony/UiccCard;
+
+    if-eqz v0, :cond_0
+
+    iget-object v0, p0, Lcom/android/internal/telephony/uicc/UiccController;->mUiccCard:Lcom/android/internal/telephony/UiccCard;
+
+    invoke-virtual {v0}, Lcom/android/internal/telephony/UiccCard;->getCardState()Lcom/android/internal/telephony/IccCardStatus$CardState;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Lcom/android/internal/telephony/IccCardStatus$CardState;->isCardPresent()Z
+
+    move-result v0
+
+    if-eqz v0, :cond_0
+
+    const/4 v0, 0x1
+
+    :goto_0
+    return v0
+
+    :cond_0
+    const/4 v0, 0x0
+
+    goto :goto_0
+.end method
+
 .method private log(Ljava/lang/String;)V
     .locals 3
     .parameter "string"
@@ -966,6 +997,15 @@
     .parameter "notifyType"
 
     .prologue
+    invoke-direct {p0}, Lcom/android/internal/telephony/uicc/UiccController;->skipNotification()Z
+
+    move-result v5
+
+    if-eqz v5, :cond_miui_0
+
+    return-void
+
+    :cond_miui_0
     new-instance v5, Ljava/lang/StringBuilder;
 
     invoke-direct {v5}, Ljava/lang/StringBuilder;-><init>()V
@@ -1215,6 +1255,37 @@
     .end local v3           #notificationManager:Landroid/app/NotificationManager;
     :cond_0
     const-string v4, "Virtual SIM 2 ON"
+
+    goto :goto_0
+.end method
+
+.method private skipNotification()Z
+    .locals 1
+
+    .prologue
+    invoke-virtual {p0}, Lcom/android/internal/telephony/uicc/UiccController;->getMySimId()I
+
+    move-result v0
+
+    invoke-static {v0}, Lcom/android/internal/telephony/DefaultSIMSettings;->isSIMInsertStateChanged(I)Z
+
+    move-result v0
+
+    if-nez v0, :cond_0
+
+    invoke-direct {p0}, Lcom/android/internal/telephony/uicc/UiccController;->isCardPresent()Z
+
+    move-result v0
+
+    if-nez v0, :cond_0
+
+    const/4 v0, 0x1
+
+    :goto_0
+    return v0
+
+    :cond_0
+    const/4 v0, 0x0
 
     goto :goto_0
 .end method

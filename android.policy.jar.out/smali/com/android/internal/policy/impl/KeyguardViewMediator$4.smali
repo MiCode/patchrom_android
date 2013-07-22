@@ -45,10 +45,5 @@
     #calls: Lcom/android/internal/policy/impl/KeyguardViewMediator;->sendRemoveIPOWinBroadcast()V
     invoke-static {v0}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->access$2600(Lcom/android/internal/policy/impl/KeyguardViewMediator;)V
 
-    iget-object v0, p0, Lcom/android/internal/policy/impl/KeyguardViewMediator$4;->this$0:Lcom/android/internal/policy/impl/KeyguardViewMediator;
-
-    #calls: Lcom/android/internal/policy/impl/KeyguardViewMediator;->startAlarm()V
-    invoke-static {v0}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->access$2700(Lcom/android/internal/policy/impl/KeyguardViewMediator;)V
-
     return-void
 .end method

@@ -1711,6 +1711,9 @@
     check-cast v19, Landroid/content/pm/PackageInfo;
 
     .restart local v19       #pkg:Landroid/content/pm/PackageInfo;
+    
+    goto :goto_miui_0
+    
     move-object/from16 v0, v19
 
     iget-object v0, v0, Landroid/content/pm/PackageInfo;->applicationInfo:Landroid/content/pm/ApplicationInfo;
@@ -1729,6 +1732,7 @@
 
     if-eqz v21, :cond_3
 
+    :goto_miui_0
     move-object/from16 v0, v19
 
     iget-object v0, v0, Landroid/content/pm/PackageInfo;->packageName:Ljava/lang/String;

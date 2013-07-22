@@ -29,36 +29,55 @@
 .end method
 
 .method private isSimPinSecure()Z
-    .locals 2
+    .locals 4
 
     .prologue
-    iget-object v1, p0, Lcom/android/internal/policy/impl/LockPatternKeyguardViewProperties;->mUpdateMonitor:Lcom/android/internal/policy/impl/KeyguardUpdateMonitor;
+    const/4 v2, 0x1
 
-    invoke-virtual {v1}, Lcom/android/internal/policy/impl/KeyguardUpdateMonitor;->getSimState()Lcom/android/internal/telephony/IccCardConstants$State;
+    iget-object v3, p0, Lcom/android/internal/policy/impl/LockPatternKeyguardViewProperties;->mUpdateMonitor:Lcom/android/internal/policy/impl/KeyguardUpdateMonitor;
+
+    invoke-virtual {v3}, Lcom/android/internal/policy/impl/KeyguardUpdateMonitor;->getSimState()Lcom/android/internal/telephony/IccCardConstants$State;
+
+    move-result-object v1
+
+    .local v1, simState:Lcom/android/internal/telephony/IccCardConstants$State;
+    iget-object v3, p0, Lcom/android/internal/policy/impl/LockPatternKeyguardViewProperties;->mUpdateMonitor:Lcom/android/internal/policy/impl/KeyguardUpdateMonitor;
+
+    invoke-virtual {v3, v2}, Lcom/android/internal/policy/impl/KeyguardUpdateMonitor;->getSimState(I)Lcom/android/internal/telephony/IccCardConstants$State;
 
     move-result-object v0
 
-    .local v0, simState:Lcom/android/internal/telephony/IccCardConstants$State;
-    sget-object v1, Lcom/android/internal/telephony/IccCardConstants$State;->PIN_REQUIRED:Lcom/android/internal/telephony/IccCardConstants$State;
+    .local v0, sim2State:Lcom/android/internal/telephony/IccCardConstants$State;
+    sget-object v3, Lcom/android/internal/telephony/IccCardConstants$State;->PIN_REQUIRED:Lcom/android/internal/telephony/IccCardConstants$State;
 
-    if-eq v0, v1, :cond_0
+    if-eq v1, v3, :cond_0
 
-    sget-object v1, Lcom/android/internal/telephony/IccCardConstants$State;->PUK_REQUIRED:Lcom/android/internal/telephony/IccCardConstants$State;
+    sget-object v3, Lcom/android/internal/telephony/IccCardConstants$State;->PUK_REQUIRED:Lcom/android/internal/telephony/IccCardConstants$State;
 
-    if-eq v0, v1, :cond_0
+    if-eq v1, v3, :cond_0
 
-    sget-object v1, Lcom/android/internal/telephony/IccCardConstants$State;->PERM_DISABLED:Lcom/android/internal/telephony/IccCardConstants$State;
+    sget-object v3, Lcom/android/internal/telephony/IccCardConstants$State;->PERM_DISABLED:Lcom/android/internal/telephony/IccCardConstants$State;
 
-    if-ne v0, v1, :cond_1
+    if-eq v1, v3, :cond_0
+
+    sget-object v3, Lcom/android/internal/telephony/IccCardConstants$State;->PIN_REQUIRED:Lcom/android/internal/telephony/IccCardConstants$State;
+
+    if-eq v0, v3, :cond_0
+
+    sget-object v3, Lcom/android/internal/telephony/IccCardConstants$State;->PUK_REQUIRED:Lcom/android/internal/telephony/IccCardConstants$State;
+
+    if-eq v0, v3, :cond_0
+
+    sget-object v3, Lcom/android/internal/telephony/IccCardConstants$State;->PERM_DISABLED:Lcom/android/internal/telephony/IccCardConstants$State;
+
+    if-ne v0, v3, :cond_1
 
     :cond_0
-    const/4 v1, 0x1
-
     :goto_0
-    return v1
+    return v2
 
     :cond_1
-    const/4 v1, 0x0
+    const/4 v2, 0x0
 
     goto :goto_0
 .end method

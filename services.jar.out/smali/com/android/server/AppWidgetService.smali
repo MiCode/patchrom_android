@@ -3,6 +3,14 @@
 .source "AppWidgetService.java"
 
 
+# annotations
+.annotation system Ldalvik/annotation/MemberClasses;
+    value = {
+        Lcom/android/server/AppWidgetService$Injector;
+    }
+.end annotation
+
+
 # static fields
 .field private static final ACTION_BOOT_IPO:Ljava/lang/String; = "android.intent.action.ACTION_BOOT_IPO"
 
@@ -1197,6 +1205,8 @@
     move/from16 v0, p1
 
     invoke-virtual {v2, v0}, Lcom/android/server/AppWidgetServiceImpl;->systemReady(Z)V
+
+    invoke-static/range {p0 .. p0}, Lcom/android/server/AppWidgetService$Injector;->receiveRestoreFinish(Lcom/android/server/AppWidgetService;)V
 
     move-object/from16 v0, p0
 

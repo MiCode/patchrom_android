@@ -709,6 +709,15 @@
 .method public abstract isFloating()Z
 .end method
 
+.method public isHardwareAccelerated()Z
+    .locals 1
+
+    .prologue
+    iget-boolean v0, p0, Landroid/view/Window;->mHardwareAccelerated:Z
+
+    return v0
+.end method
+
 .method public abstract isShortcutKey(ILandroid/view/KeyEvent;)Z
 .end method
 

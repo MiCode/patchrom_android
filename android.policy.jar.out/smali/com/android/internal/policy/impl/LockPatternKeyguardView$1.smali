@@ -73,6 +73,15 @@
     :cond_0
     iget-object v2, p0, Lcom/android/internal/policy/impl/LockPatternKeyguardView$1;->this$0:Lcom/android/internal/policy/impl/LockPatternKeyguardView;
 
+    #calls: Lcom/android/internal/policy/impl/LockPatternKeyguardView;->skipUpdateSimUnlockScreen(Lcom/android/internal/policy/impl/LockPatternKeyguardView$Mode;)Z
+    invoke-static {v2, v1}, Lcom/android/internal/policy/impl/LockPatternKeyguardView;->_skipUpdateSimUnlockScreen(Lcom/android/internal/policy/impl/LockPatternKeyguardView;Lcom/android/internal/policy/impl/LockPatternKeyguardView$Mode;)Z
+
+    move-result v2
+
+    if-nez v2, :cond_miui_0
+
+    iget-object v2, p0, Lcom/android/internal/policy/impl/LockPatternKeyguardView$1;->this$0:Lcom/android/internal/policy/impl/LockPatternKeyguardView;
+
     const/4 v3, 0x1
 
     #calls: Lcom/android/internal/policy/impl/LockPatternKeyguardView;->updateScreen(Lcom/android/internal/policy/impl/LockPatternKeyguardView$Mode;Z)V
@@ -83,6 +92,7 @@
     #calls: Lcom/android/internal/policy/impl/LockPatternKeyguardView;->restoreWidgetState()V
     invoke-static {v2}, Lcom/android/internal/policy/impl/LockPatternKeyguardView;->access$300(Lcom/android/internal/policy/impl/LockPatternKeyguardView;)V
 
+    :cond_miui_0
     if-eqz v0, :cond_1
 
     iget-object v2, p0, Lcom/android/internal/policy/impl/LockPatternKeyguardView$1;->this$0:Lcom/android/internal/policy/impl/LockPatternKeyguardView;

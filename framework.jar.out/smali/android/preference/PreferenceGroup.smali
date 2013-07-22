@@ -257,6 +257,8 @@
     :cond_5
     invoke-virtual {p0}, Landroid/preference/PreferenceGroup;->notifyHierarchyChanged()V
 
+    invoke-virtual {p1, p0}, Landroid/preference/Preference;->setParent(Landroid/preference/PreferenceGroup;)V
+
     move v1, v2
 
     goto :goto_0

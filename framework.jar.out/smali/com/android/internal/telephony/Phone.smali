@@ -16,6 +16,20 @@
 
 
 # static fields
+.field public static final APN_ALREADY_ACTIVE:I = 0x0
+
+.field public static final APN_ALREADY_INACTIVE:I = 0x4
+
+.field public static final APN_REQUEST_FAILED:I = 0x3
+
+.field public static final APN_REQUEST_STARTED:I = 0x1
+
+.field public static final APN_TYPE_ALL:Ljava/lang/String; = "*"
+
+.field public static final APN_TYPE_MMS:Ljava/lang/String; = "mms"
+
+.field public static final APN_TYPE_NOT_AVAILABLE:I = 0x2
+
 .field public static final BM_AUS2_BAND:I = 0x5
 
 .field public static final BM_AUS_BAND:I = 0x4
@@ -120,6 +134,12 @@
 
 .field public static final IS_VT_CALL:Ljava/lang/String; = "isVtCall"
 
+.field public static final LTE_ON_CDMA_FALSE:I = 0x0
+
+.field public static final LTE_ON_CDMA_TRUE:I = 0x1
+
+.field public static final LTE_ON_CDMA_UNKNOWN:I = -0x1
+
 .field public static final NT_MODE_CDMA:I = 0x4
 
 .field public static final NT_MODE_CDMA_NO_EVDO:I = 0x5
@@ -139,6 +159,16 @@
 .field public static final NT_MODE_WCDMA_ONLY:I = 0x2
 
 .field public static final NT_MODE_WCDMA_PREF:I = 0x0
+
+.field public static final PHONE_NAME_KEY:Ljava/lang/String; = "phoneName"
+
+.field public static final PHONE_TYPE_CDMA:I = 0x2
+
+.field public static final PHONE_TYPE_GSM:I = 0x1
+
+.field public static final PHONE_TYPE_NONE:I = 0x0
+
+.field public static final PHONE_TYPE_SIP:I = 0x3
 
 .field public static final PREFERRED_CDMA_SUBSCRIPTION:I = 0x1
 
@@ -189,6 +219,8 @@
 .field public static final REASON_VOICE_CALL_ENDED:Ljava/lang/String; = "2GVoiceCallEnded"
 
 .field public static final REASON_VOICE_CALL_STARTED:Ljava/lang/String; = "2GVoiceCallStarted"
+
+.field public static final STATE_KEY:Ljava/lang/String; = "state"
 
 .field public static final TTY_MODE_FULL:I = 0x1
 

@@ -11,6 +11,7 @@
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
         Landroid/preference/PreferenceActivity$Header;,
+        Landroid/preference/PreferenceActivity$Injector;,
         Landroid/preference/PreferenceActivity$HeaderAdapter;
     }
 .end annotation
@@ -2044,6 +2045,8 @@
     move-result v17
 
     if-lez v17, :cond_e
+
+    invoke-static/range {p0 .. p0}, Landroid/preference/PreferenceActivity$Injector;->setListViewPadding(Landroid/preference/PreferenceActivity;)V
 
     new-instance v17, Landroid/preference/PreferenceActivity$HeaderAdapter;
 
