@@ -1514,6 +1514,16 @@
     return-void
 .end method
 
+.method public setFailedAttempts(I)V
+    .locals 0
+    .parameter "failedAttempts"
+
+    .prologue
+    iput p1, p0, Lcom/android/internal/policy/impl/KeyguardUpdateMonitor;->mFailedAttempts:I
+
+    return-void
+.end method
+
 .method public setSkipSimStateChange(Z)V
     .locals 0
     .parameter "skip"
