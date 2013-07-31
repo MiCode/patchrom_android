@@ -24639,6 +24639,37 @@
     return-void
 .end method
 
+.method public setProxy(Ljava/lang/String;I)V
+    .locals 3
+    .parameter "host"
+    .parameter "port"
+
+    .prologue
+    const/4 v2, 0x0
+
+    const/16 v1, 0xc1
+
+    if-eqz p1, :cond_0
+
+    if-nez p2, :cond_1
+
+    :cond_0
+    invoke-static {v1, v2}, Landroid/webkit/WebViewCore;->sendStaticMessage(ILjava/lang/Object;)V
+
+    :goto_0
+    return-void
+
+    :cond_1
+    new-instance v0, Landroid/net/ProxyProperties;
+
+    invoke-direct {v0, p1, p2, v2}, Landroid/net/ProxyProperties;-><init>(Ljava/lang/String;ILjava/lang/String;)V
+
+    .local v0, pp:Landroid/net/ProxyProperties;
+    invoke-static {v1, v0}, Landroid/webkit/WebViewCore;->sendStaticMessage(ILjava/lang/Object;)V
+
+    goto :goto_0
+.end method
+
 .method public setScrollBarStyle(I)V
     .locals 1
     .parameter "style"
