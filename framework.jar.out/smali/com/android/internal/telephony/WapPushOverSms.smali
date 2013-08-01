@@ -85,9 +85,6 @@
 .method public dispatchWapPdu([B)I
     .locals 24
     .parameter "pdu"
-    .annotation build Landroid/annotation/MiuiHook;
-        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->CHANGE_CODE:Landroid/annotation/MiuiHook$MiuiHookType;
-    .end annotation
 
     .prologue
     const/4 v10, 0x0
@@ -435,20 +432,6 @@
 
     invoke-static {v0, v6, v13, v1, v2}, Ljava/lang/System;->arraycopy(Ljava/lang/Object;ILjava/lang/Object;II)V
 
-    move-object/from16 v0, p0
-
-    invoke-static {v0, v13}, Lcom/android/internal/telephony/WapPushOverSms$Injector;->checkFirewallForWapPush(Lcom/android/internal/telephony/WapPushOverSms;[B)Z
-
-    move-result v22
-
-    if-eqz v22, :cond_miui_0
-
-    const/16 v22, -0x1
-
-    return v22
-    ########### method end
-
-    :cond_miui_0
     goto :goto_1
 
     .end local v6           #dataIndex:I
