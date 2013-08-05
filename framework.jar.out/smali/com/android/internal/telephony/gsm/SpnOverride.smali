@@ -1592,3 +1592,19 @@
 
     goto :goto_0
 .end method
+
+.method public getSpnFromConfig(Ljava/lang/String;)Ljava/lang/String;
+    .locals 1
+    .parameter "carrier"
+
+    .prologue
+    sget-object v0, Lcom/android/internal/telephony/gsm/SpnOverride;->CarrierSpnMap:Ljava/util/HashMap;
+
+    invoke-virtual {v0, p1}, Ljava/util/HashMap;->get(Ljava/lang/Object;)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Ljava/lang/String;
+
+    return-object v0
+.end method
