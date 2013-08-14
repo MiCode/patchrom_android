@@ -2623,6 +2623,18 @@
 
 
 # virtual methods
+.method public areNotificationsEnabled(Ljava/lang/String;)Z
+    .locals 1
+    .parameter "pkg"
+
+    .prologue
+    invoke-direct {p0, p1}, Lcom/android/server/NotificationManagerService;->areNotificationsEnabledForPackageInt(Ljava/lang/String;)Z
+
+    move-result v0
+
+    return v0
+.end method
+
 .method public areNotificationsEnabledForPackage(Ljava/lang/String;)Z
     .locals 1
     .parameter "pkg"
