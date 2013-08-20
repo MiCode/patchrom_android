@@ -635,6 +635,10 @@
     :cond_0
     sget-object v0, Landroid/database/CursorWindow;->sWindowToPidMap:Landroid/util/SparseIntArray;
 
+    invoke-static {v0, p1}, Landroid/database/CursorWindow$Injector;->delQuota(Landroid/util/SparseIntArray;I)V
+
+    sget-object v0, Landroid/database/CursorWindow;->sWindowToPidMap:Landroid/util/SparseIntArray;
+
     invoke-virtual {v0, p1}, Landroid/util/SparseIntArray;->delete(I)V
 
     monitor-exit v1
@@ -703,6 +707,8 @@
     invoke-static {v0, v2}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
 
     :cond_0
+    invoke-static {p1}, Landroid/database/CursorWindow$Injector;->addQuota(I)V
+
     monitor-exit v1
 
     return-void
