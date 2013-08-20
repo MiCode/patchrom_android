@@ -3874,7 +3874,7 @@
 .end method
 
 .method public final query(Landroid/net/Uri;[Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;Landroid/os/CancellationSignal;)Landroid/database/Cursor;
-    .locals 24
+    .locals 31
     .parameter "uri"
     .parameter "projection"
     .parameter "selection"
@@ -3922,6 +3922,7 @@
     invoke-virtual {v0, v9}, Landroid/os/CancellationSignal;->setRemote(Landroid/os/ICancellationSignal;)V
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
+    .catch Landroid/os/IllegalStateException; {:try_start_0 .. :try_end_0} :catch_miui_0
     .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_1
 
     :cond_2
@@ -3940,6 +3941,7 @@
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
     .catch Landroid/os/DeadObjectException; {:try_start_1 .. :try_end_1} :catch_0
+    .catch Landroid/os/IllegalStateException; {:try_start_1 .. :try_end_1} :catch_miui_0
     .catch Landroid/os/RemoteException; {:try_start_1 .. :try_end_1} :catch_1
 
     move-result-object v19
@@ -3978,6 +3980,7 @@
     invoke-virtual/range {p0 .. p1}, Landroid/content/ContentResolver;->acquireProvider(Landroid/net/Uri;)Landroid/content/IContentProvider;
     :try_end_2
     .catchall {:try_start_2 .. :try_end_2} :catchall_0
+    .catch Landroid/os/IllegalStateException; {:try_start_2 .. :try_end_2} :catch_miui_0
     .catch Landroid/os/RemoteException; {:try_start_2 .. :try_end_2} :catch_1
 
     move-result-object v10
@@ -4087,6 +4090,7 @@
     invoke-virtual {v0, v4, v1, v5}, Landroid/content/ContentResolver;->AddToQueryHistory(Ljava/lang/String;Ljava/lang/Throwable;I)Z
     :try_end_3
     .catchall {:try_start_3 .. :try_end_3} :catchall_0
+    .catch Landroid/os/IllegalStateException; {:try_start_3 .. :try_end_3} :catch_miui_0
     .catch Landroid/os/RemoteException; {:try_start_3 .. :try_end_3} :catch_1
 
     if-eqz v3, :cond_7
@@ -4111,6 +4115,7 @@
     invoke-virtual/range {p0 .. p1}, Landroid/content/ContentResolver;->acquireProvider(Landroid/net/Uri;)Landroid/content/IContentProvider;
     :try_end_4
     .catchall {:try_start_4 .. :try_end_4} :catchall_0
+    .catch Landroid/os/IllegalStateException; {:try_start_4 .. :try_end_4} :catch_miui_0
     .catch Landroid/os/RemoteException; {:try_start_4 .. :try_end_4} :catch_1
 
     move-result-object v4
@@ -4143,6 +4148,49 @@
     goto/16 :goto_0
 
     .end local v18           #e:Landroid/os/RemoteException;
+    :catch_miui_0
+    move-exception v25
+
+    .local v25, e:Ljava/lang/IllegalStateException;
+    :try_start_miui_0
+    move-object/from16 v0, p0
+
+    iget-object v0, v0, Landroid/content/ContentResolver;->mContext:Landroid/content/Context;
+
+    move-object/from16 v24, v0
+
+    move-object/from16 v26, p1
+
+    move-object/from16 v27, p2
+
+    move-object/from16 v28, p3
+
+    move-object/from16 v29, p4
+
+    move-object/from16 v30, p5
+
+    invoke-static/range {v24 .. v30}, Landroid/content/ContentResolver$Injector;->checkCursorLeakException(Landroid/content/Context;Ljava/lang/IllegalStateException;Landroid/net/Uri;[Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;)Landroid/database/Cursor;
+    :try_end_miui_0
+    .catchall {:try_start_miui_0 .. :try_end_miui_0} :catchall_0
+
+    move-result-object v23
+
+    if-eqz v3, :cond_miui_0
+
+    move-object/from16 v0, p0
+
+    invoke-virtual {v0, v3}, Landroid/content/ContentResolver;->releaseUnstableProvider(Landroid/content/IContentProvider;)Z
+
+    :cond_miui_0
+    if-eqz v10, :cond_0
+
+    move-object/from16 v0, p0
+
+    invoke-virtual {v0, v10}, Landroid/content/ContentResolver;->releaseProvider(Landroid/content/IContentProvider;)Z
+
+    goto/16 :goto_0
+
+    .end local v25           #e:Ljava/lang/IllegalStateException;
     :catchall_0
     move-exception v4
 
