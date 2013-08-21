@@ -3853,7 +3853,7 @@
     invoke-virtual {v0, v9}, Landroid/os/CancellationSignal;->setRemote(Landroid/os/ICancellationSignal;)V
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
-    .catch Landroid/os/IllegalStateException; {:try_start_0 .. :try_end_0} :catch_miui_0
+    .catch Ljava/lang/IllegalStateException; {:try_start_0 .. :try_end_0} :catch_miui_0
     .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_1
 
     :cond_2
@@ -3872,7 +3872,7 @@
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
     .catch Landroid/os/DeadObjectException; {:try_start_1 .. :try_end_1} :catch_0
-    .catch Landroid/os/IllegalStateException; {:try_start_1 .. :try_end_1} :catch_miui_0
+    .catch Ljava/lang/IllegalStateException; {:try_start_1 .. :try_end_1} :catch_miui_0
     .catch Landroid/os/RemoteException; {:try_start_1 .. :try_end_1} :catch_1
 
     move-result-object v19
@@ -3916,7 +3916,7 @@
     invoke-virtual/range {p0 .. p1}, Landroid/content/ContentResolver;->acquireProvider(Landroid/net/Uri;)Landroid/content/IContentProvider;
     :try_end_2
     .catchall {:try_start_2 .. :try_end_2} :catchall_0
-    .catch Landroid/os/IllegalStateException; {:try_start_2 .. :try_end_2} :catch_miui_0
+    .catch Ljava/lang/IllegalStateException; {:try_start_2 .. :try_end_2} :catch_miui_0
     .catch Landroid/os/RemoteException; {:try_start_2 .. :try_end_2} :catch_1
 
     move-result-object v10
@@ -3996,7 +3996,7 @@
     invoke-direct {v0, v1, v2, v4}, Landroid/content/ContentResolver$CursorWrapperInner;-><init>(Landroid/content/ContentResolver;Landroid/database/Cursor;Landroid/content/IContentProvider;)V
     :try_end_3
     .catchall {:try_start_3 .. :try_end_3} :catchall_0
-    .catch Landroid/os/IllegalStateException; {:try_start_3 .. :try_end_3} :catch_miui_0
+    .catch Ljava/lang/IllegalStateException; {:try_start_3 .. :try_end_3} :catch_miui_0
     .catch Landroid/os/RemoteException; {:try_start_3 .. :try_end_3} :catch_1
 
     .local v22, wrapper:Landroid/content/ContentResolver$CursorWrapperInner;
@@ -4019,7 +4019,7 @@
     invoke-virtual/range {p0 .. p1}, Landroid/content/ContentResolver;->acquireProvider(Landroid/net/Uri;)Landroid/content/IContentProvider;
     :try_end_4
     .catchall {:try_start_4 .. :try_end_4} :catchall_0
-    .catch Landroid/os/IllegalStateException; {:try_start_4 .. :try_end_4} :catch_miui_0
+    .catch Ljava/lang/IllegalStateException; {:try_start_4 .. :try_end_4} :catch_miui_0
     .catch Landroid/os/RemoteException; {:try_start_4 .. :try_end_4} :catch_1
 
     move-result-object v4
