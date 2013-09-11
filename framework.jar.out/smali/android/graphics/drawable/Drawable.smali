@@ -274,6 +274,58 @@
     goto :goto_0
 .end method
 
+.method public static createFromResourceStreamAndCloseStream(Landroid/content/res/Resources;Landroid/util/TypedValue;Ljava/io/InputStream;Ljava/lang/String;Landroid/graphics/BitmapFactory$Options;)Landroid/graphics/drawable/Drawable;
+    .locals 2
+    .parameter "res"
+    .parameter "value"
+    .parameter "is"
+    .parameter "srcName"
+    .parameter "opts"
+
+    .prologue
+    :try_start_0
+    invoke-static {p0, p1, p2, p3, p4}, Landroid/graphics/drawable/Drawable;->createFromResourceStream(Landroid/content/res/Resources;Landroid/util/TypedValue;Ljava/io/InputStream;Ljava/lang/String;Landroid/graphics/BitmapFactory$Options;)Landroid/graphics/drawable/Drawable;
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    move-result-object v0
+
+    if-eqz p2, :cond_0
+
+    :try_start_1
+    invoke-virtual {p2}, Ljava/io/InputStream;->close()V
+    :try_end_1
+    .catch Ljava/lang/Exception; {:try_start_1 .. :try_end_1} :catch_0
+
+    :cond_0
+    :goto_0
+    return-object v0
+
+    :catchall_0
+    move-exception v0
+
+    if-eqz p2, :cond_1
+
+    :try_start_2
+    invoke-virtual {p2}, Ljava/io/InputStream;->close()V
+    :try_end_2
+    .catch Ljava/lang/Exception; {:try_start_2 .. :try_end_2} :catch_1
+
+    :cond_1
+    :goto_1
+    throw v0
+
+    :catch_0
+    move-exception v1
+
+    goto :goto_0
+
+    :catch_1
+    move-exception v1
+
+    goto :goto_1
+.end method
+
 .method public static createFromStream(Ljava/io/InputStream;Ljava/lang/String;)Landroid/graphics/drawable/Drawable;
     .locals 1
     .parameter "is"
