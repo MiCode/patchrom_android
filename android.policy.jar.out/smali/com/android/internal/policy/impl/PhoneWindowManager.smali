@@ -7272,6 +7272,17 @@
     .end local v27           #telephonyService:Lcom/android/internal/telephony/ITelephony;
     :cond_5
     :goto_3
+    if-eqz v15, :cond_miui_0
+
+    move-object/from16 v0, p0
+
+    iget-object v4, v0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mContext:Landroid/content/Context;
+
+    invoke-static {v4}, Lcom/android/internal/policy/impl/PhoneWindowManager$Injector;->isInCallScreenShowing(Landroid/content/Context;)Z
+
+    move-result v15
+
+    :cond_miui_0
     if-eqz v15, :cond_6
 
     const-string v32, "WindowManager"
