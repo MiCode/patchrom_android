@@ -1360,6 +1360,12 @@
 
     iput-object v4, p0, Lcom/android/internal/telephony/gsm/SIMRecords;->mVmConfig:Lcom/android/internal/telephony/gsm/VoiceMailConstants;
 
+    invoke-static {}, Lcom/android/internal/telephony/gsm/MiuiSpnOverride;->getImpl()Lcom/android/internal/telephony/gsm/SpnOverride;
+
+    move-result-object v4
+
+    iput-object v4, p0, Lcom/android/internal/telephony/gsm/SIMRecords;->mSpnOverride:Lcom/android/internal/telephony/gsm/SpnOverride;
+
     iput-boolean v7, p0, Lcom/android/internal/telephony/gsm/SIMRecords;->recordsRequested:Z
 
     iput v7, p0, Lcom/android/internal/telephony/gsm/SIMRecords;->recordsToLoad:I

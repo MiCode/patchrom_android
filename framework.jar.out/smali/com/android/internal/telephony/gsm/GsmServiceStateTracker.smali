@@ -9886,6 +9886,15 @@
     return v0
 .end method
 
+.method getIccRecords()Lcom/android/internal/telephony/IccRecords;
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Lcom/android/internal/telephony/gsm/GsmServiceStateTracker;->mIccRecords:Lcom/android/internal/telephony/IccRecords;
+
+    return-object v0
+.end method
+
 .method protected getPhone()Lcom/android/internal/telephony/Phone;
     .locals 1
 
@@ -14385,9 +14394,15 @@
     invoke-virtual {v11}, Lcom/android/internal/telephony/gsm/SIMRecords;->getServiceProviderName()Ljava/lang/String;
 
     move-result-object v12
-
+    
     .local v12, spn:Ljava/lang/String;
     :goto_1
+    move-object/from16 v0, p0
+
+    invoke-static {v0, v12}, Lcom/android/internal/telephony/gsm/GsmServiceStateTracker$Injector;->getSpn(Lcom/android/internal/telephony/gsm/GsmServiceStateTracker;Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v12
+    
     const/4 v8, 0x0
 
     .local v8, sEons:Ljava/lang/String;

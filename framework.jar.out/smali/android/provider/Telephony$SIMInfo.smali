@@ -1715,6 +1715,10 @@
     .parameter "name"
 
     .prologue
+    const/4 v0, 0x0
+
+    return v0
+
     const-wide/16 v2, 0x0
 
     cmp-long v2, p1, v2
@@ -1935,6 +1939,10 @@
     .parameter "nameSource"
 
     .prologue
+    const/4 v0, 0x0
+
+    return v0
+
     const-wide/16 v2, 0x0
 
     cmp-long v2, p1, v2
