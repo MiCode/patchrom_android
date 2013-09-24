@@ -58,6 +58,8 @@
 
 .field private static final TOP:I = 0x1
 
+.field static sOptimizeLineBreakStrategy:Z
+
 
 # instance fields
 .field private mBottomPadding:I
@@ -334,6 +336,12 @@
     invoke-direct {v1}, Landroid/graphics/Paint$FontMetricsInt;-><init>()V
 
     iput-object v1, p0, Landroid/text/StaticLayout;->mFontMetricsInt:Landroid/graphics/Paint$FontMetricsInt;
+
+    invoke-static {}, Lmiui/provider/ExtraSettings$System;->isLinebreakingEnabled()Z
+
+    move-result v1
+
+    sput-boolean v1, Landroid/text/StaticLayout;->sOptimizeLineBreakStrategy:Z
 
     if-eqz p11, :cond_2
 
