@@ -14,6 +14,8 @@
 # static fields
 .field public static final ACQUIRE_CAUSES_WAKEUP:I = 0x10000000
 
+.field public static final BRIGHTNESS_DIM:I = 0x14
+
 .field public static final BRIGHTNESS_OFF:I = 0x0
 
 .field public static final BRIGHTNESS_ON:I = 0xff

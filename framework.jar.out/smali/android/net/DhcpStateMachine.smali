@@ -11,7 +11,8 @@
         Landroid/net/DhcpStateMachine$WaitBeforeStartState;,
         Landroid/net/DhcpStateMachine$StoppedState;,
         Landroid/net/DhcpStateMachine$DefaultState;,
-        Landroid/net/DhcpStateMachine$DhcpAction;
+        Landroid/net/DhcpStateMachine$DhcpAction;,
+        Landroid/net/DhcpStateMachine$Injector;
     }
 .end annotation
 
@@ -547,6 +548,10 @@
 
     :cond_0
     :goto_0
+    invoke-static {v0}, Landroid/net/DhcpStateMachine$Injector;->checkDhcpInfoInternal(Landroid/net/DhcpInfoInternal;)Z
+
+    move-result v3
+
     if-eqz v3, :cond_4
 
     iget v4, v0, Landroid/net/DhcpInfoInternal;->leaseDuration:I

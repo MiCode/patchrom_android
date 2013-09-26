@@ -614,6 +614,59 @@
     goto :goto_0
 .end method
 
+.method private miuiUpdateSearchAppIcon()Z
+    .locals 6
+
+    .prologue
+    const/4 v1, 0x0
+
+    .local v1, retval:Z
+    iget-object v2, p0, Landroid/app/SearchDialog;->mContext:Landroid/content/Context;
+
+    invoke-static {v2}, Lmiui/util/UiUtils;->isV5Ui(Landroid/content/Context;)Z
+
+    move-result v2
+
+    if-eqz v2, :cond_0
+
+    iget-object v2, p0, Landroid/app/SearchDialog;->mAppIcon:Landroid/widget/ImageView;
+
+    const/16 v3, 0x8
+
+    invoke-virtual {v2, v3}, Landroid/widget/ImageView;->setVisibility(I)V
+
+    iget-object v2, p0, Landroid/app/SearchDialog;->mCloseSearch:Landroid/view/View;
+
+    invoke-virtual {v2}, Landroid/view/View;->getParent()Landroid/view/ViewParent;
+
+    move-result-object v0
+
+    check-cast v0, Landroid/view/ViewGroup;
+
+    .local v0, parent:Landroid/view/ViewGroup;
+    const/4 v2, 0x0
+
+    invoke-virtual {v0}, Landroid/view/ViewGroup;->getPaddingTop()I
+
+    move-result v3
+
+    invoke-virtual {v0}, Landroid/view/ViewGroup;->getPaddingRight()I
+
+    move-result v4
+
+    invoke-virtual {v0}, Landroid/view/ViewGroup;->getPaddingBottom()I
+
+    move-result v5
+
+    invoke-virtual {v0, v2, v3, v4, v5}, Landroid/view/ViewGroup;->setPadding(IIII)V
+
+    const/4 v1, 0x1
+
+    .end local v0           #parent:Landroid/view/ViewGroup;
+    :cond_0
+    return v1
+.end method
+
 .method private onClosePressed()Z
     .locals 1
 
@@ -776,6 +829,15 @@
     .prologue
     const/4 v7, 0x0
 
+    invoke-direct {p0}, Landroid/app/SearchDialog;->miuiUpdateSearchAppIcon()Z
+
+    move-result v4
+
+    if-eqz v4, :cond_miui_0
+
+    return-void
+
+    :cond_miui_0
     invoke-virtual {p0}, Landroid/app/SearchDialog;->getContext()Landroid/content/Context;
 
     move-result-object v4

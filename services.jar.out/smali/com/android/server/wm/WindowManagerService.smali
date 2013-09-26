@@ -20,7 +20,8 @@
         Lcom/android/server/wm/WindowManagerService$DragInputEventReceiver;,
         Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;,
         Lcom/android/server/wm/WindowManagerService$AppWindowAnimParams;,
-        Lcom/android/server/wm/WindowManagerService$LayoutFields;
+        Lcom/android/server/wm/WindowManagerService$LayoutFields;,
+        Lcom/android/server/wm/WindowManagerService$Injector;
     }
 .end annotation
 
@@ -6938,6 +6939,15 @@
     .end local v5           #pos:I
     .end local v7           #windows:Lcom/android/server/wm/WindowList;
     :cond_6
+    invoke-static {p0, p2}, Lcom/android/server/wm/WindowManagerService$Injector;->updateFocusAndLayout(Lcom/android/server/wm/WindowManagerService;I)Z
+
+    move-result v8
+
+    if-nez v8, :cond_miui_0
+
+    return-void
+
+    :cond_miui_0
     iget-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mInputMonitor:Lcom/android/server/wm/InputMonitor;
 
     invoke-virtual {v8}, Lcom/android/server/wm/InputMonitor;->setUpdateInputWindowsNeededLw()V
@@ -9986,6 +9996,8 @@
 
     :cond_4
     :goto_5
+    invoke-static {p0}, Lcom/android/server/wm/WindowManagerService$Injector;->hideFloatingWindow(Lcom/android/server/wm/WindowManagerService;)V
+
     invoke-static {v9, v10}, Landroid/os/Trace;->traceEnd(J)V
 
     goto/16 :goto_0
@@ -18293,6 +18305,17 @@
 
     :cond_2
     iput-boolean v5, p0, Lcom/android/server/wm/WindowManagerService;->mSafeMode:Z
+
+    const/4 v6, 0x0
+    
+    if-lez v1, :cond_miui_0
+
+    if-lez v4, :cond_miui_0
+
+    const/4 v6, 0x1
+    
+    :cond_miui_0
+    iput-boolean v6, p0, Lcom/android/server/wm/WindowManagerService;->mSafeMode:Z
 
     :try_start_0
     const-string v5, "persist.sys.safemode"
@@ -28026,6 +28049,17 @@
     goto :goto_1
 .end method
 
+.method public rebootSafeMode()V
+    .locals 1
+
+    .prologue
+    const/4 v0, 0x0
+
+    invoke-virtual {p0, v0}, Lcom/android/server/wm/WindowManagerService;->rebootSafeMode(Z)V
+
+    return-void
+.end method
+
 .method public rebootSafeMode(Z)V
     .locals 1
     .parameter "confirm"
@@ -28773,6 +28807,8 @@
     return v30
 
     :cond_1
+    invoke-static/range {v28 .. v28}, Lcom/android/server/wm/WindowManagerService$Injector;->restoreFloatingWindowState(Lcom/android/server/wm/WindowState;)V
+
     move-object/from16 v0, v28
 
     iget-object v0, v0, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
@@ -29874,6 +29910,8 @@
 
     invoke-virtual {v0, v1}, Lcom/android/server/wm/InputMonitor;->updateInputWindowsLw(Z)V
 
+    invoke-static/range {v28 .. v28}, Lcom/android/server/wm/WindowManagerService$Injector;->saveFloatingWindowState(Lcom/android/server/wm/WindowState;)V
+
     monitor-exit v31
     :try_end_3
     .catchall {:try_start_3 .. :try_end_3} :catchall_0
@@ -30083,6 +30121,8 @@
     invoke-static {v0, v1, v10}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
 
     invoke-static/range {v18 .. v19}, Landroid/os/Binder;->restoreCallingIdentity(J)V
+
+    invoke-static/range {v28 .. v28}, Lcom/android/server/wm/WindowManagerService$Injector;->saveFloatingWindowState(Lcom/android/server/wm/WindowState;)V
 
     const/16 v30, 0x0
 
@@ -35718,6 +35758,17 @@
     const/4 v1, 0x0
 
     goto :goto_1
+.end method
+
+.method public shutdown()V
+    .locals 1
+
+    .prologue
+    const/4 v0, 0x0
+
+    invoke-virtual {p0, v0}, Lcom/android/server/wm/WindowManagerService;->shutdown(Z)V
+
+    return-void
 .end method
 
 .method public shutdown(Z)V

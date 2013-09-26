@@ -6,12 +6,15 @@
 # annotations
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
-        Landroid/media/MediaFile$MediaFileType;
+        Landroid/media/MediaFile$MediaFileType;,
+        Landroid/media/MediaFile$Injector;
     }
 .end annotation
 
 
 # static fields
+.field public static final FILE_TYPE_3G2B:I = 0xcf
+
 .field public static final FILE_TYPE_3GPP:I = 0x17
 
 .field public static final FILE_TYPE_3GPP2:I = 0x18
@@ -19,6 +22,8 @@
 .field public static final FILE_TYPE_AAC:I = 0x8
 
 .field public static final FILE_TYPE_AMR:I = 0x4
+
+.field public static final FILE_TYPE_APE:I = 0x3e9
 
 .field public static final FILE_TYPE_ASF:I = 0x1a
 
@@ -28,9 +33,13 @@
 
 .field public static final FILE_TYPE_BMP:I = 0x22
 
+.field public static final FILE_TYPE_F4V:I = 0xce
+
 .field public static final FILE_TYPE_FL:I = 0x33
 
 .field public static final FILE_TYPE_FLAC:I = 0xa
+
+.field public static final FILE_TYPE_FLV:I = 0xc9
 
 .field public static final FILE_TYPE_GIF:I = 0x20
 
@@ -54,6 +63,8 @@
 
 .field public static final FILE_TYPE_MKV:I = 0x1b
 
+.field public static final FILE_TYPE_MOV:I = 0xcc
+
 .field public static final FILE_TYPE_MP2PS:I = 0xc8
 
 .field public static final FILE_TYPE_MP2TS:I = 0x1c
@@ -76,9 +87,15 @@
 
 .field public static final FILE_TYPE_PNG:I = 0x21
 
+.field public static final FILE_TYPE_RM:I = 0xca
+
+.field public static final FILE_TYPE_RMVB:I = 0xcb
+
 .field public static final FILE_TYPE_SMF:I = 0xc
 
 .field public static final FILE_TYPE_TEXT:I = 0x64
+
+.field public static final FILE_TYPE_VOB:I = 0xcd
 
 .field public static final FILE_TYPE_WAV:I = 0x3
 
@@ -102,6 +119,8 @@
 
 .field private static final FIRST_DRM_FILE_TYPE:I = 0x33
 
+.field private static final FIRST_FFMPEG_AUDIO_FILE_TYPE:I = 0x3e9
+
 .field private static final FIRST_IMAGE_FILE_TYPE:I = 0x1f
 
 .field private static final FIRST_MIDI_FILE_TYPE:I = 0xb
@@ -116,6 +135,8 @@
 
 .field private static final LAST_DRM_FILE_TYPE:I = 0x33
 
+.field private static final LAST_FFMPEG_AUDIO_FILE_TYPE:I = 0x3e9
+
 .field private static final LAST_IMAGE_FILE_TYPE:I = 0x24
 
 .field private static final LAST_MIDI_FILE_TYPE:I = 0xd
@@ -124,7 +145,7 @@
 
 .field private static final LAST_VIDEO_FILE_TYPE:I = 0x1e
 
-.field private static final LAST_VIDEO_FILE_TYPE2:I = 0xc8
+.field private static final LAST_VIDEO_FILE_TYPE2:I = 0xcf
 
 .field private static final sFileTypeMap:Ljava/util/HashMap;
     .annotation system Ldalvik/annotation/Signature;
@@ -286,7 +307,7 @@
 
     invoke-static {v0, v1, v2}, Landroid/media/MediaFile;->addFileType(Ljava/lang/String;ILjava/lang/String;)V
 
-    invoke-static {}, Landroid/media/MediaFile;->isWMAEnabled()Z
+    invoke-static {}, Landroid/media/MediaFile$Injector;->isWMAEnabled()Z
 
     move-result v0
 
@@ -768,6 +789,8 @@
 
     invoke-static {v0, v1, v2}, Landroid/media/MediaFile;->addFileType(Ljava/lang/String;ILjava/lang/String;)V
 
+    invoke-static {}, Landroid/media/MediaFile$Injector;->add()V
+
     return-void
 .end method
 
@@ -1080,6 +1103,17 @@
     .parameter "fileType"
 
     .prologue
+    const/16 v1, 0x3e9
+
+    if-lt p0, v1, :cond_miui_0
+
+    if-gt p0, v1, :cond_miui_0
+    
+    const/4 v0, 0x1
+    
+    return v0
+    
+    :cond_miui_0
     const/4 v0, 0x1
 
     if-lt p0, v0, :cond_0
@@ -1240,6 +1274,8 @@
 
     :cond_0
     if-lt p0, v1, :cond_2
+
+    const/16 v1, 0xcf
 
     if-gt p0, v1, :cond_2
 

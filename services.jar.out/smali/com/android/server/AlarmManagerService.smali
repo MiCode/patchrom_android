@@ -7,6 +7,7 @@
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
         Lcom/android/server/AlarmManagerService$ResultReceiver;,
+        Lcom/android/server/AlarmManagerService$Injector;,
         Lcom/android/server/AlarmManagerService$UninstallReceiver;,
         Lcom/android/server/AlarmManagerService$ClockReceiver;,
         Lcom/android/server/AlarmManagerService$AlarmHandler;,
@@ -2675,6 +2676,14 @@
     return-void
 
     :cond_0
+    invoke-static {p1, p2, p3}, Lcom/android/server/ExtraAlarmManagerService;->alignTriggerTime(IJ)J
+
+    move-result-wide p2
+
+    invoke-static {p1, p4, p5}, Lcom/android/server/ExtraAlarmManagerService;->alignInterval(IJ)J
+
+    move-result-wide p4
+
     iget-object v3, p0, Lcom/android/server/AlarmManagerService;->mLock:Ljava/lang/Object;
 
     monitor-enter v3

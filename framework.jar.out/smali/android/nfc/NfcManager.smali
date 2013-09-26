@@ -64,3 +64,13 @@
 
     return-object v0
 .end method
+
+.method public setPollDuration(I)I
+    .locals 1
+    .parameter "pollDurationMs"
+
+    .prologue
+    const/4 v0, 0x0
+
+    return v0
+.end method

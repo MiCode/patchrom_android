@@ -15,7 +15,8 @@
         Landroid/accounts/AccountManagerService$GetAccountsByTypeAndFeatureSession;,
         Landroid/accounts/AccountManagerService$RemoveAccountSession;,
         Landroid/accounts/AccountManagerService$TestFeaturesSession;,
-        Landroid/accounts/AccountManagerService$UserAccounts;
+        Landroid/accounts/AccountManagerService$UserAccounts;,
+        Landroid/accounts/AccountManagerService$Injector;
     }
 .end annotation
 
@@ -2787,7 +2788,7 @@
 
     iget v5, v2, Landroid/content/pm/RegisteredServicesCache$ServiceInfo;->uid:I
 
-    invoke-virtual {v3, v5, p2}, Landroid/content/pm/PackageManager;->checkSignatures(II)I
+    invoke-static {v3, v5, p2, p1}, Landroid/accounts/AccountManagerService$Injector;->checkSignatures(Landroid/content/pm/PackageManager;IILjava/lang/String;)I
 
     move-result v3
 

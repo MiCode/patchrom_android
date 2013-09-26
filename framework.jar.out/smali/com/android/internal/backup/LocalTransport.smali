@@ -108,6 +108,276 @@
     return-void
 .end method
 
+.method private performBackupWithBigChangeSetConsidered(Landroid/app/backup/BackupDataInput;Ljava/io/File;)I
+    .locals 15
+    .parameter "changeSet"
+    .parameter "packageDir"
+    .annotation build Landroid/annotation/MiuiHook;
+        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
+    .end annotation
+
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Ljava/io/IOException;
+        }
+    .end annotation
+
+    .prologue
+    const/16 v9, 0x1000
+
+    .local v9, maxBufSize:I
+    const/16 v3, 0x200
+
+    .local v3, bufSize:I
+    new-array v2, v3, [B
+
+    .local v2, buf:[B
+    :goto_0
+    invoke-virtual/range {p1 .. p1}, Landroid/app/backup/BackupDataInput;->readNextHeader()Z
+
+    move-result v12
+
+    if-eqz v12, :cond_5
+
+    invoke-virtual/range {p1 .. p1}, Landroid/app/backup/BackupDataInput;->getKey()Ljava/lang/String;
+
+    move-result-object v8
+
+    .local v8, key:Ljava/lang/String;
+    new-instance v1, Ljava/lang/String;
+
+    invoke-virtual {v8}, Ljava/lang/String;->getBytes()[B
+
+    move-result-object v12
+
+    invoke-static {v12}, Lcom/android/org/bouncycastle/util/encoders/Base64;->encode([B)[B
+
+    move-result-object v12
+
+    invoke-direct {v1, v12}, Ljava/lang/String;-><init>([B)V
+
+    .local v1, base64Key:Ljava/lang/String;
+    new-instance v7, Ljava/io/File;
+
+    move-object/from16 v0, p2
+
+    invoke-direct {v7, v0, v1}, Ljava/io/File;-><init>(Ljava/io/File;Ljava/lang/String;)V
+
+    .local v7, entityFile:Ljava/io/File;
+    invoke-virtual/range {p1 .. p1}, Landroid/app/backup/BackupDataInput;->getDataSize()I
+
+    move-result v4
+
+    .local v4, dataSize:I
+    const-string v12, "LocalTransport"
+
+    new-instance v13, Ljava/lang/StringBuilder;
+
+    invoke-direct {v13}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v14, "Got change set key="
+
+    invoke-virtual {v13, v14}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v13
+
+    invoke-virtual {v13, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v13
+
+    const-string v14, " size="
+
+    invoke-virtual {v13, v14}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v13
+
+    invoke-virtual {v13, v4}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v13
+
+    const-string v14, " key64="
+
+    invoke-virtual {v13, v14}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v13
+
+    invoke-virtual {v13, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v13
+
+    invoke-virtual {v13}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v13
+
+    invoke-static {v12, v13}, Landroid/util/Log;->v(Ljava/lang/String;Ljava/lang/String;)I
+
+    if-ltz v4, :cond_4
+
+    invoke-virtual {v7}, Ljava/io/File;->exists()Z
+
+    move-result v12
+
+    if-eqz v12, :cond_0
+
+    invoke-virtual {v7}, Ljava/io/File;->delete()Z
+
+    :cond_0
+    new-instance v6, Ljava/io/FileOutputStream;
+
+    invoke-direct {v6, v7}, Ljava/io/FileOutputStream;-><init>(Ljava/io/File;)V
+
+    .local v6, entity:Ljava/io/FileOutputStream;
+    const/16 v12, 0x1000
+
+    if-le v4, v12, :cond_2
+
+    const/16 v10, 0x1000
+
+    .local v10, newBufSize:I
+    :goto_1
+    if-le v10, v3, :cond_1
+
+    move v3, v10
+
+    new-array v2, v10, [B
+
+    :cond_1
+    const-string v12, "LocalTransport"
+
+    new-instance v13, Ljava/lang/StringBuilder;
+
+    invoke-direct {v13}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v14, "  data size "
+
+    invoke-virtual {v13, v14}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v13
+
+    invoke-virtual {v13, v4}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v13
+
+    invoke-virtual {v13}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v13
+
+    invoke-static {v12, v13}, Landroid/util/Log;->v(Ljava/lang/String;Ljava/lang/String;)I
+
+    const/4 v11, 0x0
+
+    .local v11, readSize:I
+    :goto_2
+    const/4 v12, 0x0
+
+    :try_start_0
+    move-object/from16 v0, p1
+
+    invoke-virtual {v0, v2, v12, v3}, Landroid/app/backup/BackupDataInput;->readEntityData([BII)I
+
+    move-result v11
+
+    if-lez v11, :cond_3
+
+    const/4 v12, 0x0
+
+    invoke-virtual {v6, v2, v12, v11}, Ljava/io/FileOutputStream;->write([BII)V
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+    .catch Ljava/io/IOException; {:try_start_0 .. :try_end_0} :catch_0
+
+    goto :goto_2
+
+    :catch_0
+    move-exception v5
+
+    .local v5, e:Ljava/io/IOException;
+    :try_start_1
+    const-string v12, "LocalTransport"
+
+    new-instance v13, Ljava/lang/StringBuilder;
+
+    invoke-direct {v13}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v14, "Unable to update key file "
+
+    invoke-virtual {v13, v14}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v13
+
+    invoke-virtual {v7}, Ljava/io/File;->getAbsolutePath()Ljava/lang/String;
+
+    move-result-object v14
+
+    invoke-virtual {v13, v14}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v13
+
+    invoke-virtual {v13}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v13
+
+    invoke-static {v12, v13}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    :try_end_1
+    .catchall {:try_start_1 .. :try_end_1} :catchall_0
+
+    const/4 v12, 0x1
+
+    invoke-virtual {v6}, Ljava/io/FileOutputStream;->close()V
+
+    .end local v1           #base64Key:Ljava/lang/String;
+    .end local v4           #dataSize:I
+    .end local v5           #e:Ljava/io/IOException;
+    .end local v6           #entity:Ljava/io/FileOutputStream;
+    .end local v7           #entityFile:Ljava/io/File;
+    .end local v8           #key:Ljava/lang/String;
+    .end local v10           #newBufSize:I
+    .end local v11           #readSize:I
+    :goto_3
+    return v12
+
+    .restart local v1       #base64Key:Ljava/lang/String;
+    .restart local v4       #dataSize:I
+    .restart local v6       #entity:Ljava/io/FileOutputStream;
+    .restart local v7       #entityFile:Ljava/io/File;
+    .restart local v8       #key:Ljava/lang/String;
+    :cond_2
+    move v10, v4
+
+    goto :goto_1
+
+    .restart local v10       #newBufSize:I
+    .restart local v11       #readSize:I
+    :cond_3
+    invoke-virtual {v6}, Ljava/io/FileOutputStream;->close()V
+
+    goto/16 :goto_0
+
+    :catchall_0
+    move-exception v12
+
+    invoke-virtual {v6}, Ljava/io/FileOutputStream;->close()V
+
+    throw v12
+
+    .end local v6           #entity:Ljava/io/FileOutputStream;
+    .end local v10           #newBufSize:I
+    .end local v11           #readSize:I
+    :cond_4
+    invoke-virtual {v7}, Ljava/io/File;->delete()Z
+
+    goto/16 :goto_0
+
+    .end local v1           #base64Key:Ljava/lang/String;
+    .end local v4           #dataSize:I
+    .end local v7           #entityFile:Ljava/io/File;
+    .end local v8           #key:Ljava/lang/String;
+    :cond_5
+    const/4 v12, 0x0
+
+    goto :goto_3
+.end method
+
 
 # virtual methods
 .method public clearBackupData(Landroid/content/pm/PackageInfo;)I
@@ -686,10 +956,21 @@
     invoke-direct {v3, v10}, Landroid/app/backup/BackupDataInput;-><init>(Ljava/io/FileDescriptor;)V
 
     .local v3, changeSet:Landroid/app/backup/BackupDataInput;
+    :try_start_0
+    invoke-direct {p0, v3, v9}, Lcom/android/internal/backup/LocalTransport;->performBackupWithBigChangeSetConsidered(Landroid/app/backup/BackupDataInput;Ljava/io/File;)I
+
+    move-result v10
+
+    if-nez v10, :cond_miui_0
+
+    const/4 v10, 0x0
+
+    return v10
+
+    :cond_miui_0
     const/16 v2, 0x200
 
     .local v2, bufSize:I
-    :try_start_0
     new-array v1, v2, [B
 
     .local v1, buf:[B

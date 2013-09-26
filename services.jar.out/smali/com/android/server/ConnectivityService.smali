@@ -13,7 +13,8 @@
         Lcom/android/server/ConnectivityService$FeatureUser;,
         Lcom/android/server/ConnectivityService$DefaultNetworkFactory;,
         Lcom/android/server/ConnectivityService$NetworkFactory;,
-        Lcom/android/server/ConnectivityService$RadioAttributes;
+        Lcom/android/server/ConnectivityService$RadioAttributes;,
+        Lcom/android/server/ConnectivityService$Injector;
     }
 .end annotation
 
@@ -416,6 +417,8 @@
 
     invoke-static {v2}, Lcom/android/server/ConnectivityService;->log(Ljava/lang/String;)V
 
+    invoke-static/range {p1 .. p1}, Lcom/miui/server/FirewallService;->setupService(Landroid/content/Context;)V
+
     new-instance v13, Landroid/os/HandlerThread;
 
     const-string v2, "ConnectivityServiceThread"
@@ -673,7 +676,7 @@
 
     iput v2, v0, Lcom/android/server/ConnectivityService;->mNetTransitionWakeLockTimeout:I
 
-    const/16 v2, 0xe
+    const/16 v2, 0xf
 
     new-array v2, v2, [Landroid/net/NetworkStateTracker;
 
@@ -681,7 +684,7 @@
 
     iput-object v2, v0, Lcom/android/server/ConnectivityService;->mNetTrackers:[Landroid/net/NetworkStateTracker;
 
-    const/16 v2, 0xe
+    const/16 v2, 0xf
 
     new-array v2, v2, [Landroid/net/LinkProperties;
 
@@ -697,7 +700,7 @@
 
     iput v2, v0, Lcom/android/server/ConnectivityService;->mNetworkPreference:I
 
-    const/16 v2, 0xe
+    const/16 v2, 0xf
 
     new-array v2, v2, [Lcom/android/server/ConnectivityService$RadioAttributes;
 
@@ -705,7 +708,7 @@
 
     iput-object v2, v0, Lcom/android/server/ConnectivityService;->mRadioAttributes:[Lcom/android/server/ConnectivityService$RadioAttributes;
 
-    const/16 v2, 0xe
+    const/16 v2, 0xf
 
     new-array v2, v2, [Landroid/net/NetworkConfig;
 
@@ -752,7 +755,7 @@
 
     iget v2, v0, Lcom/android/server/ConnectivityService$RadioAttributes;->mType:I
 
-    const/16 v3, 0xd
+    const/16 v3, 0xe
 
     if-le v2, v3, :cond_4
 
@@ -953,7 +956,7 @@
 
     iget v2, v0, Landroid/net/NetworkConfig;->type:I
 
-    const/16 v3, 0xd
+    const/16 v3, 0xe
 
     if-le v2, v3, :cond_7
 
@@ -1364,7 +1367,7 @@
 
     .end local v8           #arr$:[Landroid/net/NetworkConfig;
     :cond_12
-    const/16 v2, 0xe
+    const/16 v2, 0xf
 
     new-array v2, v2, [Ljava/util/ArrayList;
 
@@ -2490,7 +2493,7 @@
 
     .local v0, t:I
     :goto_0
-    const/16 v1, 0xd
+    const/16 v1, 0xe
 
     if-gt v0, v1, :cond_0
 
@@ -2846,7 +2849,7 @@
     const v1, 0xea60
 
     .local v1, ret:I
-    const/16 v2, 0xd
+    const/16 v2, 0xe
 
     if-gt p1, v2, :cond_0
 
@@ -7301,6 +7304,8 @@
     move-result v8
 
     .local v8, usedNetworkType:I
+    invoke-static {p1, v8}, Lcom/android/server/ConnectivityService$Injector;->stopUsingNetworkFeature(Lcom/android/server/ConnectivityService$FeatureUser;I)V
+
     iget-object v10, p0, Lcom/android/server/ConnectivityService;->mNetTrackers:[Landroid/net/NetworkStateTracker;
 
     aget-object v6, v10, v8
@@ -7554,7 +7559,7 @@
 
     .local v2, checkType:I
     :goto_0
-    const/16 v3, 0xd
+    const/16 v3, 0xe
 
     if-gt v2, v3, :cond_5
 
@@ -11491,9 +11496,11 @@
     :try_end_8
     .catchall {:try_start_8 .. :try_end_8} :catchall_2
 
+    :try_start_9
+    invoke-static/range {v20 .. v20}, Lcom/android/server/ConnectivityService$Injector;->startUsingNetworkFeature(I)V
+
     if-ltz v13, :cond_d
 
-    :try_start_9
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/ConnectivityService;->mHandler:Lcom/android/server/ConnectivityService$InternalHandler;

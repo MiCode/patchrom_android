@@ -90,15 +90,7 @@
     :cond_1
     iget-object v2, p0, Landroid/content/pm/ResolveInfo$DisplayNameComparator;->sCollator:Ljava/text/Collator;
 
-    invoke-virtual {v0}, Ljava/lang/Object;->toString()Ljava/lang/String;
-
-    move-result-object v3
-
-    invoke-virtual {v1}, Ljava/lang/Object;->toString()Ljava/lang/String;
-
-    move-result-object v4
-
-    invoke-virtual {v2, v3, v4}, Ljava/text/Collator;->compare(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v2, p1, v0, p2, v1}, Landroid/content/pm/ResolveInfo$Injector;->compare(Ljava/text/Collator;Landroid/content/pm/ResolveInfo;Ljava/lang/CharSequence;Landroid/content/pm/ResolveInfo;Ljava/lang/CharSequence;)I
 
     move-result v2
 

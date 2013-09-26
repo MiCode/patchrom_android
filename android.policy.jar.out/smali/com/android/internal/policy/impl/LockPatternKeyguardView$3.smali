@@ -7,8 +7,8 @@
 
 
 # annotations
-.annotation system Ldalvik/annotation/EnclosingClass;
-    value = Lcom/android/internal/policy/impl/LockPatternKeyguardView;
+.annotation system Ldalvik/annotation/EnclosingMethod;
+    value = Lcom/android/internal/policy/impl/LockPatternKeyguardView;->createKeyguardScreenCallback()Lcom/android/internal/policy/impl/KeyguardScreenCallback;
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -392,7 +392,7 @@
     move-result v2
 
     .local v2, failedAttemptsBeforeWipe:I
-    const/16 v0, 0xf
+    const/16 v0, 0x8
 
     .local v0, failedAttemptWarning:I
     if-lez v2, :cond_2
@@ -466,7 +466,9 @@
 
     .local v4, showTimeout:Z
     :goto_3
-    if-eqz v5, :cond_5
+    sget-boolean v8, Lcom/android/internal/policy/impl/LockPatternKeyguardView$Injector;->FALSE:Z
+
+    if-nez v8, :cond_5
 
     iget-object v8, p0, Lcom/android/internal/policy/impl/LockPatternKeyguardView$3;->this$0:Lcom/android/internal/policy/impl/LockPatternKeyguardView;
 
@@ -477,7 +479,7 @@
 
     if-eqz v8, :cond_5
 
-    const/16 v8, 0xf
+    const/16 v8, 0x8
 
     if-ne v1, v8, :cond_7
 
@@ -507,7 +509,7 @@
 
     .restart local v4       #showTimeout:Z
     :cond_7
-    const/16 v8, 0x14
+    const/16 v8, 0x9
 
     if-lt v1, v8, :cond_5
 

@@ -15,7 +15,7 @@
 
 
 # static fields
-.field private static final MAX_SUPPLICANT_LOOP_ITERATIONS:I = 0x4
+.field private static final MAX_SUPPLICANT_LOOP_ITERATIONS:I = 0xa
 
 
 # instance fields
@@ -101,7 +101,7 @@
     :cond_1
     iget v2, p0, Landroid/net/wifi/SupplicantStateTracker$HandshakeState;->mLoopDetectCount:I
 
-    const/4 v3, 0x4
+    const/16 v3, 0xa
 
     if-le v2, v3, :cond_2
 

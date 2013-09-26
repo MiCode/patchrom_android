@@ -111,5 +111,9 @@
 
     .end local v0           #child:Landroid/view/View;
     :cond_1
+    iget-object v4, p0, Lcom/android/internal/widget/ScrollingTabContainerView$TabClickListener;->this$0:Lcom/android/internal/widget/ScrollingTabContainerView;
+
+    invoke-static {v4, p1}, Lcom/android/internal/widget/ScrollingTabContainerView$Injector;->onTabViewClick(Lcom/android/internal/widget/ScrollingTabContainerView;Landroid/view/View;)V
+
     return-void
 .end method

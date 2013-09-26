@@ -10,7 +10,8 @@
         Landroid/view/LayoutInflater$FactoryMerger;,
         Landroid/view/LayoutInflater$Factory2;,
         Landroid/view/LayoutInflater$Factory;,
-        Landroid/view/LayoutInflater$Filter;
+        Landroid/view/LayoutInflater$Filter;,
+        Landroid/view/LayoutInflater$Injector;
     }
 .end annotation
 
@@ -1499,6 +1500,14 @@
     .parameter "attachToRoot"
 
     .prologue
+    invoke-virtual {p0}, Landroid/view/LayoutInflater;->getContext()Landroid/content/Context;
+
+    move-result-object v1
+
+    invoke-static {v1, p1}, Landroid/view/LayoutInflater$Injector;->getResourceId(Landroid/content/Context;I)I
+
+    move-result p1
+
     invoke-virtual {p0}, Landroid/view/LayoutInflater;->getContext()Landroid/content/Context;
 
     move-result-object v1

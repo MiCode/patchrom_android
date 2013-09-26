@@ -313,7 +313,7 @@
 .end method
 
 .method private onIccSwap(Z)V
-    .locals 10
+    .locals 11
     .parameter "isAdded"
 
     .prologue
@@ -370,7 +370,9 @@
 
     iget-object v9, p0, Lcom/android/internal/telephony/UiccCard;->mContext:Landroid/content/Context;
 
-    invoke-direct {v7, v9}, Landroid/app/AlertDialog$Builder;-><init>(Landroid/content/Context;)V
+    const v10, 0x60d003e
+
+    invoke-direct {v7, v9, v10}, Landroid/app/AlertDialog$Builder;-><init>(Landroid/content/Context;I)V
 
     invoke-virtual {v7, v6}, Landroid/app/AlertDialog$Builder;->setTitle(Ljava/lang/CharSequence;)Landroid/app/AlertDialog$Builder;
 

@@ -266,7 +266,7 @@
 
     iget-object v2, v0, Landroid/net/wifi/WifiConfiguration;->allowedKeyManagement:Ljava/util/BitSet;
 
-    const/4 v3, 0x4
+    const/4 v3, 0x6
 
     invoke-virtual {v2, v3}, Ljava/util/BitSet;->set(I)V
 

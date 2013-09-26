@@ -9,7 +9,8 @@
         Landroid/net/CaptivePortalTracker$DelayedCaptiveCheckState;,
         Landroid/net/CaptivePortalTracker$ActiveNetworkState;,
         Landroid/net/CaptivePortalTracker$NoActiveNetworkState;,
-        Landroid/net/CaptivePortalTracker$DefaultState;
+        Landroid/net/CaptivePortalTracker$DefaultState;,
+        Landroid/net/CaptivePortalTracker$Injector;
     }
 .end annotation
 
@@ -885,9 +886,9 @@
 
     invoke-virtual {v3, v7, v6, v0, v8}, Landroid/app/Notification;->setLatestEventInfo(Landroid/content/Context;Ljava/lang/CharSequence;Ljava/lang/CharSequence;Landroid/app/PendingIntent;)V
 
-    const-string v7, "CaptivePortal.Notification"
+    iget-object v7, p0, Landroid/net/CaptivePortalTracker;->mContext:Landroid/content/Context;
 
-    invoke-virtual {v4, v7, v11, v3}, Landroid/app/NotificationManager;->notify(Ljava/lang/String;ILandroid/app/Notification;)V
+    invoke-static {v7, v2}, Landroid/net/CaptivePortalTracker$Injector;->showLogin(Landroid/content/Context;Landroid/content/Intent;)V
 
     .end local v0           #details:Ljava/lang/CharSequence;
     .end local v1           #icon:I

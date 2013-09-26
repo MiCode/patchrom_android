@@ -220,6 +220,10 @@
 
     sget-object v1, Landroid/os/Build;->TYPE:Ljava/lang/String;
 
+    invoke-static {v1}, Landroid/os/StrictMode;->ignoreDebugBuild(Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v1
+
     invoke-virtual {v0, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
     move-result v0
@@ -743,6 +747,13 @@
     move-result v2
 
     .local v2, suppress:Z
+    sget-boolean v6, Landroid/os/StrictMode;->IS_USER_BUILD:Z
+
+    if-eqz v6, :cond_miui_0
+
+    const/4 v0, 0x0
+
+    :cond_miui_0
     if-nez v0, :cond_2
 
     sget-boolean v6, Landroid/os/StrictMode;->IS_USER_BUILD:Z
@@ -1392,6 +1403,26 @@
     const/4 v0, 0x0
 
     goto :goto_0
+.end method
+
+.method static ignoreDebugBuild(Ljava/lang/String;)Ljava/lang/String;
+    .locals 1
+    .parameter "build"
+
+    .prologue
+    const-string v0, "userdebug"
+
+    invoke-virtual {v0, p0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_0
+
+    const-string p0, "user"
+
+    .end local p0
+    :cond_0
+    return-object p0
 .end method
 
 .method public static incrementExpectedActivityCount(Ljava/lang/Class;)V

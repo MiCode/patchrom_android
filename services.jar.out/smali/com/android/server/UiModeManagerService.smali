@@ -3,6 +3,14 @@
 .source "UiModeManagerService.java"
 
 
+# annotations
+.annotation system Ldalvik/annotation/MemberClasses;
+    value = {
+        Lcom/android/server/UiModeManagerService$Injector;
+    }
+.end annotation
+
+
 # static fields
 .field private static final ENABLE_LAUNCH_CAR_DOCK_APP:Z = true
 
@@ -47,6 +55,8 @@
 .field final mLock:Ljava/lang/Object;
 
 .field private mNightMode:I
+
+.field mNormalType:I
 
 .field private mNotificationManager:Landroid/app/NotificationManager;
 
@@ -96,6 +106,8 @@
     const/4 v2, 0x0
 
     invoke-direct {p0}, Landroid/app/IUiModeManager$Stub;-><init>()V
+
+    iput v1, p0, Lcom/android/server/UiModeManagerService;->mNormalType:I
 
     new-instance v0, Landroid/os/Handler;
 
@@ -186,6 +198,10 @@
     invoke-direct {v4, v5}, Landroid/content/IntentFilter;-><init>(Ljava/lang/String;)V
 
     invoke-virtual {v0, v3, v4}, Landroid/content/Context;->registerReceiver(Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;)Landroid/content/Intent;
+
+    iget-object v0, p0, Lcom/android/server/UiModeManagerService;->mContext:Landroid/content/Context;
+
+    invoke-static {p0, v0}, Lcom/android/server/UiModeManagerService$Injector;->registerUIModeScaleChangedObserver(Lcom/android/server/UiModeManagerService;Landroid/content/Context;)V
 
     const-string v0, "power"
 
@@ -948,7 +964,7 @@
 
     .end local v0           #uiMode:I
     :cond_2
-    iget v0, p0, Lcom/android/server/UiModeManagerService;->mDefaultUiModeType:I
+    iget v0, p0, Lcom/android/server/UiModeManagerService;->mNormalType:I
 
     goto :goto_0
 

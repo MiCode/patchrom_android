@@ -209,12 +209,6 @@
 
     if-eqz v2, :cond_1
 
-    new-instance v2, Lcom/android/server/usb/UsbDebuggingManager;
-
-    invoke-direct {v2, p1}, Lcom/android/server/usb/UsbDebuggingManager;-><init>(Landroid/content/Context;)V
-
-    iput-object v2, p0, Lcom/android/server/usb/UsbDeviceManager;->mDebuggingManager:Lcom/android/server/usb/UsbDebuggingManager;
-
     :cond_1
     return-void
 .end method

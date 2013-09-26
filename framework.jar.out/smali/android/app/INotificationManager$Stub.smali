@@ -26,6 +26,8 @@
 # static fields
 .field private static final DESCRIPTOR:Ljava/lang/String; = "android.app.INotificationManager"
 
+.field static final TRANSACTION_areNotificationsEnabled:I = 0x8
+
 .field static final TRANSACTION_areNotificationsEnabledForPackage:I = 0x7
 
 .field static final TRANSACTION_cancelAllNotifications:I = 0x1
@@ -377,6 +379,34 @@
 
     goto/16 :goto_0
 
+    .end local v1           #_arg0:Ljava/lang/String;
+    .end local v7           #_result:Z
+    :sswitch_8
+    const-string v0, "android.app.INotificationManager"
+
+    invoke-virtual {p2, v0}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    invoke-virtual {p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v1
+
+    .restart local v1       #_arg0:Ljava/lang/String;
+    invoke-virtual {p0, v1}, Landroid/app/INotificationManager$Stub;->areNotificationsEnabled(Ljava/lang/String;)Z
+
+    move-result v7
+
+    .restart local v7       #_result:Z
+    invoke-virtual {p3}, Landroid/os/Parcel;->writeNoException()V
+
+    if-eqz v7, :cond_3
+
+    move v2, v8
+
+    :cond_3
+    invoke-virtual {p3, v2}, Landroid/os/Parcel;->writeInt(I)V
+
+    goto/16 :goto_0
+
     nop
 
     :sswitch_data_0
@@ -388,6 +418,7 @@
         0x5 -> :sswitch_5
         0x6 -> :sswitch_6
         0x7 -> :sswitch_7
+        0x8 -> :sswitch_8
         0x5f4e5446 -> :sswitch_0
     .end sparse-switch
 .end method

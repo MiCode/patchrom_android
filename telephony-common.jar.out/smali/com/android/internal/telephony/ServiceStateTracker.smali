@@ -883,6 +883,15 @@
     return v0
 .end method
 
+.method public getIccRecords()Lcom/android/internal/telephony/IccRecords;
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Lcom/android/internal/telephony/ServiceStateTracker;->mIccRecords:Lcom/android/internal/telephony/IccRecords;
+
+    return-object v0
+.end method
+
 .method protected abstract getPhone()Lcom/android/internal/telephony/Phone;
 .end method
 

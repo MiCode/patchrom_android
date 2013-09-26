@@ -17,6 +17,8 @@
 # static fields
 .field public static final RSN:I = 0x1
 
+.field public static final WAPI:I = 0x2
+
 .field public static final WPA:I = 0x0
 
 .field public static final strings:[Ljava/lang/String; = null
@@ -29,7 +31,7 @@
     .locals 3
 
     .prologue
-    const/4 v0, 0x2
+    const/4 v0, 0x3
 
     new-array v0, v0, [Ljava/lang/String;
 
@@ -42,6 +44,12 @@
     const/4 v1, 0x1
 
     const-string v2, "RSN"
+
+    aput-object v2, v0, v1
+
+    const/4 v1, 0x2
+
+    const-string v2, "WAPI"
 
     aput-object v2, v0, v1
 

@@ -9,7 +9,8 @@
         Lcom/android/server/connectivity/Tethering$1;,
         Lcom/android/server/connectivity/Tethering$TetherMasterSM;,
         Lcom/android/server/connectivity/Tethering$TetherInterfaceSM;,
-        Lcom/android/server/connectivity/Tethering$StateReceiver;
+        Lcom/android/server/connectivity/Tethering$StateReceiver;,
+        Lcom/android/server/connectivity/Tethering$Injector;
     }
 .end annotation
 
@@ -1221,6 +1222,12 @@
     return-void
 
     :cond_1
+    invoke-static {}, Lcom/android/server/connectivity/Tethering$Injector;->isUsbShareNet()Z
+
+    move-result v0
+
+    if-nez v0, :cond_0
+
     iget-object v0, p0, Lcom/android/server/connectivity/Tethering;->mTetheredNotification:Landroid/app/Notification;
 
     if-eqz v0, :cond_2
@@ -1250,10 +1257,6 @@
     const-string v3, "com.android.settings.TetherSettings"
 
     invoke-virtual {v2, v0, v3}, Landroid/content/Intent;->setClassName(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;
-
-    const/high16 v0, 0x4000
-
-    invoke-virtual {v2, v0}, Landroid/content/Intent;->setFlags(I)Landroid/content/Intent;
 
     iget-object v0, p0, Lcom/android/server/connectivity/Tethering;->mContext:Landroid/content/Context;
 

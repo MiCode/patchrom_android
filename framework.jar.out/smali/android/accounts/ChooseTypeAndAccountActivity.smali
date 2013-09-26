@@ -785,11 +785,15 @@
     :cond_0
     new-instance v0, Landroid/content/Intent;
 
-    const-class v1, Landroid/accounts/ChooseAccountTypeActivity;
-
-    invoke-direct {v0, p0, v1}, Landroid/content/Intent;-><init>(Landroid/content/Context;Ljava/lang/Class;)V
+    invoke-direct {v0}, Landroid/content/Intent;-><init>()V
 
     .local v0, intent:Landroid/content/Intent;
+    const-string v1, "miui"
+
+    const-string v2, "miui.accounts.MiuiChooseAccountTypeActivity"
+
+    invoke-virtual {v0, v1, v2}, Landroid/content/Intent;->setClassName(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;
+
     const/high16 v1, 0x8
 
     invoke-virtual {v0, v1}, Landroid/content/Intent;->setFlags(I)Landroid/content/Intent;

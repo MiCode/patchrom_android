@@ -19,6 +19,8 @@
 
 .field public static final DEFAULT:I = 0x0
 
+.field public static final FM:I = 0x9
+
 .field public static final MIC:I = 0x1
 
 .field public static final REMOTE_SUBMIX_SOURCE:I = 0x8

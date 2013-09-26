@@ -132,6 +132,15 @@
 
     goto :goto_0
 
+    :pswitch_7
+    new-instance v0, Landroid/net/UsbShareNetStateTracker;
+
+    iget-object v1, p2, Landroid/net/NetworkConfig;->name:Ljava/lang/String;
+
+    invoke-direct {v0, p1, v1}, Landroid/net/UsbShareNetStateTracker;-><init>(ILjava/lang/String;)V
+
+    goto :goto_0
+
     nop
 
     :pswitch_data_0
@@ -146,5 +155,10 @@
         :pswitch_4
         :pswitch_3
         :pswitch_6
+        :pswitch_0
+        :pswitch_0
+        :pswitch_0
+        :pswitch_0
+        :pswitch_7
     .end packed-switch
 .end method

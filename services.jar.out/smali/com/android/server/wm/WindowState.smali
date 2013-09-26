@@ -36,6 +36,8 @@
 
 .field final mAttachedWindow:Lcom/android/server/wm/WindowState;
 
+.field mAttrFlagsSaved:Z
+
 .field final mAttrs:Landroid/view/WindowManager$LayoutParams;
 
 .field final mBaseLayer:I
@@ -74,6 +76,8 @@
 
 .field mExiting:Z
 
+.field final mFloatingWindowAllowed:Z
+
 .field final mFrame:Landroid/graphics/Rect;
 
 .field final mGivenContentInsets:Landroid/graphics/Rect;
@@ -93,6 +97,8 @@
 .field mHaveFrame:Z
 
 .field mInputChannel:Landroid/view/InputChannel;
+
+.field mInputChannelSaved:Landroid/view/InputChannel;
 
 .field final mInputWindowHandle:Lcom/android/server/input/InputWindowHandle;
 
@@ -673,6 +679,10 @@
 
     iput-object v6, p0, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
 
+    const/4 v6, 0x0
+
+    iput-boolean v6, p0, Lcom/android/server/wm/WindowState;->mFloatingWindowAllowed:Z
+
     .end local v4           #e:Landroid/os/RemoteException;
     :goto_7
     return-void
@@ -887,6 +897,16 @@
     invoke-direct {v7, v6, p0, v8}, Lcom/android/server/input/InputWindowHandle;-><init>(Lcom/android/server/input/InputApplicationHandle;Ljava/lang/Object;I)V
 
     iput-object v7, p0, Lcom/android/server/wm/WindowState;->mInputWindowHandle:Lcom/android/server/input/InputWindowHandle;
+
+    iget-object v6, p0, Lcom/android/server/wm/WindowState;->mSession:Lcom/android/server/wm/Session;
+
+    iget v6, v6, Lcom/android/server/wm/Session;->mUid:I
+
+    invoke-static {v6}, Lcom/android/server/wm/WindowManagerService$Injector;->isFloatingWindowAllowed(I)Z
+
+    move-result v6
+
+    iput-boolean v6, p0, Lcom/android/server/wm/WindowState;->mFloatingWindowAllowed:Z
 
     goto/16 :goto_7
 

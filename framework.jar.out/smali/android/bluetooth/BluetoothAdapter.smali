@@ -7,7 +7,8 @@
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
         Landroid/bluetooth/BluetoothAdapter$StateChangeCallbackWrapper;,
-        Landroid/bluetooth/BluetoothAdapter$BluetoothStateChangeCallback;
+        Landroid/bluetooth/BluetoothAdapter$BluetoothStateChangeCallback;,
+        Landroid/bluetooth/BluetoothAdapter$ProfileProxyHandler;
     }
 .end annotation
 
@@ -1297,6 +1298,109 @@
     const-string v3, "getProfileConnectionState:"
 
     invoke-static {v2, v3, v0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+
+    goto :goto_0
+.end method
+
+.method public getProfileProxy(Landroid/content/Context;Landroid/bluetooth/BluetoothProfile$ServiceListener;ILjava/lang/Object;)Landroid/bluetooth/BluetoothAdapter$ProfileProxyHandler;
+    .locals 7
+    .parameter "context"
+    .parameter "listener"
+    .parameter "profile"
+    .parameter "nullObject"
+
+    .prologue
+    const/4 v5, 0x0
+
+    if-eqz p1, :cond_0
+
+    if-nez p2, :cond_1
+
+    :cond_0
+    :goto_0
+    return-object v5
+
+    :cond_1
+    const/4 v6, 0x1
+
+    if-ne p3, v6, :cond_2
+
+    new-instance v1, Landroid/bluetooth/BluetoothHeadset;
+
+    invoke-direct {v1, p1, p2}, Landroid/bluetooth/BluetoothHeadset;-><init>(Landroid/content/Context;Landroid/bluetooth/BluetoothProfile$ServiceListener;)V
+
+    .local v1, headset:Landroid/bluetooth/BluetoothHeadset;
+    new-instance v5, Landroid/bluetooth/BluetoothAdapter$ProfileProxyHandler;
+
+    invoke-direct {v5, p0, p3, v1}, Landroid/bluetooth/BluetoothAdapter$ProfileProxyHandler;-><init>(Landroid/bluetooth/BluetoothAdapter;ILandroid/bluetooth/BluetoothProfile;)V
+
+    goto :goto_0
+
+    .end local v1           #headset:Landroid/bluetooth/BluetoothHeadset;
+    :cond_2
+    const/4 v6, 0x2
+
+    if-ne p3, v6, :cond_3
+
+    new-instance v0, Landroid/bluetooth/BluetoothA2dp;
+
+    invoke-direct {v0, p1, p2}, Landroid/bluetooth/BluetoothA2dp;-><init>(Landroid/content/Context;Landroid/bluetooth/BluetoothProfile$ServiceListener;)V
+
+    .local v0, a2dp:Landroid/bluetooth/BluetoothA2dp;
+    new-instance v5, Landroid/bluetooth/BluetoothAdapter$ProfileProxyHandler;
+
+    invoke-direct {v5, p0, p3, v0}, Landroid/bluetooth/BluetoothAdapter$ProfileProxyHandler;-><init>(Landroid/bluetooth/BluetoothAdapter;ILandroid/bluetooth/BluetoothProfile;)V
+
+    goto :goto_0
+
+    .end local v0           #a2dp:Landroid/bluetooth/BluetoothA2dp;
+    :cond_3
+    const/4 v6, 0x4
+
+    if-ne p3, v6, :cond_4
+
+    new-instance v3, Landroid/bluetooth/BluetoothInputDevice;
+
+    invoke-direct {v3, p1, p2}, Landroid/bluetooth/BluetoothInputDevice;-><init>(Landroid/content/Context;Landroid/bluetooth/BluetoothProfile$ServiceListener;)V
+
+    .local v3, iDev:Landroid/bluetooth/BluetoothInputDevice;
+    new-instance v5, Landroid/bluetooth/BluetoothAdapter$ProfileProxyHandler;
+
+    invoke-direct {v5, p0, p3, v3}, Landroid/bluetooth/BluetoothAdapter$ProfileProxyHandler;-><init>(Landroid/bluetooth/BluetoothAdapter;ILandroid/bluetooth/BluetoothProfile;)V
+
+    goto :goto_0
+
+    .end local v3           #iDev:Landroid/bluetooth/BluetoothInputDevice;
+    :cond_4
+    const/4 v6, 0x5
+
+    if-ne p3, v6, :cond_5
+
+    new-instance v4, Landroid/bluetooth/BluetoothPan;
+
+    invoke-direct {v4, p1, p2}, Landroid/bluetooth/BluetoothPan;-><init>(Landroid/content/Context;Landroid/bluetooth/BluetoothProfile$ServiceListener;)V
+
+    .local v4, pan:Landroid/bluetooth/BluetoothPan;
+    new-instance v5, Landroid/bluetooth/BluetoothAdapter$ProfileProxyHandler;
+
+    invoke-direct {v5, p0, p3, v4}, Landroid/bluetooth/BluetoothAdapter$ProfileProxyHandler;-><init>(Landroid/bluetooth/BluetoothAdapter;ILandroid/bluetooth/BluetoothProfile;)V
+
+    goto :goto_0
+
+    .end local v4           #pan:Landroid/bluetooth/BluetoothPan;
+    :cond_5
+    const/4 v6, 0x3
+
+    if-ne p3, v6, :cond_0
+
+    new-instance v2, Landroid/bluetooth/BluetoothHealth;
+
+    invoke-direct {v2, p1, p2}, Landroid/bluetooth/BluetoothHealth;-><init>(Landroid/content/Context;Landroid/bluetooth/BluetoothProfile$ServiceListener;)V
+
+    .local v2, health:Landroid/bluetooth/BluetoothHealth;
+    new-instance v5, Landroid/bluetooth/BluetoothAdapter$ProfileProxyHandler;
+
+    invoke-direct {v5, p0, p3, v2}, Landroid/bluetooth/BluetoothAdapter$ProfileProxyHandler;-><init>(Landroid/bluetooth/BluetoothAdapter;ILandroid/bluetooth/BluetoothProfile;)V
 
     goto :goto_0
 .end method

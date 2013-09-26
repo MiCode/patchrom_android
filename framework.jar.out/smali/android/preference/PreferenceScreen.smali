@@ -10,6 +10,7 @@
 # annotations
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
+        Landroid/preference/PreferenceScreen$Injector;,
         Landroid/preference/PreferenceScreen$SavedState;
     }
 .end annotation
@@ -93,13 +94,13 @@
     move-result-object v4
 
     .local v4, title:Ljava/lang/CharSequence;
-    new-instance v2, Landroid/app/Dialog;
+    new-instance v2, Landroid/app/PreferenceDialog;
 
     invoke-virtual {v1}, Landroid/content/Context;->getThemeResId()I
 
     move-result v5
 
-    invoke-direct {v2, v1, v5}, Landroid/app/Dialog;-><init>(Landroid/content/Context;I)V
+    invoke-direct {v2, v1, v5}, Landroid/app/PreferenceDialog;-><init>(Landroid/content/Context;I)V
 
     iput-object v2, p0, Landroid/preference/PreferenceScreen;->mDialog:Landroid/app/Dialog;
 
@@ -157,7 +158,15 @@
 
     move-result-object v0
 
+    invoke-static {p1, v0}, Landroid/preference/PreferenceScreen$Injector;->addHeaderView(Landroid/widget/ListView;Landroid/widget/ListAdapter;)V
+
+    invoke-virtual {p0}, Landroid/preference/PreferenceScreen;->getRootAdapter()Landroid/widget/ListAdapter;
+
+    move-result-object v0
+
     invoke-virtual {p1, v0}, Landroid/widget/ListView;->setAdapter(Landroid/widget/ListAdapter;)V
+
+    invoke-static {p1}, Landroid/preference/PreferenceScreen$Injector;->bind(Landroid/widget/ListView;)V
 
     invoke-virtual {p0}, Landroid/preference/PreferenceScreen;->onAttachedToActivity()V
 

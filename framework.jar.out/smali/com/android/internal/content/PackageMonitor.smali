@@ -1291,6 +1291,19 @@
     return-void
 .end method
 
+.method public register(Landroid/content/Context;Z)V
+    .locals 1
+    .parameter "context"
+    .parameter "externalStorage"
+
+    .prologue
+    const/4 v0, 0x0
+
+    invoke-virtual {p0, p1, v0, p2}, Lcom/android/internal/content/PackageMonitor;->register(Landroid/content/Context;Landroid/os/Looper;Z)V
+
+    return-void
+.end method
+
 .method public unregister()V
     .locals 2
 

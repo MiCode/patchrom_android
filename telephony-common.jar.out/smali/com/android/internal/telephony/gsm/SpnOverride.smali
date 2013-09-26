@@ -3,6 +3,14 @@
 .source "SpnOverride.java"
 
 
+# annotations
+.annotation system Ldalvik/annotation/MemberClasses;
+    value = {
+        Lcom/android/internal/telephony/gsm/SpnOverride$Injector;
+    }
+.end annotation
+
+
 # static fields
 .field static final LOG_TAG:Ljava/lang/String; = "GSM"
 
@@ -97,6 +105,9 @@
 
     .end local v2           #name:Ljava/lang/String;
     .end local v4           #parser:Lorg/xmlpull/v1/XmlPullParser;
+    :goto_miui_0
+    invoke-static {v6}, Lcom/android/internal/telephony/gsm/SpnOverride$Injector;->closeSpnReader(Ljava/io/FileReader;)V
+
     .end local v6           #spnReader:Ljava/io/FileReader;
     :goto_1
     return-void
@@ -208,7 +219,7 @@
 
     invoke-static {v7, v8}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    goto :goto_1
+    goto :goto_miui_0
 
     .end local v1           #e:Lorg/xmlpull/v1/XmlPullParserException;
     :catch_2
@@ -237,7 +248,7 @@
 
     invoke-static {v7, v8}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    goto :goto_1
+    goto :goto_miui_0
 .end method
 
 
@@ -257,6 +268,22 @@
 .end method
 
 .method getSpn(Ljava/lang/String;)Ljava/lang/String;
+    .locals 1
+    .parameter "carrier"
+
+    .prologue
+    iget-object v0, p0, Lcom/android/internal/telephony/gsm/SpnOverride;->CarrierSpnMap:Ljava/util/HashMap;
+
+    invoke-virtual {v0, p1}, Ljava/util/HashMap;->get(Ljava/lang/Object;)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Ljava/lang/String;
+
+    return-object v0
+.end method
+
+.method public getSpnFromConfig(Ljava/lang/String;)Ljava/lang/String;
     .locals 1
     .parameter "carrier"
 

@@ -172,6 +172,15 @@
 
 
 # virtual methods
+.method getParams()Landroid/view/WindowManager$LayoutParams;
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Landroid/widget/Toast$TN;->mParams:Landroid/view/WindowManager$LayoutParams;
+
+    return-object v0
+.end method
+
 .method public handleHide()V
     .locals 2
 

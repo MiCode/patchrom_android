@@ -26,6 +26,8 @@
 
 .field public static final FIRST_SHARED_APPLICATION_GID:I = 0xc350
 
+.field public static final FM_RADIO_UID:I = 0x405
+
 .field public static final GOOGLE_SHARED_APP_CONTENT:Ljava/lang/String; = "com.google.process.content"
 
 .field public static final LAST_APPLICATION_UID:I = 0x4e1f

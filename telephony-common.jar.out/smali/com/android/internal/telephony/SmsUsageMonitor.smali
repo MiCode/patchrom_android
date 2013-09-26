@@ -1679,6 +1679,19 @@
     .parameter "smsWaiting"
 
     .prologue
+    const-string v1, "com.android.mms"
+
+    invoke-virtual {v1, p1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_miui_0
+
+    const/4 v1, 0x1
+
+    return v1
+
+    :cond_miui_0
     iget-object v2, p0, Lcom/android/internal/telephony/SmsUsageMonitor;->mSmsStamp:Ljava/util/HashMap;
 
     monitor-enter v2

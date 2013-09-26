@@ -1112,6 +1112,15 @@
     throw v1
 .end method
 
+.method public vibrateEx([BLandroid/os/IBinder;)V
+    .locals 0
+    .parameter "params"
+    .parameter "token"
+
+    .prologue
+    return-void
+.end method
+
 .method public vibratePattern([JILandroid/os/IBinder;)V
     .locals 9
     .parameter "pattern"

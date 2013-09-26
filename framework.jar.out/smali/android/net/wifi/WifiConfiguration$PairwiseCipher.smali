@@ -31,7 +31,7 @@
     .locals 3
 
     .prologue
-    const/4 v0, 0x3
+    const/4 v0, 0x4
 
     new-array v0, v0, [Ljava/lang/String;
 
@@ -50,6 +50,12 @@
     const/4 v1, 0x2
 
     const-string v2, "CCMP"
+
+    aput-object v2, v0, v1
+
+    const/4 v1, 0x3
+
+    const-string v2, "SMS4"
 
     aput-object v2, v0, v1
 

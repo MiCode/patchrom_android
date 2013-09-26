@@ -44,6 +44,8 @@
 
 .field public static final ANR_SHOW_BACKGROUND:Ljava/lang/String; = "anr_show_background"
 
+.field public static final ASSISTED_GPS_ENABLED:Ljava/lang/String; = "assisted_gps_enabled"
+
 .field public static final BACKGROUND_DATA:Ljava/lang/String; = "background_data"
     .annotation runtime Ljava/lang/Deprecated;
     .end annotation
@@ -64,6 +66,8 @@
 
 .field public static final BUGREPORT_IN_POWER_MENU:Ljava/lang/String; = "bugreport_in_power_menu"
 
+.field public static final CONTACTS_PREAUTH_URI_EXPIRATION:Ljava/lang/String; = "contacts_preauth_uri_expiration"
+
 .field public static final CONTENT_URI:Landroid/net/Uri; = null
 
 .field public static final DATA_ROAMING:Ljava/lang/String; = "data_roaming"
@@ -72,6 +76,8 @@
 .end field
 
 .field public static final DEFAULT_INPUT_METHOD:Ljava/lang/String; = "default_input_method"
+
+.field public static final DEFAULT_INSTALL_LOCATION:Ljava/lang/String; = "default_install_location"
 
 .field public static final DEVELOPMENT_SETTINGS_ENABLED:Ljava/lang/String; = "development_settings_enabled"
     .annotation runtime Ljava/lang/Deprecated;
@@ -84,6 +90,8 @@
 .end field
 
 .field public static final DISABLED_SYSTEM_INPUT_METHODS:Ljava/lang/String; = "disabled_system_input_methods"
+
+.field public static final DOWNLOAD_RECOMMENDED_MAX_BYTES_OVER_MOBILE:Ljava/lang/String; = "download_manager_recommended_max_bytes_over_mobile"
 
 .field public static final ENABLED_ACCESSIBILITY_SERVICES:Ljava/lang/String; = "enabled_accessibility_services"
 
@@ -147,6 +155,8 @@
 
 .field public static final LONG_PRESS_TIMEOUT:Ljava/lang/String; = "long_press_timeout"
 
+.field public static final MOBILE_DATA:Ljava/lang/String; = "mobile_data"
+
 .field public static final MOUNT_PLAY_NOTIFICATION_SND:Ljava/lang/String; = "mount_play_not_snd"
 
 .field public static final MOUNT_UMS_AUTOSTART:Ljava/lang/String; = "mount_ums_autostart"
@@ -193,6 +203,8 @@
 .field public static final SCREENSAVER_ACTIVATE_ON_DOCK:Ljava/lang/String; = "screensaver_activate_on_dock"
 
 .field public static final SCREENSAVER_ACTIVATE_ON_SLEEP:Ljava/lang/String; = "screensaver_activate_on_sleep"
+
+.field public static final SCREENSAVER_COMPONENT:Ljava/lang/String; = "screensaver_components"
 
 .field public static final SCREENSAVER_COMPONENTS:Ljava/lang/String; = "screensaver_components"
 
@@ -244,13 +256,19 @@
 
 .field public static final SELECTED_SPELL_CHECKER_SUBTYPE:Ljava/lang/String; = "selected_spell_checker_subtype"
 
+.field public static final SEND_ACTION_APP_ERROR:Ljava/lang/String; = "send_action_app_error"
+
 .field public static final SETTINGS_CLASSNAME:Ljava/lang/String; = "settings_classname"
 
 .field public static final SETTINGS_TO_BACKUP:[Ljava/lang/String; = null
 
+.field public static final SET_INSTALL_LOCATION:Ljava/lang/String; = "set_install_location"
+
 .field public static final SPELL_CHECKER_ENABLED:Ljava/lang/String; = "spell_checker_enabled"
 
 .field public static final SYS_PROP_SETTING_VERSION:Ljava/lang/String; = "sys.settings_secure_version"
+
+.field public static final SYS_STORAGE_THRESHOLD_PERCENTAGE:Ljava/lang/String; = "sys_storage_threshold_percentage"
 
 .field public static final TOUCH_EXPLORATION_ENABLED:Ljava/lang/String; = "touch_exploration_enabled"
 
@@ -339,6 +357,8 @@
     .end annotation
 .end field
 
+.field public static final WIFI_SAVED_STATE:Ljava/lang/String; = "wifi_saved_state"
+
 .field public static final WIFI_WATCHDOG_ACCEPTABLE_PACKET_LOSS_PERCENTAGE:Ljava/lang/String; = "wifi_watchdog_acceptable_packet_loss_percentage"
     .annotation runtime Ljava/lang/Deprecated;
     .end annotation
@@ -393,6 +413,8 @@
     .annotation runtime Ljava/lang/Deprecated;
     .end annotation
 .end field
+
+.field public static final WIFI_WATCHDOG_POOR_NETWORK_TEST_ENABLED:Ljava/lang/String; = "wifi_watchdog_poor_network_test_enabled"
 
 .field public static final WIFI_WATCHDOG_WATCH_LIST:Ljava/lang/String; = "wifi_watchdog_watch_list"
     .annotation runtime Ljava/lang/Deprecated;

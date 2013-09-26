@@ -32,6 +32,8 @@
 
 .field private mSavedPaddingLeft:I
 
+.field mSavedPaddingRight:I
+
 .field private mTitle:Ljava/lang/CharSequence;
 
 
@@ -153,6 +155,14 @@
     iget-object v3, p0, Lcom/android/internal/view/menu/ActionMenuItemView;->mIcon:Landroid/graphics/drawable/Drawable;
 
     if-eqz v3, :cond_0
+
+    iget-object v3, p0, Lcom/android/internal/view/menu/ActionMenuItemView;->mItemData:Lcom/android/internal/view/menu/MenuItemImpl;
+
+    invoke-virtual {v3}, Lcom/android/internal/view/menu/MenuItemImpl;->isForceShowText()Z
+
+    move-result v3
+
+    if-nez v3, :cond_0
 
     iget-object v3, p0, Lcom/android/internal/view/menu/ActionMenuItemView;->mItemData:Lcom/android/internal/view/menu/MenuItemImpl;
 
@@ -305,6 +315,128 @@
 
     :cond_0
     const/16 v0, 0x8
+
+    goto :goto_0
+.end method
+
+.method miuiOnMeasure(II)Z
+    .locals 8
+    .parameter "widthMeasureSpec"
+    .parameter "heightMeasureSpec"
+
+    .prologue
+    iget v4, p0, Lcom/android/internal/view/menu/ActionMenuItemView;->mSavedPaddingLeft:I
+
+    if-ltz v4, :cond_0
+
+    iget v4, p0, Lcom/android/internal/view/menu/ActionMenuItemView;->mSavedPaddingLeft:I
+
+    invoke-virtual {p0}, Lcom/android/internal/view/menu/ActionMenuItemView;->getPaddingTop()I
+
+    move-result v5
+
+    iget v6, p0, Lcom/android/internal/view/menu/ActionMenuItemView;->mSavedPaddingRight:I
+
+    invoke-virtual {p0}, Lcom/android/internal/view/menu/ActionMenuItemView;->getPaddingBottom()I
+
+    move-result v7
+
+    invoke-super {p0, v4, v5, v6, v7}, Landroid/widget/TextView;->setPadding(IIII)V
+
+    :cond_0
+    const/4 v4, 0x0
+
+    invoke-super {p0, v4, p2}, Landroid/widget/TextView;->onMeasure(II)V
+
+    invoke-static {p1}, Landroid/view/View$MeasureSpec;->getMode(I)I
+
+    move-result v4
+
+    if-eqz v4, :cond_1
+
+    invoke-virtual {p0}, Lcom/android/internal/view/menu/ActionMenuItemView;->getMeasuredWidth()I
+
+    move-result v0
+
+    .local v0, contentWidth:I
+    invoke-super {p0, p1, p2}, Landroid/widget/TextView;->onMeasure(II)V
+
+    invoke-virtual {p0}, Lcom/android/internal/view/menu/ActionMenuItemView;->hasText()Z
+
+    move-result v4
+
+    if-nez v4, :cond_2
+
+    iget-object v4, p0, Lcom/android/internal/view/menu/ActionMenuItemView;->mIcon:Landroid/graphics/drawable/Drawable;
+
+    if-eqz v4, :cond_2
+
+    invoke-virtual {p0}, Lcom/android/internal/view/menu/ActionMenuItemView;->getMeasuredWidth()I
+
+    move-result v3
+
+    .local v3, w:I
+    iget-object v4, p0, Lcom/android/internal/view/menu/ActionMenuItemView;->mIcon:Landroid/graphics/drawable/Drawable;
+
+    invoke-virtual {v4}, Landroid/graphics/drawable/Drawable;->getIntrinsicWidth()I
+
+    move-result v1
+
+    .local v1, dw:I
+    sub-int v4, v3, v1
+
+    div-int/lit8 v4, v4, 0x2
+
+    invoke-virtual {p0}, Lcom/android/internal/view/menu/ActionMenuItemView;->getPaddingTop()I
+
+    move-result v5
+
+    invoke-virtual {p0}, Lcom/android/internal/view/menu/ActionMenuItemView;->getPaddingRight()I
+
+    move-result v6
+
+    invoke-virtual {p0}, Lcom/android/internal/view/menu/ActionMenuItemView;->getPaddingBottom()I
+
+    move-result v7
+
+    invoke-super {p0, v4, v5, v6, v7}, Landroid/widget/TextView;->setPadding(IIII)V
+
+    .end local v0           #contentWidth:I
+    .end local v1           #dw:I
+    .end local v3           #w:I
+    :cond_1
+    :goto_0
+    const/4 v4, 0x1
+
+    return v4
+
+    .restart local v0       #contentWidth:I
+    :cond_2
+    invoke-virtual {p0}, Lcom/android/internal/view/menu/ActionMenuItemView;->getMeasuredWidth()I
+
+    move-result v3
+
+    .restart local v3       #w:I
+    sub-int v4, v3, v0
+
+    div-int/lit8 v2, v4, 0x2
+
+    .local v2, extraWidth:I
+    iget v4, p0, Lcom/android/internal/view/menu/ActionMenuItemView;->mPaddingLeft:I
+
+    add-int/2addr v4, v2
+
+    iget v5, p0, Lcom/android/internal/view/menu/ActionMenuItemView;->mPaddingTop:I
+
+    iget v6, p0, Lcom/android/internal/view/menu/ActionMenuItemView;->mPaddingRight:I
+
+    add-int/2addr v6, v2
+
+    iget v7, p0, Lcom/android/internal/view/menu/ActionMenuItemView;->mPaddingBottom:I
+
+    invoke-super {p0, v4, v5, v6, v7}, Landroid/widget/TextView;->setPadding(IIII)V
+
+    invoke-super {p0, p1, p2}, Landroid/widget/TextView;->onMeasure(II)V
 
     goto :goto_0
 .end method
@@ -516,6 +648,15 @@
 
     const/high16 v11, 0x4000
 
+    invoke-virtual {p0, p1, p2}, Lcom/android/internal/view/menu/ActionMenuItemView;->miuiOnMeasure(II)Z
+
+    move-result v7
+
+    if-eqz v7, :cond_miui_0
+
+    return-void
+
+    :cond_miui_0
     invoke-static {p2}, Landroid/view/View$MeasureSpec;->getMode(I)I
 
     move-result v7
@@ -829,6 +970,8 @@
 
     .prologue
     iput p1, p0, Lcom/android/internal/view/menu/ActionMenuItemView;->mSavedPaddingLeft:I
+
+    iput p3, p0, Lcom/android/internal/view/menu/ActionMenuItemView;->mSavedPaddingRight:I
 
     invoke-super {p0, p1, p2, p3, p4}, Landroid/widget/TextView;->setPadding(IIII)V
 

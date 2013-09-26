@@ -6,8 +6,10 @@
 # annotations
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
+        Lcom/android/server/am/ActivityStack$CpuBooster;,
         Lcom/android/server/am/ActivityStack$ScheduleDestroyArgs;,
-        Lcom/android/server/am/ActivityStack$ActivityState;
+        Lcom/android/server/am/ActivityStack$ActivityState;,
+        Lcom/android/server/am/ActivityStack$Injector;
     }
 .end annotation
 
@@ -94,6 +96,8 @@
 .field mConfigWillChange:Z
 
 .field final mContext:Landroid/content/Context;
+
+.field private mCpuBooster:Lcom/android/server/am/ActivityStack$CpuBooster;
 
 .field private mCurrentUser:I
 
@@ -361,6 +365,8 @@
 
     iput-object v1, p0, Lcom/android/server/am/ActivityStack;->mHandler:Landroid/os/Handler;
 
+    iput-object v3, p0, Lcom/android/server/am/ActivityStack;->mCpuBooster:Lcom/android/server/am/ActivityStack$CpuBooster;
+
     iput-object p1, p0, Lcom/android/server/am/ActivityStack;->mService:Lcom/android/server/am/ActivityManagerService;
 
     iput-object p2, p0, Lcom/android/server/am/ActivityStack;->mContext:Landroid/content/Context;
@@ -395,6 +401,15 @@
     iget-object v1, p0, Lcom/android/server/am/ActivityStack;->mLaunchingActivity:Landroid/os/PowerManager$WakeLock;
 
     invoke-virtual {v1, v3}, Landroid/os/PowerManager$WakeLock;->setReferenceCounted(Z)V
+    new-instance v1, Lcom/android/server/am/ActivityStack$CpuBooster;
+
+    iget-object v2, p0, Lcom/android/server/am/ActivityStack;->mService:Lcom/android/server/am/ActivityManagerService;
+
+    iget-object v3, p0, Lcom/android/server/am/ActivityStack;->mHandler:Landroid/os/Handler;
+
+    invoke-direct {v1, v2, v3}, Lcom/android/server/am/ActivityStack$CpuBooster;-><init>(Lcom/android/server/am/ActivityManagerService;Landroid/os/Handler;)V
+
+    iput-object v1, p0, Lcom/android/server/am/ActivityStack;->mCpuBooster:Lcom/android/server/am/ActivityStack$CpuBooster;
 
     return-void
 .end method
@@ -6776,6 +6791,16 @@
     if-eqz v5, :cond_c
 
     :cond_7
+    iget-object v5, p1, Lcom/android/server/am/ActivityRecord;->info:Landroid/content/pm/ActivityInfo;
+
+    iget-object v5, v5, Landroid/content/pm/ActivityInfo;->packageName:Ljava/lang/String;
+
+    invoke-static {v5, v0, v1}, Landroid/app/MiuiThemeHelper;->needRestartActivity(Ljava/lang/String;ILandroid/content/res/Configuration;)Z
+
+    move-result v5
+
+    if-nez v5, :cond_0
+
     iget v5, p1, Lcom/android/server/am/ActivityRecord;->configChangeFlags:I
 
     or-int/2addr v5, v0
@@ -9979,6 +10004,10 @@
 
     move-result v0
 
+    invoke-virtual {p0, v0}, Lcom/android/server/am/ActivityStack;->setForegroundProcess(Z)Z
+
+    move-result v0
+
     return v0
 .end method
 
@@ -11686,6 +11715,32 @@
     goto :goto_0
 .end method
 
+.method setForegroundProcess(Z)Z
+    .locals 3
+    .parameter "resumed"
+
+    .prologue
+    const/4 v1, 0x0
+
+    invoke-virtual {p0, v1}, Lcom/android/server/am/ActivityStack;->topRunningActivityLocked(Lcom/android/server/am/ActivityRecord;)Lcom/android/server/am/ActivityRecord;
+
+    move-result-object v0
+
+    .local v0, next:Lcom/android/server/am/ActivityRecord;
+    if-eqz v0, :cond_0
+
+    if-eqz p1, :cond_0
+
+    const-string v1, "sys.foreground_process"
+
+    iget-object v2, v0, Lcom/android/server/am/ActivityRecord;->processName:Ljava/lang/String;
+
+    invoke-static {v1, v2}, Landroid/os/SystemProperties;->set(Ljava/lang/String;Ljava/lang/String;)V
+
+    :cond_0
+    return p1
+.end method
+
 .method final showAskCompatModeDialogLocked(Lcom/android/server/am/ActivityRecord;)V
     .locals 2
     .parameter "r"
@@ -12112,6 +12167,12 @@
     .parameter "outActivity"
 
     .prologue
+    move-object/from16 v0, p0
+
+    iget-object v3, v0, Lcom/android/server/am/ActivityStack;->mCpuBooster:Lcom/android/server/am/ActivityStack$CpuBooster;
+
+    invoke-virtual {v3}, Lcom/android/server/am/ActivityStack$CpuBooster;->start()V
+
     const/16 v23, 0x0
 
     .local v23, err:I
@@ -13100,6 +13161,36 @@
     move-result-object v22
 
     .local v22, aInfo:Landroid/content/pm/ActivityInfo;
+    move-object/from16 v0, p0
+
+    iget-object v2, v0, Lcom/android/server/am/ActivityStack;->mContext:Landroid/content/Context;
+
+    move-object/from16 v4, v22
+
+    move/from16 v1, p7
+
+    move-object/from16 v0, p5
+
+    invoke-static {v2, v4, v3, v0, v1}, Lcom/android/server/am/ActivityStack$Injector;->checkAccessControl(Landroid/content/Context;Landroid/content/pm/ActivityInfo;Landroid/content/Intent;Landroid/os/IBinder;I)Landroid/content/Intent;
+
+    move-result-object p3
+
+    .end local v3           #intent:Landroid/content/Intent;
+    .restart local p3
+    move-object/from16 v5, p3
+
+    move-object/from16 v6, p0
+
+    move-object/from16 v7, p9
+
+    move-object/from16 v8, p10
+
+    move/from16 v9, p14
+
+    invoke-static/range {v4 .. v9}, Lcom/android/server/am/ActivityStack$Injector;->resolveCheckIntent(Landroid/content/pm/ActivityInfo;Landroid/content/Intent;Lcom/android/server/am/ActivityStack;Ljava/lang/String;Landroid/os/ParcelFileDescriptor;I)Landroid/content/pm/ActivityInfo;
+
+    move-result-object v4
+
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/am/ActivityStack;->mService:Lcom/android/server/am/ActivityManagerService;

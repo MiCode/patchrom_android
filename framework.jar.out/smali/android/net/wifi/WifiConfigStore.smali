@@ -7,7 +7,8 @@
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
         Landroid/net/wifi/WifiConfigStore$1;,
-        Landroid/net/wifi/WifiConfigStore$DelayedDiskWrite;
+        Landroid/net/wifi/WifiConfigStore$DelayedDiskWrite;,
+        Landroid/net/wifi/WifiConfigStore$Injector;
     }
 .end annotation
 

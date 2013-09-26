@@ -8,7 +8,8 @@
     value = {
         Landroid/app/ContextImpl$ApplicationContentResolver;,
         Landroid/app/ContextImpl$StaticServiceFetcher;,
-        Landroid/app/ContextImpl$ServiceFetcher;
+        Landroid/app/ContextImpl$ServiceFetcher;,
+        Landroid/app/ContextImpl$Injector;
     }
 .end annotation
 
@@ -1211,6 +1212,8 @@
     .restart local v3       #rd:Landroid/content/IIntentReceiver;
     :cond_1
     :goto_0
+    invoke-static {p0, p3}, Landroid/app/ContextImpl$Injector;->checkPriority(Landroid/app/ContextImpl;Landroid/content/IntentFilter;)V
+
     :try_start_0
     invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
 
@@ -3921,7 +3924,7 @@
 
     move-result-object v3
 
-    invoke-virtual {p3, v0, v1, v2, v3}, Landroid/app/ActivityThread;->getTopLevelResources(Ljava/lang/String;ILandroid/content/res/Configuration;Landroid/content/res/CompatibilityInfo;)Landroid/content/res/Resources;
+    invoke-direct {p0, p3, p4}, Landroid/app/ContextImpl;->getTopLevelResources(Landroid/app/ActivityThread;Landroid/content/res/Resources;)Landroid/content/res/Resources;
 
     move-result-object v0
 
@@ -6397,4 +6400,37 @@
     move-exception v1
 
     goto :goto_0
+.end method
+
+.method private getTopLevelResources(Landroid/app/ActivityThread;Landroid/content/res/Resources;)Landroid/content/res/Resources;
+    .locals 6
+    .parameter "mainThread"
+    .parameter "container"
+
+    .prologue
+    iget-object v0, p0, Landroid/app/ContextImpl;->mPackageInfo:Landroid/app/LoadedApk;
+
+    iget-object v1, v0, Landroid/app/LoadedApk;->mPackageName:Ljava/lang/String;
+
+    iget-object v0, p0, Landroid/app/ContextImpl;->mPackageInfo:Landroid/app/LoadedApk;
+
+    invoke-virtual {v0}, Landroid/app/LoadedApk;->getResDir()Ljava/lang/String;
+
+    move-result-object v2
+
+    const/4 v3, 0x0
+
+    const/4 v4, 0x0
+
+    invoke-virtual {p2}, Landroid/content/res/Resources;->getCompatibilityInfo()Landroid/content/res/CompatibilityInfo;
+
+    move-result-object v5
+
+    move-object v0, p1
+
+    invoke-virtual/range {v0 .. v5}, Landroid/app/ActivityThread;->getTopLevelResources(Ljava/lang/String;Ljava/lang/String;ILandroid/content/res/Configuration;Landroid/content/res/CompatibilityInfo;)Landroid/content/res/Resources;
+
+    move-result-object v0
+
+    return-object v0
 .end method

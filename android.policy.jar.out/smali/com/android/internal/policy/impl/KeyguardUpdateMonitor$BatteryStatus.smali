@@ -1,4 +1,4 @@
-.class Lcom/android/internal/policy/impl/KeyguardUpdateMonitor$BatteryStatus;
+.class public Lcom/android/internal/policy/impl/KeyguardUpdateMonitor$BatteryStatus;
 .super Ljava/lang/Object;
 .source "KeyguardUpdateMonitor.java"
 
@@ -9,7 +9,7 @@
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
-    accessFlags = 0x8
+    accessFlags = 0x9
     name = "BatteryStatus"
 .end annotation
 
@@ -97,7 +97,7 @@
     goto :goto_0
 .end method
 
-.method isPluggedIn()Z
+.method public isPluggedIn()Z
     .locals 3
 
     .prologue
@@ -118,6 +118,12 @@
     const/4 v2, 0x4
 
     if-ne v1, v2, :cond_1
+
+    invoke-static {}, Landroid/app/MiuiThemeHelper;->isScreenshotMode()Z
+
+    move-result v1
+
+    if-nez v1, :cond_1
 
     :cond_0
     :goto_0

@@ -124,6 +124,33 @@
     return-object v0
 .end method
 
+.method public isConnected()Z
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Landroid/speech/tts/TextToSpeech$Connection;->mService:Landroid/speech/tts/ITextToSpeechService;
+
+    if-eqz v0, :cond_0
+
+    iget-object v0, p0, Landroid/speech/tts/TextToSpeech$Connection;->mService:Landroid/speech/tts/ITextToSpeechService;
+
+    invoke-interface {v0}, Landroid/speech/tts/ITextToSpeechService;->asBinder()Landroid/os/IBinder;
+
+    move-result-object v0
+
+    invoke-interface {v0}, Landroid/os/IBinder;->isBinderAlive()Z
+
+    move-result v0
+
+    :goto_0
+    return v0
+
+    :cond_0
+    const/4 v0, 0x0
+
+    goto :goto_0
+.end method
+
 .method public onServiceConnected(Landroid/content/ComponentName;Landroid/os/IBinder;)V
     .locals 5
     .parameter "name"

@@ -1816,3 +1816,33 @@
 
     return v0
 .end method
+
+.method public tryReconnectIfDead()V
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Landroid/speech/tts/TextToSpeech;->mServiceConnection:Landroid/speech/tts/TextToSpeech$Connection;
+
+    if-eqz v0, :cond_0
+
+    iget-object v0, p0, Landroid/speech/tts/TextToSpeech;->mServiceConnection:Landroid/speech/tts/TextToSpeech$Connection;
+
+    invoke-virtual {v0}, Landroid/speech/tts/TextToSpeech$Connection;->isConnected()Z
+
+    move-result v0
+
+    if-eqz v0, :cond_1
+
+    :cond_0
+    iget-object v0, p0, Landroid/speech/tts/TextToSpeech;->mServiceConnection:Landroid/speech/tts/TextToSpeech$Connection;
+
+    if-nez v0, :cond_2
+
+    :cond_1
+    invoke-virtual {p0}, Landroid/speech/tts/TextToSpeech;->shutdown()V
+
+    invoke-direct {p0}, Landroid/speech/tts/TextToSpeech;->initTts()I
+
+    :cond_2
+    return-void
+.end method

@@ -361,6 +361,30 @@
 
 
 # virtual methods
+.method public getAppPolicy(I)I
+    .locals 1
+    .parameter "uid"
+
+    .prologue
+    invoke-virtual {p0, p1}, Landroid/net/NetworkPolicyManager;->getUidPolicy(I)I
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public getAppsWithPolicy(I)[I
+    .locals 1
+    .parameter "policy"
+
+    .prologue
+    invoke-virtual {p0, p1}, Landroid/net/NetworkPolicyManager;->getUidsWithPolicy(I)[I
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
 .method public getNetworkPolicies()[Landroid/net/NetworkPolicy;
     .locals 2
 
@@ -484,6 +508,17 @@
     move-exception v0
 
     goto :goto_0
+.end method
+
+.method public setAppPolicy(II)V
+    .locals 0
+    .parameter "uid"
+    .parameter "policy"
+
+    .prologue
+    invoke-virtual {p0, p1, p2}, Landroid/net/NetworkPolicyManager;->setUidPolicy(II)V
+
+    return-void
 .end method
 
 .method public setNetworkPolicies([Landroid/net/NetworkPolicy;)V

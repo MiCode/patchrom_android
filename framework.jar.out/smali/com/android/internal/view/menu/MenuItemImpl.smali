@@ -895,6 +895,29 @@
     goto :goto_0
 .end method
 
+.method public isForceShowText()Z
+    .locals 2
+
+    .prologue
+    iget v0, p0, Lcom/android/internal/view/menu/MenuItemImpl;->mShowAsAction:I
+
+    const/high16 v1, -0x8000
+
+    and-int/2addr v0, v1
+
+    if-eqz v0, :cond_0
+
+    const/4 v0, 0x1
+
+    :goto_0
+    return v0
+
+    :cond_0
+    const/4 v0, 0x0
+
+    goto :goto_0
+.end method
+
 .method public isVisible()Z
     .locals 3
 

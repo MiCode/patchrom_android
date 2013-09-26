@@ -3,6 +3,14 @@
 .source "AppWidgetService.java"
 
 
+# annotations
+.annotation system Ldalvik/annotation/MemberClasses;
+    value = {
+        Lcom/android/server/AppWidgetService$Injector;
+    }
+.end annotation
+
+
 # static fields
 .field private static final TAG:Ljava/lang/String; = "AppWidgetService"
 
@@ -1189,6 +1197,8 @@
     check-cast v0, Lcom/android/server/AppWidgetServiceImpl;
 
     invoke-virtual {v0, p1}, Lcom/android/server/AppWidgetServiceImpl;->systemReady(Z)V
+
+    invoke-static {p0}, Lcom/android/server/AppWidgetService$Injector;->receiveRestoreFinish(Lcom/android/server/AppWidgetService;)V
 
     iget-object v0, p0, Lcom/android/server/AppWidgetService;->mContext:Landroid/content/Context;
 

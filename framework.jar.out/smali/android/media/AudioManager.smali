@@ -1378,6 +1378,19 @@
     .parameter "streamType"
 
     .prologue
+    const/4 v2, 0x0
+
+    iget-object v3, p0, Landroid/media/AudioManager;->mContext:Landroid/content/Context;
+
+    invoke-static {v3, p1}, Landroid/media/AudioManager$Injector;->checkQuietModeForNotification(Landroid/content/Context;I)Z
+
+    move-result v3
+
+    if-eqz v3, :cond_miui_0
+
+    return v2
+
+    :cond_miui_0
     invoke-static {}, Landroid/media/AudioManager;->getService()Landroid/media/IAudioService;
 
     move-result-object v1

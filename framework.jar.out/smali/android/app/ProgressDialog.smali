@@ -3,6 +3,14 @@
 .source "ProgressDialog.java"
 
 
+# annotations
+.annotation system Ldalvik/annotation/MemberClasses;
+    value = {
+        Landroid/app/ProgressDialog$Injector;
+    }
+.end annotation
+
+
 # static fields
 .field public static final STYLE_HORIZONTAL:I = 0x1
 
@@ -641,7 +649,13 @@
 
     invoke-virtual {p0, v2}, Landroid/app/ProgressDialog;->setView(Landroid/view/View;)V
 
-    goto :goto_0
+    iget-object v3, p0, Landroid/app/ProgressDialog;->mContext:Landroid/content/Context;
+
+    iget-object v4, p0, Landroid/app/ProgressDialog;->mMessageView:Landroid/widget/TextView;
+
+    invoke-static {p0, v3, v4}, Landroid/app/ProgressDialog$Injector;->usingV5Style(Landroid/app/ProgressDialog;Landroid/content/Context;Landroid/widget/TextView;)V
+
+    goto/16 :goto_0
 .end method
 
 .method public onStart()V
