@@ -1107,7 +1107,7 @@
     goto :goto_0
 .end method
 
-.method public getProfileProxy(Landroid/content/Context;Landroid/bluetooth/BluetoothProfile$ServiceListener;ILjava/lang/Object;)Landroid/bluetooth/BluetoothAdapter$ProfileProxyHandler;
+.method public getProfileProxyHandler(Landroid/content/Context;Landroid/bluetooth/BluetoothProfile$ServiceListener;ILjava/lang/Object;)Landroid/bluetooth/BluetoothAdapter$ProfileProxyHandler;
     .locals 7
     .parameter "context"
     .parameter "listener"
