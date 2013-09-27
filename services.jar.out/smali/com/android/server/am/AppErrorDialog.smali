@@ -314,8 +314,6 @@
 
     invoke-virtual {p0, v0, v1, v2}, Lcom/android/server/am/AppErrorDialog;->setButton(ILjava/lang/CharSequence;Landroid/os/Message;)V
 
-    invoke-static {p1, p4, p5, p0}, Lcom/android/server/am/AppErrorDialog$Injector;->showSpecialMessageForResourceLeak(Landroid/content/Context;Lcom/android/server/am/ProcessRecord;Landroid/app/ApplicationErrorReport$CrashInfo;Lcom/android/server/am/AppErrorDialog;)V
-
     return-void
 .end method
 
