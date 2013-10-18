@@ -11450,7 +11450,7 @@
 
     .restart local v1       #statusbar:Lcom/android/internal/statusbar/IStatusBarService;
     :cond_0
-    const/high16 v2, 0x400
+    const/high16 v2, 0x2000
 
     goto :goto_0
 
