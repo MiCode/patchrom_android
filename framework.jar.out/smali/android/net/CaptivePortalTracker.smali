@@ -888,7 +888,13 @@
 
     iget-object v7, p0, Landroid/net/CaptivePortalTracker;->mContext:Landroid/content/Context;
 
-    invoke-static {v7, v2}, Landroid/net/CaptivePortalTracker$Injector;->showLogin(Landroid/content/Context;Landroid/content/Intent;)V
+    iget-object v8, p0, Landroid/net/CaptivePortalTracker;->mNetworkInfo:Landroid/net/NetworkInfo;
+
+    invoke-virtual {v8}, Landroid/net/NetworkInfo;->getExtraInfo()Ljava/lang/String;
+
+    move-result-object v8
+
+    invoke-static {v7, v2, v8}, Landroid/net/CaptivePortalTracker$Injector;->showLogin(Landroid/content/Context;Landroid/content/Intent;Ljava/lang/String;)V
 
     .end local v0           #details:Ljava/lang/CharSequence;
     .end local v1           #icon:I
