@@ -512,35 +512,61 @@
 .end method
 
 .method public getRawHeight()I
-    .locals 2
+    .locals 1
 
     .prologue
-    new-instance v0, Landroid/graphics/Point;
+    monitor-enter p0
 
-    invoke-direct {v0}, Landroid/graphics/Point;-><init>()V
+    :try_start_0
+    invoke-direct {p0}, Landroid/view/Display;->updateDisplayInfoLocked()V
 
-    .local v0, outSize:Landroid/graphics/Point;
-    invoke-virtual {p0, v0}, Landroid/view/Display;->getRealSize(Landroid/graphics/Point;)V
+    iget-object v0, p0, Landroid/view/Display;->mDisplayInfo:Landroid/view/DisplayInfo;
 
-    iget v1, v0, Landroid/graphics/Point;->x:I
+    invoke-virtual {v0}, Landroid/view/DisplayInfo;->getNaturalHeight()I
 
-    return v1
+    move-result v0
+
+    monitor-exit p0
+
+    return v0
+
+    :catchall_0
+    move-exception v0
+
+    monitor-exit p0
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    throw v0
 .end method
 
 .method public getRawWidth()I
-    .locals 2
+    .locals 1
 
     .prologue
-    new-instance v0, Landroid/graphics/Point;
+    monitor-enter p0
 
-    invoke-direct {v0}, Landroid/graphics/Point;-><init>()V
+    :try_start_0
+    invoke-direct {p0}, Landroid/view/Display;->updateDisplayInfoLocked()V
 
-    .local v0, outSize:Landroid/graphics/Point;
-    invoke-virtual {p0, v0}, Landroid/view/Display;->getRealSize(Landroid/graphics/Point;)V
+    iget-object v0, p0, Landroid/view/Display;->mDisplayInfo:Landroid/view/DisplayInfo;
 
-    iget v1, v0, Landroid/graphics/Point;->y:I
+    invoke-virtual {v0}, Landroid/view/DisplayInfo;->getNaturalWidth()I
 
-    return v1
+    move-result v0
+
+    monitor-exit p0
+
+    return v0
+
+    :catchall_0
+    move-exception v0
+
+    monitor-exit p0
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    throw v0
 .end method
 
 .method public getRealMetrics(Landroid/util/DisplayMetrics;)V

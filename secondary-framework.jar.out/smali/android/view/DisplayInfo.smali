@@ -964,3 +964,55 @@
 
     return-void
 .end method
+
+.method public getNaturalHeight()I
+    .locals 2
+
+    .prologue
+    iget v0, p0, Landroid/view/DisplayInfo;->rotation:I
+
+    if-eqz v0, :cond_0
+
+    iget v0, p0, Landroid/view/DisplayInfo;->rotation:I
+
+    const/4 v1, 0x2
+
+    if-ne v0, v1, :cond_1
+
+    :cond_0
+    iget v0, p0, Landroid/view/DisplayInfo;->logicalHeight:I
+
+    :goto_0
+    return v0
+
+    :cond_1
+    iget v0, p0, Landroid/view/DisplayInfo;->logicalWidth:I
+
+    goto :goto_0
+.end method
+
+.method public getNaturalWidth()I
+    .locals 2
+
+    .prologue
+    iget v0, p0, Landroid/view/DisplayInfo;->rotation:I
+
+    if-eqz v0, :cond_0
+
+    iget v0, p0, Landroid/view/DisplayInfo;->rotation:I
+
+    const/4 v1, 0x2
+
+    if-ne v0, v1, :cond_1
+
+    :cond_0
+    iget v0, p0, Landroid/view/DisplayInfo;->logicalWidth:I
+
+    :goto_0
+    return v0
+
+    :cond_1
+    iget v0, p0, Landroid/view/DisplayInfo;->logicalHeight:I
+
+    goto :goto_0
+.end method
