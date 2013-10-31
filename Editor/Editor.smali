@@ -4405,7 +4405,7 @@
     .parameter "cc"
 
     .prologue
-    sget v11, Lcom/android/internal/R$string;->save_password_notnow:I
+    sget v11, Lcom/android/internal/R$string;->text_copied:I
 
     const/4 v10, 0x0
 
