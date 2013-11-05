@@ -4219,7 +4219,7 @@
 .end method
 
 .method public setRepeating(IJJLandroid/app/PendingIntent;)V
-    .locals 4
+    .locals 7
     .parameter "type"
     .parameter "triggerAtTime"
     .parameter "interval"
@@ -4257,6 +4257,26 @@
     goto :goto_0
 
     :cond_1
+    iget-object v0, p0, Lcom/android/server/AlarmManagerService;->mContext:Landroid/content/Context;
+ 
+    move v1, p1
+ 
+    move-wide v2, p2
+ 
+    move-wide v4, p4
+
+    invoke-static/range {v0 .. v5}, Lcom/android/server/ExtraAlarmManagerService;->alignAlarm(Landroid/content/Context;IJJ)[J
+
+    move-result-object v2
+
+    const/4 v0, 0x0
+
+    aget-wide p2, v2, v0
+
+    const/4 v0, 0x1
+
+    aget-wide p4, v2, v0
+
     iget-object v3, p0, Lcom/android/server/AlarmManagerService;->mLock:Ljava/lang/Object;
 
     monitor-enter v3
