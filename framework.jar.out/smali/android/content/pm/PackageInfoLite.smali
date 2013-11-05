@@ -28,6 +28,8 @@
 
 .field public verifiers:[Landroid/content/pm/VerifierInfo;
 
+.field public versionCode:I
+
 
 # direct methods
 .method static constructor <clinit>()V
@@ -48,6 +50,10 @@
 
     .prologue
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    const/4 v0, 0x0
+
+    iput v0, p0, Landroid/content/pm/PackageInfoLite;->versionCode:I
 
     return-void
 .end method
@@ -91,6 +97,12 @@
     iput-object v1, p0, Landroid/content/pm/PackageInfoLite;->verifiers:[Landroid/content/pm/VerifierInfo;
 
     :goto_0
+    invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
+
+    move-result v1
+
+    iput v1, p0, Landroid/content/pm/PackageInfoLite;->versionCode:I
+
     return-void
 
     :cond_0
@@ -214,6 +226,10 @@
     invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeInt(I)V
 
     :goto_0
+    iget v0, p0, Landroid/content/pm/PackageInfoLite;->versionCode:I
+
+    invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeInt(I)V
+
     return-void
 
     :cond_1

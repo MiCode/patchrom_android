@@ -69,6 +69,8 @@
 
 .field public static final START_FORWARD_AND_REQUEST_CONFLICT:I = -0x3
 
+.field public static final START_INCOMPATIBLE:I = 0x5
+
 .field public static final START_INTENT_NOT_RESOLVED:I = -0x1
 
 .field public static final START_NOT_ACTIVITY:I = -0x5
