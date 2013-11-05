@@ -182,6 +182,8 @@
 
 .field public static final INSTALL_FAILED_CONTAINER_ERROR:I = -0x12
 
+.field public static final INSTALL_FAILED_CONTAIN_VIRUS:I = -0x19
+
 .field public static final INSTALL_FAILED_CPU_ABI_INCOMPATIBLE:I = -0x10
 
 .field public static final INSTALL_FAILED_DEXOPT:I = -0xb
@@ -215,6 +217,8 @@
 .field public static final INSTALL_FAILED_REPLACE_COULDNT_DELETE:I = -0xa
 
 .field public static final INSTALL_FAILED_SHARED_USER_INCOMPATIBLE:I = -0x8
+
+.field public static final INSTALL_FAILED_SYSTEM_INCOMPATIBLE:I = -0x1a
 
 .field public static final INSTALL_FAILED_TEST_ONLY:I = -0xf
 
