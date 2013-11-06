@@ -26,13 +26,9 @@
 # static fields
 .field private static final DESCRIPTOR:Ljava/lang/String; = "com.android.internal.telephony.IIccPhoneBook"
 
-.field static final TRANSACTION_getAdnCapacity:I = 0x6
-
 .field static final TRANSACTION_getAdnRecordsInEf:I = 0x1
 
 .field static final TRANSACTION_getAdnRecordsSize:I = 0x4
-
-.field static final TRANSACTION_getFreeAdn:I = 0x5
 
 .field static final TRANSACTION_updateAdnRecordsInEfByIndex:I = 0x3
 
@@ -297,41 +293,6 @@
 
     goto/16 :goto_0
 
-    .end local v1           #_arg0:I
-    .end local v7           #_result:[I
-    :sswitch_5
-    const-string v0, "com.android.internal.telephony.IIccPhoneBook"
-
-    invoke-virtual {p2, v0}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
-
-    invoke-virtual {p0}, Lcom/android/internal/telephony/IIccPhoneBook$Stub;->getFreeAdn()I
-
-    move-result v7
-
-    .local v7, _result:I
-    invoke-virtual {p3}, Landroid/os/Parcel;->writeNoException()V
-
-    invoke-virtual {p3, v7}, Landroid/os/Parcel;->writeInt(I)V
-
-    goto/16 :goto_0
-
-    .end local v7           #_result:I
-    :sswitch_6
-    const-string v0, "com.android.internal.telephony.IIccPhoneBook"
-
-    invoke-virtual {p2, v0}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
-
-    invoke-virtual {p0}, Lcom/android/internal/telephony/IIccPhoneBook$Stub;->getAdnCapacity()I
-
-    move-result v7
-
-    .restart local v7       #_result:I
-    invoke-virtual {p3}, Landroid/os/Parcel;->writeNoException()V
-
-    invoke-virtual {p3, v7}, Landroid/os/Parcel;->writeInt(I)V
-
-    goto/16 :goto_0
-
     nop
 
     :sswitch_data_0
@@ -340,8 +301,6 @@
         0x2 -> :sswitch_2
         0x3 -> :sswitch_3
         0x4 -> :sswitch_4
-        0x5 -> :sswitch_5
-        0x6 -> :sswitch_6
         0x5f4e5446 -> :sswitch_0
     .end sparse-switch
 .end method

@@ -225,6 +225,19 @@
     return-void
 .end method
 
+.method static callStringCompareNullEqualsEmpty(Ljava/lang/String;Ljava/lang/String;)Z
+    .locals 1
+    .parameter "s1"
+    .parameter "s2"
+
+    .prologue
+    invoke-static {p0, p1}, Lcom/android/internal/telephony/AdnRecord;->stringCompareNullEqualsEmpty(Ljava/lang/String;Ljava/lang/String;)Z
+
+    move-result v0
+
+    return v0
+.end method
+
 .method private parseRecord([B)V
     .locals 6
     .parameter "record"
