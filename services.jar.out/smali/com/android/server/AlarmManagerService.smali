@@ -2055,7 +2055,7 @@
 .end method
 
 .method public setRepeating(IJJLandroid/app/PendingIntent;)V
-    .locals 6
+    .locals 7
     .parameter "type"
     .parameter "triggerAtTime"
     .parameter "interval"
