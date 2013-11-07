@@ -9501,7 +9501,7 @@
     :cond_miui_1
     const/4 v9, 0x2
 
-    if-lt v13, v9, :cond_a
+    if-lt v10, v9, :cond_a
 
     .end local v0           #attr:Ljava/lang/String;
     :cond_7
