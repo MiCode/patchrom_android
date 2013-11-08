@@ -46,7 +46,7 @@
 .end method
 
 .method public constructor <init>()V
-    .locals 0
+    .locals 1
 
     .prologue
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
