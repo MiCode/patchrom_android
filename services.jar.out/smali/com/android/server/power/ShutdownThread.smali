@@ -757,6 +757,9 @@
 
     :cond_7
     :try_start_8
+
+    goto :goto_miui_00
+
     new-instance v4, Landroid/app/ProgressDialog;
 
     invoke-direct {v4, p0}, Landroid/app/ProgressDialog;-><init>(Landroid/content/Context;)V
@@ -819,7 +822,13 @@
 
     #invoke-virtual {v4}, Landroid/app/ProgressDialog;->show()V
 
-    invoke-static {p0}, Lcom/android/server/power/ShutdownThread$Injector;->createShutDownDialog(Landroid/content/Context;)V
+    :goto_miui_00
+    invoke-static {p0}, Lcom/android/server/power/ShutdownThread$Injector;->createShutDownDialog(Landroid/content/Context;)Landroid/app/Dialog;
+
+    move-result-object v4
+
+    sput-object v4, Lcom/android/server/power/ShutdownThread;->pd:Landroid/app/Dialog;
+
     :try_end_8
     .catchall {:try_start_8 .. :try_end_8} :catchall_2
 
