@@ -5219,6 +5219,9 @@
     move-object/from16 v0, p0
 
     invoke-direct {v0, v6}, Lcom/android/server/NotificationManagerService;->keepProcessAliveLocked(I)V
+
+    invoke-static {v0, v9}, Lcom/android/server/NotificationManagerService$Injector;->cancelCurrentToast(Lcom/android/server/NotificationManagerService;I)V
+
     :try_end_5
     .catchall {:try_start_5 .. :try_end_5} :catchall_1
 
@@ -5363,3 +5366,15 @@
 
     return-void
 .end method
+
+.method callScheduleTimeoutLocked(Lcom/android/server/NotificationManagerService$ToastRecord;Z)V
+    .locals 0
+    .parameter "r"
+    .parameter "immediate"
+
+    .prologue
+    invoke-direct {p0, p1, p2}, Lcom/android/server/NotificationManagerService;->scheduleTimeoutLocked(Lcom/android/server/NotificationManagerService$ToastRecord;Z)V
+
+    return-void
+.end method
+
