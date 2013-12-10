@@ -1,4 +1,4 @@
-.class public final Landroid/graphics/drawable/AnimationDrawable$AnimationState;
+.class final Landroid/graphics/drawable/AnimationDrawable$AnimationState;
 .super Landroid/graphics/drawable/DrawableContainer$DrawableContainerState;
 .source "AnimationDrawable.java"
 
@@ -9,7 +9,7 @@
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
-    accessFlags = 0x1c
+    accessFlags = 0x1a
     name = "AnimationState"
 .end annotation
 
@@ -170,17 +170,4 @@
     invoke-direct {v0, p0, p1, v1}, Landroid/graphics/drawable/AnimationDrawable;-><init>(Landroid/graphics/drawable/AnimationDrawable$AnimationState;Landroid/content/res/Resources;Landroid/graphics/drawable/AnimationDrawable$1;)V
 
     return-object v0
-.end method
-
-.method setDuration(II)V
-    .locals 1
-    .parameter "frame"
-    .parameter "value"
-
-    .prologue
-    iget-object v0, p0, Landroid/graphics/drawable/AnimationDrawable$AnimationState;->mDurations:[I
-
-    aput p2, v0, p1
-
-    return-void
 .end method
