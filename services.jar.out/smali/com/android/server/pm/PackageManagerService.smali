@@ -3798,19 +3798,21 @@
     goto :goto_0
 
     :cond_3
-    iget-object v5, p0, Lcom/android/server/pm/PackageManagerService;->mResolveInfo:Landroid/content/pm/ResolveInfo;
+    iget-object v6, p0, Lcom/android/server/pm/PackageManagerService;->mResolveInfo:Landroid/content/pm/ResolveInfo;
 
     move-object v0, p0
 
-    move-object v1, p1
+    move-object/from16 v1, p4
 
-    move-object v2, p2
+    move-object v2, p1
 
-    move v3, p3
+    move-object v3, p2
 
-    move/from16 v4, p5
+    move v4, p3
 
-    invoke-static/range {v0 .. v5}, Lcom/android/server/pm/PackageManagerService$Injector;->checkMiuiIntent(Lcom/android/server/pm/PackageManagerService;Landroid/content/Intent;Ljava/lang/String;IILandroid/content/pm/ResolveInfo;)Landroid/content/pm/ResolveInfo;
+    move/from16 v5, p5
+
+    invoke-static/range {v0 .. v6}, Lcom/android/server/pm/PackageManagerService$Injector;->checkMiuiIntent(Lcom/android/server/pm/PackageManagerService;Ljava/util/List;Landroid/content/Intent;Ljava/lang/String;IILandroid/content/pm/ResolveInfo;)Landroid/content/pm/ResolveInfo;
 
     move-result-object v0
 
