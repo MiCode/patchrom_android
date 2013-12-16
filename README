@@ -1,3 +1,4 @@
 BRANCH=jellybean42
+PLATFORM=v17
 JAR_OUTS=android.policy.jar.out framework.jar.out services.jar.out telephony-common.jar.out
 
