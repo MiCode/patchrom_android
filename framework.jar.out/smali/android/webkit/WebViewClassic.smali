@@ -23415,3 +23415,14 @@
     .prologue
     return-void
 .end method
+
+.method public checkIfSaveImageFromCacheAvailable(Ljava/lang/String;Ljava/lang/String;)Z
+    .locals 1
+    .parameter "imageUrl"
+    .parameter "path"
+
+    .prologue
+    const/4 v0, 0x0
+
+    return v0
+.end method
