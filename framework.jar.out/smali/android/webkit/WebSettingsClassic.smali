@@ -104,6 +104,8 @@
 
 .field private mHardwareAccelSkia:Z
 
+.field private mIsWebapp:Z
+
 .field private mJavaScriptCanOpenWindowsAutomatically:Z
 
 .field private mJavaScriptEnabled:Z
@@ -212,6 +214,8 @@
     const/4 v3, 0x0
 
     invoke-direct {p0}, Landroid/webkit/WebSettings;-><init>()V
+
+    iput-boolean v3, p0, Landroid/webkit/WebSettingsClassic;->mIsWebapp:Z
 
     iput-boolean v3, p0, Landroid/webkit/WebSettingsClassic;->mSyncPending:Z
 
@@ -4670,4 +4674,53 @@
     monitor-exit p0
 
     throw v1
+.end method
+
+.method public declared-synchronized getIsWebapp()Z
+    .locals 1
+
+    .prologue
+    monitor-enter p0
+
+    :try_start_0
+    iget-boolean v0, p0, Landroid/webkit/WebSettingsClassic;->mIsWebapp:Z
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    monitor-exit p0
+
+    return v0
+
+    :catchall_0
+    move-exception v0
+
+    monitor-exit p0
+
+    throw v0
+.end method
+
+.method public declared-synchronized setIsWebapp(Z)V
+    .locals 1
+    .parameter "isWebapp"
+
+    .prologue
+    monitor-enter p0
+
+    :try_start_0
+    iput-boolean p1, p0, Landroid/webkit/WebSettingsClassic;->mIsWebapp:Z
+
+    invoke-direct {p0}, Landroid/webkit/WebSettingsClassic;->postSync()V
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    monitor-exit p0
+
+    return-void
+
+    :catchall_0
+    move-exception v0
+
+    monitor-exit p0
+
+    throw v0
 .end method
