@@ -1717,6 +1717,40 @@
     goto :goto_0
 .end method
 
+.method public isMiWifi()Z
+    .locals 3
+
+    .prologue
+    invoke-virtual {p0}, Landroid/net/wifi/WifiManager;->getConnectionInfo()Landroid/net/wifi/WifiInfo;
+
+    move-result-object v0
+
+    .local v0, wifiInfo:Landroid/net/wifi/WifiInfo;
+    if-eqz v0, :cond_0
+
+    const-string v1, "XIAOMI_ROUTER"
+
+    invoke-virtual {v0}, Landroid/net/wifi/WifiInfo;->getVendorInfo()Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-virtual {v1, v2}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_0
+
+    const/4 v1, 0x1
+
+    :goto_0
+    return v1
+
+    :cond_0
+    const/4 v1, 0x0
+
+    goto :goto_0
+.end method
+
 .method public isMulticastEnabled()Z
     .locals 2
 
