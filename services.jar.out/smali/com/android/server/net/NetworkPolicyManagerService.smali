@@ -4429,8 +4429,6 @@
     :cond_1
     const/4 v0, 0x2
     
-    invoke-direct {p0, v10, v0, v12, v13}, Lcom/android/server/net/NetworkPolicyManagerService;->enqueueNotification(Landroid/net/NetworkPolicy;IJ)V
-
     invoke-direct {p0, v10, v0, v12, v13}, Lcom/android/server/net/NetworkPolicyManagerService;->enqueueValidNotification(Landroid/net/NetworkPolicy;IJ)V
 
     iget-object v0, v10, Landroid/net/NetworkPolicy;->template:Landroid/net/NetworkTemplate;
