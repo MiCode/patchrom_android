@@ -1164,9 +1164,9 @@
     .prologue
     const-string/jumbo v0, "security"
 
-    new-instance v1, Landroid/app/ContextImpl$41;
+    new-instance v1, Landroid/app/ContextImpl$SecurityServiceFetcher;
 
-    invoke-direct {v1}, Landroid/app/ContextImpl$41;-><init>()V
+    invoke-direct {v1}, Landroid/app/ContextImpl$SecurityServiceFetcher;-><init>()V
 
     invoke-static {v0, v1}, Landroid/app/ContextImpl;->registerService(Ljava/lang/String;Landroid/app/ContextImpl$ServiceFetcher;)V
 
