@@ -15142,6 +15142,8 @@
     .end local v13           #ba:Landroid/util/SparseArray;,"Landroid/util/SparseArray<Ljava/lang/Long;>;"
     .end local v14           #badApps:Ljava/util/Iterator;,"Ljava/util/Iterator<Landroid/util/SparseArray<Ljava/lang/Long;>;>;"
     :cond_2
+    invoke-direct/range {p0 .. p1}, Lcom/android/server/am/ActivityManagerService;->killNativePackageProcesses(Ljava/lang/String;)V
+
     const/16 v5, -0x64
 
     const/4 v7, 0x0
@@ -18688,6 +18690,52 @@
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
     const/4 v3, 0x0
+
+    goto :goto_0
+.end method
+
+.method private final killNativePackageProcesses(Ljava/lang/String;)V
+    .locals 3
+    .parameter "packageName"
+
+    .prologue
+    :try_start_0
+    iget-object v1, p0, Lcom/android/server/am/ActivityManagerService;->mContext:Landroid/content/Context;
+
+    const-string v2, "security"
+
+    invoke-virtual {v1, v2}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Lmiui/security/SecurityManager;
+
+    .local v0, sm:Lmiui/security/SecurityManager;
+    if-eqz v0, :cond_0
+
+    if-eqz p1, :cond_0
+
+    invoke-static {}, Landroid/app/AppGlobals;->getPackageManager()Landroid/content/pm/IPackageManager;
+
+    move-result-object v1
+
+    const/4 v2, 0x0
+
+    invoke-interface {v1, p1, v2}, Landroid/content/pm/IPackageManager;->getPackageUid(Ljava/lang/String;I)I
+
+    move-result v1
+
+    invoke-virtual {v0, v1, p1}, Lmiui/security/SecurityManager;->killNativePackageProcesses(ILjava/lang/String;)V
+    :try_end_0
+    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
+
+    .end local v0           #sm:Lmiui/security/SecurityManager;
+    :cond_0
+    :goto_0
+    return-void
+
+    :catch_0
+    move-exception v1
 
     goto :goto_0
 .end method
