@@ -419,6 +419,8 @@
     :try_start_0
     invoke-static {}, Lcom/android/internal/os/SamplingProfilerIntegration;->start()V
 
+    invoke-static {}, Lmiui/security/SecurityManager;->init()V
+
     invoke-static {}, Lcom/android/internal/os/ZygoteInit;->registerZygoteSocket()V
 
     const/16 v2, 0xbcc
