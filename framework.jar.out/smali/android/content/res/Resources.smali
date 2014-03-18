@@ -816,7 +816,7 @@
 .end method
 
 .method public static getSystem()Landroid/content/res/Resources;
-    .locals 3
+    .locals 5
     .annotation build Landroid/annotation/MiuiHook;
         value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->CHANGE_CODE:Landroid/annotation/MiuiHook$MiuiHookType;
     .end annotation
@@ -839,6 +839,14 @@
 
     .restart local v0       #ret:Landroid/content/res/Resources;
     sput-object v0, Landroid/content/res/Resources;->mSystem:Landroid/content/res/Resources;
+
+    move-object v1, v0
+
+    check-cast v1, Landroid/content/res/MiuiResources;
+
+    const/4 v4, 0x0
+
+    invoke-virtual {v1, v4}, Landroid/content/res/MiuiResources;->init(Ljava/lang/String;)V
 
     :cond_0
     monitor-exit v2
