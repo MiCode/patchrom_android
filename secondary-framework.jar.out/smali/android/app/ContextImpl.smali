@@ -496,6 +496,8 @@
 
     invoke-static {v0, v1}, Landroid/app/ContextImpl;->registerService(Ljava/lang/String;Landroid/app/ContextImpl$ServiceFetcher;)V
 
+    invoke-static {}, Landroid/app/ContextImpl;->registerMiuiServices()V
+
     return-void
 .end method
 
@@ -6475,4 +6477,19 @@
     move-result-object v0
 
     return-object v0
+.end method
+
+.method static registerMiuiServices()V
+    .locals 2
+
+    .prologue
+    const-string v0, "security"
+
+    new-instance v1, Landroid/app/ContextImpl$SecurityServiceFetcher;
+
+    invoke-direct {v1}, Landroid/app/ContextImpl$SecurityServiceFetcher;-><init>()V
+
+    invoke-static {v0, v1}, Landroid/app/ContextImpl;->registerService(Ljava/lang/String;Landroid/app/ContextImpl$ServiceFetcher;)V
+
+    return-void
 .end method
