@@ -5710,6 +5710,8 @@
     :try_end_0
     .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
 
+    goto :cond_0
+
     const/4 v2, -0x2
 
     :goto_0
