@@ -3828,6 +3828,12 @@
 
     iput-object v0, v1, Lcom/android/server/am/BroadcastQueue;->mPendingBroadcast:Lcom/android/server/am/BroadcastRecord;
 
+    iget-object v0, v0, Lcom/android/server/am/BroadcastRecord;->curApp:Lcom/android/server/am/ProcessRecord;
+
+    const/4 v1, 0x1
+
+    iput-boolean v1, v0, Lcom/android/server/am/ProcessRecord;->startedViaBroadcast:Z
+
     move/from16 v0, v28
 
     move-object/from16 v1, p0
