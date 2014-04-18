@@ -46,11 +46,16 @@
 
     iget-object v0, v0, Landroid/webkit/HTML5VideoFullScreen;->mProxy:Landroid/webkit/HTML5VideoViewProxy;
 
+    if-eqz v0, :cond_miui_0
+
     invoke-virtual {v0}, Landroid/webkit/HTML5VideoViewProxy;->dispatchOnStopFullScreen()V
 
+    :cond_miui_0
     invoke-static {}, Landroid/webkit/HTML5VideoFullScreen;->access$800()Landroid/widget/FrameLayout;
 
     move-result-object v0
+
+    if-eqz v0, :cond_miui_1
 
     iget-object v1, p0, Landroid/webkit/HTML5VideoFullScreen$3;->this$0:Landroid/webkit/HTML5VideoFullScreen;
 
@@ -61,6 +66,7 @@
 
     invoke-virtual {v0, v1}, Landroid/widget/FrameLayout;->removeView(Landroid/view/View;)V
 
+    :cond_miui_1
     invoke-static {}, Landroid/webkit/HTML5VideoFullScreen;->access$900()Landroid/view/View;
 
     move-result-object v0
@@ -86,6 +92,8 @@
 
     iget-object v0, v0, Landroid/webkit/HTML5VideoFullScreen;->mProxy:Landroid/webkit/HTML5VideoViewProxy;
 
+    if-eqz v0, :cond_miui_2
+
     invoke-virtual {v0}, Landroid/webkit/HTML5VideoViewProxy;->getWebView()Landroid/webkit/WebViewClassic;
 
     move-result-object v0
@@ -109,5 +117,6 @@
 
     sput v0, Landroid/webkit/HTML5VideoView;->mCurrentState:I
 
+    :cond_miui_2
     return-void
 .end method
