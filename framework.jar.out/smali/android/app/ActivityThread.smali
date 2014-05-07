@@ -9789,7 +9789,7 @@
     or-int/lit16 v0, v0, 0xd00
 
     :cond_3
-    invoke-static {v0}, Landroid/app/MiuiThemeHelper;->handleExtraConfigurationChanges(I)V
+    invoke-static {v0, p1}, Landroid/app/MiuiThemeHelper;->handleExtraConfigurationChanges(ILandroid/content/res/Configuration;)V
 
     iget-object v10, p1, Landroid/content/res/Configuration;->locale:Ljava/util/Locale;
 
