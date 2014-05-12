@@ -26,9 +26,13 @@
 # static fields
 .field private static final DESCRIPTOR:Ljava/lang/String; = "android.net.INetworkManagementEventObserver"
 
+.field static final TRANSACTION_addressRemoved:I = 0x6
+
+.field static final TRANSACTION_addressUpdated:I = 0x5
+
 .field static final TRANSACTION_interfaceAdded:I = 0x3
 
-.field static final TRANSACTION_interfaceClassDataActivityChanged:I = 0x6
+.field static final TRANSACTION_interfaceClassDataActivityChanged:I = 0x8
 
 .field static final TRANSACTION_interfaceLinkStateChanged:I = 0x2
 
@@ -36,7 +40,7 @@
 
 .field static final TRANSACTION_interfaceStatusChanged:I = 0x1
 
-.field static final TRANSACTION_limitReached:I = 0x5
+.field static final TRANSACTION_limitReached:I = 0x7
 
 
 # direct methods
@@ -102,7 +106,7 @@
 .end method
 
 .method public onTransact(ILandroid/os/Parcel;Landroid/os/Parcel;I)Z
-    .locals 4
+    .locals 6
     .parameter "code"
     .parameter "data"
     .parameter "reply"
@@ -116,28 +120,28 @@
     .prologue
     const/4 v1, 0x0
 
-    const/4 v2, 0x1
+    const/4 v4, 0x1
 
     sparse-switch p1, :sswitch_data_0
 
     invoke-super {p0, p1, p2, p3, p4}, Landroid/os/Binder;->onTransact(ILandroid/os/Parcel;Landroid/os/Parcel;I)Z
 
-    move-result v2
+    move-result v4
 
     :goto_0
-    return v2
+    return v4
 
     :sswitch_0
-    const-string v3, "android.net.INetworkManagementEventObserver"
+    const-string v5, "android.net.INetworkManagementEventObserver"
 
-    invoke-virtual {p3, v3}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
+    invoke-virtual {p3, v5}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
     goto :goto_0
 
     :sswitch_1
-    const-string v3, "android.net.INetworkManagementEventObserver"
+    const-string v5, "android.net.INetworkManagementEventObserver"
 
-    invoke-virtual {p2, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+    invoke-virtual {p2, v5}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
     invoke-virtual {p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
@@ -146,11 +150,11 @@
     .local v0, _arg0:Ljava/lang/String;
     invoke-virtual {p2}, Landroid/os/Parcel;->readInt()I
 
-    move-result v3
+    move-result v5
 
-    if-eqz v3, :cond_0
+    if-eqz v5, :cond_0
 
-    move v1, v2
+    move v1, v4
 
     .local v1, _arg1:Z
     :cond_0
@@ -163,9 +167,9 @@
     .end local v0           #_arg0:Ljava/lang/String;
     .end local v1           #_arg1:Z
     :sswitch_2
-    const-string v3, "android.net.INetworkManagementEventObserver"
+    const-string v5, "android.net.INetworkManagementEventObserver"
 
-    invoke-virtual {p2, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+    invoke-virtual {p2, v5}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
     invoke-virtual {p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
@@ -174,11 +178,11 @@
     .restart local v0       #_arg0:Ljava/lang/String;
     invoke-virtual {p2}, Landroid/os/Parcel;->readInt()I
 
-    move-result v3
+    move-result v5
 
-    if-eqz v3, :cond_1
+    if-eqz v5, :cond_1
 
-    move v1, v2
+    move v1, v4
 
     .restart local v1       #_arg1:Z
     :cond_1
@@ -191,9 +195,9 @@
     .end local v0           #_arg0:Ljava/lang/String;
     .end local v1           #_arg1:Z
     :sswitch_3
-    const-string v3, "android.net.INetworkManagementEventObserver"
+    const-string v5, "android.net.INetworkManagementEventObserver"
 
-    invoke-virtual {p2, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+    invoke-virtual {p2, v5}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
     invoke-virtual {p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
@@ -208,9 +212,9 @@
 
     .end local v0           #_arg0:Ljava/lang/String;
     :sswitch_4
-    const-string v3, "android.net.INetworkManagementEventObserver"
+    const-string v5, "android.net.INetworkManagementEventObserver"
 
-    invoke-virtual {p2, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+    invoke-virtual {p2, v5}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
     invoke-virtual {p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
@@ -225,9 +229,9 @@
 
     .end local v0           #_arg0:Ljava/lang/String;
     :sswitch_5
-    const-string v3, "android.net.INetworkManagementEventObserver"
+    const-string v5, "android.net.INetworkManagementEventObserver"
 
-    invoke-virtual {p2, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+    invoke-virtual {p2, v5}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
     invoke-virtual {p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
@@ -239,7 +243,17 @@
     move-result-object v1
 
     .local v1, _arg1:Ljava/lang/String;
-    invoke-virtual {p0, v0, v1}, Landroid/net/INetworkManagementEventObserver$Stub;->limitReached(Ljava/lang/String;Ljava/lang/String;)V
+    invoke-virtual {p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v2
+
+    .local v2, _arg2:I
+    invoke-virtual {p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v3
+
+    .local v3, _arg3:I
+    invoke-virtual {p0, v0, v1, v2, v3}, Landroid/net/INetworkManagementEventObserver$Stub;->addressUpdated(Ljava/lang/String;Ljava/lang/String;II)V
 
     invoke-virtual {p3}, Landroid/os/Parcel;->writeNoException()V
 
@@ -247,10 +261,70 @@
 
     .end local v0           #_arg0:Ljava/lang/String;
     .end local v1           #_arg1:Ljava/lang/String;
+    .end local v2           #_arg2:I
+    .end local v3           #_arg3:I
     :sswitch_6
-    const-string v3, "android.net.INetworkManagementEventObserver"
+    const-string v5, "android.net.INetworkManagementEventObserver"
 
-    invoke-virtual {p2, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+    invoke-virtual {p2, v5}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    invoke-virtual {p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v0
+
+    .restart local v0       #_arg0:Ljava/lang/String;
+    invoke-virtual {p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v1
+
+    .restart local v1       #_arg1:Ljava/lang/String;
+    invoke-virtual {p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v2
+
+    .restart local v2       #_arg2:I
+    invoke-virtual {p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v3
+
+    .restart local v3       #_arg3:I
+    invoke-virtual {p0, v0, v1, v2, v3}, Landroid/net/INetworkManagementEventObserver$Stub;->addressRemoved(Ljava/lang/String;Ljava/lang/String;II)V
+
+    invoke-virtual {p3}, Landroid/os/Parcel;->writeNoException()V
+
+    goto/16 :goto_0
+
+    .end local v0           #_arg0:Ljava/lang/String;
+    .end local v1           #_arg1:Ljava/lang/String;
+    .end local v2           #_arg2:I
+    .end local v3           #_arg3:I
+    :sswitch_7
+    const-string v5, "android.net.INetworkManagementEventObserver"
+
+    invoke-virtual {p2, v5}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    invoke-virtual {p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v0
+
+    .restart local v0       #_arg0:Ljava/lang/String;
+    invoke-virtual {p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v1
+
+    .restart local v1       #_arg1:Ljava/lang/String;
+    invoke-virtual {p0, v0, v1}, Landroid/net/INetworkManagementEventObserver$Stub;->limitReached(Ljava/lang/String;Ljava/lang/String;)V
+
+    invoke-virtual {p3}, Landroid/os/Parcel;->writeNoException()V
+
+    goto/16 :goto_0
+
+    .end local v0           #_arg0:Ljava/lang/String;
+    .end local v1           #_arg1:Ljava/lang/String;
+    :sswitch_8
+    const-string v5, "android.net.INetworkManagementEventObserver"
+
+    invoke-virtual {p2, v5}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
     invoke-virtual {p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
@@ -259,11 +333,11 @@
     .restart local v0       #_arg0:Ljava/lang/String;
     invoke-virtual {p2}, Landroid/os/Parcel;->readInt()I
 
-    move-result v3
+    move-result v5
 
-    if-eqz v3, :cond_2
+    if-eqz v5, :cond_2
 
-    move v1, v2
+    move v1, v4
 
     .local v1, _arg1:Z
     :cond_2
@@ -271,9 +345,7 @@
 
     invoke-virtual {p3}, Landroid/os/Parcel;->writeNoException()V
 
-    goto :goto_0
-
-    nop
+    goto/16 :goto_0
 
     :sswitch_data_0
     .sparse-switch
@@ -283,6 +355,8 @@
         0x4 -> :sswitch_4
         0x5 -> :sswitch_5
         0x6 -> :sswitch_6
+        0x7 -> :sswitch_7
+        0x8 -> :sswitch_8
         0x5f4e5446 -> :sswitch_0
     .end sparse-switch
 .end method

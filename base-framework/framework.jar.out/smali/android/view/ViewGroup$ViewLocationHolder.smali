@@ -30,35 +30,38 @@
 # static fields
 .field private static final MAX_POOL_SIZE:I = 0x20
 
-.field private static sPool:Landroid/view/ViewGroup$ViewLocationHolder;
-
-.field private static final sPoolLock:Ljava/lang/Object;
-
-.field private static sPoolSize:I
+.field private static final sPool:Landroid/util/Pools$SynchronizedPool;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "Landroid/util/Pools$SynchronizedPool",
+            "<",
+            "Landroid/view/ViewGroup$ViewLocationHolder;",
+            ">;"
+        }
+    .end annotation
+.end field
 
 
 # instance fields
-.field private mIsPooled:Z
-
 .field private mLayoutDirection:I
 
 .field private final mLocation:Landroid/graphics/Rect;
-
-.field private mNext:Landroid/view/ViewGroup$ViewLocationHolder;
 
 .field public mView:Landroid/view/View;
 
 
 # direct methods
 .method static constructor <clinit>()V
-    .locals 1
+    .locals 2
 
     .prologue
-    new-instance v0, Ljava/lang/Object;
+    new-instance v0, Landroid/util/Pools$SynchronizedPool;
 
-    invoke-direct {v0}, Ljava/lang/Object;-><init>()V
+    const/16 v1, 0x20
 
-    sput-object v0, Landroid/view/ViewGroup$ViewLocationHolder;->sPoolLock:Ljava/lang/Object;
+    invoke-direct {v0, v1}, Landroid/util/Pools$SynchronizedPool;-><init>(I)V
+
+    sput-object v0, Landroid/view/ViewGroup$ViewLocationHolder;->sPool:Landroid/util/Pools$SynchronizedPool;
 
     return-void
 .end method
@@ -120,71 +123,32 @@
 .end method
 
 .method public static obtain(Landroid/view/ViewGroup;Landroid/view/View;)Landroid/view/ViewGroup$ViewLocationHolder;
-    .locals 4
+    .locals 2
     .parameter "root"
     .parameter "view"
 
     .prologue
-    const/4 v0, 0x0
+    sget-object v1, Landroid/view/ViewGroup$ViewLocationHolder;->sPool:Landroid/util/Pools$SynchronizedPool;
+
+    invoke-virtual {v1}, Landroid/util/Pools$SynchronizedPool;->acquire()Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Landroid/view/ViewGroup$ViewLocationHolder;
 
     .local v0, holder:Landroid/view/ViewGroup$ViewLocationHolder;
-    sget-object v3, Landroid/view/ViewGroup$ViewLocationHolder;->sPoolLock:Ljava/lang/Object;
+    if-nez v0, :cond_0
 
-    monitor-enter v3
-
-    :try_start_0
-    sget-object v2, Landroid/view/ViewGroup$ViewLocationHolder;->sPool:Landroid/view/ViewGroup$ViewLocationHolder;
-
-    if-eqz v2, :cond_0
-
-    sget-object v0, Landroid/view/ViewGroup$ViewLocationHolder;->sPool:Landroid/view/ViewGroup$ViewLocationHolder;
-
-    iget-object v2, v0, Landroid/view/ViewGroup$ViewLocationHolder;->mNext:Landroid/view/ViewGroup$ViewLocationHolder;
-
-    sput-object v2, Landroid/view/ViewGroup$ViewLocationHolder;->sPool:Landroid/view/ViewGroup$ViewLocationHolder;
-
-    const/4 v2, 0x0
-
-    iput-object v2, v0, Landroid/view/ViewGroup$ViewLocationHolder;->mNext:Landroid/view/ViewGroup$ViewLocationHolder;
-
-    const/4 v2, 0x0
-
-    iput-boolean v2, v0, Landroid/view/ViewGroup$ViewLocationHolder;->mIsPooled:Z
-
-    sget v2, Landroid/view/ViewGroup$ViewLocationHolder;->sPoolSize:I
-
-    add-int/lit8 v2, v2, -0x1
-
-    sput v2, Landroid/view/ViewGroup$ViewLocationHolder;->sPoolSize:I
-
-    :goto_0
-    invoke-direct {v0, p0, p1}, Landroid/view/ViewGroup$ViewLocationHolder;->init(Landroid/view/ViewGroup;Landroid/view/View;)V
-
-    monitor-exit v3
-
-    return-object v0
-
-    :cond_0
-    new-instance v1, Landroid/view/ViewGroup$ViewLocationHolder;
-
-    invoke-direct {v1}, Landroid/view/ViewGroup$ViewLocationHolder;-><init>()V
+    new-instance v0, Landroid/view/ViewGroup$ViewLocationHolder;
 
     .end local v0           #holder:Landroid/view/ViewGroup$ViewLocationHolder;
-    .local v1, holder:Landroid/view/ViewGroup$ViewLocationHolder;
-    move-object v0, v1
+    invoke-direct {v0}, Landroid/view/ViewGroup$ViewLocationHolder;-><init>()V
 
-    .end local v1           #holder:Landroid/view/ViewGroup$ViewLocationHolder;
     .restart local v0       #holder:Landroid/view/ViewGroup$ViewLocationHolder;
-    goto :goto_0
+    :cond_0
+    invoke-direct {v0, p0, p1}, Landroid/view/ViewGroup$ViewLocationHolder;->init(Landroid/view/ViewGroup;Landroid/view/View;)V
 
-    :catchall_0
-    move-exception v2
-
-    monitor-exit v3
-    :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
-
-    throw v2
+    return-object v0
 .end method
 
 
@@ -377,62 +341,14 @@
 .end method
 
 .method public recycle()V
-    .locals 3
+    .locals 1
 
     .prologue
-    iget-boolean v0, p0, Landroid/view/ViewGroup$ViewLocationHolder;->mIsPooled:Z
-
-    if-eqz v0, :cond_0
-
-    new-instance v0, Ljava/lang/IllegalStateException;
-
-    const-string v1, "Instance already recycled."
-
-    invoke-direct {v0, v1}, Ljava/lang/IllegalStateException;-><init>(Ljava/lang/String;)V
-
-    throw v0
-
-    :cond_0
     invoke-direct {p0}, Landroid/view/ViewGroup$ViewLocationHolder;->clear()V
 
-    sget-object v1, Landroid/view/ViewGroup$ViewLocationHolder;->sPoolLock:Ljava/lang/Object;
+    sget-object v0, Landroid/view/ViewGroup$ViewLocationHolder;->sPool:Landroid/util/Pools$SynchronizedPool;
 
-    monitor-enter v1
-
-    :try_start_0
-    sget v0, Landroid/view/ViewGroup$ViewLocationHolder;->sPoolSize:I
-
-    const/16 v2, 0x20
-
-    if-ge v0, v2, :cond_1
-
-    sget-object v0, Landroid/view/ViewGroup$ViewLocationHolder;->sPool:Landroid/view/ViewGroup$ViewLocationHolder;
-
-    iput-object v0, p0, Landroid/view/ViewGroup$ViewLocationHolder;->mNext:Landroid/view/ViewGroup$ViewLocationHolder;
-
-    const/4 v0, 0x1
-
-    iput-boolean v0, p0, Landroid/view/ViewGroup$ViewLocationHolder;->mIsPooled:Z
-
-    sput-object p0, Landroid/view/ViewGroup$ViewLocationHolder;->sPool:Landroid/view/ViewGroup$ViewLocationHolder;
-
-    sget v0, Landroid/view/ViewGroup$ViewLocationHolder;->sPoolSize:I
-
-    add-int/lit8 v0, v0, 0x1
-
-    sput v0, Landroid/view/ViewGroup$ViewLocationHolder;->sPoolSize:I
-
-    :cond_1
-    monitor-exit v1
+    invoke-virtual {v0, p0}, Landroid/util/Pools$SynchronizedPool;->release(Ljava/lang/Object;)Z
 
     return-void
-
-    :catchall_0
-    move-exception v0
-
-    monitor-exit v1
-    :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
-
-    throw v0
 .end method

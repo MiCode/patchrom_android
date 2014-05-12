@@ -53,7 +53,7 @@
     move-result v0
 
     .local v0, pos:I
-    add-int/lit16 v0, v0, -0x1388
+    add-int/lit16 v0, v0, -0x3a98
 
     iget-object v1, p0, Landroid/widget/MediaController$6;->this$0:Landroid/widget/MediaController;
 

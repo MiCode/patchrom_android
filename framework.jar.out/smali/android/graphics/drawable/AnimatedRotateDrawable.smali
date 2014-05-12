@@ -12,8 +12,7 @@
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
         Landroid/graphics/drawable/AnimatedRotateDrawable$1;,
-        Landroid/graphics/drawable/AnimatedRotateDrawable$AnimatedRotateState;,
-        Landroid/graphics/drawable/AnimatedRotateDrawable$Injector;
+        Landroid/graphics/drawable/AnimatedRotateDrawable$AnimatedRotateState;
     }
 .end annotation
 
@@ -230,6 +229,21 @@
     iget v4, v6, Landroid/graphics/drawable/AnimatedRotateDrawable$AnimatedRotateState;->mPivotY:F
 
     goto :goto_1
+.end method
+
+.method public getAlpha()I
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Landroid/graphics/drawable/AnimatedRotateDrawable;->mState:Landroid/graphics/drawable/AnimatedRotateDrawable$AnimatedRotateState;
+
+    iget-object v0, v0, Landroid/graphics/drawable/AnimatedRotateDrawable$AnimatedRotateState;->mDrawable:Landroid/graphics/drawable/Drawable;
+
+    invoke-virtual {v0}, Landroid/graphics/drawable/Drawable;->getAlpha()I
+
+    move-result v0
+
+    return v0
 .end method
 
 .method public getChangingConfigurations()I
@@ -483,7 +497,7 @@
 
     move-object/from16 v2, p3
 
-    invoke-static {v0, v1, v2}, Landroid/graphics/drawable/AnimatedRotateDrawable$Injector;->init(Landroid/graphics/drawable/AnimatedRotateDrawable;Landroid/content/res/Resources;Landroid/util/AttributeSet;)V
+    invoke-static {v0, v1, v2}, Landroid/graphics/drawable/Injector$AnimatedRotateDrawableHook;->parseMiuiFramesAttributes(Landroid/graphics/drawable/AnimatedRotateDrawable;Landroid/content/res/Resources;Landroid/util/AttributeSet;)V
 
     const/4 v14, 0x1
 

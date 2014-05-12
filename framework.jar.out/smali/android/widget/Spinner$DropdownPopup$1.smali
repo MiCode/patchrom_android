@@ -70,7 +70,7 @@
     iget-object v1, p0, Landroid/widget/Spinner$DropdownPopup$1;->this$1:Landroid/widget/Spinner$DropdownPopup;
 
     #getter for: Landroid/widget/Spinner$DropdownPopup;->mAdapter:Landroid/widget/ListAdapter;
-    invoke-static {v1}, Landroid/widget/Spinner$DropdownPopup;->access$100(Landroid/widget/Spinner$DropdownPopup;)Landroid/widget/ListAdapter;
+    invoke-static {v1}, Landroid/widget/Spinner$DropdownPopup;->access$300(Landroid/widget/Spinner$DropdownPopup;)Landroid/widget/ListAdapter;
 
     move-result-object v1
 

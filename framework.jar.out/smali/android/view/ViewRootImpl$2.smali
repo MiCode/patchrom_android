@@ -3,12 +3,12 @@
 .source "ViewRootImpl.java"
 
 # interfaces
-.implements Landroid/view/SurfaceHolder;
+.implements Ljava/lang/Runnable;
 
 
 # annotations
-.annotation system Ldalvik/annotation/EnclosingClass;
-    value = Landroid/view/ViewRootImpl;
+.annotation system Ldalvik/annotation/EnclosingMethod;
+    value = Landroid/view/ViewRootImpl;->performLayout(Landroid/view/WindowManager$LayoutParams;II)V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -20,14 +20,19 @@
 # instance fields
 .field final synthetic this$0:Landroid/view/ViewRootImpl;
 
+.field final synthetic val$finalRequesters:Ljava/util/ArrayList;
+
 
 # direct methods
-.method constructor <init>(Landroid/view/ViewRootImpl;)V
+.method constructor <init>(Landroid/view/ViewRootImpl;Ljava/util/ArrayList;)V
     .locals 0
+    .parameter
     .parameter
 
     .prologue
     iput-object p1, p0, Landroid/view/ViewRootImpl$2;->this$0:Landroid/view/ViewRootImpl;
+
+    iput-object p2, p0, Landroid/view/ViewRootImpl$2;->val$finalRequesters:Ljava/util/ArrayList;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
@@ -36,117 +41,67 @@
 
 
 # virtual methods
-.method public addCallback(Landroid/view/SurfaceHolder$Callback;)V
-    .locals 0
-    .parameter "callback"
+.method public run()V
+    .locals 6
 
     .prologue
-    return-void
-.end method
+    iget-object v3, p0, Landroid/view/ViewRootImpl$2;->val$finalRequesters:Ljava/util/ArrayList;
 
-.method public getSurface()Landroid/view/Surface;
-    .locals 1
+    invoke-virtual {v3}, Ljava/util/ArrayList;->size()I
 
-    .prologue
-    iget-object v0, p0, Landroid/view/ViewRootImpl$2;->this$0:Landroid/view/ViewRootImpl;
+    move-result v1
 
-    #getter for: Landroid/view/ViewRootImpl;->mSurface:Landroid/view/Surface;
-    invoke-static {v0}, Landroid/view/ViewRootImpl;->access$400(Landroid/view/ViewRootImpl;)Landroid/view/Surface;
-
-    move-result-object v0
-
-    return-object v0
-.end method
-
-.method public getSurfaceFrame()Landroid/graphics/Rect;
-    .locals 1
-
-    .prologue
+    .local v1, numValidRequests:I
     const/4 v0, 0x0
 
-    return-object v0
-.end method
+    .local v0, i:I
+    :goto_0
+    if-ge v0, v1, :cond_0
 
-.method public isCreating()Z
-    .locals 1
+    iget-object v3, p0, Landroid/view/ViewRootImpl$2;->val$finalRequesters:Ljava/util/ArrayList;
 
-    .prologue
-    const/4 v0, 0x0
+    invoke-virtual {v3, v0}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
 
-    return v0
-.end method
+    move-result-object v2
 
-.method public lockCanvas()Landroid/graphics/Canvas;
-    .locals 1
+    check-cast v2, Landroid/view/View;
 
-    .prologue
-    const/4 v0, 0x0
+    .local v2, view:Landroid/view/View;
+    const-string v3, "View"
 
-    return-object v0
-.end method
+    new-instance v4, Ljava/lang/StringBuilder;
 
-.method public lockCanvas(Landroid/graphics/Rect;)Landroid/graphics/Canvas;
-    .locals 1
-    .parameter "dirty"
+    invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
 
-    .prologue
-    const/4 v0, 0x0
+    const-string v5, "requestLayout() improperly called by "
 
-    return-object v0
-.end method
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-.method public removeCallback(Landroid/view/SurfaceHolder$Callback;)V
-    .locals 0
-    .parameter "callback"
+    move-result-object v4
 
-    .prologue
-    return-void
-.end method
+    invoke-virtual {v4, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
 
-.method public setFixedSize(II)V
-    .locals 0
-    .parameter "width"
-    .parameter "height"
+    move-result-object v4
 
-    .prologue
-    return-void
-.end method
+    const-string v5, " during second layout pass: posting in next frame"
 
-.method public setFormat(I)V
-    .locals 0
-    .parameter "format"
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    .prologue
-    return-void
-.end method
+    move-result-object v4
 
-.method public setKeepScreenOn(Z)V
-    .locals 0
-    .parameter "screenOn"
+    invoke-virtual {v4}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    .prologue
-    return-void
-.end method
+    move-result-object v4
 
-.method public setSizeFromLayout()V
-    .locals 0
+    invoke-static {v3, v4}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .prologue
-    return-void
-.end method
+    invoke-virtual {v2}, Landroid/view/View;->requestLayout()V
 
-.method public setType(I)V
-    .locals 0
-    .parameter "type"
+    add-int/lit8 v0, v0, 0x1
 
-    .prologue
-    return-void
-.end method
+    goto :goto_0
 
-.method public unlockCanvasAndPost(Landroid/graphics/Canvas;)V
-    .locals 0
-    .parameter "canvas"
-
-    .prologue
+    .end local v2           #view:Landroid/view/View;
+    :cond_0
     return-void
 .end method

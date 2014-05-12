@@ -34,6 +34,8 @@
 
 .field public static final SUGGESTION_SPAN_PICKED_HASHCODE:Ljava/lang/String; = "hashcode"
 
+.field private static final TAG:Ljava/lang/String; = "SuggestionSpan"
+
 
 # instance fields
 .field private mAutoCorrectionUnderlineColor:I
@@ -55,6 +57,8 @@
 .field private mMisspelledUnderlineThickness:F
 
 .field private final mNotificationTargetClassName:Ljava/lang/String;
+
+.field private final mNotificationTargetPackageName:Ljava/lang/String;
 
 .field private final mSuggestions:[Ljava/lang/String;
 
@@ -125,7 +129,16 @@
     iput-object v1, p0, Landroid/text/style/SuggestionSpan;->mLocaleString:Ljava/lang/String;
 
     :goto_0
-    if-eqz p5, :cond_2
+    if-eqz p1, :cond_2
+
+    invoke-virtual {p1}, Landroid/content/Context;->getPackageName()Ljava/lang/String;
+
+    move-result-object v1
+
+    iput-object v1, p0, Landroid/text/style/SuggestionSpan;->mNotificationTargetPackageName:Ljava/lang/String;
+
+    :goto_1
+    if-eqz p5, :cond_3
 
     invoke-virtual {p5}, Ljava/lang/Class;->getCanonicalName()Ljava/lang/String;
 
@@ -133,7 +146,7 @@
 
     iput-object v1, p0, Landroid/text/style/SuggestionSpan;->mNotificationTargetClassName:Ljava/lang/String;
 
-    :goto_1
+    :goto_2
     iget-object v1, p0, Landroid/text/style/SuggestionSpan;->mSuggestions:[Ljava/lang/String;
 
     iget-object v2, p0, Landroid/text/style/SuggestionSpan;->mLocaleString:Ljava/lang/String;
@@ -185,11 +198,18 @@
     goto :goto_0
 
     :cond_2
+    const/4 v1, 0x0
+
+    iput-object v1, p0, Landroid/text/style/SuggestionSpan;->mNotificationTargetPackageName:Ljava/lang/String;
+
+    goto :goto_1
+
+    :cond_3
     const-string v1, ""
 
     iput-object v1, p0, Landroid/text/style/SuggestionSpan;->mNotificationTargetClassName:Ljava/lang/String;
 
-    goto :goto_1
+    goto :goto_2
 .end method
 
 .method public constructor <init>(Landroid/content/Context;[Ljava/lang/String;I)V
@@ -246,6 +266,12 @@
     move-result-object v0
 
     iput-object v0, p0, Landroid/text/style/SuggestionSpan;->mNotificationTargetClassName:Ljava/lang/String;
+
+    invoke-virtual {p1}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v0
+
+    iput-object v0, p0, Landroid/text/style/SuggestionSpan;->mNotificationTargetPackageName:Ljava/lang/String;
 
     invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
 
@@ -391,7 +417,7 @@
     return-void
 
     :cond_0
-    const v0, 0x10103cd
+    const v0, 0x10103f2
 
     .local v0, defStyle:I
     sget-object v2, Lcom/android/internal/R$styleable;->SuggestionSpan:[I
@@ -433,7 +459,7 @@
 
     iput v2, p0, Landroid/text/style/SuggestionSpan;->mEasyCorrectUnderlineColor:I
 
-    const v0, 0x10103ce
+    const v0, 0x10103f3
 
     sget-object v2, Lcom/android/internal/R$styleable;->SuggestionSpan:[I
 
@@ -631,6 +657,132 @@
     return v0
 .end method
 
+.method public notifySelection(Landroid/content/Context;Ljava/lang/String;I)V
+    .locals 5
+    .parameter "context"
+    .parameter "original"
+    .parameter "index"
+
+    .prologue
+    new-instance v1, Landroid/content/Intent;
+
+    invoke-direct {v1}, Landroid/content/Intent;-><init>()V
+
+    .local v1, intent:Landroid/content/Intent;
+    if-eqz p1, :cond_0
+
+    iget-object v2, p0, Landroid/text/style/SuggestionSpan;->mNotificationTargetClassName:Ljava/lang/String;
+
+    if-nez v2, :cond_1
+
+    :cond_0
+    :goto_0
+    return-void
+
+    :cond_1
+    iget-object v2, p0, Landroid/text/style/SuggestionSpan;->mSuggestions:[Ljava/lang/String;
+
+    if-eqz v2, :cond_2
+
+    if-ltz p3, :cond_2
+
+    iget-object v2, p0, Landroid/text/style/SuggestionSpan;->mSuggestions:[Ljava/lang/String;
+
+    array-length v2, v2
+
+    if-lt p3, v2, :cond_3
+
+    :cond_2
+    const-string v2, "SuggestionSpan"
+
+    new-instance v3, Ljava/lang/StringBuilder;
+
+    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v4, "Unable to notify the suggestion as the index is out of range index="
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    invoke-virtual {v3, p3}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    const-string v4, " length="
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    iget-object v4, p0, Landroid/text/style/SuggestionSpan;->mSuggestions:[Ljava/lang/String;
+
+    array-length v4, v4
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-static {v2, v3}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+
+    goto :goto_0
+
+    :cond_3
+    iget-object v2, p0, Landroid/text/style/SuggestionSpan;->mNotificationTargetPackageName:Ljava/lang/String;
+
+    if-eqz v2, :cond_4
+
+    iget-object v2, p0, Landroid/text/style/SuggestionSpan;->mNotificationTargetPackageName:Ljava/lang/String;
+
+    iget-object v3, p0, Landroid/text/style/SuggestionSpan;->mNotificationTargetClassName:Ljava/lang/String;
+
+    invoke-virtual {v1, v2, v3}, Landroid/content/Intent;->setClassName(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;
+
+    const-string v2, "android.text.style.SUGGESTION_PICKED"
+
+    invoke-virtual {v1, v2}, Landroid/content/Intent;->setAction(Ljava/lang/String;)Landroid/content/Intent;
+
+    const-string v2, "before"
+
+    invoke-virtual {v1, v2, p2}, Landroid/content/Intent;->putExtra(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;
+
+    const-string v2, "after"
+
+    iget-object v3, p0, Landroid/text/style/SuggestionSpan;->mSuggestions:[Ljava/lang/String;
+
+    aget-object v3, v3, p3
+
+    invoke-virtual {v1, v2, v3}, Landroid/content/Intent;->putExtra(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;
+
+    const-string v2, "hashcode"
+
+    invoke-virtual {p0}, Landroid/text/style/SuggestionSpan;->hashCode()I
+
+    move-result v3
+
+    invoke-virtual {v1, v2, v3}, Landroid/content/Intent;->putExtra(Ljava/lang/String;I)Landroid/content/Intent;
+
+    invoke-virtual {p1, v1}, Landroid/content/Context;->sendBroadcast(Landroid/content/Intent;)V
+
+    goto :goto_0
+
+    :cond_4
+    invoke-static {}, Landroid/view/inputmethod/InputMethodManager;->peekInstance()Landroid/view/inputmethod/InputMethodManager;
+
+    move-result-object v0
+
+    .local v0, imm:Landroid/view/inputmethod/InputMethodManager;
+    if-eqz v0, :cond_0
+
+    invoke-virtual {v0, p0, p2, p3}, Landroid/view/inputmethod/InputMethodManager;->notifySuggestionPicked(Landroid/text/style/SuggestionSpan;Ljava/lang/String;I)V
+
+    goto :goto_0
+.end method
+
 .method public setFlags(I)V
     .locals 0
     .parameter "flags"
@@ -759,6 +911,10 @@
     invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
     iget-object v0, p0, Landroid/text/style/SuggestionSpan;->mNotificationTargetClassName:Ljava/lang/String;
+
+    invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
+
+    iget-object v0, p0, Landroid/text/style/SuggestionSpan;->mNotificationTargetPackageName:Ljava/lang/String;
 
     invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 

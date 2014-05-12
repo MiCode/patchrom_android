@@ -44,7 +44,7 @@
 
     sput-object v0, Landroid/provider/CalendarContract$Calendars;->CONTENT_URI:Landroid/net/Uri;
 
-    const/16 v0, 0x18
+    const/16 v0, 0x19
 
     new-array v0, v0, [Ljava/lang/String;
 
@@ -74,119 +74,125 @@
 
     const/4 v1, 0x4
 
-    const-string v2, "ownerAccount"
+    const-string v2, "mutators"
 
     aput-object v2, v0, v1
 
     const/4 v1, 0x5
 
-    const-string v2, "maxReminders"
+    const-string v2, "ownerAccount"
 
     aput-object v2, v0, v1
 
     const/4 v1, 0x6
 
-    const-string v2, "allowedReminders"
+    const-string v2, "maxReminders"
 
     aput-object v2, v0, v1
 
     const/4 v1, 0x7
 
-    const-string v2, "canModifyTimeZone"
+    const-string v2, "allowedReminders"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x8
 
-    const-string v2, "canOrganizerRespond"
+    const-string v2, "canModifyTimeZone"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x9
 
-    const-string v2, "canPartiallyUpdate"
+    const-string v2, "canOrganizerRespond"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0xa
 
-    const-string v2, "calendar_location"
+    const-string v2, "canPartiallyUpdate"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0xb
 
-    const-string v2, "calendar_timezone"
+    const-string v2, "calendar_location"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0xc
 
-    const-string v2, "calendar_access_level"
+    const-string v2, "calendar_timezone"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0xd
 
-    const-string v2, "deleted"
+    const-string v2, "calendar_access_level"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0xe
 
-    const-string v2, "cal_sync1"
+    const-string v2, "deleted"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0xf
 
-    const-string v2, "cal_sync2"
+    const-string v2, "cal_sync1"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x10
 
-    const-string v2, "cal_sync3"
+    const-string v2, "cal_sync2"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x11
 
-    const-string v2, "cal_sync4"
+    const-string v2, "cal_sync3"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x12
 
-    const-string v2, "cal_sync5"
+    const-string v2, "cal_sync4"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x13
 
-    const-string v2, "cal_sync6"
+    const-string v2, "cal_sync5"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x14
 
-    const-string v2, "cal_sync7"
+    const-string v2, "cal_sync6"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x15
 
-    const-string v2, "cal_sync8"
+    const-string v2, "cal_sync7"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x16
 
-    const-string v2, "cal_sync9"
+    const-string v2, "cal_sync8"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x17
+
+    const-string v2, "cal_sync9"
+
+    aput-object v2, v0, v1
+
+    const/16 v1, 0x18
 
     const-string v2, "cal_sync10"
 

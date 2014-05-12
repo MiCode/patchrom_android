@@ -497,12 +497,28 @@
 .end method
 
 .method public getNotificationUri()Landroid/net/Uri;
-    .locals 1
+    .locals 2
 
     .prologue
+    iget-object v1, p0, Landroid/database/AbstractCursor;->mSelfObserverLock:Ljava/lang/Object;
+
+    monitor-enter v1
+
+    :try_start_0
     iget-object v0, p0, Landroid/database/AbstractCursor;->mNotifyUri:Landroid/net/Uri;
 
+    monitor-exit v1
+
     return-object v0
+
+    :catchall_0
+    move-exception v0
+
+    monitor-exit v1
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    throw v0
 .end method
 
 .method public final getPosition()I

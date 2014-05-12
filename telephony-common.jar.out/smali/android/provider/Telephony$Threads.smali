@@ -20,15 +20,13 @@
 # static fields
 .field public static final BROADCAST_THREAD:I = 0x1
 
-.field public static final COMMON_THREAD:I = 0x0
+.field public static final COMMON_THREAD:I
 
-.field public static final CONTENT_URI:Landroid/net/Uri; = null
+.field public static final CONTENT_URI:Landroid/net/Uri;
 
-.field private static final ID_PROJECTION:[Ljava/lang/String; = null
+.field private static final ID_PROJECTION:[Ljava/lang/String;
 
-.field public static final OBSOLETE_THREADS_URI:Landroid/net/Uri; = null
-
-.field private static final STANDARD_ENCODING:Ljava/lang/String; = "UTF-8"
+.field public static final OBSOLETE_THREADS_URI:Landroid/net/Uri;
 
 .field private static final THREAD_ID_CONTENT_URI:Landroid/net/Uri;
 
@@ -223,7 +221,7 @@
 
     const-string v1, "getOrCreateThreadId returned no rows!"
 
-    invoke-static {v0, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v0, v1}, Landroid/telephony/Rlog;->e(Ljava/lang/String;Ljava/lang/String;)I
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
@@ -254,7 +252,7 @@
 
     move-result-object v1
 
-    invoke-static {v0, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v0, v1}, Landroid/telephony/Rlog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     new-instance v0, Ljava/lang/IllegalArgumentException;
 

@@ -170,6 +170,38 @@
 .method public abstract setDisplayUseLogoEnabled(Z)V
 .end method
 
+.method public setHomeActionContentDescription(I)V
+    .locals 0
+    .parameter "resId"
+
+    .prologue
+    return-void
+.end method
+
+.method public setHomeActionContentDescription(Ljava/lang/CharSequence;)V
+    .locals 0
+    .parameter "description"
+
+    .prologue
+    return-void
+.end method
+
+.method public setHomeAsUpIndicator(I)V
+    .locals 0
+    .parameter "resId"
+
+    .prologue
+    return-void
+.end method
+
+.method public setHomeAsUpIndicator(Landroid/graphics/drawable/Drawable;)V
+    .locals 0
+    .parameter "indicator"
+
+    .prologue
+    return-void
+.end method
+
 .method public setHomeButtonEnabled(Z)V
     .locals 0
     .parameter "enabled"

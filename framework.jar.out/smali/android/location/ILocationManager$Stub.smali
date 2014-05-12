@@ -599,9 +599,14 @@
     move-result-object v3
 
     .local v3, _arg0:Landroid/location/IGpsStatusListener;
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v5
+
+    .restart local v5       #_arg1:Ljava/lang/String;
     move-object/from16 v0, p0
 
-    invoke-virtual {v0, v3}, Landroid/location/ILocationManager$Stub;->addGpsStatusListener(Landroid/location/IGpsStatusListener;)Z
+    invoke-virtual {v0, v3, v5}, Landroid/location/ILocationManager$Stub;->addGpsStatusListener(Landroid/location/IGpsStatusListener;Ljava/lang/String;)Z
 
     move-result v29
 
@@ -627,6 +632,7 @@
     goto :goto_b
 
     .end local v3           #_arg0:Landroid/location/IGpsStatusListener;
+    .end local v5           #_arg1:Ljava/lang/String;
     .end local v29           #_result:Z
     :sswitch_7
     const-string v2, "android.location.ILocationManager"

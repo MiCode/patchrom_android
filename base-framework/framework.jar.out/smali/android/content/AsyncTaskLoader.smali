@@ -38,6 +38,8 @@
     .end annotation
 .end field
 
+.field private final mExecutor:Ljava/util/concurrent/Executor;
+
 .field mHandler:Landroid/os/Handler;
 
 .field mLastLoadCompleteTime:J
@@ -57,8 +59,22 @@
 
 # direct methods
 .method public constructor <init>(Landroid/content/Context;)V
+    .locals 1
+    .parameter "context"
+
+    .prologue
+    .local p0, this:Landroid/content/AsyncTaskLoader;,"Landroid/content/AsyncTaskLoader<TD;>;"
+    sget-object v0, Landroid/os/AsyncTask;->THREAD_POOL_EXECUTOR:Ljava/util/concurrent/Executor;
+
+    invoke-direct {p0, p1, v0}, Landroid/content/AsyncTaskLoader;-><init>(Landroid/content/Context;Ljava/util/concurrent/Executor;)V
+
+    return-void
+.end method
+
+.method public constructor <init>(Landroid/content/Context;Ljava/util/concurrent/Executor;)V
     .locals 2
     .parameter "context"
+    .parameter "executor"
 
     .prologue
     .local p0, this:Landroid/content/AsyncTaskLoader;,"Landroid/content/AsyncTaskLoader<TD;>;"
@@ -67,6 +83,8 @@
     const-wide/16 v0, -0x2710
 
     iput-wide v0, p0, Landroid/content/AsyncTaskLoader;->mLastLoadCompleteTime:J
+
+    iput-object p2, p0, Landroid/content/AsyncTaskLoader;->mExecutor:Ljava/util/concurrent/Executor;
 
     return-void
 .end method
@@ -104,6 +122,8 @@
     iget-object v0, p0, Landroid/content/AsyncTaskLoader;->mCancellingTask:Landroid/content/AsyncTaskLoader$LoadTask;
 
     if-ne v0, p1, :cond_0
+
+    invoke-virtual {p0}, Landroid/content/AsyncTaskLoader;->rollbackContentChanged()V
 
     invoke-static {}, Landroid/os/SystemClock;->uptimeMillis()J
 
@@ -162,6 +182,8 @@
     goto :goto_0
 
     :cond_1
+    invoke-virtual {p0}, Landroid/content/AsyncTaskLoader;->commitContentChanged()V
+
     invoke-static {}, Landroid/os/SystemClock;->uptimeMillis()J
 
     move-result-wide v0
@@ -355,7 +377,7 @@
     :cond_2
     iget-object v3, p0, Landroid/content/AsyncTaskLoader;->mTask:Landroid/content/AsyncTaskLoader$LoadTask;
 
-    sget-object v4, Landroid/os/AsyncTask;->THREAD_POOL_EXECUTOR:Ljava/util/concurrent/Executor;
+    iget-object v4, p0, Landroid/content/AsyncTaskLoader;->mExecutor:Ljava/util/concurrent/Executor;
 
     const/4 v2, 0x0
 

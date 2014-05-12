@@ -54,14 +54,14 @@
     long-to-float v0, p1
 
     .local v0, result:F
-    const v1, 0x104006c
+    const v1, 0x1040048
 
     .local v1, suffix:I
     cmpl-float v3, v0, v4
 
     if-lez v3, :cond_1
 
-    const v1, 0x104006d
+    const v1, 0x1040049
 
     div-float/2addr v0, v5
 
@@ -70,7 +70,7 @@
 
     if-lez v3, :cond_2
 
-    const v1, 0x104006e
+    const v1, 0x104004a
 
     div-float/2addr v0, v5
 
@@ -79,7 +79,7 @@
 
     if-lez v3, :cond_3
 
-    const v1, 0x104006f
+    const v1, 0x104004b
 
     div-float/2addr v0, v5
 
@@ -88,7 +88,7 @@
 
     if-lez v3, :cond_4
 
-    const v1, 0x1040070
+    const v1, 0x104004c
 
     div-float/2addr v0, v5
 
@@ -97,7 +97,7 @@
 
     if-lez v3, :cond_5
 
-    const v1, 0x1040071
+    const v1, 0x104004d
 
     div-float/2addr v0, v5
 
@@ -128,7 +128,7 @@
 
     move-result-object v3
 
-    const v4, 0x1040072
+    const v4, 0x104004e
 
     const/4 v5, 0x2
 

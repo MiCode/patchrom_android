@@ -332,13 +332,17 @@
     :cond_1
     iget-object v0, p0, Lcom/android/server/TextServicesManagerService;->mContext:Landroid/content/Context;
 
-    iget-object v1, p0, Lcom/android/server/TextServicesManagerService;->mSettings:Lcom/android/server/TextServicesManagerService$TextServicesSettings;
+    new-instance v1, Landroid/os/UserHandle;
 
-    invoke-virtual {v1}, Lcom/android/server/TextServicesManagerService$TextServicesSettings;->getCurrentUserId()I
+    iget-object v2, p0, Lcom/android/server/TextServicesManagerService;->mSettings:Lcom/android/server/TextServicesManagerService$TextServicesSettings;
 
-    move-result v1
+    invoke-virtual {v2}, Lcom/android/server/TextServicesManagerService$TextServicesSettings;->getCurrentUserId()I
 
-    invoke-virtual {v0, p1, p2, p3, v1}, Landroid/content/Context;->bindService(Landroid/content/Intent;Landroid/content/ServiceConnection;II)Z
+    move-result v2
+
+    invoke-direct {v1, v2}, Landroid/os/UserHandle;-><init>(I)V
+
+    invoke-virtual {v0, p1, p2, p3, v1}, Landroid/content/Context;->bindServiceAsUser(Landroid/content/Intent;Landroid/content/ServiceConnection;ILandroid/os/UserHandle;)Z
 
     move-result v0
 
@@ -2650,7 +2654,7 @@
     goto :goto_0
 .end method
 
-.method public systemReady()V
+.method public systemRunning()V
     .locals 1
 
     .prologue

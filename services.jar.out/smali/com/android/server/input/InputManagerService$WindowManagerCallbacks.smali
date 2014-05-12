@@ -30,7 +30,7 @@
 .method public abstract interceptMotionBeforeQueueingWhenScreenOff(I)I
 .end method
 
-.method public abstract notifyANR(Lcom/android/server/input/InputApplicationHandle;Lcom/android/server/input/InputWindowHandle;)J
+.method public abstract notifyANR(Lcom/android/server/input/InputApplicationHandle;Lcom/android/server/input/InputWindowHandle;Ljava/lang/String;)J
 .end method
 
 .method public abstract notifyConfigurationChanged()V

@@ -309,11 +309,19 @@
 
 .field public static final Theme_DeviceDefault_Light_NoActionBar_Fullscreen:I = 0x103012d
 
+.field public static final Theme_DeviceDefault_Light_NoActionBar_Overscan:I = 0x10301e0
+
+.field public static final Theme_DeviceDefault_Light_NoActionBar_TranslucentDecor:I = 0x10301e4
+
 .field public static final Theme_DeviceDefault_Light_Panel:I = 0x103013b
 
 .field public static final Theme_DeviceDefault_NoActionBar:I = 0x1030129
 
 .field public static final Theme_DeviceDefault_NoActionBar_Fullscreen:I = 0x103012a
+
+.field public static final Theme_DeviceDefault_NoActionBar_Overscan:I = 0x10301df
+
+.field public static final Theme_DeviceDefault_NoActionBar_TranslucentDecor:I = 0x10301e3
 
 .field public static final Theme_DeviceDefault_Panel:I = 0x103013a
 
@@ -359,11 +367,19 @@
 
 .field public static final Theme_Holo_Light_NoActionBar_Fullscreen:I = 0x10300f1
 
+.field public static final Theme_Holo_Light_NoActionBar_Overscan:I = 0x10301de
+
+.field public static final Theme_Holo_Light_NoActionBar_TranslucentDecor:I = 0x10301e2
+
 .field public static final Theme_Holo_Light_Panel:I = 0x103007c
 
 .field public static final Theme_Holo_NoActionBar:I = 0x103006c
 
 .field public static final Theme_Holo_NoActionBar_Fullscreen:I = 0x103006d
+
+.field public static final Theme_Holo_NoActionBar_Overscan:I = 0x10301dd
+
+.field public static final Theme_Holo_NoActionBar_TranslucentDecor:I = 0x10301e1
 
 .field public static final Theme_Holo_Panel:I = 0x103007b
 

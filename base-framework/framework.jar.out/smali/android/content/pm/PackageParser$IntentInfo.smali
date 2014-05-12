@@ -25,6 +25,8 @@
 
 .field public nonLocalizedLabel:Ljava/lang/CharSequence;
 
+.field public preferred:I
+
 
 # direct methods
 .method public constructor <init>()V

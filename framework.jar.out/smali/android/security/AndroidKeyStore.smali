@@ -253,11 +253,12 @@
     return v0
 .end method
 
-.method private setPrivateKeyEntry(Ljava/lang/String;Ljava/security/PrivateKey;[Ljava/security/cert/Certificate;)V
-    .locals 19
+.method private setPrivateKeyEntry(Ljava/lang/String;Ljava/security/PrivateKey;[Ljava/security/cert/Certificate;Landroid/security/KeyStoreParameter;)V
+    .locals 22
     .parameter "alias"
     .parameter "key"
     .parameter "chain"
+    .parameter "params"
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Ljava/security/KeyStoreException;
@@ -265,594 +266,594 @@
     .end annotation
 
     .prologue
-    const/4 v7, 0x0
+    const/4 v10, 0x0
 
-    .local v7, keyBytes:[B
+    .local v10, keyBytes:[B
     move-object/from16 v0, p2
 
-    instance-of v0, v0, Lorg/apache/harmony/xnet/provider/jsse/OpenSSLRSAPrivateKey;
+    instance-of v0, v0, Lcom/android/org/conscrypt/OpenSSLKeyHolder;
 
-    move/from16 v16, v0
+    move/from16 v19, v0
 
-    if-eqz v16, :cond_0
+    if-eqz v19, :cond_0
 
-    move-object/from16 v16, p2
+    move-object/from16 v19, p2
 
-    check-cast v16, Lorg/apache/harmony/xnet/provider/jsse/OpenSSLRSAPrivateKey;
+    check-cast v19, Lcom/android/org/conscrypt/OpenSSLKeyHolder;
 
-    invoke-virtual/range {v16 .. v16}, Lorg/apache/harmony/xnet/provider/jsse/OpenSSLRSAPrivateKey;->getPkeyAlias()Ljava/lang/String;
+    invoke-interface/range {v19 .. v19}, Lcom/android/org/conscrypt/OpenSSLKeyHolder;->getOpenSSLKey()Lcom/android/org/conscrypt/OpenSSLKey;
 
-    move-result-object v11
+    move-result-object v19
 
-    .local v11, pkeyAlias:Ljava/lang/String;
+    invoke-virtual/range {v19 .. v19}, Lcom/android/org/conscrypt/OpenSSLKey;->getAlias()Ljava/lang/String;
+
+    move-result-object v14
+
+    .local v14, pkeyAlias:Ljava/lang/String;
     :goto_0
-    if-eqz v11, :cond_4
+    if-eqz v14, :cond_3
 
-    const-string v16, "USRPKEY_"
+    const-string v19, "USRPKEY_"
 
-    move-object/from16 v0, v16
+    move-object/from16 v0, v19
 
-    invoke-virtual {v11, v0}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
+    invoke-virtual {v14, v0}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
 
-    move-result v16
+    move-result v19
 
-    if-eqz v16, :cond_4
+    if-eqz v19, :cond_3
 
-    const-string v16, "USRPKEY_"
+    const-string v19, "USRPKEY_"
 
-    invoke-virtual/range {v16 .. v16}, Ljava/lang/String;->length()I
+    invoke-virtual/range {v19 .. v19}, Ljava/lang/String;->length()I
 
-    move-result v16
+    move-result v19
 
-    move/from16 v0, v16
+    move/from16 v0, v19
 
-    invoke-virtual {v11, v0}, Ljava/lang/String;->substring(I)Ljava/lang/String;
+    invoke-virtual {v14, v0}, Ljava/lang/String;->substring(I)Ljava/lang/String;
 
-    move-result-object v9
+    move-result-object v12
 
-    .local v9, keySubalias:Ljava/lang/String;
+    .local v12, keySubalias:Ljava/lang/String;
     move-object/from16 v0, p1
 
-    invoke-virtual {v0, v9}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+    invoke-virtual {v0, v12}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
-    move-result v16
+    move-result v19
 
-    if-nez v16, :cond_2
+    if-nez v19, :cond_1
 
-    new-instance v16, Ljava/security/KeyStoreException;
+    new-instance v19, Ljava/security/KeyStoreException;
 
-    new-instance v17, Ljava/lang/StringBuilder;
+    new-instance v20, Ljava/lang/StringBuilder;
 
-    invoke-direct/range {v17 .. v17}, Ljava/lang/StringBuilder;-><init>()V
+    invoke-direct/range {v20 .. v20}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v18, "Can only replace keys with same alias: "
+    const-string v21, "Can only replace keys with same alias: "
 
-    invoke-virtual/range {v17 .. v18}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual/range {v20 .. v21}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v17
+    move-result-object v20
 
-    move-object/from16 v0, v17
+    move-object/from16 v0, v20
 
     move-object/from16 v1, p1
 
     invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v17
+    move-result-object v20
 
-    const-string v18, " != "
+    const-string v21, " != "
 
-    invoke-virtual/range {v17 .. v18}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual/range {v20 .. v21}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v17
+    move-result-object v20
 
-    move-object/from16 v0, v17
+    move-object/from16 v0, v20
 
-    invoke-virtual {v0, v9}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {v0, v12}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v17
+    move-result-object v20
 
-    invoke-virtual/range {v17 .. v17}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    invoke-virtual/range {v20 .. v20}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    move-result-object v17
+    move-result-object v20
 
-    invoke-direct/range {v16 .. v17}, Ljava/security/KeyStoreException;-><init>(Ljava/lang/String;)V
+    invoke-direct/range {v19 .. v20}, Ljava/security/KeyStoreException;-><init>(Ljava/lang/String;)V
 
-    throw v16
+    throw v19
 
-    .end local v9           #keySubalias:Ljava/lang/String;
-    .end local v11           #pkeyAlias:Ljava/lang/String;
+    .end local v12           #keySubalias:Ljava/lang/String;
+    .end local v14           #pkeyAlias:Ljava/lang/String;
     :cond_0
-    move-object/from16 v0, p2
+    const/4 v14, 0x0
 
-    instance-of v0, v0, Lorg/apache/harmony/xnet/provider/jsse/OpenSSLDSAPrivateKey;
+    .restart local v14       #pkeyAlias:Ljava/lang/String;
+    goto :goto_0
 
-    move/from16 v16, v0
+    .restart local v12       #keySubalias:Ljava/lang/String;
+    :cond_1
+    const/4 v15, 0x0
 
-    if-eqz v16, :cond_1
+    .end local v12           #keySubalias:Ljava/lang/String;
+    .local v15, shouldReplacePrivateKey:Z
+    :goto_1
+    if-eqz p3, :cond_2
 
-    move-object/from16 v16, p2
+    move-object/from16 v0, p3
 
-    check-cast v16, Lorg/apache/harmony/xnet/provider/jsse/OpenSSLDSAPrivateKey;
+    array-length v0, v0
 
-    invoke-virtual/range {v16 .. v16}, Lorg/apache/harmony/xnet/provider/jsse/OpenSSLDSAPrivateKey;->getPkeyAlias()Ljava/lang/String;
+    move/from16 v19, v0
+
+    if-nez v19, :cond_7
+
+    :cond_2
+    new-instance v19, Ljava/security/KeyStoreException;
+
+    const-string v20, "Must supply at least one Certificate with PrivateKey"
+
+    invoke-direct/range {v19 .. v20}, Ljava/security/KeyStoreException;-><init>(Ljava/lang/String;)V
+
+    throw v19
+
+    .end local v15           #shouldReplacePrivateKey:Z
+    :cond_3
+    invoke-interface/range {p2 .. p2}, Ljava/security/PrivateKey;->getFormat()Ljava/lang/String;
 
     move-result-object v11
 
-    .restart local v11       #pkeyAlias:Ljava/lang/String;
-    goto :goto_0
+    .local v11, keyFormat:Ljava/lang/String;
+    if-eqz v11, :cond_4
 
-    .end local v11           #pkeyAlias:Ljava/lang/String;
-    :cond_1
-    const/4 v11, 0x0
+    const-string v19, "PKCS#8"
 
-    .restart local v11       #pkeyAlias:Ljava/lang/String;
-    goto :goto_0
+    move-object/from16 v0, v19
 
-    .restart local v9       #keySubalias:Ljava/lang/String;
-    :cond_2
-    const/4 v12, 0x0
+    invoke-virtual {v0, v11}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
-    .end local v9           #keySubalias:Ljava/lang/String;
-    .local v12, shouldReplacePrivateKey:Z
-    :goto_1
-    if-eqz p3, :cond_3
+    move-result v19
 
-    move-object/from16 v0, p3
+    if-nez v19, :cond_5
 
-    array-length v0, v0
-
-    move/from16 v16, v0
-
-    if-nez v16, :cond_8
-
-    :cond_3
-    new-instance v16, Ljava/security/KeyStoreException;
-
-    const-string v17, "Must supply at least one Certificate with PrivateKey"
-
-    invoke-direct/range {v16 .. v17}, Ljava/security/KeyStoreException;-><init>(Ljava/lang/String;)V
-
-    throw v16
-
-    .end local v12           #shouldReplacePrivateKey:Z
     :cond_4
-    invoke-interface/range {p2 .. p2}, Ljava/security/PrivateKey;->getFormat()Ljava/lang/String;
+    new-instance v19, Ljava/security/KeyStoreException;
 
-    move-result-object v8
+    const-string v20, "Only PrivateKeys that can be encoded into PKCS#8 are supported"
 
-    .local v8, keyFormat:Ljava/lang/String;
-    if-eqz v8, :cond_5
+    invoke-direct/range {v19 .. v20}, Ljava/security/KeyStoreException;-><init>(Ljava/lang/String;)V
 
-    const-string v16, "PKCS#8"
-
-    move-object/from16 v0, v16
-
-    invoke-virtual {v0, v8}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v16
-
-    if-nez v16, :cond_6
+    throw v19
 
     :cond_5
-    new-instance v16, Ljava/security/KeyStoreException;
-
-    const-string v17, "Only PrivateKeys that can be encoded into PKCS#8 are supported"
-
-    invoke-direct/range {v16 .. v17}, Ljava/security/KeyStoreException;-><init>(Ljava/lang/String;)V
-
-    throw v16
-
-    :cond_6
     invoke-interface/range {p2 .. p2}, Ljava/security/PrivateKey;->getEncoded()[B
 
-    move-result-object v7
+    move-result-object v10
 
-    if-nez v7, :cond_7
+    if-nez v10, :cond_6
 
-    new-instance v16, Ljava/security/KeyStoreException;
+    new-instance v19, Ljava/security/KeyStoreException;
 
-    const-string v17, "PrivateKey has no encoding"
+    const-string v20, "PrivateKey has no encoding"
 
-    invoke-direct/range {v16 .. v17}, Ljava/security/KeyStoreException;-><init>(Ljava/lang/String;)V
+    invoke-direct/range {v19 .. v20}, Ljava/security/KeyStoreException;-><init>(Ljava/lang/String;)V
 
-    throw v16
+    throw v19
 
-    :cond_7
-    const/4 v12, 0x1
+    :cond_6
+    const/4 v15, 0x1
 
-    .restart local v12       #shouldReplacePrivateKey:Z
+    .restart local v15       #shouldReplacePrivateKey:Z
     goto :goto_1
 
-    .end local v8           #keyFormat:Ljava/lang/String;
-    :cond_8
+    .end local v11           #keyFormat:Ljava/lang/String;
+    :cond_7
     move-object/from16 v0, p3
 
     array-length v0, v0
 
-    move/from16 v16, v0
+    move/from16 v19, v0
 
-    move/from16 v0, v16
+    move/from16 v0, v19
 
-    new-array v15, v0, [Ljava/security/cert/X509Certificate;
+    new-array v0, v0, [Ljava/security/cert/X509Certificate;
 
-    .local v15, x509chain:[Ljava/security/cert/X509Certificate;
-    const/4 v6, 0x0
+    move-object/from16 v18, v0
 
-    .local v6, i:I
+    .local v18, x509chain:[Ljava/security/cert/X509Certificate;
+    const/4 v9, 0x0
+
+    .local v9, i:I
     :goto_2
     move-object/from16 v0, p3
 
     array-length v0, v0
 
-    move/from16 v16, v0
+    move/from16 v19, v0
 
-    move/from16 v0, v16
+    move/from16 v0, v19
 
-    if-ge v6, v0, :cond_b
+    if-ge v9, v0, :cond_a
 
-    const-string v16, "X.509"
+    const-string v19, "X.509"
 
-    aget-object v17, p3, v6
+    aget-object v20, p3, v9
 
-    invoke-virtual/range {v17 .. v17}, Ljava/security/cert/Certificate;->getType()Ljava/lang/String;
+    invoke-virtual/range {v20 .. v20}, Ljava/security/cert/Certificate;->getType()Ljava/lang/String;
 
-    move-result-object v17
+    move-result-object v20
 
-    invoke-virtual/range {v16 .. v17}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+    invoke-virtual/range {v19 .. v20}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
-    move-result v16
+    move-result v19
 
-    if-nez v16, :cond_9
+    if-nez v19, :cond_8
 
-    new-instance v16, Ljava/security/KeyStoreException;
+    new-instance v19, Ljava/security/KeyStoreException;
 
-    new-instance v17, Ljava/lang/StringBuilder;
+    new-instance v20, Ljava/lang/StringBuilder;
 
-    invoke-direct/range {v17 .. v17}, Ljava/lang/StringBuilder;-><init>()V
+    invoke-direct/range {v20 .. v20}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v18, "Certificates must be in X.509 format: invalid cert #"
+    const-string v21, "Certificates must be in X.509 format: invalid cert #"
 
-    invoke-virtual/range {v17 .. v18}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual/range {v20 .. v21}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v17
+    move-result-object v20
 
-    move-object/from16 v0, v17
+    move-object/from16 v0, v20
 
-    invoke-virtual {v0, v6}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+    invoke-virtual {v0, v9}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
-    move-result-object v17
+    move-result-object v20
 
-    invoke-virtual/range {v17 .. v17}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    invoke-virtual/range {v20 .. v20}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    move-result-object v17
+    move-result-object v20
 
-    invoke-direct/range {v16 .. v17}, Ljava/security/KeyStoreException;-><init>(Ljava/lang/String;)V
+    invoke-direct/range {v19 .. v20}, Ljava/security/KeyStoreException;-><init>(Ljava/lang/String;)V
 
-    throw v16
+    throw v19
 
-    :cond_9
-    aget-object v16, p3, v6
+    :cond_8
+    aget-object v19, p3, v9
 
-    move-object/from16 v0, v16
+    move-object/from16 v0, v19
 
     instance-of v0, v0, Ljava/security/cert/X509Certificate;
 
-    move/from16 v16, v0
+    move/from16 v19, v0
 
-    if-nez v16, :cond_a
+    if-nez v19, :cond_9
 
-    new-instance v16, Ljava/security/KeyStoreException;
+    new-instance v19, Ljava/security/KeyStoreException;
 
-    new-instance v17, Ljava/lang/StringBuilder;
+    new-instance v20, Ljava/lang/StringBuilder;
 
-    invoke-direct/range {v17 .. v17}, Ljava/lang/StringBuilder;-><init>()V
+    invoke-direct/range {v20 .. v20}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v18, "Certificates must be in X.509 format: invalid cert #"
+    const-string v21, "Certificates must be in X.509 format: invalid cert #"
 
-    invoke-virtual/range {v17 .. v18}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual/range {v20 .. v21}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v17
+    move-result-object v20
 
-    move-object/from16 v0, v17
+    move-object/from16 v0, v20
 
-    invoke-virtual {v0, v6}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+    invoke-virtual {v0, v9}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
-    move-result-object v17
+    move-result-object v20
 
-    invoke-virtual/range {v17 .. v17}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    invoke-virtual/range {v20 .. v20}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    move-result-object v17
+    move-result-object v20
 
-    invoke-direct/range {v16 .. v17}, Ljava/security/KeyStoreException;-><init>(Ljava/lang/String;)V
+    invoke-direct/range {v19 .. v20}, Ljava/security/KeyStoreException;-><init>(Ljava/lang/String;)V
 
-    throw v16
+    throw v19
 
-    :cond_a
-    aget-object v16, p3, v6
+    :cond_9
+    aget-object v19, p3, v9
 
-    check-cast v16, Ljava/security/cert/X509Certificate;
+    check-cast v19, Ljava/security/cert/X509Certificate;
 
-    aput-object v16, v15, v6
+    aput-object v19, v18, v9
 
-    add-int/lit8 v6, v6, 0x1
+    add-int/lit8 v9, v9, 0x1
 
     goto :goto_2
 
-    :cond_b
-    const/16 v16, 0x0
+    :cond_a
+    const/16 v19, 0x0
 
     :try_start_0
-    aget-object v16, v15, v16
+    aget-object v19, v18, v19
 
-    invoke-virtual/range {v16 .. v16}, Ljava/security/cert/X509Certificate;->getEncoded()[B
+    invoke-virtual/range {v19 .. v19}, Ljava/security/cert/X509Certificate;->getEncoded()[B
     :try_end_0
     .catch Ljava/security/cert/CertificateEncodingException; {:try_start_0 .. :try_end_0} :catch_0
 
-    move-result-object v14
+    move-result-object v17
 
-    .local v14, userCertBytes:[B
+    .local v17, userCertBytes:[B
     move-object/from16 v0, p3
 
     array-length v0, v0
 
-    move/from16 v16, v0
+    move/from16 v19, v0
 
-    const/16 v17, 0x1
+    const/16 v20, 0x1
 
-    move/from16 v0, v16
+    move/from16 v0, v19
 
-    move/from16 v1, v17
+    move/from16 v1, v20
 
-    if-le v0, v1, :cond_d
+    if-le v0, v1, :cond_c
 
-    array-length v0, v15
-
-    move/from16 v16, v0
-
-    add-int/lit8 v16, v16, -0x1
-
-    move/from16 v0, v16
-
-    new-array v3, v0, [[B
-
-    .local v3, certsBytes:[[B
-    const/4 v13, 0x0
-
-    .local v13, totalCertLength:I
-    const/4 v6, 0x0
-
-    :goto_3
-    array-length v0, v3
-
-    move/from16 v16, v0
-
-    move/from16 v0, v16
-
-    if-ge v6, v0, :cond_c
-
-    add-int/lit8 v16, v6, 0x1
-
-    :try_start_1
-    aget-object v16, v15, v16
-
-    invoke-virtual/range {v16 .. v16}, Ljava/security/cert/X509Certificate;->getEncoded()[B
-
-    move-result-object v16
-
-    aput-object v16, v3, v6
-
-    aget-object v16, v3, v6
-
-    move-object/from16 v0, v16
+    move-object/from16 v0, v18
 
     array-length v0, v0
 
-    move/from16 v16, v0
+    move/from16 v19, v0
+
+    add-int/lit8 v19, v19, -0x1
+
+    move/from16 v0, v19
+
+    new-array v5, v0, [[B
+
+    .local v5, certsBytes:[[B
+    const/16 v16, 0x0
+
+    .local v16, totalCertLength:I
+    const/4 v9, 0x0
+
+    :goto_3
+    array-length v0, v5
+
+    move/from16 v19, v0
+
+    move/from16 v0, v19
+
+    if-ge v9, v0, :cond_b
+
+    add-int/lit8 v19, v9, 0x1
+
+    :try_start_1
+    aget-object v19, v18, v19
+
+    invoke-virtual/range {v19 .. v19}, Ljava/security/cert/X509Certificate;->getEncoded()[B
+
+    move-result-object v19
+
+    aput-object v19, v5, v9
+
+    aget-object v19, v5, v9
+
+    move-object/from16 v0, v19
+
+    array-length v0, v0
+
+    move/from16 v19, v0
     :try_end_1
     .catch Ljava/security/cert/CertificateEncodingException; {:try_start_1 .. :try_end_1} :catch_1
 
-    add-int v13, v13, v16
+    add-int v16, v16, v19
 
-    add-int/lit8 v6, v6, 0x1
+    add-int/lit8 v9, v9, 0x1
 
     goto :goto_3
 
-    .end local v3           #certsBytes:[[B
-    .end local v13           #totalCertLength:I
-    .end local v14           #userCertBytes:[B
+    .end local v5           #certsBytes:[[B
+    .end local v16           #totalCertLength:I
+    .end local v17           #userCertBytes:[B
     :catch_0
-    move-exception v5
+    move-exception v7
 
-    .local v5, e:Ljava/security/cert/CertificateEncodingException;
-    new-instance v16, Ljava/security/KeyStoreException;
+    .local v7, e:Ljava/security/cert/CertificateEncodingException;
+    new-instance v19, Ljava/security/KeyStoreException;
 
-    const-string v17, "Couldn\'t encode certificate #1"
+    const-string v20, "Couldn\'t encode certificate #1"
 
-    move-object/from16 v0, v16
+    move-object/from16 v0, v19
 
-    move-object/from16 v1, v17
+    move-object/from16 v1, v20
 
-    invoke-direct {v0, v1, v5}, Ljava/security/KeyStoreException;-><init>(Ljava/lang/String;Ljava/lang/Throwable;)V
+    invoke-direct {v0, v1, v7}, Ljava/security/KeyStoreException;-><init>(Ljava/lang/String;Ljava/lang/Throwable;)V
 
-    throw v16
+    throw v19
 
-    .end local v5           #e:Ljava/security/cert/CertificateEncodingException;
-    .restart local v3       #certsBytes:[[B
-    .restart local v13       #totalCertLength:I
-    .restart local v14       #userCertBytes:[B
+    .end local v7           #e:Ljava/security/cert/CertificateEncodingException;
+    .restart local v5       #certsBytes:[[B
+    .restart local v16       #totalCertLength:I
+    .restart local v17       #userCertBytes:[B
     :catch_1
-    move-exception v5
+    move-exception v7
 
-    .restart local v5       #e:Ljava/security/cert/CertificateEncodingException;
-    new-instance v16, Ljava/security/KeyStoreException;
+    .restart local v7       #e:Ljava/security/cert/CertificateEncodingException;
+    new-instance v19, Ljava/security/KeyStoreException;
 
-    new-instance v17, Ljava/lang/StringBuilder;
+    new-instance v20, Ljava/lang/StringBuilder;
 
-    invoke-direct/range {v17 .. v17}, Ljava/lang/StringBuilder;-><init>()V
+    invoke-direct/range {v20 .. v20}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v18, "Can\'t encode Certificate #"
+    const-string v21, "Can\'t encode Certificate #"
 
-    invoke-virtual/range {v17 .. v18}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual/range {v20 .. v21}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v17
+    move-result-object v20
 
-    move-object/from16 v0, v17
+    move-object/from16 v0, v20
 
-    invoke-virtual {v0, v6}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+    invoke-virtual {v0, v9}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
-    move-result-object v17
+    move-result-object v20
 
-    invoke-virtual/range {v17 .. v17}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    invoke-virtual/range {v20 .. v20}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    move-result-object v17
+    move-result-object v20
 
-    move-object/from16 v0, v16
+    move-object/from16 v0, v19
 
-    move-object/from16 v1, v17
+    move-object/from16 v1, v20
 
-    invoke-direct {v0, v1, v5}, Ljava/security/KeyStoreException;-><init>(Ljava/lang/String;Ljava/lang/Throwable;)V
+    invoke-direct {v0, v1, v7}, Ljava/security/KeyStoreException;-><init>(Ljava/lang/String;Ljava/lang/Throwable;)V
 
-    throw v16
+    throw v19
 
-    .end local v5           #e:Ljava/security/cert/CertificateEncodingException;
-    :cond_c
-    new-array v4, v13, [B
-
-    .local v4, chainBytes:[B
-    const/4 v10, 0x0
-
-    .local v10, outputOffset:I
-    const/4 v6, 0x0
-
-    :goto_4
-    array-length v0, v3
-
-    move/from16 v16, v0
-
+    .end local v7           #e:Ljava/security/cert/CertificateEncodingException;
+    :cond_b
     move/from16 v0, v16
 
-    if-ge v6, v0, :cond_e
+    new-array v6, v0, [B
 
-    aget-object v16, v3, v6
+    .local v6, chainBytes:[B
+    const/4 v13, 0x0
 
-    move-object/from16 v0, v16
+    .local v13, outputOffset:I
+    const/4 v9, 0x0
 
-    array-length v2, v0
+    :goto_4
+    array-length v0, v5
 
-    .local v2, certLength:I
-    aget-object v16, v3, v6
+    move/from16 v19, v0
 
-    const/16 v17, 0x0
+    move/from16 v0, v19
 
-    move-object/from16 v0, v16
+    if-ge v9, v0, :cond_d
 
-    move/from16 v1, v17
+    aget-object v19, v5, v9
 
-    invoke-static {v0, v1, v4, v10, v2}, Ljava/lang/System;->arraycopy(Ljava/lang/Object;ILjava/lang/Object;II)V
+    move-object/from16 v0, v19
 
-    add-int/2addr v10, v2
+    array-length v4, v0
 
-    const/16 v16, 0x0
+    .local v4, certLength:I
+    aget-object v19, v5, v9
 
-    aput-object v16, v3, v6
+    const/16 v20, 0x0
 
-    add-int/lit8 v6, v6, 0x1
+    move-object/from16 v0, v19
+
+    move/from16 v1, v20
+
+    invoke-static {v0, v1, v6, v13, v4}, Ljava/lang/System;->arraycopy(Ljava/lang/Object;ILjava/lang/Object;II)V
+
+    add-int/2addr v13, v4
+
+    const/16 v19, 0x0
+
+    aput-object v19, v5, v9
+
+    add-int/lit8 v9, v9, 0x1
 
     goto :goto_4
 
-    .end local v2           #certLength:I
-    .end local v3           #certsBytes:[[B
-    .end local v4           #chainBytes:[B
-    .end local v10           #outputOffset:I
-    .end local v13           #totalCertLength:I
-    :cond_d
-    const/4 v4, 0x0
+    .end local v4           #certLength:I
+    .end local v5           #certsBytes:[[B
+    .end local v6           #chainBytes:[B
+    .end local v13           #outputOffset:I
+    .end local v16           #totalCertLength:I
+    :cond_c
+    const/4 v6, 0x0
 
-    .restart local v4       #chainBytes:[B
-    :cond_e
-    if-eqz v12, :cond_f
+    .restart local v6       #chainBytes:[B
+    :cond_d
+    if-eqz v15, :cond_e
 
     move-object/from16 v0, p0
 
     iget-object v0, v0, Landroid/security/AndroidKeyStore;->mKeyStore:Landroid/security/KeyStore;
 
-    move-object/from16 v16, v0
+    move-object/from16 v19, v0
 
-    move-object/from16 v0, v16
+    move-object/from16 v0, v19
 
     move-object/from16 v1, p1
 
     invoke-static {v0, v1}, Landroid/security/Credentials;->deleteAllTypesForAlias(Landroid/security/KeyStore;Ljava/lang/String;)Z
 
     :goto_5
-    if-eqz v12, :cond_10
+    if-nez p4, :cond_f
+
+    const/4 v8, 0x0
+
+    .local v8, flags:I
+    :goto_6
+    if-eqz v15, :cond_10
 
     move-object/from16 v0, p0
 
     iget-object v0, v0, Landroid/security/AndroidKeyStore;->mKeyStore:Landroid/security/KeyStore;
 
-    move-object/from16 v16, v0
+    move-object/from16 v19, v0
 
-    new-instance v17, Ljava/lang/StringBuilder;
+    new-instance v20, Ljava/lang/StringBuilder;
 
-    invoke-direct/range {v17 .. v17}, Ljava/lang/StringBuilder;-><init>()V
+    invoke-direct/range {v20 .. v20}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v18, "USRPKEY_"
+    const-string v21, "USRPKEY_"
 
-    invoke-virtual/range {v17 .. v18}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual/range {v20 .. v21}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v17
+    move-result-object v20
 
-    move-object/from16 v0, v17
+    move-object/from16 v0, v20
 
     move-object/from16 v1, p1
 
     invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v17
+    move-result-object v20
 
-    invoke-virtual/range {v17 .. v17}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    invoke-virtual/range {v20 .. v20}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    move-result-object v17
+    move-result-object v20
 
-    move-object/from16 v0, v16
+    const/16 v21, -0x1
 
-    move-object/from16 v1, v17
+    move-object/from16 v0, v19
 
-    invoke-virtual {v0, v1, v7}, Landroid/security/KeyStore;->importKey(Ljava/lang/String;[B)Z
+    move-object/from16 v1, v20
 
-    move-result v16
+    move/from16 v2, v21
 
-    if-nez v16, :cond_10
+    invoke-virtual {v0, v1, v10, v2, v8}, Landroid/security/KeyStore;->importKey(Ljava/lang/String;[BII)Z
+
+    move-result v19
+
+    if-nez v19, :cond_10
 
     move-object/from16 v0, p0
 
     iget-object v0, v0, Landroid/security/AndroidKeyStore;->mKeyStore:Landroid/security/KeyStore;
 
-    move-object/from16 v16, v0
+    move-object/from16 v19, v0
 
-    move-object/from16 v0, v16
+    move-object/from16 v0, v19
 
     move-object/from16 v1, p1
 
     invoke-static {v0, v1}, Landroid/security/Credentials;->deleteAllTypesForAlias(Landroid/security/KeyStore;Ljava/lang/String;)Z
 
-    new-instance v16, Ljava/security/KeyStoreException;
+    new-instance v19, Ljava/security/KeyStoreException;
 
-    const-string v17, "Couldn\'t put private key in keystore"
+    const-string v20, "Couldn\'t put private key in keystore"
 
-    invoke-direct/range {v16 .. v17}, Ljava/security/KeyStoreException;-><init>(Ljava/lang/String;)V
+    invoke-direct/range {v19 .. v20}, Ljava/security/KeyStoreException;-><init>(Ljava/lang/String;)V
 
-    throw v16
+    throw v19
 
-    :cond_f
+    .end local v8           #flags:I
+    :cond_e
     move-object/from16 v0, p0
 
     iget-object v0, v0, Landroid/security/AndroidKeyStore;->mKeyStore:Landroid/security/KeyStore;
 
-    move-object/from16 v16, v0
+    move-object/from16 v19, v0
 
-    move-object/from16 v0, v16
+    move-object/from16 v0, v19
 
     move-object/from16 v1, p1
 
@@ -860,125 +861,143 @@
 
     goto :goto_5
 
+    :cond_f
+    invoke-virtual/range {p4 .. p4}, Landroid/security/KeyStoreParameter;->getFlags()I
+
+    move-result v8
+
+    goto :goto_6
+
+    .restart local v8       #flags:I
     :cond_10
     move-object/from16 v0, p0
 
     iget-object v0, v0, Landroid/security/AndroidKeyStore;->mKeyStore:Landroid/security/KeyStore;
 
-    move-object/from16 v16, v0
+    move-object/from16 v19, v0
 
-    new-instance v17, Ljava/lang/StringBuilder;
+    new-instance v20, Ljava/lang/StringBuilder;
 
-    invoke-direct/range {v17 .. v17}, Ljava/lang/StringBuilder;-><init>()V
+    invoke-direct/range {v20 .. v20}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v18, "USRCERT_"
+    const-string v21, "USRCERT_"
 
-    invoke-virtual/range {v17 .. v18}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual/range {v20 .. v21}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v17
+    move-result-object v20
 
-    move-object/from16 v0, v17
+    move-object/from16 v0, v20
 
     move-object/from16 v1, p1
 
     invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v17
+    move-result-object v20
 
-    invoke-virtual/range {v17 .. v17}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    invoke-virtual/range {v20 .. v20}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    move-result-object v17
+    move-result-object v20
 
-    move-object/from16 v0, v16
+    const/16 v21, -0x1
 
-    move-object/from16 v1, v17
+    move-object/from16 v0, v19
 
-    invoke-virtual {v0, v1, v14}, Landroid/security/KeyStore;->put(Ljava/lang/String;[B)Z
+    move-object/from16 v1, v20
 
-    move-result v16
+    move-object/from16 v2, v17
 
-    if-nez v16, :cond_11
+    move/from16 v3, v21
+
+    invoke-virtual {v0, v1, v2, v3, v8}, Landroid/security/KeyStore;->put(Ljava/lang/String;[BII)Z
+
+    move-result v19
+
+    if-nez v19, :cond_11
 
     move-object/from16 v0, p0
 
     iget-object v0, v0, Landroid/security/AndroidKeyStore;->mKeyStore:Landroid/security/KeyStore;
 
-    move-object/from16 v16, v0
+    move-object/from16 v19, v0
 
-    move-object/from16 v0, v16
+    move-object/from16 v0, v19
 
     move-object/from16 v1, p1
 
     invoke-static {v0, v1}, Landroid/security/Credentials;->deleteAllTypesForAlias(Landroid/security/KeyStore;Ljava/lang/String;)Z
 
-    new-instance v16, Ljava/security/KeyStoreException;
+    new-instance v19, Ljava/security/KeyStoreException;
 
-    const-string v17, "Couldn\'t put certificate #1 in keystore"
+    const-string v20, "Couldn\'t put certificate #1 in keystore"
 
-    invoke-direct/range {v16 .. v17}, Ljava/security/KeyStoreException;-><init>(Ljava/lang/String;)V
+    invoke-direct/range {v19 .. v20}, Ljava/security/KeyStoreException;-><init>(Ljava/lang/String;)V
 
-    throw v16
+    throw v19
 
     :cond_11
-    if-eqz v4, :cond_12
+    if-eqz v6, :cond_12
 
     move-object/from16 v0, p0
 
     iget-object v0, v0, Landroid/security/AndroidKeyStore;->mKeyStore:Landroid/security/KeyStore;
 
-    move-object/from16 v16, v0
+    move-object/from16 v19, v0
 
-    new-instance v17, Ljava/lang/StringBuilder;
+    new-instance v20, Ljava/lang/StringBuilder;
 
-    invoke-direct/range {v17 .. v17}, Ljava/lang/StringBuilder;-><init>()V
+    invoke-direct/range {v20 .. v20}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v18, "CACERT_"
+    const-string v21, "CACERT_"
 
-    invoke-virtual/range {v17 .. v18}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual/range {v20 .. v21}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v17
+    move-result-object v20
 
-    move-object/from16 v0, v17
+    move-object/from16 v0, v20
 
     move-object/from16 v1, p1
 
     invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v17
+    move-result-object v20
 
-    invoke-virtual/range {v17 .. v17}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    invoke-virtual/range {v20 .. v20}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    move-result-object v17
+    move-result-object v20
 
-    move-object/from16 v0, v16
+    const/16 v21, -0x1
 
-    move-object/from16 v1, v17
+    move-object/from16 v0, v19
 
-    invoke-virtual {v0, v1, v4}, Landroid/security/KeyStore;->put(Ljava/lang/String;[B)Z
+    move-object/from16 v1, v20
 
-    move-result v16
+    move/from16 v2, v21
 
-    if-nez v16, :cond_12
+    invoke-virtual {v0, v1, v6, v2, v8}, Landroid/security/KeyStore;->put(Ljava/lang/String;[BII)Z
+
+    move-result v19
+
+    if-nez v19, :cond_12
 
     move-object/from16 v0, p0
 
     iget-object v0, v0, Landroid/security/AndroidKeyStore;->mKeyStore:Landroid/security/KeyStore;
 
-    move-object/from16 v16, v0
+    move-object/from16 v19, v0
 
-    move-object/from16 v0, v16
+    move-object/from16 v0, v19
 
     move-object/from16 v1, p1
 
     invoke-static {v0, v1}, Landroid/security/Credentials;->deleteAllTypesForAlias(Landroid/security/KeyStore;Ljava/lang/String;)Z
 
-    new-instance v16, Ljava/security/KeyStoreException;
+    new-instance v19, Ljava/security/KeyStoreException;
 
-    const-string v17, "Couldn\'t put certificate chain in keystore"
+    const-string v20, "Couldn\'t put certificate chain in keystore"
 
-    invoke-direct/range {v16 .. v17}, Ljava/security/KeyStoreException;-><init>(Ljava/lang/String;)V
+    invoke-direct/range {v19 .. v20}, Ljava/security/KeyStoreException;-><init>(Ljava/lang/String;)V
 
-    throw v16
+    throw v19
 
     :cond_12
     return-void
@@ -1390,6 +1409,8 @@
     move-result-object v4
 
     .local v4, certAliases:[Ljava/lang/String;
+    if-eqz v4, :cond_3
+
     move-object v1, v4
 
     .local v1, arr$:[Ljava/lang/String;
@@ -1454,8 +1475,11 @@
     goto :goto_0
 
     .end local v0           #alias:Ljava/lang/String;
+    .end local v1           #arr$:[Ljava/lang/String;
     .end local v2           #c:Ljava/security/cert/Certificate;
     .end local v5           #certBytes:[B
+    .end local v6           #i$:I
+    .end local v7           #len$:I
     :cond_3
     iget-object v10, p0, Landroid/security/AndroidKeyStore;->mKeyStore:Landroid/security/KeyStore;
 
@@ -1466,12 +1490,17 @@
     move-result-object v3
 
     .local v3, caAliases:[Ljava/lang/String;
+    if-eqz v4, :cond_6
+
     move-object v1, v3
 
+    .restart local v1       #arr$:[Ljava/lang/String;
     array-length v7, v1
 
+    .restart local v7       #len$:I
     const/4 v6, 0x0
 
+    .restart local v6       #i$:I
     :goto_2
     if-ge v6, v7, :cond_6
 
@@ -1555,8 +1584,11 @@
     goto/16 :goto_0
 
     .end local v0           #alias:Ljava/lang/String;
+    .end local v1           #arr$:[Ljava/lang/String;
     .end local v2           #c:Ljava/security/cert/Certificate;
     .end local v5           #certBytes:[B
+    .end local v6           #i$:I
+    .end local v7           #len$:I
     :cond_6
     move-object v0, v9
 
@@ -1813,11 +1845,11 @@
     :cond_0
     const-string v3, "keystore"
 
-    invoke-static {v3}, Lorg/apache/harmony/xnet/provider/jsse/OpenSSLEngine;->getInstance(Ljava/lang/String;)Lorg/apache/harmony/xnet/provider/jsse/OpenSSLEngine;
+    invoke-static {v3}, Lcom/android/org/conscrypt/OpenSSLEngine;->getInstance(Ljava/lang/String;)Lcom/android/org/conscrypt/OpenSSLEngine;
 
     move-result-object v1
 
-    .local v1, engine:Lorg/apache/harmony/xnet/provider/jsse/OpenSSLEngine;
+    .local v1, engine:Lcom/android/org/conscrypt/OpenSSLEngine;
     :try_start_0
     new-instance v3, Ljava/lang/StringBuilder;
 
@@ -1837,7 +1869,7 @@
 
     move-result-object v3
 
-    invoke-virtual {v1, v3}, Lorg/apache/harmony/xnet/provider/jsse/OpenSSLEngine;->getPrivateKeyById(Ljava/lang/String;)Ljava/security/PrivateKey;
+    invoke-virtual {v1, v3}, Lcom/android/org/conscrypt/OpenSSLEngine;->getPrivateKeyById(Ljava/lang/String;)Ljava/security/PrivateKey;
     :try_end_0
     .catch Ljava/security/InvalidKeyException; {:try_start_0 .. :try_end_0} :catch_0
 
@@ -1946,7 +1978,7 @@
 .end method
 
 .method public engineSetCertificateEntry(Ljava/lang/String;Ljava/security/cert/Certificate;)V
-    .locals 5
+    .locals 6
     .parameter "alias"
     .parameter "cert"
     .annotation system Ldalvik/annotation/Throws;
@@ -2010,7 +2042,11 @@
 
     move-result-object v3
 
-    invoke-virtual {v2, v3, v1}, Landroid/security/KeyStore;->put(Ljava/lang/String;[B)Z
+    const/4 v4, -0x1
+
+    const/4 v5, 0x0
+
+    invoke-virtual {v2, v3, v1, v4, v5}, Landroid/security/KeyStore;->put(Ljava/lang/String;[BII)Z
 
     move-result v2
 
@@ -2039,6 +2075,151 @@
     .restart local v1       #encoded:[B
     :cond_2
     return-void
+.end method
+
+.method public engineSetEntry(Ljava/lang/String;Ljava/security/KeyStore$Entry;Ljava/security/KeyStore$ProtectionParameter;)V
+    .locals 5
+    .parameter "alias"
+    .parameter "entry"
+    .parameter "param"
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Ljava/security/KeyStoreException;
+        }
+    .end annotation
+
+    .prologue
+    if-nez p2, :cond_0
+
+    new-instance v2, Ljava/security/KeyStoreException;
+
+    const-string v3, "entry == null"
+
+    invoke-direct {v2, v3}, Ljava/security/KeyStoreException;-><init>(Ljava/lang/String;)V
+
+    throw v2
+
+    :cond_0
+    invoke-virtual {p0, p1}, Landroid/security/AndroidKeyStore;->engineContainsAlias(Ljava/lang/String;)Z
+
+    move-result v2
+
+    if-eqz v2, :cond_1
+
+    invoke-virtual {p0, p1}, Landroid/security/AndroidKeyStore;->engineDeleteEntry(Ljava/lang/String;)V
+
+    :cond_1
+    instance-of v2, p2, Ljava/security/KeyStore$TrustedCertificateEntry;
+
+    if-eqz v2, :cond_2
+
+    move-object v1, p2
+
+    check-cast v1, Ljava/security/KeyStore$TrustedCertificateEntry;
+
+    .local v1, trE:Ljava/security/KeyStore$TrustedCertificateEntry;
+    invoke-virtual {v1}, Ljava/security/KeyStore$TrustedCertificateEntry;->getTrustedCertificate()Ljava/security/cert/Certificate;
+
+    move-result-object v2
+
+    invoke-virtual {p0, p1, v2}, Landroid/security/AndroidKeyStore;->engineSetCertificateEntry(Ljava/lang/String;Ljava/security/cert/Certificate;)V
+
+    .end local v1           #trE:Ljava/security/KeyStore$TrustedCertificateEntry;
+    .end local p3
+    :goto_0
+    return-void
+
+    .restart local p3
+    :cond_2
+    if-eqz p3, :cond_3
+
+    instance-of v2, p3, Landroid/security/KeyStoreParameter;
+
+    if-nez v2, :cond_3
+
+    new-instance v2, Ljava/security/KeyStoreException;
+
+    new-instance v3, Ljava/lang/StringBuilder;
+
+    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v4, "protParam should be android.security.KeyStoreParameter; was: "
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    invoke-virtual {p3}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
+
+    move-result-object v4
+
+    invoke-virtual {v4}, Ljava/lang/Class;->getName()Ljava/lang/String;
+
+    move-result-object v4
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-direct {v2, v3}, Ljava/security/KeyStoreException;-><init>(Ljava/lang/String;)V
+
+    throw v2
+
+    :cond_3
+    instance-of v2, p2, Ljava/security/KeyStore$PrivateKeyEntry;
+
+    if-eqz v2, :cond_4
+
+    move-object v0, p2
+
+    check-cast v0, Ljava/security/KeyStore$PrivateKeyEntry;
+
+    .local v0, prE:Ljava/security/KeyStore$PrivateKeyEntry;
+    invoke-virtual {v0}, Ljava/security/KeyStore$PrivateKeyEntry;->getPrivateKey()Ljava/security/PrivateKey;
+
+    move-result-object v2
+
+    invoke-virtual {v0}, Ljava/security/KeyStore$PrivateKeyEntry;->getCertificateChain()[Ljava/security/cert/Certificate;
+
+    move-result-object v3
+
+    check-cast p3, Landroid/security/KeyStoreParameter;
+
+    .end local p3
+    invoke-direct {p0, p1, v2, v3, p3}, Landroid/security/AndroidKeyStore;->setPrivateKeyEntry(Ljava/lang/String;Ljava/security/PrivateKey;[Ljava/security/cert/Certificate;Landroid/security/KeyStoreParameter;)V
+
+    goto :goto_0
+
+    .end local v0           #prE:Ljava/security/KeyStore$PrivateKeyEntry;
+    .restart local p3
+    :cond_4
+    new-instance v2, Ljava/security/KeyStoreException;
+
+    new-instance v3, Ljava/lang/StringBuilder;
+
+    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v4, "Entry must be a PrivateKeyEntry or TrustedCertificateEntry; was "
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    invoke-virtual {v3, p2}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-direct {v2, v3}, Ljava/security/KeyStoreException;-><init>(Ljava/lang/String;)V
+
+    throw v2
 .end method
 
 .method public engineSetKeyEntry(Ljava/lang/String;Ljava/security/Key;[C[Ljava/security/cert/Certificate;)V
@@ -2076,7 +2257,9 @@
     check-cast p2, Ljava/security/PrivateKey;
 
     .end local p2
-    invoke-direct {p0, p1, p2, p4}, Landroid/security/AndroidKeyStore;->setPrivateKeyEntry(Ljava/lang/String;Ljava/security/PrivateKey;[Ljava/security/cert/Certificate;)V
+    const/4 v0, 0x0
+
+    invoke-direct {p0, p1, p2, p4, v0}, Landroid/security/AndroidKeyStore;->setPrivateKeyEntry(Ljava/lang/String;Ljava/security/PrivateKey;[Ljava/security/cert/Certificate;Landroid/security/KeyStoreParameter;)V
 
     return-void
 

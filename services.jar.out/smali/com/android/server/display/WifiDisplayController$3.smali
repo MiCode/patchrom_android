@@ -3,12 +3,12 @@
 .source "WifiDisplayController.java"
 
 # interfaces
-.implements Ljava/lang/Runnable;
+.implements Landroid/net/wifi/p2p/WifiP2pManager$ActionListener;
 
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/android/server/display/WifiDisplayController;->reportFeatureState()V
+    value = Lcom/android/server/display/WifiDisplayController;->updateWfdEnableState()V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -20,19 +20,14 @@
 # instance fields
 .field final synthetic this$0:Lcom/android/server/display/WifiDisplayController;
 
-.field final synthetic val$featureState:I
-
 
 # direct methods
-.method constructor <init>(Lcom/android/server/display/WifiDisplayController;I)V
+.method constructor <init>(Lcom/android/server/display/WifiDisplayController;)V
     .locals 0
-    .parameter
     .parameter
 
     .prologue
     iput-object p1, p0, Lcom/android/server/display/WifiDisplayController$3;->this$0:Lcom/android/server/display/WifiDisplayController;
-
-    iput p2, p0, Lcom/android/server/display/WifiDisplayController$3;->val$featureState:I
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
@@ -41,20 +36,17 @@
 
 
 # virtual methods
-.method public run()V
-    .locals 2
+.method public onFailure(I)V
+    .locals 0
+    .parameter "reason"
 
     .prologue
-    iget-object v0, p0, Lcom/android/server/display/WifiDisplayController$3;->this$0:Lcom/android/server/display/WifiDisplayController;
+    return-void
+.end method
 
-    #getter for: Lcom/android/server/display/WifiDisplayController;->mListener:Lcom/android/server/display/WifiDisplayController$Listener;
-    invoke-static {v0}, Lcom/android/server/display/WifiDisplayController;->access$400(Lcom/android/server/display/WifiDisplayController;)Lcom/android/server/display/WifiDisplayController$Listener;
+.method public onSuccess()V
+    .locals 0
 
-    move-result-object v0
-
-    iget v1, p0, Lcom/android/server/display/WifiDisplayController$3;->val$featureState:I
-
-    invoke-interface {v0, v1}, Lcom/android/server/display/WifiDisplayController$Listener;->onFeatureStateChanged(I)V
-
+    .prologue
     return-void
 .end method

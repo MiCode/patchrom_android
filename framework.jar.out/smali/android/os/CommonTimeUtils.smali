@@ -178,7 +178,7 @@
 .end method
 
 .method public transactGetSockaddr(I)Ljava/net/InetSocketAddress;
-    .locals 22
+    .locals 23
     .parameter "method_code"
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -262,77 +262,79 @@
 
     move-result v11
 
-    const-string v17, "%d.%d.%d.%d"
+    sget-object v17, Ljava/util/Locale;->US:Ljava/util/Locale;
 
-    const/16 v18, 0x4
+    const-string v18, "%d.%d.%d.%d"
 
-    move/from16 v0, v18
+    const/16 v19, 0x4
+
+    move/from16 v0, v19
 
     new-array v0, v0, [Ljava/lang/Object;
 
-    move-object/from16 v18, v0
+    move-object/from16 v19, v0
 
-    const/16 v19, 0x0
+    const/16 v20, 0x0
 
-    shr-int/lit8 v20, v3, 0x18
+    shr-int/lit8 v21, v3, 0x18
 
-    move/from16 v0, v20
-
-    and-int/lit16 v0, v0, 0xff
-
-    move/from16 v20, v0
-
-    invoke-static/range {v20 .. v20}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
-
-    move-result-object v20
-
-    aput-object v20, v18, v19
-
-    const/16 v19, 0x1
-
-    shr-int/lit8 v20, v3, 0x10
-
-    move/from16 v0, v20
+    move/from16 v0, v21
 
     and-int/lit16 v0, v0, 0xff
 
-    move/from16 v20, v0
+    move/from16 v21, v0
 
-    invoke-static/range {v20 .. v20}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+    invoke-static/range {v21 .. v21}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
-    move-result-object v20
+    move-result-object v21
 
-    aput-object v20, v18, v19
+    aput-object v21, v19, v20
 
-    const/16 v19, 0x2
+    const/16 v20, 0x1
 
-    shr-int/lit8 v20, v3, 0x8
+    shr-int/lit8 v21, v3, 0x10
 
-    move/from16 v0, v20
+    move/from16 v0, v21
 
     and-int/lit16 v0, v0, 0xff
 
-    move/from16 v20, v0
+    move/from16 v21, v0
 
-    invoke-static/range {v20 .. v20}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+    invoke-static/range {v21 .. v21}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
-    move-result-object v20
+    move-result-object v21
 
-    aput-object v20, v18, v19
+    aput-object v21, v19, v20
 
-    const/16 v19, 0x3
+    const/16 v20, 0x2
+
+    shr-int/lit8 v21, v3, 0x8
+
+    move/from16 v0, v21
+
+    and-int/lit16 v0, v0, 0xff
+
+    move/from16 v21, v0
+
+    invoke-static/range {v21 .. v21}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v21
+
+    aput-object v21, v19, v20
+
+    const/16 v20, 0x3
 
     and-int/lit16 v0, v3, 0xff
 
-    move/from16 v20, v0
+    move/from16 v21, v0
 
-    invoke-static/range {v20 .. v20}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+    invoke-static/range {v21 .. v21}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
-    move-result-object v20
+    move-result-object v21
 
-    aput-object v20, v18, v19
+    aput-object v21, v19, v20
 
-    invoke-static/range {v17 .. v18}, Ljava/lang/String;->format(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+    invoke-static/range {v17 .. v19}, Ljava/lang/String;->format(Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
 
     move-result-object v8
 
@@ -406,121 +408,123 @@
     move-result v15
 
     .local v15, scope_id:I
-    const-string v17, "[%04X:%04X:%04X:%04X:%04X:%04X:%04X:%04X]"
+    sget-object v17, Ljava/util/Locale;->US:Ljava/util/Locale;
 
-    const/16 v18, 0x8
+    const-string v18, "[%04X:%04X:%04X:%04X:%04X:%04X:%04X:%04X]"
 
-    move/from16 v0, v18
+    const/16 v19, 0x8
+
+    move/from16 v0, v19
 
     new-array v0, v0, [Ljava/lang/Object;
 
-    move-object/from16 v18, v0
+    move-object/from16 v19, v0
 
-    const/16 v19, 0x0
+    const/16 v20, 0x0
 
-    shr-int/lit8 v20, v4, 0x10
+    shr-int/lit8 v21, v4, 0x10
 
-    const v21, 0xffff
+    const v22, 0xffff
 
-    and-int v20, v20, v21
+    and-int v21, v21, v22
 
-    invoke-static/range {v20 .. v20}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+    invoke-static/range {v21 .. v21}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
-    move-result-object v20
+    move-result-object v21
 
-    aput-object v20, v18, v19
+    aput-object v21, v19, v20
 
-    const/16 v19, 0x1
-
-    const v20, 0xffff
-
-    and-int v20, v20, v4
-
-    invoke-static/range {v20 .. v20}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
-
-    move-result-object v20
-
-    aput-object v20, v18, v19
-
-    const/16 v19, 0x2
-
-    shr-int/lit8 v20, v5, 0x10
+    const/16 v20, 0x1
 
     const v21, 0xffff
 
-    and-int v20, v20, v21
+    and-int v21, v21, v4
 
-    invoke-static/range {v20 .. v20}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+    invoke-static/range {v21 .. v21}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
-    move-result-object v20
+    move-result-object v21
 
-    aput-object v20, v18, v19
+    aput-object v21, v19, v20
 
-    const/16 v19, 0x3
+    const/16 v20, 0x2
 
-    const v20, 0xffff
+    shr-int/lit8 v21, v5, 0x10
 
-    and-int v20, v20, v5
+    const v22, 0xffff
 
-    invoke-static/range {v20 .. v20}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+    and-int v21, v21, v22
 
-    move-result-object v20
+    invoke-static/range {v21 .. v21}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
-    aput-object v20, v18, v19
+    move-result-object v21
 
-    const/16 v19, 0x4
+    aput-object v21, v19, v20
 
-    shr-int/lit8 v20, v6, 0x10
-
-    const v21, 0xffff
-
-    and-int v20, v20, v21
-
-    invoke-static/range {v20 .. v20}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
-
-    move-result-object v20
-
-    aput-object v20, v18, v19
-
-    const/16 v19, 0x5
-
-    const v20, 0xffff
-
-    and-int v20, v20, v6
-
-    invoke-static/range {v20 .. v20}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
-
-    move-result-object v20
-
-    aput-object v20, v18, v19
-
-    const/16 v19, 0x6
-
-    shr-int/lit8 v20, v7, 0x10
+    const/16 v20, 0x3
 
     const v21, 0xffff
 
-    and-int v20, v20, v21
+    and-int v21, v21, v5
 
-    invoke-static/range {v20 .. v20}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+    invoke-static/range {v21 .. v21}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
-    move-result-object v20
+    move-result-object v21
 
-    aput-object v20, v18, v19
+    aput-object v21, v19, v20
 
-    const/16 v19, 0x7
+    const/16 v20, 0x4
 
-    const v20, 0xffff
+    shr-int/lit8 v21, v6, 0x10
 
-    and-int v20, v20, v7
+    const v22, 0xffff
 
-    invoke-static/range {v20 .. v20}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+    and-int v21, v21, v22
 
-    move-result-object v20
+    invoke-static/range {v21 .. v21}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
-    aput-object v20, v18, v19
+    move-result-object v21
 
-    invoke-static/range {v17 .. v18}, Ljava/lang/String;->format(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+    aput-object v21, v19, v20
+
+    const/16 v20, 0x5
+
+    const v21, 0xffff
+
+    and-int v21, v21, v6
+
+    invoke-static/range {v21 .. v21}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v21
+
+    aput-object v21, v19, v20
+
+    const/16 v20, 0x6
+
+    shr-int/lit8 v21, v7, 0x10
+
+    const v22, 0xffff
+
+    and-int v21, v21, v22
+
+    invoke-static/range {v21 .. v21}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v21
+
+    aput-object v21, v19, v20
+
+    const/16 v20, 0x7
+
+    const v21, 0xffff
+
+    and-int v21, v21, v7
+
+    invoke-static/range {v21 .. v21}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v21
+
+    aput-object v21, v19, v20
+
+    invoke-static/range {v17 .. v19}, Ljava/lang/String;->format(Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 

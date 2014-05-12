@@ -24,12 +24,21 @@
 .field public static final ACTION_TTS_DATA_INSTALLED:Ljava/lang/String; = "android.speech.tts.engine.TTS_DATA_INSTALLED"
 
 .field public static final CHECK_VOICE_DATA_BAD_DATA:I = -0x1
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
+.end field
 
 .field public static final CHECK_VOICE_DATA_FAIL:I = 0x0
 
 .field public static final CHECK_VOICE_DATA_MISSING_DATA:I = -0x2
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
+.end field
 
 .field public static final CHECK_VOICE_DATA_MISSING_VOLUME:I = -0x3
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
+.end field
 
 .field public static final CHECK_VOICE_DATA_PASS:I = 0x1
 
@@ -51,16 +60,33 @@
 .field public static final EXTRA_AVAILABLE_VOICES:Ljava/lang/String; = "availableVoices"
 
 .field public static final EXTRA_CHECK_VOICE_DATA_FOR:Ljava/lang/String; = "checkVoiceDataFor"
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
+.end field
+
+.field public static final EXTRA_SAMPLE_TEXT:Ljava/lang/String; = "sampleText"
 
 .field public static final EXTRA_TTS_DATA_INSTALLED:Ljava/lang/String; = "dataInstalled"
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
+.end field
 
 .field public static final EXTRA_UNAVAILABLE_VOICES:Ljava/lang/String; = "unavailableVoices"
 
 .field public static final EXTRA_VOICE_DATA_FILES:Ljava/lang/String; = "dataFiles"
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
+.end field
 
 .field public static final EXTRA_VOICE_DATA_FILES_INFO:Ljava/lang/String; = "dataFilesInfo"
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
+.end field
 
 .field public static final EXTRA_VOICE_DATA_ROOT_DIRECTORY:Ljava/lang/String; = "dataRoot"
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
+.end field
 
 .field public static final INTENT_ACTION_TTS_SERVICE:Ljava/lang/String; = "android.intent.action.TTS_SERVICE"
 

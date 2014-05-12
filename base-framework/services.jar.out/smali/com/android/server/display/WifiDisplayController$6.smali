@@ -3,12 +3,12 @@
 .source "WifiDisplayController.java"
 
 # interfaces
-.implements Ljava/lang/Runnable;
+.implements Landroid/net/wifi/p2p/WifiP2pManager$ActionListener;
 
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/android/server/display/WifiDisplayController;->handleScanStarted()V
+    value = Lcom/android/server/display/WifiDisplayController;->stopPeerDiscovery()V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -36,18 +36,17 @@
 
 
 # virtual methods
-.method public run()V
-    .locals 1
+.method public onFailure(I)V
+    .locals 0
+    .parameter "reason"
 
     .prologue
-    iget-object v0, p0, Lcom/android/server/display/WifiDisplayController$6;->this$0:Lcom/android/server/display/WifiDisplayController;
+    return-void
+.end method
 
-    #getter for: Lcom/android/server/display/WifiDisplayController;->mListener:Lcom/android/server/display/WifiDisplayController$Listener;
-    invoke-static {v0}, Lcom/android/server/display/WifiDisplayController;->access$400(Lcom/android/server/display/WifiDisplayController;)Lcom/android/server/display/WifiDisplayController$Listener;
+.method public onSuccess()V
+    .locals 0
 
-    move-result-object v0
-
-    invoke-interface {v0}, Lcom/android/server/display/WifiDisplayController$Listener;->onScanStarted()V
-
+    .prologue
     return-void
 .end method

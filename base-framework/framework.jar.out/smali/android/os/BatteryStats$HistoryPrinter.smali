@@ -497,3 +497,102 @@
         :pswitch_f
     .end packed-switch
 .end method
+
+.method public printNextItemCheckin(Ljava/io/PrintWriter;Landroid/os/BatteryStats$HistoryItem;J)V
+    .locals 2
+    .parameter "pw"
+    .parameter "rec"
+    .parameter "now"
+
+    .prologue
+    iget-wide v0, p2, Landroid/os/BatteryStats$HistoryItem;->time:J
+
+    sub-long/2addr v0, p3
+
+    invoke-virtual {p1, v0, v1}, Ljava/io/PrintWriter;->print(J)V
+
+    const-string v0, ","
+
+    invoke-virtual {p1, v0}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
+
+    iget-byte v0, p2, Landroid/os/BatteryStats$HistoryItem;->cmd:B
+
+    const/4 v1, 0x2
+
+    if-ne v0, v1, :cond_0
+
+    const-string v0, "start"
+
+    invoke-virtual {p1, v0}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
+
+    :goto_0
+    return-void
+
+    :cond_0
+    iget-byte v0, p2, Landroid/os/BatteryStats$HistoryItem;->cmd:B
+
+    const/4 v1, 0x3
+
+    if-ne v0, v1, :cond_1
+
+    const-string v0, "overflow"
+
+    invoke-virtual {p1, v0}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
+
+    goto :goto_0
+
+    :cond_1
+    iget-byte v0, p2, Landroid/os/BatteryStats$HistoryItem;->batteryLevel:B
+
+    invoke-virtual {p1, v0}, Ljava/io/PrintWriter;->print(I)V
+
+    const-string v0, ","
+
+    invoke-virtual {p1, v0}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
+
+    iget v0, p2, Landroid/os/BatteryStats$HistoryItem;->states:I
+
+    invoke-virtual {p1, v0}, Ljava/io/PrintWriter;->print(I)V
+
+    const-string v0, ","
+
+    invoke-virtual {p1, v0}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
+
+    iget-byte v0, p2, Landroid/os/BatteryStats$HistoryItem;->batteryStatus:B
+
+    invoke-virtual {p1, v0}, Ljava/io/PrintWriter;->print(I)V
+
+    const-string v0, ","
+
+    invoke-virtual {p1, v0}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
+
+    iget-byte v0, p2, Landroid/os/BatteryStats$HistoryItem;->batteryHealth:B
+
+    invoke-virtual {p1, v0}, Ljava/io/PrintWriter;->print(I)V
+
+    const-string v0, ","
+
+    invoke-virtual {p1, v0}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
+
+    iget-byte v0, p2, Landroid/os/BatteryStats$HistoryItem;->batteryPlugType:B
+
+    invoke-virtual {p1, v0}, Ljava/io/PrintWriter;->print(I)V
+
+    const-string v0, ","
+
+    invoke-virtual {p1, v0}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
+
+    iget-char v0, p2, Landroid/os/BatteryStats$HistoryItem;->batteryTemperature:C
+
+    invoke-virtual {p1, v0}, Ljava/io/PrintWriter;->print(I)V
+
+    const-string v0, ","
+
+    invoke-virtual {p1, v0}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
+
+    iget-char v0, p2, Landroid/os/BatteryStats$HistoryItem;->batteryVoltage:C
+
+    invoke-virtual {p1, v0}, Ljava/io/PrintWriter;->print(I)V
+
+    goto :goto_0
+.end method

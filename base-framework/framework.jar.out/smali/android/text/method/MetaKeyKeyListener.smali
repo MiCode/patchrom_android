@@ -10,6 +10,8 @@
 
 .field private static final LOCKED:I = 0x4000011
 
+.field private static final LOCKED_RETURN_VALUE:I = 0x2
+
 .field public static final META_ALT_LOCKED:I = 0x200
 
 .field private static final META_ALT_MASK:J = 0x2020200000202L
@@ -49,6 +51,8 @@
 .field private static final META_SYM_USED:J = 0x400000000L
 
 .field private static final PRESSED:I = 0x1000011
+
+.field private static final PRESSED_RETURN_VALUE:I = 0x1
 
 .field private static final RELEASED:I = 0x2000011
 
@@ -676,6 +680,96 @@
         0x4 -> :sswitch_2
         0x800 -> :sswitch_3
     .end sparse-switch
+.end method
+
+.method public static final getMetaState(Ljava/lang/CharSequence;ILandroid/view/KeyEvent;)I
+    .locals 3
+    .parameter "text"
+    .parameter "meta"
+    .parameter "event"
+
+    .prologue
+    const/4 v1, 0x1
+
+    invoke-virtual {p2}, Landroid/view/KeyEvent;->getMetaState()I
+
+    move-result v0
+
+    .local v0, metaState:I
+    invoke-virtual {p2}, Landroid/view/KeyEvent;->getKeyCharacterMap()Landroid/view/KeyCharacterMap;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Landroid/view/KeyCharacterMap;->getModifierBehavior()I
+
+    move-result v2
+
+    if-ne v2, v1, :cond_0
+
+    invoke-static {p0}, Landroid/text/method/MetaKeyKeyListener;->getMetaState(Ljava/lang/CharSequence;)I
+
+    move-result v2
+
+    or-int/2addr v0, v2
+
+    :cond_0
+    const/16 v2, 0x800
+
+    if-ne v2, p1, :cond_2
+
+    and-int/lit16 v2, v0, 0x800
+
+    if-eqz v2, :cond_1
+
+    :goto_0
+    return v1
+
+    :cond_1
+    const/4 v1, 0x0
+
+    goto :goto_0
+
+    :cond_2
+    int-to-long v1, v0
+
+    invoke-static {v1, v2, p1}, Landroid/text/method/MetaKeyKeyListener;->getMetaState(JI)I
+
+    move-result v1
+
+    goto :goto_0
+.end method
+
+.method public static final getMetaState(Ljava/lang/CharSequence;Landroid/view/KeyEvent;)I
+    .locals 3
+    .parameter "text"
+    .parameter "event"
+
+    .prologue
+    invoke-virtual {p1}, Landroid/view/KeyEvent;->getMetaState()I
+
+    move-result v0
+
+    .local v0, metaState:I
+    invoke-virtual {p1}, Landroid/view/KeyEvent;->getKeyCharacterMap()Landroid/view/KeyCharacterMap;
+
+    move-result-object v1
+
+    invoke-virtual {v1}, Landroid/view/KeyCharacterMap;->getModifierBehavior()I
+
+    move-result v1
+
+    const/4 v2, 0x1
+
+    if-ne v1, v2, :cond_0
+
+    invoke-static {p0}, Landroid/text/method/MetaKeyKeyListener;->getMetaState(Ljava/lang/CharSequence;)I
+
+    move-result v1
+
+    or-int/2addr v0, v1
+
+    :cond_0
+    return v0
 .end method
 
 .method public static handleKeyDown(JILandroid/view/KeyEvent;)J

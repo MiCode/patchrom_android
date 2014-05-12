@@ -224,47 +224,70 @@
     return-void
 .end method
 
-.method public show()V
-    .locals 3
+.method public show(II)V
+    .locals 4
+    .parameter "textDirection"
+    .parameter "textAlignment"
 
     .prologue
-    new-instance v0, Landroid/app/AlertDialog$Builder;
+    iget-object v2, p0, Landroid/widget/Spinner$DialogPopup;->mListAdapter:Landroid/widget/ListAdapter;
 
-    iget-object v1, p0, Landroid/widget/Spinner$DialogPopup;->this$0:Landroid/widget/Spinner;
+    if-nez v2, :cond_0
 
-    invoke-virtual {v1}, Landroid/widget/Spinner;->getContext()Landroid/content/Context;
-
-    move-result-object v1
-
-    invoke-direct {v0, v1}, Landroid/app/AlertDialog$Builder;-><init>(Landroid/content/Context;)V
-
-    .local v0, builder:Landroid/app/AlertDialog$Builder;
-    iget-object v1, p0, Landroid/widget/Spinner$DialogPopup;->mPrompt:Ljava/lang/CharSequence;
-
-    if-eqz v1, :cond_0
-
-    iget-object v1, p0, Landroid/widget/Spinner$DialogPopup;->mPrompt:Ljava/lang/CharSequence;
-
-    invoke-virtual {v0, v1}, Landroid/app/AlertDialog$Builder;->setTitle(Ljava/lang/CharSequence;)Landroid/app/AlertDialog$Builder;
+    :goto_0
+    return-void
 
     :cond_0
-    iget-object v1, p0, Landroid/widget/Spinner$DialogPopup;->mListAdapter:Landroid/widget/ListAdapter;
+    new-instance v0, Landroid/app/AlertDialog$Builder;
 
     iget-object v2, p0, Landroid/widget/Spinner$DialogPopup;->this$0:Landroid/widget/Spinner;
 
-    invoke-virtual {v2}, Landroid/widget/Spinner;->getSelectedItemPosition()I
+    invoke-virtual {v2}, Landroid/widget/Spinner;->getContext()Landroid/content/Context;
 
-    move-result v2
+    move-result-object v2
 
-    invoke-virtual {v0, v1, v2, p0}, Landroid/app/AlertDialog$Builder;->setSingleChoiceItems(Landroid/widget/ListAdapter;ILandroid/content/DialogInterface$OnClickListener;)Landroid/app/AlertDialog$Builder;
+    invoke-direct {v0, v2}, Landroid/app/AlertDialog$Builder;-><init>(Landroid/content/Context;)V
+
+    .local v0, builder:Landroid/app/AlertDialog$Builder;
+    iget-object v2, p0, Landroid/widget/Spinner$DialogPopup;->mPrompt:Ljava/lang/CharSequence;
+
+    if-eqz v2, :cond_1
+
+    iget-object v2, p0, Landroid/widget/Spinner$DialogPopup;->mPrompt:Ljava/lang/CharSequence;
+
+    invoke-virtual {v0, v2}, Landroid/app/AlertDialog$Builder;->setTitle(Ljava/lang/CharSequence;)Landroid/app/AlertDialog$Builder;
+
+    :cond_1
+    iget-object v2, p0, Landroid/widget/Spinner$DialogPopup;->mListAdapter:Landroid/widget/ListAdapter;
+
+    iget-object v3, p0, Landroid/widget/Spinner$DialogPopup;->this$0:Landroid/widget/Spinner;
+
+    invoke-virtual {v3}, Landroid/widget/Spinner;->getSelectedItemPosition()I
+
+    move-result v3
+
+    invoke-virtual {v0, v2, v3, p0}, Landroid/app/AlertDialog$Builder;->setSingleChoiceItems(Landroid/widget/ListAdapter;ILandroid/content/DialogInterface$OnClickListener;)Landroid/app/AlertDialog$Builder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Landroid/app/AlertDialog$Builder;->create()Landroid/app/AlertDialog;
+
+    move-result-object v2
+
+    iput-object v2, p0, Landroid/widget/Spinner$DialogPopup;->mPopup:Landroid/app/AlertDialog;
+
+    iget-object v2, p0, Landroid/widget/Spinner$DialogPopup;->mPopup:Landroid/app/AlertDialog;
+
+    invoke-virtual {v2}, Landroid/app/AlertDialog;->getListView()Landroid/widget/ListView;
 
     move-result-object v1
 
-    invoke-virtual {v1}, Landroid/app/AlertDialog$Builder;->show()Landroid/app/AlertDialog;
+    .local v1, listView:Landroid/widget/ListView;
+    invoke-static {v1, p1, p2}, Landroid/widget/Injector$SpinnerHook;->setListViewRtl(Landroid/widget/ListView;II)V
 
-    move-result-object v1
+    iget-object v2, p0, Landroid/widget/Spinner$DialogPopup;->mPopup:Landroid/app/AlertDialog;
 
-    iput-object v1, p0, Landroid/widget/Spinner$DialogPopup;->mPopup:Landroid/app/AlertDialog;
+    invoke-virtual {v2}, Landroid/app/AlertDialog;->show()V
 
-    return-void
+    goto :goto_0
 .end method

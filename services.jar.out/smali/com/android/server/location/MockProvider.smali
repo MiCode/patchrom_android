@@ -498,11 +498,3 @@
 
     return-void
 .end method
-
-.method public switchUser(I)V
-    .locals 0
-    .parameter "userId"
-
-    .prologue
-    return-void
-.end method

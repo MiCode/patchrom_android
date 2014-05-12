@@ -119,18 +119,26 @@
     .parameter "len"
 
     .prologue
+    if-nez p5, :cond_0
+
+    sget-object v21, Landroid/text/Layout;->DIRS_ALL_LEFT_TO_RIGHT:Landroid/text/Layout$Directions;
+
+    :goto_0
+    return-object v21
+
+    :cond_0
     const/16 v21, 0x1
 
     move/from16 v0, p0
 
     move/from16 v1, v21
 
-    if-ne v0, v1, :cond_1
+    if-ne v0, v1, :cond_2
 
     const/4 v2, 0x0
 
     .local v2, baseLevel:I
-    :goto_0
+    :goto_1
     aget-byte v4, p1, p2
 
     .local v4, curLevel:I
@@ -146,22 +154,22 @@
     add-int v5, p2, p5
 
     .local v5, e:I
-    :goto_1
-    if-ge v7, v5, :cond_2
+    :goto_2
+    if-ge v7, v5, :cond_3
 
     aget-byte v9, p1, v7
 
     .local v9, level:I
-    if-eq v9, v4, :cond_0
+    if-eq v9, v4, :cond_1
 
     move v4, v9
 
     add-int/lit8 v17, v17, 0x1
 
-    :cond_0
+    :cond_1
     add-int/lit8 v7, v7, 0x1
 
-    goto :goto_1
+    goto :goto_2
 
     .end local v2           #baseLevel:I
     .end local v4           #curLevel:I
@@ -170,10 +178,10 @@
     .end local v9           #level:I
     .end local v13           #minLevel:I
     .end local v17           #runCount:I
-    :cond_1
+    :cond_2
     const/4 v2, 0x1
 
-    goto :goto_0
+    goto :goto_1
 
     .restart local v2       #baseLevel:I
     .restart local v4       #curLevel:I
@@ -181,7 +189,7 @@
     .restart local v7       #i:I
     .restart local v13       #minLevel:I
     .restart local v17       #runCount:I
-    :cond_2
+    :cond_3
     move/from16 v19, p5
 
     .local v19, visLen:I
@@ -193,12 +201,12 @@
 
     move/from16 v1, v22
 
-    if-eq v0, v1, :cond_5
+    if-eq v0, v1, :cond_6
 
-    :cond_3
+    :cond_4
     add-int/lit8 v19, v19, -0x1
 
-    if-ltz v19, :cond_4
+    if-ltz v19, :cond_5
 
     add-int v21, p4, v19
 
@@ -209,66 +217,65 @@
 
     move/from16 v0, v21
 
-    if-ne v3, v0, :cond_6
+    if-ne v3, v0, :cond_7
 
     add-int/lit8 v19, v19, -0x1
 
     .end local v3           #ch:C
-    :cond_4
-    :goto_2
+    :cond_5
+    :goto_3
     add-int/lit8 v19, v19, 0x1
 
     move/from16 v0, v19
 
     move/from16 v1, p5
 
-    if-eq v0, v1, :cond_5
+    if-eq v0, v1, :cond_6
 
     add-int/lit8 v17, v17, 0x1
 
-    :cond_5
+    :cond_6
     const/16 v21, 0x1
 
     move/from16 v0, v17
 
     move/from16 v1, v21
 
-    if-ne v0, v1, :cond_8
+    if-ne v0, v1, :cond_9
 
-    if-ne v13, v2, :cond_8
+    if-ne v13, v2, :cond_9
 
     and-int/lit8 v21, v13, 0x1
 
-    if-eqz v21, :cond_7
+    if-eqz v21, :cond_8
 
     sget-object v21, Landroid/text/Layout;->DIRS_ALL_RIGHT_TO_LEFT:Landroid/text/Layout$Directions;
 
-    :goto_3
-    return-object v21
+    goto :goto_0
 
     .restart local v3       #ch:C
-    :cond_6
+    :cond_7
     const/16 v21, 0x20
 
     move/from16 v0, v21
 
-    if-eq v3, v0, :cond_3
+    if-eq v3, v0, :cond_4
 
     const/16 v21, 0x9
 
     move/from16 v0, v21
 
-    if-eq v3, v0, :cond_3
-
-    goto :goto_2
-
-    .end local v3           #ch:C
-    :cond_7
-    sget-object v21, Landroid/text/Layout;->DIRS_ALL_LEFT_TO_RIGHT:Landroid/text/Layout$Directions;
+    if-eq v3, v0, :cond_4
 
     goto :goto_3
 
+    .end local v3           #ch:C
     :cond_8
+    sget-object v21, Landroid/text/Layout;->DIRS_ALL_LEFT_TO_RIGHT:Landroid/text/Layout$Directions;
+
+    goto :goto_0
+
+    :cond_9
     mul-int/lit8 v21, v17, 0x2
 
     move/from16 v0, v21
@@ -299,20 +306,20 @@
     .end local v14           #n:I
     .local v15, n:I
     :goto_4
-    if-ge v7, v5, :cond_b
+    if-ge v7, v5, :cond_c
 
     aget-byte v9, p1, v7
 
     .restart local v9       #level:I
-    if-eq v9, v4, :cond_15
+    if-eq v9, v4, :cond_16
 
     move v4, v9
 
-    if-le v9, v12, :cond_a
+    if-le v9, v12, :cond_b
 
     move v12, v9
 
-    :cond_9
+    :cond_a
     :goto_5
     add-int/lit8 v14, v15, 0x1
 
@@ -349,15 +356,15 @@
     .restart local v15       #n:I
     goto :goto_4
 
-    :cond_a
-    if-ge v9, v13, :cond_9
+    :cond_b
+    if-ge v9, v13, :cond_a
 
     move v13, v9
 
     goto :goto_5
 
     .end local v9           #level:I
-    :cond_b
+    :cond_c
     add-int v21, p2, v19
 
     sub-int v21, v21, v16
@@ -370,7 +377,7 @@
 
     move/from16 v1, p5
 
-    if-ge v0, v1, :cond_14
+    if-ge v0, v1, :cond_15
 
     add-int/lit8 v14, v15, 0x1
 
@@ -393,23 +400,23 @@
 
     move/from16 v0, v21
 
-    if-ne v0, v2, :cond_d
+    if-ne v0, v2, :cond_e
 
     add-int/lit8 v13, v13, 0x1
 
-    if-le v12, v13, :cond_c
+    if-le v12, v13, :cond_d
 
     const/16 v18, 0x1
 
     .local v18, swap:Z
     :goto_8
-    if-eqz v18, :cond_13
+    if-eqz v18, :cond_14
 
     add-int/lit8 v9, v12, -0x1
 
     .restart local v9       #level:I
     :goto_9
-    if-lt v9, v13, :cond_13
+    if-lt v9, v13, :cond_14
 
     const/4 v7, 0x0
 
@@ -420,7 +427,7 @@
 
     move/from16 v0, v21
 
-    if-ge v7, v0, :cond_12
+    if-ge v7, v0, :cond_13
 
     aget v21, v8, v7
 
@@ -428,7 +435,7 @@
 
     move/from16 v0, v21
 
-    if-lt v0, v9, :cond_11
+    if-lt v0, v9, :cond_12
 
     add-int/lit8 v5, v7, 0x2
 
@@ -439,7 +446,7 @@
 
     move/from16 v0, v21
 
-    if-ge v5, v0, :cond_f
+    if-ge v5, v0, :cond_10
 
     aget v21, v8, v5
 
@@ -447,7 +454,7 @@
 
     move/from16 v0, v21
 
-    if-lt v0, v9, :cond_f
+    if-lt v0, v9, :cond_10
 
     add-int/lit8 v5, v5, 0x2
 
@@ -455,19 +462,19 @@
 
     .end local v9           #level:I
     .end local v18           #swap:Z
-    :cond_c
+    :cond_d
     const/16 v18, 0x0
 
     goto :goto_8
 
-    :cond_d
+    :cond_e
     const/16 v21, 0x1
 
     move/from16 v0, v17
 
     move/from16 v1, v21
 
-    if-le v0, v1, :cond_e
+    if-le v0, v1, :cond_f
 
     const/16 v18, 0x1
 
@@ -476,14 +483,14 @@
     goto :goto_8
 
     .end local v18           #swap:Z
-    :cond_e
+    :cond_f
     const/16 v18, 0x0
 
     goto :goto_c
 
     .restart local v9       #level:I
     .restart local v18       #swap:Z
-    :cond_f
+    :cond_10
     move v11, v7
 
     .local v11, low:I
@@ -491,7 +498,7 @@
 
     .local v6, hi:I
     :goto_d
-    if-ge v11, v6, :cond_10
+    if-ge v11, v6, :cond_11
 
     aget v20, v8, v11
 
@@ -525,35 +532,35 @@
     goto :goto_d
 
     .end local v20           #x:I
-    :cond_10
+    :cond_11
     add-int/lit8 v7, v5, 0x2
 
     .end local v6           #hi:I
     .end local v11           #low:I
-    :cond_11
+    :cond_12
     add-int/lit8 v7, v7, 0x2
 
     goto :goto_a
 
-    :cond_12
+    :cond_13
     add-int/lit8 v9, v9, -0x1
 
     goto :goto_9
 
     .end local v9           #level:I
-    :cond_13
+    :cond_14
     new-instance v21, Landroid/text/Layout$Directions;
 
     move-object/from16 v0, v21
 
     invoke-direct {v0, v8}, Landroid/text/Layout$Directions;-><init>([I)V
 
-    goto/16 :goto_3
+    goto/16 :goto_0
 
     .end local v14           #n:I
     .end local v18           #swap:Z
     .restart local v15       #n:I
-    :cond_14
+    :cond_15
     move v14, v15
 
     .end local v15           #n:I
@@ -563,7 +570,7 @@
     .end local v14           #n:I
     .restart local v9       #level:I
     .restart local v15       #n:I
-    :cond_15
+    :cond_16
     move v14, v15
 
     .end local v15           #n:I

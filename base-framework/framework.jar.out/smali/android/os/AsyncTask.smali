@@ -30,13 +30,18 @@
 
 
 # static fields
-.field private static final CORE_POOL_SIZE:I = 0x5
+#the value of this static final field might be set in the static constructor
+.field private static final CORE_POOL_SIZE:I = 0x0
+
+#the value of this static final field might be set in the static constructor
+.field private static final CPU_COUNT:I = 0x0
 
 .field private static final KEEP_ALIVE:I = 0x1
 
 .field private static final LOG_TAG:Ljava/lang/String; = "AsyncTask"
 
-.field private static final MAXIMUM_POOL_SIZE:I = 0x80
+#the value of this static final field might be set in the static constructor
+.field private static final MAXIMUM_POOL_SIZE:I = 0x0
 
 .field private static final MESSAGE_POST_PROGRESS:I = 0x2
 
@@ -97,6 +102,30 @@
     .prologue
     const/4 v8, 0x0
 
+    invoke-static {}, Ljava/lang/Runtime;->getRuntime()Ljava/lang/Runtime;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Ljava/lang/Runtime;->availableProcessors()I
+
+    move-result v0
+
+    sput v0, Landroid/os/AsyncTask;->CPU_COUNT:I
+
+    sget v0, Landroid/os/AsyncTask;->CPU_COUNT:I
+
+    add-int/lit8 v0, v0, 0x1
+
+    sput v0, Landroid/os/AsyncTask;->CORE_POOL_SIZE:I
+
+    sget v0, Landroid/os/AsyncTask;->CPU_COUNT:I
+
+    mul-int/lit8 v0, v0, 0x2
+
+    add-int/lit8 v0, v0, 0x1
+
+    sput v0, Landroid/os/AsyncTask;->MAXIMUM_POOL_SIZE:I
+
     new-instance v0, Landroid/os/AsyncTask$1;
 
     invoke-direct {v0}, Landroid/os/AsyncTask$1;-><init>()V
@@ -105,7 +134,7 @@
 
     new-instance v0, Ljava/util/concurrent/LinkedBlockingQueue;
 
-    const/16 v1, 0xa
+    const/16 v1, 0x80
 
     invoke-direct {v0, v1}, Ljava/util/concurrent/LinkedBlockingQueue;-><init>(I)V
 
@@ -113,9 +142,9 @@
 
     new-instance v0, Ljava/util/concurrent/ThreadPoolExecutor;
 
-    const/4 v1, 0x5
+    sget v1, Landroid/os/AsyncTask;->CORE_POOL_SIZE:I
 
-    const/16 v2, 0x80
+    sget v2, Landroid/os/AsyncTask;->MAXIMUM_POOL_SIZE:I
 
     const-wide/16 v3, 0x1
 

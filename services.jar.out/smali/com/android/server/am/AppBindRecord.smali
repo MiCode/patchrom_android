@@ -1,4 +1,4 @@
-.class Lcom/android/server/am/AppBindRecord;
+.class final Lcom/android/server/am/AppBindRecord;
 .super Ljava/lang/Object;
 .source "AppBindRecord.java"
 

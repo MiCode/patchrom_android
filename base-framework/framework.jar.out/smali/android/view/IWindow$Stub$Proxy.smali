@@ -698,9 +698,10 @@
     throw v1
 .end method
 
-.method public resized(Landroid/graphics/Rect;Landroid/graphics/Rect;Landroid/graphics/Rect;ZLandroid/content/res/Configuration;)V
+.method public resized(Landroid/graphics/Rect;Landroid/graphics/Rect;Landroid/graphics/Rect;Landroid/graphics/Rect;ZLandroid/content/res/Configuration;)V
     .locals 5
     .parameter "frame"
+    .parameter "overscanInsets"
     .parameter "contentInsets"
     .parameter "visibleInsets"
     .parameter "reportDraw"
@@ -761,10 +762,21 @@
     :goto_2
     if-eqz p4, :cond_3
 
+    const/4 v3, 0x1
+
+    invoke-virtual {v0, v3}, Landroid/os/Parcel;->writeInt(I)V
+
+    const/4 v3, 0x0
+
+    invoke-virtual {p4, v0, v3}, Landroid/graphics/Rect;->writeToParcel(Landroid/os/Parcel;I)V
+
     :goto_3
+    if-eqz p5, :cond_4
+
+    :goto_4
     invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeInt(I)V
 
-    if-eqz p5, :cond_4
+    if-eqz p6, :cond_5
 
     const/4 v1, 0x1
 
@@ -772,9 +784,9 @@
 
     const/4 v1, 0x0
 
-    invoke-virtual {p5, v0, v1}, Landroid/content/res/Configuration;->writeToParcel(Landroid/os/Parcel;I)V
+    invoke-virtual {p6, v0, v1}, Landroid/content/res/Configuration;->writeToParcel(Landroid/os/Parcel;I)V
 
-    :goto_4
+    :goto_5
     iget-object v1, p0, Landroid/view/IWindow$Stub$Proxy;->mRemote:Landroid/os/IBinder;
 
     const/4 v2, 0x2
@@ -824,18 +836,25 @@
     goto :goto_2
 
     :cond_3
-    move v1, v2
+    const/4 v3, 0x0
+
+    invoke-virtual {v0, v3}, Landroid/os/Parcel;->writeInt(I)V
 
     goto :goto_3
 
     :cond_4
+    move v1, v2
+
+    goto :goto_4
+
+    :cond_5
     const/4 v1, 0x0
 
     invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeInt(I)V
     :try_end_2
     .catchall {:try_start_2 .. :try_end_2} :catchall_0
 
-    goto :goto_4
+    goto :goto_5
 .end method
 
 .method public windowFocusChanged(ZZ)V

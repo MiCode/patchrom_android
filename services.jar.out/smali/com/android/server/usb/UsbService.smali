@@ -292,6 +292,25 @@
     return-void
 .end method
 
+.method public clearUsbDebuggingKeys()V
+    .locals 3
+
+    .prologue
+    iget-object v0, p0, Lcom/android/server/usb/UsbService;->mContext:Landroid/content/Context;
+
+    const-string v1, "android.permission.MANAGE_USB"
+
+    const/4 v2, 0x0
+
+    invoke-virtual {v0, v1, v2}, Landroid/content/Context;->enforceCallingOrSelfPermission(Ljava/lang/String;Ljava/lang/String;)V
+
+    iget-object v0, p0, Lcom/android/server/usb/UsbService;->mDeviceManager:Lcom/android/server/usb/UsbDeviceManager;
+
+    invoke-virtual {v0}, Lcom/android/server/usb/UsbDeviceManager;->clearUsbDebuggingKeys()V
+
+    return-void
+.end method
+
 .method public denyUsbDebugging()V
     .locals 3
 

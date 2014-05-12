@@ -17,7 +17,11 @@
     .prologue
     const/high16 v3, 0x2
 
-    const v1, 0x60d003e
+    const v1, 0x1030307
+
+    invoke-static {v1}, Lcom/android/server/am/Injector$BaseErrorDialogHook;->getTheme(I)I
+
+    move-result v1
 
     invoke-direct {p0, p1, v1}, Landroid/app/AlertDialog;-><init>(Landroid/content/Context;I)V
 

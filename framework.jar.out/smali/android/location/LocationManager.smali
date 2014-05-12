@@ -23,6 +23,8 @@
 
 .field public static final GPS_PROVIDER:Ljava/lang/String; = "gps"
 
+.field public static final HIGH_POWER_REQUEST_CHANGE_ACTION:Ljava/lang/String; = "android.location.HIGH_POWER_REQUEST_CHANGE"
+
 .field public static final KEY_LOCATION_CHANGED:Ljava/lang/String; = "location"
 
 .field public static final KEY_PROVIDER_ENABLED:Ljava/lang/String; = "providerEnabled"
@@ -30,6 +32,8 @@
 .field public static final KEY_PROXIMITY_ENTERING:Ljava/lang/String; = "entering"
 
 .field public static final KEY_STATUS_CHANGED:Ljava/lang/String; = "status"
+
+.field public static final MODE_CHANGED_ACTION:Ljava/lang/String; = "android.location.MODE_CHANGED"
 
 .field public static final NETWORK_PROVIDER:Ljava/lang/String; = "network"
 
@@ -535,7 +539,13 @@
     .local v2, transport:Landroid/location/LocationManager$GpsStatusListenerTransport;
     iget-object v3, p0, Landroid/location/LocationManager;->mService:Landroid/location/ILocationManager;
 
-    invoke-interface {v3, v2}, Landroid/location/ILocationManager;->addGpsStatusListener(Landroid/location/IGpsStatusListener;)Z
+    iget-object v4, p0, Landroid/location/LocationManager;->mContext:Landroid/content/Context;
+
+    invoke-virtual {v4}, Landroid/content/Context;->getPackageName()Ljava/lang/String;
+
+    move-result-object v4
+
+    invoke-interface {v3, v2, v4}, Landroid/location/ILocationManager;->addGpsStatusListener(Landroid/location/IGpsStatusListener;Ljava/lang/String;)Z
 
     move-result v1
 
@@ -596,7 +606,13 @@
     .local v2, transport:Landroid/location/LocationManager$GpsStatusListenerTransport;
     iget-object v3, p0, Landroid/location/LocationManager;->mService:Landroid/location/ILocationManager;
 
-    invoke-interface {v3, v2}, Landroid/location/ILocationManager;->addGpsStatusListener(Landroid/location/IGpsStatusListener;)Z
+    iget-object v4, p0, Landroid/location/LocationManager;->mContext:Landroid/content/Context;
+
+    invoke-virtual {v4}, Landroid/content/Context;->getPackageName()Ljava/lang/String;
+
+    move-result-object v4
+
+    invoke-interface {v3, v2, v4}, Landroid/location/ILocationManager;->addGpsStatusListener(Landroid/location/IGpsStatusListener;Ljava/lang/String;)Z
 
     move-result v1
 

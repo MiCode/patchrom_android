@@ -52,8 +52,13 @@
     .prologue
     const/4 v0, 0x4
 
-    if-ne p1, v0, :cond_0
+    if-eq p1, v0, :cond_0
 
+    const/16 v0, 0x64
+
+    if-ne p1, v0, :cond_1
+
+    :cond_0
     iget-object v0, p0, Landroid/accounts/AccountManager$AmsTask$Response;->this$1:Landroid/accounts/AccountManager$AmsTask;
 
     const/4 v1, 0x1
@@ -63,7 +68,7 @@
     :goto_0
     return-void
 
-    :cond_0
+    :cond_1
     iget-object v0, p0, Landroid/accounts/AccountManager$AmsTask$Response;->this$1:Landroid/accounts/AccountManager$AmsTask;
 
     iget-object v1, p0, Landroid/accounts/AccountManager$AmsTask$Response;->this$1:Landroid/accounts/AccountManager$AmsTask;

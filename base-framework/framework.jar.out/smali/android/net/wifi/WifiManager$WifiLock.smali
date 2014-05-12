@@ -533,6 +533,8 @@
     return-void
 
     :cond_3
+    invoke-virtual {p1}, Landroid/os/WorkSource;->clearNames()V
+
     iget-object v1, p0, Landroid/net/wifi/WifiManager$WifiLock;->mWorkSource:Landroid/os/WorkSource;
 
     if-nez v1, :cond_5

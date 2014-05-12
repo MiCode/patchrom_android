@@ -40,7 +40,7 @@
 
 # virtual methods
 .method public createFromParcel(Landroid/os/Parcel;)Landroid/net/ProxyProperties;
-    .locals 7
+    .locals 8
     .parameter "in"
 
     .prologue
@@ -54,9 +54,33 @@
 
     move-result v5
 
-    const/4 v6, 0x1
+    if-eqz v5, :cond_0
 
-    if-ne v5, v6, :cond_0
+    invoke-virtual {p1}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v7
+
+    .local v7, url:Ljava/lang/String;
+    invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
+
+    move-result v6
+
+    .local v6, localPort:I
+    new-instance v0, Landroid/net/ProxyProperties;
+
+    invoke-direct {v0, v7, v6}, Landroid/net/ProxyProperties;-><init>(Ljava/lang/String;I)V
+
+    .end local v6           #localPort:I
+    .end local v7           #url:Ljava/lang/String;
+    :goto_0
+    return-object v0
+
+    :cond_0
+    invoke-virtual {p1}, Landroid/os/Parcel;->readByte()B
+
+    move-result v5
+
+    if-eqz v5, :cond_1
 
     invoke-virtual {p1}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
@@ -66,7 +90,7 @@
 
     move-result v2
 
-    :cond_0
+    :cond_1
     invoke-virtual {p1}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
     move-result-object v3
@@ -84,7 +108,7 @@
     invoke-direct/range {v0 .. v5}, Landroid/net/ProxyProperties;-><init>(Ljava/lang/String;ILjava/lang/String;[Ljava/lang/String;Landroid/net/ProxyProperties$1;)V
 
     .local v0, proxyProperties:Landroid/net/ProxyProperties;
-    return-object v0
+    goto :goto_0
 .end method
 
 .method public bridge synthetic createFromParcel(Landroid/os/Parcel;)Ljava/lang/Object;

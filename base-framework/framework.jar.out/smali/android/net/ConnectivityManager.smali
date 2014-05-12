@@ -9,6 +9,8 @@
     .end annotation
 .end field
 
+.field public static final ACTION_CAPTIVE_PORTAL_TEST_COMPLETED:Ljava/lang/String; = "android.net.conn.CAPTIVE_PORTAL_TEST_COMPLETED"
+
 .field public static final ACTION_DATA_ACTIVITY_CHANGE:Ljava/lang/String; = "android.net.conn.DATA_ACTIVITY_CHANGE"
 
 .field public static final ACTION_TETHER_STATE_CHANGED:Ljava/lang/String; = "android.net.conn.TETHER_STATE_CHANGED"
@@ -20,6 +22,9 @@
 .field public static final CONNECTIVITY_CHANGE_DELAY_DEFAULT:I = 0xbb8
 
 .field public static final DEFAULT_NETWORK_PREFERENCE:I = 0x1
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
+.end field
 
 .field public static final EXTRA_ACTIVE_TETHER:Ljava/lang/String; = "activeArray"
 
@@ -34,6 +39,8 @@
 .field public static final EXTRA_INET_CONDITION:Ljava/lang/String; = "inetCondition"
 
 .field public static final EXTRA_IS_ACTIVE:Ljava/lang/String; = "isActive"
+
+.field public static final EXTRA_IS_CAPTIVE_PORTAL:Ljava/lang/String; = "captivePortal"
 
 .field public static final EXTRA_IS_FAILOVER:Ljava/lang/String; = "isFailover"
 
@@ -52,9 +59,9 @@
 
 .field public static final INET_CONDITION_ACTION:Ljava/lang/String; = "android.net.conn.INET_CONDITION_ACTION"
 
-.field public static final MAX_NETWORK_TYPE:I = 0xd
+.field public static final MAX_NETWORK_TYPE:I = 0xe
 
-.field public static final MAX_RADIO_TYPE:I = 0xd
+.field public static final MAX_RADIO_TYPE:I = 0xe
 
 .field private static final TAG:Ljava/lang/String; = "ConnectivityManager"
 
@@ -95,6 +102,8 @@
 .field public static final TYPE_MOBILE_FOTA:I = 0xa
 
 .field public static final TYPE_MOBILE_HIPRI:I = 0x5
+
+.field public static final TYPE_MOBILE_IA:I = 0xe
 
 .field public static final TYPE_MOBILE_IMS:I = 0xb
 
@@ -236,6 +245,13 @@
 
     goto :goto_0
 
+    :pswitch_e
+    const-string v0, "MOBILE_IA"
+
+    goto :goto_0
+
+    nop
+
     :pswitch_data_0
     .packed-switch 0x0
         :pswitch_0
@@ -252,7 +268,36 @@
         :pswitch_b
         :pswitch_c
         :pswitch_d
+        :pswitch_e
     .end packed-switch
+.end method
+
+.method public static isNetworkTypeExempt(I)Z
+    .locals 1
+    .parameter "networkType"
+
+    .prologue
+    sparse-switch p0, :sswitch_data_0
+
+    const/4 v0, 0x0
+
+    :goto_0
+    return v0
+
+    :sswitch_0
+    const/4 v0, 0x1
+
+    goto :goto_0
+
+    nop
+
+    :sswitch_data_0
+    .sparse-switch
+        0x2 -> :sswitch_0
+        0x3 -> :sswitch_0
+        0x5 -> :sswitch_0
+        0xe -> :sswitch_0
+    .end sparse-switch
 .end method
 
 .method public static isNetworkTypeMobile(I)Z
@@ -290,6 +335,8 @@
         :pswitch_1
         :pswitch_1
         :pswitch_1
+        :pswitch_0
+        :pswitch_1
     .end packed-switch
 .end method
 
@@ -300,7 +347,7 @@
     .prologue
     if-ltz p0, :cond_0
 
-    const/16 v0, 0xd
+    const/16 v0, 0xe
 
     if-gt p0, v0, :cond_0
 
@@ -313,6 +360,32 @@
     const/4 v0, 0x0
 
     goto :goto_0
+.end method
+
+.method public static isNetworkTypeWifi(I)Z
+    .locals 1
+    .parameter "networkType"
+
+    .prologue
+    sparse-switch p0, :sswitch_data_0
+
+    const/4 v0, 0x0
+
+    :goto_0
+    return v0
+
+    :sswitch_0
+    const/4 v0, 0x1
+
+    goto :goto_0
+
+    nop
+
+    :sswitch_data_0
+    .sparse-switch
+        0x1 -> :sswitch_0
+        0xd -> :sswitch_0
+    .end sparse-switch
 .end method
 
 
@@ -338,6 +411,54 @@
     goto :goto_0
 .end method
 
+.method public captivePortalCheckCompleted(Landroid/net/NetworkInfo;Z)V
+    .locals 1
+    .parameter "info"
+    .parameter "isCaptivePortal"
+
+    .prologue
+    :try_start_0
+    iget-object v0, p0, Landroid/net/ConnectivityManager;->mService:Landroid/net/IConnectivityManager;
+
+    invoke-interface {v0, p1, p2}, Landroid/net/IConnectivityManager;->captivePortalCheckCompleted(Landroid/net/NetworkInfo;Z)V
+    :try_end_0
+    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
+
+    :goto_0
+    return-void
+
+    :catch_0
+    move-exception v0
+
+    goto :goto_0
+.end method
+
+.method public checkMobileProvisioning(I)I
+    .locals 2
+    .parameter "suggestedTimeOutMs"
+
+    .prologue
+    const/4 v0, -0x1
+
+    .local v0, timeOutMs:I
+    :try_start_0
+    iget-object v1, p0, Landroid/net/ConnectivityManager;->mService:Landroid/net/IConnectivityManager;
+
+    invoke-interface {v1, p1}, Landroid/net/IConnectivityManager;->checkMobileProvisioning(I)I
+    :try_end_0
+    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
+
+    move-result v0
+
+    :goto_0
+    return v0
+
+    :catch_0
+    move-exception v1
+
+    goto :goto_0
+.end method
+
 .method public getActiveLinkProperties()Landroid/net/LinkProperties;
     .locals 2
 
@@ -346,6 +467,31 @@
     iget-object v1, p0, Landroid/net/ConnectivityManager;->mService:Landroid/net/IConnectivityManager;
 
     invoke-interface {v1}, Landroid/net/IConnectivityManager;->getActiveLinkProperties()Landroid/net/LinkProperties;
+    :try_end_0
+    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
+
+    move-result-object v1
+
+    :goto_0
+    return-object v1
+
+    :catch_0
+    move-exception v0
+
+    .local v0, e:Landroid/os/RemoteException;
+    const/4 v1, 0x0
+
+    goto :goto_0
+.end method
+
+.method public getActiveLinkQualityInfo()Landroid/net/LinkQualityInfo;
+    .locals 3
+
+    .prologue
+    :try_start_0
+    iget-object v2, p0, Landroid/net/ConnectivityManager;->mService:Landroid/net/IConnectivityManager;
+
+    invoke-interface {v2}, Landroid/net/IConnectivityManager;->getActiveLinkQualityInfo()Landroid/net/LinkQualityInfo;
     :try_end_0
     .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
 
@@ -422,6 +568,31 @@
     iget-object v1, p0, Landroid/net/ConnectivityManager;->mService:Landroid/net/IConnectivityManager;
 
     invoke-interface {v1}, Landroid/net/IConnectivityManager;->getActiveNetworkQuotaInfo()Landroid/net/NetworkQuotaInfo;
+    :try_end_0
+    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
+
+    move-result-object v1
+
+    :goto_0
+    return-object v1
+
+    :catch_0
+    move-exception v0
+
+    .local v0, e:Landroid/os/RemoteException;
+    const/4 v1, 0x0
+
+    goto :goto_0
+.end method
+
+.method public getAllLinkQualityInfo()[Landroid/net/LinkQualityInfo;
+    .locals 3
+
+    .prologue
+    :try_start_0
+    iget-object v2, p0, Landroid/net/ConnectivityManager;->mService:Landroid/net/IConnectivityManager;
+
+    invoke-interface {v2}, Landroid/net/IConnectivityManager;->getAllLinkQualityInfo()[Landroid/net/LinkQualityInfo;
     :try_end_0
     .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
 
@@ -552,6 +723,32 @@
     goto :goto_0
 .end method
 
+.method public getLinkQualityInfo(I)Landroid/net/LinkQualityInfo;
+    .locals 3
+    .parameter "networkType"
+
+    .prologue
+    :try_start_0
+    iget-object v2, p0, Landroid/net/ConnectivityManager;->mService:Landroid/net/IConnectivityManager;
+
+    invoke-interface {v2, p1}, Landroid/net/IConnectivityManager;->getLinkQualityInfo(I)Landroid/net/LinkQualityInfo;
+    :try_end_0
+    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
+
+    move-result-object v1
+
+    :goto_0
+    return-object v1
+
+    :catch_0
+    move-exception v0
+
+    .local v0, e:Landroid/os/RemoteException;
+    const/4 v1, 0x0
+
+    goto :goto_0
+.end method
+
 .method public getMobileDataEnabled()Z
     .locals 2
 
@@ -573,6 +770,54 @@
 
     .local v0, e:Landroid/os/RemoteException;
     const/4 v1, 0x1
+
+    goto :goto_0
+.end method
+
+.method public getMobileProvisioningUrl()Ljava/lang/String;
+    .locals 1
+
+    .prologue
+    :try_start_0
+    iget-object v0, p0, Landroid/net/ConnectivityManager;->mService:Landroid/net/IConnectivityManager;
+
+    invoke-interface {v0}, Landroid/net/IConnectivityManager;->getMobileProvisioningUrl()Ljava/lang/String;
+    :try_end_0
+    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
+
+    move-result-object v0
+
+    :goto_0
+    return-object v0
+
+    :catch_0
+    move-exception v0
+
+    const/4 v0, 0x0
+
+    goto :goto_0
+.end method
+
+.method public getMobileRedirectedProvisioningUrl()Ljava/lang/String;
+    .locals 1
+
+    .prologue
+    :try_start_0
+    iget-object v0, p0, Landroid/net/ConnectivityManager;->mService:Landroid/net/IConnectivityManager;
+
+    invoke-interface {v0}, Landroid/net/IConnectivityManager;->getMobileRedirectedProvisioningUrl()Ljava/lang/String;
+    :try_end_0
+    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
+
+    move-result-object v0
+
+    :goto_0
+    return-object v0
+
+    :catch_0
+    move-exception v0
+
+    const/4 v0, 0x0
 
     goto :goto_0
 .end method
@@ -624,6 +869,31 @@
 
     .local v0, e:Landroid/os/RemoteException;
     const/4 v1, -0x1
+
+    goto :goto_0
+.end method
+
+.method public getProvisioningOrActiveNetworkInfo()Landroid/net/NetworkInfo;
+    .locals 2
+
+    .prologue
+    :try_start_0
+    iget-object v1, p0, Landroid/net/ConnectivityManager;->mService:Landroid/net/IConnectivityManager;
+
+    invoke-interface {v1}, Landroid/net/IConnectivityManager;->getProvisioningOrActiveNetworkInfo()Landroid/net/NetworkInfo;
+    :try_end_0
+    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
+
+    move-result-object v1
+
+    :goto_0
+    return-object v1
+
+    :catch_0
+    move-exception v0
+
+    .local v0, e:Landroid/os/RemoteException;
+    const/4 v1, 0x0
 
     goto :goto_0
 .end method
@@ -996,6 +1266,27 @@
     goto :goto_0
 .end method
 
+.method public setAirplaneMode(Z)V
+    .locals 1
+    .parameter "enable"
+
+    .prologue
+    :try_start_0
+    iget-object v0, p0, Landroid/net/ConnectivityManager;->mService:Landroid/net/IConnectivityManager;
+
+    invoke-interface {v0, p1}, Landroid/net/IConnectivityManager;->setAirplaneMode(Z)V
+    :try_end_0
+    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
+
+    :goto_0
+    return-void
+
+    :catch_0
+    move-exception v0
+
+    goto :goto_0
+.end method
+
 .method public setBackgroundDataSetting(Z)V
     .locals 0
     .parameter "allowBackgroundData"
@@ -1079,6 +1370,30 @@
     iget-object v0, p0, Landroid/net/ConnectivityManager;->mService:Landroid/net/IConnectivityManager;
 
     invoke-interface {v0, p1}, Landroid/net/IConnectivityManager;->setNetworkPreference(I)V
+    :try_end_0
+    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
+
+    :goto_0
+    return-void
+
+    :catch_0
+    move-exception v0
+
+    goto :goto_0
+.end method
+
+.method public setProvisioningNotificationVisible(ZILjava/lang/String;Ljava/lang/String;)V
+    .locals 1
+    .parameter "visible"
+    .parameter "networkType"
+    .parameter "extraInfo"
+    .parameter "url"
+
+    .prologue
+    :try_start_0
+    iget-object v0, p0, Landroid/net/ConnectivityManager;->mService:Landroid/net/IConnectivityManager;
+
+    invoke-interface {v0, p1, p2, p3, p4}, Landroid/net/IConnectivityManager;->setProvisioningNotificationVisible(ZILjava/lang/String;Ljava/lang/String;)V
     :try_end_0
     .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
 
@@ -1224,6 +1539,28 @@
 
     .local v0, e:Landroid/os/RemoteException;
     const/4 v1, -0x1
+
+    goto :goto_0
+.end method
+
+.method public supplyMessenger(ILandroid/os/Messenger;)V
+    .locals 1
+    .parameter "networkType"
+    .parameter "messenger"
+
+    .prologue
+    :try_start_0
+    iget-object v0, p0, Landroid/net/ConnectivityManager;->mService:Landroid/net/IConnectivityManager;
+
+    invoke-interface {v0, p1, p2}, Landroid/net/IConnectivityManager;->supplyMessenger(ILandroid/os/Messenger;)V
+    :try_end_0
+    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
+
+    :goto_0
+    return-void
+
+    :catch_0
+    move-exception v0
 
     goto :goto_0
 .end method

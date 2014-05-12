@@ -15,10 +15,23 @@
 
 
 # static fields
-.field public static final CREATOR:Landroid/os/Parcelable$Creator;
+.field public static final CREATOR:Landroid/os/Parcelable$Creator; = null
     .annotation system Ldalvik/annotation/Signature;
         value = {
             "Landroid/os/Parcelable$Creator",
+            "<",
+            "Landroid/graphics/Region;",
+            ">;"
+        }
+    .end annotation
+.end field
+
+.field private static final MAX_POOL_SIZE:I = 0xa
+
+.field private static final sPool:Landroid/util/Pools$SynchronizedPool;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "Landroid/util/Pools$SynchronizedPool",
             "<",
             "Landroid/graphics/Region;",
             ">;"
@@ -33,9 +46,17 @@
 
 # direct methods
 .method static constructor <clinit>()V
-    .locals 1
+    .locals 2
 
     .prologue
+    new-instance v0, Landroid/util/Pools$SynchronizedPool;
+
+    const/16 v1, 0xa
+
+    invoke-direct {v0, v1}, Landroid/util/Pools$SynchronizedPool;-><init>(I)V
+
+    sput-object v0, Landroid/graphics/Region;->sPool:Landroid/util/Pools$SynchronizedPool;
+
     new-instance v0, Landroid/graphics/Region$1;
 
     invoke-direct {v0}, Landroid/graphics/Region$1;-><init>()V
@@ -156,7 +177,7 @@
 
     iget v1, p1, Landroid/graphics/Region;->mNativeRegion:I
 
-    invoke-static {v0, v1}, Landroid/graphics/Region;->nativeSetRegion(II)Z
+    invoke-static {v0, v1}, Landroid/graphics/Region;->nativeSetRegion(II)V
 
     return-void
 .end method
@@ -206,13 +227,57 @@
 .method private static native nativeSetRect(IIIII)Z
 .end method
 
-.method private static native nativeSetRegion(II)Z
+.method private static native nativeSetRegion(II)V
 .end method
 
 .method private static native nativeToString(I)Ljava/lang/String;
 .end method
 
 .method private static native nativeWriteToParcel(ILandroid/os/Parcel;)Z
+.end method
+
+.method public static obtain()Landroid/graphics/Region;
+    .locals 2
+
+    .prologue
+    sget-object v1, Landroid/graphics/Region;->sPool:Landroid/util/Pools$SynchronizedPool;
+
+    invoke-virtual {v1}, Landroid/util/Pools$SynchronizedPool;->acquire()Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Landroid/graphics/Region;
+
+    .local v0, region:Landroid/graphics/Region;
+    if-eqz v0, :cond_0
+
+    .end local v0           #region:Landroid/graphics/Region;
+    :goto_0
+    return-object v0
+
+    .restart local v0       #region:Landroid/graphics/Region;
+    :cond_0
+    new-instance v0, Landroid/graphics/Region;
+
+    .end local v0           #region:Landroid/graphics/Region;
+    invoke-direct {v0}, Landroid/graphics/Region;-><init>()V
+
+    goto :goto_0
+.end method
+
+.method public static obtain(Landroid/graphics/Region;)Landroid/graphics/Region;
+    .locals 1
+    .parameter "other"
+
+    .prologue
+    invoke-static {}, Landroid/graphics/Region;->obtain()Landroid/graphics/Region;
+
+    move-result-object v0
+
+    .local v0, region:Landroid/graphics/Region;
+    invoke-virtual {v0, p0}, Landroid/graphics/Region;->set(Landroid/graphics/Region;)Z
+
+    return-object v0
 .end method
 
 
@@ -543,6 +608,19 @@
 .method public native quickReject(Landroid/graphics/Region;)Z
 .end method
 
+.method public recycle()V
+    .locals 1
+
+    .prologue
+    invoke-virtual {p0}, Landroid/graphics/Region;->setEmpty()V
+
+    sget-object v0, Landroid/graphics/Region;->sPool:Landroid/util/Pools$SynchronizedPool;
+
+    invoke-virtual {v0, p0}, Landroid/util/Pools$SynchronizedPool;->release(Ljava/lang/Object;)Z
+
+    return-void
+.end method
+
 .method public scale(F)V
     .locals 1
     .parameter "scale"
@@ -606,9 +684,9 @@
 
     iget v1, p1, Landroid/graphics/Region;->mNativeRegion:I
 
-    invoke-static {v0, v1}, Landroid/graphics/Region;->nativeSetRegion(II)Z
+    invoke-static {v0, v1}, Landroid/graphics/Region;->nativeSetRegion(II)V
 
-    move-result v0
+    const/4 v0, 0x1
 
     return v0
 .end method

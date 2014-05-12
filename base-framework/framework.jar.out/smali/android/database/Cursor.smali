@@ -69,6 +69,9 @@
 .method public abstract getLong(I)J
 .end method
 
+.method public abstract getNotificationUri()Landroid/net/Uri;
+.end method
+
 .method public abstract getPosition()I
 .end method
 

@@ -15,65 +15,35 @@
 
 
 # instance fields
-.field mDimAnimator:Lcom/android/server/wm/DimAnimator;
-
-.field mDimParams:Lcom/android/server/wm/DimAnimator$Parameters;
-
 .field mScreenRotationAnimation:Lcom/android/server/wm/ScreenRotationAnimation;
-
-.field mWinAnimators:Lcom/android/server/wm/WinAnimatorList;
-
-.field mWindowAnimationBackgroundSurface:Lcom/android/server/wm/DimSurface;
 
 .field final synthetic this$0:Lcom/android/server/wm/WindowAnimator;
 
 
 # direct methods
-.method public constructor <init>(Lcom/android/server/wm/WindowAnimator;I)V
-    .locals 2
+.method private constructor <init>(Lcom/android/server/wm/WindowAnimator;)V
+    .locals 1
     .parameter
-    .parameter "displayId"
 
     .prologue
-    const/4 v1, 0x0
-
     iput-object p1, p0, Lcom/android/server/wm/WindowAnimator$DisplayContentsAnimator;->this$0:Lcom/android/server/wm/WindowAnimator;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    new-instance v0, Lcom/android/server/wm/WinAnimatorList;
+    const/4 v0, 0x0
 
-    invoke-direct {v0}, Lcom/android/server/wm/WinAnimatorList;-><init>()V
+    iput-object v0, p0, Lcom/android/server/wm/WindowAnimator$DisplayContentsAnimator;->mScreenRotationAnimation:Lcom/android/server/wm/ScreenRotationAnimation;
 
-    iput-object v0, p0, Lcom/android/server/wm/WindowAnimator$DisplayContentsAnimator;->mWinAnimators:Lcom/android/server/wm/WinAnimatorList;
+    return-void
+.end method
 
-    iput-object v1, p0, Lcom/android/server/wm/WindowAnimator$DisplayContentsAnimator;->mDimAnimator:Lcom/android/server/wm/DimAnimator;
+.method synthetic constructor <init>(Lcom/android/server/wm/WindowAnimator;Lcom/android/server/wm/WindowAnimator$1;)V
+    .locals 0
+    .parameter "x0"
+    .parameter "x1"
 
-    iput-object v1, p0, Lcom/android/server/wm/WindowAnimator$DisplayContentsAnimator;->mDimParams:Lcom/android/server/wm/DimAnimator$Parameters;
-
-    iput-object v1, p0, Lcom/android/server/wm/WindowAnimator$DisplayContentsAnimator;->mWindowAnimationBackgroundSurface:Lcom/android/server/wm/DimSurface;
-
-    iput-object v1, p0, Lcom/android/server/wm/WindowAnimator$DisplayContentsAnimator;->mScreenRotationAnimation:Lcom/android/server/wm/ScreenRotationAnimation;
-
-    new-instance v0, Lcom/android/server/wm/DimAnimator;
-
-    iget-object v1, p1, Lcom/android/server/wm/WindowAnimator;->mService:Lcom/android/server/wm/WindowManagerService;
-
-    iget-object v1, v1, Lcom/android/server/wm/WindowManagerService;->mFxSession:Landroid/view/SurfaceSession;
-
-    invoke-direct {v0, v1, p2}, Lcom/android/server/wm/DimAnimator;-><init>(Landroid/view/SurfaceSession;I)V
-
-    iput-object v0, p0, Lcom/android/server/wm/WindowAnimator$DisplayContentsAnimator;->mDimAnimator:Lcom/android/server/wm/DimAnimator;
-
-    new-instance v0, Lcom/android/server/wm/DimSurface;
-
-    iget-object v1, p1, Lcom/android/server/wm/WindowAnimator;->mService:Lcom/android/server/wm/WindowManagerService;
-
-    iget-object v1, v1, Lcom/android/server/wm/WindowManagerService;->mFxSession:Landroid/view/SurfaceSession;
-
-    invoke-direct {v0, v1, p2}, Lcom/android/server/wm/DimSurface;-><init>(Landroid/view/SurfaceSession;I)V
-
-    iput-object v0, p0, Lcom/android/server/wm/WindowAnimator$DisplayContentsAnimator;->mWindowAnimationBackgroundSurface:Lcom/android/server/wm/DimSurface;
+    .prologue
+    invoke-direct {p0, p1}, Lcom/android/server/wm/WindowAnimator$DisplayContentsAnimator;-><init>(Lcom/android/server/wm/WindowAnimator;)V
 
     return-void
 .end method

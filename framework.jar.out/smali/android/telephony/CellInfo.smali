@@ -34,6 +34,8 @@
 
 .field protected static final TYPE_LTE:I = 0x3
 
+.field protected static final TYPE_WCDMA:I = 0x4
+
 
 # instance fields
 .field private mRegistered:Z
@@ -167,8 +169,6 @@
     const-string v0, "java_ril"
 
     goto :goto_0
-
-    nop
 
     :pswitch_data_0
     .packed-switch 0x1
@@ -383,7 +383,7 @@
     invoke-direct {v0}, Ljava/lang/StringBuffer;-><init>()V
 
     .local v0, sb:Ljava/lang/StringBuffer;
-    const-string v2, " mRegistered="
+    const-string v2, "mRegistered="
 
     invoke-virtual {v0, v2}, Ljava/lang/StringBuffer;->append(Ljava/lang/String;)Ljava/lang/StringBuffer;
 

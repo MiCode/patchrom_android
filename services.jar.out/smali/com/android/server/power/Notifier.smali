@@ -32,6 +32,8 @@
 # instance fields
 .field private mActualPowerState:I
 
+.field private final mAppOps:Lcom/android/internal/app/IAppOpsService;
+
 .field private final mBatteryStats:Lcom/android/internal/app/IBatteryStats;
 
 .field private mBroadcastInProgress:Z
@@ -74,11 +76,12 @@
 
 
 # direct methods
-.method public constructor <init>(Landroid/os/Looper;Landroid/content/Context;Lcom/android/internal/app/IBatteryStats;Lcom/android/server/power/SuspendBlocker;Lcom/android/server/power/ScreenOnBlocker;Landroid/view/WindowManagerPolicy;)V
+.method public constructor <init>(Landroid/os/Looper;Landroid/content/Context;Lcom/android/internal/app/IBatteryStats;Lcom/android/internal/app/IAppOpsService;Lcom/android/server/power/SuspendBlocker;Lcom/android/server/power/ScreenOnBlocker;Landroid/view/WindowManagerPolicy;)V
     .locals 3
     .parameter "looper"
     .parameter "context"
     .parameter "batteryStats"
+    .parameter "appOps"
     .parameter "suspendBlocker"
     .parameter "screenOnBlocker"
     .parameter "policy"
@@ -116,11 +119,13 @@
 
     iput-object p3, p0, Lcom/android/server/power/Notifier;->mBatteryStats:Lcom/android/internal/app/IBatteryStats;
 
-    iput-object p4, p0, Lcom/android/server/power/Notifier;->mSuspendBlocker:Lcom/android/server/power/SuspendBlocker;
+    iput-object p4, p0, Lcom/android/server/power/Notifier;->mAppOps:Lcom/android/internal/app/IAppOpsService;
 
-    iput-object p5, p0, Lcom/android/server/power/Notifier;->mScreenOnBlocker:Lcom/android/server/power/ScreenOnBlocker;
+    iput-object p5, p0, Lcom/android/server/power/Notifier;->mSuspendBlocker:Lcom/android/server/power/SuspendBlocker;
 
-    iput-object p6, p0, Lcom/android/server/power/Notifier;->mPolicy:Landroid/view/WindowManagerPolicy;
+    iput-object p6, p0, Lcom/android/server/power/Notifier;->mScreenOnBlocker:Lcom/android/server/power/ScreenOnBlocker;
+
+    iput-object p7, p0, Lcom/android/server/power/Notifier;->mPolicy:Landroid/view/WindowManagerPolicy;
 
     new-instance v0, Lcom/android/server/power/Notifier$NotifierHandler;
 
@@ -1063,10 +1068,11 @@
     goto :goto_0
 .end method
 
-.method public onWakeLockAcquired(ILjava/lang/String;IILandroid/os/WorkSource;)V
-    .locals 2
+.method public onWakeLockAcquired(ILjava/lang/String;Ljava/lang/String;IILandroid/os/WorkSource;)V
+    .locals 4
     .parameter "flags"
     .parameter "tag"
+    .parameter "packageName"
     .parameter "ownerUid"
     .parameter "ownerPid"
     .parameter "workSource"
@@ -1078,11 +1084,11 @@
     move-result v0
 
     .local v0, monitorType:I
-    if-eqz p5, :cond_0
+    if-eqz p6, :cond_0
 
     iget-object v1, p0, Lcom/android/server/power/Notifier;->mBatteryStats:Lcom/android/internal/app/IBatteryStats;
 
-    invoke-interface {v1, p5, p4, p2, v0}, Lcom/android/internal/app/IBatteryStats;->noteStartWakelockFromSource(Landroid/os/WorkSource;ILjava/lang/String;I)V
+    invoke-interface {v1, p6, p5, p2, v0}, Lcom/android/internal/app/IBatteryStats;->noteStartWakelockFromSource(Landroid/os/WorkSource;ILjava/lang/String;I)V
 
     .end local v0           #monitorType:I
     :goto_0
@@ -1092,7 +1098,19 @@
     :cond_0
     iget-object v1, p0, Lcom/android/server/power/Notifier;->mBatteryStats:Lcom/android/internal/app/IBatteryStats;
 
-    invoke-interface {v1, p3, p4, p2, v0}, Lcom/android/internal/app/IBatteryStats;->noteStartWakelock(IILjava/lang/String;I)V
+    invoke-interface {v1, p4, p5, p2, v0}, Lcom/android/internal/app/IBatteryStats;->noteStartWakelock(IILjava/lang/String;I)V
+
+    iget-object v1, p0, Lcom/android/server/power/Notifier;->mAppOps:Lcom/android/internal/app/IAppOpsService;
+
+    iget-object v2, p0, Lcom/android/server/power/Notifier;->mAppOps:Lcom/android/internal/app/IAppOpsService;
+
+    invoke-static {v2}, Landroid/app/AppOpsManager;->getToken(Lcom/android/internal/app/IAppOpsService;)Landroid/os/IBinder;
+
+    move-result-object v2
+
+    const/16 v3, 0x28
+
+    invoke-interface {v1, v2, v3, p4, p3}, Lcom/android/internal/app/IAppOpsService;->startOperation(Landroid/os/IBinder;IILjava/lang/String;)I
     :try_end_0
     .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
 
@@ -1105,10 +1123,11 @@
     goto :goto_0
 .end method
 
-.method public onWakeLockReleased(ILjava/lang/String;IILandroid/os/WorkSource;)V
-    .locals 2
+.method public onWakeLockReleased(ILjava/lang/String;Ljava/lang/String;IILandroid/os/WorkSource;)V
+    .locals 4
     .parameter "flags"
     .parameter "tag"
+    .parameter "packageName"
     .parameter "ownerUid"
     .parameter "ownerPid"
     .parameter "workSource"
@@ -1120,11 +1139,11 @@
     move-result v0
 
     .local v0, monitorType:I
-    if-eqz p5, :cond_0
+    if-eqz p6, :cond_0
 
     iget-object v1, p0, Lcom/android/server/power/Notifier;->mBatteryStats:Lcom/android/internal/app/IBatteryStats;
 
-    invoke-interface {v1, p5, p4, p2, v0}, Lcom/android/internal/app/IBatteryStats;->noteStopWakelockFromSource(Landroid/os/WorkSource;ILjava/lang/String;I)V
+    invoke-interface {v1, p6, p5, p2, v0}, Lcom/android/internal/app/IBatteryStats;->noteStopWakelockFromSource(Landroid/os/WorkSource;ILjava/lang/String;I)V
 
     .end local v0           #monitorType:I
     :goto_0
@@ -1134,7 +1153,19 @@
     :cond_0
     iget-object v1, p0, Lcom/android/server/power/Notifier;->mBatteryStats:Lcom/android/internal/app/IBatteryStats;
 
-    invoke-interface {v1, p3, p4, p2, v0}, Lcom/android/internal/app/IBatteryStats;->noteStopWakelock(IILjava/lang/String;I)V
+    invoke-interface {v1, p4, p5, p2, v0}, Lcom/android/internal/app/IBatteryStats;->noteStopWakelock(IILjava/lang/String;I)V
+
+    iget-object v1, p0, Lcom/android/server/power/Notifier;->mAppOps:Lcom/android/internal/app/IAppOpsService;
+
+    iget-object v2, p0, Lcom/android/server/power/Notifier;->mAppOps:Lcom/android/internal/app/IAppOpsService;
+
+    invoke-static {v2}, Landroid/app/AppOpsManager;->getToken(Lcom/android/internal/app/IAppOpsService;)Landroid/os/IBinder;
+
+    move-result-object v2
+
+    const/16 v3, 0x28
+
+    invoke-interface {v1, v2, v3, p4, p3}, Lcom/android/internal/app/IAppOpsService;->finishOperation(Landroid/os/IBinder;IILjava/lang/String;)V
     :try_end_0
     .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
 

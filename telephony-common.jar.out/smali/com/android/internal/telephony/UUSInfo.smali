@@ -30,11 +30,11 @@
 
 
 # instance fields
-.field private uusData:[B
+.field private mUusData:[B
 
-.field private uusDcs:I
+.field private mUusDcs:I
 
-.field private uusType:I
+.field private mUusType:I
 
 
 # direct methods
@@ -46,15 +46,15 @@
 
     const/4 v0, 0x0
 
-    iput v0, p0, Lcom/android/internal/telephony/UUSInfo;->uusType:I
+    iput v0, p0, Lcom/android/internal/telephony/UUSInfo;->mUusType:I
 
     const/4 v0, 0x4
 
-    iput v0, p0, Lcom/android/internal/telephony/UUSInfo;->uusDcs:I
+    iput v0, p0, Lcom/android/internal/telephony/UUSInfo;->mUusDcs:I
 
     const/4 v0, 0x0
 
-    iput-object v0, p0, Lcom/android/internal/telephony/UUSInfo;->uusData:[B
+    iput-object v0, p0, Lcom/android/internal/telephony/UUSInfo;->mUusData:[B
 
     return-void
 .end method
@@ -68,11 +68,11 @@
     .prologue
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    iput p1, p0, Lcom/android/internal/telephony/UUSInfo;->uusType:I
+    iput p1, p0, Lcom/android/internal/telephony/UUSInfo;->mUusType:I
 
-    iput p2, p0, Lcom/android/internal/telephony/UUSInfo;->uusDcs:I
+    iput p2, p0, Lcom/android/internal/telephony/UUSInfo;->mUusDcs:I
 
-    iput-object p3, p0, Lcom/android/internal/telephony/UUSInfo;->uusData:[B
+    iput-object p3, p0, Lcom/android/internal/telephony/UUSInfo;->mUusData:[B
 
     return-void
 .end method
@@ -83,7 +83,7 @@
     .locals 1
 
     .prologue
-    iget v0, p0, Lcom/android/internal/telephony/UUSInfo;->uusDcs:I
+    iget v0, p0, Lcom/android/internal/telephony/UUSInfo;->mUusDcs:I
 
     return v0
 .end method
@@ -92,7 +92,7 @@
     .locals 1
 
     .prologue
-    iget v0, p0, Lcom/android/internal/telephony/UUSInfo;->uusType:I
+    iget v0, p0, Lcom/android/internal/telephony/UUSInfo;->mUusType:I
 
     return v0
 .end method
@@ -101,7 +101,7 @@
     .locals 1
 
     .prologue
-    iget-object v0, p0, Lcom/android/internal/telephony/UUSInfo;->uusData:[B
+    iget-object v0, p0, Lcom/android/internal/telephony/UUSInfo;->mUusData:[B
 
     return-object v0
 .end method
@@ -111,7 +111,7 @@
     .parameter "uusDcs"
 
     .prologue
-    iput p1, p0, Lcom/android/internal/telephony/UUSInfo;->uusDcs:I
+    iput p1, p0, Lcom/android/internal/telephony/UUSInfo;->mUusDcs:I
 
     return-void
 .end method
@@ -121,7 +121,7 @@
     .parameter "uusType"
 
     .prologue
-    iput p1, p0, Lcom/android/internal/telephony/UUSInfo;->uusType:I
+    iput p1, p0, Lcom/android/internal/telephony/UUSInfo;->mUusType:I
 
     return-void
 .end method
@@ -131,7 +131,7 @@
     .parameter "uusData"
 
     .prologue
-    iput-object p1, p0, Lcom/android/internal/telephony/UUSInfo;->uusData:[B
+    iput-object p1, p0, Lcom/android/internal/telephony/UUSInfo;->mUusData:[B
 
     return-void
 .end method

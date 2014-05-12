@@ -146,6 +146,8 @@
 
 .field public static final FORCE_DIGITAL_DOCK:I = 0x9
 
+.field public static final FORCE_EARPIECE:I = 0xc
+
 .field public static final FORCE_HEADPHONES:I = 0x2
 
 .field public static final FORCE_NONE:I = 0x0
@@ -161,6 +163,8 @@
 .field public static final FOR_COMMUNICATION:I = 0x0
 
 .field public static final FOR_DOCK:I = 0x3
+
+.field public static final FOR_LB_TEST:I = 0x5
 
 .field public static final FOR_MEDIA:I = 0x1
 
@@ -182,9 +186,9 @@
 
 .field private static final NUM_DEVICE_STATES:I = 0x1
 
-.field private static final NUM_FORCE_CONFIG:I = 0xc
+.field private static final NUM_FORCE_CONFIG:I = 0xd
 
-.field private static final NUM_FORCE_USE:I = 0x5
+.field private static final NUM_FORCE_USE:I = 0x6
 
 .field public static final NUM_MODES:I = 0x4
 
@@ -268,6 +272,9 @@
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
+.end method
+
+.method public static native checkAudioFlinger()I
 .end method
 
 .method private static errorCallbackFromNative(I)V
@@ -449,6 +456,9 @@
     return v0
 .end method
 
+.method public static native getOutputLatency(I)I
+.end method
+
 .method public static native getParameters(Ljava/lang/String;)Ljava/lang/String;
 .end method
 
@@ -473,6 +483,9 @@
 .method public static native isStreamActive(II)Z
 .end method
 
+.method public static native isStreamActiveRemotely(II)Z
+.end method
+
 .method public static native muteMicrophone(Z)I
 .end method
 
@@ -491,26 +504,33 @@
     :try_start_0
     sput-object p0, Landroid/media/AudioSystem;->mErrorCallback:Landroid/media/AudioSystem$ErrorCallback;
 
-    monitor-exit v1
-    :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+    if-eqz p0, :cond_0
 
-    invoke-static {}, Landroid/media/AudioSystem;->isMicrophoneMuted()Z
+    invoke-static {}, Landroid/media/AudioSystem;->checkAudioFlinger()I
+
+    move-result v0
+
+    invoke-interface {p0, v0}, Landroid/media/AudioSystem$ErrorCallback;->onError(I)V
+
+    :cond_0
+    monitor-exit v1
 
     return-void
 
     :catchall_0
     move-exception v0
 
-    :try_start_1
     monitor-exit v1
-    :try_end_1
-    .catchall {:try_start_1 .. :try_end_1} :catchall_0
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
     throw v0
 .end method
 
 .method public static native setForceUse(II)I
+.end method
+
+.method public static native setLowRamDevice(Z)I
 .end method
 
 .method public static native setMasterMute(Z)I

@@ -15,6 +15,8 @@
 
 
 # instance fields
+.field mLooper:Landroid/os/Looper;
+
 .field mReady:Z
 
 .field mService:Lcom/android/server/am/ActivityManagerService;
@@ -39,7 +41,7 @@
 
 # virtual methods
 .method public run()V
-    .locals 3
+    .locals 4
 
     .prologue
     invoke-static {}, Landroid/os/Looper;->prepare()V
@@ -63,6 +65,28 @@
 
     :try_start_0
     iput-object v0, p0, Lcom/android/server/am/ActivityManagerService$AThread;->mService:Lcom/android/server/am/ActivityManagerService;
+
+    invoke-static {}, Landroid/os/Looper;->myLooper()Landroid/os/Looper;
+
+    move-result-object v1
+
+    iput-object v1, p0, Lcom/android/server/am/ActivityManagerService$AThread;->mLooper:Landroid/os/Looper;
+
+    invoke-static {}, Lcom/android/server/Watchdog;->getInstance()Lcom/android/server/Watchdog;
+
+    move-result-object v1
+
+    new-instance v2, Landroid/os/Handler;
+
+    iget-object v3, p0, Lcom/android/server/am/ActivityManagerService$AThread;->mLooper:Landroid/os/Looper;
+
+    invoke-direct {v2, v3}, Landroid/os/Handler;-><init>(Landroid/os/Looper;)V
+
+    invoke-virtual {p0}, Lcom/android/server/am/ActivityManagerService$AThread;->getName()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-virtual {v1, v2, v3}, Lcom/android/server/Watchdog;->addThread(Landroid/os/Handler;Ljava/lang/String;)V
 
     invoke-virtual {p0}, Ljava/lang/Object;->notifyAll()V
 

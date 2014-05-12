@@ -90,93 +90,126 @@
 .end method
 
 .method public static varargs ofFloat([F)Landroid/animation/KeyframeSet;
-    .locals 7
+    .locals 8
     .parameter "values"
 
     .prologue
-    const/4 v6, 0x1
+    const/4 v7, 0x1
 
     const/4 v5, 0x0
 
-    const/4 v4, 0x0
+    const/4 v6, 0x0
 
-    array-length v2, p0
+    const/4 v0, 0x0
 
-    .local v2, numKeyframes:I
-    const/4 v3, 0x2
+    .local v0, badValue:Z
+    array-length v3, p0
 
-    invoke-static {v2, v3}, Ljava/lang/Math;->max(II)I
+    .local v3, numKeyframes:I
+    const/4 v4, 0x2
 
-    move-result v3
+    invoke-static {v3, v4}, Ljava/lang/Math;->max(II)I
 
-    new-array v1, v3, [Landroid/animation/Keyframe$FloatKeyframe;
+    move-result v4
 
-    .local v1, keyframes:[Landroid/animation/Keyframe$FloatKeyframe;
-    if-ne v2, v6, :cond_1
+    new-array v2, v4, [Landroid/animation/Keyframe$FloatKeyframe;
+
+    .local v2, keyframes:[Landroid/animation/Keyframe$FloatKeyframe;
+    if-ne v3, v7, :cond_2
 
     invoke-static {v5}, Landroid/animation/Keyframe;->ofFloat(F)Landroid/animation/Keyframe;
 
-    move-result-object v3
+    move-result-object v4
 
-    check-cast v3, Landroid/animation/Keyframe$FloatKeyframe;
+    check-cast v4, Landroid/animation/Keyframe$FloatKeyframe;
 
-    aput-object v3, v1, v4
+    aput-object v4, v2, v6
 
-    const/high16 v3, 0x3f80
+    const/high16 v4, 0x3f80
 
-    aget v4, p0, v4
+    aget v5, p0, v6
 
-    invoke-static {v3, v4}, Landroid/animation/Keyframe;->ofFloat(FF)Landroid/animation/Keyframe;
+    invoke-static {v4, v5}, Landroid/animation/Keyframe;->ofFloat(FF)Landroid/animation/Keyframe;
 
-    move-result-object v3
+    move-result-object v4
 
-    check-cast v3, Landroid/animation/Keyframe$FloatKeyframe;
+    check-cast v4, Landroid/animation/Keyframe$FloatKeyframe;
 
-    aput-object v3, v1, v6
+    aput-object v4, v2, v7
 
-    :cond_0
-    new-instance v3, Landroid/animation/FloatKeyframeSet;
+    aget v4, p0, v6
 
-    invoke-direct {v3, v1}, Landroid/animation/FloatKeyframeSet;-><init>([Landroid/animation/Keyframe$FloatKeyframe;)V
+    invoke-static {v4}, Ljava/lang/Float;->isNaN(F)Z
 
-    return-object v3
+    move-result v4
 
-    :cond_1
-    aget v3, p0, v4
-
-    invoke-static {v5, v3}, Landroid/animation/Keyframe;->ofFloat(FF)Landroid/animation/Keyframe;
-
-    move-result-object v3
-
-    check-cast v3, Landroid/animation/Keyframe$FloatKeyframe;
-
-    aput-object v3, v1, v4
+    if-eqz v4, :cond_0
 
     const/4 v0, 0x1
 
-    .local v0, i:I
+    :cond_0
+    if-eqz v0, :cond_1
+
+    const-string v4, "Animator"
+
+    const-string v5, "Bad value (NaN) in float animator"
+
+    invoke-static {v4, v5}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+
+    :cond_1
+    new-instance v4, Landroid/animation/FloatKeyframeSet;
+
+    invoke-direct {v4, v2}, Landroid/animation/FloatKeyframeSet;-><init>([Landroid/animation/Keyframe$FloatKeyframe;)V
+
+    return-object v4
+
+    :cond_2
+    aget v4, p0, v6
+
+    invoke-static {v5, v4}, Landroid/animation/Keyframe;->ofFloat(FF)Landroid/animation/Keyframe;
+
+    move-result-object v4
+
+    check-cast v4, Landroid/animation/Keyframe$FloatKeyframe;
+
+    aput-object v4, v2, v6
+
+    const/4 v1, 0x1
+
+    .local v1, i:I
     :goto_0
-    if-ge v0, v2, :cond_0
+    if-ge v1, v3, :cond_0
 
-    int-to-float v3, v0
+    int-to-float v4, v1
 
-    add-int/lit8 v4, v2, -0x1
+    add-int/lit8 v5, v3, -0x1
 
-    int-to-float v4, v4
+    int-to-float v5, v5
 
-    div-float/2addr v3, v4
+    div-float/2addr v4, v5
 
-    aget v4, p0, v0
+    aget v5, p0, v1
 
-    invoke-static {v3, v4}, Landroid/animation/Keyframe;->ofFloat(FF)Landroid/animation/Keyframe;
+    invoke-static {v4, v5}, Landroid/animation/Keyframe;->ofFloat(FF)Landroid/animation/Keyframe;
 
-    move-result-object v3
+    move-result-object v4
 
-    check-cast v3, Landroid/animation/Keyframe$FloatKeyframe;
+    check-cast v4, Landroid/animation/Keyframe$FloatKeyframe;
 
-    aput-object v3, v1, v0
+    aput-object v4, v2, v1
 
-    add-int/lit8 v0, v0, 0x1
+    aget v4, p0, v1
+
+    invoke-static {v4}, Ljava/lang/Float;->isNaN(F)Z
+
+    move-result v4
+
+    if-eqz v4, :cond_3
+
+    const/4 v0, 0x1
+
+    :cond_3
+    add-int/lit8 v1, v1, 0x1
 
     goto :goto_0
 .end method

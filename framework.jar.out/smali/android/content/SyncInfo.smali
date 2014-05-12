@@ -43,7 +43,7 @@
     return-void
 .end method
 
-.method constructor <init>(ILandroid/accounts/Account;Ljava/lang/String;J)V
+.method public constructor <init>(ILandroid/accounts/Account;Ljava/lang/String;J)V
     .locals 0
     .parameter "authorityId"
     .parameter "account"
@@ -60,6 +60,42 @@
     iput-object p3, p0, Landroid/content/SyncInfo;->authority:Ljava/lang/String;
 
     iput-wide p4, p0, Landroid/content/SyncInfo;->startTime:J
+
+    return-void
+.end method
+
+.method public constructor <init>(Landroid/content/SyncInfo;)V
+    .locals 3
+    .parameter "other"
+
+    .prologue
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    iget v0, p1, Landroid/content/SyncInfo;->authorityId:I
+
+    iput v0, p0, Landroid/content/SyncInfo;->authorityId:I
+
+    new-instance v0, Landroid/accounts/Account;
+
+    iget-object v1, p1, Landroid/content/SyncInfo;->account:Landroid/accounts/Account;
+
+    iget-object v1, v1, Landroid/accounts/Account;->name:Ljava/lang/String;
+
+    iget-object v2, p1, Landroid/content/SyncInfo;->account:Landroid/accounts/Account;
+
+    iget-object v2, v2, Landroid/accounts/Account;->type:Ljava/lang/String;
+
+    invoke-direct {v0, v1, v2}, Landroid/accounts/Account;-><init>(Ljava/lang/String;Ljava/lang/String;)V
+
+    iput-object v0, p0, Landroid/content/SyncInfo;->account:Landroid/accounts/Account;
+
+    iget-object v0, p1, Landroid/content/SyncInfo;->authority:Ljava/lang/String;
+
+    iput-object v0, p0, Landroid/content/SyncInfo;->authority:Ljava/lang/String;
+
+    iget-wide v0, p1, Landroid/content/SyncInfo;->startTime:J
+
+    iput-wide v0, p0, Landroid/content/SyncInfo;->startTime:J
 
     return-void
 .end method

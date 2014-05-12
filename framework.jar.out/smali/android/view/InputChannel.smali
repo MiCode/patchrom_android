@@ -53,6 +53,9 @@
 .method private native nativeDispose(Z)V
 .end method
 
+.method private native nativeDup(Landroid/view/InputChannel;)V
+.end method
+
 .method private native nativeGetName()Ljava/lang/String;
 .end method
 
@@ -111,6 +114,20 @@
     invoke-direct {p0, v0}, Landroid/view/InputChannel;->nativeDispose(Z)V
 
     return-void
+.end method
+
+.method public dup()Landroid/view/InputChannel;
+    .locals 1
+
+    .prologue
+    new-instance v0, Landroid/view/InputChannel;
+
+    invoke-direct {v0}, Landroid/view/InputChannel;-><init>()V
+
+    .local v0, target:Landroid/view/InputChannel;
+    invoke-direct {p0, v0}, Landroid/view/InputChannel;->nativeDup(Landroid/view/InputChannel;)V
+
+    return-object v0
 .end method
 
 .method protected finalize()V

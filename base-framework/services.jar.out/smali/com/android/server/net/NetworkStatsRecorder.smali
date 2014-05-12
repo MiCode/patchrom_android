@@ -292,6 +292,7 @@
     invoke-virtual {v1}, Lcom/android/server/net/NetworkStatsCollection;->reset()V
     :try_end_0
     .catch Ljava/io/IOException; {:try_start_0 .. :try_end_0} :catch_0
+    .catch Ljava/lang/OutOfMemoryError; {:try_start_0 .. :try_end_0} :catch_1
 
     :cond_0
     :goto_0
@@ -301,6 +302,21 @@
     move-exception v0
 
     .local v0, e:Ljava/io/IOException;
+    const-string v1, "NetworkStatsRecorder"
+
+    const-string v2, "problem persisting pending stats"
+
+    invoke-static {v1, v2, v0}, Landroid/util/Log;->wtf(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+
+    invoke-direct {p0}, Lcom/android/server/net/NetworkStatsRecorder;->recoverFromWtf()V
+
+    goto :goto_0
+
+    .end local v0           #e:Ljava/io/IOException;
+    :catch_1
+    move-exception v0
+
+    .local v0, e:Ljava/lang/OutOfMemoryError;
     const-string v1, "NetworkStatsRecorder"
 
     const-string v2, "problem persisting pending stats"
@@ -342,6 +358,7 @@
     invoke-direct {v1, v2, v3}, Lcom/android/server/net/NetworkStatsCollection;-><init>(J)V
     :try_end_0
     .catch Ljava/io/IOException; {:try_start_0 .. :try_end_0} :catch_0
+    .catch Ljava/lang/OutOfMemoryError; {:try_start_0 .. :try_end_0} :catch_1
 
     .end local v6           #complete:Lcom/android/server/net/NetworkStatsCollection;
     .local v1, complete:Lcom/android/server/net/NetworkStatsCollection;
@@ -364,7 +381,8 @@
 
     iput-object v0, p0, Lcom/android/server/net/NetworkStatsRecorder;->mComplete:Ljava/lang/ref/WeakReference;
     :try_end_1
-    .catch Ljava/io/IOException; {:try_start_1 .. :try_end_1} :catch_1
+    .catch Ljava/io/IOException; {:try_start_1 .. :try_end_1} :catch_3
+    .catch Ljava/lang/OutOfMemoryError; {:try_start_1 .. :try_end_1} :catch_2
 
     .end local v1           #complete:Lcom/android/server/net/NetworkStatsCollection;
     :goto_1
@@ -395,8 +413,33 @@
     goto :goto_1
 
     .end local v7           #e:Ljava/io/IOException;
-    .restart local v1       #complete:Lcom/android/server/net/NetworkStatsCollection;
+    .restart local v6       #complete:Lcom/android/server/net/NetworkStatsCollection;
     :catch_1
+    move-exception v7
+
+    move-object v1, v6
+
+    .end local v6           #complete:Lcom/android/server/net/NetworkStatsCollection;
+    .local v7, e:Ljava/lang/OutOfMemoryError;
+    :goto_3
+    const-string v0, "NetworkStatsRecorder"
+
+    const-string v2, "problem completely reading network stats"
+
+    invoke-static {v0, v2, v7}, Landroid/util/Log;->wtf(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+
+    invoke-direct {p0}, Lcom/android/server/net/NetworkStatsRecorder;->recoverFromWtf()V
+
+    goto :goto_1
+
+    .end local v7           #e:Ljava/lang/OutOfMemoryError;
+    .restart local v1       #complete:Lcom/android/server/net/NetworkStatsCollection;
+    :catch_2
+    move-exception v7
+
+    goto :goto_3
+
+    :catch_3
     move-exception v7
 
     goto :goto_2
@@ -806,6 +849,7 @@
     invoke-virtual {v2, v3}, Lcom/android/internal/util/FileRotator;->rewriteAll(Lcom/android/internal/util/FileRotator$Rewriter;)V
     :try_end_0
     .catch Ljava/io/IOException; {:try_start_0 .. :try_end_0} :catch_0
+    .catch Ljava/lang/OutOfMemoryError; {:try_start_0 .. :try_end_0} :catch_1
 
     :goto_0
     iget-object v2, p0, Lcom/android/server/net/NetworkStatsRecorder;->mPending:Lcom/android/server/net/NetworkStatsCollection;
@@ -888,6 +932,41 @@
     goto :goto_0
 
     .end local v1           #e:Ljava/io/IOException;
+    :catch_1
+    move-exception v1
+
+    .local v1, e:Ljava/lang/OutOfMemoryError;
+    const-string v2, "NetworkStatsRecorder"
+
+    new-instance v3, Ljava/lang/StringBuilder;
+
+    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v4, "problem removing UIDs "
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    invoke-static {p1}, Ljava/util/Arrays;->toString([I)Ljava/lang/String;
+
+    move-result-object v4
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-static {v2, v3, v1}, Landroid/util/Log;->wtf(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+
+    invoke-direct {p0}, Lcom/android/server/net/NetworkStatsRecorder;->recoverFromWtf()V
+
+    goto :goto_0
+
+    .end local v1           #e:Ljava/lang/OutOfMemoryError;
     :cond_2
     const/4 v0, 0x0
 

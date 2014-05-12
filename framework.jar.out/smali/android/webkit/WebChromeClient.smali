@@ -124,6 +124,8 @@
     .parameter "estimatedDatabaseSize"
     .parameter "totalQuota"
     .parameter "quotaUpdater"
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
 
     .prologue
     invoke-interface {p9, p3, p4}, Landroid/webkit/WebStorage$QuotaUpdater;->updateQuota(J)V
@@ -230,6 +232,8 @@
     .parameter "requiredStorage"
     .parameter "quota"
     .parameter "quotaUpdater"
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
 
     .prologue
     invoke-interface {p5, p3, p4}, Landroid/webkit/WebStorage$QuotaUpdater;->updateQuota(J)V
@@ -278,6 +282,8 @@
     .parameter "view"
     .parameter "requestedOrientation"
     .parameter "callback"
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
 
     .prologue
     return-void

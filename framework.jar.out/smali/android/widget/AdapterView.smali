@@ -1372,7 +1372,7 @@
     invoke-virtual {p0}, Landroid/widget/AdapterView;->checkSelectionChanged()V
 
     :cond_5
-    invoke-virtual {p0}, Landroid/widget/AdapterView;->notifyAccessibilityStateChanged()V
+    invoke-virtual {p0}, Landroid/widget/AdapterView;->notifySubtreeAccessibilityStateChangedIfNeeded()V
 
     return-void
 .end method

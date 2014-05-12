@@ -367,7 +367,9 @@
 
     if-eqz p2, :cond_7
 
-    invoke-virtual {p2}, Ljava/lang/String;->toLowerCase()Ljava/lang/String;
+    sget-object v8, Ljava/util/Locale;->ROOT:Ljava/util/Locale;
+
+    invoke-virtual {p2, v8}, Ljava/lang/String;->toLowerCase(Ljava/util/Locale;)Ljava/lang/String;
 
     move-result-object v8
 

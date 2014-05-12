@@ -26,6 +26,15 @@
 
 
 # virtual methods
+.method public getBitmap()Landroid/graphics/Bitmap;
+    .locals 1
+
+    .prologue
+    const/4 v0, 0x0
+
+    return-object v0
+.end method
+
 .method public abstract getChangingConfigurations()I
 .end method
 

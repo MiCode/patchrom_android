@@ -221,10 +221,11 @@
     return-object v0
 .end method
 
-.method public onDebugDraw(Landroid/view/View;Landroid/graphics/Canvas;)V
+.method public onDebugDraw(Landroid/view/View;Landroid/graphics/Canvas;Landroid/graphics/Paint;)V
     .locals 0
     .parameter "view"
     .parameter "canvas"
+    .parameter "paint"
 
     .prologue
     return-void

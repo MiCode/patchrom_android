@@ -62,17 +62,6 @@
 
 
 # instance fields
-.field private final emptyConnections:Ljava/util/ArrayList;
-    .annotation system Ldalvik/annotation/Signature;
-        value = {
-            "Ljava/util/ArrayList",
-            "<",
-            "Lcom/android/internal/telephony/Connection;",
-            ">;"
-        }
-    .end annotation
-.end field
-
 .field private final mBackgroundCalls:Ljava/util/ArrayList;
     .annotation system Ldalvik/annotation/Signature;
         value = {
@@ -95,6 +84,17 @@
 .field protected final mDisplayInfoRegistrants:Landroid/os/RegistrantList;
 
 .field protected final mEcmTimerResetRegistrants:Landroid/os/RegistrantList;
+
+.field private final mEmptyConnections:Ljava/util/ArrayList;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "Ljava/util/ArrayList",
+            "<",
+            "Lcom/android/internal/telephony/Connection;",
+            ">;"
+        }
+    .end annotation
+.end field
 
 .field private final mForegroundCalls:Ljava/util/ArrayList;
     .annotation system Ldalvik/annotation/Signature;
@@ -190,7 +190,7 @@
 
     invoke-direct {v0}, Ljava/util/ArrayList;-><init>()V
 
-    iput-object v0, p0, Lcom/android/internal/telephony/CallManager;->emptyConnections:Ljava/util/ArrayList;
+    iput-object v0, p0, Lcom/android/internal/telephony/CallManager;->mEmptyConnections:Ljava/util/ArrayList;
 
     const/4 v0, 0x0
 
@@ -372,167 +372,104 @@
 .end method
 
 .method private canDial(Lcom/android/internal/telephony/Phone;)Z
-    .locals 10
+    .locals 7
     .parameter "phone"
 
     .prologue
-    const/4 v7, 0x1
-
-    const/4 v8, 0x0
-
     invoke-interface {p1}, Lcom/android/internal/telephony/Phone;->getServiceState()Landroid/telephony/ServiceState;
 
-    move-result-object v9
+    move-result-object v4
 
-    invoke-virtual {v9}, Landroid/telephony/ServiceState;->getState()I
-
-    move-result v6
-
-    .local v6, serviceState:I
-    invoke-virtual {p0}, Lcom/android/internal/telephony/CallManager;->hasActiveRingingCall()Z
-
-    move-result v4
-
-    .local v4, hasRingingCall:Z
-    invoke-virtual {p0}, Lcom/android/internal/telephony/CallManager;->hasActiveFgCall()Z
-
-    move-result v2
-
-    .local v2, hasActiveCall:Z
-    invoke-virtual {p0}, Lcom/android/internal/telephony/CallManager;->hasActiveBgCall()Z
+    invoke-virtual {v4}, Landroid/telephony/ServiceState;->getState()I
 
     move-result v3
 
-    .local v3, hasHoldingCall:Z
-    if-eqz v2, :cond_2
+    .local v3, serviceState:I
+    invoke-virtual {p0}, Lcom/android/internal/telephony/CallManager;->hasActiveRingingCall()Z
 
-    if-eqz v3, :cond_2
+    move-result v1
 
-    move v0, v7
-
-    .local v0, allLinesTaken:Z
-    :goto_0
+    .local v1, hasRingingCall:Z
     invoke-virtual {p0}, Lcom/android/internal/telephony/CallManager;->getActiveFgCallState()Lcom/android/internal/telephony/Call$State;
 
-    move-result-object v1
+    move-result-object v0
 
-    .local v1, fgCallState:Lcom/android/internal/telephony/Call$State;
-    const/4 v9, 0x3
+    .local v0, fgCallState:Lcom/android/internal/telephony/Call$State;
+    const/4 v4, 0x3
 
-    if-eq v6, v9, :cond_3
+    if-eq v3, v4, :cond_2
 
-    if-nez v4, :cond_3
+    if-nez v1, :cond_2
 
-    if-nez v0, :cond_3
+    sget-object v4, Lcom/android/internal/telephony/Call$State;->ACTIVE:Lcom/android/internal/telephony/Call$State;
 
-    sget-object v9, Lcom/android/internal/telephony/Call$State;->ACTIVE:Lcom/android/internal/telephony/Call$State;
+    if-eq v0, v4, :cond_0
 
-    if-eq v1, v9, :cond_0
+    sget-object v4, Lcom/android/internal/telephony/Call$State;->IDLE:Lcom/android/internal/telephony/Call$State;
 
-    sget-object v9, Lcom/android/internal/telephony/Call$State;->IDLE:Lcom/android/internal/telephony/Call$State;
+    if-eq v0, v4, :cond_0
 
-    if-eq v1, v9, :cond_0
+    sget-object v4, Lcom/android/internal/telephony/Call$State;->DISCONNECTED:Lcom/android/internal/telephony/Call$State;
 
-    sget-object v9, Lcom/android/internal/telephony/Call$State;->DISCONNECTED:Lcom/android/internal/telephony/Call$State;
-
-    if-ne v1, v9, :cond_3
+    if-ne v0, v4, :cond_2
 
     :cond_0
-    move v5, v7
+    const/4 v2, 0x1
 
-    .local v5, result:Z
-    :goto_1
-    if-nez v5, :cond_1
+    .local v2, result:Z
+    :goto_0
+    if-nez v2, :cond_1
 
-    const-string v7, "CallManager"
+    const-string v4, "CallManager"
 
-    new-instance v8, Ljava/lang/StringBuilder;
+    new-instance v5, Ljava/lang/StringBuilder;
 
-    invoke-direct {v8}, Ljava/lang/StringBuilder;-><init>()V
+    invoke-direct {v5}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v9, "canDial serviceState="
+    const-string v6, "canDial serviceState="
 
-    invoke-virtual {v8, v9}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v8
+    move-result-object v5
 
-    invoke-virtual {v8, v6}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+    invoke-virtual {v5, v3}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
-    move-result-object v8
+    move-result-object v5
 
-    const-string v9, " hasRingingCall="
+    const-string v6, " hasRingingCall="
 
-    invoke-virtual {v8, v9}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v8
+    move-result-object v5
 
-    invoke-virtual {v8, v4}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;
+    invoke-virtual {v5, v1}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;
 
-    move-result-object v8
+    move-result-object v5
 
-    const-string v9, " hasActiveCall="
+    const-string v6, " fgCallState="
 
-    invoke-virtual {v8, v9}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v8
+    move-result-object v5
 
-    invoke-virtual {v8, v2}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;
+    invoke-virtual {v5, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
 
-    move-result-object v8
+    move-result-object v5
 
-    const-string v9, " hasHoldingCall="
+    invoke-virtual {v5}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    invoke-virtual {v8, v9}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    move-result-object v5
 
-    move-result-object v8
-
-    invoke-virtual {v8, v3}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;
-
-    move-result-object v8
-
-    const-string v9, " allLinesTaken="
-
-    invoke-virtual {v8, v9}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v8
-
-    invoke-virtual {v8, v0}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;
-
-    move-result-object v8
-
-    const-string v9, " fgCallState="
-
-    invoke-virtual {v8, v9}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v8
-
-    invoke-virtual {v8, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
-
-    move-result-object v8
-
-    invoke-virtual {v8}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v8
-
-    invoke-static {v7, v8}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v4, v5}, Landroid/telephony/Rlog;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     :cond_1
-    return v5
+    return v2
 
-    .end local v0           #allLinesTaken:Z
-    .end local v1           #fgCallState:Lcom/android/internal/telephony/Call$State;
-    .end local v5           #result:Z
+    .end local v2           #result:Z
     :cond_2
-    move v0, v8
+    const/4 v2, 0x0
 
     goto :goto_0
-
-    .restart local v0       #allLinesTaken:Z
-    .restart local v1       #fgCallState:Lcom/android/internal/telephony/Call$State;
-    :cond_3
-    move v5, v8
-
-    goto :goto_1
 .end method
 
 .method private getContext()Landroid/content/Context;
@@ -1202,7 +1139,7 @@
 
     const-string v8, "Speedup Audio Path enhancement: Context is null"
 
-    invoke-static {v7, v8}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v7, v8}, Landroid/telephony/Rlog;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     :cond_2
     :goto_2
@@ -1250,7 +1187,7 @@
 
     move-result-object v8
 
-    const v9, 0x111004b
+    const v9, 0x1110056
 
     invoke-virtual {v8, v9}, Landroid/content/res/Resources;->getBoolean(I)Z
 
@@ -1262,7 +1199,7 @@
 
     const-string v9, "Speedup Audio Path enhancement"
 
-    invoke-static {v8, v9}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v8, v9}, Landroid/telephony/Rlog;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     const-string v8, "audio"
 
@@ -1314,7 +1251,7 @@
 
     move-result-object v9
 
-    invoke-static {v8, v9}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v8, v9}, Landroid/telephony/Rlog;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     invoke-virtual {v1, v11}, Landroid/media/AudioManager;->setMode(I)V
 
@@ -1603,7 +1540,7 @@
 
     move-result-object v4
 
-    invoke-static {v6, v4}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v6, v4}, Landroid/telephony/Rlog;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     if-eq v0, v1, :cond_1
 
@@ -1613,7 +1550,7 @@
 
     const-string v5, "Hangup"
 
-    invoke-static {v4, v5}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v4, v5}, Landroid/telephony/Rlog;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     invoke-virtual {p0}, Lcom/android/internal/telephony/CallManager;->getActiveFgCall()Lcom/android/internal/telephony/Call;
 
@@ -1650,7 +1587,7 @@
 
     const-string v5, "Switch"
 
-    invoke-static {v4, v5}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v4, v5}, Landroid/telephony/Rlog;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     invoke-interface {v0}, Lcom/android/internal/telephony/Phone;->switchHoldingAndActive()V
 
@@ -1831,7 +1768,7 @@
     return-object v1
 
     :cond_0
-    iget-object v1, p0, Lcom/android/internal/telephony/CallManager;->emptyConnections:Ljava/util/ArrayList;
+    iget-object v1, p0, Lcom/android/internal/telephony/CallManager;->mEmptyConnections:Ljava/util/ArrayList;
 
     goto :goto_0
 .end method
@@ -1888,7 +1825,7 @@
     return-object v1
 
     :cond_0
-    iget-object v1, p0, Lcom/android/internal/telephony/CallManager;->emptyConnections:Ljava/util/ArrayList;
+    iget-object v1, p0, Lcom/android/internal/telephony/CallManager;->mEmptyConnections:Ljava/util/ArrayList;
 
     goto :goto_0
 .end method
@@ -2092,7 +2029,7 @@
 
     const-string v1, "getPendingMmiCodes not implemented"
 
-    invoke-static {v0, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v0, v1}, Landroid/telephony/Rlog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     const/4 v0, 0x0
 
@@ -2791,7 +2728,7 @@
 
     move-result-object v2
 
-    invoke-static {v1, v2}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v1, v2}, Landroid/telephony/Rlog;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     iget-object v1, p0, Lcom/android/internal/telephony/CallManager;->mPhones:Ljava/util/ArrayList;
 
@@ -2940,7 +2877,7 @@
 
     const-string v1, "sendUssdResponse not implemented"
 
-    invoke-static {v0, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v0, v1}, Landroid/telephony/Rlog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     const/4 v0, 0x0
 
@@ -3900,7 +3837,7 @@
 
     move-result-object v2
 
-    invoke-static {v1, v2}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v1, v2}, Landroid/telephony/Rlog;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     iget-object v1, p0, Lcom/android/internal/telephony/CallManager;->mPhones:Ljava/util/ArrayList;
 

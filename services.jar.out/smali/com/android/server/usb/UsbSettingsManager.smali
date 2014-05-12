@@ -3231,111 +3231,147 @@
 .end method
 
 .method public hasPermission(Landroid/hardware/usb/UsbAccessory;)Z
-    .locals 3
+    .locals 4
     .parameter "accessory"
 
     .prologue
-    iget-object v2, p0, Lcom/android/server/usb/UsbSettingsManager;->mLock:Ljava/lang/Object;
+    iget-object v3, p0, Lcom/android/server/usb/UsbSettingsManager;->mLock:Ljava/lang/Object;
 
-    monitor-enter v2
+    monitor-enter v3
 
     :try_start_0
-    iget-object v1, p0, Lcom/android/server/usb/UsbSettingsManager;->mAccessoryPermissionMap:Ljava/util/HashMap;
-
-    invoke-virtual {v1, p1}, Ljava/util/HashMap;->get(Ljava/lang/Object;)Ljava/lang/Object;
-
-    move-result-object v0
-
-    check-cast v0, Landroid/util/SparseBooleanArray;
-
-    .local v0, uidList:Landroid/util/SparseBooleanArray;
-    if-nez v0, :cond_0
-
-    const/4 v1, 0x0
-
-    monitor-exit v2
-
-    :goto_0
-    return v1
-
-    :cond_0
     invoke-static {}, Landroid/os/Binder;->getCallingUid()I
 
-    move-result v1
+    move-result v0
 
-    invoke-virtual {v0, v1}, Landroid/util/SparseBooleanArray;->get(I)Z
+    .local v0, uid:I
+    const/16 v2, 0x3e8
 
-    move-result v1
+    if-ne v0, v2, :cond_0
 
-    monitor-exit v2
+    const/4 v2, 0x1
+
+    monitor-exit v3
+
+    :goto_0
+    return v2
+
+    :cond_0
+    iget-object v2, p0, Lcom/android/server/usb/UsbSettingsManager;->mAccessoryPermissionMap:Ljava/util/HashMap;
+
+    invoke-virtual {v2, p1}, Ljava/util/HashMap;->get(Ljava/lang/Object;)Ljava/lang/Object;
+
+    move-result-object v1
+
+    check-cast v1, Landroid/util/SparseBooleanArray;
+
+    .local v1, uidList:Landroid/util/SparseBooleanArray;
+    if-nez v1, :cond_1
+
+    const/4 v2, 0x0
+
+    monitor-exit v3
 
     goto :goto_0
 
-    .end local v0           #uidList:Landroid/util/SparseBooleanArray;
+    .end local v0           #uid:I
+    .end local v1           #uidList:Landroid/util/SparseBooleanArray;
     :catchall_0
-    move-exception v1
+    move-exception v2
 
-    monitor-exit v2
+    monitor-exit v3
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    throw v1
+    throw v2
+
+    .restart local v0       #uid:I
+    .restart local v1       #uidList:Landroid/util/SparseBooleanArray;
+    :cond_1
+    :try_start_1
+    invoke-virtual {v1, v0}, Landroid/util/SparseBooleanArray;->get(I)Z
+
+    move-result v2
+
+    monitor-exit v3
+    :try_end_1
+    .catchall {:try_start_1 .. :try_end_1} :catchall_0
+
+    goto :goto_0
 .end method
 
 .method public hasPermission(Landroid/hardware/usb/UsbDevice;)Z
-    .locals 4
+    .locals 5
     .parameter "device"
 
     .prologue
-    iget-object v2, p0, Lcom/android/server/usb/UsbSettingsManager;->mLock:Ljava/lang/Object;
+    iget-object v3, p0, Lcom/android/server/usb/UsbSettingsManager;->mLock:Ljava/lang/Object;
 
-    monitor-enter v2
+    monitor-enter v3
 
     :try_start_0
-    iget-object v1, p0, Lcom/android/server/usb/UsbSettingsManager;->mDevicePermissionMap:Ljava/util/HashMap;
+    invoke-static {}, Landroid/os/Binder;->getCallingUid()I
+
+    move-result v0
+
+    .local v0, uid:I
+    const/16 v2, 0x3e8
+
+    if-ne v0, v2, :cond_0
+
+    const/4 v2, 0x1
+
+    monitor-exit v3
+
+    :goto_0
+    return v2
+
+    :cond_0
+    iget-object v2, p0, Lcom/android/server/usb/UsbSettingsManager;->mDevicePermissionMap:Ljava/util/HashMap;
 
     invoke-virtual {p1}, Landroid/hardware/usb/UsbDevice;->getDeviceName()Ljava/lang/String;
 
-    move-result-object v3
+    move-result-object v4
 
-    invoke-virtual {v1, v3}, Ljava/util/HashMap;->get(Ljava/lang/Object;)Ljava/lang/Object;
+    invoke-virtual {v2, v4}, Ljava/util/HashMap;->get(Ljava/lang/Object;)Ljava/lang/Object;
 
-    move-result-object v0
+    move-result-object v1
 
-    check-cast v0, Landroid/util/SparseBooleanArray;
+    check-cast v1, Landroid/util/SparseBooleanArray;
 
-    .local v0, uidList:Landroid/util/SparseBooleanArray;
-    if-nez v0, :cond_0
+    .local v1, uidList:Landroid/util/SparseBooleanArray;
+    if-nez v1, :cond_1
 
-    const/4 v1, 0x0
+    const/4 v2, 0x0
 
-    monitor-exit v2
-
-    :goto_0
-    return v1
-
-    :cond_0
-    invoke-static {}, Landroid/os/Binder;->getCallingUid()I
-
-    move-result v1
-
-    invoke-virtual {v0, v1}, Landroid/util/SparseBooleanArray;->get(I)Z
-
-    move-result v1
-
-    monitor-exit v2
+    monitor-exit v3
 
     goto :goto_0
 
-    .end local v0           #uidList:Landroid/util/SparseBooleanArray;
+    .end local v0           #uid:I
+    .end local v1           #uidList:Landroid/util/SparseBooleanArray;
     :catchall_0
-    move-exception v1
+    move-exception v2
 
-    monitor-exit v2
+    monitor-exit v3
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    throw v1
+    throw v2
+
+    .restart local v0       #uid:I
+    .restart local v1       #uidList:Landroid/util/SparseBooleanArray;
+    :cond_1
+    :try_start_1
+    invoke-virtual {v1, v0}, Landroid/util/SparseBooleanArray;->get(I)Z
+
+    move-result v2
+
+    monitor-exit v3
+    :try_end_1
+    .catchall {:try_start_1 .. :try_end_1} :catchall_0
+
+    goto :goto_0
 .end method
 
 .method public requestPermission(Landroid/hardware/usb/UsbAccessory;Ljava/lang/String;Landroid/app/PendingIntent;)V

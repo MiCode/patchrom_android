@@ -120,11 +120,9 @@
     .prologue
     iget-object v0, p0, Landroid/graphics/drawable/StateListDrawable;->mStateListState:Landroid/graphics/drawable/StateListDrawable$StateListState;
 
-    invoke-virtual {v0}, Landroid/graphics/drawable/StateListDrawable$StateListState;->getChildren()[Landroid/graphics/drawable/Drawable;
+    invoke-virtual {v0, p1}, Landroid/graphics/drawable/StateListDrawable$StateListState;->getChild(I)Landroid/graphics/drawable/Drawable;
 
     move-result-object v0
-
-    aget-object v0, v0, p1
 
     return-object v0
 .end method
@@ -286,6 +284,20 @@
     move-object/from16 v0, p0
 
     invoke-virtual {v0, v15}, Landroid/graphics/drawable/StateListDrawable;->setDither(Z)V
+
+    const/4 v15, 0x6
+
+    const/16 v16, 0x0
+
+    move/from16 v0, v16
+
+    invoke-virtual {v3, v15, v0}, Landroid/content/res/TypedArray;->getBoolean(IZ)Z
+
+    move-result v15
+
+    move-object/from16 v0, p0
+
+    invoke-virtual {v0, v15}, Landroid/graphics/drawable/StateListDrawable;->setAutoMirrored(Z)V
 
     invoke-virtual {v3}, Landroid/content/res/TypedArray;->recycle()V
 
@@ -651,33 +663,15 @@
 .end method
 
 .method public setLayoutDirection(I)V
-    .locals 3
+    .locals 1
     .parameter "layoutDirection"
 
     .prologue
-    invoke-virtual {p0}, Landroid/graphics/drawable/StateListDrawable;->getStateCount()I
-
-    move-result v1
-
-    .local v1, numStates:I
-    const/4 v0, 0x0
-
-    .local v0, i:I
-    :goto_0
-    if-ge v0, v1, :cond_0
-
-    invoke-virtual {p0, v0}, Landroid/graphics/drawable/StateListDrawable;->getStateDrawable(I)Landroid/graphics/drawable/Drawable;
-
-    move-result-object v2
-
-    invoke-virtual {v2, p1}, Landroid/graphics/drawable/Drawable;->setLayoutDirection(I)V
-
-    add-int/lit8 v0, v0, 0x1
-
-    goto :goto_0
-
-    :cond_0
     invoke-super {p0, p1}, Landroid/graphics/drawable/DrawableContainer;->setLayoutDirection(I)V
+
+    iget-object v0, p0, Landroid/graphics/drawable/StateListDrawable;->mStateListState:Landroid/graphics/drawable/StateListDrawable$StateListState;
+
+    invoke-virtual {v0, p1}, Landroid/graphics/drawable/StateListDrawable$StateListState;->setLayoutDirection(I)V
 
     return-void
 .end method

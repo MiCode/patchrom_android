@@ -14,11 +14,13 @@
 
 .field private static final EVENT_START_DATA_DOWNLOAD:I = 0x1
 
+.field private static final EVENT_WRITE_SMS_COMPLETE:I = 0x3
+
 .field private static final TAG:Ljava/lang/String; = "UsimDataDownloadHandler"
 
 
 # instance fields
-.field private final mCI:Lcom/android/internal/telephony/CommandsInterface;
+.field private final mCi:Lcom/android/internal/telephony/CommandsInterface;
 
 
 # direct methods
@@ -29,7 +31,7 @@
     .prologue
     invoke-direct {p0}, Landroid/os/Handler;-><init>()V
 
-    iput-object p1, p0, Lcom/android/internal/telephony/gsm/UsimDataDownloadHandler;->mCI:Lcom/android/internal/telephony/CommandsInterface;
+    iput-object p1, p0, Lcom/android/internal/telephony/gsm/UsimDataDownloadHandler;->mCi:Lcom/android/internal/telephony/CommandsInterface;
 
     return-void
 .end method
@@ -39,7 +41,7 @@
     .parameter "cause"
 
     .prologue
-    iget-object v0, p0, Lcom/android/internal/telephony/gsm/UsimDataDownloadHandler;->mCI:Lcom/android/internal/telephony/CommandsInterface;
+    iget-object v0, p0, Lcom/android/internal/telephony/gsm/UsimDataDownloadHandler;->mCi:Lcom/android/internal/telephony/CommandsInterface;
 
     const/4 v1, 0x0
 
@@ -294,7 +296,7 @@
 
     const-string v14, "startDataDownload() calculated incorrect envelope length, aborting."
 
-    invoke-static {v13, v14}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v13, v14}, Landroid/telephony/Rlog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     const/16 v13, 0xff
 
@@ -317,14 +319,14 @@
     .restart local v5       #index:I
     .restart local v10       #totalLength:I
     :cond_1
-    invoke-static {v4}, Lcom/android/internal/telephony/IccUtils;->bytesToHexString([B)Ljava/lang/String;
+    invoke-static {v4}, Lcom/android/internal/telephony/uicc/IccUtils;->bytesToHexString([B)Ljava/lang/String;
 
     move-result-object v3
 
     .local v3, encodedEnvelope:Ljava/lang/String;
     move-object/from16 v0, p0
 
-    iget-object v13, v0, Lcom/android/internal/telephony/gsm/UsimDataDownloadHandler;->mCI:Lcom/android/internal/telephony/CommandsInterface;
+    iget-object v13, v0, Lcom/android/internal/telephony/gsm/UsimDataDownloadHandler;->mCi:Lcom/android/internal/telephony/CommandsInterface;
 
     const/4 v14, 0x2
 
@@ -406,17 +408,17 @@
     goto :goto_0
 .end method
 
-.method private sendSmsAckForEnvelopeResponse(Lcom/android/internal/telephony/IccIoResult;II)V
+.method private sendSmsAckForEnvelopeResponse(Lcom/android/internal/telephony/uicc/IccIoResult;II)V
     .locals 12
     .parameter "response"
     .parameter "dcs"
     .parameter "pid"
 
     .prologue
-    iget v6, p1, Lcom/android/internal/telephony/IccIoResult;->sw1:I
+    iget v6, p1, Lcom/android/internal/telephony/uicc/IccIoResult;->sw1:I
 
     .local v6, sw1:I
-    iget v7, p1, Lcom/android/internal/telephony/IccIoResult;->sw2:I
+    iget v7, p1, Lcom/android/internal/telephony/uicc/IccIoResult;->sw2:I
 
     .local v7, sw2:I
     const/16 v8, 0x90
@@ -443,7 +445,7 @@
 
     move-result-object v9
 
-    invoke-virtual {p1}, Lcom/android/internal/telephony/IccIoResult;->toString()Ljava/lang/String;
+    invoke-virtual {p1}, Lcom/android/internal/telephony/uicc/IccIoResult;->toString()Ljava/lang/String;
 
     move-result-object v10
 
@@ -455,13 +457,13 @@
 
     move-result-object v9
 
-    invoke-static {v8, v9}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v8, v9}, Landroid/telephony/Rlog;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     const/4 v5, 0x1
 
     .local v5, success:Z
     :goto_0
-    iget-object v2, p1, Lcom/android/internal/telephony/IccIoResult;->payload:[B
+    iget-object v2, p1, Lcom/android/internal/telephony/uicc/IccIoResult;->payload:[B
 
     .local v2, responseBytes:[B
     if-eqz v2, :cond_2
@@ -473,7 +475,7 @@
     :cond_2
     if-eqz v5, :cond_7
 
-    iget-object v8, p0, Lcom/android/internal/telephony/gsm/UsimDataDownloadHandler;->mCI:Lcom/android/internal/telephony/CommandsInterface;
+    iget-object v8, p0, Lcom/android/internal/telephony/gsm/UsimDataDownloadHandler;->mCi:Lcom/android/internal/telephony/CommandsInterface;
 
     const/4 v9, 0x1
 
@@ -499,7 +501,7 @@
 
     const-string v9, "USIM data download failed: Toolkit busy"
 
-    invoke-static {v8, v9}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v8, v9}, Landroid/telephony/Rlog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     const/16 v8, 0xd4
 
@@ -529,7 +531,7 @@
 
     move-result-object v9
 
-    invoke-virtual {p1}, Lcom/android/internal/telephony/IccIoResult;->toString()Ljava/lang/String;
+    invoke-virtual {p1}, Lcom/android/internal/telephony/uicc/IccIoResult;->toString()Ljava/lang/String;
 
     move-result-object v10
 
@@ -541,7 +543,7 @@
 
     move-result-object v9
 
-    invoke-static {v8, v9}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v8, v9}, Landroid/telephony/Rlog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     const/4 v5, 0x0
 
@@ -562,7 +564,7 @@
 
     move-result-object v9
 
-    invoke-virtual {p1}, Lcom/android/internal/telephony/IccIoResult;->toString()Ljava/lang/String;
+    invoke-virtual {p1}, Lcom/android/internal/telephony/uicc/IccIoResult;->toString()Ljava/lang/String;
 
     move-result-object v10
 
@@ -574,7 +576,7 @@
 
     move-result-object v9
 
-    invoke-static {v8, v9}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v8, v9}, Landroid/telephony/Rlog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     const/4 v5, 0x0
 
@@ -668,9 +670,9 @@
 
     invoke-static {v2, v8, v4, v0, v9}, Ljava/lang/System;->arraycopy(Ljava/lang/Object;ILjava/lang/Object;II)V
 
-    iget-object v8, p0, Lcom/android/internal/telephony/gsm/UsimDataDownloadHandler;->mCI:Lcom/android/internal/telephony/CommandsInterface;
+    iget-object v8, p0, Lcom/android/internal/telephony/gsm/UsimDataDownloadHandler;->mCi:Lcom/android/internal/telephony/CommandsInterface;
 
-    invoke-static {v4}, Lcom/android/internal/telephony/IccUtils;->bytesToHexString([B)Ljava/lang/String;
+    invoke-static {v4}, Lcom/android/internal/telephony/uicc/IccUtils;->bytesToHexString([B)Ljava/lang/String;
 
     move-result-object v9
 
@@ -740,10 +742,16 @@
 
 # virtual methods
 .method public handleMessage(Landroid/os/Message;)V
-    .locals 5
+    .locals 7
     .parameter "msg"
 
     .prologue
+    const/4 v6, 0x0
+
+    const/4 v4, 0x1
+
+    const/4 v5, 0x0
+
     iget v2, p1, Landroid/os/Message;->what:I
 
     packed-switch v2, :pswitch_data_0
@@ -770,7 +778,7 @@
 
     move-result-object v3
 
-    invoke-static {v2, v3}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v2, v3}, Landroid/telephony/Rlog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     :goto_0
     return-void
@@ -816,7 +824,7 @@
 
     move-result-object v3
 
-    invoke-static {v2, v3}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v2, v3}, Landroid/telephony/Rlog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     const/16 v2, 0xd5
 
@@ -836,27 +844,135 @@
     .local v1, dcsPid:[I
     iget-object v2, v0, Landroid/os/AsyncResult;->result:Ljava/lang/Object;
 
-    check-cast v2, Lcom/android/internal/telephony/IccIoResult;
+    check-cast v2, Lcom/android/internal/telephony/uicc/IccIoResult;
 
-    const/4 v3, 0x0
-
-    aget v3, v1, v3
-
-    const/4 v4, 0x1
+    aget v3, v1, v5
 
     aget v4, v1, v4
 
-    invoke-direct {p0, v2, v3, v4}, Lcom/android/internal/telephony/gsm/UsimDataDownloadHandler;->sendSmsAckForEnvelopeResponse(Lcom/android/internal/telephony/IccIoResult;II)V
+    invoke-direct {p0, v2, v3, v4}, Lcom/android/internal/telephony/gsm/UsimDataDownloadHandler;->sendSmsAckForEnvelopeResponse(Lcom/android/internal/telephony/uicc/IccIoResult;II)V
 
     goto :goto_0
 
-    nop
+    .end local v0           #ar:Landroid/os/AsyncResult;
+    .end local v1           #dcsPid:[I
+    :pswitch_2
+    iget-object v0, p1, Landroid/os/Message;->obj:Ljava/lang/Object;
+
+    check-cast v0, Landroid/os/AsyncResult;
+
+    .restart local v0       #ar:Landroid/os/AsyncResult;
+    iget-object v2, v0, Landroid/os/AsyncResult;->exception:Ljava/lang/Throwable;
+
+    if-nez v2, :cond_1
+
+    const-string v2, "UsimDataDownloadHandler"
+
+    const-string v3, "Successfully wrote SMS-PP message to UICC"
+
+    invoke-static {v2, v3}, Landroid/telephony/Rlog;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    iget-object v2, p0, Lcom/android/internal/telephony/gsm/UsimDataDownloadHandler;->mCi:Lcom/android/internal/telephony/CommandsInterface;
+
+    invoke-interface {v2, v4, v5, v6}, Lcom/android/internal/telephony/CommandsInterface;->acknowledgeLastIncomingGsmSms(ZILandroid/os/Message;)V
+
+    goto :goto_0
+
+    :cond_1
+    const-string v2, "UsimDataDownloadHandler"
+
+    const-string v3, "Failed to write SMS-PP message to UICC"
+
+    iget-object v4, v0, Landroid/os/AsyncResult;->exception:Ljava/lang/Throwable;
+
+    invoke-static {v2, v3, v4}, Landroid/telephony/Rlog;->d(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+
+    iget-object v2, p0, Lcom/android/internal/telephony/gsm/UsimDataDownloadHandler;->mCi:Lcom/android/internal/telephony/CommandsInterface;
+
+    const/16 v3, 0xff
+
+    invoke-interface {v2, v5, v3, v6}, Lcom/android/internal/telephony/CommandsInterface;->acknowledgeLastIncomingGsmSms(ZILandroid/os/Message;)V
+
+    goto :goto_0
 
     :pswitch_data_0
     .packed-switch 0x1
         :pswitch_0
         :pswitch_1
+        :pswitch_2
     .end packed-switch
+.end method
+
+.method handleUsimDataDownload(Lcom/android/internal/telephony/uicc/UsimServiceTable;Lcom/android/internal/telephony/gsm/SmsMessage;)I
+    .locals 5
+    .parameter "ust"
+    .parameter "smsMessage"
+
+    .prologue
+    const/4 v4, 0x3
+
+    if-eqz p1, :cond_0
+
+    sget-object v1, Lcom/android/internal/telephony/uicc/UsimServiceTable$UsimService;->DATA_DL_VIA_SMS_PP:Lcom/android/internal/telephony/uicc/UsimServiceTable$UsimService;
+
+    invoke-virtual {p1, v1}, Lcom/android/internal/telephony/uicc/UsimServiceTable;->isAvailable(Lcom/android/internal/telephony/uicc/UsimServiceTable$UsimService;)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_0
+
+    const-string v1, "UsimDataDownloadHandler"
+
+    const-string v2, "Received SMS-PP data download, sending to UICC."
+
+    invoke-static {v1, v2}, Landroid/telephony/Rlog;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    invoke-virtual {p0, p2}, Lcom/android/internal/telephony/gsm/UsimDataDownloadHandler;->startDataDownload(Lcom/android/internal/telephony/gsm/SmsMessage;)I
+
+    move-result v1
+
+    :goto_0
+    return v1
+
+    :cond_0
+    const-string v1, "UsimDataDownloadHandler"
+
+    const-string v2, "DATA_DL_VIA_SMS_PP service not available, storing message to UICC."
+
+    invoke-static {v1, v2}, Landroid/telephony/Rlog;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    invoke-virtual {p2}, Lcom/android/internal/telephony/gsm/SmsMessage;->getServiceCenterAddress()Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-static {v1}, Landroid/telephony/PhoneNumberUtils;->networkPortionToCalledPartyBCDWithLength(Ljava/lang/String;)[B
+
+    move-result-object v1
+
+    invoke-static {v1}, Lcom/android/internal/telephony/uicc/IccUtils;->bytesToHexString([B)Ljava/lang/String;
+
+    move-result-object v0
+
+    .local v0, smsc:Ljava/lang/String;
+    iget-object v1, p0, Lcom/android/internal/telephony/gsm/UsimDataDownloadHandler;->mCi:Lcom/android/internal/telephony/CommandsInterface;
+
+    invoke-virtual {p2}, Lcom/android/internal/telephony/gsm/SmsMessage;->getPdu()[B
+
+    move-result-object v2
+
+    invoke-static {v2}, Lcom/android/internal/telephony/uicc/IccUtils;->bytesToHexString([B)Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-virtual {p0, v4}, Lcom/android/internal/telephony/gsm/UsimDataDownloadHandler;->obtainMessage(I)Landroid/os/Message;
+
+    move-result-object v3
+
+    invoke-interface {v1, v4, v0, v2, v3}, Lcom/android/internal/telephony/CommandsInterface;->writeSmsToSim(ILjava/lang/String;Ljava/lang/String;Landroid/os/Message;)V
+
+    const/4 v1, -0x1
+
+    goto :goto_0
 .end method
 
 .method public startDataDownload(Lcom/android/internal/telephony/gsm/SmsMessage;)I
@@ -886,7 +1002,7 @@
 
     const-string v1, "startDataDownload failed to send message to start data download."
 
-    invoke-static {v0, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v0, v1}, Landroid/telephony/Rlog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     const/4 v0, 0x2
 

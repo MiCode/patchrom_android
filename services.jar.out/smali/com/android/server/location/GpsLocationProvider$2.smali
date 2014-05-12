@@ -34,11 +34,13 @@
 
 # virtual methods
 .method public onReceive(Landroid/content/Context;Landroid/content/Intent;)V
-    .locals 6
+    .locals 7
     .parameter "context"
     .parameter "intent"
 
     .prologue
+    const/4 v6, 0x0
+
     invoke-virtual {p2}, Landroid/content/Intent;->getAction()Ljava/lang/String;
 
     move-result-object v0
@@ -67,8 +69,8 @@
     :cond_0
     iget-object v4, p0, Lcom/android/server/location/GpsLocationProvider$2;->this$0:Lcom/android/server/location/GpsLocationProvider;
 
-    #calls: Lcom/android/server/location/GpsLocationProvider;->startNavigating()V
-    invoke-static {v4}, Lcom/android/server/location/GpsLocationProvider;->access$200(Lcom/android/server/location/GpsLocationProvider;)V
+    #calls: Lcom/android/server/location/GpsLocationProvider;->startNavigating(Z)V
+    invoke-static {v4, v6}, Lcom/android/server/location/GpsLocationProvider;->access$200(Lcom/android/server/location/GpsLocationProvider;Z)V
 
     :cond_1
     :goto_0
@@ -146,9 +148,7 @@
 
     const-string v4, "noConnectivity"
 
-    const/4 v5, 0x0
-
-    invoke-virtual {p2, v4, v5}, Landroid/content/Intent;->getBooleanExtra(Ljava/lang/String;Z)Z
+    invoke-virtual {p2, v4, v6}, Landroid/content/Intent;->getBooleanExtra(Ljava/lang/String;Z)Z
 
     move-result v4
 

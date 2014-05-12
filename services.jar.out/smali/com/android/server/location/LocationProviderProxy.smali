@@ -7,6 +7,7 @@
 
 
 # static fields
+#the value of this static final field might be set in the static constructor
 .field private static final D:Z = false
 
 .field private static final TAG:Ljava/lang/String; = "LocationProviderProxy"
@@ -33,14 +34,108 @@
 
 
 # direct methods
-.method private constructor <init>(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Landroid/os/Handler;I)V
-    .locals 8
+.method static constructor <clinit>()V
+    .locals 1
+
+    .prologue
+    sget-boolean v0, Lcom/android/server/LocationManagerService;->D:Z
+
+    sput-boolean v0, Lcom/android/server/location/LocationProviderProxy;->D:Z
+
+    return-void
+.end method
+
+.method private constructor <init>(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;IIILandroid/os/Handler;)V
+    .locals 9
+    .parameter "context"
+    .parameter "name"
+    .parameter "action"
+    .parameter "overlaySwitchResId"
+    .parameter "defaultServicePackageNameResId"
+    .parameter "initialPackageNamesResId"
+    .parameter "handler"
+
+    .prologue
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    new-instance v0, Ljava/lang/Object;
+
+    invoke-direct {v0}, Ljava/lang/Object;-><init>()V
+
+    iput-object v0, p0, Lcom/android/server/location/LocationProviderProxy;->mLock:Ljava/lang/Object;
+
+    const/4 v0, 0x0
+
+    iput-boolean v0, p0, Lcom/android/server/location/LocationProviderProxy;->mEnabled:Z
+
+    const/4 v0, 0x0
+
+    iput-object v0, p0, Lcom/android/server/location/LocationProviderProxy;->mRequest:Lcom/android/internal/location/ProviderRequest;
+
+    new-instance v0, Landroid/os/WorkSource;
+
+    invoke-direct {v0}, Landroid/os/WorkSource;-><init>()V
+
+    iput-object v0, p0, Lcom/android/server/location/LocationProviderProxy;->mWorksource:Landroid/os/WorkSource;
+
+    new-instance v0, Lcom/android/server/location/LocationProviderProxy$1;
+
+    invoke-direct {v0, p0}, Lcom/android/server/location/LocationProviderProxy$1;-><init>(Lcom/android/server/location/LocationProviderProxy;)V
+
+    iput-object v0, p0, Lcom/android/server/location/LocationProviderProxy;->mNewServiceWork:Ljava/lang/Runnable;
+
+    iput-object p1, p0, Lcom/android/server/location/LocationProviderProxy;->mContext:Landroid/content/Context;
+
+    iput-object p2, p0, Lcom/android/server/location/LocationProviderProxy;->mName:Ljava/lang/String;
+
+    new-instance v0, Lcom/android/server/ServiceWatcher;
+
+    iget-object v1, p0, Lcom/android/server/location/LocationProviderProxy;->mContext:Landroid/content/Context;
+
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v3, "LocationProviderProxy-"
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2, p2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v2
+
+    iget-object v7, p0, Lcom/android/server/location/LocationProviderProxy;->mNewServiceWork:Ljava/lang/Runnable;
+
+    move-object v3, p3
+
+    move v4, p4
+
+    move v5, p5
+
+    move v6, p6
+
+    move-object/from16 v8, p7
+
+    invoke-direct/range {v0 .. v8}, Lcom/android/server/ServiceWatcher;-><init>(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;IIILjava/lang/Runnable;Landroid/os/Handler;)V
+
+    iput-object v0, p0, Lcom/android/server/location/LocationProviderProxy;->mServiceWatcher:Lcom/android/server/ServiceWatcher;
+
+    return-void
+.end method
+
+.method private constructor <init>(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Landroid/os/Handler;)V
+    .locals 7
     .parameter "context"
     .parameter "name"
     .parameter "action"
     .parameter
     .parameter "handler"
-    .parameter "userId"
     .annotation system Ldalvik/annotation/Signature;
         value = {
             "(",
@@ -52,7 +147,7 @@
             "Ljava/lang/String;",
             ">;",
             "Landroid/os/Handler;",
-            "I)V"
+            ")V"
         }
     .end annotation
 
@@ -94,7 +189,23 @@
 
     iget-object v1, p0, Lcom/android/server/location/LocationProviderProxy;->mContext:Landroid/content/Context;
 
-    const-string v2, "LocationProviderProxy"
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v3, "LocationProviderProxy-"
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2, p2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v2
 
     iget-object v5, p0, Lcom/android/server/location/LocationProviderProxy;->mNewServiceWork:Ljava/lang/Runnable;
 
@@ -104,16 +215,23 @@
 
     move-object v6, p5
 
-    move v7, p6
-
-    invoke-direct/range {v0 .. v7}, Lcom/android/server/ServiceWatcher;-><init>(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/Runnable;Landroid/os/Handler;I)V
+    invoke-direct/range {v0 .. v6}, Lcom/android/server/ServiceWatcher;-><init>(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/Runnable;Landroid/os/Handler;)V
 
     iput-object v0, p0, Lcom/android/server/location/LocationProviderProxy;->mServiceWatcher:Lcom/android/server/ServiceWatcher;
 
     return-void
 .end method
 
-.method static synthetic access$000(Lcom/android/server/location/LocationProviderProxy;)Ljava/lang/Object;
+.method static synthetic access$000()Z
+    .locals 1
+
+    .prologue
+    sget-boolean v0, Lcom/android/server/location/LocationProviderProxy;->D:Z
+
+    return v0
+.end method
+
+.method static synthetic access$100(Lcom/android/server/location/LocationProviderProxy;)Ljava/lang/Object;
     .locals 1
     .parameter "x0"
 
@@ -123,7 +241,7 @@
     return-object v0
 .end method
 
-.method static synthetic access$100(Lcom/android/server/location/LocationProviderProxy;)Z
+.method static synthetic access$200(Lcom/android/server/location/LocationProviderProxy;)Z
     .locals 1
     .parameter "x0"
 
@@ -133,7 +251,7 @@
     return v0
 .end method
 
-.method static synthetic access$200(Lcom/android/server/location/LocationProviderProxy;)Lcom/android/internal/location/ProviderRequest;
+.method static synthetic access$300(Lcom/android/server/location/LocationProviderProxy;)Lcom/android/internal/location/ProviderRequest;
     .locals 1
     .parameter "x0"
 
@@ -143,7 +261,7 @@
     return-object v0
 .end method
 
-.method static synthetic access$300(Lcom/android/server/location/LocationProviderProxy;)Landroid/os/WorkSource;
+.method static synthetic access$400(Lcom/android/server/location/LocationProviderProxy;)Landroid/os/WorkSource;
     .locals 1
     .parameter "x0"
 
@@ -153,7 +271,7 @@
     return-object v0
 .end method
 
-.method static synthetic access$400(Lcom/android/server/location/LocationProviderProxy;)Lcom/android/internal/location/ILocationProvider;
+.method static synthetic access$500(Lcom/android/server/location/LocationProviderProxy;)Lcom/android/internal/location/ILocationProvider;
     .locals 1
     .parameter "x0"
 
@@ -165,7 +283,7 @@
     return-object v0
 .end method
 
-.method static synthetic access$500(Lcom/android/server/location/LocationProviderProxy;)Lcom/android/server/ServiceWatcher;
+.method static synthetic access$600(Lcom/android/server/location/LocationProviderProxy;)Lcom/android/server/ServiceWatcher;
     .locals 1
     .parameter "x0"
 
@@ -175,7 +293,7 @@
     return-object v0
 .end method
 
-.method static synthetic access$602(Lcom/android/server/location/LocationProviderProxy;Lcom/android/internal/location/ProviderProperties;)Lcom/android/internal/location/ProviderProperties;
+.method static synthetic access$702(Lcom/android/server/location/LocationProviderProxy;Lcom/android/internal/location/ProviderProperties;)Lcom/android/internal/location/ProviderProperties;
     .locals 0
     .parameter "x0"
     .parameter "x1"
@@ -199,14 +317,64 @@
     return v0
 .end method
 
-.method public static createAndBind(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Landroid/os/Handler;I)Lcom/android/server/location/LocationProviderProxy;
-    .locals 7
+.method public static createAndBind(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;IIILandroid/os/Handler;)Lcom/android/server/location/LocationProviderProxy;
+    .locals 8
+    .parameter "context"
+    .parameter "name"
+    .parameter "action"
+    .parameter "overlaySwitchResId"
+    .parameter "defaultServicePackageNameResId"
+    .parameter "initialPackageNamesResId"
+    .parameter "handler"
+
+    .prologue
+    invoke-static {p0, p2}, Lcom/android/server/location/LocationProviderProxy;->pickNetworkLocationServiceAction(Landroid/content/Context;Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object p2
+
+    new-instance v0, Lcom/android/server/location/LocationProviderProxy;
+
+    move-object v1, p0
+
+    move-object v2, p1
+
+    move-object v3, p2
+
+    move v4, p3
+
+    move v5, p4
+
+    move v6, p5
+
+    move-object v7, p6
+
+    invoke-direct/range {v0 .. v7}, Lcom/android/server/location/LocationProviderProxy;-><init>(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;IIILandroid/os/Handler;)V
+
+    .local v0, proxy:Lcom/android/server/location/LocationProviderProxy;
+    invoke-direct {v0}, Lcom/android/server/location/LocationProviderProxy;->bind()Z
+
+    move-result v1
+
+    if-eqz v1, :cond_0
+
+    .end local v0           #proxy:Lcom/android/server/location/LocationProviderProxy;
+    :goto_0
+    return-object v0
+
+    .restart local v0       #proxy:Lcom/android/server/location/LocationProviderProxy;
+    :cond_0
+    const/4 v0, 0x0
+
+    goto :goto_0
+.end method
+
+.method public static createAndBind(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Landroid/os/Handler;)Lcom/android/server/location/LocationProviderProxy;
+    .locals 6
     .parameter "context"
     .parameter "name"
     .parameter "action"
     .parameter
     .parameter "handler"
-    .parameter "userId"
     .annotation system Ldalvik/annotation/Signature;
         value = {
             "(",
@@ -218,7 +386,7 @@
             "Ljava/lang/String;",
             ">;",
             "Landroid/os/Handler;",
-            "I)",
+            ")",
             "Lcom/android/server/location/LocationProviderProxy;"
         }
     .end annotation
@@ -237,9 +405,7 @@
 
     move-object v5, p4
 
-    move v6, p5
-
-    invoke-direct/range {v0 .. v6}, Lcom/android/server/location/LocationProviderProxy;-><init>(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Landroid/os/Handler;I)V
+    invoke-direct/range {v0 .. v5}, Lcom/android/server/location/LocationProviderProxy;-><init>(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Landroid/os/Handler;)V
 
     .local v0, proxy:Lcom/android/server/location/LocationProviderProxy;
     invoke-direct {v0}, Lcom/android/server/location/LocationProviderProxy;->bind()Z
@@ -274,6 +440,44 @@
     move-result-object v0
 
     return-object v0
+.end method
+
+.method private static pickNetworkLocationServiceAction(Landroid/content/Context;Ljava/lang/String;)Ljava/lang/String;
+    .locals 4
+    .parameter "context"
+    .parameter "action"
+
+    .prologue
+    new-instance v1, Landroid/content/Intent;
+
+    invoke-direct {v1, p1}, Landroid/content/Intent;-><init>(Ljava/lang/String;)V
+
+    .local v1, intent:Landroid/content/Intent;
+    invoke-virtual {p0}, Landroid/content/Context;->getPackageManager()Landroid/content/pm/PackageManager;
+
+    move-result-object v2
+
+    const/16 v3, 0x80
+
+    invoke-virtual {v2, v1, v3}, Landroid/content/pm/PackageManager;->queryIntentServices(Landroid/content/Intent;I)Ljava/util/List;
+
+    move-result-object v0
+
+    .local v0, infos:Ljava/util/List;,"Ljava/util/List<Landroid/content/pm/ResolveInfo;>;"
+    if-eqz v0, :cond_0
+
+    invoke-interface {v0}, Ljava/util/List;->isEmpty()Z
+
+    move-result v2
+
+    if-eqz v2, :cond_1
+
+    :cond_0
+    const-string p1, "com.android.location.service.v2.NetworkLocationProvider"
+
+    .end local p1
+    :cond_1
+    return-object p1
 .end method
 
 
@@ -1008,16 +1212,4 @@
     invoke-static {v2, v3, v0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
 
     goto :goto_0
-.end method
-
-.method public switchUser(I)V
-    .locals 1
-    .parameter "userId"
-
-    .prologue
-    iget-object v0, p0, Lcom/android/server/location/LocationProviderProxy;->mServiceWatcher:Lcom/android/server/ServiceWatcher;
-
-    invoke-virtual {v0, p1}, Lcom/android/server/ServiceWatcher;->switchUser(I)V
-
-    return-void
 .end method

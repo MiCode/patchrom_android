@@ -10,6 +10,8 @@
 
 .field final labelRes:I
 
+.field final logo:I
+
 .field final nonLocalizedLabel:Ljava/lang/CharSequence;
 
 .field final pkg:Ljava/lang/String;
@@ -20,7 +22,7 @@
 
 
 # direct methods
-.method constructor <init>(Ljava/lang/String;ILandroid/content/res/CompatibilityInfo;Ljava/lang/CharSequence;III)V
+.method constructor <init>(Ljava/lang/String;ILandroid/content/res/CompatibilityInfo;Ljava/lang/CharSequence;IIII)V
     .locals 0
     .parameter "_pkg"
     .parameter "_theme"
@@ -28,6 +30,7 @@
     .parameter "_nonLocalizedLabel"
     .parameter "_labelRes"
     .parameter "_icon"
+    .parameter "_logo"
     .parameter "_windowFlags"
 
     .prologue
@@ -45,7 +48,9 @@
 
     iput p6, p0, Lcom/android/server/wm/StartingData;->icon:I
 
-    iput p7, p0, Lcom/android/server/wm/StartingData;->windowFlags:I
+    iput p7, p0, Lcom/android/server/wm/StartingData;->logo:I
+
+    iput p8, p0, Lcom/android/server/wm/StartingData;->windowFlags:I
 
     return-void
 .end method

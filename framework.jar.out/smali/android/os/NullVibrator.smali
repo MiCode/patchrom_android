@@ -57,6 +57,31 @@
     return v0
 .end method
 
+.method public vibrate(ILjava/lang/String;J)V
+    .locals 0
+    .parameter "owningUid"
+    .parameter "owningPackage"
+    .parameter "milliseconds"
+
+    .prologue
+    invoke-virtual {p0, p3, p4}, Landroid/os/NullVibrator;->vibrate(J)V
+
+    return-void
+.end method
+
+.method public vibrate(ILjava/lang/String;[JI)V
+    .locals 0
+    .parameter "owningUid"
+    .parameter "owningPackage"
+    .parameter "pattern"
+    .parameter "repeat"
+
+    .prologue
+    invoke-virtual {p0, p3, p4}, Landroid/os/NullVibrator;->vibrate([JI)V
+
+    return-void
+.end method
+
 .method public vibrate(J)V
     .locals 0
     .parameter "milliseconds"

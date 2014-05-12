@@ -101,7 +101,7 @@
     if-ne v0, v2, :cond_2
 
     #calls: Landroid/view/HardwareRenderer$Gl20Renderer;->usePbufferSurface(Ljavax/microedition/khronos/egl/EGLContext;)V
-    invoke-static {p1}, Landroid/view/HardwareRenderer$Gl20Renderer;->access$300(Ljavax/microedition/khronos/egl/EGLContext;)V
+    invoke-static {p1}, Landroid/view/HardwareRenderer$Gl20Renderer;->access$500(Ljavax/microedition/khronos/egl/EGLContext;)V
 
     invoke-static {}, Landroid/view/GLES20Canvas;->terminateCaches()V
 
@@ -125,7 +125,7 @@
 
     sget-object v2, Landroid/view/HardwareRenderer$GlRenderer;->sEglDisplay:Ljavax/microedition/khronos/egl/EGLDisplay;
 
-    invoke-static {}, Landroid/view/HardwareRenderer$Gl20Renderer;->access$400()Ljavax/microedition/khronos/egl/EGLSurface;
+    invoke-static {}, Landroid/view/HardwareRenderer$Gl20Renderer;->access$600()Ljavax/microedition/khronos/egl/EGLSurface;
 
     move-result-object v3
 
@@ -167,7 +167,7 @@
 
     const/4 v0, 0x0
 
-    invoke-static {v0}, Landroid/view/HardwareRenderer$Gl20Renderer;->access$402(Ljavax/microedition/khronos/egl/EGLSurface;)Ljavax/microedition/khronos/egl/EGLSurface;
+    invoke-static {v0}, Landroid/view/HardwareRenderer$Gl20Renderer;->access$602(Ljavax/microedition/khronos/egl/EGLSurface;)Ljavax/microedition/khronos/egl/EGLSurface;
 
     :cond_2
     monitor-exit v1

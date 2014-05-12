@@ -219,11 +219,11 @@
     check-cast v3, Landroid/view/LayoutInflater;
 
     .local v3, inflater:Landroid/view/LayoutInflater;
-    const v7, 0x10900c1
+    const v7, 0x1090097
 
     invoke-virtual {v3, v7, p0, v11}, Landroid/view/LayoutInflater;->inflate(ILandroid/view/ViewGroup;Z)Landroid/view/View;
 
-    const v7, 0x1020364
+    const v7, 0x102031d
 
     invoke-virtual {p0, v7}, Landroid/widget/SearchView;->findViewById(I)Landroid/view/View;
 
@@ -231,7 +231,7 @@
 
     iput-object v7, p0, Landroid/widget/SearchView;->mSearchButton:Landroid/view/View;
 
-    const v7, 0x1020368
+    const v7, 0x1020321
 
     invoke-virtual {p0, v7}, Landroid/widget/SearchView;->findViewById(I)Landroid/view/View;
 
@@ -245,7 +245,7 @@
 
     invoke-virtual {v7, p0}, Landroid/widget/SearchView$SearchAutoComplete;->setSearchView(Landroid/widget/SearchView;)V
 
-    const v7, 0x1020365
+    const v7, 0x102031e
 
     invoke-virtual {p0, v7}, Landroid/widget/SearchView;->findViewById(I)Landroid/view/View;
 
@@ -253,7 +253,7 @@
 
     iput-object v7, p0, Landroid/widget/SearchView;->mSearchEditFrame:Landroid/view/View;
 
-    const v7, 0x1020367
+    const v7, 0x1020320
 
     invoke-virtual {p0, v7}, Landroid/widget/SearchView;->findViewById(I)Landroid/view/View;
 
@@ -261,7 +261,7 @@
 
     iput-object v7, p0, Landroid/widget/SearchView;->mSearchPlate:Landroid/view/View;
 
-    const v7, 0x102036a
+    const v7, 0x1020323
 
     invoke-virtual {p0, v7}, Landroid/widget/SearchView;->findViewById(I)Landroid/view/View;
 
@@ -269,7 +269,7 @@
 
     iput-object v7, p0, Landroid/widget/SearchView;->mSubmitArea:Landroid/view/View;
 
-    const v7, 0x102036b
+    const v7, 0x1020324
 
     invoke-virtual {p0, v7}, Landroid/widget/SearchView;->findViewById(I)Landroid/view/View;
 
@@ -277,7 +277,7 @@
 
     iput-object v7, p0, Landroid/widget/SearchView;->mSubmitButton:Landroid/view/View;
 
-    const v7, 0x1020369
+    const v7, 0x1020322
 
     invoke-virtual {p0, v7}, Landroid/widget/SearchView;->findViewById(I)Landroid/view/View;
 
@@ -287,7 +287,7 @@
 
     iput-object v7, p0, Landroid/widget/SearchView;->mCloseButton:Landroid/widget/ImageView;
 
-    const v7, 0x102036c
+    const v7, 0x1020325
 
     invoke-virtual {p0, v7}, Landroid/widget/SearchView;->findViewById(I)Landroid/view/View;
 
@@ -295,7 +295,7 @@
 
     iput-object v7, p0, Landroid/widget/SearchView;->mVoiceButton:Landroid/view/View;
 
-    const v7, 0x1020366
+    const v7, 0x102031f
 
     invoke-virtual {p0, v7}, Landroid/widget/SearchView;->findViewById(I)Landroid/view/View;
 
@@ -795,13 +795,13 @@
 
     if-eqz v7, :cond_1
 
-    const v7, 0x105004b
+    const v7, 0x105004d
 
     invoke-virtual {v5, v7}, Landroid/content/res/Resources;->getDimensionPixelSize(I)I
 
     move-result v7
 
-    const v8, 0x1050049
+    const v8, 0x105004b
 
     invoke-virtual {v5, v8}, Landroid/content/res/Resources;->getDimensionPixelSize(I)I
 
@@ -1420,19 +1420,17 @@
     .parameter "hintText"
 
     .prologue
-    iget-object v3, p0, Landroid/widget/SearchView;->mContext:Landroid/content/Context;
+    const/4 v7, 0x0
 
-    invoke-static {v3}, Lmiui/util/UiUtils;->isV5Ui(Landroid/content/Context;)Z
+    invoke-static {p0}, Landroid/widget/Injector$SearchViewHook;->before_getDecoratedHint(Landroid/widget/SearchView;)Z
 
     move-result v3
 
-    if-eqz v3, :cond_miui_0
+    if-eqz v3, :cond_miui
 
     return-object p1
 
-    :cond_miui_0
-    const/4 v7, 0x0
-
+    :cond_miui
     iget-boolean v3, p0, Landroid/widget/SearchView;->mIconifiedByDefault:Z
 
     if-nez v3, :cond_0
@@ -1515,7 +1513,7 @@
 
     move-result-object v0
 
-    const v1, 0x1050037
+    const v1, 0x1050039
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getDimensionPixelSize(I)I
 
@@ -1541,7 +1539,7 @@
 
     move-result-object v1
 
-    const v2, 0x10103ee
+    const v2, 0x1010417
 
     const/4 v3, 0x1
 
@@ -2615,15 +2613,15 @@
     .locals 3
 
     .prologue
-    invoke-direct {p0}, Landroid/widget/SearchView;->miuiUpdateFocusedState()Z
+    invoke-static {p0}, Landroid/widget/Injector$SearchViewHook;->updateFocusedState(Landroid/widget/SearchView;)Z
 
     move-result v1
 
-    if-eqz v1, :cond_miui_0
+    if-eqz v1, :cond_miui
 
     return-void
 
-    :cond_miui_0
+    :cond_miui
     iget-object v1, p0, Landroid/widget/SearchView;->mQueryTextView:Landroid/widget/SearchView$SearchAutoComplete;
 
     invoke-virtual {v1}, Landroid/widget/SearchView$SearchAutoComplete;->hasFocus()Z
@@ -2909,7 +2907,7 @@
 
     invoke-virtual {v1, v0}, Landroid/view/View;->setVisibility(I)V
 
-    invoke-direct {p0}, Landroid/widget/SearchView;->miuiUpdateSubmitArea()V
+    invoke-static {p0}, Landroid/widget/Injector$SearchViewHook;->after_updateSubmitArea(Landroid/widget/SearchView;)V
 
     return-void
 .end method
@@ -3116,6 +3114,24 @@
     return-void
 .end method
 
+.method getEmptyStateSet()[I
+    .locals 1
+
+    .prologue
+    sget-object v0, Landroid/widget/SearchView;->EMPTY_STATE_SET:[I
+
+    return-object v0
+.end method
+
+.method getFocusedStateSet()[I
+    .locals 1
+
+    .prologue
+    sget-object v0, Landroid/widget/SearchView;->FOCUSED_STATE_SET:[I
+
+    return-object v0
+.end method
+
 .method public getImeOptions()I
     .locals 1
 
@@ -3213,6 +3229,33 @@
     goto :goto_0
 .end method
 
+.method getQueryTextView()Landroid/view/View;
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Landroid/widget/SearchView;->mQueryTextView:Landroid/widget/SearchView$SearchAutoComplete;
+
+    return-object v0
+.end method
+
+.method getSearchEditFrame()Landroid/view/View;
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Landroid/widget/SearchView;->mSearchEditFrame:Landroid/view/View;
+
+    return-object v0
+.end method
+
+.method getSubmitArea()Landroid/view/View;
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Landroid/widget/SearchView;->mSubmitArea:Landroid/view/View;
+
+    return-object v0
+.end method
+
 .method public getSuggestionsAdapter()Landroid/widget/CursorAdapter;
     .locals 1
 
@@ -3259,9 +3302,15 @@
 .end method
 
 .method public onActionViewCollapsed()V
-    .locals 2
+    .locals 3
 
     .prologue
+    const/4 v2, 0x0
+
+    const-string v0, ""
+
+    invoke-virtual {p0, v0, v2}, Landroid/widget/SearchView;->setQuery(Ljava/lang/CharSequence;Z)V
+
     invoke-virtual {p0}, Landroid/widget/SearchView;->clearFocus()V
 
     const/4 v0, 0x1
@@ -3274,9 +3323,7 @@
 
     invoke-virtual {v0, v1}, Landroid/widget/SearchView$SearchAutoComplete;->setImeOptions(I)V
 
-    const/4 v0, 0x0
-
-    iput-boolean v0, p0, Landroid/widget/SearchView;->mExpandedInActionView:Z
+    iput-boolean v2, p0, Landroid/widget/SearchView;->mExpandedInActionView:Z
 
     return-void
 .end method
@@ -3955,148 +4002,3 @@
 
     return-void
 .end method
-
-.method private miuiUpdateFocusedState()Z
-    .locals 4
-
-    .prologue
-    const/4 v1, 0x0
-
-    .local v1, retval:Z
-    iget-object v2, p0, Landroid/widget/SearchView;->mContext:Landroid/content/Context;
-
-    invoke-static {v2}, Lmiui/util/UiUtils;->isV5Ui(Landroid/content/Context;)Z
-
-    move-result v2
-
-    if-eqz v2, :cond_0
-
-    iget-object v2, p0, Landroid/widget/SearchView;->mQueryTextView:Landroid/widget/SearchView$SearchAutoComplete;
-
-    invoke-virtual {v2}, Landroid/widget/SearchView$SearchAutoComplete;->hasFocus()Z
-
-    move-result v0
-
-    .local v0, focused:Z
-    iget-object v2, p0, Landroid/widget/SearchView;->mSearchEditFrame:Landroid/view/View;
-
-    invoke-virtual {v2}, Landroid/view/View;->getBackground()Landroid/graphics/drawable/Drawable;
-
-    move-result-object v3
-
-    if-eqz v0, :cond_1
-
-    sget-object v2, Landroid/widget/SearchView;->FOCUSED_STATE_SET:[I
-
-    :goto_0
-    invoke-virtual {v3, v2}, Landroid/graphics/drawable/Drawable;->setState([I)Z
-
-    iget-object v2, p0, Landroid/widget/SearchView;->mSubmitArea:Landroid/view/View;
-
-    invoke-virtual {v2}, Landroid/view/View;->getBackground()Landroid/graphics/drawable/Drawable;
-
-    move-result-object v3
-
-    if-eqz v0, :cond_2
-
-    sget-object v2, Landroid/widget/SearchView;->FOCUSED_STATE_SET:[I
-
-    :goto_1
-    invoke-virtual {v3, v2}, Landroid/graphics/drawable/Drawable;->setState([I)Z
-
-    invoke-virtual {p0}, Landroid/widget/SearchView;->invalidate()V
-
-    const/4 v1, 0x1
-
-    .end local v0           #focused:Z
-    :cond_0
-    return v1
-
-    .restart local v0       #focused:Z
-    :cond_1
-    sget-object v2, Landroid/widget/SearchView;->EMPTY_STATE_SET:[I
-
-    goto :goto_0
-
-    :cond_2
-    sget-object v2, Landroid/widget/SearchView;->EMPTY_STATE_SET:[I
-
-    goto :goto_1
-.end method
-
-.method private miuiUpdateSubmitArea()V
-    .locals 6
-
-    .prologue
-    iget-object v5, p0, Landroid/widget/SearchView;->mContext:Landroid/content/Context;
-
-    invoke-static {v5}, Lmiui/util/UiUtils;->isV5Ui(Landroid/content/Context;)Z
-
-    move-result v5
-
-    if-nez v5, :cond_0
-
-    :goto_0
-    return-void
-
-    :cond_0
-    iget-object v5, p0, Landroid/widget/SearchView;->mSearchEditFrame:Landroid/view/View;
-
-    invoke-virtual {v5}, Landroid/view/View;->getPaddingLeft()I
-
-    move-result v1
-
-    .local v1, leftPadding:I
-    iget-object v5, p0, Landroid/widget/SearchView;->mSearchEditFrame:Landroid/view/View;
-
-    invoke-virtual {v5}, Landroid/view/View;->getPaddingTop()I
-
-    move-result v4
-
-    .local v4, topPadding:I
-    new-instance v2, Landroid/graphics/Rect;
-
-    invoke-direct {v2}, Landroid/graphics/Rect;-><init>()V
-
-    .local v2, paddingRect:Landroid/graphics/Rect;
-    iget-object v5, p0, Landroid/widget/SearchView;->mSearchEditFrame:Landroid/view/View;
-
-    invoke-virtual {v5}, Landroid/view/View;->getBackground()Landroid/graphics/drawable/Drawable;
-
-    move-result-object v5
-
-    invoke-virtual {v5, v2}, Landroid/graphics/drawable/Drawable;->getPadding(Landroid/graphics/Rect;)Z
-
-    iget-object v5, p0, Landroid/widget/SearchView;->mSubmitArea:Landroid/view/View;
-
-    invoke-virtual {v5}, Landroid/view/View;->getVisibility()I
-
-    move-result v5
-
-    if-nez v5, :cond_1
-
-    const/4 v3, 0x0
-
-    .local v3, rightPadding:I
-    :goto_1
-    iget-object v5, p0, Landroid/widget/SearchView;->mSearchEditFrame:Landroid/view/View;
-
-    invoke-virtual {v5}, Landroid/view/View;->getPaddingBottom()I
-
-    move-result v0
-
-    .local v0, bottomPadding:I
-    iget-object v5, p0, Landroid/widget/SearchView;->mSearchEditFrame:Landroid/view/View;
-
-    invoke-virtual {v5, v1, v4, v3, v0}, Landroid/view/View;->setPadding(IIII)V
-
-    goto :goto_0
-
-    .end local v0           #bottomPadding:I
-    .end local v3           #rightPadding:I
-    :cond_1
-    iget v3, v2, Landroid/graphics/Rect;->right:I
-
-    goto :goto_1
-.end method
-

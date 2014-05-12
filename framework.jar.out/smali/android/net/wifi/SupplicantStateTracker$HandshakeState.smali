@@ -133,8 +133,10 @@
 
     iget v3, v1, Landroid/net/wifi/StateChangeResult;->networkId:I
 
-    #calls: Landroid/net/wifi/SupplicantStateTracker;->handleNetworkConnectionFailure(I)V
-    invoke-static {v2, v3}, Landroid/net/wifi/SupplicantStateTracker;->access$800(Landroid/net/wifi/SupplicantStateTracker;I)V
+    const/4 v4, 0x3
+
+    #calls: Landroid/net/wifi/SupplicantStateTracker;->handleNetworkConnectionFailure(II)V
+    invoke-static {v2, v3, v4}, Landroid/net/wifi/SupplicantStateTracker;->access$900(Landroid/net/wifi/SupplicantStateTracker;II)V
 
     :cond_2
     invoke-virtual {v0}, Landroid/net/wifi/SupplicantState;->ordinal()I
@@ -158,6 +160,8 @@
     const/4 v2, 0x1
 
     goto :goto_0
+
+    nop
 
     :pswitch_data_0
     .packed-switch 0x24006

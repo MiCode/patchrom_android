@@ -184,7 +184,9 @@
 
     move-result-object v13
 
-    invoke-virtual {v13}, Ljava/lang/String;->toLowerCase()Ljava/lang/String;
+    sget-object v15, Ljava/util/Locale;->ROOT:Ljava/util/Locale;
+
+    invoke-virtual {v13, v15}, Ljava/lang/String;->toLowerCase(Ljava/util/Locale;)Ljava/lang/String;
 
     move-result-object v15
 

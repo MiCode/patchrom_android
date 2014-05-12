@@ -108,7 +108,7 @@
     .parameter "editText"
 
     .prologue
-    const v1, 0x102033f
+    const v1, 0x10202f2
 
     invoke-virtual {p1, v1}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -163,6 +163,8 @@
     invoke-virtual {p0, p1, v0}, Landroid/preference/EditTextPreference;->onAddEditTextToDialogView(Landroid/view/View;Landroid/widget/EditText;)V
 
     :cond_1
+    invoke-static {p0, p1}, Landroid/preference/Injector$EditTextPreferenceHook;->after_onBindDialogView(Landroid/preference/EditTextPreference;Landroid/view/View;)V
+
     return-void
 .end method
 

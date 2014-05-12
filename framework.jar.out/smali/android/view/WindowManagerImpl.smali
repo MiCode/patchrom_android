@@ -52,36 +52,6 @@
     return-void
 .end method
 
-.method public static getDefault()Landroid/view/WindowManager;
-    .locals 3
-
-    .prologue
-    sget-object v0, Landroid/view/WindowManagerImpl;->sWindowManager:Landroid/view/WindowManagerImpl;
-
-    if-nez v0, :cond_0
-
-    new-instance v0, Landroid/view/WindowManagerImpl;
-
-    invoke-static {}, Landroid/hardware/display/DisplayManagerGlobal;->getInstance()Landroid/hardware/display/DisplayManagerGlobal;
-
-    move-result-object v1
-
-    const/4 v2, 0x0
-
-    invoke-virtual {v1, v2}, Landroid/hardware/display/DisplayManagerGlobal;->getRealDisplay(I)Landroid/view/Display;
-
-    move-result-object v1
-
-    invoke-direct {v0, v1}, Landroid/view/WindowManagerImpl;-><init>(Landroid/view/Display;)V
-
-    sput-object v0, Landroid/view/WindowManagerImpl;->sWindowManager:Landroid/view/WindowManagerImpl;
-
-    :cond_0
-    sget-object v0, Landroid/view/WindowManagerImpl;->sWindowManager:Landroid/view/WindowManagerImpl;
-
-    return-object v0
-.end method
-
 
 # virtual methods
 .method public addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
@@ -177,4 +147,34 @@
     invoke-virtual {v0, p1, p2}, Landroid/view/WindowManagerGlobal;->updateViewLayout(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
     return-void
+.end method
+
+.method public static getDefault()Landroid/view/WindowManager;
+    .locals 3
+
+    .prologue
+    sget-object v0, Landroid/view/WindowManagerImpl;->sWindowManager:Landroid/view/WindowManagerImpl;
+
+    if-nez v0, :cond_0
+
+    new-instance v0, Landroid/view/WindowManagerImpl;
+
+    invoke-static {}, Landroid/hardware/display/DisplayManagerGlobal;->getInstance()Landroid/hardware/display/DisplayManagerGlobal;
+
+    move-result-object v1
+
+    const/4 v2, 0x0
+
+    invoke-virtual {v1, v2}, Landroid/hardware/display/DisplayManagerGlobal;->getRealDisplay(I)Landroid/view/Display;
+
+    move-result-object v1
+
+    invoke-direct {v0, v1}, Landroid/view/WindowManagerImpl;-><init>(Landroid/view/Display;)V
+
+    sput-object v0, Landroid/view/WindowManagerImpl;->sWindowManager:Landroid/view/WindowManagerImpl;
+
+    :cond_0
+    sget-object v0, Landroid/view/WindowManagerImpl;->sWindowManager:Landroid/view/WindowManagerImpl;
+
+    return-object v0
 .end method

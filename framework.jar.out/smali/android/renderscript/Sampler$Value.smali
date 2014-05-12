@@ -34,6 +34,8 @@
 
 .field public static final enum LINEAR_MIP_NEAREST:Landroid/renderscript/Sampler$Value;
 
+.field public static final enum MIRRORED_REPEAT:Landroid/renderscript/Sampler$Value;
+
 .field public static final enum NEAREST:Landroid/renderscript/Sampler$Value;
 
 .field public static final enum WRAP:Landroid/renderscript/Sampler$Value;
@@ -45,24 +47,24 @@
 
 # direct methods
 .method static constructor <clinit>()V
-    .locals 8
+    .locals 9
 
     .prologue
-    const/4 v7, 0x4
+    const/4 v8, 0x4
 
-    const/4 v6, 0x3
+    const/4 v7, 0x3
 
-    const/4 v5, 0x2
+    const/4 v6, 0x2
 
-    const/4 v4, 0x1
+    const/4 v5, 0x1
 
-    const/4 v3, 0x0
+    const/4 v4, 0x0
 
     new-instance v0, Landroid/renderscript/Sampler$Value;
 
     const-string v1, "NEAREST"
 
-    invoke-direct {v0, v1, v3, v3}, Landroid/renderscript/Sampler$Value;-><init>(Ljava/lang/String;II)V
+    invoke-direct {v0, v1, v4, v4}, Landroid/renderscript/Sampler$Value;-><init>(Ljava/lang/String;II)V
 
     sput-object v0, Landroid/renderscript/Sampler$Value;->NEAREST:Landroid/renderscript/Sampler$Value;
 
@@ -70,7 +72,7 @@
 
     const-string v1, "LINEAR"
 
-    invoke-direct {v0, v1, v4, v4}, Landroid/renderscript/Sampler$Value;-><init>(Ljava/lang/String;II)V
+    invoke-direct {v0, v1, v5, v5}, Landroid/renderscript/Sampler$Value;-><init>(Ljava/lang/String;II)V
 
     sput-object v0, Landroid/renderscript/Sampler$Value;->LINEAR:Landroid/renderscript/Sampler$Value;
 
@@ -78,7 +80,7 @@
 
     const-string v1, "LINEAR_MIP_LINEAR"
 
-    invoke-direct {v0, v1, v5, v5}, Landroid/renderscript/Sampler$Value;-><init>(Ljava/lang/String;II)V
+    invoke-direct {v0, v1, v6, v6}, Landroid/renderscript/Sampler$Value;-><init>(Ljava/lang/String;II)V
 
     sput-object v0, Landroid/renderscript/Sampler$Value;->LINEAR_MIP_LINEAR:Landroid/renderscript/Sampler$Value;
 
@@ -88,7 +90,7 @@
 
     const/4 v2, 0x5
 
-    invoke-direct {v0, v1, v6, v2}, Landroid/renderscript/Sampler$Value;-><init>(Ljava/lang/String;II)V
+    invoke-direct {v0, v1, v7, v2}, Landroid/renderscript/Sampler$Value;-><init>(Ljava/lang/String;II)V
 
     sput-object v0, Landroid/renderscript/Sampler$Value;->LINEAR_MIP_NEAREST:Landroid/renderscript/Sampler$Value;
 
@@ -96,7 +98,7 @@
 
     const-string v1, "WRAP"
 
-    invoke-direct {v0, v1, v7, v6}, Landroid/renderscript/Sampler$Value;-><init>(Ljava/lang/String;II)V
+    invoke-direct {v0, v1, v8, v7}, Landroid/renderscript/Sampler$Value;-><init>(Ljava/lang/String;II)V
 
     sput-object v0, Landroid/renderscript/Sampler$Value;->WRAP:Landroid/renderscript/Sampler$Value;
 
@@ -106,37 +108,55 @@
 
     const/4 v2, 0x5
 
-    invoke-direct {v0, v1, v2, v7}, Landroid/renderscript/Sampler$Value;-><init>(Ljava/lang/String;II)V
+    invoke-direct {v0, v1, v2, v8}, Landroid/renderscript/Sampler$Value;-><init>(Ljava/lang/String;II)V
 
     sput-object v0, Landroid/renderscript/Sampler$Value;->CLAMP:Landroid/renderscript/Sampler$Value;
 
-    const/4 v0, 0x6
+    new-instance v0, Landroid/renderscript/Sampler$Value;
+
+    const-string v1, "MIRRORED_REPEAT"
+
+    const/4 v2, 0x6
+
+    const/4 v3, 0x6
+
+    invoke-direct {v0, v1, v2, v3}, Landroid/renderscript/Sampler$Value;-><init>(Ljava/lang/String;II)V
+
+    sput-object v0, Landroid/renderscript/Sampler$Value;->MIRRORED_REPEAT:Landroid/renderscript/Sampler$Value;
+
+    const/4 v0, 0x7
 
     new-array v0, v0, [Landroid/renderscript/Sampler$Value;
 
     sget-object v1, Landroid/renderscript/Sampler$Value;->NEAREST:Landroid/renderscript/Sampler$Value;
 
-    aput-object v1, v0, v3
+    aput-object v1, v0, v4
 
     sget-object v1, Landroid/renderscript/Sampler$Value;->LINEAR:Landroid/renderscript/Sampler$Value;
 
-    aput-object v1, v0, v4
+    aput-object v1, v0, v5
 
     sget-object v1, Landroid/renderscript/Sampler$Value;->LINEAR_MIP_LINEAR:Landroid/renderscript/Sampler$Value;
 
-    aput-object v1, v0, v5
+    aput-object v1, v0, v6
 
     sget-object v1, Landroid/renderscript/Sampler$Value;->LINEAR_MIP_NEAREST:Landroid/renderscript/Sampler$Value;
 
-    aput-object v1, v0, v6
+    aput-object v1, v0, v7
 
     sget-object v1, Landroid/renderscript/Sampler$Value;->WRAP:Landroid/renderscript/Sampler$Value;
 
-    aput-object v1, v0, v7
+    aput-object v1, v0, v8
 
     const/4 v1, 0x5
 
     sget-object v2, Landroid/renderscript/Sampler$Value;->CLAMP:Landroid/renderscript/Sampler$Value;
+
+    aput-object v2, v0, v1
+
+    const/4 v1, 0x6
+
+    sget-object v2, Landroid/renderscript/Sampler$Value;->MIRRORED_REPEAT:Landroid/renderscript/Sampler$Value;
 
     aput-object v2, v0, v1
 

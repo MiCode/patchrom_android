@@ -19,6 +19,8 @@
 
 .field public static final AsecPathResult:I = 0xd3
 
+.field public static final FstrimCompleted:I = 0x2bc
+
 .field public static final OpFailedMediaBlank:I = 0x192
 
 .field public static final OpFailedMediaCorrupt:I = 0x193
@@ -46,6 +48,10 @@
 .field public static final VolumeListResult:I = 0x6e
 
 .field public static final VolumeStateChange:I = 0x25d
+
+.field public static final VolumeUserLabelChange:I = 0x266
+
+.field public static final VolumeUuidChange:I = 0x265
 
 
 # instance fields

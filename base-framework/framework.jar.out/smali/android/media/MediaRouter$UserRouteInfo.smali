@@ -232,6 +232,18 @@
     goto :goto_0
 .end method
 
+.method public setDescription(Ljava/lang/CharSequence;)V
+    .locals 0
+    .parameter "description"
+
+    .prologue
+    iput-object p1, p0, Landroid/media/MediaRouter$UserRouteInfo;->mDescription:Ljava/lang/CharSequence;
+
+    invoke-virtual {p0}, Landroid/media/MediaRouter$UserRouteInfo;->routeUpdated()V
+
+    return-void
+.end method
+
 .method public setIconDrawable(Landroid/graphics/drawable/Drawable;)V
     .locals 0
     .parameter "icon"

@@ -426,6 +426,15 @@
 
 
 # virtual methods
+.method public canSelectArbitrarily()Z
+    .locals 1
+
+    .prologue
+    const/4 v0, 0x1
+
+    return v0
+.end method
+
 .method protected down(Landroid/widget/TextView;Landroid/text/Spannable;)Z
     .locals 1
     .parameter "widget"

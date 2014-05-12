@@ -41,87 +41,38 @@
     .parameter "error"
 
     .prologue
-    const/4 v5, 0x0
-
-    const/4 v2, 0x1
-
     const/4 v3, 0x0
 
-    sparse-switch p1, :sswitch_data_0
+    packed-switch p1, :pswitch_data_0
 
-    :cond_0
     :goto_0
     return-void
 
-    :sswitch_0
-    iget-object v0, p0, Landroid/media/AudioService$1;->this$0:Landroid/media/AudioService;
-
-    #getter for: Landroid/media/AudioService;->mMediaServerOk:Z
-    invoke-static {v0}, Landroid/media/AudioService;->access$000(Landroid/media/AudioService;)Z
-
-    move-result v0
-
-    if-eqz v0, :cond_0
-
+    :pswitch_0
     iget-object v0, p0, Landroid/media/AudioService$1;->this$0:Landroid/media/AudioService;
 
     #getter for: Landroid/media/AudioService;->mAudioHandler:Landroid/media/AudioService$AudioHandler;
-    invoke-static {v0}, Landroid/media/AudioService;->access$100(Landroid/media/AudioService;)Landroid/media/AudioService$AudioHandler;
+    invoke-static {v0}, Landroid/media/AudioService;->access$000(Landroid/media/AudioService;)Landroid/media/AudioService$AudioHandler;
 
     move-result-object v0
 
     const/4 v1, 0x4
 
-    const/16 v6, 0x5dc
+    const/4 v2, 0x1
 
-    move v4, v3
-
-    #calls: Landroid/media/AudioService;->sendMsg(Landroid/os/Handler;IIIILjava/lang/Object;I)V
-    invoke-static/range {v0 .. v6}, Landroid/media/AudioService;->access$200(Landroid/os/Handler;IIIILjava/lang/Object;I)V
-
-    iget-object v0, p0, Landroid/media/AudioService$1;->this$0:Landroid/media/AudioService;
-
-    #setter for: Landroid/media/AudioService;->mMediaServerOk:Z
-    invoke-static {v0, v3}, Landroid/media/AudioService;->access$002(Landroid/media/AudioService;Z)Z
-
-    goto :goto_0
-
-    :sswitch_1
-    iget-object v0, p0, Landroid/media/AudioService$1;->this$0:Landroid/media/AudioService;
-
-    #getter for: Landroid/media/AudioService;->mMediaServerOk:Z
-    invoke-static {v0}, Landroid/media/AudioService;->access$000(Landroid/media/AudioService;)Z
-
-    move-result v0
-
-    if-nez v0, :cond_0
-
-    iget-object v0, p0, Landroid/media/AudioService$1;->this$0:Landroid/media/AudioService;
-
-    #getter for: Landroid/media/AudioService;->mAudioHandler:Landroid/media/AudioService$AudioHandler;
-    invoke-static {v0}, Landroid/media/AudioService;->access$100(Landroid/media/AudioService;)Landroid/media/AudioService$AudioHandler;
-
-    move-result-object v0
-
-    const/4 v1, 0x5
+    const/4 v5, 0x0
 
     move v4, v3
 
     move v6, v3
 
     #calls: Landroid/media/AudioService;->sendMsg(Landroid/os/Handler;IIIILjava/lang/Object;I)V
-    invoke-static/range {v0 .. v6}, Landroid/media/AudioService;->access$200(Landroid/os/Handler;IIIILjava/lang/Object;I)V
-
-    iget-object v0, p0, Landroid/media/AudioService$1;->this$0:Landroid/media/AudioService;
-
-    #setter for: Landroid/media/AudioService;->mMediaServerOk:Z
-    invoke-static {v0, v2}, Landroid/media/AudioService;->access$002(Landroid/media/AudioService;Z)Z
+    invoke-static/range {v0 .. v6}, Landroid/media/AudioService;->access$100(Landroid/os/Handler;IIIILjava/lang/Object;I)V
 
     goto :goto_0
 
-    :sswitch_data_0
-    .sparse-switch
-        0x0 -> :sswitch_1
-        0x64 -> :sswitch_0
-    .end sparse-switch
+    :pswitch_data_0
+    .packed-switch 0x64
+        :pswitch_0
+    .end packed-switch
 .end method

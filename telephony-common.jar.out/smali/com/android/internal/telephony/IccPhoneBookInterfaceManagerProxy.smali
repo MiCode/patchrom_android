@@ -43,14 +43,8 @@
             "(I)",
             "Ljava/util/List",
             "<",
-            "Lcom/android/internal/telephony/AdnRecord;",
+            "Lcom/android/internal/telephony/uicc/AdnRecord;",
             ">;"
-        }
-    .end annotation
-
-    .annotation system Ldalvik/annotation/Throws;
-        value = {
-            Landroid/os/RemoteException;
         }
     .end annotation
 
@@ -67,11 +61,6 @@
 .method public getAdnRecordsSize(I)[I
     .locals 1
     .parameter "efid"
-    .annotation system Ldalvik/annotation/Throws;
-        value = {
-            Landroid/os/RemoteException;
-        }
-    .end annotation
 
     .prologue
     iget-object v0, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManagerProxy;->mIccPhoneBookInterfaceManager:Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;
@@ -109,11 +98,6 @@
     .parameter "newPhoneNumber"
     .parameter "index"
     .parameter "pin2"
-    .annotation system Ldalvik/annotation/Throws;
-        value = {
-            Landroid/os/RemoteException;
-        }
-    .end annotation
 
     .prologue
     iget-object v0, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManagerProxy;->mIccPhoneBookInterfaceManager:Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;
@@ -143,11 +127,6 @@
     .parameter "newTag"
     .parameter "newPhoneNumber"
     .parameter "pin2"
-    .annotation system Ldalvik/annotation/Throws;
-        value = {
-            Landroid/os/RemoteException;
-        }
-    .end annotation
 
     .prologue
     iget-object v0, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManagerProxy;->mIccPhoneBookInterfaceManager:Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;

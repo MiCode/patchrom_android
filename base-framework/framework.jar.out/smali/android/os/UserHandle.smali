@@ -119,6 +119,150 @@
     return-void
 .end method
 
+.method public static formatUid(Ljava/io/PrintWriter;I)V
+    .locals 4
+    .parameter "pw"
+    .parameter "uid"
+
+    .prologue
+    const v3, 0x182b8
+
+    const/16 v2, 0x2710
+
+    if-ge p1, v2, :cond_0
+
+    invoke-virtual {p0, p1}, Ljava/io/PrintWriter;->print(I)V
+
+    :goto_0
+    return-void
+
+    :cond_0
+    const/16 v1, 0x75
+
+    invoke-virtual {p0, v1}, Ljava/io/PrintWriter;->print(C)V
+
+    invoke-static {p1}, Landroid/os/UserHandle;->getUserId(I)I
+
+    move-result v1
+
+    invoke-virtual {p0, v1}, Ljava/io/PrintWriter;->print(I)V
+
+    invoke-static {p1}, Landroid/os/UserHandle;->getAppId(I)I
+
+    move-result v0
+
+    .local v0, appId:I
+    if-lt v0, v3, :cond_1
+
+    const v1, 0x1869f
+
+    if-gt v0, v1, :cond_1
+
+    const/16 v1, 0x69
+
+    invoke-virtual {p0, v1}, Ljava/io/PrintWriter;->print(C)V
+
+    sub-int v1, v0, v3
+
+    invoke-virtual {p0, v1}, Ljava/io/PrintWriter;->print(I)V
+
+    goto :goto_0
+
+    :cond_1
+    if-lt v0, v2, :cond_2
+
+    const/16 v1, 0x61
+
+    invoke-virtual {p0, v1}, Ljava/io/PrintWriter;->print(C)V
+
+    add-int/lit16 v1, v0, -0x2710
+
+    invoke-virtual {p0, v1}, Ljava/io/PrintWriter;->print(I)V
+
+    goto :goto_0
+
+    :cond_2
+    const/16 v1, 0x73
+
+    invoke-virtual {p0, v1}, Ljava/io/PrintWriter;->print(C)V
+
+    invoke-virtual {p0, v0}, Ljava/io/PrintWriter;->print(I)V
+
+    goto :goto_0
+.end method
+
+.method public static formatUid(Ljava/lang/StringBuilder;I)V
+    .locals 4
+    .parameter "sb"
+    .parameter "uid"
+
+    .prologue
+    const v3, 0x182b8
+
+    const/16 v2, 0x2710
+
+    if-ge p1, v2, :cond_0
+
+    invoke-virtual {p0, p1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    :goto_0
+    return-void
+
+    :cond_0
+    const/16 v1, 0x75
+
+    invoke-virtual {p0, v1}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
+
+    invoke-static {p1}, Landroid/os/UserHandle;->getUserId(I)I
+
+    move-result v1
+
+    invoke-virtual {p0, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    invoke-static {p1}, Landroid/os/UserHandle;->getAppId(I)I
+
+    move-result v0
+
+    .local v0, appId:I
+    if-lt v0, v3, :cond_1
+
+    const v1, 0x1869f
+
+    if-gt v0, v1, :cond_1
+
+    const/16 v1, 0x69
+
+    invoke-virtual {p0, v1}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
+
+    sub-int v1, v0, v3
+
+    invoke-virtual {p0, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    goto :goto_0
+
+    :cond_1
+    if-lt v0, v2, :cond_2
+
+    const/16 v1, 0x61
+
+    invoke-virtual {p0, v1}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
+
+    add-int/lit16 v1, v0, -0x2710
+
+    invoke-virtual {p0, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    goto :goto_0
+
+    :cond_2
+    const/16 v1, 0x73
+
+    invoke-virtual {p0, v1}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
+
+    invoke-virtual {p0, v0}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    goto :goto_0
+.end method
+
 .method public static final getAppId(I)I
     .locals 1
     .parameter "uid"

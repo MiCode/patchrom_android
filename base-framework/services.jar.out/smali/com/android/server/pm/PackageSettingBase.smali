@@ -24,6 +24,8 @@
 
 .field installerPackageName:Ljava/lang/String;
 
+.field keySetData:Lcom/android/server/pm/PackageKeySetData;
+
 .field lastUpdateTime:J
 
 .field final name:Ljava/lang/String;
@@ -86,6 +88,12 @@
     invoke-direct {v1}, Lcom/android/server/pm/PackageSignatures;-><init>()V
 
     iput-object v1, p0, Lcom/android/server/pm/PackageSettingBase;->signatures:Lcom/android/server/pm/PackageSignatures;
+
+    new-instance v1, Lcom/android/server/pm/PackageKeySetData;
+
+    invoke-direct {v1}, Lcom/android/server/pm/PackageKeySetData;-><init>()V
+
+    iput-object v1, p0, Lcom/android/server/pm/PackageSettingBase;->keySetData:Lcom/android/server/pm/PackageKeySetData;
 
     new-instance v1, Landroid/util/SparseArray;
 
@@ -216,6 +224,14 @@
 
     iput-object v1, p0, Lcom/android/server/pm/PackageSettingBase;->installerPackageName:Ljava/lang/String;
 
+    new-instance v1, Lcom/android/server/pm/PackageKeySetData;
+
+    iget-object v2, p1, Lcom/android/server/pm/PackageSettingBase;->keySetData:Lcom/android/server/pm/PackageKeySetData;
+
+    invoke-direct {v1, v2}, Lcom/android/server/pm/PackageKeySetData;-><init>(Lcom/android/server/pm/PackageKeySetData;)V
+
+    iput-object v1, p0, Lcom/android/server/pm/PackageSettingBase;->keySetData:Lcom/android/server/pm/PackageKeySetData;
+
     return-void
 .end method
 
@@ -237,6 +253,12 @@
     invoke-direct {v0}, Lcom/android/server/pm/PackageSignatures;-><init>()V
 
     iput-object v0, p0, Lcom/android/server/pm/PackageSettingBase;->signatures:Lcom/android/server/pm/PackageSignatures;
+
+    new-instance v0, Lcom/android/server/pm/PackageKeySetData;
+
+    invoke-direct {v0}, Lcom/android/server/pm/PackageKeySetData;-><init>()V
+
+    iput-object v0, p0, Lcom/android/server/pm/PackageSettingBase;->keySetData:Lcom/android/server/pm/PackageKeySetData;
 
     new-instance v0, Landroid/util/SparseArray;
 
@@ -409,6 +431,10 @@
 
     iput v1, p0, Lcom/android/server/pm/PackageSettingBase;->installStatus:I
 
+    iget-object v1, p1, Lcom/android/server/pm/PackageSettingBase;->keySetData:Lcom/android/server/pm/PackageKeySetData;
+
+    iput-object v1, p0, Lcom/android/server/pm/PackageSettingBase;->keySetData:Lcom/android/server/pm/PackageKeySetData;
+
     return-void
 .end method
 
@@ -484,6 +510,20 @@
     move-result v2
 
     or-int/2addr v0, v2
+
+    return v0
+.end method
+
+.method getBlocked(I)Z
+    .locals 1
+    .parameter "userId"
+
+    .prologue
+    invoke-virtual {p0, p1}, Lcom/android/server/pm/PackageSettingBase;->readUserState(I)Landroid/content/pm/PackageUserState;
+
+    move-result-object v0
+
+    iget-boolean v0, v0, Landroid/content/pm/PackageUserState;->blocked:Z
 
     return v0
 .end method
@@ -627,6 +667,20 @@
 
     .prologue
     iget-object v0, p0, Lcom/android/server/pm/PackageSettingBase;->installerPackageName:Ljava/lang/String;
+
+    return-object v0
+.end method
+
+.method getLastDisabledAppCaller(I)Ljava/lang/String;
+    .locals 1
+    .parameter "userId"
+
+    .prologue
+    invoke-virtual {p0, p1}, Lcom/android/server/pm/PackageSettingBase;->readUserState(I)Landroid/content/pm/PackageUserState;
+
+    move-result-object v0
+
+    iget-object v0, v0, Landroid/content/pm/PackageUserState;->lastDisableAppCaller:Ljava/lang/String;
 
     return-object v0
 .end method
@@ -944,6 +998,21 @@
     goto :goto_0
 .end method
 
+.method setBlocked(ZI)V
+    .locals 1
+    .parameter "blocked"
+    .parameter "userId"
+
+    .prologue
+    invoke-direct {p0, p2}, Lcom/android/server/pm/PackageSettingBase;->modifyUserState(I)Landroid/content/pm/PackageUserState;
+
+    move-result-object v0
+
+    iput-boolean p1, v0, Landroid/content/pm/PackageUserState;->blocked:Z
+
+    return-void
+.end method
+
 .method setDisabledComponents(Ljava/util/HashSet;I)V
     .locals 1
     .parameter
@@ -1006,17 +1075,21 @@
     goto :goto_0
 .end method
 
-.method setEnabled(II)V
+.method setEnabled(IILjava/lang/String;)V
     .locals 1
     .parameter "state"
     .parameter "userId"
+    .parameter "callingPackage"
 
     .prologue
     invoke-direct {p0, p2}, Lcom/android/server/pm/PackageSettingBase;->modifyUserState(I)Landroid/content/pm/PackageUserState;
 
     move-result-object v0
 
+    .local v0, st:Landroid/content/pm/PackageUserState;
     iput p1, v0, Landroid/content/pm/PackageUserState;->enabled:I
+
+    iput-object p3, v0, Landroid/content/pm/PackageUserState;->lastDisableAppCaller:Ljava/lang/String;
 
     return-void
 .end method
@@ -1158,18 +1231,21 @@
     return-void
 .end method
 
-.method setUserState(IIZZZLjava/util/HashSet;Ljava/util/HashSet;)V
+.method setUserState(IIZZZZLjava/lang/String;Ljava/util/HashSet;Ljava/util/HashSet;)V
     .locals 1
     .parameter "userId"
     .parameter "enabled"
     .parameter "installed"
     .parameter "stopped"
     .parameter "notLaunched"
+    .parameter "blocked"
+    .parameter "lastDisableAppCaller"
     .parameter
     .parameter
     .annotation system Ldalvik/annotation/Signature;
         value = {
-            "(IIZZZ",
+            "(IIZZZZ",
+            "Ljava/lang/String;",
             "Ljava/util/HashSet",
             "<",
             "Ljava/lang/String;",
@@ -1182,8 +1258,8 @@
     .end annotation
 
     .prologue
-    .local p6, enabledComponents:Ljava/util/HashSet;,"Ljava/util/HashSet<Ljava/lang/String;>;"
-    .local p7, disabledComponents:Ljava/util/HashSet;,"Ljava/util/HashSet<Ljava/lang/String;>;"
+    .local p8, enabledComponents:Ljava/util/HashSet;,"Ljava/util/HashSet<Ljava/lang/String;>;"
+    .local p9, disabledComponents:Ljava/util/HashSet;,"Ljava/util/HashSet<Ljava/lang/String;>;"
     invoke-direct {p0, p1}, Lcom/android/server/pm/PackageSettingBase;->modifyUserState(I)Landroid/content/pm/PackageUserState;
 
     move-result-object v0
@@ -1197,9 +1273,13 @@
 
     iput-boolean p5, v0, Landroid/content/pm/PackageUserState;->notLaunched:Z
 
-    iput-object p6, v0, Landroid/content/pm/PackageUserState;->enabledComponents:Ljava/util/HashSet;
+    iput-boolean p6, v0, Landroid/content/pm/PackageUserState;->blocked:Z
 
-    iput-object p7, v0, Landroid/content/pm/PackageUserState;->disabledComponents:Ljava/util/HashSet;
+    iput-object p7, v0, Landroid/content/pm/PackageUserState;->lastDisableAppCaller:Ljava/lang/String;
+
+    iput-object p8, v0, Landroid/content/pm/PackageUserState;->enabledComponents:Ljava/util/HashSet;
+
+    iput-object p9, v0, Landroid/content/pm/PackageUserState;->disabledComponents:Ljava/util/HashSet;
 
     return-void
 .end method

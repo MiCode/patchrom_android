@@ -330,7 +330,7 @@
 .end method
 
 .method public notify(Ljava/lang/String;ILandroid/app/Notification;)V
-    .locals 7
+    .locals 8
     .parameter "tag"
     .parameter "id"
     .parameter "notification"
@@ -338,9 +338,9 @@
     .prologue
     const/4 v2, 0x1
 
-    new-array v5, v2, [I
+    new-array v6, v2, [I
 
-    .local v5, idOut:[I
+    .local v6, idOut:[I
     invoke-static {}, Landroid/app/NotificationManager;->getService()Landroid/app/INotificationManager;
 
     move-result-object v0
@@ -364,6 +364,18 @@
     move-result-object v2
 
     iput-object v2, p3, Landroid/app/Notification;->sound:Landroid/net/Uri;
+
+    invoke-static {}, Landroid/os/StrictMode;->vmFileUriExposureEnabled()Z
+
+    move-result v2
+
+    if-eqz v2, :cond_0
+
+    iget-object v2, p3, Landroid/app/Notification;->sound:Landroid/net/Uri;
+
+    const-string v3, "Notification.sound"
+
+    invoke-virtual {v2, v3}, Landroid/net/Uri;->checkFileUriExposed(Ljava/lang/String;)V
 
     :cond_0
     sget-boolean v2, Landroid/app/NotificationManager;->localLOGV:Z
@@ -414,21 +426,27 @@
 
     :cond_1
     :try_start_0
+    iget-object v2, p0, Landroid/app/NotificationManager;->mContext:Landroid/content/Context;
+
+    invoke-virtual {v2}, Landroid/content/Context;->getOpPackageName()Ljava/lang/String;
+
+    move-result-object v2
+
     invoke-static {}, Landroid/os/UserHandle;->myUserId()I
 
-    move-result v6
+    move-result v7
 
-    move-object v2, p1
+    move-object v3, p1
 
-    move v3, p2
+    move v4, p2
 
-    move-object v4, p3
+    move-object v5, p3
 
-    invoke-interface/range {v0 .. v6}, Landroid/app/INotificationManager;->enqueueNotificationWithTag(Ljava/lang/String;Ljava/lang/String;ILandroid/app/Notification;[II)V
+    invoke-interface/range {v0 .. v7}, Landroid/app/INotificationManager;->enqueueNotificationWithTag(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILandroid/app/Notification;[II)V
 
     const/4 v2, 0x0
 
-    aget v2, v5, v2
+    aget v2, v6, v2
 
     if-eq p2, v2, :cond_2
 
@@ -456,7 +474,7 @@
 
     const/4 v4, 0x0
 
-    aget v4, v5, v4
+    aget v4, v6, v4
 
     invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
@@ -481,7 +499,7 @@
 .end method
 
 .method public notifyAsUser(Ljava/lang/String;ILandroid/app/Notification;Landroid/os/UserHandle;)V
-    .locals 7
+    .locals 8
     .parameter "tag"
     .parameter "id"
     .parameter "notification"
@@ -490,9 +508,9 @@
     .prologue
     const/4 v2, 0x1
 
-    new-array v5, v2, [I
+    new-array v6, v2, [I
 
-    .local v5, idOut:[I
+    .local v6, idOut:[I
     invoke-static {}, Landroid/app/NotificationManager;->getService()Landroid/app/INotificationManager;
 
     move-result-object v0
@@ -516,6 +534,18 @@
     move-result-object v2
 
     iput-object v2, p3, Landroid/app/Notification;->sound:Landroid/net/Uri;
+
+    invoke-static {}, Landroid/os/StrictMode;->vmFileUriExposureEnabled()Z
+
+    move-result v2
+
+    if-eqz v2, :cond_0
+
+    iget-object v2, p3, Landroid/app/Notification;->sound:Landroid/net/Uri;
+
+    const-string v3, "Notification.sound"
+
+    invoke-virtual {v2, v3}, Landroid/net/Uri;->checkFileUriExposed(Ljava/lang/String;)V
 
     :cond_0
     sget-boolean v2, Landroid/app/NotificationManager;->localLOGV:Z
@@ -566,21 +596,27 @@
 
     :cond_1
     :try_start_0
+    iget-object v2, p0, Landroid/app/NotificationManager;->mContext:Landroid/content/Context;
+
+    invoke-virtual {v2}, Landroid/content/Context;->getOpPackageName()Ljava/lang/String;
+
+    move-result-object v2
+
     invoke-virtual {p4}, Landroid/os/UserHandle;->getIdentifier()I
 
-    move-result v6
+    move-result v7
 
-    move-object v2, p1
+    move-object v3, p1
 
-    move v3, p2
+    move v4, p2
 
-    move-object v4, p3
+    move-object v5, p3
 
-    invoke-interface/range {v0 .. v6}, Landroid/app/INotificationManager;->enqueueNotificationWithTag(Ljava/lang/String;Ljava/lang/String;ILandroid/app/Notification;[II)V
+    invoke-interface/range {v0 .. v7}, Landroid/app/INotificationManager;->enqueueNotificationWithTag(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILandroid/app/Notification;[II)V
 
     const/4 v2, 0x0
 
-    aget v2, v5, v2
+    aget v2, v6, v2
 
     if-eq p2, v2, :cond_2
 
@@ -608,7 +644,7 @@
 
     const/4 v4, 0x0
 
-    aget v4, v5, v4
+    aget v4, v6, v4
 
     invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 

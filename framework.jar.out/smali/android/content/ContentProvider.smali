@@ -20,11 +20,24 @@
 
 
 # instance fields
+.field private final mCallingPackage:Ljava/lang/ThreadLocal;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "Ljava/lang/ThreadLocal",
+            "<",
+            "Ljava/lang/String;",
+            ">;"
+        }
+    .end annotation
+.end field
+
 .field private mContext:Landroid/content/Context;
 
 .field private mExported:Z
 
 .field private mMyUid:I
+
+.field private mNoPerms:Z
 
 .field private mPathPermissions:[Landroid/content/pm/PathPermission;
 
@@ -45,6 +58,12 @@
     const/4 v0, 0x0
 
     iput-object v0, p0, Landroid/content/ContentProvider;->mContext:Landroid/content/Context;
+
+    new-instance v0, Ljava/lang/ThreadLocal;
+
+    invoke-direct {v0}, Ljava/lang/ThreadLocal;-><init>()V
+
+    iput-object v0, p0, Landroid/content/ContentProvider;->mCallingPackage:Ljava/lang/ThreadLocal;
 
     new-instance v0, Landroid/content/ContentProvider$Transport;
 
@@ -69,6 +88,12 @@
 
     iput-object v0, p0, Landroid/content/ContentProvider;->mContext:Landroid/content/Context;
 
+    new-instance v0, Ljava/lang/ThreadLocal;
+
+    invoke-direct {v0}, Ljava/lang/ThreadLocal;-><init>()V
+
+    iput-object v0, p0, Landroid/content/ContentProvider;->mCallingPackage:Ljava/lang/ThreadLocal;
+
     new-instance v0, Landroid/content/ContentProvider$Transport;
 
     invoke-direct {v0, p0}, Landroid/content/ContentProvider$Transport;-><init>(Landroid/content/ContentProvider;)V
@@ -86,24 +111,80 @@
     return-void
 .end method
 
-.method static synthetic access$000(Landroid/content/ContentProvider;)I
+.method static synthetic access$000(Landroid/content/ContentProvider;Ljava/lang/String;)Ljava/lang/String;
     .locals 1
     .parameter "x0"
+    .parameter "x1"
 
     .prologue
-    iget v0, p0, Landroid/content/ContentProvider;->mMyUid:I
+    invoke-direct {p0, p1}, Landroid/content/ContentProvider;->setCallingPackage(Ljava/lang/String;)Ljava/lang/String;
 
-    return v0
+    move-result-object v0
+
+    return-object v0
 .end method
 
-.method static synthetic access$100(Landroid/content/ContentProvider;)Z
-    .locals 1
-    .parameter "x0"
+.method private attachInfo(Landroid/content/Context;Landroid/content/pm/ProviderInfo;Z)V
+    .locals 2
+    .parameter "context"
+    .parameter "info"
+    .parameter "testing"
 
     .prologue
-    iget-boolean v0, p0, Landroid/content/ContentProvider;->mExported:Z
+    invoke-static {}, Landroid/os/AsyncTask;->init()V
 
-    return v0
+    iput-boolean p3, p0, Landroid/content/ContentProvider;->mNoPerms:Z
+
+    iget-object v0, p0, Landroid/content/ContentProvider;->mContext:Landroid/content/Context;
+
+    if-nez v0, :cond_2
+
+    iput-object p1, p0, Landroid/content/ContentProvider;->mContext:Landroid/content/Context;
+
+    if-eqz p1, :cond_0
+
+    iget-object v1, p0, Landroid/content/ContentProvider;->mTransport:Landroid/content/ContentProvider$Transport;
+
+    const-string v0, "appops"
+
+    invoke-virtual {p1, v0}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Landroid/app/AppOpsManager;
+
+    iput-object v0, v1, Landroid/content/ContentProvider$Transport;->mAppOpsManager:Landroid/app/AppOpsManager;
+
+    :cond_0
+    invoke-static {}, Landroid/os/Process;->myUid()I
+
+    move-result v0
+
+    iput v0, p0, Landroid/content/ContentProvider;->mMyUid:I
+
+    if-eqz p2, :cond_1
+
+    iget-object v0, p2, Landroid/content/pm/ProviderInfo;->readPermission:Ljava/lang/String;
+
+    invoke-virtual {p0, v0}, Landroid/content/ContentProvider;->setReadPermission(Ljava/lang/String;)V
+
+    iget-object v0, p2, Landroid/content/pm/ProviderInfo;->writePermission:Ljava/lang/String;
+
+    invoke-virtual {p0, v0}, Landroid/content/ContentProvider;->setWritePermission(Ljava/lang/String;)V
+
+    iget-object v0, p2, Landroid/content/pm/ProviderInfo;->pathPermissions:[Landroid/content/pm/PathPermission;
+
+    invoke-virtual {p0, v0}, Landroid/content/ContentProvider;->setPathPermissions([Landroid/content/pm/PathPermission;)V
+
+    iget-boolean v0, p2, Landroid/content/pm/ProviderInfo;->exported:Z
+
+    iput-boolean v0, p0, Landroid/content/ContentProvider;->mExported:Z
+
+    :cond_1
+    invoke-virtual {p0}, Landroid/content/ContentProvider;->onCreate()Z
+
+    :cond_2
+    return-void
 .end method
 
 .method public static coerceToLocalContentProvider(Landroid/content/IContentProvider;)Landroid/content/ContentProvider;
@@ -130,6 +211,27 @@
     const/4 v0, 0x0
 
     goto :goto_0
+.end method
+
+.method private setCallingPackage(Ljava/lang/String;)Ljava/lang/String;
+    .locals 2
+    .parameter "callingPackage"
+
+    .prologue
+    iget-object v1, p0, Landroid/content/ContentProvider;->mCallingPackage:Ljava/lang/ThreadLocal;
+
+    invoke-virtual {v1}, Ljava/lang/ThreadLocal;->get()Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Ljava/lang/String;
+
+    .local v0, original:Ljava/lang/String;
+    iget-object v1, p0, Landroid/content/ContentProvider;->mCallingPackage:Ljava/lang/ThreadLocal;
+
+    invoke-virtual {v1, p1}, Ljava/lang/ThreadLocal;->set(Ljava/lang/Object;)V
+
+    return-object v0
 .end method
 
 
@@ -196,42 +298,23 @@
     .parameter "info"
 
     .prologue
-    invoke-static {}, Landroid/os/AsyncTask;->init()V
+    const/4 v0, 0x0
 
-    iget-object v0, p0, Landroid/content/ContentProvider;->mContext:Landroid/content/Context;
+    invoke-direct {p0, p1, p2, v0}, Landroid/content/ContentProvider;->attachInfo(Landroid/content/Context;Landroid/content/pm/ProviderInfo;Z)V
 
-    if-nez v0, :cond_1
+    return-void
+.end method
 
-    iput-object p1, p0, Landroid/content/ContentProvider;->mContext:Landroid/content/Context;
+.method public attachInfoForTesting(Landroid/content/Context;Landroid/content/pm/ProviderInfo;)V
+    .locals 1
+    .parameter "context"
+    .parameter "info"
 
-    invoke-static {}, Landroid/os/Process;->myUid()I
+    .prologue
+    const/4 v0, 0x1
 
-    move-result v0
+    invoke-direct {p0, p1, p2, v0}, Landroid/content/ContentProvider;->attachInfo(Landroid/content/Context;Landroid/content/pm/ProviderInfo;Z)V
 
-    iput v0, p0, Landroid/content/ContentProvider;->mMyUid:I
-
-    if-eqz p2, :cond_0
-
-    iget-object v0, p2, Landroid/content/pm/ProviderInfo;->readPermission:Ljava/lang/String;
-
-    invoke-virtual {p0, v0}, Landroid/content/ContentProvider;->setReadPermission(Ljava/lang/String;)V
-
-    iget-object v0, p2, Landroid/content/pm/ProviderInfo;->writePermission:Ljava/lang/String;
-
-    invoke-virtual {p0, v0}, Landroid/content/ContentProvider;->setWritePermission(Ljava/lang/String;)V
-
-    iget-object v0, p2, Landroid/content/pm/ProviderInfo;->pathPermissions:[Landroid/content/pm/PathPermission;
-
-    invoke-virtual {p0, v0}, Landroid/content/ContentProvider;->setPathPermissions([Landroid/content/pm/PathPermission;)V
-
-    iget-boolean v0, p2, Landroid/content/pm/ProviderInfo;->exported:Z
-
-    iput-boolean v0, p0, Landroid/content/ContentProvider;->mExported:Z
-
-    :cond_0
-    invoke-virtual {p0}, Landroid/content/ContentProvider;->onCreate()Z
-
-    :cond_1
     return-void
 .end method
 
@@ -274,6 +357,16 @@
     return-object v0
 .end method
 
+.method public canonicalize(Landroid/net/Uri;)Landroid/net/Uri;
+    .locals 1
+    .parameter "url"
+
+    .prologue
+    const/4 v0, 0x0
+
+    return-object v0
+.end method
+
 .method public abstract delete(Landroid/net/Uri;Ljava/lang/String;[Ljava/lang/String;)I
 .end method
 
@@ -289,6 +382,610 @@
     invoke-virtual {p2, v0}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
     return-void
+.end method
+
+.method protected enforceReadPermissionInner(Landroid/net/Uri;)V
+    .locals 19
+    .parameter "uri"
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Ljava/lang/SecurityException;
+        }
+    .end annotation
+
+    .prologue
+    invoke-virtual/range {p0 .. p0}, Landroid/content/ContentProvider;->getContext()Landroid/content/Context;
+
+    move-result-object v5
+
+    .local v5, context:Landroid/content/Context;
+    invoke-static {}, Landroid/os/Binder;->getCallingPid()I
+
+    move-result v12
+
+    .local v12, pid:I
+    invoke-static {}, Landroid/os/Binder;->getCallingUid()I
+
+    move-result v15
+
+    .local v15, uid:I
+    const/4 v9, 0x0
+
+    .local v9, missingPerm:Ljava/lang/String;
+    move-object/from16 v0, p0
+
+    iget v0, v0, Landroid/content/ContentProvider;->mMyUid:I
+
+    move/from16 v16, v0
+
+    invoke-static/range {v15 .. v16}, Landroid/os/UserHandle;->isSameApp(II)Z
+
+    move-result v16
+
+    if-eqz v16, :cond_1
+
+    :cond_0
+    return-void
+
+    :cond_1
+    move-object/from16 v0, p0
+
+    iget-boolean v0, v0, Landroid/content/ContentProvider;->mExported:Z
+
+    move/from16 v16, v0
+
+    if-eqz v16, :cond_6
+
+    invoke-virtual/range {p0 .. p0}, Landroid/content/ContentProvider;->getReadPermission()Ljava/lang/String;
+
+    move-result-object v4
+
+    .local v4, componentPerm:Ljava/lang/String;
+    if-eqz v4, :cond_2
+
+    invoke-virtual {v5, v4, v12, v15}, Landroid/content/Context;->checkPermission(Ljava/lang/String;II)I
+
+    move-result v16
+
+    if-eqz v16, :cond_0
+
+    move-object v9, v4
+
+    :cond_2
+    if-nez v4, :cond_4
+
+    const/4 v2, 0x1
+
+    .local v2, allowDefaultRead:Z
+    :goto_0
+    invoke-virtual/range {p0 .. p0}, Landroid/content/ContentProvider;->getPathPermissions()[Landroid/content/pm/PathPermission;
+
+    move-result-object v14
+
+    .local v14, pps:[Landroid/content/pm/PathPermission;
+    if-eqz v14, :cond_5
+
+    invoke-virtual/range {p1 .. p1}, Landroid/net/Uri;->getPath()Ljava/lang/String;
+
+    move-result-object v10
+
+    .local v10, path:Ljava/lang/String;
+    move-object v3, v14
+
+    .local v3, arr$:[Landroid/content/pm/PathPermission;
+    array-length v8, v3
+
+    .local v8, len$:I
+    const/4 v7, 0x0
+
+    .local v7, i$:I
+    :goto_1
+    if-ge v7, v8, :cond_5
+
+    aget-object v13, v3, v7
+
+    .local v13, pp:Landroid/content/pm/PathPermission;
+    invoke-virtual {v13}, Landroid/content/pm/PathPermission;->getReadPermission()Ljava/lang/String;
+
+    move-result-object v11
+
+    .local v11, pathPerm:Ljava/lang/String;
+    if-eqz v11, :cond_3
+
+    invoke-virtual {v13, v10}, Landroid/content/pm/PathPermission;->match(Ljava/lang/String;)Z
+
+    move-result v16
+
+    if-eqz v16, :cond_3
+
+    invoke-virtual {v5, v11, v12, v15}, Landroid/content/Context;->checkPermission(Ljava/lang/String;II)I
+
+    move-result v16
+
+    if-eqz v16, :cond_0
+
+    const/4 v2, 0x0
+
+    move-object v9, v11
+
+    :cond_3
+    add-int/lit8 v7, v7, 0x1
+
+    goto :goto_1
+
+    .end local v2           #allowDefaultRead:Z
+    .end local v3           #arr$:[Landroid/content/pm/PathPermission;
+    .end local v7           #i$:I
+    .end local v8           #len$:I
+    .end local v10           #path:Ljava/lang/String;
+    .end local v11           #pathPerm:Ljava/lang/String;
+    .end local v13           #pp:Landroid/content/pm/PathPermission;
+    .end local v14           #pps:[Landroid/content/pm/PathPermission;
+    :cond_4
+    const/4 v2, 0x0
+
+    goto :goto_0
+
+    .restart local v2       #allowDefaultRead:Z
+    .restart local v14       #pps:[Landroid/content/pm/PathPermission;
+    :cond_5
+    if-nez v2, :cond_0
+
+    .end local v2           #allowDefaultRead:Z
+    .end local v4           #componentPerm:Ljava/lang/String;
+    .end local v14           #pps:[Landroid/content/pm/PathPermission;
+    :cond_6
+    const/16 v16, 0x1
+
+    move-object/from16 v0, p1
+
+    move/from16 v1, v16
+
+    invoke-virtual {v5, v0, v12, v15, v1}, Landroid/content/Context;->checkUriPermission(Landroid/net/Uri;III)I
+
+    move-result v16
+
+    if-eqz v16, :cond_0
+
+    move-object/from16 v0, p0
+
+    iget-boolean v0, v0, Landroid/content/ContentProvider;->mExported:Z
+
+    move/from16 v16, v0
+
+    if-eqz v16, :cond_7
+
+    new-instance v16, Ljava/lang/StringBuilder;
+
+    invoke-direct/range {v16 .. v16}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v17, " requires "
+
+    invoke-virtual/range {v16 .. v17}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v16
+
+    move-object/from16 v0, v16
+
+    invoke-virtual {v0, v9}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v16
+
+    const-string v17, ", or grantUriPermission()"
+
+    invoke-virtual/range {v16 .. v17}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v16
+
+    invoke-virtual/range {v16 .. v16}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v6
+
+    .local v6, failReason:Ljava/lang/String;
+    :goto_2
+    new-instance v16, Ljava/lang/SecurityException;
+
+    new-instance v17, Ljava/lang/StringBuilder;
+
+    invoke-direct/range {v17 .. v17}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v18, "Permission Denial: reading "
+
+    invoke-virtual/range {v17 .. v18}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v17
+
+    invoke-virtual/range {p0 .. p0}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
+
+    move-result-object v18
+
+    invoke-virtual/range {v18 .. v18}, Ljava/lang/Class;->getName()Ljava/lang/String;
+
+    move-result-object v18
+
+    invoke-virtual/range {v17 .. v18}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v17
+
+    const-string v18, " uri "
+
+    invoke-virtual/range {v17 .. v18}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v17
+
+    move-object/from16 v0, v17
+
+    move-object/from16 v1, p1
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    move-result-object v17
+
+    const-string v18, " from pid="
+
+    invoke-virtual/range {v17 .. v18}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v17
+
+    move-object/from16 v0, v17
+
+    invoke-virtual {v0, v12}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v17
+
+    const-string v18, ", uid="
+
+    invoke-virtual/range {v17 .. v18}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v17
+
+    move-object/from16 v0, v17
+
+    invoke-virtual {v0, v15}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v17
+
+    move-object/from16 v0, v17
+
+    invoke-virtual {v0, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v17
+
+    invoke-virtual/range {v17 .. v17}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v17
+
+    invoke-direct/range {v16 .. v17}, Ljava/lang/SecurityException;-><init>(Ljava/lang/String;)V
+
+    throw v16
+
+    .end local v6           #failReason:Ljava/lang/String;
+    :cond_7
+    const-string v6, " requires the provider be exported, or grantUriPermission()"
+
+    goto :goto_2
+.end method
+
+.method protected enforceWritePermissionInner(Landroid/net/Uri;)V
+    .locals 19
+    .parameter "uri"
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Ljava/lang/SecurityException;
+        }
+    .end annotation
+
+    .prologue
+    invoke-virtual/range {p0 .. p0}, Landroid/content/ContentProvider;->getContext()Landroid/content/Context;
+
+    move-result-object v5
+
+    .local v5, context:Landroid/content/Context;
+    invoke-static {}, Landroid/os/Binder;->getCallingPid()I
+
+    move-result v12
+
+    .local v12, pid:I
+    invoke-static {}, Landroid/os/Binder;->getCallingUid()I
+
+    move-result v15
+
+    .local v15, uid:I
+    const/4 v9, 0x0
+
+    .local v9, missingPerm:Ljava/lang/String;
+    move-object/from16 v0, p0
+
+    iget v0, v0, Landroid/content/ContentProvider;->mMyUid:I
+
+    move/from16 v16, v0
+
+    invoke-static/range {v15 .. v16}, Landroid/os/UserHandle;->isSameApp(II)Z
+
+    move-result v16
+
+    if-eqz v16, :cond_1
+
+    :cond_0
+    return-void
+
+    :cond_1
+    move-object/from16 v0, p0
+
+    iget-boolean v0, v0, Landroid/content/ContentProvider;->mExported:Z
+
+    move/from16 v16, v0
+
+    if-eqz v16, :cond_6
+
+    invoke-virtual/range {p0 .. p0}, Landroid/content/ContentProvider;->getWritePermission()Ljava/lang/String;
+
+    move-result-object v4
+
+    .local v4, componentPerm:Ljava/lang/String;
+    if-eqz v4, :cond_2
+
+    invoke-virtual {v5, v4, v12, v15}, Landroid/content/Context;->checkPermission(Ljava/lang/String;II)I
+
+    move-result v16
+
+    if-eqz v16, :cond_0
+
+    move-object v9, v4
+
+    :cond_2
+    if-nez v4, :cond_4
+
+    const/4 v2, 0x1
+
+    .local v2, allowDefaultWrite:Z
+    :goto_0
+    invoke-virtual/range {p0 .. p0}, Landroid/content/ContentProvider;->getPathPermissions()[Landroid/content/pm/PathPermission;
+
+    move-result-object v14
+
+    .local v14, pps:[Landroid/content/pm/PathPermission;
+    if-eqz v14, :cond_5
+
+    invoke-virtual/range {p1 .. p1}, Landroid/net/Uri;->getPath()Ljava/lang/String;
+
+    move-result-object v10
+
+    .local v10, path:Ljava/lang/String;
+    move-object v3, v14
+
+    .local v3, arr$:[Landroid/content/pm/PathPermission;
+    array-length v8, v3
+
+    .local v8, len$:I
+    const/4 v7, 0x0
+
+    .local v7, i$:I
+    :goto_1
+    if-ge v7, v8, :cond_5
+
+    aget-object v13, v3, v7
+
+    .local v13, pp:Landroid/content/pm/PathPermission;
+    invoke-virtual {v13}, Landroid/content/pm/PathPermission;->getWritePermission()Ljava/lang/String;
+
+    move-result-object v11
+
+    .local v11, pathPerm:Ljava/lang/String;
+    if-eqz v11, :cond_3
+
+    invoke-virtual {v13, v10}, Landroid/content/pm/PathPermission;->match(Ljava/lang/String;)Z
+
+    move-result v16
+
+    if-eqz v16, :cond_3
+
+    invoke-virtual {v5, v11, v12, v15}, Landroid/content/Context;->checkPermission(Ljava/lang/String;II)I
+
+    move-result v16
+
+    if-eqz v16, :cond_0
+
+    const/4 v2, 0x0
+
+    move-object v9, v11
+
+    :cond_3
+    add-int/lit8 v7, v7, 0x1
+
+    goto :goto_1
+
+    .end local v2           #allowDefaultWrite:Z
+    .end local v3           #arr$:[Landroid/content/pm/PathPermission;
+    .end local v7           #i$:I
+    .end local v8           #len$:I
+    .end local v10           #path:Ljava/lang/String;
+    .end local v11           #pathPerm:Ljava/lang/String;
+    .end local v13           #pp:Landroid/content/pm/PathPermission;
+    .end local v14           #pps:[Landroid/content/pm/PathPermission;
+    :cond_4
+    const/4 v2, 0x0
+
+    goto :goto_0
+
+    .restart local v2       #allowDefaultWrite:Z
+    .restart local v14       #pps:[Landroid/content/pm/PathPermission;
+    :cond_5
+    if-nez v2, :cond_0
+
+    .end local v2           #allowDefaultWrite:Z
+    .end local v4           #componentPerm:Ljava/lang/String;
+    .end local v14           #pps:[Landroid/content/pm/PathPermission;
+    :cond_6
+    const/16 v16, 0x2
+
+    move-object/from16 v0, p1
+
+    move/from16 v1, v16
+
+    invoke-virtual {v5, v0, v12, v15, v1}, Landroid/content/Context;->checkUriPermission(Landroid/net/Uri;III)I
+
+    move-result v16
+
+    if-eqz v16, :cond_0
+
+    move-object/from16 v0, p0
+
+    iget-boolean v0, v0, Landroid/content/ContentProvider;->mExported:Z
+
+    move/from16 v16, v0
+
+    if-eqz v16, :cond_7
+
+    new-instance v16, Ljava/lang/StringBuilder;
+
+    invoke-direct/range {v16 .. v16}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v17, " requires "
+
+    invoke-virtual/range {v16 .. v17}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v16
+
+    move-object/from16 v0, v16
+
+    invoke-virtual {v0, v9}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v16
+
+    const-string v17, ", or grantUriPermission()"
+
+    invoke-virtual/range {v16 .. v17}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v16
+
+    invoke-virtual/range {v16 .. v16}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v6
+
+    .local v6, failReason:Ljava/lang/String;
+    :goto_2
+    new-instance v16, Ljava/lang/SecurityException;
+
+    new-instance v17, Ljava/lang/StringBuilder;
+
+    invoke-direct/range {v17 .. v17}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v18, "Permission Denial: writing "
+
+    invoke-virtual/range {v17 .. v18}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v17
+
+    invoke-virtual/range {p0 .. p0}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
+
+    move-result-object v18
+
+    invoke-virtual/range {v18 .. v18}, Ljava/lang/Class;->getName()Ljava/lang/String;
+
+    move-result-object v18
+
+    invoke-virtual/range {v17 .. v18}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v17
+
+    const-string v18, " uri "
+
+    invoke-virtual/range {v17 .. v18}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v17
+
+    move-object/from16 v0, v17
+
+    move-object/from16 v1, p1
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    move-result-object v17
+
+    const-string v18, " from pid="
+
+    invoke-virtual/range {v17 .. v18}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v17
+
+    move-object/from16 v0, v17
+
+    invoke-virtual {v0, v12}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v17
+
+    const-string v18, ", uid="
+
+    invoke-virtual/range {v17 .. v18}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v17
+
+    move-object/from16 v0, v17
+
+    invoke-virtual {v0, v15}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v17
+
+    move-object/from16 v0, v17
+
+    invoke-virtual {v0, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v17
+
+    invoke-virtual/range {v17 .. v17}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v17
+
+    invoke-direct/range {v16 .. v17}, Ljava/lang/SecurityException;-><init>(Ljava/lang/String;)V
+
+    throw v16
+
+    .end local v6           #failReason:Ljava/lang/String;
+    :cond_7
+    const-string v6, " requires the provider be exported, or grantUriPermission()"
+
+    goto :goto_2
+.end method
+
+.method public getAppOpsManager()Landroid/app/AppOpsManager;
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Landroid/content/ContentProvider;->mTransport:Landroid/content/ContentProvider$Transport;
+
+    iget-object v0, v0, Landroid/content/ContentProvider$Transport;->mAppOpsManager:Landroid/app/AppOpsManager;
+
+    return-object v0
+.end method
+
+.method public final getCallingPackage()Ljava/lang/String;
+    .locals 3
+
+    .prologue
+    iget-object v1, p0, Landroid/content/ContentProvider;->mCallingPackage:Ljava/lang/ThreadLocal;
+
+    invoke-virtual {v1}, Ljava/lang/ThreadLocal;->get()Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Ljava/lang/String;
+
+    .local v0, pkg:Ljava/lang/String;
+    if-eqz v0, :cond_0
+
+    iget-object v1, p0, Landroid/content/ContentProvider;->mTransport:Landroid/content/ContentProvider$Transport;
+
+    iget-object v1, v1, Landroid/content/ContentProvider$Transport;->mAppOpsManager:Landroid/app/AppOpsManager;
+
+    invoke-static {}, Landroid/os/Binder;->getCallingUid()I
+
+    move-result v2
+
+    invoke-virtual {v1, v2, v0}, Landroid/app/AppOpsManager;->checkPackage(ILjava/lang/String;)V
+
+    :cond_0
+    return-object v0
 .end method
 
 .method public final getContext()Landroid/content/Context;
@@ -423,6 +1120,25 @@
     goto :goto_0
 .end method
 
+.method public openAssetFile(Landroid/net/Uri;Ljava/lang/String;Landroid/os/CancellationSignal;)Landroid/content/res/AssetFileDescriptor;
+    .locals 1
+    .parameter "uri"
+    .parameter "mode"
+    .parameter "signal"
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Ljava/io/FileNotFoundException;
+        }
+    .end annotation
+
+    .prologue
+    invoke-virtual {p0, p1, p2}, Landroid/content/ContentProvider;->openAssetFile(Landroid/net/Uri;Ljava/lang/String;)Landroid/content/res/AssetFileDescriptor;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
 .method public openFile(Landroid/net/Uri;Ljava/lang/String;)Landroid/os/ParcelFileDescriptor;
     .locals 3
     .parameter "uri"
@@ -457,6 +1173,25 @@
     invoke-direct {v0, v1}, Ljava/io/FileNotFoundException;-><init>(Ljava/lang/String;)V
 
     throw v0
+.end method
+
+.method public openFile(Landroid/net/Uri;Ljava/lang/String;Landroid/os/CancellationSignal;)Landroid/os/ParcelFileDescriptor;
+    .locals 1
+    .parameter "uri"
+    .parameter "mode"
+    .parameter "signal"
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Ljava/io/FileNotFoundException;
+        }
+    .end annotation
+
+    .prologue
+    invoke-virtual {p0, p1, p2}, Landroid/content/ContentProvider;->openFile(Landroid/net/Uri;Ljava/lang/String;)Landroid/os/ParcelFileDescriptor;
+
+    move-result-object v0
+
+    return-object v0
 .end method
 
 .method protected final openFileHelper(Landroid/net/Uri;Ljava/lang/String;)Landroid/os/ParcelFileDescriptor;
@@ -599,7 +1334,7 @@
 
     .restart local v10       #path:Ljava/lang/String;
     :cond_5
-    invoke-static {p1, p2}, Landroid/content/ContentResolver;->modeToMode(Landroid/net/Uri;Ljava/lang/String;)I
+    invoke-static {p2}, Landroid/os/ParcelFileDescriptor;->parseMode(Ljava/lang/String;)I
 
     move-result v9
 
@@ -787,6 +1522,26 @@
     throw v1
 .end method
 
+.method public openTypedAssetFile(Landroid/net/Uri;Ljava/lang/String;Landroid/os/Bundle;Landroid/os/CancellationSignal;)Landroid/content/res/AssetFileDescriptor;
+    .locals 1
+    .parameter "uri"
+    .parameter "mimeTypeFilter"
+    .parameter "opts"
+    .parameter "signal"
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Ljava/io/FileNotFoundException;
+        }
+    .end annotation
+
+    .prologue
+    invoke-virtual {p0, p1, p2, p3}, Landroid/content/ContentProvider;->openTypedAssetFile(Landroid/net/Uri;Ljava/lang/String;Landroid/os/Bundle;)Landroid/content/res/AssetFileDescriptor;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
 .method public abstract query(Landroid/net/Uri;[Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;)Landroid/database/Cursor;
 .end method
 
@@ -805,6 +1560,107 @@
     move-result-object v0
 
     return-object v0
+.end method
+
+.method public rejectInsert(Landroid/net/Uri;Landroid/content/ContentValues;)Landroid/net/Uri;
+    .locals 2
+    .parameter "uri"
+    .parameter "values"
+
+    .prologue
+    invoke-virtual {p1}, Landroid/net/Uri;->buildUpon()Landroid/net/Uri$Builder;
+
+    move-result-object v0
+
+    const-string v1, "0"
+
+    invoke-virtual {v0, v1}, Landroid/net/Uri$Builder;->appendPath(Ljava/lang/String;)Landroid/net/Uri$Builder;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Landroid/net/Uri$Builder;->build()Landroid/net/Uri;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public rejectQuery(Landroid/net/Uri;[Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;Landroid/os/CancellationSignal;)Landroid/database/Cursor;
+    .locals 2
+    .parameter "uri"
+    .parameter "projection"
+    .parameter "selection"
+    .parameter "selectionArgs"
+    .parameter "sortOrder"
+    .parameter "cancellationSignal"
+
+    .prologue
+    if-eqz p3, :cond_0
+
+    invoke-virtual {p3}, Ljava/lang/String;->isEmpty()Z
+
+    move-result v0
+
+    if-eqz v0, :cond_1
+
+    :cond_0
+    const-string p3, "\'A\' = \'B\'"
+
+    :goto_0
+    invoke-virtual/range {p0 .. p6}, Landroid/content/ContentProvider;->query(Landroid/net/Uri;[Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;Landroid/os/CancellationSignal;)Landroid/database/Cursor;
+
+    move-result-object v0
+
+    return-object v0
+
+    :cond_1
+    new-instance v0, Ljava/lang/StringBuilder;
+
+    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v1, "\'A\' = \'B\' AND ("
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v0, p3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    const-string v1, ")"
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object p3
+
+    goto :goto_0
+.end method
+
+.method public final setAppOps(II)V
+    .locals 1
+    .parameter "readOp"
+    .parameter "writeOp"
+
+    .prologue
+    iget-boolean v0, p0, Landroid/content/ContentProvider;->mNoPerms:Z
+
+    if-nez v0, :cond_0
+
+    iget-object v0, p0, Landroid/content/ContentProvider;->mTransport:Landroid/content/ContentProvider$Transport;
+
+    iput p1, v0, Landroid/content/ContentProvider$Transport;->mReadOp:I
+
+    iget-object v0, p0, Landroid/content/ContentProvider;->mTransport:Landroid/content/ContentProvider$Transport;
+
+    iput p2, v0, Landroid/content/ContentProvider$Transport;->mWriteOp:I
+
+    :cond_0
+    return-void
 .end method
 
 .method protected final setPathPermissions([Landroid/content/pm/PathPermission;)V
@@ -848,6 +1704,14 @@
     invoke-static {v0, v1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
 
     return-void
+.end method
+
+.method public uncanonicalize(Landroid/net/Uri;)Landroid/net/Uri;
+    .locals 0
+    .parameter "url"
+
+    .prologue
+    return-object p1
 .end method
 
 .method public abstract update(Landroid/net/Uri;Landroid/content/ContentValues;Ljava/lang/String;[Ljava/lang/String;)I

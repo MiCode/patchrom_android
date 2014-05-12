@@ -1,5 +1,5 @@
 .class Landroid/widget/ActivityChooserView$3;
-.super Landroid/database/DataSetObserver;
+.super Landroid/view/View$AccessibilityDelegate;
 .source "ActivityChooserView.java"
 
 
@@ -26,23 +26,24 @@
     .prologue
     iput-object p1, p0, Landroid/widget/ActivityChooserView$3;->this$0:Landroid/widget/ActivityChooserView;
 
-    invoke-direct {p0}, Landroid/database/DataSetObserver;-><init>()V
+    invoke-direct {p0}, Landroid/view/View$AccessibilityDelegate;-><init>()V
 
     return-void
 .end method
 
 
 # virtual methods
-.method public onChanged()V
+.method public onInitializeAccessibilityNodeInfo(Landroid/view/View;Landroid/view/accessibility/AccessibilityNodeInfo;)V
     .locals 1
+    .parameter "host"
+    .parameter "info"
 
     .prologue
-    invoke-super {p0}, Landroid/database/DataSetObserver;->onChanged()V
+    invoke-super {p0, p1, p2}, Landroid/view/View$AccessibilityDelegate;->onInitializeAccessibilityNodeInfo(Landroid/view/View;Landroid/view/accessibility/AccessibilityNodeInfo;)V
 
-    iget-object v0, p0, Landroid/widget/ActivityChooserView$3;->this$0:Landroid/widget/ActivityChooserView;
+    const/4 v0, 0x1
 
-    #calls: Landroid/widget/ActivityChooserView;->updateAppearance()V
-    invoke-static {v0}, Landroid/widget/ActivityChooserView;->access$400(Landroid/widget/ActivityChooserView;)V
+    invoke-virtual {p2, v0}, Landroid/view/accessibility/AccessibilityNodeInfo;->setCanOpenPopup(Z)V
 
     return-void
 .end method

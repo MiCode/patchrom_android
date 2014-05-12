@@ -1,5 +1,5 @@
 .class Lcom/android/internal/policy/impl/PhoneWindowManager$MyOrientationListener;
-.super Landroid/view/WindowOrientationListener;
+.super Lcom/android/internal/policy/impl/WindowOrientationListener;
 .source "PhoneWindowManager.java"
 
 
@@ -19,15 +19,16 @@
 
 
 # direct methods
-.method constructor <init>(Lcom/android/internal/policy/impl/PhoneWindowManager;Landroid/content/Context;)V
+.method constructor <init>(Lcom/android/internal/policy/impl/PhoneWindowManager;Landroid/content/Context;Landroid/os/Handler;)V
     .locals 0
     .parameter
     .parameter "context"
+    .parameter "handler"
 
     .prologue
     iput-object p1, p0, Lcom/android/internal/policy/impl/PhoneWindowManager$MyOrientationListener;->this$0:Lcom/android/internal/policy/impl/PhoneWindowManager;
 
-    invoke-direct {p0, p2}, Landroid/view/WindowOrientationListener;-><init>(Landroid/content/Context;)V
+    invoke-direct {p0, p2, p3}, Lcom/android/internal/policy/impl/WindowOrientationListener;-><init>(Landroid/content/Context;Landroid/os/Handler;)V
 
     return-void
 .end method

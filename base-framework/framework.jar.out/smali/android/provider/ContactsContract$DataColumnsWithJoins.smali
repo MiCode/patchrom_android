@@ -11,6 +11,7 @@
 .implements Landroid/provider/ContactsContract$ContactNameColumns;
 .implements Landroid/provider/ContactsContract$ContactOptionsColumns;
 .implements Landroid/provider/ContactsContract$ContactStatusColumns;
+.implements Landroid/provider/ContactsContract$DataUsageStatColumns;
 
 
 # annotations

@@ -20,7 +20,9 @@
 # static fields
 .field public static final CONTENT_TYPE:Ljava/lang/String; = "vnd.android.cursor.dir/data"
 
-.field public static final CONTENT_URI:Landroid/net/Uri;
+.field public static final CONTENT_URI:Landroid/net/Uri; = null
+
+.field public static final VISIBLE_CONTACTS_ONLY:Ljava/lang/String; = "visible_contacts_only"
 
 
 # direct methods

@@ -4,17 +4,27 @@
 
 
 # static fields
-.field public static final EVENT_CONFIGURATION_CHANGED:I = 0x3
+.field public static final EVENT_CONFIGURATION_CHANGED:I = 0x70001
 
-.field public static final EVENT_NETWORK_SUBTYPE_CHANGED:I = 0x7
+.field public static final EVENT_NETWORK_CONNECTED:I = 0x70004
 
-.field public static final EVENT_RESTORE_DEFAULT_NETWORK:I = 0x6
+.field public static final EVENT_NETWORK_DISCONNECTED:I = 0x70005
 
-.field public static final EVENT_STATE_CHANGED:I = 0x1
+.field public static final EVENT_NETWORK_SUBTYPE_CHANGED:I = 0x70003
+
+.field public static final EVENT_RESTORE_DEFAULT_NETWORK:I = 0x70002
+
+.field public static final EVENT_STATE_CHANGED:I = 0x70000
 
 
 # virtual methods
+.method public abstract addStackedLink(Landroid/net/LinkProperties;)V
+.end method
+
 .method public abstract captivePortalCheckComplete()V
+.end method
+
+.method public abstract captivePortalCheckCompleted(Z)V
 .end method
 
 .method public abstract defaultRouteSet(Z)V
@@ -26,7 +36,13 @@
 .method public abstract getLinkProperties()Landroid/net/LinkProperties;
 .end method
 
+.method public abstract getLinkQualityInfo()Landroid/net/LinkQualityInfo;
+.end method
+
 .method public abstract getNetworkInfo()Landroid/net/NetworkInfo;
+.end method
+
+.method public abstract getNetworkInterfaceName()Ljava/lang/String;
 .end method
 
 .method public abstract getTcpBufferSizesPropName()Ljava/lang/String;
@@ -50,6 +66,9 @@
 .method public abstract reconnect()Z
 .end method
 
+.method public abstract removeStackedLink(Landroid/net/LinkProperties;)V
+.end method
+
 .method public abstract setDependencyMet(Z)V
 .end method
 
@@ -66,6 +85,15 @@
 .end method
 
 .method public abstract startMonitoring(Landroid/content/Context;Landroid/os/Handler;)V
+.end method
+
+.method public abstract startSampling(Landroid/net/SamplingDataTracker$SamplingSnapshot;)V
+.end method
+
+.method public abstract stopSampling(Landroid/net/SamplingDataTracker$SamplingSnapshot;)V
+.end method
+
+.method public abstract supplyMessenger(Landroid/os/Messenger;)V
 .end method
 
 .method public abstract teardown()Z

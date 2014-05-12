@@ -378,7 +378,7 @@
 
     iget-object v0, p0, Lcom/android/server/display/DisplayDevice;->mDisplayToken:Landroid/os/IBinder;
 
-    invoke-static {v0, p1}, Landroid/view/Surface;->setDisplayLayerStack(Landroid/os/IBinder;I)V
+    invoke-static {v0, p1}, Landroid/view/SurfaceControl;->setDisplayLayerStack(Landroid/os/IBinder;I)V
 
     :cond_0
     return-void
@@ -454,7 +454,7 @@
 
     iget-object v0, p0, Lcom/android/server/display/DisplayDevice;->mDisplayToken:Landroid/os/IBinder;
 
-    invoke-static {v0, p1, p2, p3}, Landroid/view/Surface;->setDisplayProjection(Landroid/os/IBinder;ILandroid/graphics/Rect;Landroid/graphics/Rect;)V
+    invoke-static {v0, p1, p2, p3}, Landroid/view/SurfaceControl;->setDisplayProjection(Landroid/os/IBinder;ILandroid/graphics/Rect;Landroid/graphics/Rect;)V
 
     :cond_3
     return-void
@@ -473,7 +473,7 @@
 
     iget-object v0, p0, Lcom/android/server/display/DisplayDevice;->mDisplayToken:Landroid/os/IBinder;
 
-    invoke-static {v0, p1}, Landroid/view/Surface;->setDisplaySurface(Landroid/os/IBinder;Landroid/view/Surface;)V
+    invoke-static {v0, p1}, Landroid/view/SurfaceControl;->setDisplaySurface(Landroid/os/IBinder;Landroid/view/Surface;)V
 
     :cond_0
     return-void

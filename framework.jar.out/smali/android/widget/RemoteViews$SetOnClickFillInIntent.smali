@@ -119,7 +119,7 @@
     :cond_2
     if-ne v1, p1, :cond_3
 
-    const v2, 0x1020244
+    const v2, 0x1020258
 
     iget-object v3, p0, Landroid/widget/RemoteViews$SetOnClickFillInIntent;->fillInIntent:Landroid/content/Intent;
 
@@ -128,8 +128,6 @@
     goto :goto_0
 
     :cond_3
-    if-eqz v1, :cond_0
-
     iget-object v2, p0, Landroid/widget/RemoteViews$SetOnClickFillInIntent;->fillInIntent:Landroid/content/Intent;
 
     if-eqz v2, :cond_0

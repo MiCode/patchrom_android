@@ -100,7 +100,7 @@
 
     invoke-virtual {p0}, Lcom/android/internal/policy/impl/GlobalActions$ToggleAction;->willCreate()V
 
-    const v6, 0x1090044
+    const v6, 0x1090045
 
     invoke-virtual {p4, v6, p3, v7}, Landroid/view/LayoutInflater;->inflate(ILandroid/view/ViewGroup;Z)Landroid/view/View;
 
@@ -125,7 +125,7 @@
     check-cast v2, Landroid/widget/TextView;
 
     .local v2, messageView:Landroid/widget/TextView;
-    const v6, 0x1020282
+    const v6, 0x102029a
 
     invoke-virtual {v5, v6}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 

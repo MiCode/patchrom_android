@@ -1,4 +1,4 @@
-.class Lcom/android/server/am/ContentProviderRecord;
+.class final Lcom/android/server/am/ContentProviderRecord;
 .super Ljava/lang/Object;
 .source "ContentProviderRecord.java"
 

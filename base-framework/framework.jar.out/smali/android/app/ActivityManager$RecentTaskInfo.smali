@@ -41,6 +41,8 @@
 
 .field public persistentId:I
 
+.field public stackId:I
+
 
 # direct methods
 .method static constructor <clinit>()V
@@ -149,6 +151,12 @@
 
     iput-object v0, p0, Landroid/app/ActivityManager$RecentTaskInfo;->description:Ljava/lang/CharSequence;
 
+    invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
+
+    move-result v0
+
+    iput v0, p0, Landroid/app/ActivityManager$RecentTaskInfo;->stackId:I
+
     return-void
 
     :cond_0
@@ -195,6 +203,10 @@
     iget-object v0, p0, Landroid/app/ActivityManager$RecentTaskInfo;->description:Ljava/lang/CharSequence;
 
     invoke-static {v0, p1, v2}, Landroid/text/TextUtils;->writeToParcel(Ljava/lang/CharSequence;Landroid/os/Parcel;I)V
+
+    iget v0, p0, Landroid/app/ActivityManager$RecentTaskInfo;->stackId:I
+
+    invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeInt(I)V
 
     return-void
 

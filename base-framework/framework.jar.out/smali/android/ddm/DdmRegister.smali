@@ -29,6 +29,8 @@
 
     invoke-static {}, Landroid/ddm/DdmHandleExit;->register()V
 
+    invoke-static {}, Landroid/ddm/DdmHandleViewDebug;->register()V
+
     invoke-static {}, Lorg/apache/harmony/dalvik/ddmc/DdmServer;->registrationComplete()V
 
     return-void

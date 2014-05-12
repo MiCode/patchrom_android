@@ -39,6 +39,14 @@
     .end annotation
 .end method
 
+.method public abstract setEnabled(Z)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
 .method public abstract setMetadata(ILandroid/os/Bundle;)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -47,7 +55,7 @@
     .end annotation
 .end method
 
-.method public abstract setPlaybackState(IIJ)V
+.method public abstract setPlaybackState(IIJJF)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -55,7 +63,7 @@
     .end annotation
 .end method
 
-.method public abstract setTransportControlFlags(II)V
+.method public abstract setTransportControlInfo(III)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;

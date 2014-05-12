@@ -9,7 +9,7 @@
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
-    accessFlags = 0x1a
+    accessFlags = 0x12
     name = "ScreenStateObserver"
 .end annotation
 
@@ -25,17 +25,19 @@
 
 .field private final mMagnificationController:Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController;
 
-.field private final mViewport:Lcom/android/server/accessibility/ScreenMagnifier$Viewport;
+.field final synthetic this$0:Lcom/android/server/accessibility/ScreenMagnifier;
 
 
 # direct methods
-.method public constructor <init>(Landroid/content/Context;Lcom/android/server/accessibility/ScreenMagnifier$Viewport;Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController;)V
+.method public constructor <init>(Lcom/android/server/accessibility/ScreenMagnifier;Landroid/content/Context;Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController;)V
     .locals 3
+    .parameter
     .parameter "context"
-    .parameter "viewport"
     .parameter "magnificationController"
 
     .prologue
+    iput-object p1, p0, Lcom/android/server/accessibility/ScreenMagnifier$ScreenStateObserver;->this$0:Lcom/android/server/accessibility/ScreenMagnifier;
+
     invoke-direct {p0}, Landroid/content/BroadcastReceiver;-><init>()V
 
     new-instance v0, Lcom/android/server/accessibility/ScreenMagnifier$ScreenStateObserver$1;
@@ -44,9 +46,7 @@
 
     iput-object v0, p0, Lcom/android/server/accessibility/ScreenMagnifier$ScreenStateObserver;->mHandler:Landroid/os/Handler;
 
-    iput-object p1, p0, Lcom/android/server/accessibility/ScreenMagnifier$ScreenStateObserver;->mContext:Landroid/content/Context;
-
-    iput-object p2, p0, Lcom/android/server/accessibility/ScreenMagnifier$ScreenStateObserver;->mViewport:Lcom/android/server/accessibility/ScreenMagnifier$Viewport;
+    iput-object p2, p0, Lcom/android/server/accessibility/ScreenMagnifier$ScreenStateObserver;->mContext:Landroid/content/Context;
 
     iput-object p3, p0, Lcom/android/server/accessibility/ScreenMagnifier$ScreenStateObserver;->mMagnificationController:Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController;
 
@@ -63,7 +63,7 @@
     return-void
 .end method
 
-.method static synthetic access$2300(Lcom/android/server/accessibility/ScreenMagnifier$ScreenStateObserver;Ljava/lang/String;)V
+.method static synthetic access$2900(Lcom/android/server/accessibility/ScreenMagnifier$ScreenStateObserver;Ljava/lang/String;)V
     .locals 0
     .parameter "x0"
     .parameter "x1"
@@ -79,16 +79,6 @@
     .parameter "action"
 
     .prologue
-    const/4 v1, 0x0
-
-    const-string v0, "android.intent.action.SCREEN_OFF"
-
-    invoke-virtual {p1, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v0
-
-    if-eqz v0, :cond_0
-
     iget-object v0, p0, Lcom/android/server/accessibility/ScreenMagnifier$ScreenStateObserver;->mMagnificationController:Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController;
 
     invoke-virtual {v0}, Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController;->isMagnifying()Z
@@ -100,7 +90,7 @@
     iget-object v0, p0, Lcom/android/server/accessibility/ScreenMagnifier$ScreenStateObserver;->mContext:Landroid/content/Context;
 
     #calls: Lcom/android/server/accessibility/ScreenMagnifier;->isScreenMagnificationAutoUpdateEnabled(Landroid/content/Context;)Z
-    invoke-static {v0}, Lcom/android/server/accessibility/ScreenMagnifier;->access$2400(Landroid/content/Context;)Z
+    invoke-static {v0}, Lcom/android/server/accessibility/ScreenMagnifier;->access$3000(Landroid/content/Context;)Z
 
     move-result v0
 
@@ -108,11 +98,9 @@
 
     iget-object v0, p0, Lcom/android/server/accessibility/ScreenMagnifier$ScreenStateObserver;->mMagnificationController:Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController;
 
+    const/4 v1, 0x0
+
     invoke-virtual {v0, v1}, Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController;->reset(Z)V
-
-    iget-object v0, p0, Lcom/android/server/accessibility/ScreenMagnifier$ScreenStateObserver;->mViewport:Lcom/android/server/accessibility/ScreenMagnifier$Viewport;
-
-    invoke-virtual {v0, v1, v1}, Lcom/android/server/accessibility/ScreenMagnifier$Viewport;->setFrameShown(ZZ)V
 
     :cond_0
     return-void

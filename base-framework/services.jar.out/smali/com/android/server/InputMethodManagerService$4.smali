@@ -48,7 +48,7 @@
     :try_start_0
     iget-object v0, p0, Lcom/android/server/InputMethodManagerService$4;->this$0:Lcom/android/server/InputMethodManagerService;
 
-    #calls: Lcom/android/server/InputMethodManagerService;->checkCurrentLocaleChangedLocked()V
+    #calls: Lcom/android/server/InputMethodManagerService;->resetStateIfCurrentLocaleChangedLocked()V
     invoke-static {v0}, Lcom/android/server/InputMethodManagerService;->access$1100(Lcom/android/server/InputMethodManagerService;)V
 
     monitor-exit v1

@@ -522,6 +522,167 @@
     return v0
 .end method
 
+.method public equals(Ljava/lang/Object;)Z
+    .locals 8
+    .parameter "o"
+
+    .prologue
+    const/4 v5, 0x0
+
+    instance-of v6, p1, Landroid/text/Spanned;
+
+    if-eqz v6, :cond_0
+
+    invoke-virtual {p0}, Landroid/text/SpannableStringInternal;->toString()Ljava/lang/String;
+
+    move-result-object v6
+
+    invoke-virtual {p1}, Ljava/lang/Object;->toString()Ljava/lang/String;
+
+    move-result-object v7
+
+    invoke-virtual {v6, v7}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v6
+
+    if-eqz v6, :cond_0
+
+    move-object v1, p1
+
+    check-cast v1, Landroid/text/Spanned;
+
+    .local v1, other:Landroid/text/Spanned;
+    invoke-interface {v1}, Landroid/text/Spanned;->length()I
+
+    move-result v6
+
+    const-class v7, Ljava/lang/Object;
+
+    invoke-interface {v1, v5, v6, v7}, Landroid/text/Spanned;->getSpans(IILjava/lang/Class;)[Ljava/lang/Object;
+
+    move-result-object v3
+
+    .local v3, otherSpans:[Ljava/lang/Object;
+    iget v6, p0, Landroid/text/SpannableStringInternal;->mSpanCount:I
+
+    array-length v7, v3
+
+    if-ne v6, v7, :cond_0
+
+    const/4 v0, 0x0
+
+    .local v0, i:I
+    :goto_0
+    iget v6, p0, Landroid/text/SpannableStringInternal;->mSpanCount:I
+
+    if-ge v0, v6, :cond_3
+
+    iget-object v6, p0, Landroid/text/SpannableStringInternal;->mSpans:[Ljava/lang/Object;
+
+    aget-object v4, v6, v0
+
+    .local v4, thisSpan:Ljava/lang/Object;
+    aget-object v2, v3, v0
+
+    .local v2, otherSpan:Ljava/lang/Object;
+    if-ne v4, p0, :cond_1
+
+    if-ne v1, v2, :cond_0
+
+    invoke-virtual {p0, v4}, Landroid/text/SpannableStringInternal;->getSpanStart(Ljava/lang/Object;)I
+
+    move-result v6
+
+    invoke-interface {v1, v2}, Landroid/text/Spanned;->getSpanStart(Ljava/lang/Object;)I
+
+    move-result v7
+
+    if-ne v6, v7, :cond_0
+
+    invoke-virtual {p0, v4}, Landroid/text/SpannableStringInternal;->getSpanEnd(Ljava/lang/Object;)I
+
+    move-result v6
+
+    invoke-interface {v1, v2}, Landroid/text/Spanned;->getSpanEnd(Ljava/lang/Object;)I
+
+    move-result v7
+
+    if-ne v6, v7, :cond_0
+
+    invoke-virtual {p0, v4}, Landroid/text/SpannableStringInternal;->getSpanFlags(Ljava/lang/Object;)I
+
+    move-result v6
+
+    invoke-interface {v1, v2}, Landroid/text/Spanned;->getSpanFlags(Ljava/lang/Object;)I
+
+    move-result v7
+
+    if-eq v6, v7, :cond_2
+
+    .end local v0           #i:I
+    .end local v1           #other:Landroid/text/Spanned;
+    .end local v2           #otherSpan:Ljava/lang/Object;
+    .end local v3           #otherSpans:[Ljava/lang/Object;
+    .end local v4           #thisSpan:Ljava/lang/Object;
+    :cond_0
+    :goto_1
+    return v5
+
+    .restart local v0       #i:I
+    .restart local v1       #other:Landroid/text/Spanned;
+    .restart local v2       #otherSpan:Ljava/lang/Object;
+    .restart local v3       #otherSpans:[Ljava/lang/Object;
+    .restart local v4       #thisSpan:Ljava/lang/Object;
+    :cond_1
+    invoke-virtual {v4, v2}, Ljava/lang/Object;->equals(Ljava/lang/Object;)Z
+
+    move-result v6
+
+    if-eqz v6, :cond_0
+
+    invoke-virtual {p0, v4}, Landroid/text/SpannableStringInternal;->getSpanStart(Ljava/lang/Object;)I
+
+    move-result v6
+
+    invoke-interface {v1, v2}, Landroid/text/Spanned;->getSpanStart(Ljava/lang/Object;)I
+
+    move-result v7
+
+    if-ne v6, v7, :cond_0
+
+    invoke-virtual {p0, v4}, Landroid/text/SpannableStringInternal;->getSpanEnd(Ljava/lang/Object;)I
+
+    move-result v6
+
+    invoke-interface {v1, v2}, Landroid/text/Spanned;->getSpanEnd(Ljava/lang/Object;)I
+
+    move-result v7
+
+    if-ne v6, v7, :cond_0
+
+    invoke-virtual {p0, v4}, Landroid/text/SpannableStringInternal;->getSpanFlags(Ljava/lang/Object;)I
+
+    move-result v6
+
+    invoke-interface {v1, v2}, Landroid/text/Spanned;->getSpanFlags(Ljava/lang/Object;)I
+
+    move-result v7
+
+    if-ne v6, v7, :cond_0
+
+    :cond_2
+    add-int/lit8 v0, v0, 0x1
+
+    goto :goto_0
+
+    .end local v2           #otherSpan:Ljava/lang/Object;
+    .end local v4           #thisSpan:Ljava/lang/Object;
+    :cond_3
+    const/4 v5, 0x1
+
+    goto :goto_1
+.end method
+
 .method public final getChars(II[CI)V
     .locals 1
     .parameter "start"
@@ -1041,6 +1202,82 @@
     move-object/from16 v16, v7
 
     goto :goto_3
+.end method
+
+.method public hashCode()I
+    .locals 5
+
+    .prologue
+    invoke-virtual {p0}, Landroid/text/SpannableStringInternal;->toString()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-virtual {v3}, Ljava/lang/String;->hashCode()I
+
+    move-result v0
+
+    .local v0, hash:I
+    mul-int/lit8 v3, v0, 0x1f
+
+    iget v4, p0, Landroid/text/SpannableStringInternal;->mSpanCount:I
+
+    add-int v0, v3, v4
+
+    const/4 v1, 0x0
+
+    .local v1, i:I
+    :goto_0
+    iget v3, p0, Landroid/text/SpannableStringInternal;->mSpanCount:I
+
+    if-ge v1, v3, :cond_1
+
+    iget-object v3, p0, Landroid/text/SpannableStringInternal;->mSpans:[Ljava/lang/Object;
+
+    aget-object v2, v3, v1
+
+    .local v2, span:Ljava/lang/Object;
+    if-eq v2, p0, :cond_0
+
+    mul-int/lit8 v3, v0, 0x1f
+
+    invoke-virtual {v2}, Ljava/lang/Object;->hashCode()I
+
+    move-result v4
+
+    add-int v0, v3, v4
+
+    :cond_0
+    mul-int/lit8 v3, v0, 0x1f
+
+    invoke-virtual {p0, v2}, Landroid/text/SpannableStringInternal;->getSpanStart(Ljava/lang/Object;)I
+
+    move-result v4
+
+    add-int v0, v3, v4
+
+    mul-int/lit8 v3, v0, 0x1f
+
+    invoke-virtual {p0, v2}, Landroid/text/SpannableStringInternal;->getSpanEnd(Ljava/lang/Object;)I
+
+    move-result v4
+
+    add-int v0, v3, v4
+
+    mul-int/lit8 v3, v0, 0x1f
+
+    invoke-virtual {p0, v2}, Landroid/text/SpannableStringInternal;->getSpanFlags(Ljava/lang/Object;)I
+
+    move-result v4
+
+    add-int v0, v3, v4
+
+    add-int/lit8 v1, v1, 0x1
+
+    goto :goto_0
+
+    .end local v2           #span:Ljava/lang/Object;
+    :cond_1
+    return v0
 .end method
 
 .method public final length()I

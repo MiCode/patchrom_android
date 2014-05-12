@@ -314,7 +314,7 @@
 .end method
 
 .method protected onDraw(Landroid/graphics/Canvas;)V
-    .locals 11
+    .locals 12
     .parameter "canvas"
 
     .prologue
@@ -370,7 +370,15 @@
 
     .local v5, right:I
     :goto_1
-    invoke-virtual {v1, v4, v6, v5, v0}, Landroid/graphics/drawable/Drawable;->setBounds(IIII)V
+    iget v10, p0, Landroid/widget/CheckedTextView;->mScrollX:I
+
+    add-int/2addr v10, v4
+
+    iget v11, p0, Landroid/widget/CheckedTextView;->mScrollX:I
+
+    add-int/2addr v11, v5
+
+    invoke-virtual {v1, v10, v6, v11, v0}, Landroid/graphics/drawable/Drawable;->setBounds(IIII)V
 
     invoke-virtual {v1, p1}, Landroid/graphics/drawable/Drawable;->draw(Landroid/graphics/Canvas;)V
 
@@ -639,7 +647,9 @@
 
     invoke-virtual {p0}, Landroid/widget/CheckedTextView;->refreshDrawableState()V
 
-    invoke-virtual {p0}, Landroid/widget/CheckedTextView;->notifyAccessibilityStateChanged()V
+    const/4 v0, 0x0
+
+    invoke-virtual {p0, v0}, Landroid/widget/CheckedTextView;->notifyViewAccessibilityStateChangedIfNeeded(I)V
 
     :cond_0
     return-void

@@ -3,22 +3,16 @@
 .source "EdgeEffect.java"
 
 
-# annotations
-.annotation system Ldalvik/annotation/MemberClasses;
-    value = {
-        Landroid/widget/EdgeEffect$Injector;
-    }
-.end annotation
-
-
 # static fields
-.field private static final EPSILON:F = 0.0010f
+.field private static final EPSILON:F = 0.001f
 
 .field private static final HELD_EDGE_SCALE_Y:F = 0.5f
 
 .field private static final MAX_ALPHA:F = 1.0f
 
 .field private static final MAX_GLOW_HEIGHT:F = 4.0f
+
+.field private static final MAX_VELOCITY:I = 0x2710
 
 .field private static final MIN_VELOCITY:I = 0x64
 
@@ -54,7 +48,7 @@
 
 .field private static final VELOCITY_EDGE_FACTOR:I = 0x8
 
-.field private static final VELOCITY_GLOW_FACTOR:I = 0x10
+.field private static final VELOCITY_GLOW_FACTOR:I = 0xc
 
 
 # instance fields
@@ -144,13 +138,13 @@
     move-result-object v0
 
     .local v0, res:Landroid/content/res/Resources;
-    invoke-static {p1}, Landroid/widget/EdgeEffect$Injector;->getOverScrollEdge(Landroid/content/Context;)Landroid/graphics/drawable/Drawable;
+    invoke-static {p1}, Landroid/widget/Injector$EdgeEffectHook;->getOverScrollEdge(Landroid/content/Context;)Landroid/graphics/drawable/Drawable;
 
     move-result-object v1
 
     iput-object v1, p0, Landroid/widget/EdgeEffect;->mEdge:Landroid/graphics/drawable/Drawable;
 
-    invoke-static {p1}, Landroid/widget/EdgeEffect$Injector;->getOverScrollGlow(Landroid/content/Context;)Landroid/graphics/drawable/Drawable;
+    invoke-static {p1}, Landroid/widget/Injector$EdgeEffectHook;->getOverScrollGlow(Landroid/content/Context;)Landroid/graphics/drawable/Drawable;
 
     move-result-object v1
 
@@ -757,13 +751,11 @@
 .end method
 
 .method public onAbsorb(I)V
-    .locals 6
+    .locals 5
     .parameter "velocity"
 
     .prologue
-    const/high16 v5, 0x3f80
-
-    const/high16 v4, 0x3f00
+    const/high16 v4, 0x3f80
 
     const/4 v3, 0x0
 
@@ -779,6 +771,12 @@
 
     invoke-static {v0, v1}, Ljava/lang/Math;->max(II)I
 
+    move-result v0
+
+    const/16 v1, 0x2710
+
+    invoke-static {v0, v1}, Ljava/lang/Math;->min(II)I
+
     move-result p1
 
     invoke-static {}, Landroid/view/animation/AnimationUtils;->currentAnimationTimeMillis()J
@@ -787,11 +785,11 @@
 
     iput-wide v0, p0, Landroid/widget/EdgeEffect;->mStartTime:J
 
-    const v0, 0x3dcccccd
+    const v0, 0x3e19999a
 
     int-to-float v1, p1
 
-    const v2, 0x3cf5c28f
+    const v2, 0x3ca3d70a
 
     mul-float/2addr v1, v2
 
@@ -805,7 +803,9 @@
 
     iput v3, p0, Landroid/widget/EdgeEffect;->mEdgeScaleY:F
 
-    iput v4, p0, Landroid/widget/EdgeEffect;->mGlowAlphaStart:F
+    const v0, 0x3e99999a
+
+    iput v0, p0, Landroid/widget/EdgeEffect;->mGlowAlphaStart:F
 
     iput v3, p0, Landroid/widget/EdgeEffect;->mGlowScaleYStart:F
 
@@ -827,15 +827,17 @@
 
     iput v0, p0, Landroid/widget/EdgeEffect;->mEdgeAlphaFinish:F
 
-    mul-int/lit8 v0, p1, 0x8
+    const/high16 v0, 0x3f00
 
-    int-to-float v0, v0
+    mul-int/lit8 v1, p1, 0x8
 
-    invoke-static {v0, v5}, Ljava/lang/Math;->min(FF)F
+    int-to-float v1, v1
 
-    move-result v0
+    invoke-static {v1, v4}, Ljava/lang/Math;->min(FF)F
 
-    invoke-static {v4, v0}, Ljava/lang/Math;->max(FF)F
+    move-result v1
+
+    invoke-static {v0, v1}, Ljava/lang/Math;->max(FF)F
 
     move-result v0
 
@@ -865,7 +867,7 @@
 
     iget v0, p0, Landroid/widget/EdgeEffect;->mGlowAlphaStart:F
 
-    mul-int/lit8 v1, p1, 0x10
+    mul-int/lit8 v1, p1, 0xc
 
     int-to-float v1, v1
 
@@ -873,7 +875,7 @@
 
     mul-float/2addr v1, v2
 
-    invoke-static {v1, v5}, Ljava/lang/Math;->min(FF)F
+    invoke-static {v1, v4}, Ljava/lang/Math;->min(FF)F
 
     move-result v1
 

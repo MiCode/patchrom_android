@@ -137,6 +137,10 @@
 
 .field private mStartDelaySet:Z
 
+.field private mTempValueAnimator:Landroid/animation/ValueAnimator;
+
+.field private mUpdateListener:Landroid/animation/ValueAnimator$AnimatorUpdateListener;
+
 .field private final mView:Landroid/view/View;
 
 
@@ -163,6 +167,8 @@
     iput-boolean v2, p0, Landroid/view/ViewPropertyAnimator;->mInterpolatorSet:Z
 
     iput-object v3, p0, Landroid/view/ViewPropertyAnimator;->mListener:Landroid/animation/Animator$AnimatorListener;
+
+    iput-object v3, p0, Landroid/view/ViewPropertyAnimator;->mUpdateListener:Landroid/animation/ValueAnimator$AnimatorUpdateListener;
 
     new-instance v0, Landroid/view/ViewPropertyAnimator$AnimatorEventListener;
 
@@ -203,6 +209,16 @@
     invoke-direct {p0}, Landroid/view/ViewPropertyAnimator;->startAnimation()V
 
     return-void
+.end method
+
+.method static synthetic access$1000(Landroid/view/ViewPropertyAnimator;)Landroid/animation/ValueAnimator$AnimatorUpdateListener;
+    .locals 1
+    .parameter "x0"
+
+    .prologue
+    iget-object v0, p0, Landroid/view/ViewPropertyAnimator;->mUpdateListener:Landroid/animation/ValueAnimator$AnimatorUpdateListener;
+
+    return-object v0
 .end method
 
 .method static synthetic access$200(Landroid/view/ViewPropertyAnimator;)Landroid/view/View;
@@ -417,7 +433,7 @@
 
     iget-object v7, p0, Landroid/view/ViewPropertyAnimator;->mAnimationStarter:Ljava/lang/Runnable;
 
-    invoke-virtual {v6, v7}, Landroid/view/View;->post(Ljava/lang/Runnable;)Z
+    invoke-virtual {v6, v7}, Landroid/view/View;->postOnAnimation(Ljava/lang/Runnable;)V
 
     return-void
 .end method
@@ -957,13 +973,56 @@
     return-wide v0
 
     :cond_0
+    iget-object v0, p0, Landroid/view/ViewPropertyAnimator;->mTempValueAnimator:Landroid/animation/ValueAnimator;
+
+    if-nez v0, :cond_1
+
     new-instance v0, Landroid/animation/ValueAnimator;
 
     invoke-direct {v0}, Landroid/animation/ValueAnimator;-><init>()V
 
+    iput-object v0, p0, Landroid/view/ViewPropertyAnimator;->mTempValueAnimator:Landroid/animation/ValueAnimator;
+
+    :cond_1
+    iget-object v0, p0, Landroid/view/ViewPropertyAnimator;->mTempValueAnimator:Landroid/animation/ValueAnimator;
+
     invoke-virtual {v0}, Landroid/animation/ValueAnimator;->getDuration()J
 
     move-result-wide v0
+
+    goto :goto_0
+.end method
+
+.method public getInterpolator()Landroid/animation/TimeInterpolator;
+    .locals 1
+
+    .prologue
+    iget-boolean v0, p0, Landroid/view/ViewPropertyAnimator;->mInterpolatorSet:Z
+
+    if-eqz v0, :cond_0
+
+    iget-object v0, p0, Landroid/view/ViewPropertyAnimator;->mInterpolator:Landroid/animation/TimeInterpolator;
+
+    :goto_0
+    return-object v0
+
+    :cond_0
+    iget-object v0, p0, Landroid/view/ViewPropertyAnimator;->mTempValueAnimator:Landroid/animation/ValueAnimator;
+
+    if-nez v0, :cond_1
+
+    new-instance v0, Landroid/animation/ValueAnimator;
+
+    invoke-direct {v0}, Landroid/animation/ValueAnimator;-><init>()V
+
+    iput-object v0, p0, Landroid/view/ViewPropertyAnimator;->mTempValueAnimator:Landroid/animation/ValueAnimator;
+
+    :cond_1
+    iget-object v0, p0, Landroid/view/ViewPropertyAnimator;->mTempValueAnimator:Landroid/animation/ValueAnimator;
+
+    invoke-virtual {v0}, Landroid/animation/ValueAnimator;->getInterpolator()Landroid/animation/TimeInterpolator;
+
+    move-result-object v0
 
     goto :goto_0
 .end method
@@ -1217,6 +1276,16 @@
     iput-boolean v0, p0, Landroid/view/ViewPropertyAnimator;->mStartDelaySet:Z
 
     iput-wide p1, p0, Landroid/view/ViewPropertyAnimator;->mStartDelay:J
+
+    return-object p0
+.end method
+
+.method public setUpdateListener(Landroid/animation/ValueAnimator$AnimatorUpdateListener;)Landroid/view/ViewPropertyAnimator;
+    .locals 0
+    .parameter "listener"
+
+    .prologue
+    iput-object p1, p0, Landroid/view/ViewPropertyAnimator;->mUpdateListener:Landroid/animation/ValueAnimator$AnimatorUpdateListener;
 
     return-object p0
 .end method

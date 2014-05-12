@@ -5,6 +5,9 @@
 
 # static fields
 .field public static final A_8:I = 0x8
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
+.end field
 
 .field public static final JPEG:I = 0x100
     .annotation runtime Ljava/lang/Deprecated;
@@ -17,6 +20,9 @@
 .end field
 
 .field public static final L_8:I = 0x9
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
+.end field
 
 .field public static final OPAQUE:I = -0x1
 
@@ -72,15 +78,6 @@
 
 
 # direct methods
-.method static constructor <clinit>()V
-    .locals 0
-
-    .prologue
-    invoke-static {}, Landroid/graphics/PixelFormat;->nativeClassInit()V
-
-    return-void
-.end method
-
 .method public constructor <init>()V
     .locals 0
 
@@ -129,8 +126,123 @@
     .end packed-switch
 .end method
 
-.method public static native getPixelFormatInfo(ILandroid/graphics/PixelFormat;)V
-.end method
+.method public static getPixelFormatInfo(ILandroid/graphics/PixelFormat;)V
+    .locals 3
+    .parameter "format"
+    .parameter "info"
 
-.method private static native nativeClassInit()V
+    .prologue
+    const/16 v0, 0x10
+
+    const/4 v1, 0x1
+
+    packed-switch p0, :pswitch_data_0
+
+    :pswitch_0
+    new-instance v0, Ljava/lang/IllegalArgumentException;
+
+    new-instance v1, Ljava/lang/StringBuilder;
+
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v2, "unkonwon pixel format "
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1, p0}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-direct {v0, v1}, Ljava/lang/IllegalArgumentException;-><init>(Ljava/lang/String;)V
+
+    throw v0
+
+    :pswitch_1
+    const/16 v0, 0x20
+
+    iput v0, p1, Landroid/graphics/PixelFormat;->bitsPerPixel:I
+
+    const/4 v0, 0x4
+
+    iput v0, p1, Landroid/graphics/PixelFormat;->bytesPerPixel:I
+
+    :goto_0
+    return-void
+
+    :pswitch_2
+    const/16 v0, 0x18
+
+    iput v0, p1, Landroid/graphics/PixelFormat;->bitsPerPixel:I
+
+    const/4 v0, 0x3
+
+    iput v0, p1, Landroid/graphics/PixelFormat;->bytesPerPixel:I
+
+    goto :goto_0
+
+    :pswitch_3
+    iput v0, p1, Landroid/graphics/PixelFormat;->bitsPerPixel:I
+
+    const/4 v0, 0x2
+
+    iput v0, p1, Landroid/graphics/PixelFormat;->bytesPerPixel:I
+
+    goto :goto_0
+
+    :pswitch_4
+    const/16 v0, 0x8
+
+    iput v0, p1, Landroid/graphics/PixelFormat;->bitsPerPixel:I
+
+    iput v1, p1, Landroid/graphics/PixelFormat;->bytesPerPixel:I
+
+    goto :goto_0
+
+    :pswitch_5
+    iput v0, p1, Landroid/graphics/PixelFormat;->bitsPerPixel:I
+
+    iput v1, p1, Landroid/graphics/PixelFormat;->bytesPerPixel:I
+
+    goto :goto_0
+
+    :pswitch_6
+    const/16 v0, 0xc
+
+    iput v0, p1, Landroid/graphics/PixelFormat;->bitsPerPixel:I
+
+    iput v1, p1, Landroid/graphics/PixelFormat;->bytesPerPixel:I
+
+    goto :goto_0
+
+    nop
+
+    :pswitch_data_0
+    .packed-switch 0x1
+        :pswitch_1
+        :pswitch_1
+        :pswitch_2
+        :pswitch_3
+        :pswitch_0
+        :pswitch_3
+        :pswitch_3
+        :pswitch_4
+        :pswitch_4
+        :pswitch_3
+        :pswitch_4
+        :pswitch_0
+        :pswitch_0
+        :pswitch_0
+        :pswitch_0
+        :pswitch_5
+        :pswitch_6
+        :pswitch_0
+        :pswitch_0
+        :pswitch_5
+    .end packed-switch
 .end method

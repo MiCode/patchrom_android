@@ -86,37 +86,32 @@
 
 # virtual methods
 .method public apply(Landroid/view/View;Landroid/view/ViewGroup;Landroid/widget/RemoteViews$OnClickHandler;)V
-    .locals 4
+    .locals 3
     .parameter "root"
     .parameter "rootParent"
     .parameter "handler"
 
     .prologue
-    invoke-virtual {p1}, Landroid/view/View;->getContext()Landroid/content/Context;
+    iget v1, p0, Landroid/widget/RemoteViews$TextViewSizeAction;->viewId:I
+
+    invoke-virtual {p1, v1}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
     move-result-object v0
 
-    .local v0, context:Landroid/content/Context;
-    iget v2, p0, Landroid/widget/RemoteViews$TextViewSizeAction;->viewId:I
+    check-cast v0, Landroid/widget/TextView;
 
-    invoke-virtual {p1, v2}, Landroid/view/View;->findViewById(I)Landroid/view/View;
-
-    move-result-object v1
-
-    check-cast v1, Landroid/widget/TextView;
-
-    .local v1, target:Landroid/widget/TextView;
-    if-nez v1, :cond_0
+    .local v0, target:Landroid/widget/TextView;
+    if-nez v0, :cond_0
 
     :goto_0
     return-void
 
     :cond_0
-    iget v2, p0, Landroid/widget/RemoteViews$TextViewSizeAction;->units:I
+    iget v1, p0, Landroid/widget/RemoteViews$TextViewSizeAction;->units:I
 
-    iget v3, p0, Landroid/widget/RemoteViews$TextViewSizeAction;->size:F
+    iget v2, p0, Landroid/widget/RemoteViews$TextViewSizeAction;->size:F
 
-    invoke-virtual {v1, v2, v3}, Landroid/widget/TextView;->setTextSize(IF)V
+    invoke-virtual {v0, v1, v2}, Landroid/widget/TextView;->setTextSize(IF)V
 
     goto :goto_0
 .end method

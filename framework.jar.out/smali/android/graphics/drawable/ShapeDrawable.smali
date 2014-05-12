@@ -192,11 +192,28 @@
 
     invoke-virtual {v1, v4}, Landroid/graphics/Paint;->setAlpha(I)V
 
+    invoke-virtual {v1}, Landroid/graphics/Paint;->getAlpha()I
+
+    move-result v4
+
+    if-nez v4, :cond_0
+
+    invoke-virtual {v1}, Landroid/graphics/Paint;->getXfermode()Landroid/graphics/Xfermode;
+
+    move-result-object v4
+
+    if-nez v4, :cond_0
+
+    iget-boolean v4, v1, Landroid/graphics/Paint;->hasShadow:Z
+
+    if-eqz v4, :cond_1
+
+    :cond_0
     iget-object v4, p0, Landroid/graphics/drawable/ShapeDrawable;->mShapeState:Landroid/graphics/drawable/ShapeDrawable$ShapeState;
 
     iget-object v4, v4, Landroid/graphics/drawable/ShapeDrawable$ShapeState;->mShape:Landroid/graphics/drawable/shapes/Shape;
 
-    if-eqz v4, :cond_0
+    if-eqz v4, :cond_2
 
     invoke-virtual {p1}, Landroid/graphics/Canvas;->save()I
 
@@ -222,15 +239,27 @@
     invoke-virtual {p1, v0}, Landroid/graphics/Canvas;->restoreToCount(I)V
 
     .end local v0           #count:I
+    :cond_1
     :goto_0
     invoke-virtual {v1, v2}, Landroid/graphics/Paint;->setAlpha(I)V
 
     return-void
 
-    :cond_0
+    :cond_2
     invoke-virtual {p1, v3, v1}, Landroid/graphics/Canvas;->drawRect(Landroid/graphics/Rect;Landroid/graphics/Paint;)V
 
     goto :goto_0
+.end method
+
+.method public getAlpha()I
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Landroid/graphics/drawable/ShapeDrawable;->mShapeState:Landroid/graphics/drawable/ShapeDrawable$ShapeState;
+
+    iget v0, v0, Landroid/graphics/drawable/ShapeDrawable$ShapeState;->mAlpha:I
+
+    return v0
 .end method
 
 .method public getChangingConfigurations()I

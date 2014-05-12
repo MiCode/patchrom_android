@@ -6,7 +6,23 @@
 .implements Landroid/os/Parcelable;
 
 
+# annotations
+.annotation system Ldalvik/annotation/MemberClasses;
+    value = {
+        Landroid/accessibilityservice/AccessibilityServiceInfo$CapabilityInfo;
+    }
+.end annotation
+
+
 # static fields
+.field public static final CAPABILITY_CAN_REQUEST_ENHANCED_WEB_ACCESSIBILITY:I = 0x4
+
+.field public static final CAPABILITY_CAN_REQUEST_FILTER_KEY_EVENTS:I = 0x8
+
+.field public static final CAPABILITY_CAN_REQUEST_TOUCH_EXPLORATION:I = 0x2
+
+.field public static final CAPABILITY_CAN_RETRIEVE_WINDOW_CONTENT:I = 0x1
+
 .field public static final CREATOR:Landroid/os/Parcelable$Creator; = null
     .annotation system Ldalvik/annotation/Signature;
         value = {
@@ -36,9 +52,26 @@
 
 .field public static final FLAG_INCLUDE_NOT_IMPORTANT_VIEWS:I = 0x2
 
+.field public static final FLAG_REPORT_VIEW_IDS:I = 0x10
+
+.field public static final FLAG_REQUEST_ENHANCED_WEB_ACCESSIBILITY:I = 0x8
+
+.field public static final FLAG_REQUEST_FILTER_KEY_EVENTS:I = 0x20
+
 .field public static final FLAG_REQUEST_TOUCH_EXPLORATION_MODE:I = 0x4
 
 .field private static final TAG_ACCESSIBILITY_SERVICE:Ljava/lang/String; = "accessibility-service"
+
+.field private static final sAvailableCapabilityInfos:Landroid/util/SparseArray;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "Landroid/util/SparseArray",
+            "<",
+            "Landroid/accessibilityservice/AccessibilityServiceInfo$CapabilityInfo;",
+            ">;"
+        }
+    .end annotation
+.end field
 
 
 # instance fields
@@ -48,7 +81,7 @@
 
 .field public flags:I
 
-.field private mCanRetrieveWindowContent:Z
+.field private mCapabilities:I
 
 .field private mDescriptionResId:I
 
@@ -67,9 +100,71 @@
 
 # direct methods
 .method static constructor <clinit>()V
-    .locals 1
+    .locals 8
 
     .prologue
+    const/16 v7, 0x8
+
+    const/4 v6, 0x4
+
+    const/4 v5, 0x2
+
+    const/4 v4, 0x1
+
+    new-instance v0, Landroid/util/SparseArray;
+
+    invoke-direct {v0}, Landroid/util/SparseArray;-><init>()V
+
+    sput-object v0, Landroid/accessibilityservice/AccessibilityServiceInfo;->sAvailableCapabilityInfos:Landroid/util/SparseArray;
+
+    sget-object v0, Landroid/accessibilityservice/AccessibilityServiceInfo;->sAvailableCapabilityInfos:Landroid/util/SparseArray;
+
+    new-instance v1, Landroid/accessibilityservice/AccessibilityServiceInfo$CapabilityInfo;
+
+    const v2, 0x1040110
+
+    const v3, 0x1040111
+
+    invoke-direct {v1, v4, v2, v3}, Landroid/accessibilityservice/AccessibilityServiceInfo$CapabilityInfo;-><init>(III)V
+
+    invoke-virtual {v0, v4, v1}, Landroid/util/SparseArray;->put(ILjava/lang/Object;)V
+
+    sget-object v0, Landroid/accessibilityservice/AccessibilityServiceInfo;->sAvailableCapabilityInfos:Landroid/util/SparseArray;
+
+    new-instance v1, Landroid/accessibilityservice/AccessibilityServiceInfo$CapabilityInfo;
+
+    const v2, 0x1040112
+
+    const v3, 0x1040113
+
+    invoke-direct {v1, v5, v2, v3}, Landroid/accessibilityservice/AccessibilityServiceInfo$CapabilityInfo;-><init>(III)V
+
+    invoke-virtual {v0, v5, v1}, Landroid/util/SparseArray;->put(ILjava/lang/Object;)V
+
+    sget-object v0, Landroid/accessibilityservice/AccessibilityServiceInfo;->sAvailableCapabilityInfos:Landroid/util/SparseArray;
+
+    new-instance v1, Landroid/accessibilityservice/AccessibilityServiceInfo$CapabilityInfo;
+
+    const v2, 0x1040114
+
+    const v3, 0x1040115
+
+    invoke-direct {v1, v6, v2, v3}, Landroid/accessibilityservice/AccessibilityServiceInfo$CapabilityInfo;-><init>(III)V
+
+    invoke-virtual {v0, v6, v1}, Landroid/util/SparseArray;->put(ILjava/lang/Object;)V
+
+    sget-object v0, Landroid/accessibilityservice/AccessibilityServiceInfo;->sAvailableCapabilityInfos:Landroid/util/SparseArray;
+
+    new-instance v1, Landroid/accessibilityservice/AccessibilityServiceInfo$CapabilityInfo;
+
+    const v2, 0x1040116
+
+    const v3, 0x1040117
+
+    invoke-direct {v1, v7, v2, v3}, Landroid/accessibilityservice/AccessibilityServiceInfo$CapabilityInfo;-><init>(III)V
+
+    invoke-virtual {v0, v7, v1}, Landroid/util/SparseArray;->put(ILjava/lang/Object;)V
+
     new-instance v0, Landroid/accessibilityservice/AccessibilityServiceInfo$1;
 
     invoke-direct {v0}, Landroid/accessibilityservice/AccessibilityServiceInfo$1;-><init>()V
@@ -365,10 +460,82 @@
 
     move-result v14
 
+    if-eqz v14, :cond_6
+
     move-object/from16 v0, p0
 
-    iput-boolean v14, v0, Landroid/accessibilityservice/AccessibilityServiceInfo;->mCanRetrieveWindowContent:Z
+    iget v14, v0, Landroid/accessibilityservice/AccessibilityServiceInfo;->mCapabilities:I
 
+    or-int/lit8 v14, v14, 0x1
+
+    move-object/from16 v0, p0
+
+    iput v14, v0, Landroid/accessibilityservice/AccessibilityServiceInfo;->mCapabilities:I
+
+    :cond_6
+    const/16 v14, 0x8
+
+    const/4 v15, 0x0
+
+    invoke-virtual {v3, v14, v15}, Landroid/content/res/TypedArray;->getBoolean(IZ)Z
+
+    move-result v14
+
+    if-eqz v14, :cond_7
+
+    move-object/from16 v0, p0
+
+    iget v14, v0, Landroid/accessibilityservice/AccessibilityServiceInfo;->mCapabilities:I
+
+    or-int/lit8 v14, v14, 0x2
+
+    move-object/from16 v0, p0
+
+    iput v14, v0, Landroid/accessibilityservice/AccessibilityServiceInfo;->mCapabilities:I
+
+    :cond_7
+    const/16 v14, 0x9
+
+    const/4 v15, 0x0
+
+    invoke-virtual {v3, v14, v15}, Landroid/content/res/TypedArray;->getBoolean(IZ)Z
+
+    move-result v14
+
+    if-eqz v14, :cond_8
+
+    move-object/from16 v0, p0
+
+    iget v14, v0, Landroid/accessibilityservice/AccessibilityServiceInfo;->mCapabilities:I
+
+    or-int/lit8 v14, v14, 0x4
+
+    move-object/from16 v0, p0
+
+    iput v14, v0, Landroid/accessibilityservice/AccessibilityServiceInfo;->mCapabilities:I
+
+    :cond_8
+    const/16 v14, 0xa
+
+    const/4 v15, 0x0
+
+    invoke-virtual {v3, v14, v15}, Landroid/content/res/TypedArray;->getBoolean(IZ)Z
+
+    move-result v14
+
+    if-eqz v14, :cond_9
+
+    move-object/from16 v0, p0
+
+    iget v14, v0, Landroid/accessibilityservice/AccessibilityServiceInfo;->mCapabilities:I
+
+    or-int/lit8 v14, v14, 0x8
+
+    move-object/from16 v0, p0
+
+    iput v14, v0, Landroid/accessibilityservice/AccessibilityServiceInfo;->mCapabilities:I
+
+    :cond_9
     const/4 v14, 0x0
 
     invoke-virtual {v3, v14}, Landroid/content/res/TypedArray;->peekValue(I)Landroid/util/TypedValue;
@@ -376,7 +543,7 @@
     move-result-object v10
 
     .local v10, peekedValue:Landroid/util/TypedValue;
-    if-eqz v10, :cond_6
+    if-eqz v10, :cond_a
 
     iget v14, v10, Landroid/util/TypedValue;->resourceId:I
 
@@ -389,7 +556,7 @@
     move-result-object v6
 
     .local v6, nonLocalizedDescription:Ljava/lang/CharSequence;
-    if-eqz v6, :cond_6
+    if-eqz v6, :cond_a
 
     invoke-virtual {v6}, Ljava/lang/Object;->toString()Ljava/lang/String;
 
@@ -404,7 +571,7 @@
     iput-object v14, v0, Landroid/accessibilityservice/AccessibilityServiceInfo;->mNonLocalizedDescription:Ljava/lang/String;
 
     .end local v6           #nonLocalizedDescription:Ljava/lang/CharSequence;
-    :cond_6
+    :cond_a
     invoke-virtual {v3}, Landroid/content/res/TypedArray;->recycle()V
     :try_end_3
     .catchall {:try_start_3 .. :try_end_3} :catchall_0
@@ -424,6 +591,60 @@
 
     .prologue
     invoke-direct {p0, p1}, Landroid/accessibilityservice/AccessibilityServiceInfo;->initFromParcel(Landroid/os/Parcel;)V
+
+    return-void
+.end method
+
+.method private static appendCapabilities(Ljava/lang/StringBuilder;I)V
+    .locals 3
+    .parameter "stringBuilder"
+    .parameter "capabilities"
+
+    .prologue
+    const-string v1, "capabilities:"
+
+    invoke-virtual {p0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    const-string v1, "["
+
+    invoke-virtual {p0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    :cond_0
+    :goto_0
+    if-eqz p1, :cond_1
+
+    const/4 v1, 0x1
+
+    invoke-static {p1}, Ljava/lang/Integer;->numberOfTrailingZeros(I)I
+
+    move-result v2
+
+    shl-int v0, v1, v2
+
+    .local v0, capabilityBit:I
+    invoke-static {v0}, Landroid/accessibilityservice/AccessibilityServiceInfo;->capabilityToString(I)Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-virtual {p0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    xor-int/lit8 v1, v0, -0x1
+
+    and-int/2addr p1, v1
+
+    if-eqz p1, :cond_0
+
+    const-string v1, ", "
+
+    invoke-virtual {p0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    goto :goto_0
+
+    .end local v0           #capabilityBit:I
+    :cond_1
+    const-string v1, "]"
+
+    invoke-virtual {p0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     return-void
 .end method
@@ -642,6 +863,52 @@
     return-void
 .end method
 
+.method public static capabilityToString(I)Ljava/lang/String;
+    .locals 1
+    .parameter "capability"
+
+    .prologue
+    packed-switch p0, :pswitch_data_0
+
+    :pswitch_0
+    const-string v0, "UNKNOWN"
+
+    :goto_0
+    return-object v0
+
+    :pswitch_1
+    const-string v0, "CAPABILITY_CAN_RETRIEVE_WINDOW_CONTENT"
+
+    goto :goto_0
+
+    :pswitch_2
+    const-string v0, "CAPABILITY_CAN_REQUEST_TOUCH_EXPLORATION"
+
+    goto :goto_0
+
+    :pswitch_3
+    const-string v0, "CAPABILITY_CAN_REQUEST_ENHANCED_WEB_ACCESSIBILITY"
+
+    goto :goto_0
+
+    :pswitch_4
+    const-string v0, "CAPABILITY_CAN_FILTER_KEY_EVENTS"
+
+    goto :goto_0
+
+    :pswitch_data_0
+    .packed-switch 0x1
+        :pswitch_1
+        :pswitch_2
+        :pswitch_0
+        :pswitch_3
+        :pswitch_0
+        :pswitch_0
+        :pswitch_0
+        :pswitch_4
+    .end packed-switch
+.end method
+
 .method public static feedbackTypeToString(I)Ljava/lang/String;
     .locals 4
     .parameter "feedbackType"
@@ -812,45 +1079,61 @@
     .parameter "flag"
 
     .prologue
-    packed-switch p0, :pswitch_data_0
+    sparse-switch p0, :sswitch_data_0
 
-    :pswitch_0
     const/4 v0, 0x0
 
     :goto_0
     return-object v0
 
-    :pswitch_1
+    :sswitch_0
     const-string v0, "DEFAULT"
 
     goto :goto_0
 
-    :pswitch_2
+    :sswitch_1
     const-string v0, "FLAG_INCLUDE_NOT_IMPORTANT_VIEWS"
 
     goto :goto_0
 
-    :pswitch_3
+    :sswitch_2
     const-string v0, "FLAG_REQUEST_TOUCH_EXPLORATION_MODE"
 
     goto :goto_0
 
-    :pswitch_data_0
-    .packed-switch 0x1
-        :pswitch_1
-        :pswitch_2
-        :pswitch_0
-        :pswitch_3
-    .end packed-switch
+    :sswitch_3
+    const-string v0, "FLAG_REQUEST_ENHANCED_WEB_ACCESSIBILITY"
+
+    goto :goto_0
+
+    :sswitch_4
+    const-string v0, "FLAG_REPORT_VIEW_IDS"
+
+    goto :goto_0
+
+    :sswitch_5
+    const-string v0, "FLAG_REQUEST_FILTER_KEY_EVENTS"
+
+    goto :goto_0
+
+    nop
+
+    :sswitch_data_0
+    .sparse-switch
+        0x1 -> :sswitch_0
+        0x2 -> :sswitch_1
+        0x4 -> :sswitch_2
+        0x8 -> :sswitch_3
+        0x10 -> :sswitch_4
+        0x20 -> :sswitch_5
+    .end sparse-switch
 .end method
 
 .method private initFromParcel(Landroid/os/Parcel;)V
-    .locals 4
+    .locals 2
     .parameter "parcel"
 
     .prologue
-    const/4 v1, 0x1
-
     invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
 
     move-result v0
@@ -871,9 +1154,9 @@
 
     invoke-virtual {p1}, Landroid/os/Parcel;->readLong()J
 
-    move-result-wide v2
+    move-result-wide v0
 
-    iput-wide v2, p0, Landroid/accessibilityservice/AccessibilityServiceInfo;->notificationTimeout:J
+    iput-wide v0, p0, Landroid/accessibilityservice/AccessibilityServiceInfo;->notificationTimeout:J
 
     invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
 
@@ -907,12 +1190,7 @@
 
     move-result v0
 
-    if-ne v0, v1, :cond_0
-
-    move v0, v1
-
-    :goto_0
-    iput-boolean v0, p0, Landroid/accessibilityservice/AccessibilityServiceInfo;->mCanRetrieveWindowContent:Z
+    iput v0, p0, Landroid/accessibilityservice/AccessibilityServiceInfo;->mCapabilities:I
 
     invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
 
@@ -927,11 +1205,6 @@
     iput-object v0, p0, Landroid/accessibilityservice/AccessibilityServiceInfo;->mNonLocalizedDescription:Ljava/lang/String;
 
     return-void
-
-    :cond_0
-    const/4 v0, 0x0
-
-    goto :goto_0
 .end method
 
 
@@ -945,13 +1218,171 @@
     return v0
 .end method
 
+.method public equals(Ljava/lang/Object;)Z
+    .locals 5
+    .parameter "obj"
+
+    .prologue
+    const/4 v1, 0x1
+
+    const/4 v2, 0x0
+
+    if-ne p0, p1, :cond_1
+
+    :cond_0
+    :goto_0
+    return v1
+
+    :cond_1
+    if-nez p1, :cond_2
+
+    move v1, v2
+
+    goto :goto_0
+
+    :cond_2
+    invoke-virtual {p0}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
+
+    move-result-object v3
+
+    invoke-virtual {p1}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
+
+    move-result-object v4
+
+    if-eq v3, v4, :cond_3
+
+    move v1, v2
+
+    goto :goto_0
+
+    :cond_3
+    move-object v0, p1
+
+    check-cast v0, Landroid/accessibilityservice/AccessibilityServiceInfo;
+
+    .local v0, other:Landroid/accessibilityservice/AccessibilityServiceInfo;
+    iget-object v3, p0, Landroid/accessibilityservice/AccessibilityServiceInfo;->mId:Ljava/lang/String;
+
+    if-nez v3, :cond_4
+
+    iget-object v3, v0, Landroid/accessibilityservice/AccessibilityServiceInfo;->mId:Ljava/lang/String;
+
+    if-eqz v3, :cond_0
+
+    move v1, v2
+
+    goto :goto_0
+
+    :cond_4
+    iget-object v3, p0, Landroid/accessibilityservice/AccessibilityServiceInfo;->mId:Ljava/lang/String;
+
+    iget-object v4, v0, Landroid/accessibilityservice/AccessibilityServiceInfo;->mId:Ljava/lang/String;
+
+    invoke-virtual {v3, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v3
+
+    if-nez v3, :cond_0
+
+    move v1, v2
+
+    goto :goto_0
+.end method
+
 .method public getCanRetrieveWindowContent()Z
     .locals 1
 
     .prologue
-    iget-boolean v0, p0, Landroid/accessibilityservice/AccessibilityServiceInfo;->mCanRetrieveWindowContent:Z
+    iget v0, p0, Landroid/accessibilityservice/AccessibilityServiceInfo;->mCapabilities:I
+
+    and-int/lit8 v0, v0, 0x1
+
+    if-eqz v0, :cond_0
+
+    const/4 v0, 0x1
+
+    :goto_0
+    return v0
+
+    :cond_0
+    const/4 v0, 0x0
+
+    goto :goto_0
+.end method
+
+.method public getCapabilities()I
+    .locals 1
+
+    .prologue
+    iget v0, p0, Landroid/accessibilityservice/AccessibilityServiceInfo;->mCapabilities:I
 
     return v0
+.end method
+
+.method public getCapabilityInfos()Ljava/util/List;
+    .locals 6
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "()",
+            "Ljava/util/List",
+            "<",
+            "Landroid/accessibilityservice/AccessibilityServiceInfo$CapabilityInfo;",
+            ">;"
+        }
+    .end annotation
+
+    .prologue
+    iget v4, p0, Landroid/accessibilityservice/AccessibilityServiceInfo;->mCapabilities:I
+
+    if-nez v4, :cond_1
+
+    invoke-static {}, Ljava/util/Collections;->emptyList()Ljava/util/List;
+
+    move-result-object v3
+
+    :cond_0
+    return-object v3
+
+    :cond_1
+    iget v0, p0, Landroid/accessibilityservice/AccessibilityServiceInfo;->mCapabilities:I
+
+    .local v0, capabilities:I
+    new-instance v3, Ljava/util/ArrayList;
+
+    invoke-direct {v3}, Ljava/util/ArrayList;-><init>()V
+
+    .local v3, capabilityInfos:Ljava/util/List;,"Ljava/util/List<Landroid/accessibilityservice/AccessibilityServiceInfo$CapabilityInfo;>;"
+    :cond_2
+    :goto_0
+    if-eqz v0, :cond_0
+
+    const/4 v4, 0x1
+
+    invoke-static {v0}, Ljava/lang/Integer;->numberOfTrailingZeros(I)I
+
+    move-result v5
+
+    shl-int v1, v4, v5
+
+    .local v1, capabilityBit:I
+    xor-int/lit8 v4, v1, -0x1
+
+    and-int/2addr v0, v4
+
+    sget-object v4, Landroid/accessibilityservice/AccessibilityServiceInfo;->sAvailableCapabilityInfos:Landroid/util/SparseArray;
+
+    invoke-virtual {v4, v1}, Landroid/util/SparseArray;->get(I)Ljava/lang/Object;
+
+    move-result-object v2
+
+    check-cast v2, Landroid/accessibilityservice/AccessibilityServiceInfo$CapabilityInfo;
+
+    .local v2, capabilityInfo:Landroid/accessibilityservice/AccessibilityServiceInfo$CapabilityInfo;
+    if-eqz v2, :cond_2
+
+    invoke-interface {v3, v2}, Ljava/util/List;->add(Ljava/lang/Object;)Z
+
+    goto :goto_0
 .end method
 
 .method public getDescription()Ljava/lang/String;
@@ -988,6 +1419,31 @@
     iget-object v0, p0, Landroid/accessibilityservice/AccessibilityServiceInfo;->mSettingsActivityName:Ljava/lang/String;
 
     return-object v0
+.end method
+
+.method public hashCode()I
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Landroid/accessibilityservice/AccessibilityServiceInfo;->mId:Ljava/lang/String;
+
+    if-nez v0, :cond_0
+
+    const/4 v0, 0x0
+
+    :goto_0
+    add-int/lit8 v0, v0, 0x1f
+
+    return v0
+
+    :cond_0
+    iget-object v0, p0, Landroid/accessibilityservice/AccessibilityServiceInfo;->mId:Ljava/lang/String;
+
+    invoke-virtual {v0}, Ljava/lang/String;->hashCode()I
+
+    move-result v0
+
+    goto :goto_0
 .end method
 
 .method public loadDescription(Landroid/content/pm/PackageManager;)Ljava/lang/String;
@@ -1037,6 +1493,30 @@
     const/4 v2, 0x0
 
     goto :goto_0
+.end method
+
+.method public setCapabilities(I)V
+    .locals 0
+    .parameter "capabilities"
+
+    .prologue
+    iput p1, p0, Landroid/accessibilityservice/AccessibilityServiceInfo;->mCapabilities:I
+
+    return-void
+.end method
+
+.method public setComponentName(Landroid/content/ComponentName;)V
+    .locals 1
+    .parameter "component"
+
+    .prologue
+    invoke-virtual {p1}, Landroid/content/ComponentName;->flattenToShortString()Ljava/lang/String;
+
+    move-result-object v0
+
+    iput-object v0, p0, Landroid/accessibilityservice/AccessibilityServiceInfo;->mId:Ljava/lang/String;
+
+    return-void
 .end method
 
 .method public toString()Ljava/lang/String;
@@ -1136,15 +1616,9 @@
 
     invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    const-string v1, "retrieveScreenContent: "
+    iget v1, p0, Landroid/accessibilityservice/AccessibilityServiceInfo;->mCapabilities:I
 
-    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v1
-
-    iget-boolean v2, p0, Landroid/accessibilityservice/AccessibilityServiceInfo;->mCanRetrieveWindowContent:Z
-
-    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;
+    invoke-static {v0, v1}, Landroid/accessibilityservice/AccessibilityServiceInfo;->appendCapabilities(Ljava/lang/StringBuilder;I)V
 
     invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
@@ -1182,52 +1656,47 @@
 .end method
 
 .method public writeToParcel(Landroid/os/Parcel;I)V
-    .locals 3
+    .locals 2
     .parameter "parcel"
     .parameter "flagz"
 
     .prologue
-    const/4 v0, 0x0
+    iget v0, p0, Landroid/accessibilityservice/AccessibilityServiceInfo;->eventTypes:I
 
-    iget v1, p0, Landroid/accessibilityservice/AccessibilityServiceInfo;->eventTypes:I
+    invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeInt(I)V
 
-    invoke-virtual {p1, v1}, Landroid/os/Parcel;->writeInt(I)V
+    iget-object v0, p0, Landroid/accessibilityservice/AccessibilityServiceInfo;->packageNames:[Ljava/lang/String;
 
-    iget-object v1, p0, Landroid/accessibilityservice/AccessibilityServiceInfo;->packageNames:[Ljava/lang/String;
+    invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeStringArray([Ljava/lang/String;)V
 
-    invoke-virtual {p1, v1}, Landroid/os/Parcel;->writeStringArray([Ljava/lang/String;)V
+    iget v0, p0, Landroid/accessibilityservice/AccessibilityServiceInfo;->feedbackType:I
 
-    iget v1, p0, Landroid/accessibilityservice/AccessibilityServiceInfo;->feedbackType:I
+    invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeInt(I)V
 
-    invoke-virtual {p1, v1}, Landroid/os/Parcel;->writeInt(I)V
+    iget-wide v0, p0, Landroid/accessibilityservice/AccessibilityServiceInfo;->notificationTimeout:J
 
-    iget-wide v1, p0, Landroid/accessibilityservice/AccessibilityServiceInfo;->notificationTimeout:J
+    invoke-virtual {p1, v0, v1}, Landroid/os/Parcel;->writeLong(J)V
 
-    invoke-virtual {p1, v1, v2}, Landroid/os/Parcel;->writeLong(J)V
+    iget v0, p0, Landroid/accessibilityservice/AccessibilityServiceInfo;->flags:I
 
-    iget v1, p0, Landroid/accessibilityservice/AccessibilityServiceInfo;->flags:I
+    invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeInt(I)V
 
-    invoke-virtual {p1, v1}, Landroid/os/Parcel;->writeInt(I)V
+    iget-object v0, p0, Landroid/accessibilityservice/AccessibilityServiceInfo;->mId:Ljava/lang/String;
 
-    iget-object v1, p0, Landroid/accessibilityservice/AccessibilityServiceInfo;->mId:Ljava/lang/String;
+    invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
-    invoke-virtual {p1, v1}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
+    iget-object v0, p0, Landroid/accessibilityservice/AccessibilityServiceInfo;->mResolveInfo:Landroid/content/pm/ResolveInfo;
 
-    iget-object v1, p0, Landroid/accessibilityservice/AccessibilityServiceInfo;->mResolveInfo:Landroid/content/pm/ResolveInfo;
+    const/4 v1, 0x0
 
-    invoke-virtual {p1, v1, v0}, Landroid/os/Parcel;->writeParcelable(Landroid/os/Parcelable;I)V
+    invoke-virtual {p1, v0, v1}, Landroid/os/Parcel;->writeParcelable(Landroid/os/Parcelable;I)V
 
-    iget-object v1, p0, Landroid/accessibilityservice/AccessibilityServiceInfo;->mSettingsActivityName:Ljava/lang/String;
+    iget-object v0, p0, Landroid/accessibilityservice/AccessibilityServiceInfo;->mSettingsActivityName:Ljava/lang/String;
 
-    invoke-virtual {p1, v1}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
+    invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
-    iget-boolean v1, p0, Landroid/accessibilityservice/AccessibilityServiceInfo;->mCanRetrieveWindowContent:Z
+    iget v0, p0, Landroid/accessibilityservice/AccessibilityServiceInfo;->mCapabilities:I
 
-    if-eqz v1, :cond_0
-
-    const/4 v0, 0x1
-
-    :cond_0
     invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeInt(I)V
 
     iget v0, p0, Landroid/accessibilityservice/AccessibilityServiceInfo;->mDescriptionResId:I

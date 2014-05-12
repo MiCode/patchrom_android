@@ -98,11 +98,11 @@
     .prologue
     sget-object v0, Landroid/database/sqlite/SQLiteConnection$Operation;->sDateFormat:Ljava/text/SimpleDateFormat;
 
-    new-instance v1, Ljava/sql/Date;
+    new-instance v1, Ljava/util/Date;
 
     iget-wide v2, p0, Landroid/database/sqlite/SQLiteConnection$Operation;->mStartTime:J
 
-    invoke-direct {v1, v2, v3}, Ljava/sql/Date;-><init>(J)V
+    invoke-direct {v1, v2, v3}, Ljava/util/Date;-><init>(J)V
 
     invoke-virtual {v0, v1}, Ljava/text/SimpleDateFormat;->format(Ljava/util/Date;)Ljava/lang/String;
 
@@ -141,9 +141,10 @@
 
 
 # virtual methods
-.method public describe(Ljava/lang/StringBuilder;)V
+.method public describe(Ljava/lang/StringBuilder;Z)V
     .locals 8
     .parameter "msg"
+    .parameter "verbose"
 
     .prologue
     iget-object v3, p0, Landroid/database/sqlite/SQLiteConnection$Operation;->mKind:Ljava/lang/String;
@@ -213,6 +214,8 @@
     invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     :cond_0
+    if-eqz p2, :cond_7
+
     iget-object v3, p0, Landroid/database/sqlite/SQLiteConnection$Operation;->mBindArgs:Ljava/util/ArrayList;
 
     if-eqz v3, :cond_7

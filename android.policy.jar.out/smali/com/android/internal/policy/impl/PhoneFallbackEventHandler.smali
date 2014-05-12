@@ -593,6 +593,7 @@
         0x7f -> :sswitch_1
         0x82 -> :sswitch_2
         0xa4 -> :sswitch_0
+        0xde -> :sswitch_2
     .end sparse-switch
 .end method
 
@@ -684,8 +685,6 @@
 
     if-nez v3, :cond_2
 
-    invoke-virtual {p0}, Lcom/android/internal/policy/impl/PhoneFallbackEventHandler;->handleCameraKeyEvent()V
-
     goto :goto_0
 
     :sswitch_3
@@ -733,6 +732,7 @@
         0x7f -> :sswitch_1
         0x82 -> :sswitch_1
         0xa4 -> :sswitch_0
+        0xde -> :sswitch_1
     .end sparse-switch
 .end method
 

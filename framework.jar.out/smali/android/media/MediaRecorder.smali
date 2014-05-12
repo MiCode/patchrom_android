@@ -87,7 +87,7 @@
 .end method
 
 .method public constructor <init>()V
-    .locals 2
+    .locals 3
 
     .prologue
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -99,21 +99,27 @@
     .local v0, looper:Landroid/os/Looper;
     if-eqz v0, :cond_0
 
-    new-instance v1, Landroid/media/MediaRecorder$EventHandler;
+    new-instance v2, Landroid/media/MediaRecorder$EventHandler;
 
-    invoke-direct {v1, p0, p0, v0}, Landroid/media/MediaRecorder$EventHandler;-><init>(Landroid/media/MediaRecorder;Landroid/media/MediaRecorder;Landroid/os/Looper;)V
+    invoke-direct {v2, p0, p0, v0}, Landroid/media/MediaRecorder$EventHandler;-><init>(Landroid/media/MediaRecorder;Landroid/media/MediaRecorder;Landroid/os/Looper;)V
 
-    iput-object v1, p0, Landroid/media/MediaRecorder;->mEventHandler:Landroid/media/MediaRecorder$EventHandler;
+    iput-object v2, p0, Landroid/media/MediaRecorder;->mEventHandler:Landroid/media/MediaRecorder$EventHandler;
 
     :goto_0
-    new-instance v1, Ljava/lang/ref/WeakReference;
+    invoke-static {}, Landroid/app/ActivityThread;->currentPackageName()Ljava/lang/String;
 
-    invoke-direct {v1, p0}, Ljava/lang/ref/WeakReference;-><init>(Ljava/lang/Object;)V
+    move-result-object v1
 
-    invoke-direct {p0, v1}, Landroid/media/MediaRecorder;->native_setup(Ljava/lang/Object;)V
+    .local v1, packageName:Ljava/lang/String;
+    new-instance v2, Ljava/lang/ref/WeakReference;
+
+    invoke-direct {v2, p0}, Ljava/lang/ref/WeakReference;-><init>(Ljava/lang/Object;)V
+
+    invoke-direct {p0, v2, v1}, Landroid/media/MediaRecorder;->native_setup(Ljava/lang/Object;Ljava/lang/String;)V
 
     return-void
 
+    .end local v1           #packageName:Ljava/lang/String;
     :cond_0
     invoke-static {}, Landroid/os/Looper;->getMainLooper()Landroid/os/Looper;
 
@@ -121,18 +127,18 @@
 
     if-eqz v0, :cond_1
 
-    new-instance v1, Landroid/media/MediaRecorder$EventHandler;
+    new-instance v2, Landroid/media/MediaRecorder$EventHandler;
 
-    invoke-direct {v1, p0, p0, v0}, Landroid/media/MediaRecorder$EventHandler;-><init>(Landroid/media/MediaRecorder;Landroid/media/MediaRecorder;Landroid/os/Looper;)V
+    invoke-direct {v2, p0, p0, v0}, Landroid/media/MediaRecorder$EventHandler;-><init>(Landroid/media/MediaRecorder;Landroid/media/MediaRecorder;Landroid/os/Looper;)V
 
-    iput-object v1, p0, Landroid/media/MediaRecorder;->mEventHandler:Landroid/media/MediaRecorder$EventHandler;
+    iput-object v2, p0, Landroid/media/MediaRecorder;->mEventHandler:Landroid/media/MediaRecorder$EventHandler;
 
     goto :goto_0
 
     :cond_1
-    const/4 v1, 0x0
+    const/4 v2, 0x0
 
-    iput-object v1, p0, Landroid/media/MediaRecorder;->mEventHandler:Landroid/media/MediaRecorder$EventHandler;
+    iput-object v2, p0, Landroid/media/MediaRecorder;->mEventHandler:Landroid/media/MediaRecorder$EventHandler;
 
     goto :goto_0
 .end method
@@ -189,7 +195,7 @@
     .locals 1
 
     .prologue
-    const/16 v0, 0x9
+    const/16 v0, 0x8
 
     return v0
 .end method
@@ -203,7 +209,7 @@
 .method private native native_reset()V
 .end method
 
-.method private final native native_setup(Ljava/lang/Object;)V
+.method private final native native_setup(Ljava/lang/Object;Ljava/lang/String;)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Ljava/lang/IllegalStateException;
@@ -885,6 +891,16 @@
             Ljava/lang/IllegalStateException;
         }
     .end annotation
+.end method
+
+.method public setParameters(Ljava/lang/String;)V
+    .locals 0
+    .parameter "nameValuePair"
+
+    .prologue
+    invoke-direct {p0, p1}, Landroid/media/MediaRecorder;->setParameter(Ljava/lang/String;)V
+
+    return-void
 .end method
 
 .method public setPreviewDisplay(Landroid/view/Surface;)V

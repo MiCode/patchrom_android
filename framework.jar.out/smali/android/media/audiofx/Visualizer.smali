@@ -8,7 +8,8 @@
     value = {
         Landroid/media/audiofx/Visualizer$NativeEventHandler;,
         Landroid/media/audiofx/Visualizer$OnServerDiedListener;,
-        Landroid/media/audiofx/Visualizer$OnDataCaptureListener;
+        Landroid/media/audiofx/Visualizer$OnDataCaptureListener;,
+        Landroid/media/audiofx/Visualizer$MeasurementPeakRms;
     }
 .end annotation
 
@@ -27,6 +28,10 @@
 .field public static final ERROR_NO_INIT:I = -0x3
 
 .field public static final ERROR_NO_MEMORY:I = -0x6
+
+.field public static final MEASUREMENT_MODE_NONE:I = 0x0
+
+.field public static final MEASUREMENT_MODE_PEAK_RMS:I = 0x1
 
 .field private static final NATIVE_EVENT_FFT_CAPTURE:I = 0x1
 
@@ -311,6 +316,12 @@
 .method private final native native_getFft([B)I
 .end method
 
+.method private final native native_getMeasurementMode()I
+.end method
+
+.method private final native native_getPeakRms(Landroid/media/audiofx/Visualizer$MeasurementPeakRms;)I
+.end method
+
 .method private final native native_getSamplingRate()I
 .end method
 
@@ -330,6 +341,9 @@
 .end method
 
 .method private final native native_setEnabled(Z)I
+.end method
+
+.method private final native native_setMeasurementMode(I)I
 .end method
 
 .method private final native native_setPeriodicCapture(IZZ)I
@@ -590,6 +604,150 @@
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
     return v0
+.end method
+
+.method public getMeasurementMode()I
+    .locals 4
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Ljava/lang/IllegalStateException;
+        }
+    .end annotation
+
+    .prologue
+    iget-object v1, p0, Landroid/media/audiofx/Visualizer;->mStateLock:Ljava/lang/Object;
+
+    monitor-enter v1
+
+    :try_start_0
+    iget v0, p0, Landroid/media/audiofx/Visualizer;->mState:I
+
+    if-nez v0, :cond_0
+
+    new-instance v0, Ljava/lang/IllegalStateException;
+
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v3, "getMeasurementMode() called in wrong state: "
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    iget v3, p0, Landroid/media/audiofx/Visualizer;->mState:I
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-direct {v0, v2}, Ljava/lang/IllegalStateException;-><init>(Ljava/lang/String;)V
+
+    throw v0
+
+    :catchall_0
+    move-exception v0
+
+    monitor-exit v1
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    throw v0
+
+    :cond_0
+    :try_start_1
+    invoke-direct {p0}, Landroid/media/audiofx/Visualizer;->native_getMeasurementMode()I
+
+    move-result v0
+
+    monitor-exit v1
+    :try_end_1
+    .catchall {:try_start_1 .. :try_end_1} :catchall_0
+
+    return v0
+.end method
+
+.method public getMeasurementPeakRms(Landroid/media/audiofx/Visualizer$MeasurementPeakRms;)I
+    .locals 4
+    .parameter "measurement"
+
+    .prologue
+    if-nez p1, :cond_0
+
+    const-string v0, "Visualizer-JAVA"
+
+    const-string v1, "Cannot store measurements in a null object"
+
+    invoke-static {v0, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+
+    const/4 v0, -0x4
+
+    :goto_0
+    return v0
+
+    :cond_0
+    iget-object v1, p0, Landroid/media/audiofx/Visualizer;->mStateLock:Ljava/lang/Object;
+
+    monitor-enter v1
+
+    :try_start_0
+    iget v0, p0, Landroid/media/audiofx/Visualizer;->mState:I
+
+    const/4 v2, 0x2
+
+    if-eq v0, v2, :cond_1
+
+    new-instance v0, Ljava/lang/IllegalStateException;
+
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v3, "getMeasurementPeakRms() called in wrong state: "
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    iget v3, p0, Landroid/media/audiofx/Visualizer;->mState:I
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-direct {v0, v2}, Ljava/lang/IllegalStateException;-><init>(Ljava/lang/String;)V
+
+    throw v0
+
+    :catchall_0
+    move-exception v0
+
+    monitor-exit v1
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    throw v0
+
+    :cond_1
+    :try_start_1
+    invoke-direct {p0, p1}, Landroid/media/audiofx/Visualizer;->native_getPeakRms(Landroid/media/audiofx/Visualizer$MeasurementPeakRms;)I
+
+    move-result v0
+
+    monitor-exit v1
+    :try_end_1
+    .catchall {:try_start_1 .. :try_end_1} :catchall_0
+
+    goto :goto_0
 .end method
 
 .method public getSamplingRate()I
@@ -1085,6 +1243,73 @@
     move v1, v2
 
     goto :goto_0
+.end method
+
+.method public setMeasurementMode(I)I
+    .locals 4
+    .parameter "mode"
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Ljava/lang/IllegalStateException;
+        }
+    .end annotation
+
+    .prologue
+    iget-object v1, p0, Landroid/media/audiofx/Visualizer;->mStateLock:Ljava/lang/Object;
+
+    monitor-enter v1
+
+    :try_start_0
+    iget v0, p0, Landroid/media/audiofx/Visualizer;->mState:I
+
+    if-nez v0, :cond_0
+
+    new-instance v0, Ljava/lang/IllegalStateException;
+
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v3, "setMeasurementMode() called in wrong state: "
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    iget v3, p0, Landroid/media/audiofx/Visualizer;->mState:I
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-direct {v0, v2}, Ljava/lang/IllegalStateException;-><init>(Ljava/lang/String;)V
+
+    throw v0
+
+    :catchall_0
+    move-exception v0
+
+    monitor-exit v1
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    throw v0
+
+    :cond_0
+    :try_start_1
+    invoke-direct {p0, p1}, Landroid/media/audiofx/Visualizer;->native_setMeasurementMode(I)I
+
+    move-result v0
+
+    monitor-exit v1
+    :try_end_1
+    .catchall {:try_start_1 .. :try_end_1} :catchall_0
+
+    return v0
 .end method
 
 .method public setScalingMode(I)I

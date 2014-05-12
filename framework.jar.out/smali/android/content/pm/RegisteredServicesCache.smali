@@ -121,7 +121,9 @@
 
     new-instance v0, Landroid/util/SparseArray;
 
-    invoke-direct {v0}, Landroid/util/SparseArray;-><init>()V
+    const/4 v1, 0x2
+
+    invoke-direct {v0, v1}, Landroid/util/SparseArray;-><init>(I)V
 
     iput-object v0, p0, Landroid/content/pm/RegisteredServicesCache;->mUserServices:Landroid/util/SparseArray;
 
@@ -1481,9 +1483,9 @@
 
     .prologue
     .local p0, this:Landroid/content/pm/RegisteredServicesCache;,"Landroid/content/pm/RegisteredServicesCache<TV;>;"
-    const/4 v11, 0x1
-
     const/4 v13, 0x2
+
+    const/4 v11, 0x1
 
     iget-object v10, p0, Landroid/content/pm/RegisteredServicesCache;->mUserServices:Landroid/util/SparseArray;
 
@@ -1569,6 +1571,8 @@
     .local v1, eventType:I
     :goto_2
     if-eq v1, v13, :cond_4
+
+    if-eq v1, v11, :cond_4
 
     invoke-interface {v3}, Lorg/xmlpull/v1/XmlPullParser;->next()I
 

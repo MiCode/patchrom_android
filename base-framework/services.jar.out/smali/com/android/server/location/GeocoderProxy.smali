@@ -16,26 +16,15 @@
 
 
 # direct methods
-.method public constructor <init>(Landroid/content/Context;Ljava/util/List;I)V
-    .locals 8
+.method private constructor <init>(Landroid/content/Context;IIILandroid/os/Handler;)V
+    .locals 9
     .parameter "context"
-    .parameter
-    .parameter "userId"
-    .annotation system Ldalvik/annotation/Signature;
-        value = {
-            "(",
-            "Landroid/content/Context;",
-            "Ljava/util/List",
-            "<",
-            "Ljava/lang/String;",
-            ">;I)V"
-        }
-    .end annotation
+    .parameter "overlaySwitchResId"
+    .parameter "defaultServicePackageNameResId"
+    .parameter "initialPackageNamesResId"
+    .parameter "handler"
 
     .prologue
-    .local p2, initialPackageNames:Ljava/util/List;,"Ljava/util/List<Ljava/lang/String;>;"
-    const/4 v5, 0x0
-
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     iput-object p1, p0, Lcom/android/server/location/GeocoderProxy;->mContext:Landroid/content/Context;
@@ -48,13 +37,17 @@
 
     const-string v3, "com.android.location.service.GeocodeProvider"
 
-    move-object v4, p2
+    const/4 v7, 0x0
 
-    move-object v6, v5
+    move v4, p2
 
-    move v7, p3
+    move v5, p3
 
-    invoke-direct/range {v0 .. v7}, Lcom/android/server/ServiceWatcher;-><init>(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/Runnable;Landroid/os/Handler;I)V
+    move v6, p4
+
+    move-object v8, p5
+
+    invoke-direct/range {v0 .. v8}, Lcom/android/server/ServiceWatcher;-><init>(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;IIILjava/lang/Runnable;Landroid/os/Handler;)V
 
     iput-object v0, p0, Lcom/android/server/location/GeocoderProxy;->mServiceWatcher:Lcom/android/server/ServiceWatcher;
 
@@ -74,28 +67,28 @@
     return v0
 .end method
 
-.method public static createAndBind(Landroid/content/Context;Ljava/util/List;I)Lcom/android/server/location/GeocoderProxy;
-    .locals 2
+.method public static createAndBind(Landroid/content/Context;IIILandroid/os/Handler;)Lcom/android/server/location/GeocoderProxy;
+    .locals 6
     .parameter "context"
-    .parameter
-    .parameter "userId"
-    .annotation system Ldalvik/annotation/Signature;
-        value = {
-            "(",
-            "Landroid/content/Context;",
-            "Ljava/util/List",
-            "<",
-            "Ljava/lang/String;",
-            ">;I)",
-            "Lcom/android/server/location/GeocoderProxy;"
-        }
-    .end annotation
+    .parameter "overlaySwitchResId"
+    .parameter "defaultServicePackageNameResId"
+    .parameter "initialPackageNamesResId"
+    .parameter "handler"
 
     .prologue
-    .local p1, initialPackageNames:Ljava/util/List;,"Ljava/util/List<Ljava/lang/String;>;"
     new-instance v0, Lcom/android/server/location/GeocoderProxy;
 
-    invoke-direct {v0, p0, p1, p2}, Lcom/android/server/location/GeocoderProxy;-><init>(Landroid/content/Context;Ljava/util/List;I)V
+    move-object v1, p0
+
+    move v2, p1
+
+    move v3, p2
+
+    move v4, p3
+
+    move-object v5, p4
+
+    invoke-direct/range {v0 .. v5}, Lcom/android/server/location/GeocoderProxy;-><init>(Landroid/content/Context;IIILandroid/os/Handler;)V
 
     .local v0, proxy:Lcom/android/server/location/GeocoderProxy;
     invoke-direct {v0}, Lcom/android/server/location/GeocoderProxy;->bind()Z

@@ -47,6 +47,16 @@
     return-object v0
 .end method
 
+.method public findFocus(I)Landroid/view/accessibility/AccessibilityNodeInfo;
+    .locals 1
+    .parameter "focus"
+
+    .prologue
+    const/4 v0, 0x0
+
+    return-object v0
+.end method
+
 .method public performAction(IILandroid/os/Bundle;)Z
     .locals 1
     .parameter "virtualViewId"

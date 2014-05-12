@@ -51,7 +51,7 @@
     return-void
 .end method
 
-.method public constructor <init>()V
+.method private constructor <init>()V
     .locals 0
 
     .prologue
@@ -189,6 +189,33 @@
     invoke-static {v1}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
     move-result-object v1
+
+    goto :goto_0
+.end method
+
+.method public static getDefaultSmsPackage(Landroid/content/Context;)Ljava/lang/String;
+    .locals 2
+    .parameter "context"
+
+    .prologue
+    const/4 v1, 0x0
+
+    invoke-static {p0, v1}, Lcom/android/internal/telephony/SmsApplication;->getDefaultSmsApplication(Landroid/content/Context;Z)Landroid/content/ComponentName;
+
+    move-result-object v0
+
+    .local v0, component:Landroid/content/ComponentName;
+    if-eqz v0, :cond_0
+
+    invoke-virtual {v0}, Landroid/content/ComponentName;->getPackageName()Ljava/lang/String;
+
+    move-result-object v1
+
+    :goto_0
+    return-object v1
+
+    :cond_0
+    const/4 v1, 0x0
 
     goto :goto_0
 .end method
@@ -359,7 +386,7 @@
     .end packed-switch
 .end method
 
-.method public static final query(Landroid/content/ContentResolver;[Ljava/lang/String;)Landroid/database/Cursor;
+.method public static query(Landroid/content/ContentResolver;[Ljava/lang/String;)Landroid/database/Cursor;
     .locals 6
     .parameter "cr"
     .parameter "projection"
@@ -384,7 +411,7 @@
     return-object v0
 .end method
 
-.method public static final query(Landroid/content/ContentResolver;[Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Landroid/database/Cursor;
+.method public static query(Landroid/content/ContentResolver;[Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Landroid/database/Cursor;
     .locals 6
     .parameter "cr"
     .parameter "projection"

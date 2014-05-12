@@ -30,9 +30,15 @@
 
 .field public static final DATA_STALL_RECOVERY_REREGISTER:I = 0xc3c8
 
+.field public static final EXP_DET_SMS_DENIED_BY_USER:I = 0xc3cd
+
+.field public static final EXP_DET_SMS_SENT_BY_USER:I = 0xc3d0
+
 .field public static final GSM_DATA_STATE_CHANGE:I = 0xc3c1
 
 .field public static final GSM_RAT_SWITCHED:I = 0xc3c0
+
+.field public static final GSM_RAT_SWITCHED_NEW:I = 0xc3cb
 
 .field public static final GSM_SERVICE_STATE_CHANGE:I = 0xc3c2
 
@@ -49,10 +55,6 @@
 .field public static final PDP_REREGISTER_NETWORK:I = 0xc3b8
 
 .field public static final PDP_SETUP_FAIL:I = 0xc3b9
-
-.field public static final SMS_DENIED_BY_USER:I = 0xc3cd
-
-.field public static final SMS_SENT_BY_USER:I = 0xc3d0
 
 
 # direct methods
@@ -392,6 +394,30 @@
     return-void
 .end method
 
+.method public static writeExpDetSmsDeniedByUser(Ljava/lang/String;)V
+    .locals 1
+    .parameter "appSignature"
+
+    .prologue
+    const v0, 0xc3cd
+
+    invoke-static {v0, p0}, Landroid/util/EventLog;->writeEvent(ILjava/lang/String;)I
+
+    return-void
+.end method
+
+.method public static writeExpDetSmsSentByUser(Ljava/lang/String;)V
+    .locals 1
+    .parameter "appSignature"
+
+    .prologue
+    const v0, 0xc3d0
+
+    invoke-static {v0, p0}, Landroid/util/EventLog;->writeEvent(ILjava/lang/String;)I
+
+    return-void
+.end method
+
 .method public static writeGsmDataStateChange(Ljava/lang/String;Ljava/lang/String;)V
     .locals 3
     .parameter "oldstate"
@@ -425,6 +451,48 @@
 
     .prologue
     const v0, 0xc3c0
+
+    const/4 v1, 0x3
+
+    new-array v1, v1, [Ljava/lang/Object;
+
+    const/4 v2, 0x0
+
+    invoke-static {p0}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v3
+
+    aput-object v3, v1, v2
+
+    const/4 v2, 0x1
+
+    invoke-static {p1}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v3
+
+    aput-object v3, v1, v2
+
+    const/4 v2, 0x2
+
+    invoke-static {p2}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v3
+
+    aput-object v3, v1, v2
+
+    invoke-static {v0, v1}, Landroid/util/EventLog;->writeEvent(I[Ljava/lang/Object;)I
+
+    return-void
+.end method
+
+.method public static writeGsmRatSwitchedNew(III)V
+    .locals 4
+    .parameter "cid"
+    .parameter "networkFrom"
+    .parameter "networkTo"
+
+    .prologue
+    const v0, 0xc3cb
 
     const/4 v1, 0x3
 
@@ -641,30 +709,6 @@
     aput-object v3, v1, v2
 
     invoke-static {v0, v1}, Landroid/util/EventLog;->writeEvent(I[Ljava/lang/Object;)I
-
-    return-void
-.end method
-
-.method public static writeSmsDeniedByUser(Ljava/lang/String;)V
-    .locals 1
-    .parameter "appSignature"
-
-    .prologue
-    const v0, 0xc3cd
-
-    invoke-static {v0, p0}, Landroid/util/EventLog;->writeEvent(ILjava/lang/String;)I
-
-    return-void
-.end method
-
-.method public static writeSmsSentByUser(Ljava/lang/String;)V
-    .locals 1
-    .parameter "appSignature"
-
-    .prologue
-    const v0, 0xc3d0
-
-    invoke-static {v0, p0}, Landroid/util/EventLog;->writeEvent(ILjava/lang/String;)I
 
     return-void
 .end method

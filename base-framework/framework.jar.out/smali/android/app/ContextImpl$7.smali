@@ -31,9 +31,9 @@
     .parameter "ctx"
 
     .prologue
-    new-instance v0, Landroid/media/MediaRouter;
+    new-instance v0, Landroid/media/AudioManager;
 
-    invoke-direct {v0, p1}, Landroid/media/MediaRouter;-><init>(Landroid/content/Context;)V
+    invoke-direct {v0, p1}, Landroid/media/AudioManager;-><init>(Landroid/content/Context;)V
 
     return-object v0
 .end method

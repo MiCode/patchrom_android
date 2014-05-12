@@ -35,71 +35,66 @@
 
 # virtual methods
 .method public run()V
-    .locals 5
+    .locals 4
 
     .prologue
-    invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
-
-    move-result-object v0
-
-    .local v0, am:Landroid/app/IActivityManager;
-    const/4 v2, -0x8
+    const/4 v1, -0x8
 
     :try_start_0
-    invoke-static {v2}, Landroid/os/Process;->setThreadPriority(I)V
+    invoke-static {v1}, Landroid/os/Process;->setThreadPriority(I)V
     :try_end_0
     .catch Ljava/lang/RuntimeException; {:try_start_0 .. :try_end_0} :catch_0
 
     :goto_0
-    iget-object v2, p0, Landroid/app/Instrumentation$InstrumentationThread;->this$0:Landroid/app/Instrumentation;
+    iget-object v1, p0, Landroid/app/Instrumentation$InstrumentationThread;->this$0:Landroid/app/Instrumentation;
 
     #getter for: Landroid/app/Instrumentation;->mAutomaticPerformanceSnapshots:Z
-    invoke-static {v2}, Landroid/app/Instrumentation;->access$100(Landroid/app/Instrumentation;)Z
+    invoke-static {v1}, Landroid/app/Instrumentation;->access$100(Landroid/app/Instrumentation;)Z
 
-    move-result v2
+    move-result v1
 
-    if-eqz v2, :cond_0
+    if-eqz v1, :cond_0
 
-    iget-object v2, p0, Landroid/app/Instrumentation$InstrumentationThread;->this$0:Landroid/app/Instrumentation;
+    iget-object v1, p0, Landroid/app/Instrumentation$InstrumentationThread;->this$0:Landroid/app/Instrumentation;
 
-    invoke-virtual {v2}, Landroid/app/Instrumentation;->startPerformanceSnapshot()V
+    invoke-virtual {v1}, Landroid/app/Instrumentation;->startPerformanceSnapshot()V
 
     :cond_0
-    iget-object v2, p0, Landroid/app/Instrumentation$InstrumentationThread;->this$0:Landroid/app/Instrumentation;
+    iget-object v1, p0, Landroid/app/Instrumentation$InstrumentationThread;->this$0:Landroid/app/Instrumentation;
 
-    invoke-virtual {v2}, Landroid/app/Instrumentation;->onStart()V
+    invoke-virtual {v1}, Landroid/app/Instrumentation;->onStart()V
 
     return-void
 
     :catch_0
-    move-exception v1
+    move-exception v0
 
-    .local v1, e:Ljava/lang/RuntimeException;
-    const-string v2, "Instrumentation"
+    .local v0, e:Ljava/lang/RuntimeException;
+    const-string v1, "Instrumentation"
 
-    new-instance v3, Ljava/lang/StringBuilder;
+    new-instance v2, Ljava/lang/StringBuilder;
 
-    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v4, "Exception setting priority of instrumentation thread "
+    const-string v3, "Exception setting priority of instrumentation thread "
 
-    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v3
+    move-result-object v2
 
     invoke-static {}, Landroid/os/Process;->myTid()I
 
-    move-result v4
+    move-result v3
 
-    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
-    move-result-object v3
+    move-result-object v2
 
-    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    move-result-object v3
+    move-result-object v2
 
-    invoke-static {v2, v3, v1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+    invoke-static {v1, v2, v0}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
 
     goto :goto_0
 .end method

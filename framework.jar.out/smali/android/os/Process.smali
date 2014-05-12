@@ -14,8 +14,6 @@
 # static fields
 .field public static final ANDROID_SHARED_MEDIA:Ljava/lang/String; = "com.android.process.media"
 
-.field public static final BLUETOOTH_GID:I = 0x7d0
-
 .field public static final BLUETOOTH_UID:I = 0x3ea
 
 .field public static final DRM_UID:I = 0x3fb
@@ -46,6 +44,8 @@
 
 .field public static final NFC_UID:I = 0x403
 
+.field public static final PACKAGE_INFO_GID:I = 0x408
+
 .field public static final PHONE_UID:I = 0x3e9
 
 .field public static final PROC_COMBINE:I = 0x100
@@ -57,6 +57,8 @@
 .field public static final PROC_OUT_STRING:I = 0x1000
 
 .field public static final PROC_PARENS:I = 0x200
+
+.field public static final PROC_QUOTES:I = 0x400
 
 .field public static final PROC_SPACE_TERM:I = 0x20
 
@@ -75,8 +77,6 @@
 .field public static final SCHED_OTHER:I = 0x0
 
 .field public static final SCHED_RR:I = 0x2
-
-.field public static final SDCARD_RW_GID:I = 0x3f7
 
 .field public static final SHELL_UID:I = 0x7d0
 
@@ -216,6 +216,15 @@
 .end method
 
 .method public static final native getPidsForCommands([Ljava/lang/String;)[I
+.end method
+
+.method public static final native getProcessGroup(I)I
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Ljava/lang/IllegalArgumentException;,
+            Ljava/lang/SecurityException;
+        }
+    .end annotation
 .end method
 
 .method public static final native getPss(I)J
@@ -403,13 +412,56 @@
     return-void
 .end method
 
-.method public static final native myPid()I
+.method public static final myPid()I
+    .locals 1
+
+    .prologue
+    sget-object v0, Llibcore/io/Libcore;->os:Llibcore/io/Os;
+
+    invoke-interface {v0}, Llibcore/io/Os;->getpid()I
+
+    move-result v0
+
+    return v0
 .end method
 
-.method public static final native myTid()I
+.method public static final myPpid()I
+    .locals 1
+
+    .prologue
+    sget-object v0, Llibcore/io/Libcore;->os:Llibcore/io/Os;
+
+    invoke-interface {v0}, Llibcore/io/Os;->getppid()I
+
+    move-result v0
+
+    return v0
 .end method
 
-.method public static final native myUid()I
+.method public static final myTid()I
+    .locals 1
+
+    .prologue
+    sget-object v0, Llibcore/io/Libcore;->os:Llibcore/io/Os;
+
+    invoke-interface {v0}, Llibcore/io/Os;->gettid()I
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public static final myUid()I
+    .locals 1
+
+    .prologue
+    sget-object v0, Llibcore/io/Libcore;->os:Llibcore/io/Os;
+
+    invoke-interface {v0}, Llibcore/io/Os;->getuid()I
+
+    move-result v0
+
+    return v0
 .end method
 
 .method public static final myUserHandle()Landroid/os/UserHandle;
@@ -646,6 +698,9 @@
             Ljava/lang/SecurityException;
         }
     .end annotation
+.end method
+
+.method public static final native setSwappiness(IZ)Z
 .end method
 
 .method public static final native setThreadGroup(II)V

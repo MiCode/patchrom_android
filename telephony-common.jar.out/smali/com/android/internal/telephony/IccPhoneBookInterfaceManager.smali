@@ -16,28 +16,28 @@
 
 
 # instance fields
-.field protected adnCache:Lcom/android/internal/telephony/AdnRecordCache;
+.field protected mAdnCache:Lcom/android/internal/telephony/uicc/AdnRecordCache;
 
 .field protected mBaseHandler:Landroid/os/Handler;
 
 .field protected final mLock:Ljava/lang/Object;
 
-.field protected phone:Lcom/android/internal/telephony/PhoneBase;
+.field protected mPhone:Lcom/android/internal/telephony/PhoneBase;
 
-.field protected recordSize:[I
+.field protected mRecordSize:[I
 
-.field protected records:Ljava/util/List;
+.field protected mRecords:Ljava/util/List;
     .annotation system Ldalvik/annotation/Signature;
         value = {
             "Ljava/util/List",
             "<",
-            "Lcom/android/internal/telephony/AdnRecord;",
+            "Lcom/android/internal/telephony/uicc/AdnRecord;",
             ">;"
         }
     .end annotation
 .end field
 
-.field protected success:Z
+.field protected mSuccess:Z
 
 
 # direct methods
@@ -60,7 +60,7 @@
 
     iput-object v1, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->mBaseHandler:Landroid/os/Handler;
 
-    iput-object p1, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->phone:Lcom/android/internal/telephony/PhoneBase;
+    iput-object p1, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->mPhone:Lcom/android/internal/telephony/PhoneBase;
 
     iget-object v1, p1, Lcom/android/internal/telephony/PhoneBase;->mIccRecords:Ljava/util/concurrent/atomic/AtomicReference;
 
@@ -68,16 +68,16 @@
 
     move-result-object v0
 
-    check-cast v0, Lcom/android/internal/telephony/IccRecords;
+    check-cast v0, Lcom/android/internal/telephony/uicc/IccRecords;
 
-    .local v0, r:Lcom/android/internal/telephony/IccRecords;
+    .local v0, r:Lcom/android/internal/telephony/uicc/IccRecords;
     if-eqz v0, :cond_0
 
-    invoke-virtual {v0}, Lcom/android/internal/telephony/IccRecords;->getAdnCache()Lcom/android/internal/telephony/AdnRecordCache;
+    invoke-virtual {v0}, Lcom/android/internal/telephony/uicc/IccRecords;->getAdnCache()Lcom/android/internal/telephony/uicc/AdnRecordCache;
 
     move-result-object v1
 
-    iput-object v1, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->adnCache:Lcom/android/internal/telephony/AdnRecordCache;
+    iput-object v1, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->mAdnCache:Lcom/android/internal/telephony/uicc/AdnRecordCache;
 
     :cond_0
     return-void
@@ -92,13 +92,13 @@
 
     if-ne p1, v0, :cond_0
 
-    iget-object v0, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->phone:Lcom/android/internal/telephony/PhoneBase;
+    iget-object v0, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->mPhone:Lcom/android/internal/telephony/PhoneBase;
 
-    invoke-virtual {v0}, Lcom/android/internal/telephony/PhoneBase;->getCurrentUiccAppType()Lcom/android/internal/telephony/IccCardApplicationStatus$AppType;
+    invoke-virtual {v0}, Lcom/android/internal/telephony/PhoneBase;->getCurrentUiccAppType()Lcom/android/internal/telephony/uicc/IccCardApplicationStatus$AppType;
 
     move-result-object v0
 
-    sget-object v1, Lcom/android/internal/telephony/IccCardApplicationStatus$AppType;->APPTYPE_USIM:Lcom/android/internal/telephony/IccCardApplicationStatus$AppType;
+    sget-object v1, Lcom/android/internal/telephony/uicc/IccCardApplicationStatus$AppType;->APPTYPE_USIM:Lcom/android/internal/telephony/uicc/IccCardApplicationStatus$AppType;
 
     if-ne v0, v1, :cond_0
 
@@ -162,13 +162,13 @@
             "(I)",
             "Ljava/util/List",
             "<",
-            "Lcom/android/internal/telephony/AdnRecord;",
+            "Lcom/android/internal/telephony/uicc/AdnRecord;",
             ">;"
         }
     .end annotation
 
     .prologue
-    iget-object v2, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->phone:Lcom/android/internal/telephony/PhoneBase;
+    iget-object v2, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->mPhone:Lcom/android/internal/telephony/PhoneBase;
 
     invoke-virtual {v2}, Lcom/android/internal/telephony/PhoneBase;->getContext()Landroid/content/Context;
 
@@ -238,32 +238,44 @@
     move-result-object v0
 
     .local v0, response:Landroid/os/Message;
-    iget-object v2, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->adnCache:Lcom/android/internal/telephony/AdnRecordCache;
+    iget-object v2, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->mAdnCache:Lcom/android/internal/telephony/uicc/AdnRecordCache;
 
-    iget-object v4, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->adnCache:Lcom/android/internal/telephony/AdnRecordCache;
+    if-eqz v2, :cond_1
 
-    invoke-virtual {v4, p1}, Lcom/android/internal/telephony/AdnRecordCache;->extensionEfForEf(I)I
+    iget-object v2, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->mAdnCache:Lcom/android/internal/telephony/uicc/AdnRecordCache;
+
+    iget-object v4, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->mAdnCache:Lcom/android/internal/telephony/uicc/AdnRecordCache;
+
+    invoke-virtual {v4, p1}, Lcom/android/internal/telephony/uicc/AdnRecordCache;->extensionEfForEf(I)I
 
     move-result v4
 
-    invoke-virtual {v2, p1, v4, v0}, Lcom/android/internal/telephony/AdnRecordCache;->requestLoadAllAdnLike(IILandroid/os/Message;)V
+    invoke-virtual {v2, p1, v4, v0}, Lcom/android/internal/telephony/uicc/AdnRecordCache;->requestLoadAllAdnLike(IILandroid/os/Message;)V
 
     invoke-virtual {p0, v1}, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->waitForResult(Ljava/util/concurrent/atomic/AtomicBoolean;)V
 
+    :goto_0
     monitor-exit v3
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    iget-object v2, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->records:Ljava/util/List;
+    iget-object v2, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->mRecords:Ljava/util/List;
 
     return-object v2
+
+    :cond_1
+    :try_start_1
+    const-string v2, "Failure while trying to load from SIM due to uninitialised adncache"
+
+    invoke-virtual {p0, v2}, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->loge(Ljava/lang/String;)V
+
+    goto :goto_0
 
     .end local v0           #response:Landroid/os/Message;
     .end local v1           #status:Ljava/util/concurrent/atomic/AtomicBoolean;
     :catchall_0
     move-exception v2
 
-    :try_start_1
     monitor-exit v3
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
@@ -300,7 +312,7 @@
     .parameter "pin2"
 
     .prologue
-    iget-object v0, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->phone:Lcom/android/internal/telephony/PhoneBase;
+    iget-object v0, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->mPhone:Lcom/android/internal/telephony/PhoneBase;
 
     invoke-virtual {v0}, Lcom/android/internal/telephony/PhoneBase;->getContext()Landroid/content/Context;
 
@@ -404,7 +416,7 @@
 
     const/4 v0, 0x0
 
-    iput-boolean v0, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->success:Z
+    iput-boolean v0, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->mSuccess:Z
 
     new-instance v6, Ljava/util/concurrent/atomic/AtomicBoolean;
 
@@ -422,12 +434,16 @@
     move-result-object v5
 
     .local v5, response:Landroid/os/Message;
-    new-instance v2, Lcom/android/internal/telephony/AdnRecord;
+    new-instance v2, Lcom/android/internal/telephony/uicc/AdnRecord;
 
-    invoke-direct {v2, p2, p3}, Lcom/android/internal/telephony/AdnRecord;-><init>(Ljava/lang/String;Ljava/lang/String;)V
+    invoke-direct {v2, p2, p3}, Lcom/android/internal/telephony/uicc/AdnRecord;-><init>(Ljava/lang/String;Ljava/lang/String;)V
 
-    .local v2, newAdn:Lcom/android/internal/telephony/AdnRecord;
-    iget-object v0, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->adnCache:Lcom/android/internal/telephony/AdnRecordCache;
+    .local v2, newAdn:Lcom/android/internal/telephony/uicc/AdnRecord;
+    iget-object v0, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->mAdnCache:Lcom/android/internal/telephony/uicc/AdnRecordCache;
+
+    if-eqz v0, :cond_1
+
+    iget-object v0, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->mAdnCache:Lcom/android/internal/telephony/uicc/AdnRecordCache;
 
     move v1, p1
 
@@ -435,25 +451,33 @@
 
     move-object v4, p5
 
-    invoke-virtual/range {v0 .. v5}, Lcom/android/internal/telephony/AdnRecordCache;->updateAdnByIndex(ILcom/android/internal/telephony/AdnRecord;ILjava/lang/String;Landroid/os/Message;)V
+    invoke-virtual/range {v0 .. v5}, Lcom/android/internal/telephony/uicc/AdnRecordCache;->updateAdnByIndex(ILcom/android/internal/telephony/uicc/AdnRecord;ILjava/lang/String;Landroid/os/Message;)V
 
     invoke-virtual {p0, v6}, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->waitForResult(Ljava/util/concurrent/atomic/AtomicBoolean;)V
 
+    :goto_0
     monitor-exit v7
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    iget-boolean v0, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->success:Z
+    iget-boolean v0, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->mSuccess:Z
 
     return v0
 
-    .end local v2           #newAdn:Lcom/android/internal/telephony/AdnRecord;
+    :cond_1
+    :try_start_1
+    const-string v0, "Failure while trying to update by index due to uninitialised adncache"
+
+    invoke-virtual {p0, v0}, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->loge(Ljava/lang/String;)V
+
+    goto :goto_0
+
+    .end local v2           #newAdn:Lcom/android/internal/telephony/uicc/AdnRecord;
     .end local v5           #response:Landroid/os/Message;
     .end local v6           #status:Ljava/util/concurrent/atomic/AtomicBoolean;
     :catchall_0
     move-exception v0
 
-    :try_start_1
     monitor-exit v7
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
@@ -471,7 +495,7 @@
     .parameter "pin2"
 
     .prologue
-    iget-object v0, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->phone:Lcom/android/internal/telephony/PhoneBase;
+    iget-object v0, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->mPhone:Lcom/android/internal/telephony/PhoneBase;
 
     invoke-virtual {v0}, Lcom/android/internal/telephony/PhoneBase;->getContext()Landroid/content/Context;
 
@@ -595,7 +619,7 @@
 
     const/4 v0, 0x0
 
-    iput-boolean v0, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->success:Z
+    iput-boolean v0, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->mSuccess:Z
 
     new-instance v6, Ljava/util/concurrent/atomic/AtomicBoolean;
 
@@ -613,42 +637,54 @@
     move-result-object v5
 
     .local v5, response:Landroid/os/Message;
-    new-instance v2, Lcom/android/internal/telephony/AdnRecord;
+    new-instance v2, Lcom/android/internal/telephony/uicc/AdnRecord;
 
-    invoke-direct {v2, p2, p3}, Lcom/android/internal/telephony/AdnRecord;-><init>(Ljava/lang/String;Ljava/lang/String;)V
+    invoke-direct {v2, p2, p3}, Lcom/android/internal/telephony/uicc/AdnRecord;-><init>(Ljava/lang/String;Ljava/lang/String;)V
 
-    .local v2, oldAdn:Lcom/android/internal/telephony/AdnRecord;
-    new-instance v3, Lcom/android/internal/telephony/AdnRecord;
+    .local v2, oldAdn:Lcom/android/internal/telephony/uicc/AdnRecord;
+    new-instance v3, Lcom/android/internal/telephony/uicc/AdnRecord;
 
-    invoke-direct {v3, p4, p5}, Lcom/android/internal/telephony/AdnRecord;-><init>(Ljava/lang/String;Ljava/lang/String;)V
+    invoke-direct {v3, p4, p5}, Lcom/android/internal/telephony/uicc/AdnRecord;-><init>(Ljava/lang/String;Ljava/lang/String;)V
 
-    .local v3, newAdn:Lcom/android/internal/telephony/AdnRecord;
-    iget-object v0, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->adnCache:Lcom/android/internal/telephony/AdnRecordCache;
+    .local v3, newAdn:Lcom/android/internal/telephony/uicc/AdnRecord;
+    iget-object v0, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->mAdnCache:Lcom/android/internal/telephony/uicc/AdnRecordCache;
+
+    if-eqz v0, :cond_1
+
+    iget-object v0, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->mAdnCache:Lcom/android/internal/telephony/uicc/AdnRecordCache;
 
     move v1, p1
 
     move-object v4, p6
 
-    invoke-virtual/range {v0 .. v5}, Lcom/android/internal/telephony/AdnRecordCache;->updateAdnBySearch(ILcom/android/internal/telephony/AdnRecord;Lcom/android/internal/telephony/AdnRecord;Ljava/lang/String;Landroid/os/Message;)V
+    invoke-virtual/range {v0 .. v5}, Lcom/android/internal/telephony/uicc/AdnRecordCache;->updateAdnBySearch(ILcom/android/internal/telephony/uicc/AdnRecord;Lcom/android/internal/telephony/uicc/AdnRecord;Ljava/lang/String;Landroid/os/Message;)V
 
     invoke-virtual {p0, v6}, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->waitForResult(Ljava/util/concurrent/atomic/AtomicBoolean;)V
 
+    :goto_0
     monitor-exit v7
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    iget-boolean v0, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->success:Z
+    iget-boolean v0, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->mSuccess:Z
 
     return v0
 
-    .end local v2           #oldAdn:Lcom/android/internal/telephony/AdnRecord;
-    .end local v3           #newAdn:Lcom/android/internal/telephony/AdnRecord;
+    :cond_1
+    :try_start_1
+    const-string v0, "Failure while trying to update by search due to uninitialised adncache"
+
+    invoke-virtual {p0, v0}, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->loge(Ljava/lang/String;)V
+
+    goto :goto_0
+
+    .end local v2           #oldAdn:Lcom/android/internal/telephony/uicc/AdnRecord;
+    .end local v3           #newAdn:Lcom/android/internal/telephony/uicc/AdnRecord;
     .end local v5           #response:Landroid/os/Message;
     .end local v6           #status:Ljava/util/concurrent/atomic/AtomicBoolean;
     :catchall_0
     move-exception v0
 
-    :try_start_1
     monitor-exit v7
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
@@ -656,18 +692,18 @@
     throw v0
 .end method
 
-.method public updateIccRecords(Lcom/android/internal/telephony/IccRecords;)V
+.method public updateIccRecords(Lcom/android/internal/telephony/uicc/IccRecords;)V
     .locals 1
     .parameter "iccRecords"
 
     .prologue
     if-eqz p1, :cond_0
 
-    invoke-virtual {p1}, Lcom/android/internal/telephony/IccRecords;->getAdnCache()Lcom/android/internal/telephony/AdnRecordCache;
+    invoke-virtual {p1}, Lcom/android/internal/telephony/uicc/IccRecords;->getAdnCache()Lcom/android/internal/telephony/uicc/AdnRecordCache;
 
     move-result-object v0
 
-    iput-object v0, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->adnCache:Lcom/android/internal/telephony/AdnRecordCache;
+    iput-object v0, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->mAdnCache:Lcom/android/internal/telephony/uicc/AdnRecordCache;
 
     :goto_0
     return-void
@@ -675,7 +711,7 @@
     :cond_0
     const/4 v0, 0x0
 
-    iput-object v0, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->adnCache:Lcom/android/internal/telephony/AdnRecordCache;
+    iput-object v0, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->mAdnCache:Lcom/android/internal/telephony/uicc/AdnRecordCache;
 
     goto :goto_0
 .end method

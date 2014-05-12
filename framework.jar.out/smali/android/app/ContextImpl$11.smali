@@ -30,20 +30,20 @@
     .locals 3
 
     .prologue
-    const-string v1, "country_detector"
+    const-string v1, "connectivity"
 
     invoke-static {v1}, Landroid/os/ServiceManager;->getService(Ljava/lang/String;)Landroid/os/IBinder;
 
     move-result-object v0
 
     .local v0, b:Landroid/os/IBinder;
-    new-instance v1, Landroid/location/CountryDetector;
+    new-instance v1, Landroid/net/ConnectivityManager;
 
-    invoke-static {v0}, Landroid/location/ICountryDetector$Stub;->asInterface(Landroid/os/IBinder;)Landroid/location/ICountryDetector;
+    invoke-static {v0}, Landroid/net/IConnectivityManager$Stub;->asInterface(Landroid/os/IBinder;)Landroid/net/IConnectivityManager;
 
     move-result-object v2
 
-    invoke-direct {v1, v2}, Landroid/location/CountryDetector;-><init>(Landroid/location/ICountryDetector;)V
+    invoke-direct {v1, v2}, Landroid/net/ConnectivityManager;-><init>(Landroid/net/IConnectivityManager;)V
 
     return-object v1
 .end method

@@ -20,6 +20,10 @@
 
 .field private static final TYPE_RX_PACKETS:I = 0x1
 
+.field private static final TYPE_TCP_RX_PACKETS:I = 0x4
+
+.field private static final TYPE_TCP_TX_PACKETS:I = 0x5
+
 .field private static final TYPE_TX_BYTES:I = 0x2
 
 .field private static final TYPE_TX_PACKETS:I = 0x3
@@ -250,6 +254,106 @@
     .end local v2           #iface:Ljava/lang/String;
     :cond_0
     return-wide v4
+.end method
+
+.method public static getMobileTcpRxPackets()J
+    .locals 10
+
+    .prologue
+    const-wide/16 v6, 0x0
+
+    .local v6, total:J
+    invoke-static {}, Landroid/net/TrafficStats;->getMobileIfaces()[Ljava/lang/String;
+
+    move-result-object v0
+
+    .local v0, arr$:[Ljava/lang/String;
+    array-length v3, v0
+
+    .local v3, len$:I
+    const/4 v1, 0x0
+
+    .local v1, i$:I
+    :goto_0
+    if-ge v1, v3, :cond_1
+
+    aget-object v2, v0, v1
+
+    .local v2, iface:Ljava/lang/String;
+    const/4 v8, 0x4
+
+    invoke-static {v2, v8}, Landroid/net/TrafficStats;->nativeGetIfaceStat(Ljava/lang/String;I)J
+
+    move-result-wide v4
+
+    .local v4, stat:J
+    const-wide/16 v8, -0x1
+
+    cmp-long v8, v4, v8
+
+    if-eqz v8, :cond_0
+
+    add-long/2addr v6, v4
+
+    :cond_0
+    add-int/lit8 v1, v1, 0x1
+
+    goto :goto_0
+
+    .end local v2           #iface:Ljava/lang/String;
+    .end local v4           #stat:J
+    :cond_1
+    return-wide v6
+.end method
+
+.method public static getMobileTcpTxPackets()J
+    .locals 10
+
+    .prologue
+    const-wide/16 v6, 0x0
+
+    .local v6, total:J
+    invoke-static {}, Landroid/net/TrafficStats;->getMobileIfaces()[Ljava/lang/String;
+
+    move-result-object v0
+
+    .local v0, arr$:[Ljava/lang/String;
+    array-length v3, v0
+
+    .local v3, len$:I
+    const/4 v1, 0x0
+
+    .local v1, i$:I
+    :goto_0
+    if-ge v1, v3, :cond_1
+
+    aget-object v2, v0, v1
+
+    .local v2, iface:Ljava/lang/String;
+    const/4 v8, 0x5
+
+    invoke-static {v2, v8}, Landroid/net/TrafficStats;->nativeGetIfaceStat(Ljava/lang/String;I)J
+
+    move-result-wide v4
+
+    .local v4, stat:J
+    const-wide/16 v8, -0x1
+
+    cmp-long v8, v4, v8
+
+    if-eqz v8, :cond_0
+
+    add-long/2addr v6, v4
+
+    :cond_0
+    add-int/lit8 v1, v1, 0x1
+
+    goto :goto_0
+
+    .end local v2           #iface:Ljava/lang/String;
+    .end local v4           #stat:J
+    :cond_1
+    return-wide v6
 .end method
 
 .method public static getMobileTxBytes()J
@@ -491,40 +595,156 @@
     return-wide v0
 .end method
 
-.method public static native getUidRxBytes(I)J
+.method public static getUidRxBytes(I)J
+    .locals 2
+    .parameter "uid"
+
+    .prologue
+    const/4 v0, 0x0
+
+    invoke-static {p0, v0}, Landroid/net/TrafficStats;->nativeGetUidStat(II)J
+
+    move-result-wide v0
+
+    return-wide v0
 .end method
 
-.method public static native getUidRxPackets(I)J
+.method public static getUidRxPackets(I)J
+    .locals 2
+    .parameter "uid"
+
+    .prologue
+    const/4 v0, 0x1
+
+    invoke-static {p0, v0}, Landroid/net/TrafficStats;->nativeGetUidStat(II)J
+
+    move-result-wide v0
+
+    return-wide v0
 .end method
 
-.method public static native getUidTcpRxBytes(I)J
+.method public static getUidTcpRxBytes(I)J
+    .locals 2
+    .parameter "uid"
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
+
+    .prologue
+    const-wide/16 v0, -0x1
+
+    return-wide v0
 .end method
 
-.method public static native getUidTcpRxSegments(I)J
+.method public static getUidTcpRxSegments(I)J
+    .locals 2
+    .parameter "uid"
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
+
+    .prologue
+    const-wide/16 v0, -0x1
+
+    return-wide v0
 .end method
 
-.method public static native getUidTcpTxBytes(I)J
+.method public static getUidTcpTxBytes(I)J
+    .locals 2
+    .parameter "uid"
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
+
+    .prologue
+    const-wide/16 v0, -0x1
+
+    return-wide v0
 .end method
 
-.method public static native getUidTcpTxSegments(I)J
+.method public static getUidTcpTxSegments(I)J
+    .locals 2
+    .parameter "uid"
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
+
+    .prologue
+    const-wide/16 v0, -0x1
+
+    return-wide v0
 .end method
 
-.method public static native getUidTxBytes(I)J
+.method public static getUidTxBytes(I)J
+    .locals 2
+    .parameter "uid"
+
+    .prologue
+    const/4 v0, 0x2
+
+    invoke-static {p0, v0}, Landroid/net/TrafficStats;->nativeGetUidStat(II)J
+
+    move-result-wide v0
+
+    return-wide v0
 .end method
 
-.method public static native getUidTxPackets(I)J
+.method public static getUidTxPackets(I)J
+    .locals 2
+    .parameter "uid"
+
+    .prologue
+    const/4 v0, 0x3
+
+    invoke-static {p0, v0}, Landroid/net/TrafficStats;->nativeGetUidStat(II)J
+
+    move-result-wide v0
+
+    return-wide v0
 .end method
 
-.method public static native getUidUdpRxBytes(I)J
+.method public static getUidUdpRxBytes(I)J
+    .locals 2
+    .parameter "uid"
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
+
+    .prologue
+    const-wide/16 v0, -0x1
+
+    return-wide v0
 .end method
 
-.method public static native getUidUdpRxPackets(I)J
+.method public static getUidUdpRxPackets(I)J
+    .locals 2
+    .parameter "uid"
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
+
+    .prologue
+    const-wide/16 v0, -0x1
+
+    return-wide v0
 .end method
 
-.method public static native getUidUdpTxBytes(I)J
+.method public static getUidUdpTxBytes(I)J
+    .locals 2
+    .parameter "uid"
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
+
+    .prologue
+    const-wide/16 v0, -0x1
+
+    return-wide v0
 .end method
 
-.method public static native getUidUdpTxPackets(I)J
+.method public static getUidUdpTxPackets(I)J
+    .locals 2
+    .parameter "uid"
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
+
+    .prologue
+    const-wide/16 v0, -0x1
+
+    return-wide v0
 .end method
 
 .method public static incrementOperationCount(I)V
@@ -579,6 +799,9 @@
 .end method
 
 .method private static native nativeGetTotalStat(I)J
+.end method
+
+.method private static native nativeGetUidStat(II)J
 .end method
 
 .method public static setThreadStatsTag(I)V

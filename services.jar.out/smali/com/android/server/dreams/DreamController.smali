@@ -516,7 +516,11 @@
 
     const/4 v2, 0x1
 
-    invoke-virtual {v0, v7, v1, v2, p4}, Landroid/content/Context;->bindService(Landroid/content/Intent;Landroid/content/ServiceConnection;II)Z
+    new-instance v3, Landroid/os/UserHandle;
+
+    invoke-direct {v3, p4}, Landroid/os/UserHandle;-><init>(I)V
+
+    invoke-virtual {v0, v7, v1, v2, v3}, Landroid/content/Context;->bindServiceAsUser(Landroid/content/Intent;Landroid/content/ServiceConnection;ILandroid/os/UserHandle;)Z
 
     move-result v0
 

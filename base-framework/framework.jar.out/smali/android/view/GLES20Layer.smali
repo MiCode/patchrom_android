@@ -57,7 +57,7 @@
     return-void
 .end method
 
-.method copyInto(Landroid/graphics/Bitmap;)Z
+.method public copyInto(Landroid/graphics/Bitmap;)Z
     .locals 2
     .parameter "bitmap"
 
@@ -73,13 +73,22 @@
     return v0
 .end method
 
-.method destroy()V
+.method public destroy()V
     .locals 1
 
     .prologue
-    iget-object v0, p0, Landroid/view/GLES20Layer;->mFinalizer:Landroid/view/GLES20Layer$Finalizer;
+    iget-object v0, p0, Landroid/view/GLES20Layer;->mDisplayList:Landroid/view/DisplayList;
 
     if-eqz v0, :cond_0
+
+    iget-object v0, p0, Landroid/view/GLES20Layer;->mDisplayList:Landroid/view/DisplayList;
+
+    invoke-virtual {v0}, Landroid/view/DisplayList;->reset()V
+
+    :cond_0
+    iget-object v0, p0, Landroid/view/GLES20Layer;->mFinalizer:Landroid/view/GLES20Layer$Finalizer;
+
+    if-eqz v0, :cond_1
 
     iget-object v0, p0, Landroid/view/GLES20Layer;->mFinalizer:Landroid/view/GLES20Layer$Finalizer;
 
@@ -89,7 +98,7 @@
 
     iput-object v0, p0, Landroid/view/GLES20Layer;->mFinalizer:Landroid/view/GLES20Layer$Finalizer;
 
-    :cond_0
+    :cond_1
     const/4 v0, 0x0
 
     iput v0, p0, Landroid/view/GLES20Layer;->mLayer:I

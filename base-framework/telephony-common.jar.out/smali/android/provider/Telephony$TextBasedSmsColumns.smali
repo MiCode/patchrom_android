@@ -41,11 +41,7 @@
 
 .field public static final MESSAGE_TYPE_SENT:I = 0x2
 
-.field public static final META_DATA:Ljava/lang/String; = "meta_data"
-
 .field public static final PERSON:Ljava/lang/String; = "person"
-
-.field public static final PERSON_ID:Ljava/lang/String; = "person"
 
 .field public static final PROTOCOL:Ljava/lang/String; = "protocol"
 

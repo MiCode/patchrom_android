@@ -24,11 +24,27 @@
 
 .field public static final KEY_IS_ADTS:Ljava/lang/String; = "is-adts"
 
+.field public static final KEY_IS_AUTOSELECT:Ljava/lang/String; = "is-autoselect"
+
+.field public static final KEY_IS_DEFAULT:Ljava/lang/String; = "is-default"
+
+.field public static final KEY_IS_FORCED_SUBTITLE:Ljava/lang/String; = "is-forced-subtitle"
+
 .field public static final KEY_I_FRAME_INTERVAL:Ljava/lang/String; = "i-frame-interval"
+
+.field public static final KEY_LANGUAGE:Ljava/lang/String; = "language"
+
+.field public static final KEY_MAX_HEIGHT:Ljava/lang/String; = "max-height"
 
 .field public static final KEY_MAX_INPUT_SIZE:Ljava/lang/String; = "max-input-size"
 
+.field public static final KEY_MAX_WIDTH:Ljava/lang/String; = "max-width"
+
 .field public static final KEY_MIME:Ljava/lang/String; = "mime"
+
+.field public static final KEY_PUSH_BLANK_BUFFERS_ON_STOP:Ljava/lang/String; = "push-blank-buffers-on-shutdown"
+
+.field public static final KEY_REPEAT_PREVIOUS_FRAME_AFTER:Ljava/lang/String; = "repeat-previous-frame-after"
 
 .field public static final KEY_SAMPLE_RATE:Ljava/lang/String; = "sample-rate"
 
@@ -115,6 +131,28 @@
     const-string v1, "channel-count"
 
     invoke-virtual {v0, v1, p2}, Landroid/media/MediaFormat;->setInteger(Ljava/lang/String;I)V
+
+    return-object v0
+.end method
+
+.method public static final createSubtitleFormat(Ljava/lang/String;Ljava/lang/String;)Landroid/media/MediaFormat;
+    .locals 2
+    .parameter "mime"
+    .parameter "language"
+
+    .prologue
+    new-instance v0, Landroid/media/MediaFormat;
+
+    invoke-direct {v0}, Landroid/media/MediaFormat;-><init>()V
+
+    .local v0, format:Landroid/media/MediaFormat;
+    const-string v1, "mime"
+
+    invoke-virtual {v0, v1, p0}, Landroid/media/MediaFormat;->setString(Ljava/lang/String;Ljava/lang/String;)V
+
+    const-string v1, "language"
+
+    invoke-virtual {v0, v1, p1}, Landroid/media/MediaFormat;->setString(Ljava/lang/String;Ljava/lang/String;)V
 
     return-object v0
 .end method
@@ -216,6 +254,36 @@
     move-result v0
 
     return v0
+.end method
+
+.method public final getInteger(Ljava/lang/String;I)I
+    .locals 1
+    .parameter "name"
+    .parameter "defaultValue"
+
+    .prologue
+    :try_start_0
+    invoke-virtual {p0, p1}, Landroid/media/MediaFormat;->getInteger(Ljava/lang/String;)I
+    :try_end_0
+    .catch Ljava/lang/NullPointerException; {:try_start_0 .. :try_end_0} :catch_0
+    .catch Ljava/lang/ClassCastException; {:try_start_0 .. :try_end_0} :catch_1
+
+    move-result p2
+
+    .end local p2
+    :goto_0
+    return p2
+
+    .restart local p2
+    :catch_0
+    move-exception v0
+
+    goto :goto_0
+
+    :catch_1
+    move-exception v0
+
+    goto :goto_0
 .end method
 
 .method public final getLong(Ljava/lang/String;)J

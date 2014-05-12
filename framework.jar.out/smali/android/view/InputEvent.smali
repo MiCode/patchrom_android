@@ -122,6 +122,30 @@
 .method public abstract getSource()I
 .end method
 
+.method public isFromSource(I)Z
+    .locals 1
+    .parameter "source"
+
+    .prologue
+    invoke-virtual {p0}, Landroid/view/InputEvent;->getSource()I
+
+    move-result v0
+
+    and-int/2addr v0, p1
+
+    if-ne v0, p1, :cond_0
+
+    const/4 v0, 0x1
+
+    :goto_0
+    return v0
+
+    :cond_0
+    const/4 v0, 0x0
+
+    goto :goto_0
+.end method
+
 .method public abstract isTainted()Z
 .end method
 

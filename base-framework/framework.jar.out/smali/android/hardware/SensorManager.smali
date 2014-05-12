@@ -3,14 +3,6 @@
 .source "SensorManager.java"
 
 
-# annotations
-.annotation system Ldalvik/annotation/MemberClasses;
-    value = {
-        Landroid/hardware/SensorManager$SensorEventPool;
-    }
-.end annotation
-
-
 # static fields
 .field public static final AXIS_MINUS_X:I = 0x81
 
@@ -69,7 +61,7 @@
 
 .field public static final LIGHT_FULLMOON:F = 0.25f
 
-.field public static final LIGHT_NO_MOON:F = 0.0010f
+.field public static final LIGHT_NO_MOON:F = 0.001f
 
 .field public static final LIGHT_OVERCAST:F = 10000.0f
 
@@ -674,6 +666,52 @@
     aget v10, p2, v25
 
     goto/16 :goto_1
+.end method
+
+.method private static getDelay(I)I
+    .locals 1
+    .parameter "rate"
+
+    .prologue
+    const/4 v0, -0x1
+
+    .local v0, delay:I
+    packed-switch p0, :pswitch_data_0
+
+    move v0, p0
+
+    :goto_0
+    return v0
+
+    :pswitch_0
+    const/4 v0, 0x0
+
+    goto :goto_0
+
+    :pswitch_1
+    const/16 v0, 0x4e20
+
+    goto :goto_0
+
+    :pswitch_2
+    const v0, 0x1046b
+
+    goto :goto_0
+
+    :pswitch_3
+    const v0, 0x30d40
+
+    goto :goto_0
+
+    nop
+
+    :pswitch_data_0
+    .packed-switch 0x0
+        :pswitch_0
+        :pswitch_1
+        :pswitch_2
+        :pswitch_3
+    .end packed-switch
 .end method
 
 .method public static getInclination([F)F
@@ -2294,6 +2332,39 @@
 
 
 # virtual methods
+.method public cancelTriggerSensor(Landroid/hardware/TriggerEventListener;Landroid/hardware/Sensor;)Z
+    .locals 1
+    .parameter "listener"
+    .parameter "sensor"
+
+    .prologue
+    const/4 v0, 0x1
+
+    invoke-virtual {p0, p1, p2, v0}, Landroid/hardware/SensorManager;->cancelTriggerSensorImpl(Landroid/hardware/TriggerEventListener;Landroid/hardware/Sensor;Z)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method protected abstract cancelTriggerSensorImpl(Landroid/hardware/TriggerEventListener;Landroid/hardware/Sensor;Z)Z
+.end method
+
+.method public flush(Landroid/hardware/SensorEventListener;)Z
+    .locals 1
+    .parameter "listener"
+
+    .prologue
+    invoke-virtual {p0, p1}, Landroid/hardware/SensorManager;->flushImpl(Landroid/hardware/SensorEventListener;)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method protected abstract flushImpl(Landroid/hardware/SensorEventListener;)Z
+.end method
+
 .method public getDefaultSensor(I)Landroid/hardware/Sensor;
     .locals 2
     .parameter "type"
@@ -2465,7 +2536,7 @@
     .locals 1
     .parameter "listener"
     .parameter "sensor"
-    .parameter "rate"
+    .parameter "rateUs"
 
     .prologue
     const/4 v0, 0x0
@@ -2477,68 +2548,101 @@
     return v0
 .end method
 
-.method public registerListener(Landroid/hardware/SensorEventListener;Landroid/hardware/Sensor;ILandroid/os/Handler;)Z
-    .locals 2
+.method public registerListener(Landroid/hardware/SensorEventListener;Landroid/hardware/Sensor;II)Z
+    .locals 7
     .parameter "listener"
     .parameter "sensor"
-    .parameter "rate"
+    .parameter "rateUs"
+    .parameter "maxBatchReportLatencyUs"
+
+    .prologue
+    invoke-static {p3}, Landroid/hardware/SensorManager;->getDelay(I)I
+
+    move-result v3
+
+    .local v3, delay:I
+    const/4 v4, 0x0
+
+    const/4 v6, 0x0
+
+    move-object v0, p0
+
+    move-object v1, p1
+
+    move-object v2, p2
+
+    move v5, p4
+
+    invoke-virtual/range {v0 .. v6}, Landroid/hardware/SensorManager;->registerListenerImpl(Landroid/hardware/SensorEventListener;Landroid/hardware/Sensor;ILandroid/os/Handler;II)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public registerListener(Landroid/hardware/SensorEventListener;Landroid/hardware/Sensor;IILandroid/os/Handler;)Z
+    .locals 7
+    .parameter "listener"
+    .parameter "sensor"
+    .parameter "rateUs"
+    .parameter "maxBatchReportLatencyUs"
     .parameter "handler"
 
     .prologue
-    if-eqz p1, :cond_0
+    invoke-static {p3}, Landroid/hardware/SensorManager;->getDelay(I)I
 
-    if-nez p2, :cond_1
+    move-result v3
 
-    :cond_0
-    const/4 v1, 0x0
+    .local v3, delayUs:I
+    const/4 v6, 0x0
 
-    :goto_0
-    return v1
+    move-object v0, p0
 
-    :cond_1
-    const/4 v0, -0x1
+    move-object v1, p1
 
-    .local v0, delay:I
-    packed-switch p3, :pswitch_data_0
+    move-object v2, p2
 
-    move v0, p3
+    move-object v4, p5
 
-    :goto_1
-    invoke-virtual {p0, p1, p2, v0, p4}, Landroid/hardware/SensorManager;->registerListenerImpl(Landroid/hardware/SensorEventListener;Landroid/hardware/Sensor;ILandroid/os/Handler;)Z
+    move v5, p4
 
-    move-result v1
+    invoke-virtual/range {v0 .. v6}, Landroid/hardware/SensorManager;->registerListenerImpl(Landroid/hardware/SensorEventListener;Landroid/hardware/Sensor;ILandroid/os/Handler;II)Z
 
-    goto :goto_0
+    move-result v0
 
-    :pswitch_0
-    const/4 v0, 0x0
+    return v0
+.end method
 
-    goto :goto_1
+.method public registerListener(Landroid/hardware/SensorEventListener;Landroid/hardware/Sensor;ILandroid/os/Handler;)Z
+    .locals 7
+    .parameter "listener"
+    .parameter "sensor"
+    .parameter "rateUs"
+    .parameter "handler"
 
-    :pswitch_1
-    const/16 v0, 0x4e20
+    .prologue
+    const/4 v5, 0x0
 
-    goto :goto_1
+    invoke-static {p3}, Landroid/hardware/SensorManager;->getDelay(I)I
 
-    :pswitch_2
-    const v0, 0x1046b
+    move-result v3
 
-    goto :goto_1
+    .local v3, delay:I
+    move-object v0, p0
 
-    :pswitch_3
-    const v0, 0x30d40
+    move-object v1, p1
 
-    goto :goto_1
+    move-object v2, p2
 
-    nop
+    move-object v4, p4
 
-    :pswitch_data_0
-    .packed-switch 0x0
-        :pswitch_0
-        :pswitch_1
-        :pswitch_2
-        :pswitch_3
-    .end packed-switch
+    move v6, v5
+
+    invoke-virtual/range {v0 .. v6}, Landroid/hardware/SensorManager;->registerListenerImpl(Landroid/hardware/SensorEventListener;Landroid/hardware/Sensor;ILandroid/os/Handler;II)Z
+
+    move-result v0
+
+    return v0
 .end method
 
 .method public registerListener(Landroid/hardware/SensorListener;I)Z
@@ -2578,7 +2682,23 @@
     return v0
 .end method
 
-.method protected abstract registerListenerImpl(Landroid/hardware/SensorEventListener;Landroid/hardware/Sensor;ILandroid/os/Handler;)Z
+.method protected abstract registerListenerImpl(Landroid/hardware/SensorEventListener;Landroid/hardware/Sensor;ILandroid/os/Handler;II)Z
+.end method
+
+.method public requestTriggerSensor(Landroid/hardware/TriggerEventListener;Landroid/hardware/Sensor;)Z
+    .locals 1
+    .parameter "listener"
+    .parameter "sensor"
+
+    .prologue
+    invoke-virtual {p0, p1, p2}, Landroid/hardware/SensorManager;->requestTriggerSensorImpl(Landroid/hardware/TriggerEventListener;Landroid/hardware/Sensor;)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method protected abstract requestTriggerSensorImpl(Landroid/hardware/TriggerEventListener;Landroid/hardware/Sensor;)Z
 .end method
 
 .method public unregisterListener(Landroid/hardware/SensorEventListener;)V

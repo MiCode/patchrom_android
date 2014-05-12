@@ -30,10 +30,16 @@
 .method public abstract onDisplayDisconnected()V
 .end method
 
+.method public abstract onDisplaySessionInfo(Landroid/hardware/display/WifiDisplaySessionInfo;)V
+.end method
+
 .method public abstract onFeatureStateChanged(I)V
 .end method
 
-.method public abstract onScanFinished([Landroid/hardware/display/WifiDisplay;)V
+.method public abstract onScanFinished()V
+.end method
+
+.method public abstract onScanResults([Landroid/hardware/display/WifiDisplay;)V
 .end method
 
 .method public abstract onScanStarted()V

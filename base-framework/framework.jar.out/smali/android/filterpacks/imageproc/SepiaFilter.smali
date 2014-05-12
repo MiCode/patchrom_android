@@ -60,6 +60,8 @@
 
     return-void
 
+    nop
+
     :array_0
     .array-data 0x4
         0x0t 0x40t 0xc9t 0x3et

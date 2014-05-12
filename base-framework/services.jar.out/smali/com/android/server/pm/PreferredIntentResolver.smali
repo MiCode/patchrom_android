@@ -56,6 +56,43 @@
     return-void
 .end method
 
+.method protected bridge synthetic isPackageForFilter(Ljava/lang/String;Landroid/content/IntentFilter;)Z
+    .locals 1
+    .parameter "x0"
+    .parameter "x1"
+
+    .prologue
+    check-cast p2, Lcom/android/server/pm/PreferredActivity;
+
+    .end local p2
+    invoke-virtual {p0, p1, p2}, Lcom/android/server/pm/PreferredIntentResolver;->isPackageForFilter(Ljava/lang/String;Lcom/android/server/pm/PreferredActivity;)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method protected isPackageForFilter(Ljava/lang/String;Lcom/android/server/pm/PreferredActivity;)Z
+    .locals 1
+    .parameter "packageName"
+    .parameter "filter"
+
+    .prologue
+    iget-object v0, p2, Lcom/android/server/pm/PreferredActivity;->mPref:Lcom/android/server/PreferredComponent;
+
+    iget-object v0, v0, Lcom/android/server/PreferredComponent;->mComponent:Landroid/content/ComponentName;
+
+    invoke-virtual {v0}, Landroid/content/ComponentName;->getPackageName()Ljava/lang/String;
+
+    move-result-object v0
+
+    invoke-virtual {p1, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v0
+
+    return v0
+.end method
+
 .method protected bridge synthetic newArray(I)[Landroid/content/IntentFilter;
     .locals 1
     .parameter "x0"
@@ -74,37 +111,6 @@
 
     .prologue
     new-array v0, p1, [Lcom/android/server/pm/PreferredActivity;
-
-    return-object v0
-.end method
-
-.method protected bridge synthetic packageForFilter(Landroid/content/IntentFilter;)Ljava/lang/String;
-    .locals 1
-    .parameter "x0"
-
-    .prologue
-    check-cast p1, Lcom/android/server/pm/PreferredActivity;
-
-    .end local p1
-    invoke-virtual {p0, p1}, Lcom/android/server/pm/PreferredIntentResolver;->packageForFilter(Lcom/android/server/pm/PreferredActivity;)Ljava/lang/String;
-
-    move-result-object v0
-
-    return-object v0
-.end method
-
-.method protected packageForFilter(Lcom/android/server/pm/PreferredActivity;)Ljava/lang/String;
-    .locals 1
-    .parameter "filter"
-
-    .prologue
-    iget-object v0, p1, Lcom/android/server/pm/PreferredActivity;->mPref:Lcom/android/server/PreferredComponent;
-
-    iget-object v0, v0, Lcom/android/server/PreferredComponent;->mComponent:Landroid/content/ComponentName;
-
-    invoke-virtual {v0}, Landroid/content/ComponentName;->getPackageName()Ljava/lang/String;
-
-    move-result-object v0
 
     return-object v0
 .end method

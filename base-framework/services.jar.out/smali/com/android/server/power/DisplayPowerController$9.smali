@@ -45,12 +45,12 @@
     const/4 v1, 0x1
 
     #setter for: Lcom/android/server/power/DisplayPowerController;->mTwilightChanged:Z
-    invoke-static {v0, v1}, Lcom/android/server/power/DisplayPowerController;->access$1102(Lcom/android/server/power/DisplayPowerController;Z)Z
+    invoke-static {v0, v1}, Lcom/android/server/power/DisplayPowerController;->access$1202(Lcom/android/server/power/DisplayPowerController;Z)Z
 
     iget-object v0, p0, Lcom/android/server/power/DisplayPowerController$9;->this$0:Lcom/android/server/power/DisplayPowerController;
 
     #calls: Lcom/android/server/power/DisplayPowerController;->updatePowerState()V
-    invoke-static {v0}, Lcom/android/server/power/DisplayPowerController;->access$300(Lcom/android/server/power/DisplayPowerController;)V
+    invoke-static {v0}, Lcom/android/server/power/DisplayPowerController;->access$400(Lcom/android/server/power/DisplayPowerController;)V
 
     return-void
 .end method

@@ -22,6 +22,8 @@
 
 
 # instance fields
+.field mAccessibilityFetchFlags:I
+
 .field mAccessibilityFocusDrawable:Landroid/graphics/drawable/Drawable;
 
 .field mAccessibilityWindowId:I
@@ -56,21 +58,27 @@
 
 .field mHardwareRenderer:Landroid/view/HardwareRenderer;
 
+.field mHasNonEmptyGivenInternalInsets:Z
+
 .field mHasSystemUiListeners:Z
 
 .field mHasWindowFocus:Z
 
+.field mIWindowId:Landroid/view/IWindowId;
+
 .field mIgnoreDirtyState:Z
 
 .field mInTouchMode:Z
-
-.field mIncludeNotImportantViews:Z
 
 .field final mInvalidateChildLocation:[I
 
 .field mKeepScreenOn:Z
 
 .field final mKeyDispatchState:Landroid/view/KeyEvent$DispatcherState;
+
+.field final mOverscanInsets:Landroid/graphics/Rect;
+
+.field mOverscanRequested:Z
 
 .field mPanelParentWindowToken:Landroid/os/IBinder;
 
@@ -134,6 +142,8 @@
 
 .field mUse32BitDrawingCache:Z
 
+.field mViewRequestingLayout:Landroid/view/View;
+
 .field final mViewRootImpl:Landroid/view/ViewRootImpl;
 
 .field mViewScrollChanged:Z
@@ -143,6 +153,8 @@
 .field final mVisibleInsets:Landroid/graphics/Rect;
 
 .field final mWindow:Landroid/view/IWindow;
+
+.field mWindowId:Landroid/view/WindowId;
 
 .field mWindowLeft:I
 
@@ -169,6 +181,12 @@
     const/4 v1, 0x2
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    new-instance v0, Landroid/graphics/Rect;
+
+    invoke-direct {v0}, Landroid/graphics/Rect;-><init>()V
+
+    iput-object v0, p0, Landroid/view/View$AttachInfo;->mOverscanInsets:Landroid/graphics/Rect;
 
     new-instance v0, Landroid/graphics/Rect;
 

@@ -23,3 +23,6 @@
 
 .method public abstract setPlatformNotificationsEnabled(Z)V
 .end method
+
+.method public abstract setWebContentsDebuggingEnabled(Z)V
+.end method

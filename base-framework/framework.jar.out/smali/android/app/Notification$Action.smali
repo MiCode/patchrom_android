@@ -1,4 +1,4 @@
-.class Landroid/app/Notification$Action;
+.class public Landroid/app/Notification$Action;
 .super Ljava/lang/Object;
 .source "Notification.java"
 
@@ -12,7 +12,7 @@
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
-    accessFlags = 0xa
+    accessFlags = 0x9
     name = "Action"
 .end annotation
 
@@ -52,7 +52,7 @@
     return-void
 .end method
 
-.method public constructor <init>()V
+.method private constructor <init>()V
     .locals 0
 
     .prologue
@@ -63,9 +63,9 @@
 
 .method public constructor <init>(ILjava/lang/CharSequence;Landroid/app/PendingIntent;)V
     .locals 0
-    .parameter "icon_"
-    .parameter "title_"
-    .parameter "intent_"
+    .parameter "icon"
+    .parameter "title"
+    .parameter "intent"
 
     .prologue
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -146,10 +146,6 @@
     iget v1, p0, Landroid/app/Notification$Action;->icon:I
 
     iget-object v2, p0, Landroid/app/Notification$Action;->title:Ljava/lang/CharSequence;
-
-    invoke-virtual {v2}, Ljava/lang/Object;->toString()Ljava/lang/String;
-
-    move-result-object v2
 
     iget-object v3, p0, Landroid/app/Notification$Action;->actionIntent:Landroid/app/PendingIntent;
 

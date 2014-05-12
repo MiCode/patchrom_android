@@ -284,6 +284,8 @@
     .parameter "ex"
 
     .prologue
+    const/4 v5, 0x0
+
     const-string v3, "FragmentManager"
 
     invoke-virtual {p1}, Ljava/lang/RuntimeException;->getMessage()Ljava/lang/String;
@@ -301,9 +303,11 @@
     invoke-direct {v1, v3, v4}, Landroid/util/LogWriter;-><init>(ILjava/lang/String;)V
 
     .local v1, logw:Landroid/util/LogWriter;
-    new-instance v2, Ljava/io/PrintWriter;
+    new-instance v2, Lcom/android/internal/util/FastPrintWriter;
 
-    invoke-direct {v2, v1}, Ljava/io/PrintWriter;-><init>(Ljava/io/Writer;)V
+    const/16 v3, 0x400
+
+    invoke-direct {v2, v1, v5, v3}, Lcom/android/internal/util/FastPrintWriter;-><init>(Ljava/io/Writer;ZI)V
 
     .local v2, pw:Ljava/io/PrintWriter;
     iget-object v3, p0, Landroid/app/FragmentManagerImpl;->mActivity:Landroid/app/Activity;
@@ -332,12 +336,16 @@
     .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
 
     :goto_0
+    invoke-virtual {v2}, Ljava/io/PrintWriter;->flush()V
+
     throw p1
 
     :catch_0
     move-exception v0
 
     .local v0, e:Ljava/lang/Exception;
+    invoke-virtual {v2}, Ljava/io/PrintWriter;->flush()V
+
     const-string v3, "FragmentManager"
 
     const-string v4, "Failed dumping state"
@@ -373,6 +381,8 @@
     move-exception v0
 
     .restart local v0       #e:Ljava/lang/Exception;
+    invoke-virtual {v2}, Ljava/io/PrintWriter;->flush()V
+
     const-string v3, "FragmentManager"
 
     const-string v4, "Failed dumping state"
@@ -2265,10 +2275,15 @@
     monitor-enter p0
 
     :try_start_0
-    iget-object v0, p0, Landroid/app/FragmentManagerImpl;->mActivity:Landroid/app/Activity;
+    iget-boolean v0, p0, Landroid/app/FragmentManagerImpl;->mDestroyed:Z
 
     if-nez v0, :cond_1
 
+    iget-object v0, p0, Landroid/app/FragmentManagerImpl;->mActivity:Landroid/app/Activity;
+
+    if-nez v0, :cond_2
+
+    :cond_1
     new-instance v0, Ljava/lang/IllegalStateException;
 
     const-string v1, "Activity has been destroyed"
@@ -2286,11 +2301,11 @@
 
     throw v0
 
-    :cond_1
+    :cond_2
     :try_start_1
     iget-object v0, p0, Landroid/app/FragmentManagerImpl;->mPendingActions:Ljava/util/ArrayList;
 
-    if-nez v0, :cond_2
+    if-nez v0, :cond_3
 
     new-instance v0, Ljava/util/ArrayList;
 
@@ -2298,7 +2313,7 @@
 
     iput-object v0, p0, Landroid/app/FragmentManagerImpl;->mPendingActions:Ljava/util/ArrayList;
 
-    :cond_2
+    :cond_3
     iget-object v0, p0, Landroid/app/FragmentManagerImpl;->mPendingActions:Ljava/util/ArrayList;
 
     invoke-virtual {v0, p1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
@@ -2311,7 +2326,7 @@
 
     const/4 v1, 0x1
 
-    if-ne v0, v1, :cond_3
+    if-ne v0, v1, :cond_4
 
     iget-object v0, p0, Landroid/app/FragmentManagerImpl;->mActivity:Landroid/app/Activity;
 
@@ -2329,7 +2344,7 @@
 
     invoke-virtual {v0, v1}, Landroid/os/Handler;->post(Ljava/lang/Runnable;)Z
 
-    :cond_3
+    :cond_4
     monitor-exit p0
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
@@ -3109,7 +3124,9 @@
 
     if-eqz v2, :cond_1
 
-    invoke-virtual {p0, p1, p2, v5, p3}, Landroid/app/FragmentManagerImpl;->loadAnimator(Landroid/app/Fragment;IZI)Landroid/animation/Animator;
+    const/4 v2, 0x0
+
+    invoke-virtual {p0, p1, p2, v2, p3}, Landroid/app/FragmentManagerImpl;->loadAnimator(Landroid/app/Fragment;IZI)Landroid/animation/Animator;
 
     move-result-object v0
 
@@ -3922,7 +3939,7 @@
 
     if-nez v0, :cond_c
 
-    new-instance v0, Landroid/app/SuperNotCalledException;
+    new-instance v0, Landroid/util/SuperNotCalledException;
 
     new-instance v1, Ljava/lang/StringBuilder;
 
@@ -3948,7 +3965,7 @@
 
     move-result-object v1
 
-    invoke-direct {v0, v1}, Landroid/app/SuperNotCalledException;-><init>(Ljava/lang/String;)V
+    invoke-direct {v0, v1}, Landroid/util/SuperNotCalledException;-><init>(Ljava/lang/String;)V
 
     throw v0
 
@@ -4618,7 +4635,7 @@
 
     if-nez v0, :cond_2b
 
-    new-instance v0, Landroid/app/SuperNotCalledException;
+    new-instance v0, Landroid/util/SuperNotCalledException;
 
     new-instance v1, Ljava/lang/StringBuilder;
 
@@ -4644,7 +4661,7 @@
 
     move-result-object v1
 
-    invoke-direct {v0, v1}, Landroid/app/SuperNotCalledException;-><init>(Ljava/lang/String;)V
+    invoke-direct {v0, v1}, Landroid/util/SuperNotCalledException;-><init>(Ljava/lang/String;)V
 
     throw v0
 
@@ -6022,14 +6039,18 @@
     invoke-direct {v5, v7, v8}, Landroid/util/LogWriter;-><init>(ILjava/lang/String;)V
 
     .local v5, logw:Landroid/util/LogWriter;
-    new-instance v6, Ljava/io/PrintWriter;
+    new-instance v6, Lcom/android/internal/util/FastPrintWriter;
 
-    invoke-direct {v6, v5}, Ljava/io/PrintWriter;-><init>(Ljava/io/Writer;)V
+    const/16 v7, 0x400
+
+    invoke-direct {v6, v5, v11, v7}, Lcom/android/internal/util/FastPrintWriter;-><init>(Ljava/io/Writer;ZI)V
 
     .local v6, pw:Ljava/io/PrintWriter;
     const-string v7, "  "
 
     invoke-virtual {v0, v7, v6, v11}, Landroid/app/BackStackRecord;->dump(Ljava/lang/String;Ljava/io/PrintWriter;Z)V
+
+    invoke-virtual {v6}, Ljava/io/PrintWriter;->flush()V
 
     .end local v5           #logw:Landroid/util/LogWriter;
     .end local v6           #pw:Ljava/io/PrintWriter;

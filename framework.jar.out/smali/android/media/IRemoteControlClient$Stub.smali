@@ -26,13 +26,25 @@
 # static fields
 .field private static final DESCRIPTOR:Ljava/lang/String; = "android.media.IRemoteControlClient"
 
+.field static final TRANSACTION_enableRemoteControlDisplay:I = 0x8
+
+.field static final TRANSACTION_informationRequestForDisplay:I = 0x2
+
 .field static final TRANSACTION_onInformationRequested:I = 0x1
 
-.field static final TRANSACTION_plugRemoteControlDisplay:I = 0x3
+.field static final TRANSACTION_plugRemoteControlDisplay:I = 0x4
 
-.field static final TRANSACTION_setCurrentClientGenerationId:I = 0x2
+.field static final TRANSACTION_seekTo:I = 0x9
 
-.field static final TRANSACTION_unplugRemoteControlDisplay:I = 0x4
+.field static final TRANSACTION_setBitmapSizeForDisplay:I = 0x6
+
+.field static final TRANSACTION_setCurrentClientGenerationId:I = 0x3
+
+.field static final TRANSACTION_setWantsSyncForDisplay:I = 0x7
+
+.field static final TRANSACTION_unplugRemoteControlDisplay:I = 0x5
+
+.field static final TRANSACTION_updateMetadata:I = 0xa
 
 
 # direct methods
@@ -110,6 +122,8 @@
     .end annotation
 
     .prologue
+    const/4 v1, 0x0
+
     const/4 v4, 0x1
 
     sparse-switch p1, :sswitch_data_0
@@ -143,40 +157,13 @@
     move-result v1
 
     .local v1, _arg1:I
-    invoke-virtual {p2}, Landroid/os/Parcel;->readInt()I
-
-    move-result v2
-
-    .local v2, _arg2:I
-    invoke-virtual {p2}, Landroid/os/Parcel;->readInt()I
-
-    move-result v3
-
-    .local v3, _arg3:I
-    invoke-virtual {p0, v0, v1, v2, v3}, Landroid/media/IRemoteControlClient$Stub;->onInformationRequested(IIII)V
+    invoke-virtual {p0, v0, v1}, Landroid/media/IRemoteControlClient$Stub;->onInformationRequested(II)V
 
     goto :goto_0
 
     .end local v0           #_arg0:I
     .end local v1           #_arg1:I
-    .end local v2           #_arg2:I
-    .end local v3           #_arg3:I
     :sswitch_2
-    const-string v5, "android.media.IRemoteControlClient"
-
-    invoke-virtual {p2, v5}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
-
-    invoke-virtual {p2}, Landroid/os/Parcel;->readInt()I
-
-    move-result v0
-
-    .restart local v0       #_arg0:I
-    invoke-virtual {p0, v0}, Landroid/media/IRemoteControlClient$Stub;->setCurrentClientGenerationId(I)V
-
-    goto :goto_0
-
-    .end local v0           #_arg0:I
-    :sswitch_3
     const-string v5, "android.media.IRemoteControlClient"
 
     invoke-virtual {p2, v5}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
@@ -190,12 +177,70 @@
     move-result-object v0
 
     .local v0, _arg0:Landroid/media/IRemoteControlDisplay;
-    invoke-virtual {p0, v0}, Landroid/media/IRemoteControlClient$Stub;->plugRemoteControlDisplay(Landroid/media/IRemoteControlDisplay;)V
+    invoke-virtual {p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v1
+
+    .restart local v1       #_arg1:I
+    invoke-virtual {p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v3
+
+    .local v3, _arg2:I
+    invoke-virtual {p0, v0, v1, v3}, Landroid/media/IRemoteControlClient$Stub;->informationRequestForDisplay(Landroid/media/IRemoteControlDisplay;II)V
 
     goto :goto_0
 
     .end local v0           #_arg0:Landroid/media/IRemoteControlDisplay;
+    .end local v1           #_arg1:I
+    .end local v3           #_arg2:I
+    :sswitch_3
+    const-string v5, "android.media.IRemoteControlClient"
+
+    invoke-virtual {p2, v5}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    invoke-virtual {p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v0
+
+    .local v0, _arg0:I
+    invoke-virtual {p0, v0}, Landroid/media/IRemoteControlClient$Stub;->setCurrentClientGenerationId(I)V
+
+    goto :goto_0
+
+    .end local v0           #_arg0:I
     :sswitch_4
+    const-string v5, "android.media.IRemoteControlClient"
+
+    invoke-virtual {p2, v5}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    invoke-virtual {p2}, Landroid/os/Parcel;->readStrongBinder()Landroid/os/IBinder;
+
+    move-result-object v5
+
+    invoke-static {v5}, Landroid/media/IRemoteControlDisplay$Stub;->asInterface(Landroid/os/IBinder;)Landroid/media/IRemoteControlDisplay;
+
+    move-result-object v0
+
+    .local v0, _arg0:Landroid/media/IRemoteControlDisplay;
+    invoke-virtual {p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v1
+
+    .restart local v1       #_arg1:I
+    invoke-virtual {p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v3
+
+    .restart local v3       #_arg2:I
+    invoke-virtual {p0, v0, v1, v3}, Landroid/media/IRemoteControlClient$Stub;->plugRemoteControlDisplay(Landroid/media/IRemoteControlDisplay;II)V
+
+    goto :goto_0
+
+    .end local v0           #_arg0:Landroid/media/IRemoteControlDisplay;
+    .end local v1           #_arg1:I
+    .end local v3           #_arg2:I
+    :sswitch_5
     const-string v5, "android.media.IRemoteControlClient"
 
     invoke-virtual {p2, v5}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
@@ -213,7 +258,160 @@
 
     goto :goto_0
 
-    nop
+    .end local v0           #_arg0:Landroid/media/IRemoteControlDisplay;
+    :sswitch_6
+    const-string v5, "android.media.IRemoteControlClient"
+
+    invoke-virtual {p2, v5}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    invoke-virtual {p2}, Landroid/os/Parcel;->readStrongBinder()Landroid/os/IBinder;
+
+    move-result-object v5
+
+    invoke-static {v5}, Landroid/media/IRemoteControlDisplay$Stub;->asInterface(Landroid/os/IBinder;)Landroid/media/IRemoteControlDisplay;
+
+    move-result-object v0
+
+    .restart local v0       #_arg0:Landroid/media/IRemoteControlDisplay;
+    invoke-virtual {p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v1
+
+    .restart local v1       #_arg1:I
+    invoke-virtual {p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v3
+
+    .restart local v3       #_arg2:I
+    invoke-virtual {p0, v0, v1, v3}, Landroid/media/IRemoteControlClient$Stub;->setBitmapSizeForDisplay(Landroid/media/IRemoteControlDisplay;II)V
+
+    goto :goto_0
+
+    .end local v0           #_arg0:Landroid/media/IRemoteControlDisplay;
+    .end local v1           #_arg1:I
+    .end local v3           #_arg2:I
+    :sswitch_7
+    const-string v5, "android.media.IRemoteControlClient"
+
+    invoke-virtual {p2, v5}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    invoke-virtual {p2}, Landroid/os/Parcel;->readStrongBinder()Landroid/os/IBinder;
+
+    move-result-object v5
+
+    invoke-static {v5}, Landroid/media/IRemoteControlDisplay$Stub;->asInterface(Landroid/os/IBinder;)Landroid/media/IRemoteControlDisplay;
+
+    move-result-object v0
+
+    .restart local v0       #_arg0:Landroid/media/IRemoteControlDisplay;
+    invoke-virtual {p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v5
+
+    if-eqz v5, :cond_0
+
+    move v1, v4
+
+    .local v1, _arg1:Z
+    :cond_0
+    invoke-virtual {p0, v0, v1}, Landroid/media/IRemoteControlClient$Stub;->setWantsSyncForDisplay(Landroid/media/IRemoteControlDisplay;Z)V
+
+    goto/16 :goto_0
+
+    .end local v0           #_arg0:Landroid/media/IRemoteControlDisplay;
+    .end local v1           #_arg1:Z
+    :sswitch_8
+    const-string v5, "android.media.IRemoteControlClient"
+
+    invoke-virtual {p2, v5}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    invoke-virtual {p2}, Landroid/os/Parcel;->readStrongBinder()Landroid/os/IBinder;
+
+    move-result-object v5
+
+    invoke-static {v5}, Landroid/media/IRemoteControlDisplay$Stub;->asInterface(Landroid/os/IBinder;)Landroid/media/IRemoteControlDisplay;
+
+    move-result-object v0
+
+    .restart local v0       #_arg0:Landroid/media/IRemoteControlDisplay;
+    invoke-virtual {p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v5
+
+    if-eqz v5, :cond_1
+
+    move v1, v4
+
+    .restart local v1       #_arg1:Z
+    :cond_1
+    invoke-virtual {p0, v0, v1}, Landroid/media/IRemoteControlClient$Stub;->enableRemoteControlDisplay(Landroid/media/IRemoteControlDisplay;Z)V
+
+    goto/16 :goto_0
+
+    .end local v0           #_arg0:Landroid/media/IRemoteControlDisplay;
+    .end local v1           #_arg1:Z
+    :sswitch_9
+    const-string v5, "android.media.IRemoteControlClient"
+
+    invoke-virtual {p2, v5}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    invoke-virtual {p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v0
+
+    .local v0, _arg0:I
+    invoke-virtual {p2}, Landroid/os/Parcel;->readLong()J
+
+    move-result-wide v1
+
+    .local v1, _arg1:J
+    invoke-virtual {p0, v0, v1, v2}, Landroid/media/IRemoteControlClient$Stub;->seekTo(IJ)V
+
+    goto/16 :goto_0
+
+    .end local v0           #_arg0:I
+    .end local v1           #_arg1:J
+    :sswitch_a
+    const-string v5, "android.media.IRemoteControlClient"
+
+    invoke-virtual {p2, v5}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    invoke-virtual {p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v0
+
+    .restart local v0       #_arg0:I
+    invoke-virtual {p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v1
+
+    .local v1, _arg1:I
+    invoke-virtual {p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v5
+
+    if-eqz v5, :cond_2
+
+    sget-object v5, Landroid/media/Rating;->CREATOR:Landroid/os/Parcelable$Creator;
+
+    invoke-interface {v5, p2}, Landroid/os/Parcelable$Creator;->createFromParcel(Landroid/os/Parcel;)Ljava/lang/Object;
+
+    move-result-object v3
+
+    check-cast v3, Landroid/media/Rating;
+
+    .local v3, _arg2:Landroid/media/Rating;
+    :goto_1
+    invoke-virtual {p0, v0, v1, v3}, Landroid/media/IRemoteControlClient$Stub;->updateMetadata(IILandroid/media/Rating;)V
+
+    goto/16 :goto_0
+
+    .end local v3           #_arg2:Landroid/media/Rating;
+    :cond_2
+    const/4 v3, 0x0
+
+    .restart local v3       #_arg2:Landroid/media/Rating;
+    goto :goto_1
 
     :sswitch_data_0
     .sparse-switch
@@ -221,6 +419,12 @@
         0x2 -> :sswitch_2
         0x3 -> :sswitch_3
         0x4 -> :sswitch_4
+        0x5 -> :sswitch_5
+        0x6 -> :sswitch_6
+        0x7 -> :sswitch_7
+        0x8 -> :sswitch_8
+        0x9 -> :sswitch_9
+        0xa -> :sswitch_a
         0x5f4e5446 -> :sswitch_0
     .end sparse-switch
 .end method

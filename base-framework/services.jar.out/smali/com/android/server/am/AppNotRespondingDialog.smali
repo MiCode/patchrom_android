@@ -1,4 +1,4 @@
-.class Lcom/android/server/am/AppNotRespondingDialog;
+.class final Lcom/android/server/am/AppNotRespondingDialog;
 .super Lcom/android/server/am/BaseErrorDialog;
 .source "AppNotRespondingDialog.java"
 
@@ -73,9 +73,9 @@
     const/4 v2, 0x0
 
     .local v2, name2:Ljava/lang/CharSequence;
-    iget-object v5, p3, Lcom/android/server/am/ProcessRecord;->pkgList:Ljava/util/HashSet;
+    iget-object v5, p3, Lcom/android/server/am/ProcessRecord;->pkgList:Landroid/util/ArrayMap;
 
-    invoke-virtual {v5}, Ljava/util/HashSet;->size()I
+    invoke-virtual {v5}, Landroid/util/ArrayMap;->size()I
 
     move-result v5
 
@@ -95,7 +95,7 @@
 
     if-eqz v1, :cond_3
 
-    const v4, 0x10403d7
+    const v4, 0x1040400
 
     .local v4, resid:I
     :goto_1
@@ -124,7 +124,7 @@
 
     const/4 v5, -0x1
 
-    const v6, 0x10403db
+    const v6, 0x1040404
 
     invoke-virtual {v3, v6}, Landroid/content/res/Resources;->getText(I)Ljava/lang/CharSequence;
 
@@ -140,7 +140,7 @@
 
     const/4 v5, -0x2
 
-    const v6, 0x10403dd
+    const v6, 0x1040406
 
     invoke-virtual {v3, v6}, Landroid/content/res/Resources;->getText(I)Ljava/lang/CharSequence;
 
@@ -160,7 +160,7 @@
 
     const/4 v5, -0x3
 
-    const v6, 0x10403dc
+    const v6, 0x1040405
 
     invoke-virtual {v3, v6}, Landroid/content/res/Resources;->getText(I)Ljava/lang/CharSequence;
 
@@ -177,7 +177,7 @@
     invoke-virtual {p0, v5, v6, v7}, Lcom/android/server/am/AppNotRespondingDialog;->setButton(ILjava/lang/CharSequence;Landroid/os/Message;)V
 
     :cond_0
-    const v5, 0x10403d6
+    const v5, 0x10403ff
 
     invoke-virtual {v3, v5}, Landroid/content/res/Resources;->getText(I)Ljava/lang/CharSequence;
 
@@ -196,14 +196,6 @@
     invoke-virtual {v5, v6}, Landroid/view/Window;->setType(I)V
 
     :cond_1
-    invoke-virtual {p0}, Lcom/android/server/am/AppNotRespondingDialog;->getWindow()Landroid/view/Window;
-
-    move-result-object v5
-
-    const/high16 v6, 0x4000
-
-    invoke-virtual {v5, v6}, Landroid/view/Window;->addFlags(I)V
-
     invoke-virtual {p0}, Lcom/android/server/am/AppNotRespondingDialog;->getWindow()Landroid/view/Window;
 
     move-result-object v5
@@ -237,7 +229,7 @@
 
     invoke-virtual {v0, v5}, Landroid/view/WindowManager$LayoutParams;->setTitle(Ljava/lang/CharSequence;)V
 
-    const/16 v5, 0x10
+    const/16 v5, 0x110
 
     iput v5, v0, Landroid/view/WindowManager$LayoutParams;->privateFlags:I
 
@@ -265,7 +257,7 @@
 
     iget-object v2, p3, Lcom/android/server/am/ProcessRecord;->processName:Ljava/lang/String;
 
-    const v4, 0x10403d9
+    const v4, 0x1040402
 
     .restart local v4       #resid:I
     goto/16 :goto_1
@@ -276,7 +268,7 @@
 
     iget-object v2, p3, Lcom/android/server/am/ProcessRecord;->processName:Ljava/lang/String;
 
-    const v4, 0x10403d8
+    const v4, 0x1040401
 
     .restart local v4       #resid:I
     goto/16 :goto_1
@@ -285,7 +277,7 @@
     :cond_5
     iget-object v1, p3, Lcom/android/server/am/ProcessRecord;->processName:Ljava/lang/String;
 
-    const v4, 0x10403da
+    const v4, 0x1040403
 
     .restart local v4       #resid:I
     goto/16 :goto_1

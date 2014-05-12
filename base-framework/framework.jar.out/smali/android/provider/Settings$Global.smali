@@ -45,7 +45,11 @@
 
 .field public static final BLUETOOTH_INPUT_DEVICE_PRIORITY_PREFIX:Ljava/lang/String; = "bluetooth_input_device_priority_"
 
+.field public static final BLUETOOTH_MAP_PRIORITY_PREFIX:Ljava/lang/String; = "bluetooth_map_priority_"
+
 .field public static final BLUETOOTH_ON:Ljava/lang/String; = "bluetooth_on"
+
+.field public static final BUGREPORT_IN_POWER_MENU:Ljava/lang/String; = "bugreport_in_power_menu"
 
 .field public static final CALL_AUTO_RETRY:Ljava/lang/String; = "call_auto_retry"
 
@@ -63,9 +67,15 @@
 
 .field public static final CDMA_SUBSCRIPTION_MODE:Ljava/lang/String; = "subscription_mode"
 
+.field public static final CERT_PIN_UPDATE_CONTENT_URL:Ljava/lang/String; = "cert_pin_content_url"
+
+.field public static final CERT_PIN_UPDATE_METADATA_URL:Ljava/lang/String; = "cert_pin_metadata_url"
+
 .field public static final COMPATIBILITY_MODE:Ljava/lang/String; = "compatibility_mode"
 
 .field public static final CONNECTIVITY_CHANGE_DELAY:Ljava/lang/String; = "connectivity_change_delay"
+
+.field public static final CONNECTIVITY_SAMPLING_INTERVAL_IN_SECONDS:Ljava/lang/String; = "connectivity_sampling_interval_in_seconds"
 
 .field public static final CONTENT_URI:Landroid/net/Uri; = null
 
@@ -88,6 +98,8 @@
 .field public static final DESK_DOCK_SOUND:Ljava/lang/String; = "desk_dock_sound"
 
 .field public static final DESK_UNDOCK_SOUND:Ljava/lang/String; = "desk_undock_sound"
+
+.field public static final DEVELOPMENT_FORCE_RTL:Ljava/lang/String; = "debug.force_rtl"
 
 .field public static final DEVELOPMENT_SETTINGS_ENABLED:Ljava/lang/String; = "development_settings_enabled"
 
@@ -131,6 +143,8 @@
 
 .field public static final GLOBAL_HTTP_PROXY_HOST:Ljava/lang/String; = "global_http_proxy_host"
 
+.field public static final GLOBAL_HTTP_PROXY_PAC:Ljava/lang/String; = "global_proxy_pac_url"
+
 .field public static final GLOBAL_HTTP_PROXY_PORT:Ljava/lang/String; = "global_http_proxy_port"
 
 .field public static final GPRS_REGISTER_CHECK_PERIOD_MS:Ljava/lang/String; = "gprs_register_check_period_ms"
@@ -143,9 +157,17 @@
 
 .field public static final INSTALL_NON_MARKET_APPS:Ljava/lang/String; = "install_non_market_apps"
 
+.field public static final INTENT_FIREWALL_UPDATE_CONTENT_URL:Ljava/lang/String; = "intent_firewall_content_url"
+
+.field public static final INTENT_FIREWALL_UPDATE_METADATA_URL:Ljava/lang/String; = "intent_firewall_metadata_url"
+
 .field public static final LOCK_SOUND:Ljava/lang/String; = "lock_sound"
 
 .field public static final LOW_BATTERY_SOUND:Ljava/lang/String; = "low_battery_sound"
+
+.field public static final LOW_BATTERY_SOUND_TIMEOUT:Ljava/lang/String; = "low_battery_sound_timeout"
+
+.field public static final MDC_INITIAL_MAX_RETRY:Ljava/lang/String; = "mdc_initial_max_retry"
 
 .field public static final MOBILE_DATA:Ljava/lang/String; = "mobile_data"
 
@@ -211,6 +233,8 @@
 
 .field public static final PACKAGE_VERIFIER_TIMEOUT:Ljava/lang/String; = "verifier_timeout"
 
+.field public static final PAC_CHANGE_DELAY:Ljava/lang/String; = "pac_change_delay"
+
 .field public static final PDP_WATCHDOG_ERROR_POLL_COUNT:Ljava/lang/String; = "pdp_watchdog_error_poll_count"
 
 .field public static final PDP_WATCHDOG_ERROR_POLL_INTERVAL_MS:Ljava/lang/String; = "pdp_watchdog_error_poll_interval_ms"
@@ -225,9 +249,9 @@
 
 .field public static final POWER_SOUNDS_ENABLED:Ljava/lang/String; = "power_sounds_enabled"
 
-.field public static final PREFERRED_CDMA_SUBSCRIPTION:Ljava/lang/String; = "preferred_cdma_subscription"
-
 .field public static final PREFERRED_NETWORK_MODE:Ljava/lang/String; = "preferred_network_mode"
+
+.field public static final PROVISIONING_APN_ALARM_DELAY_IN_MS:Ljava/lang/String; = "provisioning_apn_alarm_delay_in_ms"
 
 .field public static final RADIO_BLUETOOTH:Ljava/lang/String; = "bluetooth"
 
@@ -242,6 +266,12 @@
 .field public static final READ_EXTERNAL_STORAGE_ENFORCED_DEFAULT:Ljava/lang/String; = "read_external_storage_enforced_default"
 
 .field public static final SAMPLING_PROFILER_MS:Ljava/lang/String; = "sampling_profiler_ms"
+
+.field public static final SELINUX_STATUS:Ljava/lang/String; = "selinux_status"
+
+.field public static final SELINUX_UPDATE_CONTENT_URL:Ljava/lang/String; = "selinux_content_url"
+
+.field public static final SELINUX_UPDATE_METADATA_URL:Ljava/lang/String; = "selinux_metadata_url"
 
 .field public static final SEND_ACTION_APP_ERROR:Ljava/lang/String; = "send_action_app_error"
 
@@ -262,6 +292,10 @@
 .field public static final SMS_OUTGOING_CHECK_INTERVAL_MS:Ljava/lang/String; = "sms_outgoing_check_interval_ms"
 
 .field public static final SMS_OUTGOING_CHECK_MAX_COUNT:Ljava/lang/String; = "sms_outgoing_check_max_count"
+
+.field public static final SMS_SHORT_CODES_UPDATE_CONTENT_URL:Ljava/lang/String; = "sms_short_codes_content_url"
+
+.field public static final SMS_SHORT_CODES_UPDATE_METADATA_URL:Ljava/lang/String; = "sms_short_codes_metadata_url"
 
 .field public static final SMS_SHORT_CODE_CONFIRMATION:Ljava/lang/String; = "sms_short_code_confirmation"
 
@@ -287,21 +321,11 @@
 
 .field public static final TETHER_SUPPORTED:Ljava/lang/String; = "tether_supported"
 
-.field public static final THROTTLE_HELP_URI:Ljava/lang/String; = "throttle_help_uri"
-
-.field public static final THROTTLE_MAX_NTP_CACHE_AGE_SEC:Ljava/lang/String; = "throttle_max_ntp_cache_age_sec"
-
-.field public static final THROTTLE_NOTIFICATION_TYPE:Ljava/lang/String; = "throttle_notification_type"
-
-.field public static final THROTTLE_POLLING_SEC:Ljava/lang/String; = "throttle_polling_sec"
-
-.field public static final THROTTLE_RESET_DAY:Ljava/lang/String; = "throttle_reset_day"
-
-.field public static final THROTTLE_THRESHOLD_BYTES:Ljava/lang/String; = "throttle_threshold_bytes"
-
-.field public static final THROTTLE_VALUE_KBITSPS:Ljava/lang/String; = "throttle_value_kbitsps"
-
 .field public static final TRANSITION_ANIMATION_SCALE:Ljava/lang/String; = "transition_animation_scale"
+
+.field public static final TZINFO_UPDATE_CONTENT_URL:Ljava/lang/String; = "tzinfo_content_url"
+
+.field public static final TZINFO_UPDATE_METADATA_URL:Ljava/lang/String; = "tzinfo_metadata_url"
 
 .field public static final UNLOCK_SOUND:Ljava/lang/String; = "unlock_sound"
 
@@ -315,7 +339,11 @@
 
 .field public static final WIFI_COUNTRY_CODE:Ljava/lang/String; = "wifi_country_code"
 
+.field public static final WIFI_DISPLAY_CERTIFICATION_ON:Ljava/lang/String; = "wifi_display_certification_on"
+
 .field public static final WIFI_DISPLAY_ON:Ljava/lang/String; = "wifi_display_on"
+
+.field public static final WIFI_DISPLAY_WPS_CONFIG:Ljava/lang/String; = "wifi_display_wps_config"
 
 .field public static final WIFI_FRAMEWORK_SCAN_INTERVAL_MS:Ljava/lang/String; = "wifi_framework_scan_interval_ms"
 
@@ -337,7 +365,11 @@
 
 .field public static final WIFI_P2P_DEVICE_NAME:Ljava/lang/String; = "wifi_p2p_device_name"
 
+.field public static final WIFI_REENABLE_DELAY_MS:Ljava/lang/String; = "wifi_reenable_delay"
+
 .field public static final WIFI_SAVED_STATE:Ljava/lang/String; = "wifi_saved_state"
+
+.field public static final WIFI_SCAN_ALWAYS_AVAILABLE:Ljava/lang/String; = "wifi_scan_always_enabled"
 
 .field public static final WIFI_SCAN_INTERVAL_WHEN_P2P_CONNECTED_MS:Ljava/lang/String; = "wifi_scan_interval_p2p_connected_ms"
 
@@ -387,13 +419,13 @@
 
     const/4 v1, 0x0
 
-    const-string v2, "stay_on_while_plugged_in"
+    const-string v2, "bugreport_in_power_menu"
 
     aput-object v2, v0, v1
 
     const/4 v1, 0x1
 
-    const-string v2, "mode_ringer"
+    const-string v2, "stay_on_while_plugged_in"
 
     aput-object v2, v0, v1
 
@@ -518,7 +550,9 @@
 
     move-result-object v0
 
-    invoke-virtual {p0}, Ljava/lang/String;->toUpperCase()Ljava/lang/String;
+    sget-object v1, Ljava/util/Locale;->ROOT:Ljava/util/Locale;
+
+    invoke-virtual {p0, v1}, Ljava/lang/String;->toUpperCase(Ljava/util/Locale;)Ljava/lang/String;
 
     move-result-object v1
 
@@ -548,7 +582,9 @@
 
     move-result-object v0
 
-    invoke-virtual {p0}, Ljava/lang/String;->toUpperCase()Ljava/lang/String;
+    sget-object v1, Ljava/util/Locale;->ROOT:Ljava/util/Locale;
+
+    invoke-virtual {p0, v1}, Ljava/lang/String;->toUpperCase(Ljava/util/Locale;)Ljava/lang/String;
 
     move-result-object v1
 
@@ -578,7 +614,41 @@
 
     move-result-object v0
 
-    invoke-virtual {p0}, Ljava/lang/String;->toUpperCase()Ljava/lang/String;
+    sget-object v1, Ljava/util/Locale;->ROOT:Ljava/util/Locale;
+
+    invoke-virtual {p0, v1}, Ljava/lang/String;->toUpperCase(Ljava/util/Locale;)Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public static final getBluetoothMapPriorityKey(Ljava/lang/String;)Ljava/lang/String;
+    .locals 2
+    .parameter "address"
+
+    .prologue
+    new-instance v0, Ljava/lang/StringBuilder;
+
+    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v1, "bluetooth_map_priority_"
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    sget-object v1, Ljava/util/Locale;->ROOT:Ljava/util/Locale;
+
+    invoke-virtual {p0, v1}, Ljava/lang/String;->toUpperCase(Ljava/util/Locale;)Ljava/lang/String;
 
     move-result-object v1
 

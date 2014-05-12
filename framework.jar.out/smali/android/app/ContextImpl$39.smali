@@ -14,6 +14,10 @@
 .end annotation
 
 
+# instance fields
+.field mDefaultDisplay:Landroid/view/Display;
+
+
 # direct methods
 .method constructor <init>()V
     .locals 0
@@ -37,7 +41,11 @@
     move-result-object v0
 
     .local v0, display:Landroid/view/Display;
-    if-nez v0, :cond_0
+    if-nez v0, :cond_1
+
+    iget-object v2, p0, Landroid/app/ContextImpl$39;->mDefaultDisplay:Landroid/view/Display;
+
+    if-nez v2, :cond_0
 
     invoke-virtual {p1}, Landroid/app/ContextImpl;->getOuterContext()Landroid/content/Context;
 
@@ -56,10 +64,15 @@
 
     invoke-virtual {v1, v2}, Landroid/hardware/display/DisplayManager;->getDisplay(I)Landroid/view/Display;
 
-    move-result-object v0
+    move-result-object v2
+
+    iput-object v2, p0, Landroid/app/ContextImpl$39;->mDefaultDisplay:Landroid/view/Display;
 
     .end local v1           #dm:Landroid/hardware/display/DisplayManager;
     :cond_0
+    iget-object v0, p0, Landroid/app/ContextImpl$39;->mDefaultDisplay:Landroid/view/Display;
+
+    :cond_1
     new-instance v2, Landroid/view/WindowManagerImpl;
 
     invoke-direct {v2, v0}, Landroid/view/WindowManagerImpl;-><init>(Landroid/view/Display;)V

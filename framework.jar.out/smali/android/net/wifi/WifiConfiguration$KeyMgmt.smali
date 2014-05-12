@@ -19,11 +19,11 @@
 
 .field public static final NONE:I = 0x0
 
-.field public static final WAPI_CERT:I = 0x5
+.field public static final WAPI_CERT:I = 0x6
 
-.field public static final WAPI_PSK:I = 0x4
+.field public static final WAPI_PSK:I = 0x5
 
-.field public static final WPA2_PSK:I = 0x6
+.field public static final WPA2_PSK:I = 0x4
 
 .field public static final WPA_EAP:I = 0x2
 
@@ -69,19 +69,19 @@
 
     const/4 v1, 0x4
 
-    const-string v2, "WAPI_PSK"
+    const-string v2, "WPA2_PSK"
 
     aput-object v2, v0, v1
 
     const/4 v1, 0x5
 
-    const-string v2, "WAPI_CERT"
+    const-string v2, "WAPI_PSK"
 
     aput-object v2, v0, v1
 
     const/4 v1, 0x6
 
-    const-string v2, "WPA2_PSK"
+    const-string v2, "WAPI_CERT"
 
     aput-object v2, v0, v1
 

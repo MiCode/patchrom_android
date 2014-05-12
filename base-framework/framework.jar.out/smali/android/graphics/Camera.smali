@@ -4,6 +4,8 @@
 
 
 # instance fields
+.field private mMatrix:Landroid/graphics/Matrix;
+
 .field native_instance:I
 
 
@@ -38,11 +40,40 @@
     .parameter "canvas"
 
     .prologue
+    invoke-virtual {p1}, Landroid/graphics/Canvas;->isHardwareAccelerated()Z
+
+    move-result v0
+
+    if-eqz v0, :cond_1
+
+    iget-object v0, p0, Landroid/graphics/Camera;->mMatrix:Landroid/graphics/Matrix;
+
+    if-nez v0, :cond_0
+
+    new-instance v0, Landroid/graphics/Matrix;
+
+    invoke-direct {v0}, Landroid/graphics/Matrix;-><init>()V
+
+    iput-object v0, p0, Landroid/graphics/Camera;->mMatrix:Landroid/graphics/Matrix;
+
+    :cond_0
+    iget-object v0, p0, Landroid/graphics/Camera;->mMatrix:Landroid/graphics/Matrix;
+
+    invoke-virtual {p0, v0}, Landroid/graphics/Camera;->getMatrix(Landroid/graphics/Matrix;)V
+
+    iget-object v0, p0, Landroid/graphics/Camera;->mMatrix:Landroid/graphics/Matrix;
+
+    invoke-virtual {p1, v0}, Landroid/graphics/Canvas;->concat(Landroid/graphics/Matrix;)V
+
+    :goto_0
+    return-void
+
+    :cond_1
     iget v0, p1, Landroid/graphics/Canvas;->mNativeCanvas:I
 
     invoke-direct {p0, v0}, Landroid/graphics/Camera;->nativeApplyToCanvas(I)V
 
-    return-void
+    goto :goto_0
 .end method
 
 .method public native dotWithNormal(FFF)F

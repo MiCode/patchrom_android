@@ -280,22 +280,16 @@
 
 .method public detectCountry()Landroid/location/Country;
     .locals 1
-    .annotation system Ldalvik/annotation/Throws;
-        value = {
-            Landroid/os/RemoteException;
-        }
-    .end annotation
 
     .prologue
     iget-boolean v0, p0, Lcom/android/server/CountryDetectorService;->mSystemReady:Z
 
     if-nez v0, :cond_0
 
-    new-instance v0, Landroid/os/RemoteException;
+    const/4 v0, 0x0
 
-    invoke-direct {v0}, Landroid/os/RemoteException;-><init>()V
-
-    throw v0
+    :goto_0
+    return-object v0
 
     :cond_0
     iget-object v0, p0, Lcom/android/server/CountryDetectorService;->mCountryDetector:Lcom/android/server/location/ComprehensiveCountryDetector;
@@ -304,7 +298,7 @@
 
     move-result-object v0
 
-    return-object v0
+    goto :goto_0
 .end method
 
 .method protected dump(Ljava/io/FileDescriptor;Ljava/io/PrintWriter;[Ljava/lang/String;)V
@@ -452,12 +446,6 @@
     .locals 1
 
     .prologue
-    const/16 v0, 0xa
-
-    invoke-static {v0}, Landroid/os/Process;->setThreadPriority(I)V
-
-    invoke-static {}, Landroid/os/Looper;->prepare()V
-
     new-instance v0, Landroid/os/Handler;
 
     invoke-direct {v0}, Landroid/os/Handler;-><init>()V
@@ -469,8 +457,6 @@
     const/4 v0, 0x1
 
     iput-boolean v0, p0, Lcom/android/server/CountryDetectorService;->mSystemReady:Z
-
-    invoke-static {}, Landroid/os/Looper;->loop()V
 
     return-void
 .end method
@@ -491,18 +477,15 @@
     return-void
 .end method
 
-.method systemReady()V
-    .locals 2
+.method systemRunning()V
+    .locals 1
 
     .prologue
-    new-instance v0, Ljava/lang/Thread;
+    invoke-static {}, Lcom/android/internal/os/BackgroundThread;->getHandler()Landroid/os/Handler;
 
-    const-string v1, "CountryDetectorService"
+    move-result-object v0
 
-    invoke-direct {v0, p0, v1}, Ljava/lang/Thread;-><init>(Ljava/lang/Runnable;Ljava/lang/String;)V
-
-    .local v0, thread:Ljava/lang/Thread;
-    invoke-virtual {v0}, Ljava/lang/Thread;->start()V
+    invoke-virtual {v0, p0}, Landroid/os/Handler;->post(Ljava/lang/Runnable;)Z
 
     return-void
 .end method

@@ -17,6 +17,8 @@
 # instance fields
 .field public count:I
 
+.field public maxWhen:J
+
 .field public operation:Landroid/app/PendingIntent;
 
 .field public repeatInterval:J
@@ -25,23 +27,43 @@
 
 .field public when:J
 
+.field public whenElapsed:J
+
+.field public windowLength:J
+
+.field public workSource:Landroid/os/WorkSource;
+
 
 # direct methods
-.method public constructor <init>()V
-    .locals 2
+.method public constructor <init>(IJJJJJLandroid/app/PendingIntent;Landroid/os/WorkSource;)V
+    .locals 0
+    .parameter "_type"
+    .parameter "_when"
+    .parameter "_whenElapsed"
+    .parameter "_windowLength"
+    .parameter "_maxWhen"
+    .parameter "_interval"
+    .parameter "_op"
+    .parameter "_ws"
 
     .prologue
-    const-wide/16 v0, 0x0
-
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    iput-wide v0, p0, Lcom/android/server/AlarmManagerService$Alarm;->when:J
+    iput p1, p0, Lcom/android/server/AlarmManagerService$Alarm;->type:I
 
-    iput-wide v0, p0, Lcom/android/server/AlarmManagerService$Alarm;->repeatInterval:J
+    iput-wide p2, p0, Lcom/android/server/AlarmManagerService$Alarm;->when:J
 
-    const/4 v0, 0x0
+    iput-wide p4, p0, Lcom/android/server/AlarmManagerService$Alarm;->whenElapsed:J
 
-    iput-object v0, p0, Lcom/android/server/AlarmManagerService$Alarm;->operation:Landroid/app/PendingIntent;
+    iput-wide p6, p0, Lcom/android/server/AlarmManagerService$Alarm;->windowLength:J
+
+    iput-wide p8, p0, Lcom/android/server/AlarmManagerService$Alarm;->maxWhen:J
+
+    iput-wide p10, p0, Lcom/android/server/AlarmManagerService$Alarm;->repeatInterval:J
+
+    iput-object p12, p0, Lcom/android/server/AlarmManagerService$Alarm;->operation:Landroid/app/PendingIntent;
+
+    iput-object p13, p0, Lcom/android/server/AlarmManagerService$Alarm;->workSource:Landroid/os/WorkSource;
 
     return-void
 .end method
@@ -65,6 +87,14 @@
 
     invoke-virtual {p1, v0}, Ljava/io/PrintWriter;->print(I)V
 
+    const-string v0, " whenElapsed="
+
+    invoke-virtual {p1, v0}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
+
+    iget-wide v0, p0, Lcom/android/server/AlarmManagerService$Alarm;->whenElapsed:J
+
+    invoke-virtual {p1, v0, v1}, Ljava/io/PrintWriter;->print(J)V
+
     const-string v0, " when="
 
     invoke-virtual {p1, v0}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -72,6 +102,14 @@
     iget-wide v0, p0, Lcom/android/server/AlarmManagerService$Alarm;->when:J
 
     invoke-static {v0, v1, p3, p4, p1}, Landroid/util/TimeUtils;->formatDuration(JJLjava/io/PrintWriter;)V
+
+    const-string v0, " window="
+
+    invoke-virtual {p1, v0}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
+
+    iget-wide v0, p0, Lcom/android/server/AlarmManagerService$Alarm;->windowLength:J
+
+    invoke-virtual {p1, v0, v1}, Ljava/io/PrintWriter;->print(J)V
 
     const-string v0, " repeatInterval="
 

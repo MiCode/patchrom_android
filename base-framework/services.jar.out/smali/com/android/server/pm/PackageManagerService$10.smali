@@ -59,7 +59,7 @@
     const/4 v3, 0x1
 
     #calls: Lcom/android/server/pm/PackageManagerService;->updateExternalMediaStatusInner(ZZZ)V
-    invoke-static {v0, v1, v2, v3}, Lcom/android/server/pm/PackageManagerService;->access$4200(Lcom/android/server/pm/PackageManagerService;ZZZ)V
+    invoke-static {v0, v1, v2, v3}, Lcom/android/server/pm/PackageManagerService;->access$4600(Lcom/android/server/pm/PackageManagerService;ZZZ)V
 
     return-void
 .end method

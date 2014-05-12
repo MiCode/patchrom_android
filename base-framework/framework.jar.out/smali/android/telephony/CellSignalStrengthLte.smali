@@ -96,11 +96,15 @@
 
     move-result v0
 
+    mul-int/lit8 v0, v0, -0x1
+
     iput v0, p0, Landroid/telephony/CellSignalStrengthLte;->mRsrp:I
 
     invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
 
     move-result v0
+
+    mul-int/lit8 v0, v0, -0x1
 
     iput v0, p0, Landroid/telephony/CellSignalStrengthLte;->mRsrq:I
 
@@ -155,7 +159,7 @@
     .prologue
     const-string v0, "CellSignalStrengthLte"
 
-    invoke-static {v0, p0}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v0, p0}, Landroid/telephony/Rlog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
     return-void
 .end method
@@ -568,7 +572,7 @@
     .parameter "timingAdvance"
 
     .prologue
-    invoke-virtual {p1}, Landroid/telephony/SignalStrength;->getLteSignalStrenght()I
+    invoke-virtual {p1}, Landroid/telephony/SignalStrength;->getLteSignalStrength()I
 
     move-result v0
 
@@ -723,9 +727,13 @@
 
     iget v0, p0, Landroid/telephony/CellSignalStrengthLte;->mRsrp:I
 
+    mul-int/lit8 v0, v0, -0x1
+
     invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeInt(I)V
 
     iget v0, p0, Landroid/telephony/CellSignalStrengthLte;->mRsrq:I
+
+    mul-int/lit8 v0, v0, -0x1
 
     invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeInt(I)V
 

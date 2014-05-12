@@ -346,6 +346,27 @@
     goto :goto_0
 .end method
 
+.method public final getLogoResource()I
+    .locals 1
+
+    .prologue
+    iget v0, p0, Landroid/content/pm/ComponentInfo;->logo:I
+
+    if-eqz v0, :cond_0
+
+    iget v0, p0, Landroid/content/pm/ComponentInfo;->logo:I
+
+    :goto_0
+    return v0
+
+    :cond_0
+    iget-object v0, p0, Landroid/content/pm/ComponentInfo;->applicationInfo:Landroid/content/pm/ApplicationInfo;
+
+    iget v0, v0, Landroid/content/pm/ApplicationInfo;->logo:I
+
+    goto :goto_0
+.end method
+
 .method public isEnabled()Z
     .locals 1
 

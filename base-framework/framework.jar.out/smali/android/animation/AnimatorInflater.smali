@@ -473,7 +473,7 @@
     .local v3, a:Landroid/content/res/TypedArray;
     const/16 v22, 0x1
 
-    const/16 v23, 0x0
+    const/16 v23, 0x12c
 
     move/from16 v0, v22
 

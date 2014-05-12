@@ -9,29 +9,38 @@
         Landroid/renderscript/RenderScript$MessageThread;,
         Landroid/renderscript/RenderScript$Priority;,
         Landroid/renderscript/RenderScript$RSErrorHandler;,
-        Landroid/renderscript/RenderScript$RSMessageHandler;
+        Landroid/renderscript/RenderScript$RSMessageHandler;,
+        Landroid/renderscript/RenderScript$ContextType;
     }
 .end annotation
 
 
 # static fields
-.field private static final CACHE_PATH:Ljava/lang/String; = "com.android.renderscript.cache"
-
 .field static final DEBUG:Z = false
 
 .field static final LOG_ENABLED:Z = false
 
 .field static final LOG_TAG:Ljava/lang/String; = "RenderScript_jni"
 
-.field static mCachePath:Ljava/lang/String;
+.field static final TRACE_TAG:J = 0x8000L
+
+.field static mCacheDir:Ljava/io/File;
+
+.field static registerNativeAllocation:Ljava/lang/reflect/Method;
+
+.field static registerNativeFree:Ljava/lang/reflect/Method;
 
 .field static sInitialized:Z
+
+.field static sRuntime:Ljava/lang/Object;
 
 
 # instance fields
 .field private mApplicationContext:Landroid/content/Context;
 
 .field mContext:I
+
+.field mContextType:Landroid/renderscript/RenderScript$ContextType;
 
 .field mDev:I
 
@@ -157,6 +166,8 @@
 
 .field mElement_USHORT_4:Landroid/renderscript/Element;
 
+.field mElement_YUV:Landroid/renderscript/Element;
+
 .field mErrorCallback:Landroid/renderscript/RenderScript$RSErrorHandler;
 
 .field mMessageCallback:Landroid/renderscript/RenderScript$RSMessageHandler;
@@ -183,6 +194,12 @@
 
 .field mSampler_CLAMP_NEAREST:Landroid/renderscript/Sampler;
 
+.field mSampler_MIRRORED_REPEAT_LINEAR:Landroid/renderscript/Sampler;
+
+.field mSampler_MIRRORED_REPEAT_LINEAR_MIP_LINEAR:Landroid/renderscript/Sampler;
+
+.field mSampler_MIRRORED_REPEAT_NEAREST:Landroid/renderscript/Sampler;
+
 .field mSampler_WRAP_LINEAR:Landroid/renderscript/Sampler;
 
 .field mSampler_WRAP_LINEAR_MIP_LINEAR:Landroid/renderscript/Sampler;
@@ -192,77 +209,208 @@
 
 # direct methods
 .method static constructor <clinit>()V
-    .locals 4
+    .locals 7
 
     .prologue
-    const/4 v1, 0x0
+    const/4 v4, 0x0
 
-    sput-boolean v1, Landroid/renderscript/RenderScript;->sInitialized:Z
+    sput-boolean v4, Landroid/renderscript/RenderScript;->sInitialized:Z
+
+    const-string v3, "config.disable_renderscript"
+
+    invoke-static {v3, v4}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
+
+    move-result v3
+
+    if-nez v3, :cond_0
 
     :try_start_0
-    const-string v1, "rs_jni"
+    const-string v3, "dalvik.system.VMRuntime"
 
-    invoke-static {v1}, Ljava/lang/System;->loadLibrary(Ljava/lang/String;)V
+    invoke-static {v3}, Ljava/lang/Class;->forName(Ljava/lang/String;)Ljava/lang/Class;
+
+    move-result-object v2
+
+    .local v2, vm_runtime:Ljava/lang/Class;,"Ljava/lang/Class<*>;"
+    const-string v3, "getRuntime"
+
+    const/4 v4, 0x0
+
+    new-array v4, v4, [Ljava/lang/Class;
+
+    invoke-virtual {v2, v3, v4}, Ljava/lang/Class;->getDeclaredMethod(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
+
+    move-result-object v1
+
+    .local v1, get_runtime:Ljava/lang/reflect/Method;
+    const/4 v3, 0x0
+
+    const/4 v4, 0x0
+
+    new-array v4, v4, [Ljava/lang/Object;
+
+    invoke-virtual {v1, v3, v4}, Ljava/lang/reflect/Method;->invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;
+
+    move-result-object v3
+
+    sput-object v3, Landroid/renderscript/RenderScript;->sRuntime:Ljava/lang/Object;
+
+    const-string v3, "registerNativeAllocation"
+
+    const/4 v4, 0x1
+
+    new-array v4, v4, [Ljava/lang/Class;
+
+    const/4 v5, 0x0
+
+    sget-object v6, Ljava/lang/Integer;->TYPE:Ljava/lang/Class;
+
+    aput-object v6, v4, v5
+
+    invoke-virtual {v2, v3, v4}, Ljava/lang/Class;->getDeclaredMethod(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
+
+    move-result-object v3
+
+    sput-object v3, Landroid/renderscript/RenderScript;->registerNativeAllocation:Ljava/lang/reflect/Method;
+
+    const-string v3, "registerNativeFree"
+
+    const/4 v4, 0x1
+
+    new-array v4, v4, [Ljava/lang/Class;
+
+    const/4 v5, 0x0
+
+    sget-object v6, Ljava/lang/Integer;->TYPE:Ljava/lang/Class;
+
+    aput-object v6, v4, v5
+
+    invoke-virtual {v2, v3, v4}, Ljava/lang/Class;->getDeclaredMethod(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
+
+    move-result-object v3
+
+    sput-object v3, Landroid/renderscript/RenderScript;->registerNativeFree:Ljava/lang/reflect/Method;
+    :try_end_0
+    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
+
+    :try_start_1
+    const-string v3, "rs_jni"
+
+    invoke-static {v3}, Ljava/lang/System;->loadLibrary(Ljava/lang/String;)V
 
     invoke-static {}, Landroid/renderscript/RenderScript;->_nInit()V
 
-    const/4 v1, 0x1
+    const/4 v3, 0x1
 
-    sput-boolean v1, Landroid/renderscript/RenderScript;->sInitialized:Z
-    :try_end_0
-    .catch Ljava/lang/UnsatisfiedLinkError; {:try_start_0 .. :try_end_0} :catch_0
+    sput-boolean v3, Landroid/renderscript/RenderScript;->sInitialized:Z
+    :try_end_1
+    .catch Ljava/lang/UnsatisfiedLinkError; {:try_start_1 .. :try_end_1} :catch_1
 
+    :cond_0
     return-void
 
+    .end local v1           #get_runtime:Ljava/lang/reflect/Method;
     :catch_0
     move-exception v0
 
+    .local v0, e:Ljava/lang/Exception;
+    const-string v3, "RenderScript_jni"
+
+    new-instance v4, Ljava/lang/StringBuilder;
+
+    invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v5, "Error loading GC methods: "
+
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v4
+
+    invoke-virtual {v4, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    move-result-object v4
+
+    invoke-virtual {v4}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v4
+
+    invoke-static {v3, v4}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+
+    new-instance v3, Landroid/renderscript/RSRuntimeException;
+
+    new-instance v4, Ljava/lang/StringBuilder;
+
+    invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v5, "Error loading GC methods: "
+
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v4
+
+    invoke-virtual {v4, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    move-result-object v4
+
+    invoke-virtual {v4}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v4
+
+    invoke-direct {v3, v4}, Landroid/renderscript/RSRuntimeException;-><init>(Ljava/lang/String;)V
+
+    throw v3
+
+    .end local v0           #e:Ljava/lang/Exception;
+    .restart local v1       #get_runtime:Ljava/lang/reflect/Method;
+    :catch_1
+    move-exception v0
+
     .local v0, e:Ljava/lang/UnsatisfiedLinkError;
-    const-string v1, "RenderScript_jni"
+    const-string v3, "RenderScript_jni"
 
-    new-instance v2, Ljava/lang/StringBuilder;
+    new-instance v4, Ljava/lang/StringBuilder;
 
-    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+    invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v3, "Error loading RS jni library: "
+    const-string v5, "Error loading RS jni library: "
 
-    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v2
+    move-result-object v4
 
-    invoke-virtual {v2, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+    invoke-virtual {v4, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
 
-    move-result-object v2
+    move-result-object v4
 
-    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    invoke-virtual {v4}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    move-result-object v2
+    move-result-object v4
 
-    invoke-static {v1, v2}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v3, v4}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
 
-    new-instance v1, Landroid/renderscript/RSRuntimeException;
+    new-instance v3, Landroid/renderscript/RSRuntimeException;
 
-    new-instance v2, Ljava/lang/StringBuilder;
+    new-instance v4, Ljava/lang/StringBuilder;
 
-    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+    invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v3, "Error loading RS jni library: "
+    const-string v5, "Error loading RS jni library: "
 
-    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v2
+    move-result-object v4
 
-    invoke-virtual {v2, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+    invoke-virtual {v4, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
 
-    move-result-object v2
+    move-result-object v4
 
-    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    invoke-virtual {v4}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    move-result-object v2
+    move-result-object v4
 
-    invoke-direct {v1, v2}, Landroid/renderscript/RSRuntimeException;-><init>(Ljava/lang/String;)V
+    invoke-direct {v3, v4}, Landroid/renderscript/RSRuntimeException;-><init>(Ljava/lang/String;)V
 
-    throw v1
+    throw v3
 .end method
 
 .method constructor <init>(Landroid/content/Context;)V
@@ -277,6 +425,10 @@
     iput-object v0, p0, Landroid/renderscript/RenderScript;->mMessageCallback:Landroid/renderscript/RenderScript$RSMessageHandler;
 
     iput-object v0, p0, Landroid/renderscript/RenderScript;->mErrorCallback:Landroid/renderscript/RenderScript$RSErrorHandler;
+
+    sget-object v0, Landroid/renderscript/RenderScript$ContextType;->NORMAL:Landroid/renderscript/RenderScript$ContextType;
+
+    iput-object v0, p0, Landroid/renderscript/RenderScript;->mContextType:Landroid/renderscript/RenderScript$ContextType;
 
     if-eqz p1, :cond_0
 
@@ -294,30 +446,57 @@
 .end method
 
 .method public static create(Landroid/content/Context;)Landroid/renderscript/RenderScript;
-    .locals 2
+    .locals 1
     .parameter "ctx"
 
     .prologue
-    invoke-virtual {p0}, Landroid/content/Context;->getApplicationInfo()Landroid/content/pm/ApplicationInfo;
+    sget-object v0, Landroid/renderscript/RenderScript$ContextType;->NORMAL:Landroid/renderscript/RenderScript$ContextType;
 
-    move-result-object v1
+    invoke-static {p0, v0}, Landroid/renderscript/RenderScript;->create(Landroid/content/Context;Landroid/renderscript/RenderScript$ContextType;)Landroid/renderscript/RenderScript;
 
-    iget v0, v1, Landroid/content/pm/ApplicationInfo;->targetSdkVersion:I
+    move-result-object v0
 
-    .local v0, v:I
-    invoke-static {p0, v0}, Landroid/renderscript/RenderScript;->create(Landroid/content/Context;I)Landroid/renderscript/RenderScript;
-
-    move-result-object v1
-
-    return-object v1
+    return-object v0
 .end method
 
 .method public static create(Landroid/content/Context;I)Landroid/renderscript/RenderScript;
-    .locals 3
+    .locals 1
     .parameter "ctx"
     .parameter "sdkVersion"
 
     .prologue
+    sget-object v0, Landroid/renderscript/RenderScript$ContextType;->NORMAL:Landroid/renderscript/RenderScript$ContextType;
+
+    invoke-static {p0, p1, v0}, Landroid/renderscript/RenderScript;->create(Landroid/content/Context;ILandroid/renderscript/RenderScript$ContextType;)Landroid/renderscript/RenderScript;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public static create(Landroid/content/Context;ILandroid/renderscript/RenderScript$ContextType;)Landroid/renderscript/RenderScript;
+    .locals 4
+    .parameter "ctx"
+    .parameter "sdkVersion"
+    .parameter "ct"
+
+    .prologue
+    sget-boolean v1, Landroid/renderscript/RenderScript;->sInitialized:Z
+
+    if-nez v1, :cond_0
+
+    const-string v1, "RenderScript_jni"
+
+    const-string v2, "RenderScript.create() called when disabled; someone is likely to crash"
+
+    invoke-static {v1, v2}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+
+    const/4 v0, 0x0
+
+    :goto_0
+    return-object v0
+
+    :cond_0
     new-instance v0, Landroid/renderscript/RenderScript;
 
     invoke-direct {v0, p0}, Landroid/renderscript/RenderScript;-><init>(Landroid/content/Context;)V
@@ -333,15 +512,19 @@
 
     const/4 v2, 0x0
 
-    invoke-virtual {v0, v1, v2, p1}, Landroid/renderscript/RenderScript;->nContextCreate(III)I
+    iget v3, p2, Landroid/renderscript/RenderScript$ContextType;->mID:I
+
+    invoke-virtual {v0, v1, v2, p1, v3}, Landroid/renderscript/RenderScript;->nContextCreate(IIII)I
 
     move-result v1
 
     iput v1, v0, Landroid/renderscript/RenderScript;->mContext:I
 
+    iput-object p2, v0, Landroid/renderscript/RenderScript;->mContextType:Landroid/renderscript/RenderScript$ContextType;
+
     iget v1, v0, Landroid/renderscript/RenderScript;->mContext:I
 
-    if-nez v1, :cond_0
+    if-nez v1, :cond_1
 
     new-instance v1, Landroid/renderscript/RSDriverException;
 
@@ -351,7 +534,7 @@
 
     throw v1
 
-    :cond_0
+    :cond_1
     new-instance v1, Landroid/renderscript/RenderScript$MessageThread;
 
     invoke-direct {v1, v0}, Landroid/renderscript/RenderScript$MessageThread;-><init>(Landroid/renderscript/RenderScript;)V
@@ -362,7 +545,27 @@
 
     invoke-virtual {v1}, Landroid/renderscript/RenderScript$MessageThread;->start()V
 
-    return-object v0
+    goto :goto_0
+.end method
+
+.method public static create(Landroid/content/Context;Landroid/renderscript/RenderScript$ContextType;)Landroid/renderscript/RenderScript;
+    .locals 2
+    .parameter "ctx"
+    .parameter "ct"
+
+    .prologue
+    invoke-virtual {p0}, Landroid/content/Context;->getApplicationInfo()Landroid/content/pm/ApplicationInfo;
+
+    move-result-object v1
+
+    iget v0, v1, Landroid/content/pm/ApplicationInfo;->targetSdkVersion:I
+
+    .local v0, v:I
+    invoke-static {p0, v0, p1}, Landroid/renderscript/RenderScript;->create(Landroid/content/Context;ILandroid/renderscript/RenderScript$ContextType;)Landroid/renderscript/RenderScript;
+
+    move-result-object v1
+
+    return-object v1
 .end method
 
 .method public static setupDiskCache(Ljava/io/File;)V
@@ -370,22 +573,23 @@
     .parameter "cacheDir"
 
     .prologue
-    new-instance v0, Ljava/io/File;
+    sget-boolean v0, Landroid/renderscript/RenderScript;->sInitialized:Z
 
-    const-string v1, "com.android.renderscript.cache"
+    if-nez v0, :cond_0
 
-    invoke-direct {v0, p0, v1}, Ljava/io/File;-><init>(Ljava/io/File;Ljava/lang/String;)V
+    const-string v0, "RenderScript_jni"
 
-    .local v0, f:Ljava/io/File;
-    invoke-virtual {v0}, Ljava/io/File;->getAbsolutePath()Ljava/lang/String;
+    const-string v1, "RenderScript.setupDiskCache() called when disabled"
 
-    move-result-object v1
+    invoke-static {v0, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
 
-    sput-object v1, Landroid/renderscript/RenderScript;->mCachePath:Ljava/lang/String;
-
-    invoke-virtual {v0}, Ljava/io/File;->mkdirs()Z
-
+    :goto_0
     return-void
+
+    :cond_0
+    sput-object p0, Landroid/renderscript/RenderScript;->mCacheDir:Ljava/io/File;
+
+    goto :goto_0
 .end method
 
 
@@ -549,6 +753,49 @@
     monitor-exit p0
 
     return-void
+
+    :catchall_0
+    move-exception v0
+
+    monitor-exit p0
+
+    throw v0
+.end method
+
+.method declared-synchronized nAllocationCreateBitmapBackedAllocation(IILandroid/graphics/Bitmap;I)I
+    .locals 6
+    .parameter "type"
+    .parameter "mip"
+    .parameter "bmp"
+    .parameter "usage"
+
+    .prologue
+    monitor-enter p0
+
+    :try_start_0
+    invoke-virtual {p0}, Landroid/renderscript/RenderScript;->validate()V
+
+    iget v1, p0, Landroid/renderscript/RenderScript;->mContext:I
+
+    move-object v0, p0
+
+    move v2, p1
+
+    move v3, p2
+
+    move-object v4, p3
+
+    move v5, p4
+
+    invoke-virtual/range {v0 .. v5}, Landroid/renderscript/RenderScript;->rsnAllocationCreateBitmapBackedAllocation(IIILandroid/graphics/Bitmap;I)I
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    move-result v0
+
+    monitor-exit p0
+
+    return v0
 
     :catchall_0
     move-exception v0
@@ -1274,6 +1521,310 @@
     throw v0
 .end method
 
+.method declared-synchronized nAllocationData3D(IIIIIIIIIIIII)V
+    .locals 15
+    .parameter "dstAlloc"
+    .parameter "dstXoff"
+    .parameter "dstYoff"
+    .parameter "dstZoff"
+    .parameter "dstMip"
+    .parameter "width"
+    .parameter "height"
+    .parameter "depth"
+    .parameter "srcAlloc"
+    .parameter "srcXoff"
+    .parameter "srcYoff"
+    .parameter "srcZoff"
+    .parameter "srcMip"
+
+    .prologue
+    monitor-enter p0
+
+    :try_start_0
+    invoke-virtual {p0}, Landroid/renderscript/RenderScript;->validate()V
+
+    iget v1, p0, Landroid/renderscript/RenderScript;->mContext:I
+
+    move-object v0, p0
+
+    move/from16 v2, p1
+
+    move/from16 v3, p2
+
+    move/from16 v4, p3
+
+    move/from16 v5, p4
+
+    move/from16 v6, p5
+
+    move/from16 v7, p6
+
+    move/from16 v8, p7
+
+    move/from16 v9, p8
+
+    move/from16 v10, p9
+
+    move/from16 v11, p10
+
+    move/from16 v12, p11
+
+    move/from16 v13, p12
+
+    move/from16 v14, p13
+
+    invoke-virtual/range {v0 .. v14}, Landroid/renderscript/RenderScript;->rsnAllocationData3D(IIIIIIIIIIIIII)V
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    monitor-exit p0
+
+    return-void
+
+    :catchall_0
+    move-exception v0
+
+    monitor-exit p0
+
+    throw v0
+.end method
+
+.method declared-synchronized nAllocationData3D(IIIIIIII[BI)V
+    .locals 12
+    .parameter "id"
+    .parameter "xoff"
+    .parameter "yoff"
+    .parameter "zoff"
+    .parameter "mip"
+    .parameter "w"
+    .parameter "h"
+    .parameter "depth"
+    .parameter "d"
+    .parameter "sizeBytes"
+
+    .prologue
+    monitor-enter p0
+
+    :try_start_0
+    invoke-virtual {p0}, Landroid/renderscript/RenderScript;->validate()V
+
+    iget v1, p0, Landroid/renderscript/RenderScript;->mContext:I
+
+    move-object v0, p0
+
+    move v2, p1
+
+    move v3, p2
+
+    move v4, p3
+
+    move/from16 v5, p4
+
+    move/from16 v6, p5
+
+    move/from16 v7, p6
+
+    move/from16 v8, p7
+
+    move/from16 v9, p8
+
+    move-object/from16 v10, p9
+
+    move/from16 v11, p10
+
+    invoke-virtual/range {v0 .. v11}, Landroid/renderscript/RenderScript;->rsnAllocationData3D(IIIIIIIII[BI)V
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    monitor-exit p0
+
+    return-void
+
+    :catchall_0
+    move-exception v0
+
+    monitor-exit p0
+
+    throw v0
+.end method
+
+.method declared-synchronized nAllocationData3D(IIIIIIII[FI)V
+    .locals 12
+    .parameter "id"
+    .parameter "xoff"
+    .parameter "yoff"
+    .parameter "zoff"
+    .parameter "mip"
+    .parameter "w"
+    .parameter "h"
+    .parameter "depth"
+    .parameter "d"
+    .parameter "sizeBytes"
+
+    .prologue
+    monitor-enter p0
+
+    :try_start_0
+    invoke-virtual {p0}, Landroid/renderscript/RenderScript;->validate()V
+
+    iget v1, p0, Landroid/renderscript/RenderScript;->mContext:I
+
+    move-object v0, p0
+
+    move v2, p1
+
+    move v3, p2
+
+    move v4, p3
+
+    move/from16 v5, p4
+
+    move/from16 v6, p5
+
+    move/from16 v7, p6
+
+    move/from16 v8, p7
+
+    move/from16 v9, p8
+
+    move-object/from16 v10, p9
+
+    move/from16 v11, p10
+
+    invoke-virtual/range {v0 .. v11}, Landroid/renderscript/RenderScript;->rsnAllocationData3D(IIIIIIIII[FI)V
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    monitor-exit p0
+
+    return-void
+
+    :catchall_0
+    move-exception v0
+
+    monitor-exit p0
+
+    throw v0
+.end method
+
+.method declared-synchronized nAllocationData3D(IIIIIIII[II)V
+    .locals 12
+    .parameter "id"
+    .parameter "xoff"
+    .parameter "yoff"
+    .parameter "zoff"
+    .parameter "mip"
+    .parameter "w"
+    .parameter "h"
+    .parameter "depth"
+    .parameter "d"
+    .parameter "sizeBytes"
+
+    .prologue
+    monitor-enter p0
+
+    :try_start_0
+    invoke-virtual {p0}, Landroid/renderscript/RenderScript;->validate()V
+
+    iget v1, p0, Landroid/renderscript/RenderScript;->mContext:I
+
+    move-object v0, p0
+
+    move v2, p1
+
+    move v3, p2
+
+    move v4, p3
+
+    move/from16 v5, p4
+
+    move/from16 v6, p5
+
+    move/from16 v7, p6
+
+    move/from16 v8, p7
+
+    move/from16 v9, p8
+
+    move-object/from16 v10, p9
+
+    move/from16 v11, p10
+
+    invoke-virtual/range {v0 .. v11}, Landroid/renderscript/RenderScript;->rsnAllocationData3D(IIIIIIIII[II)V
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    monitor-exit p0
+
+    return-void
+
+    :catchall_0
+    move-exception v0
+
+    monitor-exit p0
+
+    throw v0
+.end method
+
+.method declared-synchronized nAllocationData3D(IIIIIIII[SI)V
+    .locals 12
+    .parameter "id"
+    .parameter "xoff"
+    .parameter "yoff"
+    .parameter "zoff"
+    .parameter "mip"
+    .parameter "w"
+    .parameter "h"
+    .parameter "depth"
+    .parameter "d"
+    .parameter "sizeBytes"
+
+    .prologue
+    monitor-enter p0
+
+    :try_start_0
+    invoke-virtual {p0}, Landroid/renderscript/RenderScript;->validate()V
+
+    iget v1, p0, Landroid/renderscript/RenderScript;->mContext:I
+
+    move-object v0, p0
+
+    move v2, p1
+
+    move v3, p2
+
+    move v4, p3
+
+    move/from16 v5, p4
+
+    move/from16 v6, p5
+
+    move/from16 v7, p6
+
+    move/from16 v8, p7
+
+    move/from16 v9, p8
+
+    move-object/from16 v10, p9
+
+    move/from16 v11, p10
+
+    invoke-virtual/range {v0 .. v11}, Landroid/renderscript/RenderScript;->rsnAllocationData3D(IIIIIIIII[SI)V
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    monitor-exit p0
+
+    return-void
+
+    :catchall_0
+    move-exception v0
+
+    monitor-exit p0
+
+    throw v0
+.end method
+
 .method declared-synchronized nAllocationElementData1D(IIII[BI)V
     .locals 8
     .parameter "id"
@@ -1349,7 +1900,7 @@
     throw v0
 .end method
 
-.method declared-synchronized nAllocationGetSurfaceTextureID(I)I
+.method declared-synchronized nAllocationGetSurface(I)Landroid/view/Surface;
     .locals 1
     .parameter "alloc"
 
@@ -1361,44 +1912,15 @@
 
     iget v0, p0, Landroid/renderscript/RenderScript;->mContext:I
 
-    invoke-virtual {p0, v0, p1}, Landroid/renderscript/RenderScript;->rsnAllocationGetSurfaceTextureID(II)I
+    invoke-virtual {p0, v0, p1}, Landroid/renderscript/RenderScript;->rsnAllocationGetSurface(II)Landroid/view/Surface;
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    move-result v0
+    move-result-object v0
 
     monitor-exit p0
 
-    return v0
-
-    :catchall_0
-    move-exception v0
-
-    monitor-exit p0
-
-    throw v0
-.end method
-
-.method declared-synchronized nAllocationGetSurfaceTextureID2(ILandroid/graphics/SurfaceTexture;)V
-    .locals 1
-    .parameter "alloc"
-    .parameter "st"
-
-    .prologue
-    monitor-enter p0
-
-    :try_start_0
-    invoke-virtual {p0}, Landroid/renderscript/RenderScript;->validate()V
-
-    iget v0, p0, Landroid/renderscript/RenderScript;->mContext:I
-
-    invoke-virtual {p0, v0, p1, p2}, Landroid/renderscript/RenderScript;->rsnAllocationGetSurfaceTextureID2(IILandroid/graphics/SurfaceTexture;)V
-    :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
-
-    monitor-exit p0
-
-    return-void
+    return-object v0
 
     :catchall_0
     move-exception v0
@@ -1624,36 +2146,6 @@
     iget v0, p0, Landroid/renderscript/RenderScript;->mContext:I
 
     invoke-virtual {p0, v0, p1, p2}, Landroid/renderscript/RenderScript;->rsnAllocationResize1D(III)V
-    :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
-
-    monitor-exit p0
-
-    return-void
-
-    :catchall_0
-    move-exception v0
-
-    monitor-exit p0
-
-    throw v0
-.end method
-
-.method declared-synchronized nAllocationResize2D(III)V
-    .locals 1
-    .parameter "id"
-    .parameter "dimX"
-    .parameter "dimY"
-
-    .prologue
-    monitor-enter p0
-
-    :try_start_0
-    invoke-virtual {p0}, Landroid/renderscript/RenderScript;->validate()V
-
-    iget v0, p0, Landroid/renderscript/RenderScript;->mContext:I
-
-    invoke-virtual {p0, v0, p1, p2, p3}, Landroid/renderscript/RenderScript;->rsnAllocationResize2D(IIII)V
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
@@ -1925,17 +2417,18 @@
     throw v0
 .end method
 
-.method declared-synchronized nContextCreate(III)I
+.method declared-synchronized nContextCreate(IIII)I
     .locals 1
     .parameter "dev"
     .parameter "ver"
     .parameter "sdkVer"
+    .parameter "contextType"
 
     .prologue
     monitor-enter p0
 
     :try_start_0
-    invoke-virtual {p0, p1, p2, p3}, Landroid/renderscript/RenderScript;->rsnContextCreate(III)I
+    invoke-virtual {p0, p1, p2, p3, p4}, Landroid/renderscript/RenderScript;->rsnContextCreate(IIII)I
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
@@ -2129,6 +2622,35 @@
     iget v0, p0, Landroid/renderscript/RenderScript;->mContext:I
 
     invoke-virtual {p0, v0}, Landroid/renderscript/RenderScript;->rsnContextResume(I)V
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    monitor-exit p0
+
+    return-void
+
+    :catchall_0
+    move-exception v0
+
+    monitor-exit p0
+
+    throw v0
+.end method
+
+.method declared-synchronized nContextSendMessage(I[I)V
+    .locals 1
+    .parameter "id"
+    .parameter "data"
+
+    .prologue
+    monitor-enter p0
+
+    :try_start_0
+    invoke-virtual {p0}, Landroid/renderscript/RenderScript;->validate()V
+
+    iget v0, p0, Landroid/renderscript/RenderScript;->mContext:I
+
+    invoke-virtual {p0, v0, p1, p2}, Landroid/renderscript/RenderScript;->rsnContextSendMessage(II[I)V
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
@@ -3430,6 +3952,257 @@
     throw v0
 .end method
 
+.method declared-synchronized nScriptForEachClipped(IIII[BIIIIII)V
+    .locals 13
+    .parameter "id"
+    .parameter "slot"
+    .parameter "ain"
+    .parameter "aout"
+    .parameter "params"
+    .parameter "xstart"
+    .parameter "xend"
+    .parameter "ystart"
+    .parameter "yend"
+    .parameter "zstart"
+    .parameter "zend"
+
+    .prologue
+    monitor-enter p0
+
+    :try_start_0
+    invoke-virtual {p0}, Landroid/renderscript/RenderScript;->validate()V
+
+    if-nez p5, :cond_0
+
+    iget v1, p0, Landroid/renderscript/RenderScript;->mContext:I
+
+    move-object v0, p0
+
+    move v2, p1
+
+    move v3, p2
+
+    move/from16 v4, p3
+
+    move/from16 v5, p4
+
+    move/from16 v6, p6
+
+    move/from16 v7, p7
+
+    move/from16 v8, p8
+
+    move/from16 v9, p9
+
+    move/from16 v10, p10
+
+    move/from16 v11, p11
+
+    invoke-virtual/range {v0 .. v11}, Landroid/renderscript/RenderScript;->rsnScriptForEachClipped(IIIIIIIIIII)V
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    :goto_0
+    monitor-exit p0
+
+    return-void
+
+    :cond_0
+    :try_start_1
+    iget v1, p0, Landroid/renderscript/RenderScript;->mContext:I
+
+    move-object v0, p0
+
+    move v2, p1
+
+    move v3, p2
+
+    move/from16 v4, p3
+
+    move/from16 v5, p4
+
+    move-object/from16 v6, p5
+
+    move/from16 v7, p6
+
+    move/from16 v8, p7
+
+    move/from16 v9, p8
+
+    move/from16 v10, p9
+
+    move/from16 v11, p10
+
+    move/from16 v12, p11
+
+    invoke-virtual/range {v0 .. v12}, Landroid/renderscript/RenderScript;->rsnScriptForEachClipped(IIIII[BIIIIII)V
+    :try_end_1
+    .catchall {:try_start_1 .. :try_end_1} :catchall_0
+
+    goto :goto_0
+
+    :catchall_0
+    move-exception v0
+
+    monitor-exit p0
+
+    throw v0
+.end method
+
+.method declared-synchronized nScriptGetVarD(II)D
+    .locals 2
+    .parameter "id"
+    .parameter "slot"
+
+    .prologue
+    monitor-enter p0
+
+    :try_start_0
+    invoke-virtual {p0}, Landroid/renderscript/RenderScript;->validate()V
+
+    iget v0, p0, Landroid/renderscript/RenderScript;->mContext:I
+
+    invoke-virtual {p0, v0, p1, p2}, Landroid/renderscript/RenderScript;->rsnScriptGetVarD(III)D
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    move-result-wide v0
+
+    monitor-exit p0
+
+    return-wide v0
+
+    :catchall_0
+    move-exception v0
+
+    monitor-exit p0
+
+    throw v0
+.end method
+
+.method declared-synchronized nScriptGetVarF(II)F
+    .locals 1
+    .parameter "id"
+    .parameter "slot"
+
+    .prologue
+    monitor-enter p0
+
+    :try_start_0
+    invoke-virtual {p0}, Landroid/renderscript/RenderScript;->validate()V
+
+    iget v0, p0, Landroid/renderscript/RenderScript;->mContext:I
+
+    invoke-virtual {p0, v0, p1, p2}, Landroid/renderscript/RenderScript;->rsnScriptGetVarF(III)F
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    move-result v0
+
+    monitor-exit p0
+
+    return v0
+
+    :catchall_0
+    move-exception v0
+
+    monitor-exit p0
+
+    throw v0
+.end method
+
+.method declared-synchronized nScriptGetVarI(II)I
+    .locals 1
+    .parameter "id"
+    .parameter "slot"
+
+    .prologue
+    monitor-enter p0
+
+    :try_start_0
+    invoke-virtual {p0}, Landroid/renderscript/RenderScript;->validate()V
+
+    iget v0, p0, Landroid/renderscript/RenderScript;->mContext:I
+
+    invoke-virtual {p0, v0, p1, p2}, Landroid/renderscript/RenderScript;->rsnScriptGetVarI(III)I
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    move-result v0
+
+    monitor-exit p0
+
+    return v0
+
+    :catchall_0
+    move-exception v0
+
+    monitor-exit p0
+
+    throw v0
+.end method
+
+.method declared-synchronized nScriptGetVarJ(II)J
+    .locals 2
+    .parameter "id"
+    .parameter "slot"
+
+    .prologue
+    monitor-enter p0
+
+    :try_start_0
+    invoke-virtual {p0}, Landroid/renderscript/RenderScript;->validate()V
+
+    iget v0, p0, Landroid/renderscript/RenderScript;->mContext:I
+
+    invoke-virtual {p0, v0, p1, p2}, Landroid/renderscript/RenderScript;->rsnScriptGetVarJ(III)J
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    move-result-wide v0
+
+    monitor-exit p0
+
+    return-wide v0
+
+    :catchall_0
+    move-exception v0
+
+    monitor-exit p0
+
+    throw v0
+.end method
+
+.method declared-synchronized nScriptGetVarV(II[B)V
+    .locals 1
+    .parameter "id"
+    .parameter "slot"
+    .parameter "val"
+
+    .prologue
+    monitor-enter p0
+
+    :try_start_0
+    invoke-virtual {p0}, Landroid/renderscript/RenderScript;->validate()V
+
+    iget v0, p0, Landroid/renderscript/RenderScript;->mContext:I
+
+    invoke-virtual {p0, v0, p1, p2, p3}, Landroid/renderscript/RenderScript;->rsnScriptGetVarV(III[B)V
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    monitor-exit p0
+
+    return-void
+
+    :catchall_0
+    move-exception v0
+
+    monitor-exit p0
+
+    throw v0
+.end method
+
 .method declared-synchronized nScriptGroupCreate([I[I[I[I[I)I
     .locals 7
     .parameter "kernels"
@@ -3955,14 +4728,15 @@
     throw v0
 .end method
 
-.method declared-synchronized nTypeCreate(IIIIZZ)I
-    .locals 8
+.method declared-synchronized nTypeCreate(IIIIZZI)I
+    .locals 9
     .parameter "eid"
     .parameter "x"
     .parameter "y"
     .parameter "z"
     .parameter "mips"
     .parameter "faces"
+    .parameter "yuv"
 
     .prologue
     monitor-enter p0
@@ -3986,7 +4760,9 @@
 
     move v7, p6
 
-    invoke-virtual/range {v0 .. v7}, Landroid/renderscript/RenderScript;->rsnTypeCreate(IIIIIZZ)I
+    move/from16 v8, p7
+
+    invoke-virtual/range {v0 .. v8}, Landroid/renderscript/RenderScript;->rsnTypeCreate(IIIIIZZI)I
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
@@ -4039,6 +4815,9 @@
 .method native rsnAllocationCopyToBitmap(IILandroid/graphics/Bitmap;)V
 .end method
 
+.method native rsnAllocationCreateBitmapBackedAllocation(IIILandroid/graphics/Bitmap;I)I
+.end method
+
 .method native rsnAllocationCreateBitmapRef(IILandroid/graphics/Bitmap;)I
 .end method
 
@@ -4084,16 +4863,28 @@
 .method native rsnAllocationData2D(IIIIIILandroid/graphics/Bitmap;)V
 .end method
 
+.method native rsnAllocationData3D(IIIIIIIIIIIIII)V
+.end method
+
+.method native rsnAllocationData3D(IIIIIIIII[BI)V
+.end method
+
+.method native rsnAllocationData3D(IIIIIIIII[FI)V
+.end method
+
+.method native rsnAllocationData3D(IIIIIIIII[II)V
+.end method
+
+.method native rsnAllocationData3D(IIIIIIIII[SI)V
+.end method
+
 .method native rsnAllocationElementData1D(IIIII[BI)V
 .end method
 
 .method native rsnAllocationGenerateMipmaps(II)V
 .end method
 
-.method native rsnAllocationGetSurfaceTextureID(II)I
-.end method
-
-.method native rsnAllocationGetSurfaceTextureID2(IILandroid/graphics/SurfaceTexture;)V
+.method native rsnAllocationGetSurface(II)Landroid/view/Surface;
 .end method
 
 .method native rsnAllocationGetType(II)I
@@ -4118,9 +4909,6 @@
 .end method
 
 .method native rsnAllocationResize1D(III)V
-.end method
-
-.method native rsnAllocationResize2D(IIII)V
 .end method
 
 .method native rsnAllocationSetSurface(IILandroid/view/Surface;)V
@@ -4150,7 +4938,7 @@
 .method native rsnContextBindSampler(III)V
 .end method
 
-.method native rsnContextCreate(III)I
+.method native rsnContextCreate(IIII)I
 .end method
 
 .method native rsnContextCreateGL(IIIIIIIIIIIIIFI)I
@@ -4169,6 +4957,9 @@
 .end method
 
 .method native rsnContextResume(I)V
+.end method
+
+.method native rsnContextSendMessage(II[I)V
 .end method
 
 .method native rsnContextSetPriority(II)V
@@ -4282,6 +5073,27 @@
 .method native rsnScriptForEach(IIIII[B)V
 .end method
 
+.method native rsnScriptForEachClipped(IIIIIIIIIII)V
+.end method
+
+.method native rsnScriptForEachClipped(IIIII[BIIIIII)V
+.end method
+
+.method native rsnScriptGetVarD(III)D
+.end method
+
+.method native rsnScriptGetVarF(III)F
+.end method
+
+.method native rsnScriptGetVarI(III)I
+.end method
+
+.method native rsnScriptGetVarJ(III)J
+.end method
+
+.method native rsnScriptGetVarV(III[B)V
+.end method
+
 .method native rsnScriptGroupCreate(I[I[I[I[I[I)I
 .end method
 
@@ -4330,7 +5142,7 @@
 .method native rsnScriptSetVarVE(III[BI[I)V
 .end method
 
-.method native rsnTypeCreate(IIIIIZZ)I
+.method native rsnTypeCreate(IIIIIZZI)I
 .end method
 
 .method native rsnTypeGetNativeData(II[I)V
@@ -4354,6 +5166,17 @@
     const/4 v0, 0x0
 
     goto :goto_0
+.end method
+
+.method public sendMessage(I[I)V
+    .locals 0
+    .parameter "id"
+    .parameter "data"
+
+    .prologue
+    invoke-virtual {p0, p1, p2}, Landroid/renderscript/RenderScript;->nContextSendMessage(I[I)V
+
+    return-void
 .end method
 
 .method public setErrorHandler(Landroid/renderscript/RenderScript$RSErrorHandler;)V

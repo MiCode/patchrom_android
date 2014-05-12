@@ -323,7 +323,7 @@
 .end method
 
 .method public loadInBackground()Landroid/database/Cursor;
-    .locals 8
+    .locals 9
 
     .prologue
     monitor-enter p0
@@ -384,35 +384,51 @@
     iget-object v6, p0, Landroid/content/CursorLoader;->mCancellationSignal:Landroid/os/CancellationSignal;
 
     invoke-virtual/range {v0 .. v6}, Landroid/content/ContentResolver;->query(Landroid/net/Uri;[Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;Landroid/os/CancellationSignal;)Landroid/database/Cursor;
+    :try_end_2
+    .catchall {:try_start_2 .. :try_end_2} :catchall_1
 
     move-result-object v7
 
     .local v7, cursor:Landroid/database/Cursor;
     if-eqz v7, :cond_1
 
+    :try_start_3
     invoke-interface {v7}, Landroid/database/Cursor;->getCount()I
 
     iget-object v0, p0, Landroid/content/CursorLoader;->mObserver:Landroid/content/Loader$ForceLoadContentObserver;
 
-    invoke-virtual {p0, v7, v0}, Landroid/content/CursorLoader;->registerContentObserver(Landroid/database/Cursor;Landroid/database/ContentObserver;)V
-    :try_end_2
-    .catchall {:try_start_2 .. :try_end_2} :catchall_1
+    invoke-interface {v7, v0}, Landroid/database/Cursor;->registerContentObserver(Landroid/database/ContentObserver;)V
+    :try_end_3
+    .catchall {:try_start_3 .. :try_end_3} :catchall_1
+    .catch Ljava/lang/RuntimeException; {:try_start_3 .. :try_end_3} :catch_0
 
     :cond_1
     monitor-enter p0
 
     const/4 v0, 0x0
 
-    :try_start_3
+    :try_start_4
     iput-object v0, p0, Landroid/content/CursorLoader;->mCancellationSignal:Landroid/os/CancellationSignal;
 
     monitor-exit p0
-    :try_end_3
-    .catchall {:try_start_3 .. :try_end_3} :catchall_3
+    :try_end_4
+    .catchall {:try_start_4 .. :try_end_4} :catchall_2
 
     return-object v7
 
+    :catch_0
+    move-exception v8
+
+    .local v8, ex:Ljava/lang/RuntimeException;
+    :try_start_5
+    invoke-interface {v7}, Landroid/database/Cursor;->close()V
+
+    throw v8
+    :try_end_5
+    .catchall {:try_start_5 .. :try_end_5} :catchall_1
+
     .end local v7           #cursor:Landroid/database/Cursor;
+    .end local v8           #ex:Ljava/lang/RuntimeException;
     :catchall_1
     move-exception v0
 
@@ -420,33 +436,34 @@
 
     const/4 v1, 0x0
 
-    :try_start_4
+    :try_start_6
     iput-object v1, p0, Landroid/content/CursorLoader;->mCancellationSignal:Landroid/os/CancellationSignal;
 
     monitor-exit p0
-    :try_end_4
-    .catchall {:try_start_4 .. :try_end_4} :catchall_2
-
-    throw v0
-
-    :catchall_2
-    move-exception v0
-
-    :try_start_5
-    monitor-exit p0
-    :try_end_5
-    .catchall {:try_start_5 .. :try_end_5} :catchall_2
+    :try_end_6
+    .catchall {:try_start_6 .. :try_end_6} :catchall_3
 
     throw v0
 
     .restart local v7       #cursor:Landroid/database/Cursor;
+    :catchall_2
+    move-exception v0
+
+    :try_start_7
+    monitor-exit p0
+    :try_end_7
+    .catchall {:try_start_7 .. :try_end_7} :catchall_2
+
+    throw v0
+
+    .end local v7           #cursor:Landroid/database/Cursor;
     :catchall_3
     move-exception v0
 
-    :try_start_6
+    :try_start_8
     monitor-exit p0
-    :try_end_6
-    .catchall {:try_start_6 .. :try_end_6} :catchall_3
+    :try_end_8
+    .catchall {:try_start_8 .. :try_end_8} :catchall_3
 
     throw v0
 .end method
@@ -561,19 +578,6 @@
 
     .prologue
     invoke-virtual {p0}, Landroid/content/CursorLoader;->cancelLoad()Z
-
-    return-void
-.end method
-
-.method registerContentObserver(Landroid/database/Cursor;Landroid/database/ContentObserver;)V
-    .locals 1
-    .parameter "cursor"
-    .parameter "observer"
-
-    .prologue
-    iget-object v0, p0, Landroid/content/CursorLoader;->mObserver:Landroid/content/Loader$ForceLoadContentObserver;
-
-    invoke-interface {p1, v0}, Landroid/database/Cursor;->registerContentObserver(Landroid/database/ContentObserver;)V
 
     return-void
 .end method

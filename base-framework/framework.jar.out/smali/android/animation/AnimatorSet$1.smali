@@ -110,5 +110,12 @@
     .end local v1           #node:Landroid/animation/AnimatorSet$Node;
     .end local v2           #numNodes:I
     :cond_0
+    iget-object v3, p0, Landroid/animation/AnimatorSet$1;->this$0:Landroid/animation/AnimatorSet;
+
+    const/4 v4, 0x0
+
+    #setter for: Landroid/animation/AnimatorSet;->mDelayAnim:Landroid/animation/ValueAnimator;
+    invoke-static {v3, v4}, Landroid/animation/AnimatorSet;->access$102(Landroid/animation/AnimatorSet;Landroid/animation/ValueAnimator;)Landroid/animation/ValueAnimator;
+
     return-void
 .end method

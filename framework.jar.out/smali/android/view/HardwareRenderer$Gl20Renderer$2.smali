@@ -61,7 +61,7 @@
     iget-object v0, p0, Landroid/view/HardwareRenderer$Gl20Renderer$2;->val$view:Landroid/view/View;
 
     #calls: Landroid/view/HardwareRenderer$Gl20Renderer;->destroyResources(Landroid/view/View;)V
-    invoke-static {v0}, Landroid/view/HardwareRenderer$Gl20Renderer;->access$600(Landroid/view/View;)V
+    invoke-static {v0}, Landroid/view/HardwareRenderer$Gl20Renderer;->access$800(Landroid/view/View;)V
 
     const/4 v0, 0x0
 

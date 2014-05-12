@@ -179,8 +179,10 @@
     throw v3
 .end method
 
-.method public vibrate(JLandroid/os/IBinder;)V
+.method public vibrate(ILjava/lang/String;JLandroid/os/IBinder;)V
     .locals 5
+    .parameter "uid"
+    .parameter "packageName"
     .parameter "milliseconds"
     .parameter "token"
     .annotation system Ldalvik/annotation/Throws;
@@ -205,9 +207,13 @@
 
     invoke-virtual {v0, v2}, Landroid/os/Parcel;->writeInterfaceToken(Ljava/lang/String;)V
 
-    invoke-virtual {v0, p1, p2}, Landroid/os/Parcel;->writeLong(J)V
+    invoke-virtual {v0, p1}, Landroid/os/Parcel;->writeInt(I)V
 
-    invoke-virtual {v0, p3}, Landroid/os/Parcel;->writeStrongBinder(Landroid/os/IBinder;)V
+    invoke-virtual {v0, p2}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
+
+    invoke-virtual {v0, p3, p4}, Landroid/os/Parcel;->writeLong(J)V
+
+    invoke-virtual {v0, p5}, Landroid/os/Parcel;->writeStrongBinder(Landroid/os/IBinder;)V
 
     iget-object v2, p0, Landroid/os/IVibratorService$Stub$Proxy;->mRemote:Landroid/os/IBinder;
 
@@ -237,8 +243,10 @@
     throw v2
 .end method
 
-.method public vibratePattern([JILandroid/os/IBinder;)V
+.method public vibratePattern(ILjava/lang/String;[JILandroid/os/IBinder;)V
     .locals 5
+    .parameter "uid"
+    .parameter "packageName"
     .parameter "pattern"
     .parameter "repeat"
     .parameter "token"
@@ -264,11 +272,15 @@
 
     invoke-virtual {v0, v2}, Landroid/os/Parcel;->writeInterfaceToken(Ljava/lang/String;)V
 
-    invoke-virtual {v0, p1}, Landroid/os/Parcel;->writeLongArray([J)V
+    invoke-virtual {v0, p1}, Landroid/os/Parcel;->writeInt(I)V
 
-    invoke-virtual {v0, p2}, Landroid/os/Parcel;->writeInt(I)V
+    invoke-virtual {v0, p2}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
-    invoke-virtual {v0, p3}, Landroid/os/Parcel;->writeStrongBinder(Landroid/os/IBinder;)V
+    invoke-virtual {v0, p3}, Landroid/os/Parcel;->writeLongArray([J)V
+
+    invoke-virtual {v0, p4}, Landroid/os/Parcel;->writeInt(I)V
+
+    invoke-virtual {v0, p5}, Landroid/os/Parcel;->writeStrongBinder(Landroid/os/IBinder;)V
 
     iget-object v2, p0, Landroid/os/IVibratorService$Stub$Proxy;->mRemote:Landroid/os/IBinder;
 

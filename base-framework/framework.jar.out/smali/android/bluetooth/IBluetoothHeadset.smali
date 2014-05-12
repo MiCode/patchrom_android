@@ -163,7 +163,7 @@
     .end annotation
 .end method
 
-.method public abstract roamChanged(Z)V
+.method public abstract sendVendorSpecificResultCode(Landroid/bluetooth/BluetoothDevice;Ljava/lang/String;Ljava/lang/String;)Z
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;

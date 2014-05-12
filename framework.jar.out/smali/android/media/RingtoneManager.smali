@@ -6,13 +6,14 @@
 # static fields
 .field public static final ACTION_RINGTONE_PICKER:Ljava/lang/String; = "android.intent.action.RINGTONE_PICKER"
 
-.field private static final DRM_COLUMNS:[Ljava/lang/String; = null
-
 .field public static final EXTRA_RINGTONE_DEFAULT_URI:Ljava/lang/String; = "android.intent.extra.ringtone.DEFAULT_URI"
 
 .field public static final EXTRA_RINGTONE_EXISTING_URI:Ljava/lang/String; = "android.intent.extra.ringtone.EXISTING_URI"
 
 .field public static final EXTRA_RINGTONE_INCLUDE_DRM:Ljava/lang/String; = "android.intent.extra.ringtone.INCLUDE_DRM"
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
+.end field
 
 .field public static final EXTRA_RINGTONE_PICKED_URI:Ljava/lang/String; = "android.intent.extra.ringtone.PICKED_URI"
 
@@ -62,8 +63,6 @@
         }
     .end annotation
 .end field
-
-.field private mIncludeDrm:Z
 
 .field private mPreviousRingtone:Landroid/media/Ringtone;
 
@@ -130,50 +129,6 @@
     aput-object v1, v0, v6
 
     sput-object v0, Landroid/media/RingtoneManager;->INTERNAL_COLUMNS:[Ljava/lang/String;
-
-    new-array v0, v7, [Ljava/lang/String;
-
-    const-string v1, "_id"
-
-    aput-object v1, v0, v3
-
-    const-string v1, "title"
-
-    aput-object v1, v0, v4
-
-    new-instance v1, Ljava/lang/StringBuilder;
-
-    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
-
-    const-string v2, "\""
-
-    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v1
-
-    sget-object v2, Landroid/provider/DrmStore$Audio;->CONTENT_URI:Landroid/net/Uri;
-
-    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
-
-    move-result-object v1
-
-    const-string v2, "\""
-
-    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v1
-
-    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v1
-
-    aput-object v1, v0, v5
-
-    const-string v1, "title AS title_key"
-
-    aput-object v1, v0, v6
-
-    sput-object v0, Landroid/media/RingtoneManager;->DRM_COLUMNS:[Ljava/lang/String;
 
     new-array v0, v7, [Ljava/lang/String;
 
@@ -280,17 +235,16 @@
     return-void
 .end method
 
-.method private static constructBooleanTrueWhereClause(Ljava/util/List;Z)Ljava/lang/String;
+.method private static constructBooleanTrueWhereClause(Ljava/util/List;)Ljava/lang/String;
     .locals 4
     .parameter
-    .parameter "includeDrm"
     .annotation system Ldalvik/annotation/Signature;
         value = {
             "(",
             "Ljava/util/List",
             "<",
             "Ljava/lang/String;",
-            ">;Z)",
+            ">;)",
             "Ljava/lang/String;"
         }
     .end annotation
@@ -362,21 +316,6 @@
 
     invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    if-nez p1, :cond_3
-
-    const-string v2, " and "
-
-    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    const-string v2, "is_drm"
-
-    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    const-string v2, "=0"
-
-    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    :cond_3
     invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
     move-result-object v2
@@ -513,29 +452,6 @@
     goto :goto_0
 .end method
 
-.method private getDrmRingtones()Landroid/database/Cursor;
-    .locals 6
-
-    .prologue
-    const/4 v3, 0x0
-
-    sget-object v1, Landroid/provider/DrmStore$Audio;->CONTENT_URI:Landroid/net/Uri;
-
-    sget-object v2, Landroid/media/RingtoneManager;->DRM_COLUMNS:[Ljava/lang/String;
-
-    const-string v5, "title"
-
-    move-object v0, p0
-
-    move-object v4, v3
-
-    invoke-direct/range {v0 .. v5}, Landroid/media/RingtoneManager;->query(Landroid/net/Uri;[Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;)Landroid/database/Cursor;
-
-    move-result-object v0
-
-    return-object v0
-.end method
-
 .method private getInternalRingtones()Landroid/database/Cursor;
     .locals 6
 
@@ -546,9 +462,7 @@
 
     iget-object v0, p0, Landroid/media/RingtoneManager;->mFilterColumns:Ljava/util/List;
 
-    iget-boolean v3, p0, Landroid/media/RingtoneManager;->mIncludeDrm:Z
-
-    invoke-static {v0, v3}, Landroid/media/RingtoneManager;->constructBooleanTrueWhereClause(Ljava/util/List;Z)Ljava/lang/String;
+    invoke-static {v0}, Landroid/media/RingtoneManager;->constructBooleanTrueWhereClause(Ljava/util/List;)Ljava/lang/String;
 
     move-result-object v3
 
@@ -599,9 +513,7 @@
 
     iget-object v0, p0, Landroid/media/RingtoneManager;->mFilterColumns:Ljava/util/List;
 
-    iget-boolean v3, p0, Landroid/media/RingtoneManager;->mIncludeDrm:Z
-
-    invoke-static {v0, v3}, Landroid/media/RingtoneManager;->constructBooleanTrueWhereClause(Ljava/util/List;Z)Ljava/lang/String;
+    invoke-static {v0}, Landroid/media/RingtoneManager;->constructBooleanTrueWhereClause(Ljava/util/List;)Ljava/lang/String;
 
     move-result-object v3
 
@@ -797,17 +709,6 @@
     move-result-object v1
 
     :cond_0
-    if-nez v1, :cond_1
-
-    invoke-direct {v0}, Landroid/media/RingtoneManager;->getDrmRingtones()Landroid/database/Cursor;
-
-    move-result-object v2
-
-    invoke-static {p0, v2}, Landroid/media/RingtoneManager;->getValidRingtoneUriFromCursorAndClose(Landroid/content/Context;Landroid/database/Cursor;)Landroid/net/Uri;
-
-    move-result-object v1
-
-    :cond_1
     return-object v1
 .end method
 
@@ -1007,86 +908,67 @@
 
 # virtual methods
 .method public getCursor()Landroid/database/Cursor;
-    .locals 6
+    .locals 5
 
     .prologue
-    iget-object v3, p0, Landroid/media/RingtoneManager;->mCursor:Landroid/database/Cursor;
+    iget-object v2, p0, Landroid/media/RingtoneManager;->mCursor:Landroid/database/Cursor;
 
-    if-eqz v3, :cond_0
+    if-eqz v2, :cond_0
 
-    iget-object v3, p0, Landroid/media/RingtoneManager;->mCursor:Landroid/database/Cursor;
+    iget-object v2, p0, Landroid/media/RingtoneManager;->mCursor:Landroid/database/Cursor;
 
-    invoke-interface {v3}, Landroid/database/Cursor;->requery()Z
+    invoke-interface {v2}, Landroid/database/Cursor;->requery()Z
 
-    move-result v3
+    move-result v2
 
-    if-eqz v3, :cond_0
+    if-eqz v2, :cond_0
 
-    iget-object v3, p0, Landroid/media/RingtoneManager;->mCursor:Landroid/database/Cursor;
+    iget-object v2, p0, Landroid/media/RingtoneManager;->mCursor:Landroid/database/Cursor;
 
     :goto_0
-    return-object v3
+    return-object v2
 
     :cond_0
     invoke-direct {p0}, Landroid/media/RingtoneManager;->getInternalRingtones()Landroid/database/Cursor;
 
-    move-result-object v1
-
-    .local v1, internalCursor:Landroid/database/Cursor;
-    iget-boolean v3, p0, Landroid/media/RingtoneManager;->mIncludeDrm:Z
-
-    if-eqz v3, :cond_1
-
-    invoke-direct {p0}, Landroid/media/RingtoneManager;->getDrmRingtones()Landroid/database/Cursor;
-
     move-result-object v0
 
-    .local v0, drmCursor:Landroid/database/Cursor;
-    :goto_1
+    .local v0, internalCursor:Landroid/database/Cursor;
     invoke-direct {p0}, Landroid/media/RingtoneManager;->getMediaRingtones()Landroid/database/Cursor;
 
-    move-result-object v2
+    move-result-object v1
 
-    .local v2, mediaCursor:Landroid/database/Cursor;
-    new-instance v3, Lcom/android/internal/database/SortCursor;
+    .local v1, mediaCursor:Landroid/database/Cursor;
+    new-instance v2, Lcom/android/internal/database/SortCursor;
 
-    const/4 v4, 0x3
+    const/4 v3, 0x2
 
-    new-array v4, v4, [Landroid/database/Cursor;
+    new-array v3, v3, [Landroid/database/Cursor;
 
-    const/4 v5, 0x0
+    const/4 v4, 0x0
 
-    aput-object v1, v4, v5
+    aput-object v0, v3, v4
 
-    const/4 v5, 0x1
+    const/4 v4, 0x1
 
-    aput-object v0, v4, v5
+    aput-object v1, v3, v4
 
-    const/4 v5, 0x2
+    const-string v4, "title_key"
 
-    aput-object v2, v4, v5
+    invoke-direct {v2, v3, v4}, Lcom/android/internal/database/SortCursor;-><init>([Landroid/database/Cursor;Ljava/lang/String;)V
 
-    const-string v5, "title_key"
-
-    invoke-direct {v3, v4, v5}, Lcom/android/internal/database/SortCursor;-><init>([Landroid/database/Cursor;Ljava/lang/String;)V
-
-    iput-object v3, p0, Landroid/media/RingtoneManager;->mCursor:Landroid/database/Cursor;
+    iput-object v2, p0, Landroid/media/RingtoneManager;->mCursor:Landroid/database/Cursor;
 
     goto :goto_0
-
-    .end local v0           #drmCursor:Landroid/database/Cursor;
-    .end local v2           #mediaCursor:Landroid/database/Cursor;
-    :cond_1
-    const/4 v0, 0x0
-
-    goto :goto_1
 .end method
 
 .method public getIncludeDrm()Z
     .locals 1
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
 
     .prologue
-    iget-boolean v0, p0, Landroid/media/RingtoneManager;->mIncludeDrm:Z
+    const/4 v0, 0x0
 
     return v0
 .end method
@@ -1310,12 +1192,21 @@
 .end method
 
 .method public setIncludeDrm(Z)V
-    .locals 0
+    .locals 2
     .parameter "includeDrm"
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
 
     .prologue
-    iput-boolean p1, p0, Landroid/media/RingtoneManager;->mIncludeDrm:Z
+    if-eqz p1, :cond_0
 
+    const-string v0, "RingtoneManager"
+
+    const-string v1, "setIncludeDrm no longer supported"
+
+    invoke-static {v0, v1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+
+    :cond_0
     return-void
 .end method
 

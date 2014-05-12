@@ -48,7 +48,7 @@
 
     if-ne v0, v1, :cond_0
 
-    const v0, 0x1040085
+    const v0, 0x1040062
 
     :goto_0
     return v0
@@ -62,7 +62,7 @@
 
     if-ne v0, v1, :cond_1
 
-    const v0, 0x1040086
+    const v0, 0x1040063
 
     goto :goto_0
 
@@ -91,7 +91,7 @@
 
     move-result-object v1
 
-    invoke-static {v0, v1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v0, v1}, Landroid/telephony/Rlog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
     const/4 v0, 0x0
 

@@ -53,7 +53,7 @@
     iget-object v3, p0, Lcom/android/server/power/DisplayPowerController$8;->this$0:Lcom/android/server/power/DisplayPowerController;
 
     #getter for: Lcom/android/server/power/DisplayPowerController;->mLightSensorEnabled:Z
-    invoke-static {v3}, Lcom/android/server/power/DisplayPowerController;->access$900(Lcom/android/server/power/DisplayPowerController;)Z
+    invoke-static {v3}, Lcom/android/server/power/DisplayPowerController;->access$1000(Lcom/android/server/power/DisplayPowerController;)Z
 
     move-result v3
 
@@ -74,7 +74,7 @@
     iget-object v3, p0, Lcom/android/server/power/DisplayPowerController$8;->this$0:Lcom/android/server/power/DisplayPowerController;
 
     #calls: Lcom/android/server/power/DisplayPowerController;->handleLightSensorEvent(JF)V
-    invoke-static {v3, v1, v2, v0}, Lcom/android/server/power/DisplayPowerController;->access$1000(Lcom/android/server/power/DisplayPowerController;JF)V
+    invoke-static {v3, v1, v2, v0}, Lcom/android/server/power/DisplayPowerController;->access$1100(Lcom/android/server/power/DisplayPowerController;JF)V
 
     .end local v0           #lux:F
     .end local v1           #time:J

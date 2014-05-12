@@ -73,20 +73,12 @@
 
     iput-object v1, p0, Landroid/widget/Toast$TN;->mHandler:Landroid/os/Handler;
 
-    const/16 v1, 0x51
-
-    iput v1, p0, Landroid/widget/Toast$TN;->mGravity:I
-
     iget-object v0, p0, Landroid/widget/Toast$TN;->mParams:Landroid/view/WindowManager$LayoutParams;
 
     .local v0, params:Landroid/view/WindowManager$LayoutParams;
     iput v2, v0, Landroid/view/WindowManager$LayoutParams;->height:I
 
     iput v2, v0, Landroid/view/WindowManager$LayoutParams;->width:I
-
-    const/16 v1, 0x98
-
-    iput v1, v0, Landroid/view/WindowManager$LayoutParams;->flags:I
 
     const/4 v1, -0x3
 
@@ -103,6 +95,10 @@
     const-string v1, "Toast"
 
     invoke-virtual {v0, v1}, Landroid/view/WindowManager$LayoutParams;->setTitle(Ljava/lang/CharSequence;)V
+
+    const/16 v1, 0x98
+
+    iput v1, v0, Landroid/view/WindowManager$LayoutParams;->flags:I
 
     return-void
 .end method
@@ -172,15 +168,6 @@
 
 
 # virtual methods
-.method getParams()Landroid/view/WindowManager$LayoutParams;
-    .locals 1
-
-    .prologue
-    iget-object v0, p0, Landroid/widget/Toast$TN;->mParams:Landroid/view/WindowManager$LayoutParams;
-
-    return-object v0
-.end method
-
 .method public handleHide()V
     .locals 2
 
@@ -377,6 +364,18 @@
     iget-object v1, p0, Landroid/widget/Toast$TN;->mHide:Ljava/lang/Runnable;
 
     invoke-virtual {v0, v1}, Landroid/os/Handler;->post(Ljava/lang/Runnable;)Z
+
+    return-void
+.end method
+
+.method public setType(I)V
+    .locals 1
+    .parameter "type"
+
+    .prologue
+    iget-object v0, p0, Landroid/widget/Toast$TN;->mParams:Landroid/view/WindowManager$LayoutParams;
+
+    iput p1, v0, Landroid/view/WindowManager$LayoutParams;->type:I
 
     return-void
 .end method

@@ -48,6 +48,8 @@
 
 .field public static final EFFECT_TYPE_EQUALIZER:Ljava/util/UUID; = null
 
+.field public static final EFFECT_TYPE_LOUDNESS_ENHANCER:Ljava/util/UUID; = null
+
 .field public static final EFFECT_TYPE_NS:Ljava/util/UUID; = null
 
 .field public static final EFFECT_TYPE_NULL:Ljava/util/UUID; = null
@@ -187,6 +189,14 @@
     move-result-object v0
 
     sput-object v0, Landroid/media/audiofx/AudioEffect;->EFFECT_TYPE_NS:Ljava/util/UUID;
+
+    const-string v0, "fe3199be-aed0-413f-87bb-11260eb63cf1"
+
+    invoke-static {v0}, Ljava/util/UUID;->fromString(Ljava/lang/String;)Ljava/util/UUID;
+
+    move-result-object v0
+
+    sput-object v0, Landroid/media/audiofx/AudioEffect;->EFFECT_TYPE_LOUDNESS_ENHANCER:Ljava/util/UUID;
 
     const-string v0, "ec7178ec-e5e1-4432-a3f4-4657e6795210"
 

@@ -45,7 +45,8 @@
     :try_start_0
     iget v0, p0, Landroid/view/GLES20DisplayList$DisplayListFinalizer;->mNativeDisplayList:I
 
-    invoke-static {v0}, Landroid/view/GLES20Canvas;->destroyDisplayList(I)V
+    #calls: Landroid/view/GLES20DisplayList;->nDestroyDisplayList(I)V
+    invoke-static {v0}, Landroid/view/GLES20DisplayList;->access$000(I)V
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 

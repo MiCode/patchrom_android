@@ -95,7 +95,7 @@
     iget-object v0, p0, Landroid/media/AudioService$ForceControlStreamClient;->this$0:Landroid/media/AudioService;
 
     #getter for: Landroid/media/AudioService;->mForceControlStreamLock:Ljava/lang/Object;
-    invoke-static {v0}, Landroid/media/AudioService;->access$800(Landroid/media/AudioService;)Ljava/lang/Object;
+    invoke-static {v0}, Landroid/media/AudioService;->access$600(Landroid/media/AudioService;)Ljava/lang/Object;
 
     move-result-object v1
 
@@ -111,7 +111,7 @@
     iget-object v0, p0, Landroid/media/AudioService$ForceControlStreamClient;->this$0:Landroid/media/AudioService;
 
     #getter for: Landroid/media/AudioService;->mForceControlStreamClient:Landroid/media/AudioService$ForceControlStreamClient;
-    invoke-static {v0}, Landroid/media/AudioService;->access$900(Landroid/media/AudioService;)Landroid/media/AudioService$ForceControlStreamClient;
+    invoke-static {v0}, Landroid/media/AudioService;->access$700(Landroid/media/AudioService;)Landroid/media/AudioService$ForceControlStreamClient;
 
     move-result-object v0
 
@@ -134,14 +134,14 @@
     const/4 v2, 0x0
 
     #setter for: Landroid/media/AudioService;->mForceControlStreamClient:Landroid/media/AudioService$ForceControlStreamClient;
-    invoke-static {v0, v2}, Landroid/media/AudioService;->access$902(Landroid/media/AudioService;Landroid/media/AudioService$ForceControlStreamClient;)Landroid/media/AudioService$ForceControlStreamClient;
+    invoke-static {v0, v2}, Landroid/media/AudioService;->access$702(Landroid/media/AudioService;Landroid/media/AudioService$ForceControlStreamClient;)Landroid/media/AudioService$ForceControlStreamClient;
 
     iget-object v0, p0, Landroid/media/AudioService$ForceControlStreamClient;->this$0:Landroid/media/AudioService;
 
     const/4 v2, -0x1
 
     #setter for: Landroid/media/AudioService;->mVolumeControlStream:I
-    invoke-static {v0, v2}, Landroid/media/AudioService;->access$1002(Landroid/media/AudioService;I)I
+    invoke-static {v0, v2}, Landroid/media/AudioService;->access$802(Landroid/media/AudioService;I)I
 
     goto :goto_0
 

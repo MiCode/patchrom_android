@@ -296,6 +296,18 @@
 
     invoke-static {v0, v8, v1}, Landroid/database/DatabaseUtils;->cursorIntToContentValuesIfPresent(Landroid/database/Cursor;Landroid/content/ContentValues;Ljava/lang/String;)V
 
+    const-string v1, "eventColor"
+
+    move-object/from16 v0, p1
+
+    invoke-static {v0, v8, v1}, Landroid/database/DatabaseUtils;->cursorIntToContentValuesIfPresent(Landroid/database/Cursor;Landroid/content/ContentValues;Ljava/lang/String;)V
+
+    const-string v1, "eventColor_index"
+
+    move-object/from16 v0, p1
+
+    invoke-static {v0, v8, v1}, Landroid/database/DatabaseUtils;->cursorStringToContentValuesIfPresent(Landroid/database/Cursor;Landroid/content/ContentValues;Ljava/lang/String;)V
+
     const-string v1, "hasAlarm"
 
     move-object/from16 v0, p1
@@ -427,6 +439,12 @@
     move-object/from16 v0, p1
 
     invoke-static {v0, v8, v1}, Landroid/database/DatabaseUtils;->cursorLongToContentValuesIfPresent(Landroid/database/Cursor;Landroid/content/ContentValues;Ljava/lang/String;)V
+
+    const-string v1, "mutators"
+
+    move-object/from16 v0, p1
+
+    invoke-static {v0, v8, v1}, Landroid/database/DatabaseUtils;->cursorStringToContentValuesIfPresent(Landroid/database/Cursor;Landroid/content/ContentValues;Ljava/lang/String;)V
 
     const-string v1, "lastSynced"
 

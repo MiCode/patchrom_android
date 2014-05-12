@@ -37,8 +37,6 @@
 
 .field private final mHandler:Landroid/os/Handler;
 
-.field private final mHandlerThread:Landroid/os/HandlerThread;
-
 .field private mOutputStream:Ljava/io/OutputStream;
 
 .field private mSocket:Landroid/net/LocalSocket;
@@ -80,23 +78,13 @@
 
     iput-object v1, p0, Lcom/android/server/usb/UsbDebuggingManager;->mOutputStream:Ljava/io/OutputStream;
 
-    new-instance v0, Landroid/os/HandlerThread;
-
-    const-string v1, "UsbDebuggingHandler"
-
-    invoke-direct {v0, v1}, Landroid/os/HandlerThread;-><init>(Ljava/lang/String;)V
-
-    iput-object v0, p0, Lcom/android/server/usb/UsbDebuggingManager;->mHandlerThread:Landroid/os/HandlerThread;
-
-    iget-object v0, p0, Lcom/android/server/usb/UsbDebuggingManager;->mHandlerThread:Landroid/os/HandlerThread;
-
-    invoke-virtual {v0}, Landroid/os/HandlerThread;->start()V
-
     new-instance v0, Lcom/android/server/usb/UsbDebuggingManager$UsbDebuggingHandler;
 
-    iget-object v1, p0, Lcom/android/server/usb/UsbDebuggingManager;->mHandlerThread:Landroid/os/HandlerThread;
+    invoke-static {}, Lcom/android/server/FgThread;->get()Lcom/android/server/FgThread;
 
-    invoke-virtual {v1}, Landroid/os/HandlerThread;->getLooper()Landroid/os/Looper;
+    move-result-object v1
+
+    invoke-virtual {v1}, Lcom/android/server/FgThread;->getLooper()Landroid/os/Looper;
 
     move-result-object v1
 
@@ -138,6 +126,16 @@
     iget-object v0, p0, Lcom/android/server/usb/UsbDebuggingManager;->mThread:Ljava/lang/Thread;
 
     return-object v0
+.end method
+
+.method static synthetic access$1000(Lcom/android/server/usb/UsbDebuggingManager;)V
+    .locals 0
+    .parameter "x0"
+
+    .prologue
+    invoke-direct {p0}, Lcom/android/server/usb/UsbDebuggingManager;->deleteKeyFile()V
+
+    return-void
 .end method
 
 .method static synthetic access$102(Lcom/android/server/usb/UsbDebuggingManager;Ljava/lang/Thread;)Ljava/lang/Thread;
@@ -331,6 +329,23 @@
     goto :goto_1
 .end method
 
+.method private deleteKeyFile()V
+    .locals 1
+
+    .prologue
+    invoke-direct {p0}, Lcom/android/server/usb/UsbDebuggingManager;->getUserKeyFile()Ljava/io/File;
+
+    move-result-object v0
+
+    .local v0, keyFile:Ljava/io/File;
+    if-eqz v0, :cond_0
+
+    invoke-virtual {v0}, Ljava/io/File;->delete()Z
+
+    :cond_0
+    return-void
+.end method
+
 .method private getFingerprints(Ljava/lang/String;)Ljava/lang/String;
     .locals 10
     .parameter "key"
@@ -469,6 +484,49 @@
     move-result-object v7
 
     goto :goto_1
+.end method
+
+.method private getUserKeyFile()Ljava/io/File;
+    .locals 4
+
+    .prologue
+    invoke-static {}, Landroid/os/Environment;->getDataDirectory()Ljava/io/File;
+
+    move-result-object v1
+
+    .local v1, dataDir:Ljava/io/File;
+    new-instance v0, Ljava/io/File;
+
+    const-string v2, "misc/adb"
+
+    invoke-direct {v0, v1, v2}, Ljava/io/File;-><init>(Ljava/io/File;Ljava/lang/String;)V
+
+    .local v0, adbDir:Ljava/io/File;
+    invoke-virtual {v0}, Ljava/io/File;->exists()Z
+
+    move-result v2
+
+    if-nez v2, :cond_0
+
+    const-string v2, "UsbDebuggingManager"
+
+    const-string v3, "ADB data directory does not exist"
+
+    invoke-static {v2, v3}, Landroid/util/Slog;->e(Ljava/lang/String;Ljava/lang/String;)I
+
+    const/4 v2, 0x0
+
+    :goto_0
+    return-object v2
+
+    :cond_0
+    new-instance v2, Ljava/io/File;
+
+    const-string v3, "adb_keys"
+
+    invoke-direct {v2, v0, v3}, Ljava/io/File;-><init>(Ljava/io/File;Ljava/lang/String;)V
+
+    goto :goto_0
 .end method
 
 .method private listenToSocket()V
@@ -802,117 +860,95 @@
 .end method
 
 .method private writeKey(Ljava/lang/String;)V
-    .locals 9
+    .locals 7
     .parameter "key"
 
     .prologue
-    invoke-static {}, Landroid/os/Environment;->getDataDirectory()Ljava/io/File;
+    :try_start_0
+    invoke-direct {p0}, Lcom/android/server/usb/UsbDebuggingManager;->getUserKeyFile()Ljava/io/File;
 
-    move-result-object v1
+    move-result-object v2
 
-    .local v1, dataDir:Ljava/io/File;
-    new-instance v0, Ljava/io/File;
+    .local v2, keyFile:Ljava/io/File;
+    if-nez v2, :cond_0
 
-    const-string v5, "misc/adb"
-
-    invoke-direct {v0, v1, v5}, Ljava/io/File;-><init>(Ljava/io/File;Ljava/lang/String;)V
-
-    .local v0, adbDir:Ljava/io/File;
-    invoke-virtual {v0}, Ljava/io/File;->exists()Z
-
-    move-result v5
-
-    if-nez v5, :cond_0
-
-    const-string v5, "UsbDebuggingManager"
-
-    const-string v6, "ADB data directory does not exist"
-
-    invoke-static {v5, v6}, Landroid/util/Slog;->e(Ljava/lang/String;Ljava/lang/String;)I
-
+    .end local v2           #keyFile:Ljava/io/File;
     :goto_0
     return-void
 
+    .restart local v2       #keyFile:Ljava/io/File;
     :cond_0
-    :try_start_0
-    new-instance v4, Ljava/io/File;
+    invoke-virtual {v2}, Ljava/io/File;->exists()Z
 
-    const-string v5, "adb_keys"
+    move-result v3
 
-    invoke-direct {v4, v0, v5}, Ljava/io/File;-><init>(Ljava/io/File;Ljava/lang/String;)V
+    if-nez v3, :cond_1
 
-    .local v4, keyFile:Ljava/io/File;
-    invoke-virtual {v4}, Ljava/io/File;->exists()Z
+    invoke-virtual {v2}, Ljava/io/File;->createNewFile()Z
 
-    move-result v5
+    invoke-virtual {v2}, Ljava/io/File;->toString()Ljava/lang/String;
 
-    if-nez v5, :cond_1
+    move-result-object v3
 
-    invoke-virtual {v4}, Ljava/io/File;->createNewFile()Z
+    const/16 v4, 0x1a0
 
-    invoke-virtual {v4}, Ljava/io/File;->toString()Ljava/lang/String;
+    const/4 v5, -0x1
 
-    move-result-object v5
+    const/4 v6, -0x1
 
-    const/16 v6, 0x1a0
-
-    const/4 v7, -0x1
-
-    const/4 v8, -0x1
-
-    invoke-static {v5, v6, v7, v8}, Landroid/os/FileUtils;->setPermissions(Ljava/lang/String;III)I
+    invoke-static {v3, v4, v5, v6}, Landroid/os/FileUtils;->setPermissions(Ljava/lang/String;III)I
 
     :cond_1
-    new-instance v3, Ljava/io/FileOutputStream;
+    new-instance v1, Ljava/io/FileOutputStream;
 
-    const/4 v5, 0x1
+    const/4 v3, 0x1
 
-    invoke-direct {v3, v4, v5}, Ljava/io/FileOutputStream;-><init>(Ljava/io/File;Z)V
+    invoke-direct {v1, v2, v3}, Ljava/io/FileOutputStream;-><init>(Ljava/io/File;Z)V
 
-    .local v3, fo:Ljava/io/FileOutputStream;
+    .local v1, fo:Ljava/io/FileOutputStream;
     invoke-virtual {p1}, Ljava/lang/String;->getBytes()[B
 
-    move-result-object v5
+    move-result-object v3
 
-    invoke-virtual {v3, v5}, Ljava/io/FileOutputStream;->write([B)V
+    invoke-virtual {v1, v3}, Ljava/io/FileOutputStream;->write([B)V
 
-    const/16 v5, 0xa
+    const/16 v3, 0xa
 
-    invoke-virtual {v3, v5}, Ljava/io/FileOutputStream;->write(I)V
+    invoke-virtual {v1, v3}, Ljava/io/FileOutputStream;->write(I)V
 
-    invoke-virtual {v3}, Ljava/io/FileOutputStream;->close()V
+    invoke-virtual {v1}, Ljava/io/FileOutputStream;->close()V
     :try_end_0
     .catch Ljava/io/IOException; {:try_start_0 .. :try_end_0} :catch_0
 
     goto :goto_0
 
-    .end local v3           #fo:Ljava/io/FileOutputStream;
-    .end local v4           #keyFile:Ljava/io/File;
+    .end local v1           #fo:Ljava/io/FileOutputStream;
+    .end local v2           #keyFile:Ljava/io/File;
     :catch_0
-    move-exception v2
+    move-exception v0
 
-    .local v2, ex:Ljava/io/IOException;
-    const-string v5, "UsbDebuggingManager"
+    .local v0, ex:Ljava/io/IOException;
+    const-string v3, "UsbDebuggingManager"
 
-    new-instance v6, Ljava/lang/StringBuilder;
+    new-instance v4, Ljava/lang/StringBuilder;
 
-    invoke-direct {v6}, Ljava/lang/StringBuilder;-><init>()V
+    invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v7, "Error writing key:"
+    const-string v5, "Error writing key:"
 
-    invoke-virtual {v6, v7}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v6
+    move-result-object v4
 
-    invoke-virtual {v6, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+    invoke-virtual {v4, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
 
-    move-result-object v6
+    move-result-object v4
 
-    invoke-virtual {v6}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    invoke-virtual {v4}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    move-result-object v6
+    move-result-object v4
 
-    invoke-static {v5, v6}, Landroid/util/Slog;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v3, v4}, Landroid/util/Slog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     goto :goto_0
 .end method
@@ -953,6 +989,19 @@
     const/4 v1, 0x0
 
     goto :goto_0
+.end method
+
+.method public clearUsbDebuggingKeys()V
+    .locals 2
+
+    .prologue
+    iget-object v0, p0, Lcom/android/server/usb/UsbDebuggingManager;->mHandler:Landroid/os/Handler;
+
+    const/4 v1, 0x6
+
+    invoke-virtual {v0, v1}, Landroid/os/Handler;->sendEmptyMessage(I)Z
+
+    return-void
 .end method
 
 .method public denyUsbDebugging()V

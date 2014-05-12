@@ -37,18 +37,20 @@
 
 # direct methods
 .method static constructor <clinit>()V
-    .locals 4
+    .locals 5
 
     .prologue
-    const/4 v3, 0x1
+    const/4 v4, 0x2
 
-    const/4 v2, 0x0
+    const/4 v3, 0x0
+
+    const/4 v2, 0x1
 
     new-instance v0, Landroid/graphics/Path$Direction;
 
     const-string v1, "CW"
 
-    invoke-direct {v0, v1, v2, v2}, Landroid/graphics/Path$Direction;-><init>(Ljava/lang/String;II)V
+    invoke-direct {v0, v1, v3, v2}, Landroid/graphics/Path$Direction;-><init>(Ljava/lang/String;II)V
 
     sput-object v0, Landroid/graphics/Path$Direction;->CW:Landroid/graphics/Path$Direction;
 
@@ -56,21 +58,19 @@
 
     const-string v1, "CCW"
 
-    invoke-direct {v0, v1, v3, v3}, Landroid/graphics/Path$Direction;-><init>(Ljava/lang/String;II)V
+    invoke-direct {v0, v1, v2, v4}, Landroid/graphics/Path$Direction;-><init>(Ljava/lang/String;II)V
 
     sput-object v0, Landroid/graphics/Path$Direction;->CCW:Landroid/graphics/Path$Direction;
 
-    const/4 v0, 0x2
-
-    new-array v0, v0, [Landroid/graphics/Path$Direction;
+    new-array v0, v4, [Landroid/graphics/Path$Direction;
 
     sget-object v1, Landroid/graphics/Path$Direction;->CW:Landroid/graphics/Path$Direction;
 
-    aput-object v1, v0, v2
+    aput-object v1, v0, v3
 
     sget-object v1, Landroid/graphics/Path$Direction;->CCW:Landroid/graphics/Path$Direction;
 
-    aput-object v1, v0, v3
+    aput-object v1, v0, v2
 
     sput-object v0, Landroid/graphics/Path$Direction;->$VALUES:[Landroid/graphics/Path$Direction;
 

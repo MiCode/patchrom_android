@@ -514,7 +514,7 @@
 
     move-result-object v0
 
-    invoke-static {v0}, Landroid/app/DownloadManager$Injector;->addParens(Ljava/lang/String;)Ljava/lang/String;
+    invoke-static {v0}, Landroid/app/Injector$DownloadManagerHook;->addParens(Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v0
 

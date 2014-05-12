@@ -1,4 +1,4 @@
-.class Lcom/android/server/am/PendingThumbnailsRecord;
+.class final Lcom/android/server/am/PendingThumbnailsRecord;
 .super Ljava/lang/Object;
 .source "PendingThumbnailsRecord.java"
 
@@ -6,7 +6,16 @@
 # instance fields
 .field finished:Z
 
-.field pendingRecords:Ljava/util/HashSet;
+.field final pendingRecords:Ljava/util/HashSet;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "Ljava/util/HashSet",
+            "<",
+            "Lcom/android/server/am/ActivityRecord;",
+            ">;"
+        }
+    .end annotation
+.end field
 
 .field final receiver:Landroid/app/IThumbnailReceiver;
 

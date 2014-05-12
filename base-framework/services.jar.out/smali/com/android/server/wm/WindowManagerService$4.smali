@@ -1,14 +1,11 @@
 .class Lcom/android/server/wm/WindowManagerService$4;
-.super Ljava/lang/Object;
+.super Landroid/app/AppOpsManager$OnOpChangedInternalListener;
 .source "WindowManagerService.java"
-
-# interfaces
-.implements Landroid/view/animation/Interpolator;
 
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/android/server/wm/WindowManagerService;->createThumbnailAnimationLocked(IZZZ)Landroid/view/animation/Animation;
+    value = Lcom/android/server/wm/WindowManagerService;-><init>(Landroid/content/Context;Lcom/android/server/power/PowerManagerService;Lcom/android/server/display/DisplayManagerService;Lcom/android/server/input/InputManagerService;ZZZ)V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -29,31 +26,22 @@
     .prologue
     iput-object p1, p0, Lcom/android/server/wm/WindowManagerService$4;->this$0:Lcom/android/server/wm/WindowManagerService;
 
-    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+    invoke-direct {p0}, Landroid/app/AppOpsManager$OnOpChangedInternalListener;-><init>()V
 
     return-void
 .end method
 
 
 # virtual methods
-.method public getInterpolation(F)F
-    .locals 2
-    .parameter "input"
+.method public onOpChanged(ILjava/lang/String;)V
+    .locals 1
+    .parameter "op"
+    .parameter "packageName"
 
     .prologue
-    const/high16 v1, 0x3e80
+    iget-object v0, p0, Lcom/android/server/wm/WindowManagerService$4;->this$0:Lcom/android/server/wm/WindowManagerService;
 
-    cmpg-float v0, p1, v1
+    invoke-virtual {v0}, Lcom/android/server/wm/WindowManagerService;->updateAppOpsState()V
 
-    if-gez v0, :cond_0
-
-    div-float v0, p1, v1
-
-    :goto_0
-    return v0
-
-    :cond_0
-    const/high16 v0, 0x3f80
-
-    goto :goto_0
+    return-void
 .end method

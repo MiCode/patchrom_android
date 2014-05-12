@@ -15,11 +15,11 @@
 
 
 # instance fields
-.field final client:Ljava/lang/String;
+.field final mClient:Ljava/lang/String;
 
-.field final endId:I
+.field final mEndId:I
 
-.field final startId:I
+.field final mStartId:I
 
 .field final synthetic this$0:Lcom/android/internal/telephony/IntRangeManager;
 
@@ -37,11 +37,11 @@
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    iput p2, p0, Lcom/android/internal/telephony/IntRangeManager$ClientRange;->startId:I
+    iput p2, p0, Lcom/android/internal/telephony/IntRangeManager$ClientRange;->mStartId:I
 
-    iput p3, p0, Lcom/android/internal/telephony/IntRangeManager$ClientRange;->endId:I
+    iput p3, p0, Lcom/android/internal/telephony/IntRangeManager$ClientRange;->mEndId:I
 
-    iput-object p4, p0, Lcom/android/internal/telephony/IntRangeManager$ClientRange;->client:Ljava/lang/String;
+    iput-object p4, p0, Lcom/android/internal/telephony/IntRangeManager$ClientRange;->mClient:Ljava/lang/String;
 
     return-void
 .end method
@@ -66,21 +66,21 @@
     check-cast v0, Lcom/android/internal/telephony/IntRangeManager$ClientRange;
 
     .local v0, other:Lcom/android/internal/telephony/IntRangeManager$ClientRange;
-    iget v2, p0, Lcom/android/internal/telephony/IntRangeManager$ClientRange;->startId:I
+    iget v2, p0, Lcom/android/internal/telephony/IntRangeManager$ClientRange;->mStartId:I
 
-    iget v3, v0, Lcom/android/internal/telephony/IntRangeManager$ClientRange;->startId:I
-
-    if-ne v2, v3, :cond_0
-
-    iget v2, p0, Lcom/android/internal/telephony/IntRangeManager$ClientRange;->endId:I
-
-    iget v3, v0, Lcom/android/internal/telephony/IntRangeManager$ClientRange;->endId:I
+    iget v3, v0, Lcom/android/internal/telephony/IntRangeManager$ClientRange;->mStartId:I
 
     if-ne v2, v3, :cond_0
 
-    iget-object v2, p0, Lcom/android/internal/telephony/IntRangeManager$ClientRange;->client:Ljava/lang/String;
+    iget v2, p0, Lcom/android/internal/telephony/IntRangeManager$ClientRange;->mEndId:I
 
-    iget-object v3, v0, Lcom/android/internal/telephony/IntRangeManager$ClientRange;->client:Ljava/lang/String;
+    iget v3, v0, Lcom/android/internal/telephony/IntRangeManager$ClientRange;->mEndId:I
+
+    if-ne v2, v3, :cond_0
+
+    iget-object v2, p0, Lcom/android/internal/telephony/IntRangeManager$ClientRange;->mClient:Ljava/lang/String;
+
+    iget-object v3, v0, Lcom/android/internal/telephony/IntRangeManager$ClientRange;->mClient:Ljava/lang/String;
 
     invoke-virtual {v2, v3}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
@@ -99,17 +99,17 @@
     .locals 2
 
     .prologue
-    iget v0, p0, Lcom/android/internal/telephony/IntRangeManager$ClientRange;->startId:I
+    iget v0, p0, Lcom/android/internal/telephony/IntRangeManager$ClientRange;->mStartId:I
 
     mul-int/lit8 v0, v0, 0x1f
 
-    iget v1, p0, Lcom/android/internal/telephony/IntRangeManager$ClientRange;->endId:I
+    iget v1, p0, Lcom/android/internal/telephony/IntRangeManager$ClientRange;->mEndId:I
 
     add-int/2addr v0, v1
 
     mul-int/lit8 v0, v0, 0x1f
 
-    iget-object v1, p0, Lcom/android/internal/telephony/IntRangeManager$ClientRange;->client:Ljava/lang/String;
+    iget-object v1, p0, Lcom/android/internal/telephony/IntRangeManager$ClientRange;->mClient:Ljava/lang/String;
 
     invoke-virtual {v1}, Ljava/lang/String;->hashCode()I
 

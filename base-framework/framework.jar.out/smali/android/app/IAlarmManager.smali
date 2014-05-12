@@ -23,23 +23,7 @@
     .end annotation
 .end method
 
-.method public abstract set(IJLandroid/app/PendingIntent;)V
-    .annotation system Ldalvik/annotation/Throws;
-        value = {
-            Landroid/os/RemoteException;
-        }
-    .end annotation
-.end method
-
-.method public abstract setInexactRepeating(IJJLandroid/app/PendingIntent;)V
-    .annotation system Ldalvik/annotation/Throws;
-        value = {
-            Landroid/os/RemoteException;
-        }
-    .end annotation
-.end method
-
-.method public abstract setRepeating(IJJLandroid/app/PendingIntent;)V
+.method public abstract set(IJJJLandroid/app/PendingIntent;Landroid/os/WorkSource;)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;

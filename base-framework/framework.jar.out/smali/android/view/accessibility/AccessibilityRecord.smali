@@ -501,7 +501,7 @@
 .end method
 
 .method public getSource()Landroid/view/accessibility/AccessibilityNodeInfo;
-    .locals 6
+    .locals 7
 
     .prologue
     const/4 v3, -0x1
@@ -542,9 +542,11 @@
 
     iget-wide v3, p0, Landroid/view/accessibility/AccessibilityRecord;->mSourceNodeId:J
 
-    const/4 v5, 0x7
+    const/4 v5, 0x0
 
-    invoke-virtual/range {v0 .. v5}, Landroid/view/accessibility/AccessibilityInteractionClient;->findAccessibilityNodeInfoByAccessibilityId(IIJI)Landroid/view/accessibility/AccessibilityNodeInfo;
+    const/4 v6, 0x7
+
+    invoke-virtual/range {v0 .. v6}, Landroid/view/accessibility/AccessibilityInteractionClient;->findAccessibilityNodeInfoByAccessibilityId(IIJZI)Landroid/view/accessibility/AccessibilityNodeInfo;
 
     move-result-object v1
 

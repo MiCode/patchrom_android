@@ -27,6 +27,9 @@
 .field private static final synthetic $VALUES:[Landroid/webkit/WebSettings$LayoutAlgorithm;
 
 .field public static final enum NARROW_COLUMNS:Landroid/webkit/WebSettings$LayoutAlgorithm;
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
+.end field
 
 .field public static final enum NORMAL:Landroid/webkit/WebSettings$LayoutAlgorithm;
 
@@ -35,12 +38,16 @@
     .end annotation
 .end field
 
+.field public static final enum TEXT_AUTOSIZING:Landroid/webkit/WebSettings$LayoutAlgorithm;
+
 
 # direct methods
 .method static constructor <clinit>()V
-    .locals 5
+    .locals 6
 
     .prologue
+    const/4 v5, 0x3
+
     const/4 v4, 0x2
 
     const/4 v3, 0x1
@@ -71,7 +78,15 @@
 
     sput-object v0, Landroid/webkit/WebSettings$LayoutAlgorithm;->NARROW_COLUMNS:Landroid/webkit/WebSettings$LayoutAlgorithm;
 
-    const/4 v0, 0x3
+    new-instance v0, Landroid/webkit/WebSettings$LayoutAlgorithm;
+
+    const-string v1, "TEXT_AUTOSIZING"
+
+    invoke-direct {v0, v1, v5}, Landroid/webkit/WebSettings$LayoutAlgorithm;-><init>(Ljava/lang/String;I)V
+
+    sput-object v0, Landroid/webkit/WebSettings$LayoutAlgorithm;->TEXT_AUTOSIZING:Landroid/webkit/WebSettings$LayoutAlgorithm;
+
+    const/4 v0, 0x4
 
     new-array v0, v0, [Landroid/webkit/WebSettings$LayoutAlgorithm;
 
@@ -86,6 +101,10 @@
     sget-object v1, Landroid/webkit/WebSettings$LayoutAlgorithm;->NARROW_COLUMNS:Landroid/webkit/WebSettings$LayoutAlgorithm;
 
     aput-object v1, v0, v4
+
+    sget-object v1, Landroid/webkit/WebSettings$LayoutAlgorithm;->TEXT_AUTOSIZING:Landroid/webkit/WebSettings$LayoutAlgorithm;
+
+    aput-object v1, v0, v5
 
     sput-object v0, Landroid/webkit/WebSettings$LayoutAlgorithm;->$VALUES:[Landroid/webkit/WebSettings$LayoutAlgorithm;
 

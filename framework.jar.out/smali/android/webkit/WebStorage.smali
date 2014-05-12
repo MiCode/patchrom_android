@@ -116,6 +116,8 @@
     .locals 0
     .parameter "origin"
     .parameter "quota"
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
 
     .prologue
     return-void

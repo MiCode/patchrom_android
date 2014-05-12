@@ -30,17 +30,13 @@
 
 
 # instance fields
-.field private mContext:Landroid/content/Context;
+.field private final mContext:Landroid/content/Context;
 
-.field private mDangerousIcon:Landroid/graphics/drawable/Drawable;
+.field private final mInflater:Landroid/view/LayoutInflater;
 
-.field private mInflater:Landroid/view/LayoutInflater;
+.field private final mNewPermPrefix:Ljava/lang/CharSequence;
 
-.field private mInstalledPackageInfo:Landroid/content/pm/PackageInfo;
-
-.field private mNewPermPrefix:Ljava/lang/CharSequence;
-
-.field private mNormalIcon:Landroid/graphics/drawable/Drawable;
+.field private mPackageName:Ljava/lang/String;
 
 .field private final mPermComparator:Landroid/widget/AppSecurityPermissions$PermissionInfoComparator;
 
@@ -69,7 +65,7 @@
     .end annotation
 .end field
 
-.field private mPermsList:Ljava/util/List;
+.field private final mPermsList:Ljava/util/List;
     .annotation system Ldalvik/annotation/Signature;
         value = {
             "Ljava/util/List",
@@ -80,434 +76,282 @@
     .end annotation
 .end field
 
-.field private mPm:Landroid/content/pm/PackageManager;
+.field private final mPm:Landroid/content/pm/PackageManager;
 
 
 # direct methods
+.method private constructor <init>(Landroid/content/Context;)V
+    .locals 2
+    .parameter "context"
+
+    .prologue
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    new-instance v0, Ljava/util/HashMap;
+
+    invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
+
+    iput-object v0, p0, Landroid/widget/AppSecurityPermissions;->mPermGroups:Ljava/util/Map;
+
+    new-instance v0, Ljava/util/ArrayList;
+
+    invoke-direct {v0}, Ljava/util/ArrayList;-><init>()V
+
+    iput-object v0, p0, Landroid/widget/AppSecurityPermissions;->mPermGroupsList:Ljava/util/List;
+
+    new-instance v0, Landroid/widget/AppSecurityPermissions$PermissionGroupInfoComparator;
+
+    invoke-direct {v0}, Landroid/widget/AppSecurityPermissions$PermissionGroupInfoComparator;-><init>()V
+
+    iput-object v0, p0, Landroid/widget/AppSecurityPermissions;->mPermGroupComparator:Landroid/widget/AppSecurityPermissions$PermissionGroupInfoComparator;
+
+    new-instance v0, Landroid/widget/AppSecurityPermissions$PermissionInfoComparator;
+
+    invoke-direct {v0}, Landroid/widget/AppSecurityPermissions$PermissionInfoComparator;-><init>()V
+
+    iput-object v0, p0, Landroid/widget/AppSecurityPermissions;->mPermComparator:Landroid/widget/AppSecurityPermissions$PermissionInfoComparator;
+
+    new-instance v0, Ljava/util/ArrayList;
+
+    invoke-direct {v0}, Ljava/util/ArrayList;-><init>()V
+
+    iput-object v0, p0, Landroid/widget/AppSecurityPermissions;->mPermsList:Ljava/util/List;
+
+    iput-object p1, p0, Landroid/widget/AppSecurityPermissions;->mContext:Landroid/content/Context;
+
+    iget-object v0, p0, Landroid/widget/AppSecurityPermissions;->mContext:Landroid/content/Context;
+
+    const-string v1, "layout_inflater"
+
+    invoke-virtual {v0, v1}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Landroid/view/LayoutInflater;
+
+    iput-object v0, p0, Landroid/widget/AppSecurityPermissions;->mInflater:Landroid/view/LayoutInflater;
+
+    iget-object v0, p0, Landroid/widget/AppSecurityPermissions;->mContext:Landroid/content/Context;
+
+    invoke-virtual {v0}, Landroid/content/Context;->getPackageManager()Landroid/content/pm/PackageManager;
+
+    move-result-object v0
+
+    iput-object v0, p0, Landroid/widget/AppSecurityPermissions;->mPm:Landroid/content/pm/PackageManager;
+
+    iget-object v0, p0, Landroid/widget/AppSecurityPermissions;->mContext:Landroid/content/Context;
+
+    const v1, 0x104045c
+
+    invoke-virtual {v0, v1}, Landroid/content/Context;->getText(I)Ljava/lang/CharSequence;
+
+    move-result-object v0
+
+    iput-object v0, p0, Landroid/widget/AppSecurityPermissions;->mNewPermPrefix:Ljava/lang/CharSequence;
+
+    return-void
+.end method
+
 .method public constructor <init>(Landroid/content/Context;Landroid/content/pm/PackageInfo;)V
-    .locals 9
+    .locals 7
     .parameter "context"
     .parameter "info"
 
     .prologue
-    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
-
-    new-instance v6, Ljava/util/HashMap;
-
-    invoke-direct {v6}, Ljava/util/HashMap;-><init>()V
-
-    iput-object v6, p0, Landroid/widget/AppSecurityPermissions;->mPermGroups:Ljava/util/Map;
-
-    new-instance v6, Ljava/util/ArrayList;
-
-    invoke-direct {v6}, Ljava/util/ArrayList;-><init>()V
-
-    iput-object v6, p0, Landroid/widget/AppSecurityPermissions;->mPermGroupsList:Ljava/util/List;
-
-    iput-object p1, p0, Landroid/widget/AppSecurityPermissions;->mContext:Landroid/content/Context;
-
-    iget-object v6, p0, Landroid/widget/AppSecurityPermissions;->mContext:Landroid/content/Context;
-
-    invoke-virtual {v6}, Landroid/content/Context;->getPackageManager()Landroid/content/pm/PackageManager;
-
-    move-result-object v6
-
-    iput-object v6, p0, Landroid/widget/AppSecurityPermissions;->mPm:Landroid/content/pm/PackageManager;
-
-    invoke-direct {p0}, Landroid/widget/AppSecurityPermissions;->loadResources()V
-
-    new-instance v6, Landroid/widget/AppSecurityPermissions$PermissionInfoComparator;
-
-    invoke-direct {v6}, Landroid/widget/AppSecurityPermissions$PermissionInfoComparator;-><init>()V
-
-    iput-object v6, p0, Landroid/widget/AppSecurityPermissions;->mPermComparator:Landroid/widget/AppSecurityPermissions$PermissionInfoComparator;
-
-    new-instance v6, Landroid/widget/AppSecurityPermissions$PermissionGroupInfoComparator;
-
-    invoke-direct {v6}, Landroid/widget/AppSecurityPermissions$PermissionGroupInfoComparator;-><init>()V
-
-    iput-object v6, p0, Landroid/widget/AppSecurityPermissions;->mPermGroupComparator:Landroid/widget/AppSecurityPermissions$PermissionGroupInfoComparator;
-
-    new-instance v6, Ljava/util/ArrayList;
-
-    invoke-direct {v6}, Ljava/util/ArrayList;-><init>()V
-
-    iput-object v6, p0, Landroid/widget/AppSecurityPermissions;->mPermsList:Ljava/util/List;
-
-    new-instance v3, Ljava/util/HashSet;
-
-    invoke-direct {v3}, Ljava/util/HashSet;-><init>()V
-
-    .local v3, permSet:Ljava/util/Set;,"Ljava/util/Set<Landroid/widget/AppSecurityPermissions$MyPermissionInfo;>;"
-    if-nez p2, :cond_0
-
-    :goto_0
-    return-void
-
-    :cond_0
-    const/4 v2, 0x0
-
-    .local v2, installedPkgInfo:Landroid/content/pm/PackageInfo;
-    iget-object v6, p2, Landroid/content/pm/PackageInfo;->requestedPermissions:[Ljava/lang/String;
-
-    if-eqz v6, :cond_1
-
-    :try_start_0
-    iget-object v6, p0, Landroid/widget/AppSecurityPermissions;->mPm:Landroid/content/pm/PackageManager;
-
-    iget-object v7, p2, Landroid/content/pm/PackageInfo;->packageName:Ljava/lang/String;
-
-    const/16 v8, 0x1000
-
-    invoke-virtual {v6, v7, v8}, Landroid/content/pm/PackageManager;->getPackageInfo(Ljava/lang/String;I)Landroid/content/pm/PackageInfo;
-    :try_end_0
-    .catch Landroid/content/pm/PackageManager$NameNotFoundException; {:try_start_0 .. :try_end_0} :catch_1
-
-    move-result-object v2
-
-    :goto_1
-    invoke-direct {p0, p2, v3, v2}, Landroid/widget/AppSecurityPermissions;->extractPerms(Landroid/content/pm/PackageInfo;Ljava/util/Set;Landroid/content/pm/PackageInfo;)V
-
-    :cond_1
-    iget-object v6, p2, Landroid/content/pm/PackageInfo;->sharedUserId:Ljava/lang/String;
-
-    if-eqz v6, :cond_2
-
-    :try_start_1
-    iget-object v6, p0, Landroid/widget/AppSecurityPermissions;->mPm:Landroid/content/pm/PackageManager;
-
-    iget-object v7, p2, Landroid/content/pm/PackageInfo;->sharedUserId:Ljava/lang/String;
-
-    invoke-virtual {v6, v7}, Landroid/content/pm/PackageManager;->getUidForSharedUser(Ljava/lang/String;)I
-
-    move-result v4
-
-    .local v4, sharedUid:I
-    invoke-direct {p0, v4, v3}, Landroid/widget/AppSecurityPermissions;->getAllUsedPermissions(ILjava/util/Set;)V
-    :try_end_1
-    .catch Landroid/content/pm/PackageManager$NameNotFoundException; {:try_start_1 .. :try_end_1} :catch_0
-
-    .end local v4           #sharedUid:I
-    :cond_2
-    :goto_2
-    invoke-interface {v3}, Ljava/util/Set;->iterator()Ljava/util/Iterator;
-
-    move-result-object v1
-
-    .local v1, i$:Ljava/util/Iterator;
-    :goto_3
-    invoke-interface {v1}, Ljava/util/Iterator;->hasNext()Z
-
-    move-result v6
-
-    if-eqz v6, :cond_3
-
-    invoke-interface {v1}, Ljava/util/Iterator;->next()Ljava/lang/Object;
-
-    move-result-object v5
-
-    check-cast v5, Landroid/widget/AppSecurityPermissions$MyPermissionInfo;
-
-    .local v5, tmpInfo:Landroid/widget/AppSecurityPermissions$MyPermissionInfo;
-    iget-object v6, p0, Landroid/widget/AppSecurityPermissions;->mPermsList:Ljava/util/List;
-
-    invoke-interface {v6, v5}, Ljava/util/List;->add(Ljava/lang/Object;)Z
-
-    goto :goto_3
-
-    .end local v1           #i$:Ljava/util/Iterator;
-    .end local v5           #tmpInfo:Landroid/widget/AppSecurityPermissions$MyPermissionInfo;
-    :catch_0
-    move-exception v0
-
-    .local v0, e:Landroid/content/pm/PackageManager$NameNotFoundException;
-    const-string v6, "AppSecurityPermissions"
-
-    new-instance v7, Ljava/lang/StringBuilder;
-
-    invoke-direct {v7}, Ljava/lang/StringBuilder;-><init>()V
-
-    const-string v8, "Could\'nt retrieve shared user id for:"
-
-    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v7
-
-    iget-object v8, p2, Landroid/content/pm/PackageInfo;->packageName:Ljava/lang/String;
-
-    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v7
-
-    invoke-virtual {v7}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v7
-
-    invoke-static {v6, v7}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
-
-    goto :goto_2
-
-    .end local v0           #e:Landroid/content/pm/PackageManager$NameNotFoundException;
-    .restart local v1       #i$:Ljava/util/Iterator;
-    :cond_3
-    iget-object v6, p0, Landroid/widget/AppSecurityPermissions;->mPermsList:Ljava/util/List;
-
-    invoke-direct {p0, v6}, Landroid/widget/AppSecurityPermissions;->setPermissions(Ljava/util/List;)V
-
-    goto :goto_0
-
-    .end local v1           #i$:Ljava/util/Iterator;
-    :catch_1
-    move-exception v6
-
-    goto :goto_1
-.end method
-
-.method public constructor <init>(Landroid/content/Context;Ljava/lang/String;)V
-    .locals 8
-    .parameter "context"
-    .parameter "packageName"
-
-    .prologue
-    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
-
-    new-instance v5, Ljava/util/HashMap;
-
-    invoke-direct {v5}, Ljava/util/HashMap;-><init>()V
-
-    iput-object v5, p0, Landroid/widget/AppSecurityPermissions;->mPermGroups:Ljava/util/Map;
-
-    new-instance v5, Ljava/util/ArrayList;
-
-    invoke-direct {v5}, Ljava/util/ArrayList;-><init>()V
-
-    iput-object v5, p0, Landroid/widget/AppSecurityPermissions;->mPermGroupsList:Ljava/util/List;
-
-    iput-object p1, p0, Landroid/widget/AppSecurityPermissions;->mContext:Landroid/content/Context;
-
-    iget-object v5, p0, Landroid/widget/AppSecurityPermissions;->mContext:Landroid/content/Context;
-
-    invoke-virtual {v5}, Landroid/content/Context;->getPackageManager()Landroid/content/pm/PackageManager;
-
-    move-result-object v5
-
-    iput-object v5, p0, Landroid/widget/AppSecurityPermissions;->mPm:Landroid/content/pm/PackageManager;
-
-    invoke-direct {p0}, Landroid/widget/AppSecurityPermissions;->loadResources()V
-
-    new-instance v5, Landroid/widget/AppSecurityPermissions$PermissionInfoComparator;
-
-    invoke-direct {v5}, Landroid/widget/AppSecurityPermissions$PermissionInfoComparator;-><init>()V
-
-    iput-object v5, p0, Landroid/widget/AppSecurityPermissions;->mPermComparator:Landroid/widget/AppSecurityPermissions$PermissionInfoComparator;
-
-    new-instance v5, Landroid/widget/AppSecurityPermissions$PermissionGroupInfoComparator;
-
-    invoke-direct {v5}, Landroid/widget/AppSecurityPermissions$PermissionGroupInfoComparator;-><init>()V
-
-    iput-object v5, p0, Landroid/widget/AppSecurityPermissions;->mPermGroupComparator:Landroid/widget/AppSecurityPermissions$PermissionGroupInfoComparator;
-
-    new-instance v5, Ljava/util/ArrayList;
-
-    invoke-direct {v5}, Ljava/util/ArrayList;-><init>()V
-
-    iput-object v5, p0, Landroid/widget/AppSecurityPermissions;->mPermsList:Ljava/util/List;
+    invoke-direct {p0, p1}, Landroid/widget/AppSecurityPermissions;-><init>(Landroid/content/Context;)V
 
     new-instance v2, Ljava/util/HashSet;
 
     invoke-direct {v2}, Ljava/util/HashSet;-><init>()V
 
     .local v2, permSet:Ljava/util/Set;,"Ljava/util/Set<Landroid/widget/AppSecurityPermissions$MyPermissionInfo;>;"
+    if-nez p2, :cond_0
+
+    :goto_0
+    return-void
+
+    :cond_0
+    iget-object v4, p2, Landroid/content/pm/PackageInfo;->packageName:Ljava/lang/String;
+
+    iput-object v4, p0, Landroid/widget/AppSecurityPermissions;->mPackageName:Ljava/lang/String;
+
+    const/4 v1, 0x0
+
+    .local v1, installedPkgInfo:Landroid/content/pm/PackageInfo;
+    iget-object v4, p2, Landroid/content/pm/PackageInfo;->requestedPermissions:[Ljava/lang/String;
+
+    if-eqz v4, :cond_1
+
     :try_start_0
-    iget-object v5, p0, Landroid/widget/AppSecurityPermissions;->mPm:Landroid/content/pm/PackageManager;
+    iget-object v4, p0, Landroid/widget/AppSecurityPermissions;->mPm:Landroid/content/pm/PackageManager;
+
+    iget-object v5, p2, Landroid/content/pm/PackageInfo;->packageName:Ljava/lang/String;
 
     const/16 v6, 0x1000
 
-    invoke-virtual {v5, p2, v6}, Landroid/content/pm/PackageManager;->getPackageInfo(Ljava/lang/String;I)Landroid/content/pm/PackageInfo;
+    invoke-virtual {v4, v5, v6}, Landroid/content/pm/PackageManager;->getPackageInfo(Ljava/lang/String;I)Landroid/content/pm/PackageInfo;
     :try_end_0
-    .catch Landroid/content/pm/PackageManager$NameNotFoundException; {:try_start_0 .. :try_end_0} :catch_0
-
-    move-result-object v3
-
-    .local v3, pkgInfo:Landroid/content/pm/PackageInfo;
-    iget-object v5, v3, Landroid/content/pm/PackageInfo;->applicationInfo:Landroid/content/pm/ApplicationInfo;
-
-    if-eqz v5, :cond_0
-
-    iget-object v5, v3, Landroid/content/pm/PackageInfo;->applicationInfo:Landroid/content/pm/ApplicationInfo;
-
-    iget v5, v5, Landroid/content/pm/ApplicationInfo;->uid:I
-
-    const/4 v6, -0x1
-
-    if-eq v5, v6, :cond_0
-
-    iget-object v5, v3, Landroid/content/pm/PackageInfo;->applicationInfo:Landroid/content/pm/ApplicationInfo;
-
-    iget v5, v5, Landroid/content/pm/ApplicationInfo;->uid:I
-
-    invoke-direct {p0, v5, v2}, Landroid/widget/AppSecurityPermissions;->getAllUsedPermissions(ILjava/util/Set;)V
-
-    :cond_0
-    invoke-interface {v2}, Ljava/util/Set;->iterator()Ljava/util/Iterator;
+    .catch Landroid/content/pm/PackageManager$NameNotFoundException; {:try_start_0 .. :try_end_0} :catch_1
 
     move-result-object v1
 
-    .local v1, i$:Ljava/util/Iterator;
-    :goto_0
-    invoke-interface {v1}, Ljava/util/Iterator;->hasNext()Z
+    :goto_1
+    invoke-direct {p0, p2, v2, v1}, Landroid/widget/AppSecurityPermissions;->extractPerms(Landroid/content/pm/PackageInfo;Ljava/util/Set;Landroid/content/pm/PackageInfo;)V
 
-    move-result v5
+    :cond_1
+    iget-object v4, p2, Landroid/content/pm/PackageInfo;->sharedUserId:Ljava/lang/String;
 
-    if-eqz v5, :cond_1
+    if-eqz v4, :cond_2
 
-    invoke-interface {v1}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+    :try_start_1
+    iget-object v4, p0, Landroid/widget/AppSecurityPermissions;->mPm:Landroid/content/pm/PackageManager;
 
-    move-result-object v4
+    iget-object v5, p2, Landroid/content/pm/PackageInfo;->sharedUserId:Ljava/lang/String;
 
-    check-cast v4, Landroid/widget/AppSecurityPermissions$MyPermissionInfo;
+    invoke-virtual {v4, v5}, Landroid/content/pm/PackageManager;->getUidForSharedUser(Ljava/lang/String;)I
 
-    .local v4, tmpInfo:Landroid/widget/AppSecurityPermissions$MyPermissionInfo;
-    iget-object v5, p0, Landroid/widget/AppSecurityPermissions;->mPermsList:Ljava/util/List;
+    move-result v3
 
-    invoke-interface {v5, v4}, Ljava/util/List;->add(Ljava/lang/Object;)Z
+    .local v3, sharedUid:I
+    invoke-direct {p0, v3, v2}, Landroid/widget/AppSecurityPermissions;->getAllUsedPermissions(ILjava/util/Set;)V
+    :try_end_1
+    .catch Landroid/content/pm/PackageManager$NameNotFoundException; {:try_start_1 .. :try_end_1} :catch_0
+
+    .end local v3           #sharedUid:I
+    :cond_2
+    :goto_2
+    iget-object v4, p0, Landroid/widget/AppSecurityPermissions;->mPermsList:Ljava/util/List;
+
+    invoke-interface {v4, v2}, Ljava/util/List;->addAll(Ljava/util/Collection;)Z
+
+    iget-object v4, p0, Landroid/widget/AppSecurityPermissions;->mPermsList:Ljava/util/List;
+
+    invoke-direct {p0, v4}, Landroid/widget/AppSecurityPermissions;->setPermissions(Ljava/util/List;)V
 
     goto :goto_0
 
-    .end local v1           #i$:Ljava/util/Iterator;
-    .end local v3           #pkgInfo:Landroid/content/pm/PackageInfo;
-    .end local v4           #tmpInfo:Landroid/widget/AppSecurityPermissions$MyPermissionInfo;
     :catch_0
     move-exception v0
 
     .local v0, e:Landroid/content/pm/PackageManager$NameNotFoundException;
-    const-string v5, "AppSecurityPermissions"
+    const-string v4, "AppSecurityPermissions"
 
-    new-instance v6, Ljava/lang/StringBuilder;
+    new-instance v5, Ljava/lang/StringBuilder;
 
-    invoke-direct {v6}, Ljava/lang/StringBuilder;-><init>()V
+    invoke-direct {v5}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v7, "Couldn\'t retrieve permissions for package:"
+    const-string v6, "Couldn\'t retrieve shared user id for: "
 
-    invoke-virtual {v6, v7}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v6
+    move-result-object v5
 
-    invoke-virtual {v6, p2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    iget-object v6, p2, Landroid/content/pm/PackageInfo;->packageName:Ljava/lang/String;
 
-    move-result-object v6
+    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    invoke-virtual {v6}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    move-result-object v5
 
-    move-result-object v6
+    invoke-virtual {v5}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    invoke-static {v5, v6}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+    move-result-object v5
+
+    invoke-static {v4, v5}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+
+    goto :goto_2
 
     .end local v0           #e:Landroid/content/pm/PackageManager$NameNotFoundException;
-    :goto_1
-    return-void
-
-    .restart local v1       #i$:Ljava/util/Iterator;
-    .restart local v3       #pkgInfo:Landroid/content/pm/PackageInfo;
-    :cond_1
-    iget-object v5, p0, Landroid/widget/AppSecurityPermissions;->mPermsList:Ljava/util/List;
-
-    invoke-direct {p0, v5}, Landroid/widget/AppSecurityPermissions;->setPermissions(Ljava/util/List;)V
+    :catch_1
+    move-exception v4
 
     goto :goto_1
 .end method
 
-.method public constructor <init>(Landroid/content/Context;Ljava/util/List;)V
-    .locals 4
+.method public constructor <init>(Landroid/content/Context;Ljava/lang/String;)V
+    .locals 6
     .parameter "context"
-    .parameter
-    .annotation system Ldalvik/annotation/Signature;
-        value = {
-            "(",
-            "Landroid/content/Context;",
-            "Ljava/util/List",
-            "<",
-            "Landroid/content/pm/PermissionInfo;",
-            ">;)V"
-        }
-    .end annotation
+    .parameter "packageName"
 
     .prologue
-    .local p2, permList:Ljava/util/List;,"Ljava/util/List<Landroid/content/pm/PermissionInfo;>;"
-    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+    invoke-direct {p0, p1}, Landroid/widget/AppSecurityPermissions;-><init>(Landroid/content/Context;)V
 
-    new-instance v2, Ljava/util/HashMap;
+    iput-object p2, p0, Landroid/widget/AppSecurityPermissions;->mPackageName:Ljava/lang/String;
 
-    invoke-direct {v2}, Ljava/util/HashMap;-><init>()V
+    new-instance v1, Ljava/util/HashSet;
 
-    iput-object v2, p0, Landroid/widget/AppSecurityPermissions;->mPermGroups:Ljava/util/Map;
+    invoke-direct {v1}, Ljava/util/HashSet;-><init>()V
 
-    new-instance v2, Ljava/util/ArrayList;
+    .local v1, permSet:Ljava/util/Set;,"Ljava/util/Set<Landroid/widget/AppSecurityPermissions$MyPermissionInfo;>;"
+    :try_start_0
+    iget-object v3, p0, Landroid/widget/AppSecurityPermissions;->mPm:Landroid/content/pm/PackageManager;
 
-    invoke-direct {v2}, Ljava/util/ArrayList;-><init>()V
+    const/16 v4, 0x1000
 
-    iput-object v2, p0, Landroid/widget/AppSecurityPermissions;->mPermGroupsList:Ljava/util/List;
-
-    iput-object p1, p0, Landroid/widget/AppSecurityPermissions;->mContext:Landroid/content/Context;
-
-    iget-object v2, p0, Landroid/widget/AppSecurityPermissions;->mContext:Landroid/content/Context;
-
-    invoke-virtual {v2}, Landroid/content/Context;->getPackageManager()Landroid/content/pm/PackageManager;
+    invoke-virtual {v3, p2, v4}, Landroid/content/pm/PackageManager;->getPackageInfo(Ljava/lang/String;I)Landroid/content/pm/PackageInfo;
+    :try_end_0
+    .catch Landroid/content/pm/PackageManager$NameNotFoundException; {:try_start_0 .. :try_end_0} :catch_0
 
     move-result-object v2
 
-    iput-object v2, p0, Landroid/widget/AppSecurityPermissions;->mPm:Landroid/content/pm/PackageManager;
+    .local v2, pkgInfo:Landroid/content/pm/PackageInfo;
+    iget-object v3, v2, Landroid/content/pm/PackageInfo;->applicationInfo:Landroid/content/pm/ApplicationInfo;
 
-    invoke-direct {p0}, Landroid/widget/AppSecurityPermissions;->loadResources()V
+    if-eqz v3, :cond_0
 
-    new-instance v2, Landroid/widget/AppSecurityPermissions$PermissionInfoComparator;
+    iget-object v3, v2, Landroid/content/pm/PackageInfo;->applicationInfo:Landroid/content/pm/ApplicationInfo;
 
-    invoke-direct {v2}, Landroid/widget/AppSecurityPermissions$PermissionInfoComparator;-><init>()V
+    iget v3, v3, Landroid/content/pm/ApplicationInfo;->uid:I
 
-    iput-object v2, p0, Landroid/widget/AppSecurityPermissions;->mPermComparator:Landroid/widget/AppSecurityPermissions$PermissionInfoComparator;
+    const/4 v4, -0x1
 
-    new-instance v2, Landroid/widget/AppSecurityPermissions$PermissionGroupInfoComparator;
+    if-eq v3, v4, :cond_0
 
-    invoke-direct {v2}, Landroid/widget/AppSecurityPermissions$PermissionGroupInfoComparator;-><init>()V
+    iget-object v3, v2, Landroid/content/pm/PackageInfo;->applicationInfo:Landroid/content/pm/ApplicationInfo;
 
-    iput-object v2, p0, Landroid/widget/AppSecurityPermissions;->mPermGroupComparator:Landroid/widget/AppSecurityPermissions$PermissionGroupInfoComparator;
+    iget v3, v3, Landroid/content/pm/ApplicationInfo;->uid:I
 
-    invoke-interface {p2}, Ljava/util/List;->iterator()Ljava/util/Iterator;
+    invoke-direct {p0, v3, v1}, Landroid/widget/AppSecurityPermissions;->getAllUsedPermissions(ILjava/util/Set;)V
 
-    move-result-object v0
+    :cond_0
+    iget-object v3, p0, Landroid/widget/AppSecurityPermissions;->mPermsList:Ljava/util/List;
 
-    .local v0, i$:Ljava/util/Iterator;
+    invoke-interface {v3, v1}, Ljava/util/List;->addAll(Ljava/util/Collection;)Z
+
+    iget-object v3, p0, Landroid/widget/AppSecurityPermissions;->mPermsList:Ljava/util/List;
+
+    invoke-direct {p0, v3}, Landroid/widget/AppSecurityPermissions;->setPermissions(Ljava/util/List;)V
+
+    .end local v2           #pkgInfo:Landroid/content/pm/PackageInfo;
     :goto_0
-    invoke-interface {v0}, Ljava/util/Iterator;->hasNext()Z
+    return-void
 
-    move-result v2
+    :catch_0
+    move-exception v0
 
-    if-eqz v2, :cond_0
+    .local v0, e:Landroid/content/pm/PackageManager$NameNotFoundException;
+    const-string v3, "AppSecurityPermissions"
 
-    invoke-interface {v0}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+    new-instance v4, Ljava/lang/StringBuilder;
 
-    move-result-object v1
+    invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
 
-    check-cast v1, Landroid/content/pm/PermissionInfo;
+    const-string v5, "Couldn\'t retrieve permissions for package:"
 
-    .local v1, pi:Landroid/content/pm/PermissionInfo;
-    iget-object v2, p0, Landroid/widget/AppSecurityPermissions;->mPermsList:Ljava/util/List;
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    new-instance v3, Landroid/widget/AppSecurityPermissions$MyPermissionInfo;
+    move-result-object v4
 
-    invoke-direct {v3, v1}, Landroid/widget/AppSecurityPermissions$MyPermissionInfo;-><init>(Landroid/content/pm/PermissionInfo;)V
+    invoke-virtual {v4, p2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    invoke-interface {v2, v3}, Ljava/util/List;->add(Ljava/lang/Object;)Z
+    move-result-object v4
+
+    invoke-virtual {v4}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v4
+
+    invoke-static {v3, v4}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
 
     goto :goto_0
-
-    .end local v1           #pi:Landroid/content/pm/PermissionInfo;
-    :cond_0
-    iget-object v2, p0, Landroid/widget/AppSecurityPermissions;->mPermsList:Ljava/util/List;
-
-    invoke-direct {p0, v2}, Landroid/widget/AppSecurityPermissions;->setPermissions(Ljava/util/List;)V
-
-    return-void
 .end method
 
 .method private addPermToList(Ljava/util/List;Landroid/widget/AppSecurityPermissions$MyPermissionInfo;)V
@@ -560,11 +404,12 @@
     return-void
 .end method
 
-.method private displayPermissions(Ljava/util/List;Landroid/widget/LinearLayout;I)V
-    .locals 10
+.method private displayPermissions(Ljava/util/List;Landroid/widget/LinearLayout;IZ)V
+    .locals 12
     .parameter
     .parameter "permListView"
     .parameter "which"
+    .parameter "showRevokeUI"
     .annotation system Ldalvik/annotation/Signature;
         value = {
             "(",
@@ -573,7 +418,7 @@
             "Landroid/widget/AppSecurityPermissions$MyPermissionGroupInfo;",
             ">;",
             "Landroid/widget/LinearLayout;",
-            "I)V"
+            "IZ)V"
         }
     .end annotation
 
@@ -581,152 +426,152 @@
     .local p1, groups:Ljava/util/List;,"Ljava/util/List<Landroid/widget/AppSecurityPermissions$MyPermissionGroupInfo;>;"
     invoke-virtual {p2}, Landroid/widget/LinearLayout;->removeAllViews()V
 
-    const/high16 v8, 0x4100
+    const/high16 v0, 0x4100
 
-    iget-object v9, p0, Landroid/widget/AppSecurityPermissions;->mContext:Landroid/content/Context;
+    iget-object v3, p0, Landroid/widget/AppSecurityPermissions;->mContext:Landroid/content/Context;
 
-    invoke-virtual {v9}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
+    invoke-virtual {v3}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
 
-    move-result-object v9
+    move-result-object v3
 
-    invoke-virtual {v9}, Landroid/content/res/Resources;->getDisplayMetrics()Landroid/util/DisplayMetrics;
+    invoke-virtual {v3}, Landroid/content/res/Resources;->getDisplayMetrics()Landroid/util/DisplayMetrics;
 
-    move-result-object v9
+    move-result-object v3
 
-    iget v9, v9, Landroid/util/DisplayMetrics;->density:F
+    iget v3, v3, Landroid/util/DisplayMetrics;->density:F
 
-    mul-float/2addr v8, v9
+    mul-float/2addr v0, v3
 
-    float-to-int v6, v8
+    float-to-int v10, v0
 
-    .local v6, spacing:I
-    const/4 v1, 0x0
+    .local v10, spacing:I
+    const/4 v6, 0x0
 
-    .local v1, i:I
+    .local v6, i:I
     :goto_0
     invoke-interface {p1}, Ljava/util/List;->size()I
 
-    move-result v8
+    move-result v0
 
-    if-ge v1, v8, :cond_6
+    if-ge v6, v0, :cond_6
 
-    invoke-interface {p1, v1}, Ljava/util/List;->get(I)Ljava/lang/Object;
+    invoke-interface {p1, v6}, Ljava/util/List;->get(I)Ljava/lang/Object;
 
-    move-result-object v0
+    move-result-object v1
 
-    check-cast v0, Landroid/widget/AppSecurityPermissions$MyPermissionGroupInfo;
+    check-cast v1, Landroid/widget/AppSecurityPermissions$MyPermissionGroupInfo;
 
-    .local v0, grp:Landroid/widget/AppSecurityPermissions$MyPermissionGroupInfo;
-    invoke-direct {p0, v0, p3}, Landroid/widget/AppSecurityPermissions;->getPermissionList(Landroid/widget/AppSecurityPermissions$MyPermissionGroupInfo;I)Ljava/util/List;
+    .local v1, grp:Landroid/widget/AppSecurityPermissions$MyPermissionGroupInfo;
+    invoke-direct {p0, v1, p3}, Landroid/widget/AppSecurityPermissions;->getPermissionList(Landroid/widget/AppSecurityPermissions$MyPermissionGroupInfo;I)Ljava/util/List;
 
-    move-result-object v5
+    move-result-object v9
 
-    .local v5, perms:Ljava/util/List;,"Ljava/util/List<Landroid/widget/AppSecurityPermissions$MyPermissionInfo;>;"
-    const/4 v2, 0x0
+    .local v9, perms:Ljava/util/List;,"Ljava/util/List<Landroid/widget/AppSecurityPermissions$MyPermissionInfo;>;"
+    const/4 v7, 0x0
 
-    .local v2, j:I
+    .local v7, j:I
     :goto_1
-    invoke-interface {v5}, Ljava/util/List;->size()I
+    invoke-interface {v9}, Ljava/util/List;->size()I
 
-    move-result v8
+    move-result v0
 
-    if-ge v2, v8, :cond_5
+    if-ge v7, v0, :cond_5
 
-    invoke-interface {v5, v2}, Ljava/util/List;->get(I)Ljava/lang/Object;
+    invoke-interface {v9, v7}, Ljava/util/List;->get(I)Ljava/lang/Object;
 
-    move-result-object v4
+    move-result-object v2
 
-    check-cast v4, Landroid/widget/AppSecurityPermissions$MyPermissionInfo;
+    check-cast v2, Landroid/widget/AppSecurityPermissions$MyPermissionInfo;
 
-    .local v4, perm:Landroid/widget/AppSecurityPermissions$MyPermissionInfo;
-    if-nez v2, :cond_3
+    .local v2, perm:Landroid/widget/AppSecurityPermissions$MyPermissionInfo;
+    if-nez v7, :cond_3
 
-    const/4 v8, 0x1
-
-    move v9, v8
+    const/4 v3, 0x1
 
     :goto_2
-    const/4 v8, 0x4
+    const/4 v0, 0x4
 
-    if-eq p3, v8, :cond_4
+    if-eq p3, v0, :cond_4
 
-    iget-object v8, p0, Landroid/widget/AppSecurityPermissions;->mNewPermPrefix:Ljava/lang/CharSequence;
+    iget-object v4, p0, Landroid/widget/AppSecurityPermissions;->mNewPermPrefix:Ljava/lang/CharSequence;
 
     :goto_3
-    invoke-direct {p0, v0, v4, v9, v8}, Landroid/widget/AppSecurityPermissions;->getPermissionItemView(Landroid/widget/AppSecurityPermissions$MyPermissionGroupInfo;Landroid/widget/AppSecurityPermissions$MyPermissionInfo;ZLjava/lang/CharSequence;)Landroid/widget/AppSecurityPermissions$PermissionItemView;
+    move-object v0, p0
 
-    move-result-object v7
+    move/from16 v5, p4
 
-    .local v7, view:Landroid/view/View;
-    new-instance v3, Landroid/widget/LinearLayout$LayoutParams;
+    invoke-direct/range {v0 .. v5}, Landroid/widget/AppSecurityPermissions;->getPermissionItemView(Landroid/widget/AppSecurityPermissions$MyPermissionGroupInfo;Landroid/widget/AppSecurityPermissions$MyPermissionInfo;ZLjava/lang/CharSequence;Z)Landroid/widget/AppSecurityPermissions$PermissionItemView;
 
-    const/4 v8, -0x1
+    move-result-object v11
 
-    const/4 v9, -0x2
+    .local v11, view:Landroid/view/View;
+    new-instance v8, Landroid/widget/LinearLayout$LayoutParams;
 
-    invoke-direct {v3, v8, v9}, Landroid/widget/LinearLayout$LayoutParams;-><init>(II)V
+    const/4 v0, -0x1
 
-    .local v3, lp:Landroid/widget/LinearLayout$LayoutParams;
-    if-nez v2, :cond_0
+    const/4 v3, -0x2
 
-    iput v6, v3, Landroid/widget/LinearLayout$LayoutParams;->topMargin:I
+    invoke-direct {v8, v0, v3}, Landroid/widget/LinearLayout$LayoutParams;-><init>(II)V
+
+    .local v8, lp:Landroid/widget/LinearLayout$LayoutParams;
+    if-nez v7, :cond_0
+
+    iput v10, v8, Landroid/widget/LinearLayout$LayoutParams;->topMargin:I
 
     :cond_0
-    iget-object v8, v0, Landroid/widget/AppSecurityPermissions$MyPermissionGroupInfo;->mAllPermissions:Ljava/util/ArrayList;
+    iget-object v0, v1, Landroid/widget/AppSecurityPermissions$MyPermissionGroupInfo;->mAllPermissions:Ljava/util/ArrayList;
 
-    invoke-virtual {v8}, Ljava/util/ArrayList;->size()I
+    invoke-virtual {v0}, Ljava/util/ArrayList;->size()I
 
-    move-result v8
+    move-result v0
 
-    add-int/lit8 v8, v8, -0x1
+    add-int/lit8 v0, v0, -0x1
 
-    if-ne v2, v8, :cond_1
+    if-ne v7, v0, :cond_1
 
-    iput v6, v3, Landroid/widget/LinearLayout$LayoutParams;->bottomMargin:I
+    iput v10, v8, Landroid/widget/LinearLayout$LayoutParams;->bottomMargin:I
 
     :cond_1
     invoke-virtual {p2}, Landroid/widget/LinearLayout;->getChildCount()I
 
-    move-result v8
+    move-result v0
 
-    if-nez v8, :cond_2
+    if-nez v0, :cond_2
 
-    iget v8, v3, Landroid/widget/LinearLayout$LayoutParams;->topMargin:I
+    iget v0, v8, Landroid/widget/LinearLayout$LayoutParams;->topMargin:I
 
-    mul-int/lit8 v8, v8, 0x2
+    mul-int/lit8 v0, v0, 0x2
 
-    iput v8, v3, Landroid/widget/LinearLayout$LayoutParams;->topMargin:I
+    iput v0, v8, Landroid/widget/LinearLayout$LayoutParams;->topMargin:I
 
     :cond_2
-    invoke-virtual {p2, v7, v3}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
+    invoke-virtual {p2, v11, v8}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
-    add-int/lit8 v2, v2, 0x1
+    add-int/lit8 v7, v7, 0x1
 
     goto :goto_1
 
-    .end local v3           #lp:Landroid/widget/LinearLayout$LayoutParams;
-    .end local v7           #view:Landroid/view/View;
+    .end local v8           #lp:Landroid/widget/LinearLayout$LayoutParams;
+    .end local v11           #view:Landroid/view/View;
     :cond_3
-    const/4 v8, 0x0
-
-    move v9, v8
+    const/4 v3, 0x0
 
     goto :goto_2
 
     :cond_4
-    const/4 v8, 0x0
+    const/4 v4, 0x0
 
     goto :goto_3
 
-    .end local v4           #perm:Landroid/widget/AppSecurityPermissions$MyPermissionInfo;
+    .end local v2           #perm:Landroid/widget/AppSecurityPermissions$MyPermissionInfo;
     :cond_5
-    add-int/lit8 v1, v1, 0x1
+    add-int/lit8 v6, v6, 0x1
 
     goto :goto_0
 
-    .end local v0           #grp:Landroid/widget/AppSecurityPermissions$MyPermissionGroupInfo;
-    .end local v2           #j:I
-    .end local v5           #perms:Ljava/util/List;,"Ljava/util/List<Landroid/widget/AppSecurityPermissions$MyPermissionInfo;>;"
+    .end local v1           #grp:Landroid/widget/AppSecurityPermissions$MyPermissionGroupInfo;
+    .end local v7           #j:I
+    .end local v9           #perms:Ljava/util/List;,"Ljava/util/List<Landroid/widget/AppSecurityPermissions$MyPermissionInfo;>;"
     :cond_6
     return-void
 .end method
@@ -777,12 +622,6 @@
     return-void
 
     :cond_1
-    move-object/from16 v0, p3
-
-    move-object/from16 v1, p0
-
-    iput-object v0, v1, Landroid/widget/AppSecurityPermissions;->mInstalledPackageInfo:Landroid/content/pm/PackageInfo;
-
     const/4 v10, 0x0
 
     .local v10, i:I
@@ -1242,7 +1081,7 @@
 
     if-eqz p3, :cond_0
 
-    const v0, 0x10802af
+    const v0, 0x10802ba
 
     :goto_0
     invoke-virtual {v2, v0}, Landroid/content/res/Resources;->getDrawable(I)Landroid/graphics/drawable/Drawable;
@@ -1266,19 +1105,21 @@
 
     .end local v5           #icon:Landroid/graphics/drawable/Drawable;
     :cond_0
-    const v0, 0x108035f
+    const v0, 0x1080398
 
     goto :goto_0
 .end method
 
-.method private static getPermissionItemView(Landroid/content/Context;Landroid/view/LayoutInflater;Landroid/widget/AppSecurityPermissions$MyPermissionGroupInfo;Landroid/widget/AppSecurityPermissions$MyPermissionInfo;ZLjava/lang/CharSequence;)Landroid/widget/AppSecurityPermissions$PermissionItemView;
-    .locals 3
+.method private static getPermissionItemView(Landroid/content/Context;Landroid/view/LayoutInflater;Landroid/widget/AppSecurityPermissions$MyPermissionGroupInfo;Landroid/widget/AppSecurityPermissions$MyPermissionInfo;ZLjava/lang/CharSequence;Ljava/lang/String;Z)Landroid/widget/AppSecurityPermissions$PermissionItemView;
+    .locals 7
     .parameter "context"
     .parameter "inflater"
     .parameter "grp"
     .parameter "perm"
     .parameter "first"
     .parameter "newPermPrefix"
+    .parameter "packageName"
+    .parameter "showRevokeUI"
 
     .prologue
     iget v1, p3, Landroid/widget/AppSecurityPermissions$MyPermissionInfo;->flags:I
@@ -1287,7 +1128,7 @@
 
     if-eqz v1, :cond_0
 
-    const v1, 0x109002b
+    const v1, 0x109002c
 
     :goto_0
     const/4 v2, 0x0
@@ -1299,28 +1140,43 @@
     check-cast v0, Landroid/widget/AppSecurityPermissions$PermissionItemView;
 
     .local v0, permView:Landroid/widget/AppSecurityPermissions$PermissionItemView;
-    invoke-virtual {v0, p2, p3, p4, p5}, Landroid/widget/AppSecurityPermissions$PermissionItemView;->setPermission(Landroid/widget/AppSecurityPermissions$MyPermissionGroupInfo;Landroid/widget/AppSecurityPermissions$MyPermissionInfo;ZLjava/lang/CharSequence;)V
+    move-object v1, p2
+
+    move-object v2, p3
+
+    move v3, p4
+
+    move-object v4, p5
+
+    move-object v5, p6
+
+    move v6, p7
+
+    invoke-virtual/range {v0 .. v6}, Landroid/widget/AppSecurityPermissions$PermissionItemView;->setPermission(Landroid/widget/AppSecurityPermissions$MyPermissionGroupInfo;Landroid/widget/AppSecurityPermissions$MyPermissionInfo;ZLjava/lang/CharSequence;Ljava/lang/String;Z)V
 
     return-object v0
 
     .end local v0           #permView:Landroid/widget/AppSecurityPermissions$PermissionItemView;
     :cond_0
-    const v1, 0x109002a
+    const v1, 0x109002b
 
     goto :goto_0
 .end method
 
-.method private getPermissionItemView(Landroid/widget/AppSecurityPermissions$MyPermissionGroupInfo;Landroid/widget/AppSecurityPermissions$MyPermissionInfo;ZLjava/lang/CharSequence;)Landroid/widget/AppSecurityPermissions$PermissionItemView;
-    .locals 6
+.method private getPermissionItemView(Landroid/widget/AppSecurityPermissions$MyPermissionGroupInfo;Landroid/widget/AppSecurityPermissions$MyPermissionInfo;ZLjava/lang/CharSequence;Z)Landroid/widget/AppSecurityPermissions$PermissionItemView;
+    .locals 8
     .parameter "grp"
     .parameter "perm"
     .parameter "first"
     .parameter "newPermPrefix"
+    .parameter "showRevokeUI"
 
     .prologue
     iget-object v0, p0, Landroid/widget/AppSecurityPermissions;->mContext:Landroid/content/Context;
 
     iget-object v1, p0, Landroid/widget/AppSecurityPermissions;->mInflater:Landroid/view/LayoutInflater;
+
+    iget-object v6, p0, Landroid/widget/AppSecurityPermissions;->mPackageName:Ljava/lang/String;
 
     move-object v2, p1
 
@@ -1330,7 +1186,9 @@
 
     move-object v5, p4
 
-    invoke-static/range {v0 .. v5}, Landroid/widget/AppSecurityPermissions;->getPermissionItemView(Landroid/content/Context;Landroid/view/LayoutInflater;Landroid/widget/AppSecurityPermissions$MyPermissionGroupInfo;Landroid/widget/AppSecurityPermissions$MyPermissionInfo;ZLjava/lang/CharSequence;)Landroid/widget/AppSecurityPermissions$PermissionItemView;
+    move v7, p5
+
+    invoke-static/range {v0 .. v7}, Landroid/widget/AppSecurityPermissions;->getPermissionItemView(Landroid/content/Context;Landroid/view/LayoutInflater;Landroid/widget/AppSecurityPermissions$MyPermissionGroupInfo;Landroid/widget/AppSecurityPermissions$MyPermissionInfo;ZLjava/lang/CharSequence;Ljava/lang/String;Z)Landroid/widget/AppSecurityPermissions$PermissionItemView;
 
     move-result-object v0
 
@@ -1347,7 +1205,7 @@
     .parameter "icon"
 
     .prologue
-    const v4, 0x109002c
+    const v4, 0x109002d
 
     const/4 v5, 0x0
 
@@ -1356,7 +1214,7 @@
     move-result-object v3
 
     .local v3, permView:Landroid/view/View;
-    const v4, 0x102026c
+    const v4, 0x1020286
 
     invoke-virtual {v3, v4}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -1365,7 +1223,7 @@
     check-cast v2, Landroid/widget/TextView;
 
     .local v2, permGrpView:Landroid/widget/TextView;
-    const v4, 0x102026d
+    const v4, 0x1020287
 
     invoke-virtual {v3, v4}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -1374,7 +1232,7 @@
     check-cast v1, Landroid/widget/TextView;
 
     .local v1, permDescView:Landroid/widget/TextView;
-    const v4, 0x1020268
+    const v4, 0x1020282
 
     invoke-virtual {v3, v4}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -1477,22 +1335,15 @@
     const/16 v3, 0x1000
 
     invoke-virtual {v2, p1, v3}, Landroid/content/pm/PackageManager;->getPackageInfo(Ljava/lang/String;I)Landroid/content/pm/PackageInfo;
-    :try_end_0
-    .catch Landroid/content/pm/PackageManager$NameNotFoundException; {:try_start_0 .. :try_end_0} :catch_0
 
     move-result-object v1
 
     .local v1, pkgInfo:Landroid/content/pm/PackageInfo;
-    if-eqz v1, :cond_0
-
-    iget-object v2, v1, Landroid/content/pm/PackageInfo;->requestedPermissions:[Ljava/lang/String;
-
-    if-eqz v2, :cond_0
-
     invoke-direct {p0, v1, p2, v1}, Landroid/widget/AppSecurityPermissions;->extractPerms(Landroid/content/pm/PackageInfo;Ljava/util/Set;Landroid/content/pm/PackageInfo;)V
+    :try_end_0
+    .catch Landroid/content/pm/PackageManager$NameNotFoundException; {:try_start_0 .. :try_end_0} :catch_0
 
     .end local v1           #pkgInfo:Landroid/content/pm/PackageInfo;
-    :cond_0
     :goto_0
     return-void
 
@@ -1506,7 +1357,7 @@
 
     invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v4, "Couldn\'t retrieve permissions for package:"
+    const-string v4, "Couldn\'t retrieve permissions for package: "
 
     invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -1525,88 +1376,187 @@
     goto :goto_0
 .end method
 
+.method private getPermissionsView(IZ)Landroid/view/View;
+    .locals 6
+    .parameter "which"
+    .parameter "showRevokeUI"
+
+    .prologue
+    iget-object v3, p0, Landroid/widget/AppSecurityPermissions;->mInflater:Landroid/view/LayoutInflater;
+
+    const v4, 0x109002e
+
+    const/4 v5, 0x0
+
+    invoke-virtual {v3, v4, v5}, Landroid/view/LayoutInflater;->inflate(ILandroid/view/ViewGroup;)Landroid/view/View;
+
+    move-result-object v2
+
+    check-cast v2, Landroid/widget/LinearLayout;
+
+    .local v2, permsView:Landroid/widget/LinearLayout;
+    const v3, 0x1020289
+
+    invoke-virtual {v2, v3}, Landroid/widget/LinearLayout;->findViewById(I)Landroid/view/View;
+
+    move-result-object v0
+
+    check-cast v0, Landroid/widget/LinearLayout;
+
+    .local v0, displayList:Landroid/widget/LinearLayout;
+    const v3, 0x1020288
+
+    invoke-virtual {v2, v3}, Landroid/widget/LinearLayout;->findViewById(I)Landroid/view/View;
+
+    move-result-object v1
+
+    .local v1, noPermsView:Landroid/view/View;
+    iget-object v3, p0, Landroid/widget/AppSecurityPermissions;->mPermGroupsList:Ljava/util/List;
+
+    invoke-direct {p0, v3, v0, p1, p2}, Landroid/widget/AppSecurityPermissions;->displayPermissions(Ljava/util/List;Landroid/widget/LinearLayout;IZ)V
+
+    invoke-virtual {v0}, Landroid/widget/LinearLayout;->getChildCount()I
+
+    move-result v3
+
+    if-gtz v3, :cond_0
+
+    const/4 v3, 0x0
+
+    invoke-virtual {v1, v3}, Landroid/view/View;->setVisibility(I)V
+
+    :cond_0
+    return-object v2
+.end method
+
 .method private isDisplayablePermission(Landroid/content/pm/PermissionInfo;II)Z
-    .locals 3
+    .locals 10
     .parameter "pInfo"
     .parameter "newReqFlags"
     .parameter "existingReqFlags"
 
     .prologue
-    const/4 v1, 0x1
+    const/4 v8, 0x0
 
-    iget v2, p1, Landroid/content/pm/PermissionInfo;->protectionLevel:I
+    const/4 v7, 0x1
 
-    and-int/lit8 v0, v2, 0xf
+    iget v9, p1, Landroid/content/pm/PermissionInfo;->protectionLevel:I
+
+    and-int/lit8 v0, v9, 0xf
 
     .local v0, base:I
-    if-eq v0, v1, :cond_0
+    if-nez v0, :cond_2
 
-    if-nez v0, :cond_1
+    move v4, v7
+
+    .local v4, isNormal:Z
+    :goto_0
+    if-ne v0, v7, :cond_3
+
+    move v1, v7
+
+    .local v1, isDangerous:Z
+    :goto_1
+    and-int/lit8 v9, p2, 0x1
+
+    if-eqz v9, :cond_4
+
+    move v5, v7
+
+    .local v5, isRequired:Z
+    :goto_2
+    iget v9, p1, Landroid/content/pm/PermissionInfo;->protectionLevel:I
+
+    and-int/lit8 v9, v9, 0x20
+
+    if-eqz v9, :cond_5
+
+    move v2, v7
+
+    .local v2, isDevelopment:Z
+    :goto_3
+    and-int/lit8 v9, p3, 0x2
+
+    if-eqz v9, :cond_6
+
+    move v6, v7
+
+    .local v6, wasGranted:Z
+    :goto_4
+    and-int/lit8 v9, p2, 0x2
+
+    if-eqz v9, :cond_7
+
+    move v3, v7
+
+    .local v3, isGranted:Z
+    :goto_5
+    if-nez v4, :cond_0
+
+    if-eqz v1, :cond_8
 
     :cond_0
-    :goto_0
-    return v1
+    if-nez v5, :cond_1
+
+    if-nez v6, :cond_1
+
+    if-eqz v3, :cond_8
 
     :cond_1
-    and-int/lit8 v2, p3, 0x2
+    :goto_6
+    return v7
 
-    if-eqz v2, :cond_2
-
-    iget v2, p1, Landroid/content/pm/PermissionInfo;->protectionLevel:I
-
-    and-int/lit8 v2, v2, 0x20
-
-    if-nez v2, :cond_0
-
+    .end local v1           #isDangerous:Z
+    .end local v2           #isDevelopment:Z
+    .end local v3           #isGranted:Z
+    .end local v4           #isNormal:Z
+    .end local v5           #isRequired:Z
+    .end local v6           #wasGranted:Z
     :cond_2
-    const/4 v1, 0x0
+    move v4, v8
 
     goto :goto_0
-.end method
 
-.method private loadResources()V
-    .locals 2
+    .restart local v4       #isNormal:Z
+    :cond_3
+    move v1, v8
 
-    .prologue
-    iget-object v0, p0, Landroid/widget/AppSecurityPermissions;->mContext:Landroid/content/Context;
+    goto :goto_1
 
-    const v1, 0x1040433
+    .restart local v1       #isDangerous:Z
+    :cond_4
+    move v5, v8
 
-    invoke-virtual {v0, v1}, Landroid/content/Context;->getText(I)Ljava/lang/CharSequence;
+    goto :goto_2
 
-    move-result-object v0
+    .restart local v5       #isRequired:Z
+    :cond_5
+    move v2, v8
 
-    iput-object v0, p0, Landroid/widget/AppSecurityPermissions;->mNewPermPrefix:Ljava/lang/CharSequence;
+    goto :goto_3
 
-    iget-object v0, p0, Landroid/widget/AppSecurityPermissions;->mContext:Landroid/content/Context;
+    .restart local v2       #isDevelopment:Z
+    :cond_6
+    move v6, v8
 
-    invoke-virtual {v0}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
+    goto :goto_4
 
-    move-result-object v0
+    .restart local v6       #wasGranted:Z
+    :cond_7
+    move v3, v8
 
-    const v1, 0x108035f
+    goto :goto_5
 
-    invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getDrawable(I)Landroid/graphics/drawable/Drawable;
+    .restart local v3       #isGranted:Z
+    :cond_8
+    if-eqz v2, :cond_9
 
-    move-result-object v0
+    if-nez v6, :cond_1
 
-    iput-object v0, p0, Landroid/widget/AppSecurityPermissions;->mNormalIcon:Landroid/graphics/drawable/Drawable;
+    :cond_9
+    move v7, v8
 
-    iget-object v0, p0, Landroid/widget/AppSecurityPermissions;->mContext:Landroid/content/Context;
-
-    invoke-virtual {v0}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
-
-    move-result-object v0
-
-    const v1, 0x10802af
-
-    invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getDrawable(I)Landroid/graphics/drawable/Drawable;
-
-    move-result-object v0
-
-    iput-object v0, p0, Landroid/widget/AppSecurityPermissions;->mDangerousIcon:Landroid/graphics/drawable/Drawable;
-
-    return-void
+    goto :goto_6
 .end method
 
 .method private setPermissions(Ljava/util/List;)V
@@ -1816,15 +1766,6 @@
 
 
 # virtual methods
-.method public getInstalledPackageInfo()Landroid/content/pm/PackageInfo;
-    .locals 1
-
-    .prologue
-    iget-object v0, p0, Landroid/widget/AppSecurityPermissions;->mInstalledPackageInfo:Landroid/content/pm/PackageInfo;
-
-    return-object v0
-.end method
-
 .method public getPermissionCount()I
     .locals 1
 
@@ -1885,12 +1826,14 @@
 .end method
 
 .method public getPermissionsView()Landroid/view/View;
-    .locals 1
+    .locals 2
 
     .prologue
     const v0, 0xffff
 
-    invoke-virtual {p0, v0}, Landroid/widget/AppSecurityPermissions;->getPermissionsView(I)Landroid/view/View;
+    const/4 v1, 0x0
+
+    invoke-direct {p0, v0, v1}, Landroid/widget/AppSecurityPermissions;->getPermissionsView(IZ)Landroid/view/View;
 
     move-result-object v0
 
@@ -1898,65 +1841,30 @@
 .end method
 
 .method public getPermissionsView(I)Landroid/view/View;
-    .locals 6
+    .locals 1
     .parameter "which"
 
     .prologue
-    iget-object v3, p0, Landroid/widget/AppSecurityPermissions;->mContext:Landroid/content/Context;
+    const/4 v0, 0x0
 
-    const-string v4, "layout_inflater"
-
-    invoke-virtual {v3, v4}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
-
-    move-result-object v3
-
-    check-cast v3, Landroid/view/LayoutInflater;
-
-    iput-object v3, p0, Landroid/widget/AppSecurityPermissions;->mInflater:Landroid/view/LayoutInflater;
-
-    iget-object v3, p0, Landroid/widget/AppSecurityPermissions;->mInflater:Landroid/view/LayoutInflater;
-
-    const v4, 0x109002d
-
-    const/4 v5, 0x0
-
-    invoke-virtual {v3, v4, v5}, Landroid/view/LayoutInflater;->inflate(ILandroid/view/ViewGroup;)Landroid/view/View;
-
-    move-result-object v2
-
-    check-cast v2, Landroid/widget/LinearLayout;
-
-    .local v2, permsView:Landroid/widget/LinearLayout;
-    const v3, 0x102026f
-
-    invoke-virtual {v2, v3}, Landroid/widget/LinearLayout;->findViewById(I)Landroid/view/View;
+    invoke-direct {p0, p1, v0}, Landroid/widget/AppSecurityPermissions;->getPermissionsView(IZ)Landroid/view/View;
 
     move-result-object v0
 
-    check-cast v0, Landroid/widget/LinearLayout;
+    return-object v0
+.end method
 
-    .local v0, displayList:Landroid/widget/LinearLayout;
-    const v3, 0x102026e
+.method public getPermissionsViewWithRevokeButtons()Landroid/view/View;
+    .locals 2
 
-    invoke-virtual {v2, v3}, Landroid/widget/LinearLayout;->findViewById(I)Landroid/view/View;
+    .prologue
+    const v0, 0xffff
 
-    move-result-object v1
+    const/4 v1, 0x1
 
-    .local v1, noPermsView:Landroid/view/View;
-    iget-object v3, p0, Landroid/widget/AppSecurityPermissions;->mPermGroupsList:Ljava/util/List;
+    invoke-direct {p0, v0, v1}, Landroid/widget/AppSecurityPermissions;->getPermissionsView(IZ)Landroid/view/View;
 
-    invoke-direct {p0, v3, v0, p1}, Landroid/widget/AppSecurityPermissions;->displayPermissions(Ljava/util/List;Landroid/widget/LinearLayout;I)V
+    move-result-object v0
 
-    invoke-virtual {v0}, Landroid/widget/LinearLayout;->getChildCount()I
-
-    move-result v3
-
-    if-gtz v3, :cond_0
-
-    const/4 v3, 0x0
-
-    invoke-virtual {v1, v3}, Landroid/view/View;->setVisibility(I)V
-
-    :cond_0
-    return-object v2
+    return-object v0
 .end method

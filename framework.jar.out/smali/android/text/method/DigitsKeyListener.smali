@@ -23,11 +23,9 @@
 
 # direct methods
 .method static constructor <clinit>()V
-    .locals 5
+    .locals 4
 
     .prologue
-    const/16 v4, 0xb
-
     const/4 v3, 0x4
 
     new-array v0, v3, [[C
@@ -44,7 +42,9 @@
 
     const/4 v1, 0x1
 
-    new-array v2, v4, [C
+    const/16 v2, 0xc
+
+    new-array v2, v2, [C
 
     fill-array-data v2, :array_1
 
@@ -52,7 +52,9 @@
 
     const/4 v1, 0x2
 
-    new-array v2, v4, [C
+    const/16 v2, 0xb
+
+    new-array v2, v2, [C
 
     fill-array-data v2, :array_2
 
@@ -60,7 +62,7 @@
 
     const/4 v1, 0x3
 
-    const/16 v2, 0xc
+    const/16 v2, 0xd
 
     new-array v2, v2, [C
 
@@ -103,9 +105,8 @@
         0x38t 0x0t
         0x39t 0x0t
         0x2dt 0x0t
+        0x2bt 0x0t
     .end array-data
-
-    nop
 
     :array_2
     .array-data 0x2
@@ -137,6 +138,7 @@
         0x38t 0x0t
         0x39t 0x0t
         0x2dt 0x0t
+        0x2bt 0x0t
         0x2et 0x0t
     .end array-data
 .end method
@@ -295,6 +297,51 @@
     goto :goto_1
 .end method
 
+.method private static isDecimalPointChar(C)Z
+    .locals 1
+    .parameter "c"
+
+    .prologue
+    const/16 v0, 0x2e
+
+    if-ne p0, v0, :cond_0
+
+    const/4 v0, 0x1
+
+    :goto_0
+    return v0
+
+    :cond_0
+    const/4 v0, 0x0
+
+    goto :goto_0
+.end method
+
+.method private static isSignChar(C)Z
+    .locals 1
+    .parameter "c"
+
+    .prologue
+    const/16 v0, 0x2d
+
+    if-eq p0, v0, :cond_0
+
+    const/16 v0, 0x2b
+
+    if-ne p0, v0, :cond_1
+
+    :cond_0
+    const/4 v0, 0x1
+
+    :goto_0
+    return v0
+
+    :cond_1
+    const/4 v0, 0x0
+
+    goto :goto_0
+.end method
+
 
 # virtual methods
 .method public filter(Ljava/lang/CharSequence;IILandroid/text/Spanned;II)Ljava/lang/CharSequence;
@@ -360,9 +407,11 @@
     move-result v0
 
     .local v0, c:C
-    const/16 v8, 0x2d
+    invoke-static {v0}, Landroid/text/method/DigitsKeyListener;->isSignChar(C)Z
 
-    if-ne v0, v8, :cond_4
+    move-result v8
+
+    if-eqz v8, :cond_4
 
     move v5, v3
 
@@ -373,9 +422,11 @@
     goto :goto_1
 
     :cond_4
-    const/16 v8, 0x2e
+    invoke-static {v0}, Landroid/text/method/DigitsKeyListener;->isDecimalPointChar(C)Z
 
-    if-ne v0, v8, :cond_3
+    move-result v8
+
+    if-eqz v8, :cond_3
 
     move v1, v3
 
@@ -393,18 +444,22 @@
     move-result v0
 
     .restart local v0       #c:C
-    const/16 v8, 0x2d
+    invoke-static {v0}, Landroid/text/method/DigitsKeyListener;->isSignChar(C)Z
 
-    if-ne v0, v8, :cond_6
+    move-result v8
+
+    if-eqz v8, :cond_6
 
     const-string v4, ""
 
     goto :goto_0
 
     :cond_6
-    const/16 v8, 0x2e
+    invoke-static {v0}, Landroid/text/method/DigitsKeyListener;->isDecimalPointChar(C)Z
 
-    if-ne v0, v8, :cond_7
+    move-result v8
+
+    if-eqz v8, :cond_7
 
     move v1, v3
 
@@ -431,9 +486,11 @@
     const/4 v6, 0x0
 
     .local v6, strip:Z
-    const/16 v8, 0x2d
+    invoke-static {v0}, Landroid/text/method/DigitsKeyListener;->isSignChar(C)Z
 
-    if-ne v0, v8, :cond_d
+    move-result v8
+
+    if-eqz v8, :cond_d
 
     if-ne v3, p2, :cond_9
 
@@ -467,9 +524,11 @@
     goto :goto_5
 
     :cond_d
-    const/16 v8, 0x2e
+    invoke-static {v0}, Landroid/text/method/DigitsKeyListener;->isDecimalPointChar(C)Z
 
-    if-ne v0, v8, :cond_a
+    move-result v8
+
+    if-eqz v8, :cond_a
 
     if-ltz v1, :cond_e
 
@@ -512,14 +571,14 @@
 
     move-object v4, v7
 
-    goto :goto_0
+    goto/16 :goto_0
 
     :cond_13
     if-nez v4, :cond_0
 
     const/4 v4, 0x0
 
-    goto :goto_0
+    goto/16 :goto_0
 .end method
 
 .method protected getAcceptedChars()[C

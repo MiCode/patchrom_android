@@ -105,7 +105,7 @@
 
     check-cast v1, [I
 
-    iput-object v1, v3, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->recordSize:[I
+    iput-object v1, v3, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->mRecordSize:[I
 
     iget-object v1, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager$1;->this$0:Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;
 
@@ -121,7 +121,7 @@
 
     iget-object v4, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager$1;->this$0:Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;
 
-    iget-object v4, v4, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->recordSize:[I
+    iget-object v4, v4, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->mRecordSize:[I
 
     const/4 v5, 0x0
 
@@ -139,7 +139,7 @@
 
     iget-object v4, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager$1;->this$0:Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;
 
-    iget-object v4, v4, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->recordSize:[I
+    iget-object v4, v4, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->mRecordSize:[I
 
     const/4 v5, 0x1
 
@@ -157,7 +157,7 @@
 
     iget-object v4, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager$1;->this$0:Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;
 
-    iget-object v4, v4, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->recordSize:[I
+    iget-object v4, v4, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->mRecordSize:[I
 
     const/4 v5, 0x2
 
@@ -210,7 +210,7 @@
     if-nez v5, :cond_1
 
     :goto_1
-    iput-boolean v1, v4, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->success:Z
+    iput-boolean v1, v4, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->mSuccess:Z
 
     invoke-direct {p0, v0}, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager$1;->notifyPending(Landroid/os/AsyncResult;)V
 
@@ -256,7 +256,7 @@
 
     check-cast v1, Ljava/util/List;
 
-    iput-object v1, v3, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->records:Ljava/util/List;
+    iput-object v1, v3, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->mRecords:Ljava/util/List;
 
     :cond_2
     :goto_2
@@ -285,13 +285,13 @@
 
     iget-object v1, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager$1;->this$0:Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;
 
-    iget-object v1, v1, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->records:Ljava/util/List;
+    iget-object v1, v1, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->mRecords:Ljava/util/List;
 
     if-eqz v1, :cond_2
 
     iget-object v1, p0, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager$1;->this$0:Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;
 
-    iget-object v1, v1, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->records:Ljava/util/List;
+    iget-object v1, v1, Lcom/android/internal/telephony/IccPhoneBookInterfaceManager;->mRecords:Ljava/util/List;
 
     invoke-interface {v1}, Ljava/util/List;->clear()V
     :try_end_3

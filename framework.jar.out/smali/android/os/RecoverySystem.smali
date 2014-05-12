@@ -539,6 +539,116 @@
     return-void
 .end method
 
+.method public static rebootFactoryReset(Landroid/content/Context;Z)V
+    .locals 10
+    .parameter "context"
+    .parameter "formatSdcard"
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Ljava/io/IOException;
+        }
+    .end annotation
+
+    .prologue
+    const/4 v5, 0x0
+
+    new-instance v9, Landroid/os/ConditionVariable;
+
+    invoke-direct {v9}, Landroid/os/ConditionVariable;-><init>()V
+
+    .local v9, condition:Landroid/os/ConditionVariable;
+    new-instance v1, Landroid/content/Intent;
+
+    const-string v0, "android.intent.action.MASTER_CLEAR_NOTIFICATION"
+
+    invoke-direct {v1, v0}, Landroid/content/Intent;-><init>(Ljava/lang/String;)V
+
+    .local v1, intent:Landroid/content/Intent;
+    sget-object v2, Landroid/os/UserHandle;->OWNER:Landroid/os/UserHandle;
+
+    const-string v3, "android.permission.MASTER_CLEAR"
+
+    new-instance v4, Landroid/os/RecoverySystem$2;
+
+    invoke-direct {v4, v9}, Landroid/os/RecoverySystem$2;-><init>(Landroid/os/ConditionVariable;)V
+
+    const/4 v6, 0x0
+
+    move-object v0, p0
+
+    move-object v7, v5
+
+    move-object v8, v5
+
+    invoke-virtual/range {v0 .. v8}, Landroid/content/Context;->sendOrderedBroadcastAsUser(Landroid/content/Intent;Landroid/os/UserHandle;Ljava/lang/String;Landroid/content/BroadcastReceiver;Landroid/os/Handler;ILjava/lang/String;Landroid/os/Bundle;)V
+
+    invoke-virtual {v9}, Landroid/os/ConditionVariable;->block()V
+
+    if-eqz p1, :cond_0
+
+    new-instance v0, Ljava/lang/StringBuilder;
+
+    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v2, "--wipe_data_and_storage\n--locale="
+
+    invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-static {}, Ljava/util/Locale;->getDefault()Ljava/util/Locale;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/util/Locale;->toString()Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    invoke-static {p0, v0}, Landroid/os/RecoverySystem;->bootCommand(Landroid/content/Context;Ljava/lang/String;)V
+
+    :goto_0
+    return-void
+
+    :cond_0
+    new-instance v0, Ljava/lang/StringBuilder;
+
+    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v2, "--wipe_data\n--locale="
+
+    invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-static {}, Ljava/util/Locale;->getDefault()Ljava/util/Locale;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/util/Locale;->toString()Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    invoke-static {p0, v0}, Landroid/os/RecoverySystem;->bootCommand(Landroid/content/Context;Ljava/lang/String;)V
+
+    goto :goto_0
+.end method
+
 .method public static rebootWipeCache(Landroid/content/Context;)V
     .locals 2
     .parameter "context"

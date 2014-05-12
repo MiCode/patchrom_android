@@ -20,6 +20,8 @@
 # instance fields
 .field private final entropyFile:Ljava/lang/String;
 
+.field private final mBroadcastReceiver:Landroid/content/BroadcastReceiver;
+
 .field private final mHandler:Landroid/os/Handler;
 
 .field private final randomDevice:Ljava/lang/String;
@@ -45,8 +47,9 @@
     return-void
 .end method
 
-.method public constructor <init>()V
+.method public constructor <init>(Landroid/content/Context;)V
     .locals 2
+    .parameter "context"
 
     .prologue
     new-instance v0, Ljava/lang/StringBuilder;
@@ -73,50 +76,57 @@
 
     const-string v1, "/dev/urandom"
 
-    invoke-direct {p0, v0, v1}, Lcom/android/server/EntropyMixer;-><init>(Ljava/lang/String;Ljava/lang/String;)V
+    invoke-direct {p0, p1, v0, v1}, Lcom/android/server/EntropyMixer;-><init>(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)V
 
     return-void
 .end method
 
-.method public constructor <init>(Ljava/lang/String;Ljava/lang/String;)V
-    .locals 2
+.method public constructor <init>(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)V
+    .locals 3
+    .parameter "context"
     .parameter "entropyFile"
     .parameter "randomDevice"
 
     .prologue
     invoke-direct {p0}, Landroid/os/Binder;-><init>()V
 
-    new-instance v0, Lcom/android/server/EntropyMixer$1;
+    new-instance v1, Lcom/android/server/EntropyMixer$1;
 
-    invoke-direct {v0, p0}, Lcom/android/server/EntropyMixer$1;-><init>(Lcom/android/server/EntropyMixer;)V
+    invoke-direct {v1, p0}, Lcom/android/server/EntropyMixer$1;-><init>(Lcom/android/server/EntropyMixer;)V
 
-    iput-object v0, p0, Lcom/android/server/EntropyMixer;->mHandler:Landroid/os/Handler;
+    iput-object v1, p0, Lcom/android/server/EntropyMixer;->mHandler:Landroid/os/Handler;
 
-    if-nez p2, :cond_0
+    new-instance v1, Lcom/android/server/EntropyMixer$2;
 
-    new-instance v0, Ljava/lang/NullPointerException;
+    invoke-direct {v1, p0}, Lcom/android/server/EntropyMixer$2;-><init>(Lcom/android/server/EntropyMixer;)V
 
-    const-string v1, "randomDevice"
+    iput-object v1, p0, Lcom/android/server/EntropyMixer;->mBroadcastReceiver:Landroid/content/BroadcastReceiver;
 
-    invoke-direct {v0, v1}, Ljava/lang/NullPointerException;-><init>(Ljava/lang/String;)V
+    if-nez p3, :cond_0
 
-    throw v0
+    new-instance v1, Ljava/lang/NullPointerException;
+
+    const-string v2, "randomDevice"
+
+    invoke-direct {v1, v2}, Ljava/lang/NullPointerException;-><init>(Ljava/lang/String;)V
+
+    throw v1
 
     :cond_0
-    if-nez p1, :cond_1
+    if-nez p2, :cond_1
 
-    new-instance v0, Ljava/lang/NullPointerException;
+    new-instance v1, Ljava/lang/NullPointerException;
 
-    const-string v1, "entropyFile"
+    const-string v2, "entropyFile"
 
-    invoke-direct {v0, v1}, Ljava/lang/NullPointerException;-><init>(Ljava/lang/String;)V
+    invoke-direct {v1, v2}, Ljava/lang/NullPointerException;-><init>(Ljava/lang/String;)V
 
-    throw v0
+    throw v1
 
     :cond_1
-    iput-object p2, p0, Lcom/android/server/EntropyMixer;->randomDevice:Ljava/lang/String;
+    iput-object p3, p0, Lcom/android/server/EntropyMixer;->randomDevice:Ljava/lang/String;
 
-    iput-object p1, p0, Lcom/android/server/EntropyMixer;->entropyFile:Ljava/lang/String;
+    iput-object p2, p0, Lcom/android/server/EntropyMixer;->entropyFile:Ljava/lang/String;
 
     invoke-direct {p0}, Lcom/android/server/EntropyMixer;->loadInitialEntropy()V
 
@@ -125,6 +135,25 @@
     invoke-direct {p0}, Lcom/android/server/EntropyMixer;->writeEntropy()V
 
     invoke-direct {p0}, Lcom/android/server/EntropyMixer;->scheduleEntropyWriter()V
+
+    new-instance v0, Landroid/content/IntentFilter;
+
+    const-string v1, "android.intent.action.ACTION_SHUTDOWN"
+
+    invoke-direct {v0, v1}, Landroid/content/IntentFilter;-><init>(Ljava/lang/String;)V
+
+    .local v0, broadcastFilter:Landroid/content/IntentFilter;
+    const-string v1, "android.intent.action.ACTION_POWER_CONNECTED"
+
+    invoke-virtual {v0, v1}, Landroid/content/IntentFilter;->addAction(Ljava/lang/String;)V
+
+    const-string v1, "android.intent.action.REBOOT"
+
+    invoke-virtual {v0, v1}, Landroid/content/IntentFilter;->addAction(Ljava/lang/String;)V
+
+    iget-object v1, p0, Lcom/android/server/EntropyMixer;->mBroadcastReceiver:Landroid/content/BroadcastReceiver;
+
+    invoke-virtual {p1, v1, v0}, Landroid/content/Context;->registerReceiver(Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;)Landroid/content/Intent;
 
     return-void
 .end method
@@ -238,6 +267,14 @@
     invoke-virtual {v2, v3}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
     const-string v3, "ro.revision"
+
+    invoke-static {v3}, Landroid/os/SystemProperties;->get(Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-virtual {v2, v3}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
+
+    const-string v3, "ro.build.fingerprint"
 
     invoke-static {v3}, Landroid/os/SystemProperties;->get(Ljava/lang/String;)Ljava/lang/String;
 
@@ -436,6 +473,12 @@
 
     .prologue
     :try_start_0
+    const-string v1, "EntropyMixer"
+
+    const-string v2, "Writing entropy..."
+
+    invoke-static {v1, v2}, Landroid/util/Slog;->i(Ljava/lang/String;Ljava/lang/String;)I
+
     iget-object v1, p0, Lcom/android/server/EntropyMixer;->randomDevice:Ljava/lang/String;
 
     invoke-static {v1}, Lcom/android/server/RandomBlock;->fromFile(Ljava/lang/String;)Lcom/android/server/RandomBlock;

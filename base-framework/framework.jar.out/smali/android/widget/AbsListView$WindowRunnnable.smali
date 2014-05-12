@@ -53,7 +53,7 @@
     iget-object v0, p0, Landroid/widget/AbsListView$WindowRunnnable;->this$0:Landroid/widget/AbsListView;
 
     #calls: Landroid/widget/AbsListView;->getWindowAttachCount()I
-    invoke-static {v0}, Landroid/widget/AbsListView;->access$200(Landroid/widget/AbsListView;)I
+    invoke-static {v0}, Landroid/widget/AbsListView;->access$400(Landroid/widget/AbsListView;)I
 
     move-result v0
 
@@ -68,16 +68,8 @@
     .prologue
     iget-object v0, p0, Landroid/widget/AbsListView$WindowRunnnable;->this$0:Landroid/widget/AbsListView;
 
-    invoke-virtual {v0}, Landroid/widget/AbsListView;->hasWindowFocus()Z
-
-    move-result v0
-
-    if-eqz v0, :cond_0
-
-    iget-object v0, p0, Landroid/widget/AbsListView$WindowRunnnable;->this$0:Landroid/widget/AbsListView;
-
     #calls: Landroid/widget/AbsListView;->getWindowAttachCount()I
-    invoke-static {v0}, Landroid/widget/AbsListView;->access$300(Landroid/widget/AbsListView;)I
+    invoke-static {v0}, Landroid/widget/AbsListView;->access$500(Landroid/widget/AbsListView;)I
 
     move-result v0
 

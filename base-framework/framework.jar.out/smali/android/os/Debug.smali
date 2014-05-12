@@ -23,6 +23,26 @@
 
 .field private static final DEFAULT_TRACE_PATH_PREFIX:Ljava/lang/String; = null
 
+.field public static final MEMINFO_BUFFERS:I = 0x2
+
+.field public static final MEMINFO_CACHED:I = 0x3
+
+.field public static final MEMINFO_COUNT:I = 0x9
+
+.field public static final MEMINFO_FREE:I = 0x1
+
+.field public static final MEMINFO_SHMEM:I = 0x4
+
+.field public static final MEMINFO_SLAB:I = 0x5
+
+.field public static final MEMINFO_SWAP_FREE:I = 0x7
+
+.field public static final MEMINFO_SWAP_TOTAL:I = 0x6
+
+.field public static final MEMINFO_TOTAL:I = 0x0
+
+.field public static final MEMINFO_ZRAM_TOTAL:I = 0x8
+
 .field private static final MIN_DEBUGGER_IDLE:I = 0x514
 
 .field public static final SHOW_CLASSLOADER:I = 0x2
@@ -543,6 +563,58 @@
     return-object v3
 .end method
 
+.method public static getCallers(II)Ljava/lang/String;
+    .locals 5
+    .parameter "start"
+    .parameter "depth"
+
+    .prologue
+    invoke-static {}, Ljava/lang/Thread;->currentThread()Ljava/lang/Thread;
+
+    move-result-object v3
+
+    invoke-virtual {v3}, Ljava/lang/Thread;->getStackTrace()[Ljava/lang/StackTraceElement;
+
+    move-result-object v0
+
+    .local v0, callStack:[Ljava/lang/StackTraceElement;
+    new-instance v2, Ljava/lang/StringBuffer;
+
+    invoke-direct {v2}, Ljava/lang/StringBuffer;-><init>()V
+
+    .local v2, sb:Ljava/lang/StringBuffer;
+    add-int/2addr p1, p0
+
+    move v1, p0
+
+    .local v1, i:I
+    :goto_0
+    if-ge v1, p1, :cond_0
+
+    invoke-static {v0, v1}, Landroid/os/Debug;->getCaller([Ljava/lang/StackTraceElement;I)Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuffer;->append(Ljava/lang/String;)Ljava/lang/StringBuffer;
+
+    move-result-object v3
+
+    const-string v4, " "
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuffer;->append(Ljava/lang/String;)Ljava/lang/StringBuffer;
+
+    add-int/lit8 v1, v1, 0x1
+
+    goto :goto_0
+
+    :cond_0
+    invoke-virtual {v2}, Ljava/lang/StringBuffer;->toString()Ljava/lang/String;
+
+    move-result-object v3
+
+    return-object v3
+.end method
+
 .method public static getCallers(ILjava/lang/String;)Ljava/lang/String;
     .locals 5
     .parameter "depth"
@@ -743,10 +815,24 @@
     return v0
 .end method
 
+.method public static native getMemInfo([J)V
+.end method
+
 .method public static native getMemoryInfo(ILandroid/os/Debug$MemoryInfo;)V
 .end method
 
 .method public static native getMemoryInfo(Landroid/os/Debug$MemoryInfo;)V
+.end method
+
+.method public static getMethodTracingMode()I
+    .locals 1
+
+    .prologue
+    invoke-static {}, Ldalvik/system/VMDebug;->getMethodTracingMode()I
+
+    move-result v0
+
+    return v0
 .end method
 
 .method public static native getNativeHeapAllocatedSize()J
@@ -761,7 +847,7 @@
 .method public static native getPss()J
 .end method
 
-.method public static native getPss(I)J
+.method public static native getPss(I[J)J
 .end method
 
 .method public static getThreadAllocCount()I
@@ -841,17 +927,6 @@
 
     .prologue
     invoke-static {}, Ldalvik/system/VMDebug;->isDebuggerConnected()Z
-
-    move-result v0
-
-    return v0
-.end method
-
-.method public static isMethodTracingActive()Z
-    .locals 1
-
-    .prologue
-    invoke-static {}, Ldalvik/system/VMDebug;->isMethodTracingActive()Z
 
     move-result v0
 
@@ -1430,6 +1505,8 @@
 
 .method public static startAllocCounting()V
     .locals 0
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
 
     .prologue
     invoke-static {}, Ldalvik/system/VMDebug;->startAllocCounting()V
@@ -1559,13 +1636,15 @@
     return-void
 .end method
 
-.method public static startMethodTracingDdms(II)V
+.method public static startMethodTracingDdms(IIZI)V
     .locals 0
     .parameter "bufferSize"
     .parameter "flags"
+    .parameter "samplingEnabled"
+    .parameter "intervalUs"
 
     .prologue
-    invoke-static {p0, p1}, Ldalvik/system/VMDebug;->startMethodTracingDdms(II)V
+    invoke-static {p0, p1, p2, p3}, Ldalvik/system/VMDebug;->startMethodTracingDdms(IIZI)V
 
     return-void
 .end method
@@ -1585,13 +1664,9 @@
     invoke-direct {v0, v3}, Ljava/io/FileOutputStream;-><init>(Ljava/lang/String;)V
 
     .local v0, fos:Ljava/io/FileOutputStream;
-    new-instance v2, Ljava/io/PrintWriter;
+    new-instance v2, Lcom/android/internal/util/FastPrintWriter;
 
-    new-instance v3, Ljava/io/OutputStreamWriter;
-
-    invoke-direct {v3, v0}, Ljava/io/OutputStreamWriter;-><init>(Ljava/io/OutputStream;)V
-
-    invoke-direct {v2, v3}, Ljava/io/PrintWriter;-><init>(Ljava/io/Writer;)V
+    invoke-direct {v2, v0}, Lcom/android/internal/util/FastPrintWriter;-><init>(Ljava/io/OutputStream;)V
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
     .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
@@ -1677,6 +1752,8 @@
 
 .method public static stopAllocCounting()V
     .locals 0
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
 
     .prologue
     invoke-static {}, Ldalvik/system/VMDebug;->stopAllocCounting()V
@@ -1710,13 +1787,9 @@
     invoke-direct {v0, v3}, Ljava/io/FileOutputStream;-><init>(Ljava/lang/String;)V
 
     .local v0, fos:Ljava/io/FileOutputStream;
-    new-instance v2, Ljava/io/PrintWriter;
+    new-instance v2, Lcom/android/internal/util/FastPrintWriter;
 
-    new-instance v3, Ljava/io/OutputStreamWriter;
-
-    invoke-direct {v3, v0}, Ljava/io/OutputStreamWriter;-><init>(Ljava/io/OutputStream;)V
-
-    invoke-direct {v2, v3}, Ljava/io/PrintWriter;-><init>(Ljava/io/Writer;)V
+    invoke-direct {v2, v0}, Lcom/android/internal/util/FastPrintWriter;-><init>(Ljava/io/OutputStream;)V
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
     .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0

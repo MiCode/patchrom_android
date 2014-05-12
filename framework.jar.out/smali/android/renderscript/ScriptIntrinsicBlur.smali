@@ -37,7 +37,21 @@
 
     move-result-object v2
 
-    if-eq p1, v2, :cond_0
+    invoke-virtual {p1, v2}, Landroid/renderscript/Element;->isCompatible(Landroid/renderscript/Element;)Z
+
+    move-result v2
+
+    if-nez v2, :cond_0
+
+    invoke-static {p0}, Landroid/renderscript/Element;->U8(Landroid/renderscript/RenderScript;)Landroid/renderscript/Element;
+
+    move-result-object v2
+
+    invoke-virtual {p1, v2}, Landroid/renderscript/Element;->isCompatible(Landroid/renderscript/Element;)Z
+
+    move-result v2
+
+    if-nez v2, :cond_0
 
     new-instance v2, Landroid/renderscript/RSIllegalArgumentException;
 

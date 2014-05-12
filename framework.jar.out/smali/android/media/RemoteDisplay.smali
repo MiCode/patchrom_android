@@ -157,15 +157,22 @@
 .method private native nativeListen(Ljava/lang/String;)I
 .end method
 
-.method private notifyDisplayConnected(Landroid/view/Surface;III)V
-    .locals 7
+.method private native nativePause(I)V
+.end method
+
+.method private native nativeResume(I)V
+.end method
+
+.method private notifyDisplayConnected(Landroid/view/Surface;IIII)V
+    .locals 8
     .parameter "surface"
     .parameter "width"
     .parameter "height"
     .parameter "flags"
+    .parameter "session"
 
     .prologue
-    iget-object v6, p0, Landroid/media/RemoteDisplay;->mHandler:Landroid/os/Handler;
+    iget-object v7, p0, Landroid/media/RemoteDisplay;->mHandler:Landroid/os/Handler;
 
     new-instance v0, Landroid/media/RemoteDisplay$1;
 
@@ -179,9 +186,11 @@
 
     move v5, p4
 
-    invoke-direct/range {v0 .. v5}, Landroid/media/RemoteDisplay$1;-><init>(Landroid/media/RemoteDisplay;Landroid/view/Surface;III)V
+    move v6, p5
 
-    invoke-virtual {v6, v0}, Landroid/os/Handler;->post(Ljava/lang/Runnable;)Z
+    invoke-direct/range {v0 .. v6}, Landroid/media/RemoteDisplay$1;-><init>(Landroid/media/RemoteDisplay;Landroid/view/Surface;IIII)V
+
+    invoke-virtual {v7, v0}, Landroid/os/Handler;->post(Ljava/lang/Runnable;)Z
 
     return-void
 .end method
@@ -311,4 +320,26 @@
     invoke-super {p0}, Ljava/lang/Object;->finalize()V
 
     throw v0
+.end method
+
+.method public pause()V
+    .locals 1
+
+    .prologue
+    iget v0, p0, Landroid/media/RemoteDisplay;->mPtr:I
+
+    invoke-direct {p0, v0}, Landroid/media/RemoteDisplay;->nativePause(I)V
+
+    return-void
+.end method
+
+.method public resume()V
+    .locals 1
+
+    .prologue
+    iget v0, p0, Landroid/media/RemoteDisplay;->mPtr:I
+
+    invoke-direct {p0, v0}, Landroid/media/RemoteDisplay;->nativeResume(I)V
+
+    return-void
 .end method

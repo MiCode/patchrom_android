@@ -90,7 +90,7 @@
     .prologue
     const/4 v0, 0x0
 
-    .local v0, cache:Lorg/apache/harmony/xnet/provider/jsse/SSLClientSessionCache;
+    .local v0, cache:Lcom/android/org/conscrypt/SSLClientSessionCache;
     if-eqz p0, :cond_0
 
     :try_start_0
@@ -122,16 +122,16 @@
 
     invoke-static {v4, v5}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    invoke-static {p0}, Lorg/apache/harmony/xnet/provider/jsse/FileClientSessionCache;->usingDirectory(Ljava/io/File;)Lorg/apache/harmony/xnet/provider/jsse/SSLClientSessionCache;
+    invoke-static {p0}, Lcom/android/org/conscrypt/FileClientSessionCache;->usingDirectory(Ljava/io/File;)Lcom/android/org/conscrypt/SSLClientSessionCache;
 
     move-result-object v0
 
     :cond_0
-    new-instance v2, Lorg/apache/harmony/xnet/provider/jsse/OpenSSLContextImpl;
+    new-instance v2, Lcom/android/org/conscrypt/OpenSSLContextImpl;
 
-    invoke-direct {v2}, Lorg/apache/harmony/xnet/provider/jsse/OpenSSLContextImpl;-><init>()V
+    invoke-direct {v2}, Lcom/android/org/conscrypt/OpenSSLContextImpl;-><init>()V
 
-    .local v2, sslContext:Lorg/apache/harmony/xnet/provider/jsse/OpenSSLContextImpl;
+    .local v2, sslContext:Lcom/android/org/conscrypt/OpenSSLContextImpl;
     const/4 v4, 0x1
 
     new-array v3, v4, [Ljavax/net/ssl/TrustManager;
@@ -149,13 +149,13 @@
 
     const/4 v5, 0x0
 
-    invoke-virtual {v2, v4, v3, v5}, Lorg/apache/harmony/xnet/provider/jsse/OpenSSLContextImpl;->engineInit([Ljavax/net/ssl/KeyManager;[Ljavax/net/ssl/TrustManager;Ljava/security/SecureRandom;)V
+    invoke-virtual {v2, v4, v3, v5}, Lcom/android/org/conscrypt/OpenSSLContextImpl;->engineInit([Ljavax/net/ssl/KeyManager;[Ljavax/net/ssl/TrustManager;Ljava/security/SecureRandom;)V
 
-    invoke-virtual {v2}, Lorg/apache/harmony/xnet/provider/jsse/OpenSSLContextImpl;->engineGetClientSessionContext()Lorg/apache/harmony/xnet/provider/jsse/ClientSessionContext;
+    invoke-virtual {v2}, Lcom/android/org/conscrypt/OpenSSLContextImpl;->engineGetClientSessionContext()Lcom/android/org/conscrypt/ClientSessionContext;
 
     move-result-object v4
 
-    invoke-virtual {v4, v0}, Lorg/apache/harmony/xnet/provider/jsse/ClientSessionContext;->setPersistentCache(Lorg/apache/harmony/xnet/provider/jsse/SSLClientSessionCache;)V
+    invoke-virtual {v4, v0}, Lcom/android/org/conscrypt/ClientSessionContext;->setPersistentCache(Lcom/android/org/conscrypt/SSLClientSessionCache;)V
 
     const-class v5, Landroid/net/http/HttpsConnection;
 
@@ -165,7 +165,7 @@
     .catch Ljava/io/IOException; {:try_start_0 .. :try_end_0} :catch_1
 
     :try_start_1
-    invoke-virtual {v2}, Lorg/apache/harmony/xnet/provider/jsse/OpenSSLContextImpl;->engineGetSocketFactory()Ljavax/net/ssl/SSLSocketFactory;
+    invoke-virtual {v2}, Lcom/android/org/conscrypt/OpenSSLContextImpl;->engineGetSocketFactory()Ljavax/net/ssl/SSLSocketFactory;
 
     move-result-object v4
 
@@ -188,7 +188,7 @@
     .catch Ljava/security/KeyManagementException; {:try_start_2 .. :try_end_2} :catch_0
     .catch Ljava/io/IOException; {:try_start_2 .. :try_end_2} :catch_1
 
-    .end local v2           #sslContext:Lorg/apache/harmony/xnet/provider/jsse/OpenSSLContextImpl;
+    .end local v2           #sslContext:Lcom/android/org/conscrypt/OpenSSLContextImpl;
     .end local v3           #trustManagers:[Ljavax/net/ssl/TrustManager;
     :catch_0
     move-exception v1
@@ -433,7 +433,9 @@
 
     move-result-object v26
 
-    invoke-virtual/range {v26 .. v26}, Ljava/lang/String;->toLowerCase()Ljava/lang/String;
+    sget-object v27, Ljava/util/Locale;->ROOT:Ljava/util/Locale;
+
+    invoke-virtual/range {v26 .. v27}, Ljava/lang/String;->toLowerCase(Ljava/util/Locale;)Ljava/lang/String;
 
     move-result-object v12
 

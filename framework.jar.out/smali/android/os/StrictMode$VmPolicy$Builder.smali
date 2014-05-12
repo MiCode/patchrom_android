@@ -149,7 +149,20 @@
     .locals 1
 
     .prologue
-    const/16 v0, 0x2e00
+    const/16 v0, 0x6e00
+
+    invoke-direct {p0, v0}, Landroid/os/StrictMode$VmPolicy$Builder;->enable(I)Landroid/os/StrictMode$VmPolicy$Builder;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public detectFileUriExposure()Landroid/os/StrictMode$VmPolicy$Builder;
+    .locals 1
+
+    .prologue
+    const/16 v0, 0x4000
 
     invoke-direct {p0, v0}, Landroid/os/StrictMode$VmPolicy$Builder;->enable(I)Landroid/os/StrictMode$VmPolicy$Builder;
 

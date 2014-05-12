@@ -3155,7 +3155,7 @@
     goto :goto_0
 .end method
 
-.method public systemReady()V
+.method public systemRunning()V
     .locals 3
 
     .prologue

@@ -79,6 +79,10 @@
 
     if-eqz v4, :cond_1
 
+    iget-object v4, p0, Landroid/net/http/SslCertificate$DName;->mCName:Ljava/lang/String;
+
+    if-nez v4, :cond_0
+
     invoke-virtual {v2, v0}, Ljava/util/Vector;->elementAt(I)Ljava/lang/Object;
 
     move-result-object v4
@@ -105,6 +109,10 @@
     move-result v4
 
     if-eqz v4, :cond_3
+
+    iget-object v4, p0, Landroid/net/http/SslCertificate$DName;->mOName:Ljava/lang/String;
+
+    if-nez v4, :cond_3
 
     invoke-virtual {v2, v0}, Ljava/util/Vector;->elementAt(I)Ljava/lang/Object;
 
@@ -142,6 +150,10 @@
     move-result v4
 
     if-eqz v4, :cond_0
+
+    iget-object v4, p0, Landroid/net/http/SslCertificate$DName;->mUName:Ljava/lang/String;
+
+    if-nez v4, :cond_0
 
     invoke-virtual {v2, v0}, Ljava/util/Vector;->elementAt(I)Ljava/lang/Object;
 

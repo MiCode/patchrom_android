@@ -1,5 +1,5 @@
 .class Landroid/speech/tts/TextToSpeechService$SynthesisSpeechItem;
-.super Landroid/speech/tts/TextToSpeechService$SpeechItem;
+.super Landroid/speech/tts/TextToSpeechService$UtteranceSpeechItem;
 .source "TextToSpeechService.java"
 
 
@@ -15,6 +15,8 @@
 
 
 # instance fields
+.field private final mCallerUid:I
+
 .field private final mDefaultLocale:[Ljava/lang/String;
 
 .field private final mEventLogger:Landroid/speech/tts/EventLogger;
@@ -41,9 +43,11 @@
     .prologue
     iput-object p1, p0, Landroid/speech/tts/TextToSpeechService$SynthesisSpeechItem;->this$0:Landroid/speech/tts/TextToSpeechService;
 
-    invoke-direct/range {p0 .. p5}, Landroid/speech/tts/TextToSpeechService$SpeechItem;-><init>(Landroid/speech/tts/TextToSpeechService;Ljava/lang/Object;IILandroid/os/Bundle;)V
+    invoke-direct/range {p0 .. p5}, Landroid/speech/tts/TextToSpeechService$UtteranceSpeechItem;-><init>(Landroid/speech/tts/TextToSpeechService;Ljava/lang/Object;IILandroid/os/Bundle;)V
 
     iput-object p6, p0, Landroid/speech/tts/TextToSpeechService$SynthesisSpeechItem;->mText:Ljava/lang/String;
+
+    iput p3, p0, Landroid/speech/tts/TextToSpeechService$SynthesisSpeechItem;->mCallerUid:I
 
     new-instance v0, Landroid/speech/tts/SynthesisRequest;
 
@@ -233,6 +237,10 @@
 
     invoke-virtual {p1, v0}, Landroid/speech/tts/SynthesisRequest;->setSpeechRate(I)V
 
+    iget v0, p0, Landroid/speech/tts/TextToSpeechService$SynthesisSpeechItem;->mCallerUid:I
+
+    invoke-virtual {p1, v0}, Landroid/speech/tts/SynthesisRequest;->setCallerUid(I)V
+
     invoke-direct {p0}, Landroid/speech/tts/TextToSpeechService$SynthesisSpeechItem;->getPitch()I
 
     move-result v0
@@ -336,7 +344,9 @@
 
     move-result v1
 
-    const/16 v2, 0xfa0
+    invoke-static {}, Landroid/speech/tts/TextToSpeech;->getMaxSpeechInputLength()I
+
+    move-result v2
 
     if-lt v1, v2, :cond_1
 

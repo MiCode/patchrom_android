@@ -19,7 +19,7 @@
 
 .field final left:I
 
-.field final surface:Landroid/view/Surface;
+.field final surface:Landroid/view/SurfaceControl;
 
 .field final synthetic this$0:Lcom/android/server/wm/BlackFrame;
 
@@ -60,7 +60,7 @@
     sub-int v4, p7, p5
 
     .local v4, h:I
-    new-instance v0, Landroid/view/Surface;
+    new-instance v0, Landroid/view/SurfaceControl;
 
     const-string v2, "BlackSurface"
 
@@ -70,27 +70,27 @@
 
     move-object v1, p2
 
-    invoke-direct/range {v0 .. v6}, Landroid/view/Surface;-><init>(Landroid/view/SurfaceSession;Ljava/lang/String;IIII)V
+    invoke-direct/range {v0 .. v6}, Landroid/view/SurfaceControl;-><init>(Landroid/view/SurfaceSession;Ljava/lang/String;IIII)V
 
-    iput-object v0, p0, Lcom/android/server/wm/BlackFrame$BlackSurface;->surface:Landroid/view/Surface;
+    iput-object v0, p0, Lcom/android/server/wm/BlackFrame$BlackSurface;->surface:Landroid/view/SurfaceControl;
 
-    iget-object v0, p0, Lcom/android/server/wm/BlackFrame$BlackSurface;->surface:Landroid/view/Surface;
+    iget-object v0, p0, Lcom/android/server/wm/BlackFrame$BlackSurface;->surface:Landroid/view/SurfaceControl;
 
     const/high16 v1, 0x3f80
 
-    invoke-virtual {v0, v1}, Landroid/view/Surface;->setAlpha(F)V
+    invoke-virtual {v0, v1}, Landroid/view/SurfaceControl;->setAlpha(F)V
 
-    iget-object v0, p0, Lcom/android/server/wm/BlackFrame$BlackSurface;->surface:Landroid/view/Surface;
+    iget-object v0, p0, Lcom/android/server/wm/BlackFrame$BlackSurface;->surface:Landroid/view/SurfaceControl;
 
-    invoke-virtual {v0, p8}, Landroid/view/Surface;->setLayerStack(I)V
+    invoke-virtual {v0, p8}, Landroid/view/SurfaceControl;->setLayerStack(I)V
 
-    iget-object v0, p0, Lcom/android/server/wm/BlackFrame$BlackSurface;->surface:Landroid/view/Surface;
+    iget-object v0, p0, Lcom/android/server/wm/BlackFrame$BlackSurface;->surface:Landroid/view/SurfaceControl;
 
-    invoke-virtual {v0, p3}, Landroid/view/Surface;->setLayer(I)V
+    invoke-virtual {v0, p3}, Landroid/view/SurfaceControl;->setLayer(I)V
 
-    iget-object v0, p0, Lcom/android/server/wm/BlackFrame$BlackSurface;->surface:Landroid/view/Surface;
+    iget-object v0, p0, Lcom/android/server/wm/BlackFrame$BlackSurface;->surface:Landroid/view/SurfaceControl;
 
-    invoke-virtual {v0}, Landroid/view/Surface;->show()V
+    invoke-virtual {v0}, Landroid/view/SurfaceControl;->show()V
 
     return-void
 .end method
@@ -105,9 +105,21 @@
 
     const/4 v1, 0x0
 
-    iget-object v0, p0, Lcom/android/server/wm/BlackFrame$BlackSurface;->surface:Landroid/view/Surface;
+    iget-object v0, p0, Lcom/android/server/wm/BlackFrame$BlackSurface;->surface:Landroid/view/SurfaceControl;
 
-    invoke-virtual {v0, v2, v1, v1, v2}, Landroid/view/Surface;->setMatrix(FFFF)V
+    invoke-virtual {v0, v2, v1, v1, v2}, Landroid/view/SurfaceControl;->setMatrix(FFFF)V
+
+    return-void
+.end method
+
+.method setAlpha(F)V
+    .locals 1
+    .parameter "alpha"
+
+    .prologue
+    iget-object v0, p0, Lcom/android/server/wm/BlackFrame$BlackSurface;->surface:Landroid/view/SurfaceControl;
+
+    invoke-virtual {v0, p1}, Landroid/view/SurfaceControl;->setAlpha(F)V
 
     return-void
 .end method
@@ -147,7 +159,7 @@
 
     invoke-virtual {v0, v1}, Landroid/graphics/Matrix;->getValues([F)V
 
-    iget-object v0, p0, Lcom/android/server/wm/BlackFrame$BlackSurface;->surface:Landroid/view/Surface;
+    iget-object v0, p0, Lcom/android/server/wm/BlackFrame$BlackSurface;->surface:Landroid/view/SurfaceControl;
 
     iget-object v1, p0, Lcom/android/server/wm/BlackFrame$BlackSurface;->this$0:Lcom/android/server/wm/BlackFrame;
 
@@ -165,9 +177,9 @@
 
     aget v2, v2, v3
 
-    invoke-virtual {v0, v1, v2}, Landroid/view/Surface;->setPosition(FF)V
+    invoke-virtual {v0, v1, v2}, Landroid/view/SurfaceControl;->setPosition(FF)V
 
-    iget-object v0, p0, Lcom/android/server/wm/BlackFrame$BlackSurface;->surface:Landroid/view/Surface;
+    iget-object v0, p0, Lcom/android/server/wm/BlackFrame$BlackSurface;->surface:Landroid/view/SurfaceControl;
 
     iget-object v1, p0, Lcom/android/server/wm/BlackFrame$BlackSurface;->this$0:Lcom/android/server/wm/BlackFrame;
 
@@ -201,7 +213,7 @@
 
     aget v4, v4, v5
 
-    invoke-virtual {v0, v1, v2, v3, v4}, Landroid/view/Surface;->setMatrix(FFFF)V
+    invoke-virtual {v0, v1, v2, v3, v4}, Landroid/view/SurfaceControl;->setMatrix(FFFF)V
 
     return-void
 .end method

@@ -30,7 +30,7 @@
     .locals 1
 
     .prologue
-    invoke-static {}, Landroid/hardware/input/InputManager;->getInstance()Landroid/hardware/input/InputManager;
+    invoke-static {}, Landroid/app/ContextImpl;->createDropBoxManager()Landroid/os/DropBoxManager;
 
     move-result-object v0
 

@@ -1,5 +1,5 @@
 .class Landroid/speech/tts/TextToSpeechService$AudioSpeechItem;
-.super Landroid/speech/tts/TextToSpeechService$SpeechItem;
+.super Landroid/speech/tts/TextToSpeechService$UtteranceSpeechItem;
 .source "TextToSpeechService.java"
 
 
@@ -33,7 +33,7 @@
     .prologue
     iput-object p1, p0, Landroid/speech/tts/TextToSpeechService$AudioSpeechItem;->this$0:Landroid/speech/tts/TextToSpeechService;
 
-    invoke-direct/range {p0 .. p5}, Landroid/speech/tts/TextToSpeechService$SpeechItem;-><init>(Landroid/speech/tts/TextToSpeechService;Ljava/lang/Object;IILandroid/os/Bundle;)V
+    invoke-direct/range {p0 .. p5}, Landroid/speech/tts/TextToSpeechService$UtteranceSpeechItem;-><init>(Landroid/speech/tts/TextToSpeechService;Ljava/lang/Object;IILandroid/os/Bundle;)V
 
     new-instance v0, Landroid/speech/tts/AudioPlaybackQueueItem;
 

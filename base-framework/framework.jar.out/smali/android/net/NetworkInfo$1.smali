@@ -125,23 +125,35 @@
 
     if-eqz v5, :cond_2
 
+    move v5, v6
+
     :goto_2
     #setter for: Landroid/net/NetworkInfo;->mIsRoaming:Z
-    invoke-static {v0, v6}, Landroid/net/NetworkInfo;->access$402(Landroid/net/NetworkInfo;Z)Z
+    invoke-static {v0, v5}, Landroid/net/NetworkInfo;->access$402(Landroid/net/NetworkInfo;Z)Z
+
+    invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
+
+    move-result v5
+
+    if-eqz v5, :cond_3
+
+    :goto_3
+    #setter for: Landroid/net/NetworkInfo;->mIsConnectedToProvisioningNetwork:Z
+    invoke-static {v0, v6}, Landroid/net/NetworkInfo;->access$502(Landroid/net/NetworkInfo;Z)Z
 
     invoke-virtual {p1}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
     move-result-object v5
 
     #setter for: Landroid/net/NetworkInfo;->mReason:Ljava/lang/String;
-    invoke-static {v0, v5}, Landroid/net/NetworkInfo;->access$502(Landroid/net/NetworkInfo;Ljava/lang/String;)Ljava/lang/String;
+    invoke-static {v0, v5}, Landroid/net/NetworkInfo;->access$602(Landroid/net/NetworkInfo;Ljava/lang/String;)Ljava/lang/String;
 
     invoke-virtual {p1}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
     move-result-object v5
 
     #setter for: Landroid/net/NetworkInfo;->mExtraInfo:Ljava/lang/String;
-    invoke-static {v0, v5}, Landroid/net/NetworkInfo;->access$602(Landroid/net/NetworkInfo;Ljava/lang/String;)Ljava/lang/String;
+    invoke-static {v0, v5}, Landroid/net/NetworkInfo;->access$702(Landroid/net/NetworkInfo;Ljava/lang/String;)Ljava/lang/String;
 
     return-object v0
 
@@ -156,9 +168,14 @@
     goto :goto_1
 
     :cond_2
-    move v6, v7
+    move v5, v7
 
     goto :goto_2
+
+    :cond_3
+    move v6, v7
+
+    goto :goto_3
 .end method
 
 .method public bridge synthetic createFromParcel(Landroid/os/Parcel;)Ljava/lang/Object;

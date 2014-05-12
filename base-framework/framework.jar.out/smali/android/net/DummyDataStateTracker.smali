@@ -1,9 +1,6 @@
 .class public Landroid/net/DummyDataStateTracker;
-.super Ljava/lang/Object;
+.super Landroid/net/BaseNetworkStateTracker;
 .source "DummyDataStateTracker.java"
-
-# interfaces
-.implements Landroid/net/NetworkStateTracker;
 
 
 # static fields
@@ -15,17 +12,9 @@
 
 
 # instance fields
-.field private mContext:Landroid/content/Context;
-
 .field private mDefaultRouteSet:Z
 
 .field private mIsDefaultOrHipri:Z
-
-.field private mLinkCapabilities:Landroid/net/LinkCapabilities;
-
-.field private mLinkProperties:Landroid/net/LinkProperties;
-
-.field private mNetworkInfo:Landroid/net/NetworkInfo;
 
 .field private mPrivateDnsRouteSet:Z
 
@@ -43,7 +32,7 @@
     .prologue
     const/4 v0, 0x0
 
-    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+    invoke-direct {p0}, Landroid/net/BaseNetworkStateTracker;-><init>()V
 
     iput-boolean v0, p0, Landroid/net/DummyDataStateTracker;->mTeardownRequested:Z
 
@@ -135,7 +124,7 @@
 
     iget-object v1, p0, Landroid/net/DummyDataStateTracker;->mTarget:Landroid/os/Handler;
 
-    const/4 v2, 0x1
+    const/high16 v2, 0x7
 
     iget-object v3, p0, Landroid/net/DummyDataStateTracker;->mNetworkInfo:Landroid/net/NetworkInfo;
 
@@ -151,8 +140,28 @@
 
 
 # virtual methods
+.method public addStackedLink(Landroid/net/LinkProperties;)V
+    .locals 1
+    .parameter "link"
+
+    .prologue
+    iget-object v0, p0, Landroid/net/DummyDataStateTracker;->mLinkProperties:Landroid/net/LinkProperties;
+
+    invoke-virtual {v0, p1}, Landroid/net/LinkProperties;->addStackedLink(Landroid/net/LinkProperties;)Z
+
+    return-void
+.end method
+
 .method public captivePortalCheckComplete()V
     .locals 0
+
+    .prologue
+    return-void
+.end method
+
+.method public captivePortalCheckCompleted(Z)V
+    .locals 0
+    .parameter "isCaptivePortal"
 
     .prologue
     return-void
@@ -292,6 +301,18 @@
     return-void
 .end method
 
+.method public removeStackedLink(Landroid/net/LinkProperties;)V
+    .locals 1
+    .parameter "link"
+
+    .prologue
+    iget-object v0, p0, Landroid/net/DummyDataStateTracker;->mLinkProperties:Landroid/net/LinkProperties;
+
+    invoke-virtual {v0, p1}, Landroid/net/LinkProperties;->removeStackedLink(Landroid/net/LinkProperties;)Z
+
+    return-void
+.end method
+
 .method public setDependencyMet(Z)V
     .locals 0
     .parameter "met"
@@ -346,6 +367,14 @@
 
     iput-object p1, p0, Landroid/net/DummyDataStateTracker;->mContext:Landroid/content/Context;
 
+    return-void
+.end method
+
+.method public supplyMessenger(Landroid/os/Messenger;)V
+    .locals 0
+    .parameter "messenger"
+
+    .prologue
     return-void
 .end method
 

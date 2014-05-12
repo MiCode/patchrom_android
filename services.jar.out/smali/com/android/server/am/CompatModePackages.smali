@@ -1,4 +1,4 @@
-.class public Lcom/android/server/am/CompatModePackages;
+.class public final Lcom/android/server/am/CompatModePackages;
 .super Ljava/lang/Object;
 .source "CompatModePackages.java"
 
@@ -369,14 +369,14 @@
     .parameter "mode"
 
     .prologue
-    iget-object v8, p1, Landroid/content/pm/ApplicationInfo;->packageName:Ljava/lang/String;
+    iget-object v7, p1, Landroid/content/pm/ApplicationInfo;->packageName:Ljava/lang/String;
 
-    .local v8, packageName:Ljava/lang/String;
-    invoke-direct {p0, v8}, Lcom/android/server/am/CompatModePackages;->getPackageFlags(Ljava/lang/String;)I
+    .local v7, packageName:Ljava/lang/String;
+    invoke-direct {p0, v7}, Lcom/android/server/am/CompatModePackages;->getPackageFlags(Ljava/lang/String;)I
 
-    move-result v3
+    move-result v2
 
-    .local v3, curFlags:I
+    .local v2, curFlags:I
     packed-switch p2, :pswitch_data_0
 
     const-string v10, "ActivityManager"
@@ -412,24 +412,24 @@
     return-void
 
     :pswitch_0
-    const/4 v4, 0x0
+    const/4 v3, 0x0
 
-    .local v4, enable:Z
+    .local v3, enable:Z
     :goto_1
-    move v7, v3
+    move v6, v2
 
-    .local v7, newFlags:I
-    if-eqz v4, :cond_5
+    .local v6, newFlags:I
+    if-eqz v3, :cond_5
 
-    or-int/lit8 v7, v7, 0x2
+    or-int/lit8 v6, v6, 0x2
 
     :goto_2
     invoke-virtual {p0, p1}, Lcom/android/server/am/CompatModePackages;->compatibilityInfoForPackageLocked(Landroid/content/pm/ApplicationInfo;)Landroid/content/res/CompatibilityInfo;
 
-    move-result-object v2
+    move-result-object v1
 
-    .local v2, ci:Landroid/content/res/CompatibilityInfo;
-    invoke-virtual {v2}, Landroid/content/res/CompatibilityInfo;->alwaysSupportsScreen()Z
+    .local v1, ci:Landroid/content/res/CompatibilityInfo;
+    invoke-virtual {v1}, Landroid/content/res/CompatibilityInfo;->alwaysSupportsScreen()Z
 
     move-result v10
 
@@ -447,7 +447,7 @@
 
     move-result-object v11
 
-    invoke-virtual {v11, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {v11, v7}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v11
 
@@ -463,10 +463,10 @@
 
     invoke-static {v10, v11}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    const/4 v7, 0x0
+    const/4 v6, 0x0
 
     :cond_1
-    invoke-virtual {v2}, Landroid/content/res/CompatibilityInfo;->neverSupportsScreen()Z
+    invoke-virtual {v1}, Landroid/content/res/CompatibilityInfo;->neverSupportsScreen()Z
 
     move-result v10
 
@@ -484,7 +484,7 @@
 
     move-result-object v11
 
-    invoke-virtual {v11, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {v11, v7}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v11
 
@@ -500,25 +500,25 @@
 
     invoke-static {v10, v11}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    const/4 v7, 0x0
+    const/4 v6, 0x0
 
     :cond_2
-    if-eq v7, v3, :cond_0
+    if-eq v6, v2, :cond_0
 
-    if-eqz v7, :cond_6
+    if-eqz v6, :cond_6
 
     iget-object v10, p0, Lcom/android/server/am/CompatModePackages;->mPackages:Ljava/util/HashMap;
 
-    invoke-static {v7}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+    invoke-static {v6}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
     move-result-object v11
 
-    invoke-virtual {v10, v8, v11}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+    invoke-virtual {v10, v7, v11}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
     :goto_3
     invoke-virtual {p0, p1}, Lcom/android/server/am/CompatModePackages;->compatibilityInfoForPackageLocked(Landroid/content/pm/ApplicationInfo;)Landroid/content/res/CompatibilityInfo;
 
-    move-result-object v2
+    move-result-object v1
 
     iget-object v10, p0, Lcom/android/server/am/CompatModePackages;->mHandler:Landroid/os/Handler;
 
@@ -532,214 +532,148 @@
 
     invoke-virtual {v10, v11}, Landroid/os/Handler;->obtainMessage(I)Landroid/os/Message;
 
-    move-result-object v6
+    move-result-object v5
 
-    .local v6, msg:Landroid/os/Message;
+    .local v5, msg:Landroid/os/Message;
     iget-object v10, p0, Lcom/android/server/am/CompatModePackages;->mHandler:Landroid/os/Handler;
 
     const-wide/16 v11, 0x2710
 
-    invoke-virtual {v10, v6, v11, v12}, Landroid/os/Handler;->sendMessageDelayed(Landroid/os/Message;J)Z
+    invoke-virtual {v10, v5, v11, v12}, Landroid/os/Handler;->sendMessageDelayed(Landroid/os/Message;J)Z
 
     iget-object v10, p0, Lcom/android/server/am/CompatModePackages;->mService:Lcom/android/server/am/ActivityManagerService;
 
-    iget-object v10, v10, Lcom/android/server/am/ActivityManagerService;->mMainStack:Lcom/android/server/am/ActivityStack;
+    invoke-virtual {v10}, Lcom/android/server/am/ActivityManagerService;->getFocusedStack()Lcom/android/server/am/ActivityStack;
 
-    const/4 v11, 0x0
+    move-result-object v8
 
-    invoke-virtual {v10, v11}, Lcom/android/server/am/ActivityStack;->topRunningActivityLocked(Lcom/android/server/am/ActivityRecord;)Lcom/android/server/am/ActivityRecord;
+    .local v8, stack:Lcom/android/server/am/ActivityStack;
+    invoke-virtual {v8, v7}, Lcom/android/server/am/ActivityStack;->restartPackage(Ljava/lang/String;)Lcom/android/server/am/ActivityRecord;
 
     move-result-object v9
 
     .local v9, starting:Lcom/android/server/am/ActivityRecord;
     iget-object v10, p0, Lcom/android/server/am/CompatModePackages;->mService:Lcom/android/server/am/ActivityManagerService;
 
-    iget-object v10, v10, Lcom/android/server/am/ActivityManagerService;->mMainStack:Lcom/android/server/am/ActivityStack;
-
-    iget-object v10, v10, Lcom/android/server/am/ActivityStack;->mHistory:Ljava/util/ArrayList;
+    iget-object v10, v10, Lcom/android/server/am/ActivityManagerService;->mLruProcesses:Ljava/util/ArrayList;
 
     invoke-virtual {v10}, Ljava/util/ArrayList;->size()I
 
     move-result v10
 
-    add-int/lit8 v5, v10, -0x1
+    add-int/lit8 v4, v10, -0x1
 
-    .local v5, i:I
+    .local v4, i:I
     :goto_4
-    if-ltz v5, :cond_7
+    if-ltz v4, :cond_8
 
     iget-object v10, p0, Lcom/android/server/am/CompatModePackages;->mService:Lcom/android/server/am/ActivityManagerService;
 
-    iget-object v10, v10, Lcom/android/server/am/ActivityManagerService;->mMainStack:Lcom/android/server/am/ActivityStack;
+    iget-object v10, v10, Lcom/android/server/am/ActivityManagerService;->mLruProcesses:Ljava/util/ArrayList;
 
-    iget-object v10, v10, Lcom/android/server/am/ActivityStack;->mHistory:Ljava/util/ArrayList;
-
-    invoke-virtual {v10, v5}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
+    invoke-virtual {v10, v4}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
 
     move-result-object v0
 
-    check-cast v0, Lcom/android/server/am/ActivityRecord;
+    check-cast v0, Lcom/android/server/am/ProcessRecord;
 
-    .local v0, a:Lcom/android/server/am/ActivityRecord;
-    iget-object v10, v0, Lcom/android/server/am/ActivityRecord;->info:Landroid/content/pm/ActivityInfo;
+    .local v0, app:Lcom/android/server/am/ProcessRecord;
+    iget-object v10, v0, Lcom/android/server/am/ProcessRecord;->pkgList:Landroid/util/ArrayMap;
 
-    iget-object v10, v10, Landroid/content/pm/ActivityInfo;->packageName:Ljava/lang/String;
-
-    invoke-virtual {v10, v8}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+    invoke-virtual {v10, v7}, Landroid/util/ArrayMap;->containsKey(Ljava/lang/Object;)Z
 
     move-result v10
 
-    if-eqz v10, :cond_3
-
-    const/4 v10, 0x1
-
-    iput-boolean v10, v0, Lcom/android/server/am/ActivityRecord;->forceNewConfig:Z
-
-    if-eqz v9, :cond_3
-
-    if-ne v0, v9, :cond_3
-
-    iget-boolean v10, v0, Lcom/android/server/am/ActivityRecord;->visible:Z
-
-    if-eqz v10, :cond_3
-
-    iget-object v10, v9, Lcom/android/server/am/ActivityRecord;->app:Lcom/android/server/am/ProcessRecord;
-
-    const/16 v11, 0x100
-
-    invoke-virtual {v0, v10, v11}, Lcom/android/server/am/ActivityRecord;->startFreezingScreenLocked(Lcom/android/server/am/ProcessRecord;I)V
+    if-nez v10, :cond_7
 
     :cond_3
-    add-int/lit8 v5, v5, -0x1
+    :goto_5
+    add-int/lit8 v4, v4, -0x1
 
     goto :goto_4
 
-    .end local v0           #a:Lcom/android/server/am/ActivityRecord;
-    .end local v2           #ci:Landroid/content/res/CompatibilityInfo;
-    .end local v4           #enable:Z
-    .end local v5           #i:I
-    .end local v6           #msg:Landroid/os/Message;
-    .end local v7           #newFlags:I
+    .end local v0           #app:Lcom/android/server/am/ProcessRecord;
+    .end local v1           #ci:Landroid/content/res/CompatibilityInfo;
+    .end local v3           #enable:Z
+    .end local v4           #i:I
+    .end local v5           #msg:Landroid/os/Message;
+    .end local v6           #newFlags:I
+    .end local v8           #stack:Lcom/android/server/am/ActivityStack;
     .end local v9           #starting:Lcom/android/server/am/ActivityRecord;
     :pswitch_1
-    const/4 v4, 0x1
+    const/4 v3, 0x1
 
-    .restart local v4       #enable:Z
+    .restart local v3       #enable:Z
     goto/16 :goto_1
 
-    .end local v4           #enable:Z
+    .end local v3           #enable:Z
     :pswitch_2
-    and-int/lit8 v10, v3, 0x2
+    and-int/lit8 v10, v2, 0x2
 
     if-nez v10, :cond_4
 
-    const/4 v4, 0x1
+    const/4 v3, 0x1
 
-    .restart local v4       #enable:Z
-    :goto_5
+    .restart local v3       #enable:Z
+    :goto_6
     goto/16 :goto_1
 
-    .end local v4           #enable:Z
+    .end local v3           #enable:Z
     :cond_4
-    const/4 v4, 0x0
-
-    goto :goto_5
-
-    .restart local v4       #enable:Z
-    .restart local v7       #newFlags:I
-    :cond_5
-    and-int/lit8 v7, v7, -0x3
-
-    goto/16 :goto_2
-
-    .restart local v2       #ci:Landroid/content/res/CompatibilityInfo;
-    :cond_6
-    iget-object v10, p0, Lcom/android/server/am/CompatModePackages;->mPackages:Ljava/util/HashMap;
-
-    invoke-virtual {v10, v8}, Ljava/util/HashMap;->remove(Ljava/lang/Object;)Ljava/lang/Object;
-
-    goto :goto_3
-
-    .restart local v5       #i:I
-    .restart local v6       #msg:Landroid/os/Message;
-    .restart local v9       #starting:Lcom/android/server/am/ActivityRecord;
-    :cond_7
-    iget-object v10, p0, Lcom/android/server/am/CompatModePackages;->mService:Lcom/android/server/am/ActivityManagerService;
-
-    iget-object v10, v10, Lcom/android/server/am/ActivityManagerService;->mLruProcesses:Ljava/util/ArrayList;
-
-    invoke-virtual {v10}, Ljava/util/ArrayList;->size()I
-
-    move-result v10
-
-    add-int/lit8 v5, v10, -0x1
-
-    :goto_6
-    if-ltz v5, :cond_a
-
-    iget-object v10, p0, Lcom/android/server/am/CompatModePackages;->mService:Lcom/android/server/am/ActivityManagerService;
-
-    iget-object v10, v10, Lcom/android/server/am/ActivityManagerService;->mLruProcesses:Ljava/util/ArrayList;
-
-    invoke-virtual {v10, v5}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
-
-    move-result-object v1
-
-    check-cast v1, Lcom/android/server/am/ProcessRecord;
-
-    .local v1, app:Lcom/android/server/am/ProcessRecord;
-    iget-object v10, v1, Lcom/android/server/am/ProcessRecord;->pkgList:Ljava/util/HashSet;
-
-    invoke-virtual {v10, v8}, Ljava/util/HashSet;->contains(Ljava/lang/Object;)Z
-
-    move-result v10
-
-    if-nez v10, :cond_9
-
-    :cond_8
-    :goto_7
-    add-int/lit8 v5, v5, -0x1
+    const/4 v3, 0x0
 
     goto :goto_6
 
-    :cond_9
+    .restart local v3       #enable:Z
+    .restart local v6       #newFlags:I
+    :cond_5
+    and-int/lit8 v6, v6, -0x3
+
+    goto/16 :goto_2
+
+    .restart local v1       #ci:Landroid/content/res/CompatibilityInfo;
+    :cond_6
+    iget-object v10, p0, Lcom/android/server/am/CompatModePackages;->mPackages:Ljava/util/HashMap;
+
+    invoke-virtual {v10, v7}, Ljava/util/HashMap;->remove(Ljava/lang/Object;)Ljava/lang/Object;
+
+    goto :goto_3
+
+    .restart local v0       #app:Lcom/android/server/am/ProcessRecord;
+    .restart local v4       #i:I
+    .restart local v5       #msg:Landroid/os/Message;
+    .restart local v8       #stack:Lcom/android/server/am/ActivityStack;
+    .restart local v9       #starting:Lcom/android/server/am/ActivityRecord;
+    :cond_7
     :try_start_0
-    iget-object v10, v1, Lcom/android/server/am/ProcessRecord;->thread:Landroid/app/IApplicationThread;
+    iget-object v10, v0, Lcom/android/server/am/ProcessRecord;->thread:Landroid/app/IApplicationThread;
 
-    if-eqz v10, :cond_8
+    if-eqz v10, :cond_3
 
-    iget-object v10, v1, Lcom/android/server/am/ProcessRecord;->thread:Landroid/app/IApplicationThread;
+    iget-object v10, v0, Lcom/android/server/am/ProcessRecord;->thread:Landroid/app/IApplicationThread;
 
-    invoke-interface {v10, v8, v2}, Landroid/app/IApplicationThread;->updatePackageCompatibilityInfo(Ljava/lang/String;Landroid/content/res/CompatibilityInfo;)V
+    invoke-interface {v10, v7, v1}, Landroid/app/IApplicationThread;->updatePackageCompatibilityInfo(Ljava/lang/String;Landroid/content/res/CompatibilityInfo;)V
     :try_end_0
     .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
 
-    goto :goto_7
+    goto :goto_5
 
     :catch_0
     move-exception v10
 
-    goto :goto_7
+    goto :goto_5
 
-    .end local v1           #app:Lcom/android/server/am/ProcessRecord;
-    :cond_a
+    .end local v0           #app:Lcom/android/server/am/ProcessRecord;
+    :cond_8
     if-eqz v9, :cond_0
 
-    iget-object v10, p0, Lcom/android/server/am/CompatModePackages;->mService:Lcom/android/server/am/ActivityManagerService;
+    const/4 v10, 0x0
 
-    iget-object v10, v10, Lcom/android/server/am/ActivityManagerService;->mMainStack:Lcom/android/server/am/ActivityStack;
+    invoke-virtual {v8, v9, v10}, Lcom/android/server/am/ActivityStack;->ensureActivityConfigurationLocked(Lcom/android/server/am/ActivityRecord;I)Z
 
-    const/4 v11, 0x0
+    const/4 v10, 0x0
 
-    invoke-virtual {v10, v9, v11}, Lcom/android/server/am/ActivityStack;->ensureActivityConfigurationLocked(Lcom/android/server/am/ActivityRecord;I)Z
-
-    iget-object v10, p0, Lcom/android/server/am/CompatModePackages;->mService:Lcom/android/server/am/ActivityManagerService;
-
-    iget-object v10, v10, Lcom/android/server/am/ActivityManagerService;->mMainStack:Lcom/android/server/am/ActivityStack;
-
-    const/4 v11, 0x0
-
-    invoke-virtual {v10, v9, v11}, Lcom/android/server/am/ActivityStack;->ensureActivitiesVisibleLocked(Lcom/android/server/am/ActivityRecord;I)V
+    invoke-virtual {v8, v9, v10}, Lcom/android/server/am/ActivityStack;->ensureActivitiesVisibleLocked(Lcom/android/server/am/ActivityRecord;I)Z
 
     goto/16 :goto_0
 
@@ -883,7 +817,9 @@
     .prologue
     iget-object v1, p0, Lcom/android/server/am/CompatModePackages;->mService:Lcom/android/server/am/ActivityManagerService;
 
-    iget-object v1, v1, Lcom/android/server/am/ActivityManagerService;->mMainStack:Lcom/android/server/am/ActivityStack;
+    invoke-virtual {v1}, Lcom/android/server/am/ActivityManagerService;->getFocusedStack()Lcom/android/server/am/ActivityStack;
+
+    move-result-object v1
 
     const/4 v2, 0x0
 
@@ -915,7 +851,9 @@
     .prologue
     iget-object v1, p0, Lcom/android/server/am/CompatModePackages;->mService:Lcom/android/server/am/ActivityManagerService;
 
-    iget-object v1, v1, Lcom/android/server/am/ActivityManagerService;->mMainStack:Lcom/android/server/am/ActivityStack;
+    invoke-virtual {v1}, Lcom/android/server/am/ActivityManagerService;->getFocusedStack()Lcom/android/server/am/ActivityStack;
+
+    move-result-object v1
 
     const/4 v2, 0x0
 
@@ -1428,7 +1366,9 @@
     .prologue
     iget-object v1, p0, Lcom/android/server/am/CompatModePackages;->mService:Lcom/android/server/am/ActivityManagerService;
 
-    iget-object v1, v1, Lcom/android/server/am/ActivityManagerService;->mMainStack:Lcom/android/server/am/ActivityStack;
+    invoke-virtual {v1}, Lcom/android/server/am/ActivityManagerService;->getFocusedStack()Lcom/android/server/am/ActivityStack;
+
+    move-result-object v1
 
     const/4 v2, 0x0
 
@@ -1454,7 +1394,9 @@
     .prologue
     iget-object v1, p0, Lcom/android/server/am/CompatModePackages;->mService:Lcom/android/server/am/ActivityManagerService;
 
-    iget-object v1, v1, Lcom/android/server/am/ActivityManagerService;->mMainStack:Lcom/android/server/am/ActivityStack;
+    invoke-virtual {v1}, Lcom/android/server/am/ActivityManagerService;->getFocusedStack()Lcom/android/server/am/ActivityStack;
+
+    move-result-object v1
 
     const/4 v2, 0x0
 

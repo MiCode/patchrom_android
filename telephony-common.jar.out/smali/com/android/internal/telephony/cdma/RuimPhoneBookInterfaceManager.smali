@@ -4,7 +4,7 @@
 
 
 # static fields
-.field static final LOG_TAG:Ljava/lang/String; = "CDMA"
+.field static final LOG_TAG:Ljava/lang/String; = "RuimPhoneBookIM"
 
 
 # direct methods
@@ -39,11 +39,11 @@
     .catch Ljava/lang/Throwable; {:try_start_0 .. :try_end_0} :catch_0
 
     :goto_0
-    const-string v1, "CDMA"
+    const-string v1, "RuimPhoneBookIM"
 
     const-string v2, "RuimPhoneBookInterfaceManager finalized"
 
-    invoke-static {v1, v2}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v1, v2}, Landroid/telephony/Rlog;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     return-void
 
@@ -51,11 +51,11 @@
     move-exception v0
 
     .local v0, throwable:Ljava/lang/Throwable;
-    const-string v1, "CDMA"
+    const-string v1, "RuimPhoneBookIM"
 
     const-string v2, "Error while finalizing:"
 
-    invoke-static {v1, v2, v0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+    invoke-static {v1, v2, v0}, Landroid/telephony/Rlog;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
 
     goto :goto_0
 .end method
@@ -96,7 +96,7 @@
 
     new-array v3, v3, [I
 
-    iput-object v3, p0, Lcom/android/internal/telephony/cdma/RuimPhoneBookInterfaceManager;->recordSize:[I
+    iput-object v3, p0, Lcom/android/internal/telephony/cdma/RuimPhoneBookInterfaceManager;->mRecordSize:[I
 
     new-instance v2, Ljava/util/concurrent/atomic/AtomicBoolean;
 
@@ -114,16 +114,16 @@
     move-result-object v1
 
     .local v1, response:Landroid/os/Message;
-    iget-object v3, p0, Lcom/android/internal/telephony/cdma/RuimPhoneBookInterfaceManager;->phone:Lcom/android/internal/telephony/PhoneBase;
+    iget-object v3, p0, Lcom/android/internal/telephony/cdma/RuimPhoneBookInterfaceManager;->mPhone:Lcom/android/internal/telephony/PhoneBase;
 
-    invoke-virtual {v3}, Lcom/android/internal/telephony/PhoneBase;->getIccFileHandler()Lcom/android/internal/telephony/IccFileHandler;
+    invoke-virtual {v3}, Lcom/android/internal/telephony/PhoneBase;->getIccFileHandler()Lcom/android/internal/telephony/uicc/IccFileHandler;
 
     move-result-object v0
 
-    .local v0, fh:Lcom/android/internal/telephony/IccFileHandler;
+    .local v0, fh:Lcom/android/internal/telephony/uicc/IccFileHandler;
     if-eqz v0, :cond_0
 
-    invoke-virtual {v0, p1, v1}, Lcom/android/internal/telephony/IccFileHandler;->getEFLinearRecordSize(ILandroid/os/Message;)V
+    invoke-virtual {v0, p1, v1}, Lcom/android/internal/telephony/uicc/IccFileHandler;->getEFLinearRecordSize(ILandroid/os/Message;)V
 
     invoke-virtual {p0, v2}, Lcom/android/internal/telephony/cdma/RuimPhoneBookInterfaceManager;->waitForResult(Ljava/util/concurrent/atomic/AtomicBoolean;)V
 
@@ -132,11 +132,11 @@
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    iget-object v3, p0, Lcom/android/internal/telephony/cdma/RuimPhoneBookInterfaceManager;->recordSize:[I
+    iget-object v3, p0, Lcom/android/internal/telephony/cdma/RuimPhoneBookInterfaceManager;->mRecordSize:[I
 
     return-object v3
 
-    .end local v0           #fh:Lcom/android/internal/telephony/IccFileHandler;
+    .end local v0           #fh:Lcom/android/internal/telephony/uicc/IccFileHandler;
     .end local v1           #response:Landroid/os/Message;
     .end local v2           #status:Ljava/util/concurrent/atomic/AtomicBoolean;
     :catchall_0
@@ -155,7 +155,7 @@
     .parameter "msg"
 
     .prologue
-    const-string v0, "CDMA"
+    const-string v0, "RuimPhoneBookIM"
 
     new-instance v1, Ljava/lang/StringBuilder;
 
@@ -175,7 +175,7 @@
 
     move-result-object v1
 
-    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v0, v1}, Landroid/telephony/Rlog;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     return-void
 .end method
@@ -185,7 +185,7 @@
     .parameter "msg"
 
     .prologue
-    const-string v0, "CDMA"
+    const-string v0, "RuimPhoneBookIM"
 
     new-instance v1, Ljava/lang/StringBuilder;
 
@@ -205,7 +205,7 @@
 
     move-result-object v1
 
-    invoke-static {v0, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v0, v1}, Landroid/telephony/Rlog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     return-void
 .end method

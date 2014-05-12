@@ -8,6 +8,7 @@
     value = {
         Landroid/view/WindowManagerPolicy$OnKeyguardExitResult;,
         Landroid/view/WindowManagerPolicy$ScreenOnListener;,
+        Landroid/view/WindowManagerPolicy$PointerEventListener;,
         Landroid/view/WindowManagerPolicy$WindowManagerFuncs;,
         Landroid/view/WindowManagerPolicy$FakeWindow;,
         Landroid/view/WindowManagerPolicy$WindowState;
@@ -80,43 +81,15 @@
 
 .field public static final PRESENCE_INTERNAL:I = 0x1
 
-.field public static final TRANSIT_ACTIVITY_CLOSE:I = 0x2007
+.field public static final TRANSIT_ENTER:I = 0x1
 
-.field public static final TRANSIT_ACTIVITY_OPEN:I = 0x1006
+.field public static final TRANSIT_EXIT:I = 0x2
 
-.field public static final TRANSIT_ENTER:I = 0x1001
-
-.field public static final TRANSIT_ENTER_MASK:I = 0x1000
-
-.field public static final TRANSIT_EXIT:I = 0x2002
-
-.field public static final TRANSIT_EXIT_MASK:I = 0x2000
-
-.field public static final TRANSIT_HIDE:I = 0x2004
-
-.field public static final TRANSIT_NONE:I = 0x0
+.field public static final TRANSIT_HIDE:I = 0x4
 
 .field public static final TRANSIT_PREVIEW_DONE:I = 0x5
 
-.field public static final TRANSIT_SHOW:I = 0x1003
-
-.field public static final TRANSIT_TASK_CLOSE:I = 0x2009
-
-.field public static final TRANSIT_TASK_OPEN:I = 0x1008
-
-.field public static final TRANSIT_TASK_TO_BACK:I = 0x200b
-
-.field public static final TRANSIT_TASK_TO_FRONT:I = 0x100a
-
-.field public static final TRANSIT_UNSET:I = -0x1
-
-.field public static final TRANSIT_WALLPAPER_CLOSE:I = 0x200c
-
-.field public static final TRANSIT_WALLPAPER_INTRA_CLOSE:I = 0x200f
-
-.field public static final TRANSIT_WALLPAPER_INTRA_OPEN:I = 0x100e
-
-.field public static final TRANSIT_WALLPAPER_OPEN:I = 0x100d
+.field public static final TRANSIT_SHOW:I = 0x3
 
 .field public static final USER_ROTATION_FREE:I = 0x0
 
@@ -126,7 +99,7 @@
 
 
 # virtual methods
-.method public abstract addStartingWindow(Landroid/os/IBinder;Ljava/lang/String;ILandroid/content/res/CompatibilityInfo;Ljava/lang/CharSequence;III)Landroid/view/View;
+.method public abstract addStartingWindow(Landroid/os/IBinder;Ljava/lang/String;ILandroid/content/res/CompatibilityInfo;Ljava/lang/CharSequence;IIII)Landroid/view/View;
 .end method
 
 .method public abstract adjustConfigurationLw(Landroid/content/res/Configuration;II)V
@@ -153,10 +126,10 @@
 .method public abstract canBeForceHidden(Landroid/view/WindowManagerPolicy$WindowState;Landroid/view/WindowManager$LayoutParams;)Z
 .end method
 
-.method public abstract canMagnifyWindowLw(Landroid/view/WindowManager$LayoutParams;)Z
+.method public abstract canMagnifyWindow(I)Z
 .end method
 
-.method public abstract checkAddPermission(Landroid/view/WindowManager$LayoutParams;)I
+.method public abstract checkAddPermission(Landroid/view/WindowManager$LayoutParams;[I)I
 .end method
 
 .method public abstract checkShowToOwnerOnly(Landroid/view/WindowManager$LayoutParams;)Z
@@ -207,6 +180,9 @@
 .method public abstract getContentInsetHintLw(Landroid/view/WindowManager$LayoutParams;Landroid/graphics/Rect;)V
 .end method
 
+.method public abstract getContentRectLw(Landroid/graphics/Rect;)V
+.end method
+
 .method public abstract getMaxWallpaperLayer()I
 .end method
 
@@ -216,13 +192,13 @@
 .method public abstract getNonDecorDisplayWidth(III)I
 .end method
 
-.method public abstract getSystemDecorRectLw(Landroid/graphics/Rect;)I
+.method public abstract getSystemDecorLayerLw()I
+.end method
+
+.method public abstract getUserRotationMode()I
 .end method
 
 .method public abstract hasNavigationBar()Z
-.end method
-
-.method public abstract hasSystemNavBar()Z
 .end method
 
 .method public abstract hideBootMessages()V
@@ -243,6 +219,9 @@
 .method public abstract interceptMotionBeforeQueueingWhenScreenOff(I)I
 .end method
 
+.method public abstract isDefaultOrientationForced()Z
+.end method
+
 .method public abstract isKeyguardLocked()Z
 .end method
 
@@ -253,6 +232,9 @@
 .end method
 
 .method public abstract isScreenOnFully()Z
+.end method
+
+.method public abstract isTopLevelWindow(I)Z
 .end method
 
 .method public abstract keepScreenOnStartedLw()V
@@ -297,10 +279,16 @@
 .method public abstract selectAnimationLw(Landroid/view/WindowManagerPolicy$WindowState;I)I
 .end method
 
+.method public abstract selectRotationAnimationLw([I)V
+.end method
+
 .method public abstract setCurrentOrientationLw(I)V
 .end method
 
 .method public abstract setCurrentUserLw(I)V
+.end method
+
+.method public abstract setDisplayOverscan(Landroid/view/Display;IIII)V
 .end method
 
 .method public abstract setInitialDisplaySize(Landroid/view/Display;III)V
@@ -315,10 +303,10 @@
 .method public abstract setSafeMode(Z)V
 .end method
 
-.method public abstract setUserRotationMode(II)V
+.method public abstract setTouchExplorationEnabled(Z)V
 .end method
 
-.method public abstract showAssistant()V
+.method public abstract setUserRotationMode(II)V
 .end method
 
 .method public abstract showBootMessage(Ljava/lang/CharSequence;Z)V
@@ -334,6 +322,9 @@
 .end method
 
 .method public abstract userActivity()V
+.end method
+
+.method public abstract validateRotationAnimationLw(IIZ)Z
 .end method
 
 .method public abstract windowTypeToLayerLw(I)I

@@ -26,17 +26,11 @@
 
 .field public static final CARRIER_ENABLED:Ljava/lang/String; = "carrier_enabled"
 
-.field public static final CLASS:Ljava/lang/String; = "class"
-
 .field public static final CONTENT_URI:Landroid/net/Uri; = null
 
 .field public static final CURRENT:Ljava/lang/String; = "current"
 
 .field public static final DEFAULT_SORT_ORDER:Ljava/lang/String; = "name ASC"
-
-.field public static final ENABLED:Ljava/lang/String; = "enabled"
-
-.field public static final INACTIVE_TIMER:Ljava/lang/String; = "inactivetimer"
 
 .field public static final MCC:Ljava/lang/String; = "mcc"
 
@@ -47,6 +41,10 @@
 .field public static final MMSPROXY:Ljava/lang/String; = "mmsproxy"
 
 .field public static final MNC:Ljava/lang/String; = "mnc"
+
+.field public static final MVNO_MATCH_DATA:Ljava/lang/String; = "mvno_match_data"
+
+.field public static final MVNO_TYPE:Ljava/lang/String; = "mvno_type"
 
 .field public static final NAME:Ljava/lang/String; = "name"
 
@@ -85,7 +83,7 @@
     return-void
 .end method
 
-.method public constructor <init>()V
+.method private constructor <init>()V
     .locals 0
 
     .prologue

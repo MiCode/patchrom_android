@@ -49,6 +49,22 @@
     .end annotation
 .end method
 
+.method public abstract getDeviceOwner()Ljava/lang/String;
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract getDeviceOwnerName()Ljava/lang/String;
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
 .method public abstract getGlobalProxyAdmin(I)Landroid/content/ComponentName;
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -201,6 +217,14 @@
     .end annotation
 .end method
 
+.method public abstract installCaCert([B)Z
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
 .method public abstract isActivePasswordSufficient(I)Z
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -210,6 +234,14 @@
 .end method
 
 .method public abstract isAdminActive(Landroid/content/ComponentName;I)Z
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract isDeviceOwner(Ljava/lang/String;)Z
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -282,6 +314,14 @@
 .end method
 
 .method public abstract setCameraDisabled(Landroid/content/ComponentName;ZI)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract setDeviceOwner(Ljava/lang/String;Ljava/lang/String;)Z
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -402,6 +442,14 @@
 .end method
 
 .method public abstract setStorageEncryption(Landroid/content/ComponentName;ZI)I
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract uninstallCaCert([B)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;

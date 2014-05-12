@@ -26,6 +26,14 @@
 
 .field public static final Hid:Landroid/os/ParcelUuid;
 
+.field public static final Hogp:Landroid/os/ParcelUuid;
+
+.field public static final MAP:Landroid/os/ParcelUuid;
+
+.field public static final MAS:Landroid/os/ParcelUuid;
+
+.field public static final MNS:Landroid/os/ParcelUuid;
+
 .field public static final NAP:Landroid/os/ParcelUuid;
 
 .field public static final ObexObjectPush:Landroid/os/ParcelUuid;
@@ -130,6 +138,14 @@
 
     sput-object v0, Landroid/bluetooth/BluetoothUuid;->Hid:Landroid/os/ParcelUuid;
 
+    const-string v0, "00001812-0000-1000-8000-00805f9b34fb"
+
+    invoke-static {v0}, Landroid/os/ParcelUuid;->fromString(Ljava/lang/String;)Landroid/os/ParcelUuid;
+
+    move-result-object v0
+
+    sput-object v0, Landroid/bluetooth/BluetoothUuid;->Hogp:Landroid/os/ParcelUuid;
+
     const-string v0, "00001115-0000-1000-8000-00805F9B34FB"
 
     invoke-static {v0}, Landroid/os/ParcelUuid;->fromString(Ljava/lang/String;)Landroid/os/ParcelUuid;
@@ -162,7 +178,31 @@
 
     sput-object v0, Landroid/bluetooth/BluetoothUuid;->PBAP_PSE:Landroid/os/ParcelUuid;
 
-    const/16 v0, 0xa
+    const-string v0, "00001134-0000-1000-8000-00805F9B34FB"
+
+    invoke-static {v0}, Landroid/os/ParcelUuid;->fromString(Ljava/lang/String;)Landroid/os/ParcelUuid;
+
+    move-result-object v0
+
+    sput-object v0, Landroid/bluetooth/BluetoothUuid;->MAP:Landroid/os/ParcelUuid;
+
+    const-string v0, "00001133-0000-1000-8000-00805F9B34FB"
+
+    invoke-static {v0}, Landroid/os/ParcelUuid;->fromString(Ljava/lang/String;)Landroid/os/ParcelUuid;
+
+    move-result-object v0
+
+    sput-object v0, Landroid/bluetooth/BluetoothUuid;->MNS:Landroid/os/ParcelUuid;
+
+    const-string v0, "00001132-0000-1000-8000-00805F9B34FB"
+
+    invoke-static {v0}, Landroid/os/ParcelUuid;->fromString(Ljava/lang/String;)Landroid/os/ParcelUuid;
+
+    move-result-object v0
+
+    sput-object v0, Landroid/bluetooth/BluetoothUuid;->MAS:Landroid/os/ParcelUuid;
+
+    const/16 v0, 0xd
 
     new-array v0, v0, [Landroid/os/ParcelUuid;
 
@@ -223,6 +263,24 @@
     const/16 v1, 0x9
 
     sget-object v2, Landroid/bluetooth/BluetoothUuid;->NAP:Landroid/os/ParcelUuid;
+
+    aput-object v2, v0, v1
+
+    const/16 v1, 0xa
+
+    sget-object v2, Landroid/bluetooth/BluetoothUuid;->MAP:Landroid/os/ParcelUuid;
+
+    aput-object v2, v0, v1
+
+    const/16 v1, 0xb
+
+    sget-object v2, Landroid/bluetooth/BluetoothUuid;->MNS:Landroid/os/ParcelUuid;
+
+    aput-object v2, v0, v1
+
+    const/16 v1, 0xc
+
+    sget-object v2, Landroid/bluetooth/BluetoothUuid;->MAS:Landroid/os/ParcelUuid;
 
     aput-object v2, v0, v1
 
@@ -540,6 +598,48 @@
 
     .prologue
     sget-object v0, Landroid/bluetooth/BluetoothUuid;->Hid:Landroid/os/ParcelUuid;
+
+    invoke-virtual {p0, v0}, Landroid/os/ParcelUuid;->equals(Ljava/lang/Object;)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public static isMap(Landroid/os/ParcelUuid;)Z
+    .locals 1
+    .parameter "uuid"
+
+    .prologue
+    sget-object v0, Landroid/bluetooth/BluetoothUuid;->MAP:Landroid/os/ParcelUuid;
+
+    invoke-virtual {p0, v0}, Landroid/os/ParcelUuid;->equals(Ljava/lang/Object;)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public static isMas(Landroid/os/ParcelUuid;)Z
+    .locals 1
+    .parameter "uuid"
+
+    .prologue
+    sget-object v0, Landroid/bluetooth/BluetoothUuid;->MAS:Landroid/os/ParcelUuid;
+
+    invoke-virtual {p0, v0}, Landroid/os/ParcelUuid;->equals(Ljava/lang/Object;)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public static isMns(Landroid/os/ParcelUuid;)Z
+    .locals 1
+    .parameter "uuid"
+
+    .prologue
+    sget-object v0, Landroid/bluetooth/BluetoothUuid;->MNS:Landroid/os/ParcelUuid;
 
     invoke-virtual {p0, v0}, Landroid/os/ParcelUuid;->equals(Ljava/lang/Object;)Z
 

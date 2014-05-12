@@ -54,9 +54,9 @@
 
 .field private mSupplicantState:Landroid/net/wifi/SupplicantState;
 
-.field private mWifiSsid:Landroid/net/wifi/WifiSsid;
-
 .field private mVendorInfo:Ljava/lang/String;
+
+.field private mWifiSsid:Landroid/net/wifi/WifiSsid;
 
 
 # direct methods
@@ -330,6 +330,17 @@
     return-object p1
 .end method
 
+.method static synthetic access$502(Landroid/net/wifi/WifiInfo;Ljava/lang/String;)Ljava/lang/String;
+    .locals 0
+    .parameter "x0"
+    .parameter "x1"
+
+    .prologue
+    iput-object p1, p0, Landroid/net/wifi/WifiInfo;->mVendorInfo:Ljava/lang/String;
+
+    return-object p1
+.end method
+
 .method public static getDetailedStateOf(Landroid/net/wifi/SupplicantState;)Landroid/net/NetworkInfo$DetailedState;
     .locals 1
     .parameter "suppState"
@@ -420,7 +431,9 @@
 
     :cond_0
     :try_start_0
-    invoke-virtual {p0}, Ljava/lang/String;->toUpperCase()Ljava/lang/String;
+    sget-object v1, Ljava/util/Locale;->ROOT:Ljava/util/Locale;
+
+    invoke-virtual {p0, v1}, Ljava/lang/String;->toUpperCase(Ljava/util/Locale;)Ljava/lang/String;
 
     move-result-object v1
 
@@ -471,33 +484,28 @@
 .end method
 
 .method public getIpAddress()I
-    .locals 1
+    .locals 2
 
     .prologue
-    iget-object v0, p0, Landroid/net/wifi/WifiInfo;->mIpAddress:Ljava/net/InetAddress;
-
-    if-eqz v0, :cond_0
-
-    iget-object v0, p0, Landroid/net/wifi/WifiInfo;->mIpAddress:Ljava/net/InetAddress;
-
-    instance-of v0, v0, Ljava/net/Inet6Address;
-
-    if-eqz v0, :cond_1
-
-    :cond_0
     const/4 v0, 0x0
 
-    :goto_0
-    return v0
+    .local v0, result:I
+    iget-object v1, p0, Landroid/net/wifi/WifiInfo;->mIpAddress:Ljava/net/InetAddress;
 
-    :cond_1
-    iget-object v0, p0, Landroid/net/wifi/WifiInfo;->mIpAddress:Ljava/net/InetAddress;
+    instance-of v1, v1, Ljava/net/Inet4Address;
 
-    invoke-static {v0}, Landroid/net/NetworkUtils;->inetAddressToInt(Ljava/net/InetAddress;)I
+    if-eqz v1, :cond_0
+
+    iget-object v1, p0, Landroid/net/wifi/WifiInfo;->mIpAddress:Ljava/net/InetAddress;
+
+    check-cast v1, Ljava/net/Inet4Address;
+
+    invoke-static {v1}, Landroid/net/NetworkUtils;->inetAddressToInt(Ljava/net/Inet4Address;)I
 
     move-result v0
 
-    goto :goto_0
+    :cond_0
+    return v0
 .end method
 
 .method public getLinkSpeed()I
@@ -1006,16 +1014,4 @@
     move v0, v1
 
     goto :goto_2
-.end method
-
-.method static synthetic access_setVendorInfo(Landroid/net/wifi/WifiInfo;Ljava/lang/String;)Ljava/lang/String;
-    .locals 0
-    .parameter "x0"
-    .parameter "x1"
-
-    .prologue
-    .line 34
-    iput-object p1, p0, Landroid/net/wifi/WifiInfo;->mVendorInfo:Ljava/lang/String;
-
-    return-object p1
 .end method

@@ -55,7 +55,7 @@
     iget-object v4, p0, Lcom/android/server/power/DisplayPowerController$7;->this$0:Lcom/android/server/power/DisplayPowerController;
 
     #getter for: Lcom/android/server/power/DisplayPowerController;->mProximitySensorEnabled:Z
-    invoke-static {v4}, Lcom/android/server/power/DisplayPowerController;->access$600(Lcom/android/server/power/DisplayPowerController;)Z
+    invoke-static {v4}, Lcom/android/server/power/DisplayPowerController;->access$700(Lcom/android/server/power/DisplayPowerController;)Z
 
     move-result v4
 
@@ -80,7 +80,7 @@
     iget-object v4, p0, Lcom/android/server/power/DisplayPowerController$7;->this$0:Lcom/android/server/power/DisplayPowerController;
 
     #getter for: Lcom/android/server/power/DisplayPowerController;->mProximityThreshold:F
-    invoke-static {v4}, Lcom/android/server/power/DisplayPowerController;->access$700(Lcom/android/server/power/DisplayPowerController;)F
+    invoke-static {v4}, Lcom/android/server/power/DisplayPowerController;->access$800(Lcom/android/server/power/DisplayPowerController;)F
 
     move-result v4
 
@@ -95,7 +95,7 @@
     iget-object v4, p0, Lcom/android/server/power/DisplayPowerController$7;->this$0:Lcom/android/server/power/DisplayPowerController;
 
     #calls: Lcom/android/server/power/DisplayPowerController;->handleProximitySensorEvent(JZ)V
-    invoke-static {v4, v2, v3, v1}, Lcom/android/server/power/DisplayPowerController;->access$800(Lcom/android/server/power/DisplayPowerController;JZ)V
+    invoke-static {v4, v2, v3, v1}, Lcom/android/server/power/DisplayPowerController;->access$900(Lcom/android/server/power/DisplayPowerController;JZ)V
 
     .end local v0           #distance:F
     .end local v1           #positive:Z

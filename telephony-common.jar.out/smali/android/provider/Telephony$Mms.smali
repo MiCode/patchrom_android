@@ -37,8 +37,6 @@
 
 .field public static final NAME_ADDR_EMAIL_PATTERN:Ljava/util/regex/Pattern;
 
-.field public static final QUOTED_STRING_PATTERN:Ljava/util/regex/Pattern;
-
 .field public static final REPORT_REQUEST_URI:Landroid/net/Uri;
 
 .field public static final REPORT_STATUS_URI:Landroid/net/Uri;
@@ -85,18 +83,10 @@
 
     sput-object v0, Landroid/provider/Telephony$Mms;->NAME_ADDR_EMAIL_PATTERN:Ljava/util/regex/Pattern;
 
-    const-string v0, "\\s*\"([^\"]*)\"\\s*"
-
-    invoke-static {v0}, Ljava/util/regex/Pattern;->compile(Ljava/lang/String;)Ljava/util/regex/Pattern;
-
-    move-result-object v0
-
-    sput-object v0, Landroid/provider/Telephony$Mms;->QUOTED_STRING_PATTERN:Ljava/util/regex/Pattern;
-
     return-void
 .end method
 
-.method public constructor <init>()V
+.method private constructor <init>()V
     .locals 0
 
     .prologue
@@ -132,75 +122,6 @@
     .end local p0
     :cond_0
     return-object p0
-.end method
-
-.method public static final getMessageBoxName(I)Ljava/lang/String;
-    .locals 3
-    .parameter "msgBox"
-
-    .prologue
-    packed-switch p0, :pswitch_data_0
-
-    new-instance v0, Ljava/lang/IllegalArgumentException;
-
-    new-instance v1, Ljava/lang/StringBuilder;
-
-    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
-
-    const-string v2, "Invalid message box: "
-
-    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v1
-
-    invoke-virtual {v1, p0}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
-
-    move-result-object v1
-
-    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v1
-
-    invoke-direct {v0, v1}, Ljava/lang/IllegalArgumentException;-><init>(Ljava/lang/String;)V
-
-    throw v0
-
-    :pswitch_0
-    const-string v0, "all"
-
-    :goto_0
-    return-object v0
-
-    :pswitch_1
-    const-string v0, "inbox"
-
-    goto :goto_0
-
-    :pswitch_2
-    const-string v0, "sent"
-
-    goto :goto_0
-
-    :pswitch_3
-    const-string v0, "drafts"
-
-    goto :goto_0
-
-    :pswitch_4
-    const-string v0, "outbox"
-
-    goto :goto_0
-
-    nop
-
-    :pswitch_data_0
-    .packed-switch 0x0
-        :pswitch_0
-        :pswitch_1
-        :pswitch_2
-        :pswitch_3
-        :pswitch_4
-    .end packed-switch
 .end method
 
 .method public static isEmailAddress(Ljava/lang/String;)Z
@@ -270,7 +191,7 @@
     goto :goto_0
 .end method
 
-.method public static final query(Landroid/content/ContentResolver;[Ljava/lang/String;)Landroid/database/Cursor;
+.method public static query(Landroid/content/ContentResolver;[Ljava/lang/String;)Landroid/database/Cursor;
     .locals 6
     .parameter "cr"
     .parameter "projection"
@@ -295,7 +216,7 @@
     return-object v0
 .end method
 
-.method public static final query(Landroid/content/ContentResolver;[Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Landroid/database/Cursor;
+.method public static query(Landroid/content/ContentResolver;[Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Landroid/database/Cursor;
     .locals 6
     .parameter "cr"
     .parameter "projection"

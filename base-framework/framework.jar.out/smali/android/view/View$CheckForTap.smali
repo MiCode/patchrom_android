@@ -74,7 +74,7 @@
     move-result v1
 
     #calls: Landroid/view/View;->checkForLongClick(I)V
-    invoke-static {v0, v1}, Landroid/view/View;->access$2400(Landroid/view/View;I)V
+    invoke-static {v0, v1}, Landroid/view/View;->access$2600(Landroid/view/View;I)V
 
     return-void
 .end method

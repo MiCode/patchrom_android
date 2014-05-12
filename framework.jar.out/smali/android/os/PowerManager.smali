@@ -175,7 +175,7 @@
 
     move-result-object v0
 
-    const v1, 0x10e0026
+    const v1, 0x10e002c
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getInteger(I)I
 
@@ -194,7 +194,7 @@
 
     move-result-object v0
 
-    const v1, 0x10e0025
+    const v1, 0x10e002b
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getInteger(I)I
 
@@ -213,7 +213,7 @@
 
     move-result-object v0
 
-    const v1, 0x10e0024
+    const v1, 0x10e002a
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getInteger(I)I
 
@@ -318,7 +318,7 @@
 .end method
 
 .method public newWakeLock(ILjava/lang/String;)Landroid/os/PowerManager$WakeLock;
-    .locals 1
+    .locals 2
     .parameter "levelAndFlags"
     .parameter "tag"
 
@@ -327,7 +327,13 @@
 
     new-instance v0, Landroid/os/PowerManager$WakeLock;
 
-    invoke-direct {v0, p0, p1, p2}, Landroid/os/PowerManager$WakeLock;-><init>(Landroid/os/PowerManager;ILjava/lang/String;)V
+    iget-object v1, p0, Landroid/os/PowerManager;->mContext:Landroid/content/Context;
+
+    invoke-virtual {v1}, Landroid/content/Context;->getOpPackageName()Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-direct {v0, p0, p1, p2, v1}, Landroid/os/PowerManager$WakeLock;-><init>(Landroid/os/PowerManager;ILjava/lang/String;Ljava/lang/String;)V
 
     return-object v0
 .end method

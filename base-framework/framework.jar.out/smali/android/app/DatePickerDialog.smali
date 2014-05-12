@@ -65,7 +65,7 @@
     .local v1, themeContext:Landroid/content/Context;
     const/4 v3, -0x1
 
-    const v4, 0x1040432
+    const v4, 0x104045b
 
     invoke-virtual {v1, v4}, Landroid/content/Context;->getText(I)Ljava/lang/CharSequence;
 
@@ -86,7 +86,7 @@
     check-cast v0, Landroid/view/LayoutInflater;
 
     .local v0, inflater:Landroid/view/LayoutInflater;
-    const v3, 0x1090038
+    const v3, 0x1090039
 
     const/4 v4, 0x0
 
@@ -97,7 +97,7 @@
     .local v2, view:Landroid/view/View;
     invoke-virtual {p0, v2}, Landroid/app/DatePickerDialog;->setView(Landroid/view/View;)V
 
-    const v3, 0x102027e
+    const v3, 0x1020296
 
     invoke-virtual {v2, v3}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -250,7 +250,7 @@
 
     iput-boolean v1, p0, Landroid/app/DatePickerDialog;->mTitleNeedsUpdate:Z
 
-    const v1, 0x1040430
+    const v1, 0x1040459
 
     invoke-virtual {p0, v1}, Landroid/app/DatePickerDialog;->setTitle(I)V
 

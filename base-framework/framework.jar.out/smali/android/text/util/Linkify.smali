@@ -255,21 +255,7 @@
 
     if-eqz v1, :cond_4
 
-    sget-object v2, Landroid/util/Patterns;->PHONE:Ljava/util/regex/Pattern;
-
-    new-array v3, v11, [Ljava/lang/String;
-
-    const-string v1, "tel:"
-
-    aput-object v1, v3, v10
-
-    sget-object v4, Landroid/text/util/Linkify;->sPhoneNumberMatchFilter:Landroid/text/util/Linkify$MatchFilter;
-
-    sget-object v5, Landroid/text/util/Linkify;->sPhoneNumberTransformFilter:Landroid/text/util/Linkify$TransformFilter;
-
-    move-object v1, p0
-
-    invoke-static/range {v0 .. v5}, Landroid/text/util/Linkify;->gatherLinks(Ljava/util/ArrayList;Landroid/text/Spannable;Ljava/util/regex/Pattern;[Ljava/lang/String;Landroid/text/util/Linkify$MatchFilter;Landroid/text/util/Linkify$TransformFilter;)V
+    invoke-static {v0, p0}, Landroid/text/util/Linkify;->gatherTelLinks(Ljava/util/ArrayList;Landroid/text/Spannable;)V
 
     :cond_4
     and-int/lit8 v1, p1, 0x8
@@ -427,7 +413,9 @@
     .end local v5           #start:I
     .end local v6           #url:Ljava/lang/String;
     :cond_2
-    invoke-virtual {p2}, Ljava/lang/String;->toLowerCase()Ljava/lang/String;
+    sget-object v7, Ljava/util/Locale;->ROOT:Ljava/util/Locale;
+
+    invoke-virtual {p2, v7}, Ljava/lang/String;->toLowerCase(Ljava/util/Locale;)Ljava/lang/String;
 
     move-result-object v4
 
@@ -730,6 +718,124 @@
 
     .local v2, e:Ljava/io/UnsupportedEncodingException;
     goto :goto_0
+.end method
+
+.method private static final gatherTelLinks(Ljava/util/ArrayList;Landroid/text/Spannable;)V
+    .locals 10
+    .parameter
+    .parameter "s"
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(",
+            "Ljava/util/ArrayList",
+            "<",
+            "Landroid/text/util/LinkSpec;",
+            ">;",
+            "Landroid/text/Spannable;",
+            ")V"
+        }
+    .end annotation
+
+    .prologue
+    .local p0, links:Ljava/util/ArrayList;,"Ljava/util/ArrayList<Landroid/text/util/LinkSpec;>;"
+    invoke-static {}, Lcom/android/i18n/phonenumbers/PhoneNumberUtil;->getInstance()Lcom/android/i18n/phonenumbers/PhoneNumberUtil;
+
+    move-result-object v0
+
+    .local v0, phoneUtil:Lcom/android/i18n/phonenumbers/PhoneNumberUtil;
+    invoke-virtual {p1}, Ljava/lang/Object;->toString()Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-static {}, Ljava/util/Locale;->getDefault()Ljava/util/Locale;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/util/Locale;->getCountry()Ljava/lang/String;
+
+    move-result-object v2
+
+    sget-object v3, Lcom/android/i18n/phonenumbers/PhoneNumberUtil$Leniency;->POSSIBLE:Lcom/android/i18n/phonenumbers/PhoneNumberUtil$Leniency;
+
+    const-wide v4, 0x7fffffffffffffffL
+
+    invoke-virtual/range {v0 .. v5}, Lcom/android/i18n/phonenumbers/PhoneNumberUtil;->findNumbers(Ljava/lang/CharSequence;Ljava/lang/String;Lcom/android/i18n/phonenumbers/PhoneNumberUtil$Leniency;J)Ljava/lang/Iterable;
+
+    move-result-object v8
+
+    .local v8, matches:Ljava/lang/Iterable;,"Ljava/lang/Iterable<Lcom/android/i18n/phonenumbers/PhoneNumberMatch;>;"
+    invoke-interface {v8}, Ljava/lang/Iterable;->iterator()Ljava/util/Iterator;
+
+    move-result-object v6
+
+    .local v6, i$:Ljava/util/Iterator;
+    :goto_0
+    invoke-interface {v6}, Ljava/util/Iterator;->hasNext()Z
+
+    move-result v1
+
+    if-eqz v1, :cond_0
+
+    invoke-interface {v6}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+
+    move-result-object v7
+
+    check-cast v7, Lcom/android/i18n/phonenumbers/PhoneNumberMatch;
+
+    .local v7, match:Lcom/android/i18n/phonenumbers/PhoneNumberMatch;
+    new-instance v9, Landroid/text/util/LinkSpec;
+
+    invoke-direct {v9}, Landroid/text/util/LinkSpec;-><init>()V
+
+    .local v9, spec:Landroid/text/util/LinkSpec;
+    new-instance v1, Ljava/lang/StringBuilder;
+
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v2, "tel:"
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v7}, Lcom/android/i18n/phonenumbers/PhoneNumberMatch;->rawString()Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-static {v2}, Landroid/telephony/PhoneNumberUtils;->normalizeNumber(Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v1
+
+    iput-object v1, v9, Landroid/text/util/LinkSpec;->url:Ljava/lang/String;
+
+    invoke-virtual {v7}, Lcom/android/i18n/phonenumbers/PhoneNumberMatch;->start()I
+
+    move-result v1
+
+    iput v1, v9, Landroid/text/util/LinkSpec;->start:I
+
+    invoke-virtual {v7}, Lcom/android/i18n/phonenumbers/PhoneNumberMatch;->end()I
+
+    move-result v1
+
+    iput v1, v9, Landroid/text/util/LinkSpec;->end:I
+
+    invoke-virtual {p0, v9}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
+
+    goto :goto_0
+
+    .end local v7           #match:Lcom/android/i18n/phonenumbers/PhoneNumberMatch;
+    .end local v9           #spec:Landroid/text/util/LinkSpec;
+    :cond_0
+    return-void
 .end method
 
 .method private static final makeUrl(Ljava/lang/String;[Ljava/lang/String;Ljava/util/regex/Matcher;Landroid/text/util/Linkify$TransformFilter;)Ljava/lang/String;

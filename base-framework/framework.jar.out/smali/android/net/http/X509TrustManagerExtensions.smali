@@ -4,7 +4,7 @@
 
 
 # instance fields
-.field mDelegate:Lorg/apache/harmony/xnet/provider/jsse/TrustManagerImpl;
+.field mDelegate:Lcom/android/org/conscrypt/TrustManagerImpl;
 
 
 # direct methods
@@ -20,14 +20,14 @@
     .prologue
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    instance-of v0, p1, Lorg/apache/harmony/xnet/provider/jsse/TrustManagerImpl;
+    instance-of v0, p1, Lcom/android/org/conscrypt/TrustManagerImpl;
 
     if-eqz v0, :cond_0
 
-    check-cast p1, Lorg/apache/harmony/xnet/provider/jsse/TrustManagerImpl;
+    check-cast p1, Lcom/android/org/conscrypt/TrustManagerImpl;
 
     .end local p1
-    iput-object p1, p0, Landroid/net/http/X509TrustManagerExtensions;->mDelegate:Lorg/apache/harmony/xnet/provider/jsse/TrustManagerImpl;
+    iput-object p1, p0, Landroid/net/http/X509TrustManagerExtensions;->mDelegate:Lcom/android/org/conscrypt/TrustManagerImpl;
 
     return-void
 
@@ -70,9 +70,9 @@
     .end annotation
 
     .prologue
-    iget-object v0, p0, Landroid/net/http/X509TrustManagerExtensions;->mDelegate:Lorg/apache/harmony/xnet/provider/jsse/TrustManagerImpl;
+    iget-object v0, p0, Landroid/net/http/X509TrustManagerExtensions;->mDelegate:Lcom/android/org/conscrypt/TrustManagerImpl;
 
-    invoke-virtual {v0, p1, p2, p3}, Lorg/apache/harmony/xnet/provider/jsse/TrustManagerImpl;->checkServerTrusted([Ljava/security/cert/X509Certificate;Ljava/lang/String;Ljava/lang/String;)Ljava/util/List;
+    invoke-virtual {v0, p1, p2, p3}, Lcom/android/org/conscrypt/TrustManagerImpl;->checkServerTrusted([Ljava/security/cert/X509Certificate;Ljava/lang/String;Ljava/lang/String;)Ljava/util/List;
 
     move-result-object v0
 

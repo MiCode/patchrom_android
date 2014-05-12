@@ -11,6 +11,8 @@
 
 .field private static final TAG:Ljava/lang/String; = "Binder"
 
+.field private static sDumpDisabled:Ljava/lang/String;
+
 
 # instance fields
 .field private mDescriptor:Ljava/lang/String;
@@ -21,6 +23,17 @@
 
 
 # direct methods
+.method static constructor <clinit>()V
+    .locals 1
+
+    .prologue
+    const/4 v0, 0x0
+
+    sput-object v0, Landroid/os/Binder;->sDumpDisabled:Ljava/lang/String;
+
+    return-void
+.end method
+
 .method public constructor <init>()V
     .locals 0
 
@@ -39,14 +52,14 @@
 .end method
 
 .method private execTransact(IIII)Z
-    .locals 7
+    .locals 8
     .parameter "code"
     .parameter "dataObj"
     .parameter "replyObj"
     .parameter "flags"
 
     .prologue
-    const/4 v6, 0x0
+    const/4 v7, 0x0
 
     invoke-static {p2}, Landroid/os/Parcel;->obtain(I)Landroid/os/Parcel;
 
@@ -80,7 +93,18 @@
     move-exception v1
 
     .local v1, e:Landroid/os/RemoteException;
-    invoke-virtual {v3, v6}, Landroid/os/Parcel;->setDataPosition(I)V
+    and-int/lit8 v5, p4, 0x1
+
+    if-eqz v5, :cond_0
+
+    const-string v5, "Binder"
+
+    const-string v6, "Binder call failed."
+
+    invoke-static {v5, v6, v1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+
+    :cond_0
+    invoke-virtual {v3, v7}, Landroid/os/Parcel;->setDataPosition(I)V
 
     invoke-virtual {v3, v1}, Landroid/os/Parcel;->writeException(Ljava/lang/Exception;)V
 
@@ -95,7 +119,18 @@
     move-exception v1
 
     .local v1, e:Ljava/lang/RuntimeException;
-    invoke-virtual {v3, v6}, Landroid/os/Parcel;->setDataPosition(I)V
+    and-int/lit8 v5, p4, 0x1
+
+    if-eqz v5, :cond_1
+
+    const-string v5, "Binder"
+
+    const-string v6, "Caught a RuntimeException from the binder stub implementation."
+
+    invoke-static {v5, v6, v1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+
+    :cond_1
+    invoke-virtual {v3, v7}, Landroid/os/Parcel;->setDataPosition(I)V
 
     invoke-virtual {v3, v1}, Landroid/os/Parcel;->writeException(Ljava/lang/Exception;)V
 
@@ -110,6 +145,12 @@
     move-exception v1
 
     .local v1, e:Ljava/lang/OutOfMemoryError;
+    const-string v5, "Binder"
+
+    const-string v6, "Caught an OutOfMemoryError from the binder stub implementation."
+
+    invoke-static {v5, v6, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+
     new-instance v2, Ljava/lang/RuntimeException;
 
     const-string v5, "Out of memory"
@@ -117,7 +158,7 @@
     invoke-direct {v2, v5, v1}, Ljava/lang/RuntimeException;-><init>(Ljava/lang/String;Ljava/lang/Throwable;)V
 
     .local v2, re:Ljava/lang/RuntimeException;
-    invoke-virtual {v3, v6}, Landroid/os/Parcel;->setDataPosition(I)V
+    invoke-virtual {v3, v7}, Landroid/os/Parcel;->setDataPosition(I)V
 
     invoke-virtual {v3, v2}, Landroid/os/Parcel;->writeException(Ljava/lang/Exception;)V
 
@@ -161,10 +202,58 @@
 .method private final native init()V
 .end method
 
+.method public static final isProxy(Landroid/os/IInterface;)Z
+    .locals 1
+    .parameter "iface"
+
+    .prologue
+    invoke-interface {p0}, Landroid/os/IInterface;->asBinder()Landroid/os/IBinder;
+
+    move-result-object v0
+
+    if-eq v0, p0, :cond_0
+
+    const/4 v0, 0x1
+
+    :goto_0
+    return v0
+
+    :cond_0
+    const/4 v0, 0x0
+
+    goto :goto_0
+.end method
+
 .method public static final native joinThreadPool()V
 .end method
 
 .method public static final native restoreCallingIdentity(J)V
+.end method
+
+.method public static setDumpDisabled(Ljava/lang/String;)V
+    .locals 2
+    .parameter "msg"
+
+    .prologue
+    const-class v1, Landroid/os/Binder;
+
+    monitor-enter v1
+
+    :try_start_0
+    sput-object p0, Landroid/os/Binder;->sDumpDisabled:Ljava/lang/String;
+
+    monitor-exit v1
+
+    return-void
+
+    :catchall_0
+    move-exception v0
+
+    monitor-exit v1
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    throw v0
 .end method
 
 .method public static final native setThreadStrictModePolicy(I)V
@@ -196,36 +285,127 @@
 .end method
 
 .method public dump(Ljava/io/FileDescriptor;[Ljava/lang/String;)V
-    .locals 3
+    .locals 6
     .parameter "fd"
     .parameter "args"
 
     .prologue
-    new-instance v0, Ljava/io/FileOutputStream;
+    new-instance v2, Ljava/io/FileOutputStream;
 
-    invoke-direct {v0, p1}, Ljava/io/FileOutputStream;-><init>(Ljava/io/FileDescriptor;)V
+    invoke-direct {v2, p1}, Ljava/io/FileOutputStream;-><init>(Ljava/io/FileDescriptor;)V
 
-    .local v0, fout:Ljava/io/FileOutputStream;
-    new-instance v1, Ljava/io/PrintWriter;
+    .local v2, fout:Ljava/io/FileOutputStream;
+    new-instance v3, Lcom/android/internal/util/FastPrintWriter;
 
-    invoke-direct {v1, v0}, Ljava/io/PrintWriter;-><init>(Ljava/io/OutputStream;)V
+    invoke-direct {v3, v2}, Lcom/android/internal/util/FastPrintWriter;-><init>(Ljava/io/OutputStream;)V
 
-    .local v1, pw:Ljava/io/PrintWriter;
+    .local v3, pw:Ljava/io/PrintWriter;
     :try_start_0
-    invoke-virtual {p0, p1, v1, p2}, Landroid/os/Binder;->dump(Ljava/io/FileDescriptor;Ljava/io/PrintWriter;[Ljava/lang/String;)V
-    :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+    const-class v5, Landroid/os/Binder;
 
-    invoke-virtual {v1}, Ljava/io/PrintWriter;->flush()V
+    monitor-enter v5
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_1
+
+    :try_start_1
+    sget-object v0, Landroid/os/Binder;->sDumpDisabled:Ljava/lang/String;
+
+    .local v0, disabled:Ljava/lang/String;
+    monitor-exit v5
+    :try_end_1
+    .catchall {:try_start_1 .. :try_end_1} :catchall_0
+
+    if-nez v0, :cond_0
+
+    :try_start_2
+    invoke-virtual {p0, p1, v3, p2}, Landroid/os/Binder;->dump(Ljava/io/FileDescriptor;Ljava/io/PrintWriter;[Ljava/lang/String;)V
+    :try_end_2
+    .catchall {:try_start_2 .. :try_end_2} :catchall_1
+    .catch Ljava/lang/SecurityException; {:try_start_2 .. :try_end_2} :catch_0
+    .catch Ljava/lang/Throwable; {:try_start_2 .. :try_end_2} :catch_1
+
+    :goto_0
+    invoke-virtual {v3}, Ljava/io/PrintWriter;->flush()V
 
     return-void
 
+    .end local v0           #disabled:Ljava/lang/String;
     :catchall_0
-    move-exception v2
+    move-exception v4
 
-    invoke-virtual {v1}, Ljava/io/PrintWriter;->flush()V
+    :try_start_3
+    monitor-exit v5
+    :try_end_3
+    .catchall {:try_start_3 .. :try_end_3} :catchall_0
 
-    throw v2
+    :try_start_4
+    throw v4
+    :try_end_4
+    .catchall {:try_start_4 .. :try_end_4} :catchall_1
+
+    :catchall_1
+    move-exception v4
+
+    invoke-virtual {v3}, Ljava/io/PrintWriter;->flush()V
+
+    throw v4
+
+    .restart local v0       #disabled:Ljava/lang/String;
+    :catch_0
+    move-exception v1
+
+    .local v1, e:Ljava/lang/SecurityException;
+    :try_start_5
+    new-instance v4, Ljava/lang/StringBuilder;
+
+    invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v5, "Security exception: "
+
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v4
+
+    invoke-virtual {v1}, Ljava/lang/SecurityException;->getMessage()Ljava/lang/String;
+
+    move-result-object v5
+
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v4
+
+    invoke-virtual {v4}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v4
+
+    invoke-virtual {v3, v4}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
+
+    throw v1
+
+    .end local v1           #e:Ljava/lang/SecurityException;
+    :catch_1
+    move-exception v1
+
+    .local v1, e:Ljava/lang/Throwable;
+    invoke-virtual {v3}, Ljava/io/PrintWriter;->println()V
+
+    const-string v4, "Exception occurred while dumping:"
+
+    invoke-virtual {v3, v4}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
+
+    invoke-virtual {v1, v3}, Ljava/lang/Throwable;->printStackTrace(Ljava/io/PrintWriter;)V
+
+    goto :goto_0
+
+    .end local v1           #e:Ljava/lang/Throwable;
+    :cond_0
+    sget-object v4, Landroid/os/Binder;->sDumpDisabled:Ljava/lang/String;
+
+    invoke-virtual {v3, v4}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
+    :try_end_5
+    .catchall {:try_start_5 .. :try_end_5} :catchall_1
+
+    goto :goto_0
 .end method
 
 .method public dumpAsync(Ljava/io/FileDescriptor;[Ljava/lang/String;)V
@@ -239,9 +419,9 @@
     invoke-direct {v6, p1}, Ljava/io/FileOutputStream;-><init>(Ljava/io/FileDescriptor;)V
 
     .local v6, fout:Ljava/io/FileOutputStream;
-    new-instance v4, Ljava/io/PrintWriter;
+    new-instance v4, Lcom/android/internal/util/FastPrintWriter;
 
-    invoke-direct {v4, v6}, Ljava/io/PrintWriter;-><init>(Ljava/io/OutputStream;)V
+    invoke-direct {v4, v6}, Lcom/android/internal/util/FastPrintWriter;-><init>(Ljava/io/OutputStream;)V
 
     .local v4, pw:Ljava/io/PrintWriter;
     new-instance v0, Landroid/os/Binder$1;

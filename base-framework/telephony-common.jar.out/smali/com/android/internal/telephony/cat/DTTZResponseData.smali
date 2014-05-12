@@ -4,7 +4,7 @@
 
 
 # instance fields
-.field private calendar:Ljava/util/Calendar;
+.field private mCalendar:Ljava/util/Calendar;
 
 
 # direct methods
@@ -15,7 +15,7 @@
     .prologue
     invoke-direct {p0}, Lcom/android/internal/telephony/cat/ResponseData;-><init>()V
 
-    iput-object p1, p0, Lcom/android/internal/telephony/cat/DTTZResponseData;->calendar:Ljava/util/Calendar;
+    iput-object p1, p0, Lcom/android/internal/telephony/cat/DTTZResponseData;->mCalendar:Ljava/util/Calendar;
 
     return-void
 .end method
@@ -187,7 +187,7 @@
 
     aput-byte v12, v2, v9
 
-    iget-object v9, p0, Lcom/android/internal/telephony/cat/DTTZResponseData;->calendar:Ljava/util/Calendar;
+    iget-object v9, p0, Lcom/android/internal/telephony/cat/DTTZResponseData;->mCalendar:Ljava/util/Calendar;
 
     if-nez v9, :cond_2
 
@@ -195,10 +195,10 @@
 
     move-result-object v9
 
-    iput-object v9, p0, Lcom/android/internal/telephony/cat/DTTZResponseData;->calendar:Ljava/util/Calendar;
+    iput-object v9, p0, Lcom/android/internal/telephony/cat/DTTZResponseData;->mCalendar:Ljava/util/Calendar;
 
     :cond_2
-    iget-object v9, p0, Lcom/android/internal/telephony/cat/DTTZResponseData;->calendar:Ljava/util/Calendar;
+    iget-object v9, p0, Lcom/android/internal/telephony/cat/DTTZResponseData;->mCalendar:Ljava/util/Calendar;
 
     invoke-virtual {v9, v10}, Ljava/util/Calendar;->get(I)I
 
@@ -212,7 +212,7 @@
 
     aput-byte v9, v2, v10
 
-    iget-object v9, p0, Lcom/android/internal/telephony/cat/DTTZResponseData;->calendar:Ljava/util/Calendar;
+    iget-object v9, p0, Lcom/android/internal/telephony/cat/DTTZResponseData;->mCalendar:Ljava/util/Calendar;
 
     invoke-virtual {v9, v11}, Ljava/util/Calendar;->get(I)I
 
@@ -228,7 +228,7 @@
 
     const/4 v9, 0x3
 
-    iget-object v10, p0, Lcom/android/internal/telephony/cat/DTTZResponseData;->calendar:Ljava/util/Calendar;
+    iget-object v10, p0, Lcom/android/internal/telephony/cat/DTTZResponseData;->mCalendar:Ljava/util/Calendar;
 
     invoke-virtual {v10, v13}, Ljava/util/Calendar;->get(I)I
 
@@ -242,7 +242,7 @@
 
     const/4 v9, 0x4
 
-    iget-object v10, p0, Lcom/android/internal/telephony/cat/DTTZResponseData;->calendar:Ljava/util/Calendar;
+    iget-object v10, p0, Lcom/android/internal/telephony/cat/DTTZResponseData;->mCalendar:Ljava/util/Calendar;
 
     const/16 v11, 0xb
 
@@ -256,7 +256,7 @@
 
     aput-byte v10, v2, v9
 
-    iget-object v9, p0, Lcom/android/internal/telephony/cat/DTTZResponseData;->calendar:Ljava/util/Calendar;
+    iget-object v9, p0, Lcom/android/internal/telephony/cat/DTTZResponseData;->mCalendar:Ljava/util/Calendar;
 
     const/16 v10, 0xc
 
@@ -272,7 +272,7 @@
 
     const/4 v9, 0x6
 
-    iget-object v10, p0, Lcom/android/internal/telephony/cat/DTTZResponseData;->calendar:Ljava/util/Calendar;
+    iget-object v10, p0, Lcom/android/internal/telephony/cat/DTTZResponseData;->mCalendar:Ljava/util/Calendar;
 
     const/16 v11, 0xd
 

@@ -4,7 +4,7 @@
 
 
 # static fields
-.field private static final CHECK_INTEGRITY:Z = true
+.field private static final CHECK_INTEGRITY_IF_DEBUGGABLE_BUILD:Z = true
 
 .field private static final DEBUG:Z = false
 
@@ -68,31 +68,31 @@
 .end method
 
 .method private checkIntegrity()V
-    .locals 23
+    .locals 22
 
     .prologue
     move-object/from16 v0, p0
 
     iget-object v0, v0, Landroid/view/accessibility/AccessibilityNodeInfoCache;->mLock:Ljava/lang/Object;
 
-    move-object/from16 v20, v0
+    move-object/from16 v19, v0
 
-    monitor-enter v20
+    monitor-enter v19
 
     :try_start_0
     move-object/from16 v0, p0
 
     iget-object v0, v0, Landroid/view/accessibility/AccessibilityNodeInfoCache;->mCacheImpl:Landroid/util/LongSparseArray;
 
-    move-object/from16 v19, v0
+    move-object/from16 v18, v0
 
-    invoke-virtual/range {v19 .. v19}, Landroid/util/LongSparseArray;->size()I
+    invoke-virtual/range {v18 .. v18}, Landroid/util/LongSparseArray;->size()I
 
-    move-result v19
+    move-result v18
 
-    if-gtz v19, :cond_0
+    if-gtz v18, :cond_0
 
-    monitor-exit v20
+    monitor-exit v19
 
     :goto_0
     return-void
@@ -102,426 +102,443 @@
 
     iget-object v0, v0, Landroid/view/accessibility/AccessibilityNodeInfoCache;->mCacheImpl:Landroid/util/LongSparseArray;
 
-    move-object/from16 v19, v0
+    move-object/from16 v18, v0
 
-    const/16 v21, 0x0
+    const/16 v20, 0x0
 
-    move-object/from16 v0, v19
+    move-object/from16 v0, v18
 
-    move/from16 v1, v21
+    move/from16 v1, v20
 
     invoke-virtual {v0, v1}, Landroid/util/LongSparseArray;->valueAt(I)Ljava/lang/Object;
 
-    move-result-object v16
+    move-result-object v15
 
-    check-cast v16, Landroid/view/accessibility/AccessibilityNodeInfo;
+    check-cast v15, Landroid/view/accessibility/AccessibilityNodeInfo;
 
-    .local v16, root:Landroid/view/accessibility/AccessibilityNodeInfo;
-    move-object/from16 v15, v16
+    .local v15, root:Landroid/view/accessibility/AccessibilityNodeInfo;
+    move-object v14, v15
 
-    .local v15, parent:Landroid/view/accessibility/AccessibilityNodeInfo;
+    .local v14, parent:Landroid/view/accessibility/AccessibilityNodeInfo;
     :goto_1
-    if-eqz v15, :cond_1
+    if-eqz v14, :cond_1
 
-    move-object/from16 v16, v15
+    move-object v15, v14
 
     move-object/from16 v0, p0
 
     iget-object v0, v0, Landroid/view/accessibility/AccessibilityNodeInfoCache;->mCacheImpl:Landroid/util/LongSparseArray;
 
-    move-object/from16 v19, v0
+    move-object/from16 v18, v0
 
-    invoke-virtual {v15}, Landroid/view/accessibility/AccessibilityNodeInfo;->getParentNodeId()J
+    invoke-virtual {v14}, Landroid/view/accessibility/AccessibilityNodeInfo;->getParentNodeId()J
 
-    move-result-wide v21
+    move-result-wide v20
 
-    move-object/from16 v0, v19
+    move-object/from16 v0, v18
 
-    move-wide/from16 v1, v21
+    move-wide/from16 v1, v20
 
     invoke-virtual {v0, v1, v2}, Landroid/util/LongSparseArray;->get(J)Ljava/lang/Object;
 
-    move-result-object v15
+    move-result-object v14
 
-    .end local v15           #parent:Landroid/view/accessibility/AccessibilityNodeInfo;
-    check-cast v15, Landroid/view/accessibility/AccessibilityNodeInfo;
+    .end local v14           #parent:Landroid/view/accessibility/AccessibilityNodeInfo;
+    check-cast v14, Landroid/view/accessibility/AccessibilityNodeInfo;
 
-    .restart local v15       #parent:Landroid/view/accessibility/AccessibilityNodeInfo;
+    .restart local v14       #parent:Landroid/view/accessibility/AccessibilityNodeInfo;
     goto :goto_1
 
     :cond_1
-    invoke-virtual/range {v16 .. v16}, Landroid/view/accessibility/AccessibilityNodeInfo;->getWindowId()I
+    invoke-virtual {v15}, Landroid/view/accessibility/AccessibilityNodeInfo;->getWindowId()I
 
-    move-result v18
+    move-result v17
 
-    .local v18, windowId:I
+    .local v17, windowId:I
     const/4 v3, 0x0
 
     .local v3, accessFocus:Landroid/view/accessibility/AccessibilityNodeInfo;
-    const/4 v14, 0x0
+    const/4 v13, 0x0
 
-    .local v14, inputFocus:Landroid/view/accessibility/AccessibilityNodeInfo;
-    new-instance v17, Ljava/util/HashSet;
+    .local v13, inputFocus:Landroid/view/accessibility/AccessibilityNodeInfo;
+    new-instance v16, Ljava/util/HashSet;
 
-    invoke-direct/range {v17 .. v17}, Ljava/util/HashSet;-><init>()V
+    invoke-direct/range {v16 .. v16}, Ljava/util/HashSet;-><init>()V
 
-    .local v17, seen:Ljava/util/HashSet;,"Ljava/util/HashSet<Landroid/view/accessibility/AccessibilityNodeInfo;>;"
-    new-instance v11, Ljava/util/LinkedList;
+    .local v16, seen:Ljava/util/HashSet;,"Ljava/util/HashSet<Landroid/view/accessibility/AccessibilityNodeInfo;>;"
+    new-instance v10, Ljava/util/LinkedList;
 
-    invoke-direct {v11}, Ljava/util/LinkedList;-><init>()V
+    invoke-direct {v10}, Ljava/util/LinkedList;-><init>()V
 
-    .local v11, fringe:Ljava/util/Queue;,"Ljava/util/Queue<Landroid/view/accessibility/AccessibilityNodeInfo;>;"
-    move-object/from16 v0, v16
-
-    invoke-interface {v11, v0}, Ljava/util/Queue;->add(Ljava/lang/Object;)Z
+    .local v10, fringe:Ljava/util/Queue;,"Ljava/util/Queue<Landroid/view/accessibility/AccessibilityNodeInfo;>;"
+    invoke-interface {v10, v15}, Ljava/util/Queue;->add(Ljava/lang/Object;)Z
 
     :cond_2
-    invoke-interface {v11}, Ljava/util/Queue;->isEmpty()Z
+    invoke-interface {v10}, Ljava/util/Queue;->isEmpty()Z
 
-    move-result v19
+    move-result v18
 
-    if-nez v19, :cond_9
+    if-nez v18, :cond_9
 
-    invoke-interface {v11}, Ljava/util/Queue;->poll()Ljava/lang/Object;
+    invoke-interface {v10}, Ljava/util/Queue;->poll()Ljava/lang/Object;
 
-    move-result-object v10
+    move-result-object v9
 
-    check-cast v10, Landroid/view/accessibility/AccessibilityNodeInfo;
+    check-cast v9, Landroid/view/accessibility/AccessibilityNodeInfo;
 
-    .local v10, current:Landroid/view/accessibility/AccessibilityNodeInfo;
-    move-object/from16 v0, v17
+    .local v9, current:Landroid/view/accessibility/AccessibilityNodeInfo;
+    move-object/from16 v0, v16
 
-    invoke-virtual {v0, v10}, Ljava/util/HashSet;->add(Ljava/lang/Object;)Z
+    invoke-virtual {v0, v9}, Ljava/util/HashSet;->add(Ljava/lang/Object;)Z
 
-    move-result v19
+    move-result v18
 
-    if-nez v19, :cond_3
+    if-nez v18, :cond_3
 
-    sget-object v19, Landroid/view/accessibility/AccessibilityNodeInfoCache;->LOG_TAG:Ljava/lang/String;
+    sget-object v18, Landroid/view/accessibility/AccessibilityNodeInfoCache;->LOG_TAG:Ljava/lang/String;
 
-    new-instance v21, Ljava/lang/StringBuilder;
+    new-instance v20, Ljava/lang/StringBuilder;
 
-    invoke-direct/range {v21 .. v21}, Ljava/lang/StringBuilder;-><init>()V
+    invoke-direct/range {v20 .. v20}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v22, "Duplicate node: "
+    const-string v21, "Duplicate node: "
 
-    invoke-virtual/range {v21 .. v22}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual/range {v20 .. v21}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v21
+    move-result-object v20
 
-    move-object/from16 v0, v21
+    move-object/from16 v0, v20
 
-    invoke-virtual {v0, v10}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+    invoke-virtual {v0, v9}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
 
-    move-result-object v21
+    move-result-object v20
 
-    invoke-virtual/range {v21 .. v21}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    invoke-virtual/range {v20 .. v20}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    move-result-object v21
+    move-result-object v20
 
-    move-object/from16 v0, v19
+    move-object/from16 v0, v18
 
-    move-object/from16 v1, v21
+    move-object/from16 v1, v20
 
     invoke-static {v0, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
 
-    monitor-exit v20
+    monitor-exit v19
 
     goto :goto_0
 
     .end local v3           #accessFocus:Landroid/view/accessibility/AccessibilityNodeInfo;
-    .end local v10           #current:Landroid/view/accessibility/AccessibilityNodeInfo;
-    .end local v11           #fringe:Ljava/util/Queue;,"Ljava/util/Queue<Landroid/view/accessibility/AccessibilityNodeInfo;>;"
-    .end local v14           #inputFocus:Landroid/view/accessibility/AccessibilityNodeInfo;
-    .end local v15           #parent:Landroid/view/accessibility/AccessibilityNodeInfo;
-    .end local v16           #root:Landroid/view/accessibility/AccessibilityNodeInfo;
-    .end local v17           #seen:Ljava/util/HashSet;,"Ljava/util/HashSet<Landroid/view/accessibility/AccessibilityNodeInfo;>;"
-    .end local v18           #windowId:I
+    .end local v9           #current:Landroid/view/accessibility/AccessibilityNodeInfo;
+    .end local v10           #fringe:Ljava/util/Queue;,"Ljava/util/Queue<Landroid/view/accessibility/AccessibilityNodeInfo;>;"
+    .end local v13           #inputFocus:Landroid/view/accessibility/AccessibilityNodeInfo;
+    .end local v14           #parent:Landroid/view/accessibility/AccessibilityNodeInfo;
+    .end local v15           #root:Landroid/view/accessibility/AccessibilityNodeInfo;
+    .end local v16           #seen:Ljava/util/HashSet;,"Ljava/util/HashSet<Landroid/view/accessibility/AccessibilityNodeInfo;>;"
+    .end local v17           #windowId:I
     :catchall_0
-    move-exception v19
+    move-exception v18
 
-    monitor-exit v20
+    monitor-exit v19
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    throw v19
+    throw v18
 
     .restart local v3       #accessFocus:Landroid/view/accessibility/AccessibilityNodeInfo;
-    .restart local v10       #current:Landroid/view/accessibility/AccessibilityNodeInfo;
-    .restart local v11       #fringe:Ljava/util/Queue;,"Ljava/util/Queue<Landroid/view/accessibility/AccessibilityNodeInfo;>;"
-    .restart local v14       #inputFocus:Landroid/view/accessibility/AccessibilityNodeInfo;
-    .restart local v15       #parent:Landroid/view/accessibility/AccessibilityNodeInfo;
-    .restart local v16       #root:Landroid/view/accessibility/AccessibilityNodeInfo;
-    .restart local v17       #seen:Ljava/util/HashSet;,"Ljava/util/HashSet<Landroid/view/accessibility/AccessibilityNodeInfo;>;"
-    .restart local v18       #windowId:I
+    .restart local v9       #current:Landroid/view/accessibility/AccessibilityNodeInfo;
+    .restart local v10       #fringe:Ljava/util/Queue;,"Ljava/util/Queue<Landroid/view/accessibility/AccessibilityNodeInfo;>;"
+    .restart local v13       #inputFocus:Landroid/view/accessibility/AccessibilityNodeInfo;
+    .restart local v14       #parent:Landroid/view/accessibility/AccessibilityNodeInfo;
+    .restart local v15       #root:Landroid/view/accessibility/AccessibilityNodeInfo;
+    .restart local v16       #seen:Ljava/util/HashSet;,"Ljava/util/HashSet<Landroid/view/accessibility/AccessibilityNodeInfo;>;"
+    .restart local v17       #windowId:I
     :cond_3
     :try_start_1
-    invoke-virtual {v10}, Landroid/view/accessibility/AccessibilityNodeInfo;->isAccessibilityFocused()Z
+    invoke-virtual {v9}, Landroid/view/accessibility/AccessibilityNodeInfo;->isAccessibilityFocused()Z
 
-    move-result v19
+    move-result v18
 
-    if-eqz v19, :cond_4
+    if-eqz v18, :cond_4
 
     if-eqz v3, :cond_7
 
-    sget-object v19, Landroid/view/accessibility/AccessibilityNodeInfoCache;->LOG_TAG:Ljava/lang/String;
+    sget-object v18, Landroid/view/accessibility/AccessibilityNodeInfoCache;->LOG_TAG:Ljava/lang/String;
 
-    new-instance v21, Ljava/lang/StringBuilder;
+    new-instance v20, Ljava/lang/StringBuilder;
 
-    invoke-direct/range {v21 .. v21}, Ljava/lang/StringBuilder;-><init>()V
+    invoke-direct/range {v20 .. v20}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v22, "Duplicate accessibility focus:"
+    const-string v21, "Duplicate accessibility focus:"
 
-    invoke-virtual/range {v21 .. v22}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual/range {v20 .. v21}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v21
+    move-result-object v20
 
-    move-object/from16 v0, v21
+    move-object/from16 v0, v20
 
-    invoke-virtual {v0, v10}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+    invoke-virtual {v0, v9}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
 
-    move-result-object v21
+    move-result-object v20
 
-    invoke-virtual/range {v21 .. v21}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    invoke-virtual/range {v20 .. v20}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    move-result-object v21
+    move-result-object v20
 
-    move-object/from16 v0, v19
+    move-object/from16 v0, v18
 
-    move-object/from16 v1, v21
+    move-object/from16 v1, v20
 
     invoke-static {v0, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     :cond_4
     :goto_2
-    invoke-virtual {v10}, Landroid/view/accessibility/AccessibilityNodeInfo;->isFocused()Z
+    invoke-virtual {v9}, Landroid/view/accessibility/AccessibilityNodeInfo;->isFocused()Z
 
-    move-result v19
+    move-result v18
 
-    if-eqz v19, :cond_5
+    if-eqz v18, :cond_5
 
-    if-eqz v14, :cond_8
+    if-eqz v13, :cond_8
 
-    sget-object v19, Landroid/view/accessibility/AccessibilityNodeInfoCache;->LOG_TAG:Ljava/lang/String;
+    sget-object v18, Landroid/view/accessibility/AccessibilityNodeInfoCache;->LOG_TAG:Ljava/lang/String;
 
-    new-instance v21, Ljava/lang/StringBuilder;
+    new-instance v20, Ljava/lang/StringBuilder;
 
-    invoke-direct/range {v21 .. v21}, Ljava/lang/StringBuilder;-><init>()V
+    invoke-direct/range {v20 .. v20}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v22, "Duplicate input focus: "
+    const-string v21, "Duplicate input focus: "
 
-    invoke-virtual/range {v21 .. v22}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual/range {v20 .. v21}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v21
+    move-result-object v20
 
-    move-object/from16 v0, v21
+    move-object/from16 v0, v20
 
-    invoke-virtual {v0, v10}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+    invoke-virtual {v0, v9}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
 
-    move-result-object v21
+    move-result-object v20
 
-    invoke-virtual/range {v21 .. v21}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    invoke-virtual/range {v20 .. v20}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    move-result-object v21
+    move-result-object v20
 
-    move-object/from16 v0, v19
+    move-object/from16 v0, v18
 
-    move-object/from16 v1, v21
+    move-object/from16 v1, v20
 
     invoke-static {v0, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     :cond_5
     :goto_3
-    invoke-virtual {v10}, Landroid/view/accessibility/AccessibilityNodeInfo;->getChildNodeIds()Landroid/util/SparseLongArray;
+    invoke-virtual {v9}, Landroid/view/accessibility/AccessibilityNodeInfo;->getChildNodeIds()Landroid/util/SparseLongArray;
 
-    move-result-object v9
+    move-result-object v8
 
-    .local v9, childIds:Landroid/util/SparseLongArray;
-    invoke-virtual {v9}, Landroid/util/SparseLongArray;->size()I
+    .local v8, childIds:Landroid/util/SparseLongArray;
+    invoke-virtual {v8}, Landroid/util/SparseLongArray;->size()I
 
-    move-result v6
+    move-result v5
 
-    .local v6, childCount:I
-    const/4 v12, 0x0
+    .local v5, childCount:I
+    const/4 v11, 0x0
 
-    .local v12, i:I
+    .local v11, i:I
     :goto_4
-    if-ge v12, v6, :cond_2
+    if-ge v11, v5, :cond_2
 
-    invoke-virtual {v9, v12}, Landroid/util/SparseLongArray;->valueAt(I)J
+    invoke-virtual {v8, v11}, Landroid/util/SparseLongArray;->valueAt(I)J
 
-    move-result-wide v7
+    move-result-wide v6
 
-    .local v7, childId:J
+    .local v6, childId:J
     move-object/from16 v0, p0
 
     iget-object v0, v0, Landroid/view/accessibility/AccessibilityNodeInfoCache;->mCacheImpl:Landroid/util/LongSparseArray;
 
-    move-object/from16 v19, v0
+    move-object/from16 v18, v0
 
-    move-object/from16 v0, v19
+    move-object/from16 v0, v18
 
-    invoke-virtual {v0, v7, v8}, Landroid/util/LongSparseArray;->get(J)Ljava/lang/Object;
+    invoke-virtual {v0, v6, v7}, Landroid/util/LongSparseArray;->get(J)Ljava/lang/Object;
 
-    move-result-object v5
+    move-result-object v4
 
-    check-cast v5, Landroid/view/accessibility/AccessibilityNodeInfo;
+    check-cast v4, Landroid/view/accessibility/AccessibilityNodeInfo;
 
-    .local v5, child:Landroid/view/accessibility/AccessibilityNodeInfo;
-    if-eqz v5, :cond_6
+    .local v4, child:Landroid/view/accessibility/AccessibilityNodeInfo;
+    if-eqz v4, :cond_6
 
-    invoke-interface {v11, v5}, Ljava/util/Queue;->add(Ljava/lang/Object;)Z
+    invoke-interface {v10, v4}, Ljava/util/Queue;->add(Ljava/lang/Object;)Z
 
     :cond_6
-    add-int/lit8 v12, v12, 0x1
+    add-int/lit8 v11, v11, 0x1
 
     goto :goto_4
 
-    .end local v5           #child:Landroid/view/accessibility/AccessibilityNodeInfo;
-    .end local v6           #childCount:I
-    .end local v7           #childId:J
-    .end local v9           #childIds:Landroid/util/SparseLongArray;
-    .end local v12           #i:I
+    .end local v4           #child:Landroid/view/accessibility/AccessibilityNodeInfo;
+    .end local v5           #childCount:I
+    .end local v6           #childId:J
+    .end local v8           #childIds:Landroid/util/SparseLongArray;
+    .end local v11           #i:I
     :cond_7
-    move-object v3, v10
+    move-object v3, v9
 
     goto :goto_2
 
     :cond_8
-    move-object v14, v10
+    move-object v13, v9
 
     goto :goto_3
 
-    .end local v10           #current:Landroid/view/accessibility/AccessibilityNodeInfo;
+    .end local v9           #current:Landroid/view/accessibility/AccessibilityNodeInfo;
     :cond_9
-    move-object/from16 v0, p0
+    const/4 v11, 0x0
 
-    iget-object v0, v0, Landroid/view/accessibility/AccessibilityNodeInfoCache;->mCacheImpl:Landroid/util/LongSparseArray;
-
-    move-object/from16 v19, v0
-
-    invoke-virtual/range {v19 .. v19}, Landroid/util/LongSparseArray;->size()I
-
-    move-result v4
-
-    .local v4, cacheSize:I
-    const/4 v12, 0x0
-
-    .restart local v12       #i:I
+    .restart local v11       #i:I
     :goto_5
-    if-ge v12, v4, :cond_c
+    move-object/from16 v0, p0
+
+    iget-object v0, v0, Landroid/view/accessibility/AccessibilityNodeInfoCache;->mCacheImpl:Landroid/util/LongSparseArray;
+
+    move-object/from16 v18, v0
+
+    invoke-virtual/range {v18 .. v18}, Landroid/util/LongSparseArray;->size()I
+
+    move-result v18
+
+    move/from16 v0, v18
+
+    if-ge v11, v0, :cond_c
 
     move-object/from16 v0, p0
 
     iget-object v0, v0, Landroid/view/accessibility/AccessibilityNodeInfoCache;->mCacheImpl:Landroid/util/LongSparseArray;
 
-    move-object/from16 v19, v0
+    move-object/from16 v18, v0
 
-    move-object/from16 v0, v19
+    move-object/from16 v0, v18
 
-    invoke-virtual {v0, v12}, Landroid/util/LongSparseArray;->valueAt(I)Ljava/lang/Object;
+    invoke-virtual {v0, v11}, Landroid/util/LongSparseArray;->valueAt(I)Ljava/lang/Object;
 
-    move-result-object v13
+    move-result-object v12
 
-    check-cast v13, Landroid/view/accessibility/AccessibilityNodeInfo;
+    check-cast v12, Landroid/view/accessibility/AccessibilityNodeInfo;
 
-    .local v13, info:Landroid/view/accessibility/AccessibilityNodeInfo;
-    move-object/from16 v0, v17
+    .local v12, info:Landroid/view/accessibility/AccessibilityNodeInfo;
+    move-object/from16 v0, v16
 
-    invoke-virtual {v0, v13}, Ljava/util/HashSet;->contains(Ljava/lang/Object;)Z
+    invoke-virtual {v0, v12}, Ljava/util/HashSet;->contains(Ljava/lang/Object;)Z
 
-    move-result v19
+    move-result v18
 
-    if-nez v19, :cond_a
+    if-nez v18, :cond_a
 
-    invoke-virtual {v13}, Landroid/view/accessibility/AccessibilityNodeInfo;->getWindowId()I
+    invoke-virtual {v12}, Landroid/view/accessibility/AccessibilityNodeInfo;->getWindowId()I
 
-    move-result v19
+    move-result v18
 
-    move/from16 v0, v19
+    move/from16 v0, v18
 
-    move/from16 v1, v18
+    move/from16 v1, v17
 
     if-ne v0, v1, :cond_b
 
-    sget-object v19, Landroid/view/accessibility/AccessibilityNodeInfoCache;->LOG_TAG:Ljava/lang/String;
+    sget-object v18, Landroid/view/accessibility/AccessibilityNodeInfoCache;->LOG_TAG:Ljava/lang/String;
+
+    new-instance v20, Ljava/lang/StringBuilder;
+
+    invoke-direct/range {v20 .. v20}, Ljava/lang/StringBuilder;-><init>()V
 
     const-string v21, "Disconneced node: "
 
-    move-object/from16 v0, v19
+    invoke-virtual/range {v20 .. v21}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-object/from16 v1, v21
+    move-result-object v20
+
+    move-object/from16 v0, v20
+
+    invoke-virtual {v0, v12}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    move-result-object v20
+
+    invoke-virtual/range {v20 .. v20}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v20
+
+    move-object/from16 v0, v18
+
+    move-object/from16 v1, v20
 
     invoke-static {v0, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     :cond_a
     :goto_6
-    add-int/lit8 v12, v12, 0x1
+    add-int/lit8 v11, v11, 0x1
 
     goto :goto_5
 
     :cond_b
-    sget-object v19, Landroid/view/accessibility/AccessibilityNodeInfoCache;->LOG_TAG:Ljava/lang/String;
+    sget-object v18, Landroid/view/accessibility/AccessibilityNodeInfoCache;->LOG_TAG:Ljava/lang/String;
 
-    new-instance v21, Ljava/lang/StringBuilder;
+    new-instance v20, Ljava/lang/StringBuilder;
 
-    invoke-direct/range {v21 .. v21}, Ljava/lang/StringBuilder;-><init>()V
+    invoke-direct/range {v20 .. v20}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v22, "Node from: "
+    const-string v21, "Node from: "
 
-    invoke-virtual/range {v21 .. v22}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual/range {v20 .. v21}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v21
+    move-result-object v20
 
-    invoke-virtual {v13}, Landroid/view/accessibility/AccessibilityNodeInfo;->getWindowId()I
+    invoke-virtual {v12}, Landroid/view/accessibility/AccessibilityNodeInfo;->getWindowId()I
 
-    move-result v22
+    move-result v21
 
-    invoke-virtual/range {v21 .. v22}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+    invoke-virtual/range {v20 .. v21}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
-    move-result-object v21
+    move-result-object v20
 
-    const-string v22, " not from:"
+    const-string v21, " not from:"
 
-    invoke-virtual/range {v21 .. v22}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual/range {v20 .. v21}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v21
+    move-result-object v20
 
-    move-object/from16 v0, v21
+    move-object/from16 v0, v20
 
-    move/from16 v1, v18
+    move/from16 v1, v17
 
     invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
-    move-result-object v21
+    move-result-object v20
 
-    const-string v22, " "
+    const-string v21, " "
 
-    invoke-virtual/range {v21 .. v22}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual/range {v20 .. v21}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v21
+    move-result-object v20
 
-    move-object/from16 v0, v21
+    move-object/from16 v0, v20
 
-    invoke-virtual {v0, v13}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+    invoke-virtual {v0, v12}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
 
-    move-result-object v21
+    move-result-object v20
 
-    invoke-virtual/range {v21 .. v21}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    invoke-virtual/range {v20 .. v20}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    move-result-object v21
+    move-result-object v20
 
-    move-object/from16 v0, v19
+    move-object/from16 v0, v18
 
-    move-object/from16 v1, v21
+    move-object/from16 v1, v20
 
     invoke-static {v0, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     goto :goto_6
 
-    .end local v13           #info:Landroid/view/accessibility/AccessibilityNodeInfo;
+    .end local v12           #info:Landroid/view/accessibility/AccessibilityNodeInfo;
     :cond_c
-    monitor-exit v20
+    monitor-exit v19
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
@@ -529,6 +546,16 @@
 .end method
 
 .method private clearSubTreeLocked(J)V
+    .locals 0
+    .parameter "rootNodeId"
+
+    .prologue
+    invoke-direct {p0, p1, p2}, Landroid/view/accessibility/AccessibilityNodeInfoCache;->clearSubTreeRecursiveLocked(J)V
+
+    return-void
+.end method
+
+.method private clearSubTreeRecursiveLocked(J)V
     .locals 7
     .parameter "rootNodeId"
 
@@ -573,123 +600,70 @@
     move-result-wide v1
 
     .local v1, childNodeId:J
-    invoke-direct {p0, v1, v2}, Landroid/view/accessibility/AccessibilityNodeInfoCache;->clearSubTreeLocked(J)V
+    invoke-direct {p0, v1, v2}, Landroid/view/accessibility/AccessibilityNodeInfoCache;->clearSubTreeRecursiveLocked(J)V
 
     add-int/lit8 v5, v5, 0x1
 
     goto :goto_0
 .end method
 
-.method private clearSubtreeWithOldAccessibilityFocusLocked(J)V
-    .locals 6
-    .parameter "currentAccessibilityFocusId"
+.method private refreshCachedNode(J)V
+    .locals 3
+    .parameter "sourceId"
 
     .prologue
-    iget-object v5, p0, Landroid/view/accessibility/AccessibilityNodeInfoCache;->mCacheImpl:Landroid/util/LongSparseArray;
+    iget-object v2, p0, Landroid/view/accessibility/AccessibilityNodeInfoCache;->mLock:Ljava/lang/Object;
 
-    invoke-virtual {v5}, Landroid/util/LongSparseArray;->size()I
+    monitor-enter v2
 
-    move-result v0
+    :try_start_0
+    iget-object v1, p0, Landroid/view/accessibility/AccessibilityNodeInfoCache;->mCacheImpl:Landroid/util/LongSparseArray;
 
-    .local v0, cacheSize:I
-    const/4 v1, 0x0
+    invoke-virtual {v1, p1, p2}, Landroid/util/LongSparseArray;->get(J)Ljava/lang/Object;
 
-    .local v1, i:I
+    move-result-object v0
+
+    check-cast v0, Landroid/view/accessibility/AccessibilityNodeInfo;
+
+    .local v0, cachedInfo:Landroid/view/accessibility/AccessibilityNodeInfo;
+    if-nez v0, :cond_0
+
+    monitor-exit v2
+
     :goto_0
-    if-ge v1, v0, :cond_0
-
-    iget-object v5, p0, Landroid/view/accessibility/AccessibilityNodeInfoCache;->mCacheImpl:Landroid/util/LongSparseArray;
-
-    invoke-virtual {v5, v1}, Landroid/util/LongSparseArray;->valueAt(I)Ljava/lang/Object;
-
-    move-result-object v2
-
-    check-cast v2, Landroid/view/accessibility/AccessibilityNodeInfo;
-
-    .local v2, info:Landroid/view/accessibility/AccessibilityNodeInfo;
-    invoke-virtual {v2}, Landroid/view/accessibility/AccessibilityNodeInfo;->getSourceNodeId()J
-
-    move-result-wide v3
-
-    .local v3, infoSourceId:J
-    cmp-long v5, v3, p1
-
-    if-eqz v5, :cond_1
-
-    invoke-virtual {v2}, Landroid/view/accessibility/AccessibilityNodeInfo;->isAccessibilityFocused()Z
-
-    move-result v5
-
-    if-eqz v5, :cond_1
-
-    invoke-direct {p0, v3, v4}, Landroid/view/accessibility/AccessibilityNodeInfoCache;->clearSubTreeLocked(J)V
-
-    .end local v2           #info:Landroid/view/accessibility/AccessibilityNodeInfo;
-    .end local v3           #infoSourceId:J
-    :cond_0
     return-void
 
-    .restart local v2       #info:Landroid/view/accessibility/AccessibilityNodeInfo;
-    .restart local v3       #infoSourceId:J
-    :cond_1
-    add-int/lit8 v1, v1, 0x1
+    :cond_0
+    const/4 v1, 0x1
+
+    invoke-virtual {v0, v1}, Landroid/view/accessibility/AccessibilityNodeInfo;->refresh(Z)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_1
+
+    monitor-exit v2
 
     goto :goto_0
-.end method
 
-.method private clearSubtreeWithOldInputFocusLocked(J)V
-    .locals 6
-    .parameter "currentInputFocusId"
+    .end local v0           #cachedInfo:Landroid/view/accessibility/AccessibilityNodeInfo;
+    :catchall_0
+    move-exception v1
 
-    .prologue
-    iget-object v5, p0, Landroid/view/accessibility/AccessibilityNodeInfoCache;->mCacheImpl:Landroid/util/LongSparseArray;
+    monitor-exit v2
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    invoke-virtual {v5}, Landroid/util/LongSparseArray;->size()I
+    throw v1
 
-    move-result v0
-
-    .local v0, cacheSize:I
-    const/4 v1, 0x0
-
-    .local v1, i:I
-    :goto_0
-    if-ge v1, v0, :cond_0
-
-    iget-object v5, p0, Landroid/view/accessibility/AccessibilityNodeInfoCache;->mCacheImpl:Landroid/util/LongSparseArray;
-
-    invoke-virtual {v5, v1}, Landroid/util/LongSparseArray;->valueAt(I)Ljava/lang/Object;
-
-    move-result-object v2
-
-    check-cast v2, Landroid/view/accessibility/AccessibilityNodeInfo;
-
-    .local v2, info:Landroid/view/accessibility/AccessibilityNodeInfo;
-    invoke-virtual {v2}, Landroid/view/accessibility/AccessibilityNodeInfo;->getSourceNodeId()J
-
-    move-result-wide v3
-
-    .local v3, infoSourceId:J
-    cmp-long v5, v3, p1
-
-    if-eqz v5, :cond_1
-
-    invoke-virtual {v2}, Landroid/view/accessibility/AccessibilityNodeInfo;->isFocused()Z
-
-    move-result v5
-
-    if-eqz v5, :cond_1
-
-    invoke-direct {p0, v3, v4}, Landroid/view/accessibility/AccessibilityNodeInfoCache;->clearSubTreeLocked(J)V
-
-    .end local v2           #info:Landroid/view/accessibility/AccessibilityNodeInfo;
-    .end local v3           #infoSourceId:J
-    :cond_0
-    return-void
-
-    .restart local v2       #info:Landroid/view/accessibility/AccessibilityNodeInfo;
-    .restart local v3       #infoSourceId:J
+    .restart local v0       #cachedInfo:Landroid/view/accessibility/AccessibilityNodeInfo;
     :cond_1
-    add-int/lit8 v1, v1, 0x1
+    :try_start_1
+    invoke-direct {p0, p1, p2}, Landroid/view/accessibility/AccessibilityNodeInfoCache;->clearSubTreeLocked(J)V
+
+    monitor-exit v2
+    :try_end_1
+    .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
     goto :goto_0
 .end method
@@ -927,16 +901,16 @@
     .prologue
     invoke-virtual {p1}, Landroid/view/accessibility/AccessibilityEvent;->getEventType()I
 
-    move-result v2
+    move-result v0
 
-    .local v2, eventType:I
-    sparse-switch v2, :sswitch_data_0
+    .local v0, eventType:I
+    sparse-switch v0, :sswitch_data_0
 
     :cond_0
     :goto_0
-    sget-boolean v6, Landroid/os/Build;->IS_DEBUGGABLE:Z
+    sget-boolean v4, Landroid/os/Build;->IS_DEBUGGABLE:Z
 
-    if-eqz v6, :cond_1
+    if-eqz v4, :cond_1
 
     invoke-direct {p0}, Landroid/view/accessibility/AccessibilityNodeInfoCache;->checkIntegrity()V
 
@@ -946,110 +920,114 @@
     :sswitch_0
     invoke-virtual {p1}, Landroid/view/accessibility/AccessibilityEvent;->getWindowId()I
 
-    move-result v6
+    move-result v3
 
-    iput v6, p0, Landroid/view/accessibility/AccessibilityNodeInfoCache;->mWindowId:I
+    .local v3, windowId:I
+    iget v4, p0, Landroid/view/accessibility/AccessibilityNodeInfoCache;->mWindowId:I
+
+    if-eq v4, v3, :cond_0
+
+    iput v3, p0, Landroid/view/accessibility/AccessibilityNodeInfoCache;->mWindowId:I
 
     invoke-virtual {p0}, Landroid/view/accessibility/AccessibilityNodeInfoCache;->clear()V
 
     goto :goto_0
 
+    .end local v3           #windowId:I
     :sswitch_1
-    invoke-virtual {p1}, Landroid/view/accessibility/AccessibilityEvent;->getWindowId()I
+    invoke-virtual {p1}, Landroid/view/accessibility/AccessibilityEvent;->getSourceNodeId()J
 
-    move-result v5
+    move-result-wide v4
 
-    .local v5, windowId:I
-    iget v6, p0, Landroid/view/accessibility/AccessibilityNodeInfoCache;->mWindowId:I
-
-    if-eq v6, v5, :cond_0
-
-    iput v5, p0, Landroid/view/accessibility/AccessibilityNodeInfoCache;->mWindowId:I
-
-    invoke-virtual {p0}, Landroid/view/accessibility/AccessibilityNodeInfoCache;->clear()V
+    invoke-direct {p0, v4, v5}, Landroid/view/accessibility/AccessibilityNodeInfoCache;->refreshCachedNode(J)V
 
     goto :goto_0
 
-    .end local v5           #windowId:I
     :sswitch_2
-    iget-object v7, p0, Landroid/view/accessibility/AccessibilityNodeInfoCache;->mLock:Ljava/lang/Object;
+    iget-object v5, p0, Landroid/view/accessibility/AccessibilityNodeInfoCache;->mLock:Ljava/lang/Object;
 
-    monitor-enter v7
+    monitor-enter v5
 
     :try_start_0
     invoke-virtual {p1}, Landroid/view/accessibility/AccessibilityEvent;->getSourceNodeId()J
 
-    move-result-wide v3
+    move-result-wide v6
 
-    .local v3, sourceId:J
-    invoke-direct {p0, v3, v4}, Landroid/view/accessibility/AccessibilityNodeInfoCache;->clearSubTreeLocked(J)V
+    invoke-direct {p0, v6, v7}, Landroid/view/accessibility/AccessibilityNodeInfoCache;->clearSubTreeLocked(J)V
 
-    const/16 v6, 0x8
-
-    if-ne v2, v6, :cond_2
-
-    invoke-direct {p0, v3, v4}, Landroid/view/accessibility/AccessibilityNodeInfoCache;->clearSubtreeWithOldInputFocusLocked(J)V
-
-    :cond_2
-    const v6, 0x8000
-
-    if-ne v2, v6, :cond_3
-
-    invoke-direct {p0, v3, v4}, Landroid/view/accessibility/AccessibilityNodeInfoCache;->clearSubtreeWithOldAccessibilityFocusLocked(J)V
-
-    :cond_3
-    monitor-exit v7
+    monitor-exit v5
 
     goto :goto_0
 
-    .end local v3           #sourceId:J
     :catchall_0
-    move-exception v6
+    move-exception v4
 
-    monitor-exit v7
+    monitor-exit v5
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    throw v6
+    throw v4
 
     :sswitch_3
-    iget-object v7, p0, Landroid/view/accessibility/AccessibilityNodeInfoCache;->mLock:Ljava/lang/Object;
+    iget-object v5, p0, Landroid/view/accessibility/AccessibilityNodeInfoCache;->mLock:Ljava/lang/Object;
 
-    monitor-enter v7
+    monitor-enter v5
 
     :try_start_1
     invoke-virtual {p1}, Landroid/view/accessibility/AccessibilityEvent;->getSourceNodeId()J
 
-    move-result-wide v0
+    move-result-wide v1
 
-    .local v0, accessibilityNodeId:J
-    invoke-direct {p0, v0, v1}, Landroid/view/accessibility/AccessibilityNodeInfoCache;->clearSubTreeLocked(J)V
+    .local v1, sourceId:J
+    invoke-virtual {p1}, Landroid/view/accessibility/AccessibilityEvent;->getContentChangeTypes()I
 
-    monitor-exit v7
+    move-result v4
+
+    and-int/lit8 v4, v4, 0x1
+
+    if-eqz v4, :cond_2
+
+    invoke-direct {p0, v1, v2}, Landroid/view/accessibility/AccessibilityNodeInfoCache;->clearSubTreeLocked(J)V
+
+    :goto_1
+    monitor-exit v5
 
     goto :goto_0
 
-    .end local v0           #accessibilityNodeId:J
+    .end local v1           #sourceId:J
     :catchall_1
-    move-exception v6
+    move-exception v4
 
-    monitor-exit v7
+    monitor-exit v5
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_1
 
-    throw v6
+    throw v4
+
+    .restart local v1       #sourceId:J
+    :cond_2
+    :try_start_2
+    invoke-direct {p0, v1, v2}, Landroid/view/accessibility/AccessibilityNodeInfoCache;->refreshCachedNode(J)V
+    :try_end_2
+    .catchall {:try_start_2 .. :try_end_2} :catchall_1
+
+    goto :goto_1
+
+    nop
 
     :sswitch_data_0
     .sparse-switch
-        0x4 -> :sswitch_2
-        0x8 -> :sswitch_2
-        0x10 -> :sswitch_2
+        0x4 -> :sswitch_1
+        0x8 -> :sswitch_1
+        0x10 -> :sswitch_1
         0x20 -> :sswitch_0
-        0x80 -> :sswitch_1
-        0x100 -> :sswitch_1
+        0x80 -> :sswitch_0
+        0x100 -> :sswitch_0
+        0x400 -> :sswitch_0
         0x800 -> :sswitch_3
-        0x1000 -> :sswitch_3
-        0x2000 -> :sswitch_2
-        0x8000 -> :sswitch_2
+        0x1000 -> :sswitch_2
+        0x2000 -> :sswitch_1
+        0x8000 -> :sswitch_1
+        0x10000 -> :sswitch_1
     .end sparse-switch
 .end method

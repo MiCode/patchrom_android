@@ -15,6 +15,8 @@
 
 
 # instance fields
+.field mAutoMirrored:Z
+
 .field mBitmap:Landroid/graphics/Bitmap;
 
 .field mChangingConfigurations:I
@@ -108,11 +110,24 @@
 
     iput-boolean v0, p0, Landroid/graphics/drawable/BitmapDrawable$BitmapState;->mRebuildShader:Z
 
+    iget-boolean v0, p1, Landroid/graphics/drawable/BitmapDrawable$BitmapState;->mAutoMirrored:Z
+
+    iput-boolean v0, p0, Landroid/graphics/drawable/BitmapDrawable$BitmapState;->mAutoMirrored:Z
+
     return-void
 .end method
 
 
 # virtual methods
+.method public getBitmap()Landroid/graphics/Bitmap;
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Landroid/graphics/drawable/BitmapDrawable$BitmapState;->mBitmap:Landroid/graphics/Bitmap;
+
+    return-object v0
+.end method
+
 .method public getChangingConfigurations()I
     .locals 1
 

@@ -75,6 +75,8 @@
 
 .field public static final COLOR_FormatRawBayer8bitcompressed:I = 0x20
 
+.field public static final COLOR_FormatSurface:I = 0x7f000789
+
 .field public static final COLOR_FormatYCbYCr:I = 0x19
 
 .field public static final COLOR_FormatYCrYCb:I = 0x1a
@@ -105,9 +107,15 @@
 
 .field public static final COLOR_TI_FormatYUV420PackedSemiPlanar:I = 0x7f000100
 
+.field public static final FEATURE_AdaptivePlayback:Ljava/lang/String; = "adaptive-playback"
+
+.field private static final FLAG_SupportsAdaptivePlayback:I = 0x1
+
 
 # instance fields
 .field public colorFormats:[I
+
+.field private flags:I
 
 .field public profileLevels:[Landroid/media/MediaCodecInfo$CodecProfileLevel;
 
@@ -120,4 +128,33 @@
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
+.end method
+
+
+# virtual methods
+.method public final isFeatureSupported(Ljava/lang/String;)Z
+    .locals 2
+    .parameter "name"
+
+    .prologue
+    const/4 v0, 0x0
+
+    const-string v1, "adaptive-playback"
+
+    invoke-virtual {p1, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_0
+
+    iget v1, p0, Landroid/media/MediaCodecInfo$CodecCapabilities;->flags:I
+
+    and-int/lit8 v1, v1, 0x1
+
+    if-eqz v1, :cond_0
+
+    const/4 v0, 0x1
+
+    :cond_0
+    return v0
 .end method

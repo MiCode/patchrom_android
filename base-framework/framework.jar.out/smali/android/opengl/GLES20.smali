@@ -447,6 +447,9 @@
 .field public static final GL_STENCIL_FUNC:I = 0xb92
 
 .field public static final GL_STENCIL_INDEX:I = 0x1901
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
+.end field
 
 .field public static final GL_STENCIL_INDEX8:I = 0x8d48
 

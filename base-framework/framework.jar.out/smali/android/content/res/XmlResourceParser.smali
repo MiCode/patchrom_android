@@ -5,6 +5,7 @@
 # interfaces
 .implements Lorg/xmlpull/v1/XmlPullParser;
 .implements Landroid/util/AttributeSet;
+.implements Ljava/lang/AutoCloseable;
 
 
 # virtual methods

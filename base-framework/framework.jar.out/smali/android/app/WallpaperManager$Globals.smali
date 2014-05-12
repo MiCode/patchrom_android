@@ -159,7 +159,7 @@
     :try_start_2
     invoke-virtual {v2}, Landroid/os/ParcelFileDescriptor;->close()V
     :try_end_2
-    .catch Ljava/io/IOException; {:try_start_2 .. :try_end_2} :catch_4
+    .catch Ljava/io/IOException; {:try_start_2 .. :try_end_2} :catch_2
     .catch Landroid/os/RemoteException; {:try_start_2 .. :try_end_2} :catch_1
 
     .end local v0           #bm:Landroid/graphics/Bitmap;
@@ -217,7 +217,7 @@
     :try_start_5
     invoke-virtual {v2}, Landroid/os/ParcelFileDescriptor;->close()V
     :try_end_5
-    .catch Ljava/io/IOException; {:try_start_5 .. :try_end_5} :catch_2
+    .catch Ljava/io/IOException; {:try_start_5 .. :try_end_5} :catch_4
     .catch Landroid/os/RemoteException; {:try_start_5 .. :try_end_5} :catch_1
 
     :goto_2
@@ -235,15 +235,19 @@
 
     goto :goto_1
 
+    .restart local v0       #bm:Landroid/graphics/Bitmap;
     .restart local v2       #fd:Landroid/os/ParcelFileDescriptor;
     .restart local v3       #height:I
+    .restart local v4       #options:Landroid/graphics/BitmapFactory$Options;
     .restart local v5       #params:Landroid/os/Bundle;
     .restart local v6       #width:I
     :catch_2
-    move-exception v9
+    move-exception v8
 
-    goto :goto_2
+    goto :goto_0
 
+    .end local v0           #bm:Landroid/graphics/Bitmap;
+    .end local v4           #options:Landroid/graphics/BitmapFactory$Options;
     .restart local v1       #e:Ljava/lang/OutOfMemoryError;
     :catch_3
     move-exception v7
@@ -251,12 +255,10 @@
     goto :goto_1
 
     .end local v1           #e:Ljava/lang/OutOfMemoryError;
-    .restart local v0       #bm:Landroid/graphics/Bitmap;
-    .restart local v4       #options:Landroid/graphics/BitmapFactory$Options;
     :catch_4
-    move-exception v8
+    move-exception v9
 
-    goto :goto_0
+    goto :goto_2
 .end method
 
 .method private getDefaultWallpaperLocked(Landroid/content/Context;)Landroid/graphics/Bitmap;
@@ -271,7 +273,7 @@
 
     move-result-object v6
 
-    const v8, 0x108021e
+    const v8, 0x1080220
 
     invoke-virtual {v6, v8}, Landroid/content/res/Resources;->openRawResource(I)Ljava/io/InputStream;
 
@@ -319,7 +321,7 @@
     :try_start_2
     invoke-virtual {v3}, Ljava/io/InputStream;->close()V
     :try_end_2
-    .catch Ljava/io/IOException; {:try_start_2 .. :try_end_2} :catch_4
+    .catch Ljava/io/IOException; {:try_start_2 .. :try_end_2} :catch_2
     .catch Landroid/os/RemoteException; {:try_start_2 .. :try_end_2} :catch_1
 
     .end local v0           #bm:Landroid/graphics/Bitmap;
@@ -373,7 +375,7 @@
     :try_start_5
     invoke-virtual {v3}, Ljava/io/InputStream;->close()V
     :try_end_5
-    .catch Ljava/io/IOException; {:try_start_5 .. :try_end_5} :catch_2
+    .catch Ljava/io/IOException; {:try_start_5 .. :try_end_5} :catch_4
     .catch Landroid/os/RemoteException; {:try_start_5 .. :try_end_5} :catch_1
 
     :goto_2
@@ -390,14 +392,18 @@
 
     goto :goto_1
 
+    .restart local v0       #bm:Landroid/graphics/Bitmap;
     .restart local v2       #height:I
     .restart local v3       #is:Ljava/io/InputStream;
+    .restart local v4       #options:Landroid/graphics/BitmapFactory$Options;
     .restart local v5       #width:I
     :catch_2
-    move-exception v8
+    move-exception v7
 
-    goto :goto_2
+    goto :goto_0
 
+    .end local v0           #bm:Landroid/graphics/Bitmap;
+    .end local v4           #options:Landroid/graphics/BitmapFactory$Options;
     .restart local v1       #e:Ljava/lang/OutOfMemoryError;
     :catch_3
     move-exception v6
@@ -405,18 +411,16 @@
     goto :goto_1
 
     .end local v1           #e:Ljava/lang/OutOfMemoryError;
-    .restart local v0       #bm:Landroid/graphics/Bitmap;
-    .restart local v4       #options:Landroid/graphics/BitmapFactory$Options;
     :catch_4
-    move-exception v7
+    move-exception v8
 
-    goto :goto_0
+    goto :goto_2
 .end method
 
 
 # virtual methods
 .method public forgetLoadedWallpaper()V
-    .locals 1
+    .locals 2
 
     .prologue
     monitor-enter p0
@@ -429,6 +433,12 @@
     const/4 v0, 0x0
 
     iput-object v0, p0, Landroid/app/WallpaperManager$Globals;->mDefaultWallpaper:Landroid/graphics/Bitmap;
+
+    iget-object v0, p0, Landroid/app/WallpaperManager$Globals;->mHandler:Landroid/os/Handler;
+
+    const/4 v1, 0x1
+
+    invoke-virtual {v0, v1}, Landroid/os/Handler;->removeMessages(I)V
 
     monitor-exit p0
 

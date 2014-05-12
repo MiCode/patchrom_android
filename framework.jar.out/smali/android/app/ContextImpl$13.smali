@@ -27,21 +27,19 @@
 
 # virtual methods
 .method public createService(Landroid/app/ContextImpl;)Ljava/lang/Object;
-    .locals 3
+    .locals 1
     .parameter "ctx"
 
     .prologue
-    new-instance v0, Landroid/app/MiuiDownloadManager;
+    iget-object v0, p1, Landroid/app/ContextImpl;->mMainThread:Landroid/app/ActivityThread;
 
-    invoke-virtual {p1}, Landroid/app/ContextImpl;->getContentResolver()Landroid/content/ContentResolver;
+    invoke-virtual {v0}, Landroid/app/ActivityThread;->getHandler()Landroid/os/Handler;
 
-    move-result-object v1
+    move-result-object v0
 
-    invoke-virtual {p1}, Landroid/app/ContextImpl;->getPackageName()Ljava/lang/String;
+    invoke-static {p1, v0}, Landroid/app/admin/DevicePolicyManager;->create(Landroid/content/Context;Landroid/os/Handler;)Landroid/app/admin/DevicePolicyManager;
 
-    move-result-object v2
-
-    invoke-direct {v0, v1, v2}, Landroid/app/MiuiDownloadManager;-><init>(Landroid/content/ContentResolver;Ljava/lang/String;)V
+    move-result-object v0
 
     return-object v0
 .end method

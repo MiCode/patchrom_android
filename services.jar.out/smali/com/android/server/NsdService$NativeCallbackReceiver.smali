@@ -43,7 +43,7 @@
     iget-object v0, p0, Lcom/android/server/NsdService$NativeCallbackReceiver;->this$0:Lcom/android/server/NsdService;
 
     #getter for: Lcom/android/server/NsdService;->mNativeDaemonConnected:Ljava/util/concurrent/CountDownLatch;
-    invoke-static {v0}, Lcom/android/server/NsdService;->access$2600(Lcom/android/server/NsdService;)Ljava/util/concurrent/CountDownLatch;
+    invoke-static {v0}, Lcom/android/server/NsdService;->access$2900(Lcom/android/server/NsdService;)Ljava/util/concurrent/CountDownLatch;
 
     move-result-object v0
 

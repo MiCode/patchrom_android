@@ -15,7 +15,7 @@
 
 
 # virtual methods
-.method public abstract onDisplayConnected(Landroid/view/Surface;III)V
+.method public abstract onDisplayConnected(Landroid/view/Surface;IIII)V
 .end method
 
 .method public abstract onDisplayDisconnected()V

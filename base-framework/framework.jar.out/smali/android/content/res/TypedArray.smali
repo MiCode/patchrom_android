@@ -1813,7 +1813,7 @@
     .prologue
     iget-object v1, p0, Landroid/content/res/TypedArray;->mResources:Landroid/content/res/Resources;
 
-    iget-object v2, v1, Landroid/content/res/Resources;->mTmpValue:Landroid/util/TypedValue;
+    iget-object v2, v1, Landroid/content/res/Resources;->mAccessLock:Ljava/lang/Object;
 
     monitor-enter v2
 

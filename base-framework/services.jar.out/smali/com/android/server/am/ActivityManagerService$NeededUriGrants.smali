@@ -34,9 +34,9 @@
 # direct methods
 .method constructor <init>(Ljava/lang/String;II)V
     .locals 0
-    .parameter "_targetPkg"
-    .parameter "_targetUid"
-    .parameter "_flags"
+    .parameter "targetPkg"
+    .parameter "targetUid"
+    .parameter "flags"
 
     .prologue
     invoke-direct {p0}, Ljava/util/ArrayList;-><init>()V

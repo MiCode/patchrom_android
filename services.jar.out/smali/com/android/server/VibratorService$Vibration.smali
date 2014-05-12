@@ -18,6 +18,8 @@
 
 
 # instance fields
+.field private final mPackageName:Ljava/lang/String;
+
 .field private final mPattern:[J
 
 .field private final mRepeat:I
@@ -34,12 +36,13 @@
 
 
 # direct methods
-.method constructor <init>(Lcom/android/server/VibratorService;Landroid/os/IBinder;JI)V
-    .locals 8
+.method constructor <init>(Lcom/android/server/VibratorService;Landroid/os/IBinder;JILjava/lang/String;)V
+    .locals 9
     .parameter
     .parameter "token"
     .parameter "millis"
     .parameter "uid"
+    .parameter "packageName"
 
     .prologue
     const/4 v5, 0x0
@@ -56,12 +59,14 @@
 
     move v7, p5
 
-    invoke-direct/range {v0 .. v7}, Lcom/android/server/VibratorService$Vibration;-><init>(Lcom/android/server/VibratorService;Landroid/os/IBinder;J[JII)V
+    move-object v8, p6
+
+    invoke-direct/range {v0 .. v8}, Lcom/android/server/VibratorService$Vibration;-><init>(Lcom/android/server/VibratorService;Landroid/os/IBinder;J[JIILjava/lang/String;)V
 
     return-void
 .end method
 
-.method private constructor <init>(Lcom/android/server/VibratorService;Landroid/os/IBinder;J[JII)V
+.method private constructor <init>(Lcom/android/server/VibratorService;Landroid/os/IBinder;J[JIILjava/lang/String;)V
     .locals 2
     .parameter
     .parameter "token"
@@ -69,6 +74,7 @@
     .parameter "pattern"
     .parameter "repeat"
     .parameter "uid"
+    .parameter "packageName"
 
     .prologue
     iput-object p1, p0, Lcom/android/server/VibratorService$Vibration;->this$0:Lcom/android/server/VibratorService;
@@ -91,16 +97,19 @@
 
     iput p7, p0, Lcom/android/server/VibratorService$Vibration;->mUid:I
 
+    iput-object p8, p0, Lcom/android/server/VibratorService$Vibration;->mPackageName:Ljava/lang/String;
+
     return-void
 .end method
 
-.method constructor <init>(Lcom/android/server/VibratorService;Landroid/os/IBinder;[JII)V
-    .locals 8
+.method constructor <init>(Lcom/android/server/VibratorService;Landroid/os/IBinder;[JIILjava/lang/String;)V
+    .locals 9
     .parameter
     .parameter "token"
     .parameter "pattern"
     .parameter "repeat"
     .parameter "uid"
+    .parameter "packageName"
 
     .prologue
     const-wide/16 v3, 0x0
@@ -117,12 +126,14 @@
 
     move v7, p5
 
-    invoke-direct/range {v0 .. v7}, Lcom/android/server/VibratorService$Vibration;-><init>(Lcom/android/server/VibratorService;Landroid/os/IBinder;J[JII)V
+    move-object v8, p6
+
+    invoke-direct/range {v0 .. v8}, Lcom/android/server/VibratorService$Vibration;-><init>(Lcom/android/server/VibratorService;Landroid/os/IBinder;J[JIILjava/lang/String;)V
 
     return-void
 .end method
 
-.method static synthetic access$1100(Lcom/android/server/VibratorService$Vibration;)I
+.method static synthetic access$1200(Lcom/android/server/VibratorService$Vibration;)I
     .locals 1
     .parameter "x0"
 
@@ -132,7 +143,27 @@
     return v0
 .end method
 
-.method static synthetic access$500(Lcom/android/server/VibratorService$Vibration;)J
+.method static synthetic access$500(Lcom/android/server/VibratorService$Vibration;)I
+    .locals 1
+    .parameter "x0"
+
+    .prologue
+    iget v0, p0, Lcom/android/server/VibratorService$Vibration;->mUid:I
+
+    return v0
+.end method
+
+.method static synthetic access$600(Lcom/android/server/VibratorService$Vibration;)Ljava/lang/String;
+    .locals 1
+    .parameter "x0"
+
+    .prologue
+    iget-object v0, p0, Lcom/android/server/VibratorService$Vibration;->mPackageName:Ljava/lang/String;
+
+    return-object v0
+.end method
+
+.method static synthetic access$700(Lcom/android/server/VibratorService$Vibration;)J
     .locals 2
     .parameter "x0"
 
@@ -142,7 +173,7 @@
     return-wide v0
 .end method
 
-.method static synthetic access$600(Lcom/android/server/VibratorService$Vibration;)Landroid/os/IBinder;
+.method static synthetic access$800(Lcom/android/server/VibratorService$Vibration;)Landroid/os/IBinder;
     .locals 1
     .parameter "x0"
 
@@ -152,7 +183,7 @@
     return-object v0
 .end method
 
-.method static synthetic access$700(Lcom/android/server/VibratorService$Vibration;)[J
+.method static synthetic access$900(Lcom/android/server/VibratorService$Vibration;)[J
     .locals 1
     .parameter "x0"
 
@@ -160,16 +191,6 @@
     iget-object v0, p0, Lcom/android/server/VibratorService$Vibration;->mPattern:[J
 
     return-object v0
-.end method
-
-.method static synthetic access$800(Lcom/android/server/VibratorService$Vibration;)I
-    .locals 1
-    .parameter "x0"
-
-    .prologue
-    iget v0, p0, Lcom/android/server/VibratorService$Vibration;->mUid:I
-
-    return v0
 .end method
 
 

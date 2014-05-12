@@ -32,7 +32,11 @@
 
 .field public static final ACTION_APPLICATION_SETTINGS:Ljava/lang/String; = "android.settings.APPLICATION_SETTINGS"
 
+.field public static final ACTION_APP_OPS_SETTINGS:Ljava/lang/String; = "android.settings.APP_OPS_SETTINGS"
+
 .field public static final ACTION_BLUETOOTH_SETTINGS:Ljava/lang/String; = "android.settings.BLUETOOTH_SETTINGS"
+
+.field public static final ACTION_CAPTIONING_SETTINGS:Ljava/lang/String; = "android.settings.CAPTIONING_SETTINGS"
 
 .field public static final ACTION_DATA_ROAMING_SETTINGS:Ljava/lang/String; = "android.settings.DATA_ROAMING_SETTINGS"
 
@@ -60,11 +64,19 @@
 
 .field public static final ACTION_MEMORY_CARD_SETTINGS:Ljava/lang/String; = "android.settings.MEMORY_CARD_SETTINGS"
 
+.field public static final ACTION_MONITORING_CERT_INFO:Ljava/lang/String; = "com.android.settings.MONITORING_CERT_INFO"
+
 .field public static final ACTION_NETWORK_OPERATOR_SETTINGS:Ljava/lang/String; = "android.settings.NETWORK_OPERATOR_SETTINGS"
 
 .field public static final ACTION_NFCSHARING_SETTINGS:Ljava/lang/String; = "android.settings.NFCSHARING_SETTINGS"
 
+.field public static final ACTION_NFC_PAYMENT_SETTINGS:Ljava/lang/String; = "android.settings.NFC_PAYMENT_SETTINGS"
+
 .field public static final ACTION_NFC_SETTINGS:Ljava/lang/String; = "android.settings.NFC_SETTINGS"
+
+.field public static final ACTION_NOTIFICATION_LISTENER_SETTINGS:Ljava/lang/String; = "android.settings.NOTIFICATION_LISTENER_SETTINGS"
+
+.field public static final ACTION_PRINT_SETTINGS:Ljava/lang/String; = "android.settings.ACTION_PRINT_SETTINGS"
 
 .field public static final ACTION_PRIVACY_SETTINGS:Ljava/lang/String; = "android.settings.PRIVACY_SETTINGS"
 
@@ -83,6 +95,8 @@
 .field public static final ACTION_SYNC_SETTINGS:Ljava/lang/String; = "android.settings.SYNC_SETTINGS"
 
 .field public static final ACTION_SYSTEM_UPDATE_SETTINGS:Ljava/lang/String; = "android.settings.SYSTEM_UPDATE_SETTINGS"
+
+.field public static final ACTION_TRUSTED_CREDENTIALS_USER:Ljava/lang/String; = "com.android.settings.TRUSTED_CREDENTIALS_USER"
 
 .field public static final ACTION_USER_DICTIONARY_INSERT:Ljava/lang/String; = "com.android.settings.USER_DICTIONARY_INSERT"
 
@@ -112,6 +126,8 @@
 
 .field public static final CALL_METHOD_USER_KEY:Ljava/lang/String; = "_user"
 
+.field public static final EXTRA_ACCOUNT_TYPES:Ljava/lang/String; = "account_types"
+
 .field public static final EXTRA_AUTHORITIES:Ljava/lang/String; = "authorities"
 
 .field public static final EXTRA_INPUT_METHOD_ID:Ljava/lang/String; = "input_method_id"
@@ -122,8 +138,23 @@
 
 .field private static final TAG:Ljava/lang/String; = "Settings"
 
+.field private static final mLocationSettingsLock:Ljava/lang/Object;
+
 
 # direct methods
+.method static constructor <clinit>()V
+    .locals 1
+
+    .prologue
+    new-instance v0, Ljava/lang/Object;
+
+    invoke-direct {v0}, Ljava/lang/Object;-><init>()V
+
+    sput-object v0, Landroid/provider/Settings;->mLocationSettingsLock:Ljava/lang/Object;
+
+    return-void
+.end method
+
 .method public constructor <init>()V
     .locals 0
 
@@ -131,6 +162,15 @@
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
+.end method
+
+.method static synthetic access$000()Ljava/lang/Object;
+    .locals 1
+
+    .prologue
+    sget-object v0, Landroid/provider/Settings;->mLocationSettingsLock:Ljava/lang/Object;
+
+    return-object v0
 .end method
 
 .method public static getGTalkDeviceId(J)Ljava/lang/String;

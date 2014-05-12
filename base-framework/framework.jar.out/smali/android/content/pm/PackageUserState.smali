@@ -4,6 +4,8 @@
 
 
 # instance fields
+.field public blocked:Z
+
 .field public disabledComponents:Ljava/util/HashSet;
     .annotation system Ldalvik/annotation/Signature;
         value = {
@@ -30,6 +32,8 @@
 
 .field public installed:Z
 
+.field public lastDisableAppCaller:Ljava/lang/String;
+
 .field public notLaunched:Z
 
 .field public stopped:Z
@@ -37,18 +41,20 @@
 
 # direct methods
 .method public constructor <init>()V
-    .locals 1
+    .locals 2
 
     .prologue
+    const/4 v1, 0x0
+
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     const/4 v0, 0x1
 
     iput-boolean v0, p0, Landroid/content/pm/PackageUserState;->installed:Z
 
-    const/4 v0, 0x0
+    iput-boolean v1, p0, Landroid/content/pm/PackageUserState;->blocked:Z
 
-    iput v0, p0, Landroid/content/pm/PackageUserState;->enabled:I
+    iput v1, p0, Landroid/content/pm/PackageUserState;->enabled:I
 
     return-void
 .end method
@@ -77,6 +83,14 @@
     iget v0, p1, Landroid/content/pm/PackageUserState;->enabled:I
 
     iput v0, p0, Landroid/content/pm/PackageUserState;->enabled:I
+
+    iget-boolean v0, p1, Landroid/content/pm/PackageUserState;->blocked:Z
+
+    iput-boolean v0, p0, Landroid/content/pm/PackageUserState;->blocked:Z
+
+    iget-object v0, p1, Landroid/content/pm/PackageUserState;->lastDisableAppCaller:Ljava/lang/String;
+
+    iput-object v0, p0, Landroid/content/pm/PackageUserState;->lastDisableAppCaller:Ljava/lang/String;
 
     iget-object v0, p1, Landroid/content/pm/PackageUserState;->disabledComponents:Ljava/util/HashSet;
 

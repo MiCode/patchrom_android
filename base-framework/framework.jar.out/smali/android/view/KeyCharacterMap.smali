@@ -78,6 +78,8 @@
     .end annotation
 .end field
 
+.field private static final CHAR_SPACE:I = 0x20
+
 .field public static final COMBINING_ACCENT:I = -0x80000000
 
 .field public static final COMBINING_ACCENT_MASK:I = 0x7fffffff
@@ -599,6 +601,19 @@
 
     const/4 v4, 0x0
 
+    if-eq p1, p0, :cond_0
+
+    const/16 v5, 0x20
+
+    if-ne v5, p1, :cond_1
+
+    :cond_0
+    move v1, p0
+
+    :goto_0
+    return v1
+
+    :cond_1
     sget-object v5, Landroid/view/KeyCharacterMap;->sAccentToCombining:Landroid/util/SparseIntArray;
 
     invoke-virtual {v5, p0}, Landroid/util/SparseIntArray;->get(I)I
@@ -606,14 +621,13 @@
     move-result v2
 
     .local v2, combining:I
-    if-nez v2, :cond_0
+    if-nez v2, :cond_2
 
     move v1, v4
 
-    :goto_0
-    return v1
+    goto :goto_0
 
-    :cond_0
+    :cond_2
     shl-int/lit8 v5, v2, 0x10
 
     or-int v0, v5, p1
@@ -633,7 +647,7 @@
     move-result v1
 
     .local v1, combined:I
-    if-ne v1, v8, :cond_1
+    if-ne v1, v8, :cond_3
 
     sget-object v6, Landroid/view/KeyCharacterMap;->sDeadKeyBuilder:Ljava/lang/StringBuilder;
 
@@ -662,17 +676,23 @@
     move-result-object v3
 
     .local v3, result:Ljava/lang/String;
+    const/4 v6, 0x0
+
     invoke-virtual {v3}, Ljava/lang/String;->length()I
+
+    move-result v7
+
+    invoke-virtual {v3, v6, v7}, Ljava/lang/String;->codePointCount(II)I
 
     move-result v6
 
     const/4 v7, 0x1
 
-    if-ne v6, v7, :cond_2
+    if-ne v6, v7, :cond_4
 
     const/4 v4, 0x0
 
-    invoke-virtual {v3, v4}, Ljava/lang/String;->charAt(I)C
+    invoke-virtual {v3, v4}, Ljava/lang/String;->codePointAt(I)I
 
     move-result v1
 
@@ -682,7 +702,7 @@
     invoke-virtual {v4, v0, v1}, Landroid/util/SparseIntArray;->put(II)V
 
     .end local v3           #result:Ljava/lang/String;
-    :cond_1
+    :cond_3
     monitor-exit v5
 
     goto :goto_0
@@ -699,7 +719,7 @@
 
     .restart local v1       #combined:I
     .restart local v3       #result:Ljava/lang/String;
-    :cond_2
+    :cond_4
     move v1, v4
 
     goto :goto_1

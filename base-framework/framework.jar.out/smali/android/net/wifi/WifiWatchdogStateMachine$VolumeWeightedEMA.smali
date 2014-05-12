@@ -50,7 +50,7 @@
     return-void
 .end method
 
-.method static synthetic access$4300(Landroid/net/wifi/WifiWatchdogStateMachine$VolumeWeightedEMA;)D
+.method static synthetic access$4200(Landroid/net/wifi/WifiWatchdogStateMachine$VolumeWeightedEMA;)D
     .locals 2
     .parameter "x0"
 
@@ -60,7 +60,7 @@
     return-wide v0
 .end method
 
-.method static synthetic access$4400(Landroid/net/wifi/WifiWatchdogStateMachine$VolumeWeightedEMA;)D
+.method static synthetic access$4300(Landroid/net/wifi/WifiWatchdogStateMachine$VolumeWeightedEMA;)D
     .locals 2
     .parameter "x0"
 

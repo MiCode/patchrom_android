@@ -83,6 +83,11 @@
     #calls: Lcom/android/server/display/WifiDisplayController;->reportFeatureState()V
     invoke-static {v0}, Lcom/android/server/display/WifiDisplayController;->access$300(Lcom/android/server/display/WifiDisplayController;)V
 
+    iget-object v0, p0, Lcom/android/server/display/WifiDisplayController$2;->this$0:Lcom/android/server/display/WifiDisplayController;
+
+    #calls: Lcom/android/server/display/WifiDisplayController;->updateScanState()V
+    invoke-static {v0}, Lcom/android/server/display/WifiDisplayController;->access$400(Lcom/android/server/display/WifiDisplayController;)V
+
     :cond_0
     return-void
 .end method

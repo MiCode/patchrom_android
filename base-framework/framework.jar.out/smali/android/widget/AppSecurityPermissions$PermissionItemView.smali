@@ -22,7 +22,11 @@
 
 .field mGroup:Landroid/widget/AppSecurityPermissions$MyPermissionGroupInfo;
 
+.field private mPackageName:Ljava/lang/String;
+
 .field mPerm:Landroid/widget/AppSecurityPermissions$MyPermissionInfo;
+
+.field private mShowRevokeUI:Z
 
 
 # direct methods
@@ -34,11 +38,78 @@
     .prologue
     invoke-direct {p0, p1, p2}, Landroid/widget/LinearLayout;-><init>(Landroid/content/Context;Landroid/util/AttributeSet;)V
 
+    const/4 v0, 0x0
+
+    iput-boolean v0, p0, Landroid/widget/AppSecurityPermissions$PermissionItemView;->mShowRevokeUI:Z
+
     const/4 v0, 0x1
 
     invoke-virtual {p0, v0}, Landroid/widget/AppSecurityPermissions$PermissionItemView;->setClickable(Z)V
 
     return-void
+.end method
+
+.method static synthetic access$000(Landroid/widget/AppSecurityPermissions$PermissionItemView;)Ljava/lang/String;
+    .locals 1
+    .parameter "x0"
+
+    .prologue
+    iget-object v0, p0, Landroid/widget/AppSecurityPermissions$PermissionItemView;->mPackageName:Ljava/lang/String;
+
+    return-object v0
+.end method
+
+.method private addRevokeUIIfNecessary(Landroid/app/AlertDialog$Builder;)V
+    .locals 4
+    .parameter "builder"
+
+    .prologue
+    iget-boolean v2, p0, Landroid/widget/AppSecurityPermissions$PermissionItemView;->mShowRevokeUI:Z
+
+    if-nez v2, :cond_1
+
+    :cond_0
+    :goto_0
+    return-void
+
+    :cond_1
+    iget-object v2, p0, Landroid/widget/AppSecurityPermissions$PermissionItemView;->mPerm:Landroid/widget/AppSecurityPermissions$MyPermissionInfo;
+
+    iget v2, v2, Landroid/widget/AppSecurityPermissions$MyPermissionInfo;->mExistingReqFlags:I
+
+    and-int/lit8 v2, v2, 0x1
+
+    if-eqz v2, :cond_2
+
+    const/4 v0, 0x1
+
+    .local v0, isRequired:Z
+    :goto_1
+    if-nez v0, :cond_0
+
+    new-instance v1, Landroid/widget/AppSecurityPermissions$PermissionItemView$1;
+
+    invoke-direct {v1, p0}, Landroid/widget/AppSecurityPermissions$PermissionItemView$1;-><init>(Landroid/widget/AppSecurityPermissions$PermissionItemView;)V
+
+    .local v1, ocl:Landroid/content/DialogInterface$OnClickListener;
+    const v2, 0x1040587
+
+    invoke-virtual {p1, v2, v1}, Landroid/app/AlertDialog$Builder;->setNegativeButton(ILandroid/content/DialogInterface$OnClickListener;)Landroid/app/AlertDialog$Builder;
+
+    const v2, 0x104000a
+
+    const/4 v3, 0x0
+
+    invoke-virtual {p1, v2, v3}, Landroid/app/AlertDialog$Builder;->setPositiveButton(ILandroid/content/DialogInterface$OnClickListener;)Landroid/app/AlertDialog$Builder;
+
+    goto :goto_0
+
+    .end local v0           #isRequired:Z
+    .end local v1           #ocl:Landroid/content/DialogInterface$OnClickListener;
+    :cond_2
+    const/4 v0, 0x0
+
+    goto :goto_1
 .end method
 
 
@@ -118,6 +189,8 @@
 
     invoke-virtual {v2, v6}, Landroid/app/AlertDialog$Builder;->setIcon(Landroid/graphics/drawable/Drawable;)Landroid/app/AlertDialog$Builder;
 
+    invoke-direct {p0, v2}, Landroid/widget/AppSecurityPermissions$PermissionItemView;->addRevokeUIIfNecessary(Landroid/app/AlertDialog$Builder;)V
+
     invoke-virtual {v2}, Landroid/app/AlertDialog$Builder;->show()Landroid/app/AlertDialog;
 
     move-result-object v6
@@ -168,7 +241,7 @@
 
     move-result-object v6
 
-    const v7, 0x1040434
+    const v7, 0x104045d
 
     new-array v8, v9, [Ljava/lang/Object;
 
@@ -230,21 +303,25 @@
     return-void
 .end method
 
-.method public setPermission(Landroid/widget/AppSecurityPermissions$MyPermissionGroupInfo;Landroid/widget/AppSecurityPermissions$MyPermissionInfo;ZLjava/lang/CharSequence;)V
-    .locals 10
+.method public setPermission(Landroid/widget/AppSecurityPermissions$MyPermissionGroupInfo;Landroid/widget/AppSecurityPermissions$MyPermissionInfo;ZLjava/lang/CharSequence;Ljava/lang/String;Z)V
+    .locals 9
     .parameter "grp"
     .parameter "perm"
     .parameter "first"
     .parameter "newPermPrefix"
+    .parameter "packageName"
+    .parameter "showRevokeUI"
 
     .prologue
-    const/4 v9, 0x0
-
     iput-object p1, p0, Landroid/widget/AppSecurityPermissions$PermissionItemView;->mGroup:Landroid/widget/AppSecurityPermissions$MyPermissionGroupInfo;
 
     iput-object p2, p0, Landroid/widget/AppSecurityPermissions$PermissionItemView;->mPerm:Landroid/widget/AppSecurityPermissions$MyPermissionInfo;
 
-    const v8, 0x1020268
+    iput-boolean p6, p0, Landroid/widget/AppSecurityPermissions$PermissionItemView;->mShowRevokeUI:Z
+
+    iput-object p5, p0, Landroid/widget/AppSecurityPermissions$PermissionItemView;->mPackageName:Ljava/lang/String;
+
+    const v8, 0x1020282
 
     invoke-virtual {p0, v8}, Landroid/widget/AppSecurityPermissions$PermissionItemView;->findViewById(I)Landroid/view/View;
 
@@ -253,7 +330,7 @@
     check-cast v5, Landroid/widget/ImageView;
 
     .local v5, permGrpIcon:Landroid/widget/ImageView;
-    const v8, 0x1020269
+    const v8, 0x1020283
 
     invoke-virtual {p0, v8}, Landroid/widget/AppSecurityPermissions$PermissionItemView;->findViewById(I)Landroid/view/View;
 
@@ -300,9 +377,13 @@
     move-result-object v4
 
     .local v4, parcel:Landroid/os/Parcel;
-    invoke-static {p4, v4, v9}, Landroid/text/TextUtils;->writeToParcel(Ljava/lang/CharSequence;Landroid/os/Parcel;I)V
+    const/4 v8, 0x0
 
-    invoke-virtual {v4, v9}, Landroid/os/Parcel;->setDataPosition(I)V
+    invoke-static {p4, v4, v8}, Landroid/text/TextUtils;->writeToParcel(Ljava/lang/CharSequence;Landroid/os/Parcel;I)V
+
+    const/4 v8, 0x0
+
+    invoke-virtual {v4, v8}, Landroid/os/Parcel;->setDataPosition(I)V
 
     sget-object v8, Landroid/text/TextUtils;->CHAR_SEQUENCE_CREATOR:Landroid/os/Parcelable$Creator;
 

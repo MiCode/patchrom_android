@@ -7,7 +7,13 @@
 .method public abstract bringChildToFront(Landroid/view/View;)V
 .end method
 
-.method public abstract childAccessibilityStateChanged(Landroid/view/View;)V
+.method public abstract canResolveLayoutDirection()Z
+.end method
+
+.method public abstract canResolveTextAlignment()Z
+.end method
+
+.method public abstract canResolveTextDirection()Z
 .end method
 
 .method public abstract childDrawableStateChanged(Landroid/view/View;)V
@@ -31,10 +37,19 @@
 .method public abstract getChildVisibleRect(Landroid/view/View;Landroid/graphics/Rect;Landroid/graphics/Point;)Z
 .end method
 
+.method public abstract getLayoutDirection()I
+.end method
+
 .method public abstract getParent()Landroid/view/ViewParent;
 .end method
 
 .method public abstract getParentForAccessibility()Landroid/view/ViewParent;
+.end method
+
+.method public abstract getTextAlignment()I
+.end method
+
+.method public abstract getTextDirection()I
 .end method
 
 .method public abstract invalidateChild(Landroid/view/View;Landroid/graphics/Rect;)V
@@ -43,7 +58,19 @@
 .method public abstract invalidateChildInParent([ILandroid/graphics/Rect;)Landroid/view/ViewParent;
 .end method
 
+.method public abstract isLayoutDirectionResolved()Z
+.end method
+
 .method public abstract isLayoutRequested()Z
+.end method
+
+.method public abstract isTextAlignmentResolved()Z
+.end method
+
+.method public abstract isTextDirectionResolved()Z
+.end method
+
+.method public abstract notifySubtreeAccessibilityStateChanged(Landroid/view/View;Landroid/view/View;I)V
 .end method
 
 .method public abstract recomputeViewAttributes(Landroid/view/View;)V

@@ -113,7 +113,15 @@
 
 .field public static final NT_MODE_GSM_UMTS:I = 0x3
 
+.field public static final NT_MODE_LTE_CDMA_AND_EVDO:I = 0x8
+
+.field public static final NT_MODE_LTE_CMDA_EVDO_GSM_WCDMA:I = 0xa
+
+.field public static final NT_MODE_LTE_GSM_WCDMA:I = 0x9
+
 .field public static final NT_MODE_LTE_ONLY:I = 0xb
+
+.field public static final NT_MODE_LTE_WCDMA:I = 0xc
 
 .field public static final NT_MODE_WCDMA_ONLY:I = 0x2
 
@@ -143,6 +151,8 @@
 
 .field public static final REASON_CDMA_DATA_DETACHED:Ljava/lang/String; = "cdmaDataDetached"
 
+.field public static final REASON_CONNECTED:Ljava/lang/String; = "connected"
+
 .field public static final REASON_DATA_ATTACHED:Ljava/lang/String; = "dataAttached"
 
 .field public static final REASON_DATA_DEPENDENCY_MET:Ljava/lang/String; = "dependencyMet"
@@ -154,6 +164,8 @@
 .field public static final REASON_DATA_DISABLED:Ljava/lang/String; = "dataDisabled"
 
 .field public static final REASON_DATA_ENABLED:Ljava/lang/String; = "dataEnabled"
+
+.field public static final REASON_LOST_DATA_CONNECTION:Ljava/lang/String; = "lostDataConnection"
 
 .field public static final REASON_NW_TYPE_CHANGED:Ljava/lang/String; = "nwTypeChanged"
 
@@ -172,6 +184,8 @@
 .field public static final REASON_ROAMING_ON:Ljava/lang/String; = "roamingOn"
 
 .field public static final REASON_SIM_LOADED:Ljava/lang/String; = "simLoaded"
+
+.field public static final REASON_SINGLE_PDN_ARBITRATION:Ljava/lang/String; = "SinglePdnArbitration"
 
 .field public static final REASON_VOICE_CALL_ENDED:Ljava/lang/String; = "2GVoiceCallEnded"
 
@@ -352,6 +366,9 @@
 .method public abstract getForegroundCall()Lcom/android/internal/telephony/Call;
 .end method
 
+.method public abstract getGroupIdLevel1()Ljava/lang/String;
+.end method
+
 .method public abstract getIccCard()Lcom/android/internal/telephony/IccCard;
 .end method
 
@@ -364,13 +381,10 @@
 .method public abstract getIccSerialNumber()Ljava/lang/String;
 .end method
 
-.method public abstract getIccSmsInterfaceManager()Lcom/android/internal/telephony/IccSmsInterfaceManager;
-.end method
-
 .method public abstract getImei()Ljava/lang/String;
 .end method
 
-.method public abstract getIsimRecords()Lcom/android/internal/telephony/ims/IsimRecords;
+.method public abstract getIsimRecords()Lcom/android/internal/telephony/uicc/IsimRecords;
 .end method
 
 .method public abstract getLine1AlphaTag()Ljava/lang/String;
@@ -454,7 +468,7 @@
 .method public abstract getUnitTestMode()Z
 .end method
 
-.method public abstract getUsimServiceTable()Lcom/android/internal/telephony/gsm/UsimServiceTable;
+.method public abstract getUsimServiceTable()Lcom/android/internal/telephony/uicc/UsimServiceTable;
 .end method
 
 .method public abstract getVoiceMailAlphaTag()Ljava/lang/String;
@@ -635,6 +649,9 @@
 .method public abstract setCellBroadcastSmsConfig([ILandroid/os/Message;)V
 .end method
 
+.method public abstract setCellInfoListRate(I)V
+.end method
+
 .method public abstract setDataRoamingEnabled(Z)V
 .end method
 
@@ -770,6 +787,9 @@
 .end method
 
 .method public abstract unsetOnEcbModeExitResponse(Landroid/os/Handler;)V
+.end method
+
+.method public abstract updatePhoneObject(I)V
 .end method
 
 .method public abstract updateServiceLocation()V

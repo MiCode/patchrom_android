@@ -40,13 +40,26 @@
     .locals 9
 
     .prologue
+    invoke-static {}, Lcom/android/server/location/LocationProviderProxy;->access$000()Z
+
+    move-result v6
+
+    if-eqz v6, :cond_0
+
+    const-string v6, "LocationProviderProxy"
+
+    const-string v7, "applying state to connected service"
+
+    invoke-static {v6, v7}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    :cond_0
     const/4 v2, 0x0
 
     .local v2, properties:Lcom/android/internal/location/ProviderProperties;
     iget-object v6, p0, Lcom/android/server/location/LocationProviderProxy$1;->this$0:Lcom/android/server/location/LocationProviderProxy;
 
     #getter for: Lcom/android/server/location/LocationProviderProxy;->mLock:Ljava/lang/Object;
-    invoke-static {v6}, Lcom/android/server/location/LocationProviderProxy;->access$000(Lcom/android/server/location/LocationProviderProxy;)Ljava/lang/Object;
+    invoke-static {v6}, Lcom/android/server/location/LocationProviderProxy;->access$100(Lcom/android/server/location/LocationProviderProxy;)Ljava/lang/Object;
 
     move-result-object v7
 
@@ -56,7 +69,7 @@
     iget-object v6, p0, Lcom/android/server/location/LocationProviderProxy$1;->this$0:Lcom/android/server/location/LocationProviderProxy;
 
     #getter for: Lcom/android/server/location/LocationProviderProxy;->mEnabled:Z
-    invoke-static {v6}, Lcom/android/server/location/LocationProviderProxy;->access$100(Lcom/android/server/location/LocationProviderProxy;)Z
+    invoke-static {v6}, Lcom/android/server/location/LocationProviderProxy;->access$200(Lcom/android/server/location/LocationProviderProxy;)Z
 
     move-result v1
 
@@ -64,7 +77,7 @@
     iget-object v6, p0, Lcom/android/server/location/LocationProviderProxy$1;->this$0:Lcom/android/server/location/LocationProviderProxy;
 
     #getter for: Lcom/android/server/location/LocationProviderProxy;->mRequest:Lcom/android/internal/location/ProviderRequest;
-    invoke-static {v6}, Lcom/android/server/location/LocationProviderProxy;->access$200(Lcom/android/server/location/LocationProviderProxy;)Lcom/android/internal/location/ProviderRequest;
+    invoke-static {v6}, Lcom/android/server/location/LocationProviderProxy;->access$300(Lcom/android/server/location/LocationProviderProxy;)Lcom/android/internal/location/ProviderRequest;
 
     move-result-object v3
 
@@ -72,7 +85,7 @@
     iget-object v6, p0, Lcom/android/server/location/LocationProviderProxy$1;->this$0:Lcom/android/server/location/LocationProviderProxy;
 
     #getter for: Lcom/android/server/location/LocationProviderProxy;->mWorksource:Landroid/os/WorkSource;
-    invoke-static {v6}, Lcom/android/server/location/LocationProviderProxy;->access$300(Lcom/android/server/location/LocationProviderProxy;)Landroid/os/WorkSource;
+    invoke-static {v6}, Lcom/android/server/location/LocationProviderProxy;->access$400(Lcom/android/server/location/LocationProviderProxy;)Landroid/os/WorkSource;
 
     move-result-object v5
 
@@ -80,14 +93,14 @@
     iget-object v6, p0, Lcom/android/server/location/LocationProviderProxy$1;->this$0:Lcom/android/server/location/LocationProviderProxy;
 
     #calls: Lcom/android/server/location/LocationProviderProxy;->getService()Lcom/android/internal/location/ILocationProvider;
-    invoke-static {v6}, Lcom/android/server/location/LocationProviderProxy;->access$400(Lcom/android/server/location/LocationProviderProxy;)Lcom/android/internal/location/ILocationProvider;
+    invoke-static {v6}, Lcom/android/server/location/LocationProviderProxy;->access$500(Lcom/android/server/location/LocationProviderProxy;)Lcom/android/internal/location/ILocationProvider;
 
     move-result-object v4
 
     .local v4, service:Lcom/android/internal/location/ILocationProvider;
     monitor-exit v7
 
-    if-nez v4, :cond_0
+    if-nez v4, :cond_1
 
     :goto_0
     return-void
@@ -109,13 +122,13 @@
     .restart local v3       #request:Lcom/android/internal/location/ProviderRequest;
     .restart local v4       #service:Lcom/android/internal/location/ILocationProvider;
     .restart local v5       #source:Landroid/os/WorkSource;
-    :cond_0
+    :cond_1
     :try_start_1
     invoke-interface {v4}, Lcom/android/internal/location/ILocationProvider;->getProperties()Lcom/android/internal/location/ProviderProperties;
 
     move-result-object v2
 
-    if-nez v2, :cond_1
+    if-nez v2, :cond_2
 
     const-string v6, "LocationProviderProxy"
 
@@ -126,7 +139,7 @@
     iget-object v8, p0, Lcom/android/server/location/LocationProviderProxy$1;->this$0:Lcom/android/server/location/LocationProviderProxy;
 
     #getter for: Lcom/android/server/location/LocationProviderProxy;->mServiceWatcher:Lcom/android/server/ServiceWatcher;
-    invoke-static {v8}, Lcom/android/server/location/LocationProviderProxy;->access$500(Lcom/android/server/location/LocationProviderProxy;)Lcom/android/server/ServiceWatcher;
+    invoke-static {v8}, Lcom/android/server/location/LocationProviderProxy;->access$600(Lcom/android/server/location/LocationProviderProxy;)Lcom/android/server/ServiceWatcher;
 
     move-result-object v8
 
@@ -150,24 +163,24 @@
 
     invoke-static {v6, v7}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
 
-    :cond_1
-    if-eqz v1, :cond_2
+    :cond_2
+    if-eqz v1, :cond_3
 
     invoke-interface {v4}, Lcom/android/internal/location/ILocationProvider;->enable()V
 
-    if-eqz v3, :cond_2
+    if-eqz v3, :cond_3
 
     invoke-interface {v4, v3, v5}, Lcom/android/internal/location/ILocationProvider;->setRequest(Lcom/android/internal/location/ProviderRequest;Landroid/os/WorkSource;)V
     :try_end_1
     .catch Landroid/os/RemoteException; {:try_start_1 .. :try_end_1} :catch_0
     .catch Ljava/lang/Exception; {:try_start_1 .. :try_end_1} :catch_1
 
-    :cond_2
+    :cond_3
     :goto_1
     iget-object v6, p0, Lcom/android/server/location/LocationProviderProxy$1;->this$0:Lcom/android/server/location/LocationProviderProxy;
 
     #getter for: Lcom/android/server/location/LocationProviderProxy;->mLock:Ljava/lang/Object;
-    invoke-static {v6}, Lcom/android/server/location/LocationProviderProxy;->access$000(Lcom/android/server/location/LocationProviderProxy;)Ljava/lang/Object;
+    invoke-static {v6}, Lcom/android/server/location/LocationProviderProxy;->access$100(Lcom/android/server/location/LocationProviderProxy;)Ljava/lang/Object;
 
     move-result-object v7
 
@@ -177,7 +190,7 @@
     iget-object v6, p0, Lcom/android/server/location/LocationProviderProxy$1;->this$0:Lcom/android/server/location/LocationProviderProxy;
 
     #setter for: Lcom/android/server/location/LocationProviderProxy;->mProperties:Lcom/android/internal/location/ProviderProperties;
-    invoke-static {v6, v2}, Lcom/android/server/location/LocationProviderProxy;->access$602(Lcom/android/server/location/LocationProviderProxy;Lcom/android/internal/location/ProviderProperties;)Lcom/android/internal/location/ProviderProperties;
+    invoke-static {v6, v2}, Lcom/android/server/location/LocationProviderProxy;->access$702(Lcom/android/server/location/LocationProviderProxy;Lcom/android/internal/location/ProviderProperties;)Lcom/android/internal/location/ProviderProperties;
 
     monitor-exit v7
 
@@ -222,7 +235,7 @@
     iget-object v8, p0, Lcom/android/server/location/LocationProviderProxy$1;->this$0:Lcom/android/server/location/LocationProviderProxy;
 
     #getter for: Lcom/android/server/location/LocationProviderProxy;->mServiceWatcher:Lcom/android/server/ServiceWatcher;
-    invoke-static {v8}, Lcom/android/server/location/LocationProviderProxy;->access$500(Lcom/android/server/location/LocationProviderProxy;)Lcom/android/server/ServiceWatcher;
+    invoke-static {v8}, Lcom/android/server/location/LocationProviderProxy;->access$600(Lcom/android/server/location/LocationProviderProxy;)Lcom/android/server/ServiceWatcher;
 
     move-result-object v8
 

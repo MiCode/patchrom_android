@@ -48,7 +48,7 @@
     iget-object v0, v0, Landroid/widget/Editor$SuggestionsPopupWindow;->this$0:Landroid/widget/Editor;
 
     #calls: Landroid/widget/Editor;->getPositionListener()Landroid/widget/Editor$PositionListener;
-    invoke-static {v0}, Landroid/widget/Editor;->access$1000(Landroid/widget/Editor;)Landroid/widget/Editor$PositionListener;
+    invoke-static {v0}, Landroid/widget/Editor;->access$1300(Landroid/widget/Editor;)Landroid/widget/Editor$PositionListener;
 
     move-result-object v0
 
@@ -91,7 +91,7 @@
     iget-object v1, p0, Landroid/widget/Editor$SuggestionsPopupWindow$CustomPopupWindow;->this$1:Landroid/widget/Editor$SuggestionsPopupWindow;
 
     #getter for: Landroid/widget/Editor$SuggestionsPopupWindow;->mCursorWasVisibleBeforeSuggestions:Z
-    invoke-static {v1}, Landroid/widget/Editor$SuggestionsPopupWindow;->access$1200(Landroid/widget/Editor$SuggestionsPopupWindow;)Z
+    invoke-static {v1}, Landroid/widget/Editor$SuggestionsPopupWindow;->access$1500(Landroid/widget/Editor$SuggestionsPopupWindow;)Z
 
     move-result v1
 
@@ -111,11 +111,11 @@
 
     iget-object v0, v0, Landroid/widget/Editor$SuggestionsPopupWindow;->this$0:Landroid/widget/Editor;
 
-    invoke-virtual {v0}, Landroid/widget/Editor;->getInsertionController()Landroid/widget/Editor$InsertionPointCursorController;
+    invoke-virtual {v0}, Landroid/widget/Editor;->getInsertionController()Landroid/widget/MiuiCursorController;
 
     move-result-object v0
 
-    invoke-virtual {v0}, Landroid/widget/Editor$InsertionPointCursorController;->show()V
+    invoke-virtual {v0}, Landroid/widget/MiuiCursorController;->show()V
 
     :cond_0
     return-void

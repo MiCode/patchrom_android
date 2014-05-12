@@ -33,13 +33,17 @@
 
 .field public static final DISABLE_SYSTEM_INFO:I = 0x100000
 
-.field public static final NAVIGATION_HINT_BACK_ALT:I = 0x8
+.field public static final NAVIGATION_HINT_BACK_ALT:I = 0x1
 
-.field public static final NAVIGATION_HINT_BACK_NOP:I = 0x1
+.field public static final WINDOW_NAVIGATION_BAR:I = 0x2
 
-.field public static final NAVIGATION_HINT_HOME_NOP:I = 0x2
+.field public static final WINDOW_STATE_HIDDEN:I = 0x2
 
-.field public static final NAVIGATION_HINT_RECENT_NOP:I = 0x4
+.field public static final WINDOW_STATE_HIDING:I = 0x1
+
+.field public static final WINDOW_STATE_SHOWING:I = 0x0
+
+.field public static final WINDOW_STATUS_BAR:I = 0x1
 
 
 # instance fields
@@ -117,6 +121,42 @@
     monitor-exit p0
 
     throw v0
+.end method
+
+.method public static windowStateToString(I)Ljava/lang/String;
+    .locals 1
+    .parameter "state"
+
+    .prologue
+    const/4 v0, 0x1
+
+    if-ne p0, v0, :cond_0
+
+    const-string v0, "WINDOW_STATE_HIDING"
+
+    :goto_0
+    return-object v0
+
+    :cond_0
+    const/4 v0, 0x2
+
+    if-ne p0, v0, :cond_1
+
+    const-string v0, "WINDOW_STATE_HIDDEN"
+
+    goto :goto_0
+
+    :cond_1
+    if-nez p0, :cond_2
+
+    const-string v0, "WINDOW_STATE_SHOWING"
+
+    goto :goto_0
+
+    :cond_2
+    const-string v0, "WINDOW_STATE_UNKNOWN"
+
+    goto :goto_0
 .end method
 
 

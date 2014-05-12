@@ -61,7 +61,7 @@
     .local v0, bpp:I
     if-eqz v1, :cond_0
 
-    sget-object v2, Landroid/widget/RemoteViews$2;->$SwitchMap$android$graphics$Bitmap$Config:[I
+    sget-object v2, Landroid/widget/RemoteViews$3;->$SwitchMap$android$graphics$Bitmap$Config:[I
 
     invoke-virtual {v1}, Landroid/graphics/Bitmap$Config;->ordinal()I
 

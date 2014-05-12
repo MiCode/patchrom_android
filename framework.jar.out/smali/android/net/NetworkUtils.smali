@@ -197,7 +197,7 @@
 .end method
 
 .method public static hexToInet6Address(Ljava/lang/String;)Ljava/net/InetAddress;
-    .locals 6
+    .locals 7
     .parameter "addrHexString"
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -207,109 +207,111 @@
 
     .prologue
     :try_start_0
-    const-string v1, "%s:%s:%s:%s:%s:%s:%s:%s"
+    sget-object v1, Ljava/util/Locale;->US:Ljava/util/Locale;
 
-    const/16 v2, 0x8
+    const-string v2, "%s:%s:%s:%s:%s:%s:%s:%s"
 
-    new-array v2, v2, [Ljava/lang/Object;
+    const/16 v3, 0x8
 
-    const/4 v3, 0x0
+    new-array v3, v3, [Ljava/lang/Object;
 
     const/4 v4, 0x0
 
+    const/4 v5, 0x0
+
+    const/4 v6, 0x4
+
+    invoke-virtual {p0, v5, v6}, Ljava/lang/String;->substring(II)Ljava/lang/String;
+
+    move-result-object v5
+
+    aput-object v5, v3, v4
+
+    const/4 v4, 0x1
+
     const/4 v5, 0x4
 
-    invoke-virtual {p0, v4, v5}, Ljava/lang/String;->substring(II)Ljava/lang/String;
+    const/16 v6, 0x8
 
-    move-result-object v4
+    invoke-virtual {p0, v5, v6}, Ljava/lang/String;->substring(II)Ljava/lang/String;
 
-    aput-object v4, v2, v3
+    move-result-object v5
 
-    const/4 v3, 0x1
+    aput-object v5, v3, v4
 
-    const/4 v4, 0x4
+    const/4 v4, 0x2
 
     const/16 v5, 0x8
 
-    invoke-virtual {p0, v4, v5}, Ljava/lang/String;->substring(II)Ljava/lang/String;
+    const/16 v6, 0xc
 
-    move-result-object v4
+    invoke-virtual {p0, v5, v6}, Ljava/lang/String;->substring(II)Ljava/lang/String;
 
-    aput-object v4, v2, v3
+    move-result-object v5
 
-    const/4 v3, 0x2
+    aput-object v5, v3, v4
 
-    const/16 v4, 0x8
+    const/4 v4, 0x3
 
     const/16 v5, 0xc
 
-    invoke-virtual {p0, v4, v5}, Ljava/lang/String;->substring(II)Ljava/lang/String;
+    const/16 v6, 0x10
 
-    move-result-object v4
+    invoke-virtual {p0, v5, v6}, Ljava/lang/String;->substring(II)Ljava/lang/String;
 
-    aput-object v4, v2, v3
+    move-result-object v5
 
-    const/4 v3, 0x3
+    aput-object v5, v3, v4
 
-    const/16 v4, 0xc
+    const/4 v4, 0x4
 
     const/16 v5, 0x10
 
-    invoke-virtual {p0, v4, v5}, Ljava/lang/String;->substring(II)Ljava/lang/String;
+    const/16 v6, 0x14
 
-    move-result-object v4
+    invoke-virtual {p0, v5, v6}, Ljava/lang/String;->substring(II)Ljava/lang/String;
 
-    aput-object v4, v2, v3
+    move-result-object v5
 
-    const/4 v3, 0x4
+    aput-object v5, v3, v4
 
-    const/16 v4, 0x10
+    const/4 v4, 0x5
 
     const/16 v5, 0x14
 
-    invoke-virtual {p0, v4, v5}, Ljava/lang/String;->substring(II)Ljava/lang/String;
+    const/16 v6, 0x18
 
-    move-result-object v4
+    invoke-virtual {p0, v5, v6}, Ljava/lang/String;->substring(II)Ljava/lang/String;
 
-    aput-object v4, v2, v3
+    move-result-object v5
 
-    const/4 v3, 0x5
+    aput-object v5, v3, v4
 
-    const/16 v4, 0x14
+    const/4 v4, 0x6
 
     const/16 v5, 0x18
 
-    invoke-virtual {p0, v4, v5}, Ljava/lang/String;->substring(II)Ljava/lang/String;
+    const/16 v6, 0x1c
 
-    move-result-object v4
+    invoke-virtual {p0, v5, v6}, Ljava/lang/String;->substring(II)Ljava/lang/String;
 
-    aput-object v4, v2, v3
+    move-result-object v5
 
-    const/4 v3, 0x6
+    aput-object v5, v3, v4
 
-    const/16 v4, 0x18
+    const/4 v4, 0x7
 
     const/16 v5, 0x1c
 
-    invoke-virtual {p0, v4, v5}, Ljava/lang/String;->substring(II)Ljava/lang/String;
+    const/16 v6, 0x20
 
-    move-result-object v4
+    invoke-virtual {p0, v5, v6}, Ljava/lang/String;->substring(II)Ljava/lang/String;
 
-    aput-object v4, v2, v3
+    move-result-object v5
 
-    const/4 v3, 0x7
+    aput-object v5, v3, v4
 
-    const/16 v4, 0x1c
-
-    const/16 v5, 0x20
-
-    invoke-virtual {p0, v4, v5}, Ljava/lang/String;->substring(II)Ljava/lang/String;
-
-    move-result-object v4
-
-    aput-object v4, v2, v3
-
-    invoke-static {v1, v2}, Ljava/lang/String;->format(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+    invoke-static {v1, v2, v3}, Ljava/lang/String;->format(Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
 
     move-result-object v1
 
@@ -364,7 +366,7 @@
     throw v1
 .end method
 
-.method public static inetAddressToInt(Ljava/net/InetAddress;)I
+.method public static inetAddressToInt(Ljava/net/Inet4Address;)I
     .locals 3
     .parameter "inetAddr"
     .annotation system Ldalvik/annotation/Throws;
@@ -374,26 +376,11 @@
     .end annotation
 
     .prologue
-    invoke-virtual {p0}, Ljava/net/InetAddress;->getAddress()[B
+    invoke-virtual {p0}, Ljava/net/Inet4Address;->getAddress()[B
 
     move-result-object v0
 
     .local v0, addr:[B
-    array-length v1, v0
-
-    const/4 v2, 0x4
-
-    if-eq v1, v2, :cond_0
-
-    new-instance v1, Ljava/lang/IllegalArgumentException;
-
-    const-string v2, "Not an IPv4 address"
-
-    invoke-direct {v1, v2}, Ljava/lang/IllegalArgumentException;-><init>(Ljava/lang/String;)V
-
-    throw v1
-
-    :cond_0
     const/4 v1, 0x3
 
     aget-byte v1, v0, v1
@@ -567,6 +554,9 @@
     return-object v4
 .end method
 
+.method public static native markSocket(II)V
+.end method
+
 .method public static netmaskIntToPrefixLength(I)I
     .locals 1
     .parameter "netmask"
@@ -642,10 +632,10 @@
 .method public static native resetConnections(Ljava/lang/String;I)I
 .end method
 
-.method public static native runDhcp(Ljava/lang/String;Landroid/net/DhcpInfoInternal;)Z
+.method public static native runDhcp(Ljava/lang/String;Landroid/net/DhcpResults;)Z
 .end method
 
-.method public static native runDhcpRenew(Ljava/lang/String;Landroid/net/DhcpInfoInternal;)Z
+.method public static native runDhcpRenew(Ljava/lang/String;Landroid/net/DhcpResults;)Z
 .end method
 
 .method public static native stopDhcp(Ljava/lang/String;)Z

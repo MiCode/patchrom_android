@@ -93,47 +93,52 @@
 .end method
 
 .method public constructor <init>(Ljava/lang/Throwable;)V
-    .locals 6
+    .locals 7
     .parameter "tr"
 
     .prologue
-    const/4 v5, 0x0
+    const/4 v6, 0x0
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    new-instance v2, Ljava/io/StringWriter;
+    new-instance v3, Ljava/io/StringWriter;
 
-    invoke-direct {v2}, Ljava/io/StringWriter;-><init>()V
+    invoke-direct {v3}, Ljava/io/StringWriter;-><init>()V
 
-    .local v2, sw:Ljava/io/StringWriter;
-    new-instance v4, Ljava/io/PrintWriter;
+    .local v3, sw:Ljava/io/StringWriter;
+    new-instance v1, Lcom/android/internal/util/FastPrintWriter;
 
-    invoke-direct {v4, v2}, Ljava/io/PrintWriter;-><init>(Ljava/io/Writer;)V
+    const/16 v5, 0x100
 
-    invoke-virtual {p1, v4}, Ljava/lang/Throwable;->printStackTrace(Ljava/io/PrintWriter;)V
+    invoke-direct {v1, v3, v6, v5}, Lcom/android/internal/util/FastPrintWriter;-><init>(Ljava/io/Writer;ZI)V
 
-    invoke-virtual {v2}, Ljava/io/StringWriter;->toString()Ljava/lang/String;
+    .local v1, pw:Ljava/io/PrintWriter;
+    invoke-virtual {p1, v1}, Ljava/lang/Throwable;->printStackTrace(Ljava/io/PrintWriter;)V
 
-    move-result-object v4
+    invoke-virtual {v1}, Ljava/io/PrintWriter;->flush()V
 
-    iput-object v4, p0, Landroid/app/ApplicationErrorReport$CrashInfo;->stackTrace:Ljava/lang/String;
+    invoke-virtual {v3}, Ljava/io/StringWriter;->toString()Ljava/lang/String;
+
+    move-result-object v5
+
+    iput-object v5, p0, Landroid/app/ApplicationErrorReport$CrashInfo;->stackTrace:Ljava/lang/String;
 
     invoke-virtual {p1}, Ljava/lang/Throwable;->getMessage()Ljava/lang/String;
 
-    move-result-object v4
+    move-result-object v5
 
-    iput-object v4, p0, Landroid/app/ApplicationErrorReport$CrashInfo;->exceptionMessage:Ljava/lang/String;
+    iput-object v5, p0, Landroid/app/ApplicationErrorReport$CrashInfo;->exceptionMessage:Ljava/lang/String;
 
-    move-object v1, p1
+    move-object v2, p1
 
-    .local v1, rootTr:Ljava/lang/Throwable;
+    .local v2, rootTr:Ljava/lang/Throwable;
     :cond_0
     :goto_0
     invoke-virtual {p1}, Ljava/lang/Throwable;->getCause()Ljava/lang/Throwable;
 
-    move-result-object v4
+    move-result-object v5
 
-    if-eqz v4, :cond_2
+    if-eqz v5, :cond_2
 
     invoke-virtual {p1}, Ljava/lang/Throwable;->getCause()Ljava/lang/Throwable;
 
@@ -141,19 +146,19 @@
 
     invoke-virtual {p1}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
 
-    move-result-object v4
+    move-result-object v5
 
-    if-eqz v4, :cond_1
+    if-eqz v5, :cond_1
 
     invoke-virtual {p1}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
 
-    move-result-object v4
+    move-result-object v5
 
-    array-length v4, v4
+    array-length v5, v5
 
-    if-lez v4, :cond_1
+    if-lez v5, :cond_1
 
-    move-object v1, p1
+    move-object v2, p1
 
     :cond_1
     invoke-virtual {p1}, Ljava/lang/Throwable;->getMessage()Ljava/lang/String;
@@ -165,9 +170,9 @@
 
     invoke-virtual {v0}, Ljava/lang/String;->length()I
 
-    move-result v4
+    move-result v5
 
-    if-lez v4, :cond_0
+    if-lez v5, :cond_0
 
     iput-object v0, p0, Landroid/app/ApplicationErrorReport$CrashInfo;->exceptionMessage:Ljava/lang/String;
 
@@ -175,73 +180,73 @@
 
     .end local v0           #msg:Ljava/lang/String;
     :cond_2
-    invoke-virtual {v1}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
+    invoke-virtual {v2}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
 
-    move-result-object v4
+    move-result-object v5
 
-    invoke-virtual {v4}, Ljava/lang/Class;->getName()Ljava/lang/String;
+    invoke-virtual {v5}, Ljava/lang/Class;->getName()Ljava/lang/String;
 
-    move-result-object v4
+    move-result-object v5
 
-    iput-object v4, p0, Landroid/app/ApplicationErrorReport$CrashInfo;->exceptionClassName:Ljava/lang/String;
+    iput-object v5, p0, Landroid/app/ApplicationErrorReport$CrashInfo;->exceptionClassName:Ljava/lang/String;
 
-    invoke-virtual {v1}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
+    invoke-virtual {v2}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
 
-    move-result-object v4
+    move-result-object v5
 
-    array-length v4, v4
+    array-length v5, v5
 
-    if-lez v4, :cond_3
+    if-lez v5, :cond_3
 
-    invoke-virtual {v1}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
+    invoke-virtual {v2}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
 
-    move-result-object v4
+    move-result-object v5
 
-    aget-object v3, v4, v5
+    aget-object v4, v5, v6
 
-    .local v3, trace:Ljava/lang/StackTraceElement;
-    invoke-virtual {v3}, Ljava/lang/StackTraceElement;->getFileName()Ljava/lang/String;
+    .local v4, trace:Ljava/lang/StackTraceElement;
+    invoke-virtual {v4}, Ljava/lang/StackTraceElement;->getFileName()Ljava/lang/String;
 
-    move-result-object v4
+    move-result-object v5
 
-    iput-object v4, p0, Landroid/app/ApplicationErrorReport$CrashInfo;->throwFileName:Ljava/lang/String;
+    iput-object v5, p0, Landroid/app/ApplicationErrorReport$CrashInfo;->throwFileName:Ljava/lang/String;
 
-    invoke-virtual {v3}, Ljava/lang/StackTraceElement;->getClassName()Ljava/lang/String;
+    invoke-virtual {v4}, Ljava/lang/StackTraceElement;->getClassName()Ljava/lang/String;
 
-    move-result-object v4
+    move-result-object v5
 
-    iput-object v4, p0, Landroid/app/ApplicationErrorReport$CrashInfo;->throwClassName:Ljava/lang/String;
+    iput-object v5, p0, Landroid/app/ApplicationErrorReport$CrashInfo;->throwClassName:Ljava/lang/String;
 
-    invoke-virtual {v3}, Ljava/lang/StackTraceElement;->getMethodName()Ljava/lang/String;
+    invoke-virtual {v4}, Ljava/lang/StackTraceElement;->getMethodName()Ljava/lang/String;
 
-    move-result-object v4
+    move-result-object v5
 
-    iput-object v4, p0, Landroid/app/ApplicationErrorReport$CrashInfo;->throwMethodName:Ljava/lang/String;
+    iput-object v5, p0, Landroid/app/ApplicationErrorReport$CrashInfo;->throwMethodName:Ljava/lang/String;
 
-    invoke-virtual {v3}, Ljava/lang/StackTraceElement;->getLineNumber()I
+    invoke-virtual {v4}, Ljava/lang/StackTraceElement;->getLineNumber()I
 
-    move-result v4
+    move-result v5
 
-    iput v4, p0, Landroid/app/ApplicationErrorReport$CrashInfo;->throwLineNumber:I
+    iput v5, p0, Landroid/app/ApplicationErrorReport$CrashInfo;->throwLineNumber:I
 
-    .end local v3           #trace:Ljava/lang/StackTraceElement;
+    .end local v4           #trace:Ljava/lang/StackTraceElement;
     :goto_1
     return-void
 
     :cond_3
-    const-string v4, "unknown"
+    const-string v5, "unknown"
 
-    iput-object v4, p0, Landroid/app/ApplicationErrorReport$CrashInfo;->throwFileName:Ljava/lang/String;
+    iput-object v5, p0, Landroid/app/ApplicationErrorReport$CrashInfo;->throwFileName:Ljava/lang/String;
 
-    const-string v4, "unknown"
+    const-string v5, "unknown"
 
-    iput-object v4, p0, Landroid/app/ApplicationErrorReport$CrashInfo;->throwClassName:Ljava/lang/String;
+    iput-object v5, p0, Landroid/app/ApplicationErrorReport$CrashInfo;->throwClassName:Ljava/lang/String;
 
-    const-string v4, "unknown"
+    const-string v5, "unknown"
 
-    iput-object v4, p0, Landroid/app/ApplicationErrorReport$CrashInfo;->throwMethodName:Ljava/lang/String;
+    iput-object v5, p0, Landroid/app/ApplicationErrorReport$CrashInfo;->throwMethodName:Ljava/lang/String;
 
-    iput v5, p0, Landroid/app/ApplicationErrorReport$CrashInfo;->throwLineNumber:I
+    iput v6, p0, Landroid/app/ApplicationErrorReport$CrashInfo;->throwLineNumber:I
 
     goto :goto_1
 .end method

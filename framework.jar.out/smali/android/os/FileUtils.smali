@@ -30,6 +30,8 @@
 
 .field public static final S_IXUSR:I = 0x40
 
+.field private static final TAG:Ljava/lang/String; = "FileUtils"
+
 
 # direct methods
 .method static constructor <clinit>()V
@@ -336,7 +338,130 @@
     goto :goto_3
 .end method
 
-.method public static native getFatVolumeId(Ljava/lang/String;)I
+.method public static deleteOlderFiles(Ljava/io/File;IJ)V
+    .locals 9
+    .parameter "dir"
+    .parameter "minCount"
+    .parameter "minAge"
+
+    .prologue
+    if-ltz p1, :cond_0
+
+    const-wide/16 v5, 0x0
+
+    cmp-long v5, p2, v5
+
+    if-gez v5, :cond_1
+
+    :cond_0
+    new-instance v5, Ljava/lang/IllegalArgumentException;
+
+    const-string v6, "Constraints must be positive or 0"
+
+    invoke-direct {v5, v6}, Ljava/lang/IllegalArgumentException;-><init>(Ljava/lang/String;)V
+
+    throw v5
+
+    :cond_1
+    invoke-virtual {p0}, Ljava/io/File;->listFiles()[Ljava/io/File;
+
+    move-result-object v3
+
+    .local v3, files:[Ljava/io/File;
+    if-nez v3, :cond_3
+
+    :cond_2
+    return-void
+
+    :cond_3
+    new-instance v5, Landroid/os/FileUtils$1;
+
+    invoke-direct {v5}, Landroid/os/FileUtils$1;-><init>()V
+
+    invoke-static {v3, v5}, Ljava/util/Arrays;->sort([Ljava/lang/Object;Ljava/util/Comparator;)V
+
+    move v4, p1
+
+    .local v4, i:I
+    :goto_0
+    array-length v5, v3
+
+    if-ge v4, v5, :cond_2
+
+    aget-object v2, v3, v4
+
+    .local v2, file:Ljava/io/File;
+    invoke-static {}, Ljava/lang/System;->currentTimeMillis()J
+
+    move-result-wide v5
+
+    invoke-virtual {v2}, Ljava/io/File;->lastModified()J
+
+    move-result-wide v7
+
+    sub-long v0, v5, v7
+
+    .local v0, age:J
+    cmp-long v5, v0, p2
+
+    if-lez v5, :cond_4
+
+    const-string v5, "FileUtils"
+
+    new-instance v6, Ljava/lang/StringBuilder;
+
+    invoke-direct {v6}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v7, "Deleting old file "
+
+    invoke-virtual {v6, v7}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v6
+
+    invoke-virtual {v6, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    move-result-object v6
+
+    invoke-virtual {v6}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v6
+
+    invoke-static {v5, v6}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    invoke-virtual {v2}, Ljava/io/File;->delete()Z
+
+    :cond_4
+    add-int/lit8 v4, v4, 0x1
+
+    goto :goto_0
+.end method
+
+.method public static getUid(Ljava/lang/String;)I
+    .locals 2
+    .parameter "path"
+
+    .prologue
+    :try_start_0
+    sget-object v1, Llibcore/io/Libcore;->os:Llibcore/io/Os;
+
+    invoke-interface {v1, p0}, Llibcore/io/Os;->stat(Ljava/lang/String;)Llibcore/io/StructStat;
+
+    move-result-object v1
+
+    iget v1, v1, Llibcore/io/StructStat;->st_uid:I
+    :try_end_0
+    .catch Llibcore/io/ErrnoException; {:try_start_0 .. :try_end_0} :catch_0
+
+    :goto_0
+    return v1
+
+    :catch_0
+    move-exception v0
+
+    .local v0, e:Llibcore/io/ErrnoException;
+    const/4 v1, -0x1
+
+    goto :goto_0
 .end method
 
 .method public static isFilenameSafe(Ljava/io/File;)Z
@@ -733,7 +858,233 @@
     throw v12
 .end method
 
-.method public static native setPermissions(Ljava/lang/String;III)I
+.method public static setPermissions(Ljava/io/File;III)I
+    .locals 1
+    .parameter "path"
+    .parameter "mode"
+    .parameter "uid"
+    .parameter "gid"
+
+    .prologue
+    invoke-virtual {p0}, Ljava/io/File;->getAbsolutePath()Ljava/lang/String;
+
+    move-result-object v0
+
+    invoke-static {v0, p1, p2, p3}, Landroid/os/FileUtils;->setPermissions(Ljava/lang/String;III)I
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public static setPermissions(Ljava/io/FileDescriptor;III)I
+    .locals 4
+    .parameter "fd"
+    .parameter "mode"
+    .parameter "uid"
+    .parameter "gid"
+
+    .prologue
+    :try_start_0
+    sget-object v1, Llibcore/io/Libcore;->os:Llibcore/io/Os;
+
+    invoke-interface {v1, p0, p1}, Llibcore/io/Os;->fchmod(Ljava/io/FileDescriptor;I)V
+    :try_end_0
+    .catch Llibcore/io/ErrnoException; {:try_start_0 .. :try_end_0} :catch_0
+
+    if-gez p2, :cond_0
+
+    if-ltz p3, :cond_1
+
+    :cond_0
+    :try_start_1
+    sget-object v1, Llibcore/io/Libcore;->os:Llibcore/io/Os;
+
+    invoke-interface {v1, p0, p2, p3}, Llibcore/io/Os;->fchown(Ljava/io/FileDescriptor;II)V
+    :try_end_1
+    .catch Llibcore/io/ErrnoException; {:try_start_1 .. :try_end_1} :catch_1
+
+    :cond_1
+    const/4 v1, 0x0
+
+    :goto_0
+    return v1
+
+    :catch_0
+    move-exception v0
+
+    .local v0, e:Llibcore/io/ErrnoException;
+    const-string v1, "FileUtils"
+
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v3, "Failed to fchmod(): "
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-static {v1, v2}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
+
+    iget v1, v0, Llibcore/io/ErrnoException;->errno:I
+
+    goto :goto_0
+
+    .end local v0           #e:Llibcore/io/ErrnoException;
+    :catch_1
+    move-exception v0
+
+    .restart local v0       #e:Llibcore/io/ErrnoException;
+    const-string v1, "FileUtils"
+
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v3, "Failed to fchown(): "
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-static {v1, v2}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
+
+    iget v1, v0, Llibcore/io/ErrnoException;->errno:I
+
+    goto :goto_0
+.end method
+
+.method public static setPermissions(Ljava/lang/String;III)I
+    .locals 4
+    .parameter "path"
+    .parameter "mode"
+    .parameter "uid"
+    .parameter "gid"
+
+    .prologue
+    :try_start_0
+    sget-object v1, Llibcore/io/Libcore;->os:Llibcore/io/Os;
+
+    invoke-interface {v1, p0, p1}, Llibcore/io/Os;->chmod(Ljava/lang/String;I)V
+    :try_end_0
+    .catch Llibcore/io/ErrnoException; {:try_start_0 .. :try_end_0} :catch_0
+
+    if-gez p2, :cond_0
+
+    if-ltz p3, :cond_1
+
+    :cond_0
+    :try_start_1
+    sget-object v1, Llibcore/io/Libcore;->os:Llibcore/io/Os;
+
+    invoke-interface {v1, p0, p2, p3}, Llibcore/io/Os;->chown(Ljava/lang/String;II)V
+    :try_end_1
+    .catch Llibcore/io/ErrnoException; {:try_start_1 .. :try_end_1} :catch_1
+
+    :cond_1
+    const/4 v1, 0x0
+
+    :goto_0
+    return v1
+
+    :catch_0
+    move-exception v0
+
+    .local v0, e:Llibcore/io/ErrnoException;
+    const-string v1, "FileUtils"
+
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v3, "Failed to chmod("
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2, p0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    const-string v3, "): "
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-static {v1, v2}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
+
+    iget v1, v0, Llibcore/io/ErrnoException;->errno:I
+
+    goto :goto_0
+
+    .end local v0           #e:Llibcore/io/ErrnoException;
+    :catch_1
+    move-exception v0
+
+    .restart local v0       #e:Llibcore/io/ErrnoException;
+    const-string v1, "FileUtils"
+
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v3, "Failed to chown("
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2, p0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    const-string v3, "): "
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-static {v1, v2}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
+
+    iget v1, v0, Llibcore/io/ErrnoException;->errno:I
+
+    goto :goto_0
 .end method
 
 .method public static stringToFile(Ljava/lang/String;Ljava/lang/String;)V

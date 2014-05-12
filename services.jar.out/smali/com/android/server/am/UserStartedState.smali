@@ -1,4 +1,4 @@
-.class public Lcom/android/server/am/UserStartedState;
+.class public final Lcom/android/server/am/UserStartedState;
 .super Ljava/lang/Object;
 .source "UserStartedState.java"
 

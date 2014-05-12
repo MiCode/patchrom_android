@@ -119,7 +119,7 @@
     iget-object v1, p0, Lcom/android/server/ConnectivityService$DefaultNetworkFactory;->mTrackerHandler:Landroid/os/Handler;
 
     #calls: Lcom/android/server/ConnectivityService;->makeWimaxStateTracker(Landroid/content/Context;Landroid/os/Handler;)Landroid/net/NetworkStateTracker;
-    invoke-static {v0, v1}, Lcom/android/server/ConnectivityService;->access$100(Landroid/content/Context;Landroid/os/Handler;)Landroid/net/NetworkStateTracker;
+    invoke-static {v0, v1}, Lcom/android/server/ConnectivityService;->access$200(Landroid/content/Context;Landroid/os/Handler;)Landroid/net/NetworkStateTracker;
 
     move-result-object v0
 
@@ -129,15 +129,6 @@
     invoke-static {}, Landroid/net/EthernetDataTracker;->getInstance()Landroid/net/EthernetDataTracker;
 
     move-result-object v0
-
-    goto :goto_0
-
-    :pswitch_7
-    new-instance v0, Landroid/net/UsbShareNetStateTracker;
-
-    iget-object v1, p2, Landroid/net/NetworkConfig;->name:Ljava/lang/String;
-
-    invoke-direct {v0, p1, v1}, Landroid/net/UsbShareNetStateTracker;-><init>(ILjava/lang/String;)V
 
     goto :goto_0
 
@@ -155,10 +146,5 @@
         :pswitch_4
         :pswitch_3
         :pswitch_6
-        :pswitch_0
-        :pswitch_0
-        :pswitch_0
-        :pswitch_0
-        :pswitch_7
     .end packed-switch
 .end method

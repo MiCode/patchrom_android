@@ -91,7 +91,7 @@
 
     check-cast v5, [Landroid/hardware/display/WifiDisplay;
 
-    .local v5, availableDisplays:[Landroid/hardware/display/WifiDisplay;
+    .local v5, displays:[Landroid/hardware/display/WifiDisplay;
     const/4 v7, 0x0
 
     .local v7, i:I
@@ -115,44 +115,18 @@
     goto :goto_0
 
     :cond_1
-    sget-object v0, Landroid/hardware/display/WifiDisplay;->CREATOR:Landroid/os/Parcelable$Creator;
-
-    invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
-
-    move-result v8
-
-    invoke-interface {v0, v8}, Landroid/os/Parcelable$Creator;->newArray(I)[Ljava/lang/Object;
-
-    move-result-object v6
-
-    check-cast v6, [Landroid/hardware/display/WifiDisplay;
-
-    .local v6, rememberedDisplays:[Landroid/hardware/display/WifiDisplay;
-    const/4 v7, 0x0
-
-    :goto_1
-    array-length v0, v6
-
-    if-ge v7, v0, :cond_2
-
-    sget-object v0, Landroid/hardware/display/WifiDisplay;->CREATOR:Landroid/os/Parcelable$Creator;
+    sget-object v0, Landroid/hardware/display/WifiDisplaySessionInfo;->CREATOR:Landroid/os/Parcelable$Creator;
 
     invoke-interface {v0, p1}, Landroid/os/Parcelable$Creator;->createFromParcel(Landroid/os/Parcel;)Ljava/lang/Object;
 
-    move-result-object v0
+    move-result-object v6
 
-    check-cast v0, Landroid/hardware/display/WifiDisplay;
+    check-cast v6, Landroid/hardware/display/WifiDisplaySessionInfo;
 
-    aput-object v0, v6, v7
-
-    add-int/lit8 v7, v7, 0x1
-
-    goto :goto_1
-
-    :cond_2
+    .local v6, sessionInfo:Landroid/hardware/display/WifiDisplaySessionInfo;
     new-instance v0, Landroid/hardware/display/WifiDisplayStatus;
 
-    invoke-direct/range {v0 .. v6}, Landroid/hardware/display/WifiDisplayStatus;-><init>(IIILandroid/hardware/display/WifiDisplay;[Landroid/hardware/display/WifiDisplay;[Landroid/hardware/display/WifiDisplay;)V
+    invoke-direct/range {v0 .. v6}, Landroid/hardware/display/WifiDisplayStatus;-><init>(IIILandroid/hardware/display/WifiDisplay;[Landroid/hardware/display/WifiDisplay;Landroid/hardware/display/WifiDisplaySessionInfo;)V
 
     return-object v0
 .end method

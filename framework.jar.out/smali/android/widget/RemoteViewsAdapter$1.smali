@@ -45,14 +45,14 @@
     .locals 3
 
     .prologue
-    invoke-static {}, Landroid/widget/RemoteViewsAdapter;->access$1400()Ljava/util/HashMap;
+    invoke-static {}, Landroid/widget/RemoteViewsAdapter;->access$1500()Ljava/util/HashMap;
 
     move-result-object v1
 
     monitor-enter v1
 
     :try_start_0
-    invoke-static {}, Landroid/widget/RemoteViewsAdapter;->access$1400()Ljava/util/HashMap;
+    invoke-static {}, Landroid/widget/RemoteViewsAdapter;->access$1500()Ljava/util/HashMap;
 
     move-result-object v0
 
@@ -64,7 +64,7 @@
 
     if-eqz v0, :cond_0
 
-    invoke-static {}, Landroid/widget/RemoteViewsAdapter;->access$1400()Ljava/util/HashMap;
+    invoke-static {}, Landroid/widget/RemoteViewsAdapter;->access$1500()Ljava/util/HashMap;
 
     move-result-object v0
 
@@ -73,7 +73,7 @@
     invoke-virtual {v0, v2}, Ljava/util/HashMap;->remove(Ljava/lang/Object;)Ljava/lang/Object;
 
     :cond_0
-    invoke-static {}, Landroid/widget/RemoteViewsAdapter;->access$1500()Ljava/util/HashMap;
+    invoke-static {}, Landroid/widget/RemoteViewsAdapter;->access$1600()Ljava/util/HashMap;
 
     move-result-object v0
 
@@ -85,7 +85,7 @@
 
     if-eqz v0, :cond_1
 
-    invoke-static {}, Landroid/widget/RemoteViewsAdapter;->access$1500()Ljava/util/HashMap;
+    invoke-static {}, Landroid/widget/RemoteViewsAdapter;->access$1600()Ljava/util/HashMap;
 
     move-result-object v0
 

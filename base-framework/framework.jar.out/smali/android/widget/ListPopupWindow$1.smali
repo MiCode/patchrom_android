@@ -1,14 +1,11 @@
 .class Landroid/widget/ListPopupWindow$1;
-.super Ljava/lang/Object;
+.super Landroid/widget/ListPopupWindow$ForwardingListener;
 .source "ListPopupWindow.java"
-
-# interfaces
-.implements Ljava/lang/Runnable;
 
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Landroid/widget/ListPopupWindow;->buildDropDown()I
+    value = Landroid/widget/ListPopupWindow;->createDragToOpenListener(Landroid/view/View;)Landroid/view/View$OnTouchListener;
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -22,43 +19,26 @@
 
 
 # direct methods
-.method constructor <init>(Landroid/widget/ListPopupWindow;)V
+.method constructor <init>(Landroid/widget/ListPopupWindow;Landroid/view/View;)V
     .locals 0
     .parameter
+    .parameter "x0"
 
     .prologue
     iput-object p1, p0, Landroid/widget/ListPopupWindow$1;->this$0:Landroid/widget/ListPopupWindow;
 
-    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+    invoke-direct {p0, p2}, Landroid/widget/ListPopupWindow$ForwardingListener;-><init>(Landroid/view/View;)V
 
     return-void
 .end method
 
 
 # virtual methods
-.method public run()V
-    .locals 2
+.method public getPopup()Landroid/widget/ListPopupWindow;
+    .locals 1
 
     .prologue
-    iget-object v1, p0, Landroid/widget/ListPopupWindow$1;->this$0:Landroid/widget/ListPopupWindow;
+    iget-object v0, p0, Landroid/widget/ListPopupWindow$1;->this$0:Landroid/widget/ListPopupWindow;
 
-    invoke-virtual {v1}, Landroid/widget/ListPopupWindow;->getAnchorView()Landroid/view/View;
-
-    move-result-object v0
-
-    .local v0, view:Landroid/view/View;
-    if-eqz v0, :cond_0
-
-    invoke-virtual {v0}, Landroid/view/View;->getWindowToken()Landroid/os/IBinder;
-
-    move-result-object v1
-
-    if-eqz v1, :cond_0
-
-    iget-object v1, p0, Landroid/widget/ListPopupWindow$1;->this$0:Landroid/widget/ListPopupWindow;
-
-    invoke-virtual {v1}, Landroid/widget/ListPopupWindow;->show()V
-
-    :cond_0
-    return-void
+    return-object v0
 .end method

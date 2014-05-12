@@ -10,7 +10,6 @@
 # annotations
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
-        Landroid/preference/PreferenceScreen$Injector;,
         Landroid/preference/PreferenceScreen$SavedState;
     }
 .end annotation
@@ -68,7 +67,7 @@
     check-cast v3, Landroid/view/LayoutInflater;
 
     .local v3, inflater:Landroid/view/LayoutInflater;
-    const v5, 0x10900a8
+    const v5, 0x109007d
 
     invoke-virtual {v3, v5, v6}, Landroid/view/LayoutInflater;->inflate(ILandroid/view/ViewGroup;)Landroid/view/View;
 
@@ -158,7 +157,7 @@
 
     move-result-object v0
 
-    invoke-static {p1, v0}, Landroid/preference/PreferenceScreen$Injector;->addHeaderView(Landroid/widget/ListView;Landroid/widget/ListAdapter;)V
+    invoke-static {p1, v0}, Landroid/preference/Injector$PreferenceScreenHook;->addHeaderView(Landroid/widget/ListView;Landroid/widget/ListAdapter;)V
 
     invoke-virtual {p0}, Landroid/preference/PreferenceScreen;->getRootAdapter()Landroid/widget/ListAdapter;
 
@@ -166,7 +165,7 @@
 
     invoke-virtual {p1, v0}, Landroid/widget/ListView;->setAdapter(Landroid/widget/ListAdapter;)V
 
-    invoke-static {p1}, Landroid/preference/PreferenceScreen$Injector;->bind(Landroid/widget/ListView;)V
+    invoke-static {p1}, Landroid/preference/Injector$PreferenceScreenHook;->bind(Landroid/widget/ListView;)V
 
     invoke-virtual {p0}, Landroid/preference/PreferenceScreen;->onAttachedToActivity()V
 

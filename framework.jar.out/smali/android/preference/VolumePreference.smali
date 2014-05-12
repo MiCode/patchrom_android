@@ -93,7 +93,7 @@
 
     move-result-object v2
 
-    const v3, 0x1020347
+    const v3, 0x10202fa
 
     invoke-virtual {v2, v3}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -134,7 +134,8 @@
 
     iget-object v0, p0, Landroid/preference/VolumePreference;->mSeekBarVolumizer:Landroid/preference/VolumePreference$SeekBarVolumizer;
 
-    invoke-virtual {v0}, Landroid/preference/VolumePreference$SeekBarVolumizer;->stopSample()V
+    #calls: Landroid/preference/VolumePreference$SeekBarVolumizer;->postStopSample()V
+    invoke-static {v0}, Landroid/preference/VolumePreference$SeekBarVolumizer;->access$000(Landroid/preference/VolumePreference$SeekBarVolumizer;)V
 
     :cond_0
     return-void
@@ -147,7 +148,7 @@
     .prologue
     invoke-super {p0, p1}, Landroid/preference/SeekBarDialogPreference;->onBindDialogView(Landroid/view/View;)V
 
-    const v1, 0x1020347
+    const v1, 0x10202fa
 
     invoke-virtual {p1, v1}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 

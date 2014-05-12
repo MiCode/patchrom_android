@@ -18,7 +18,9 @@
     .end annotation
 .end field
 
-.field private static final DIGEST_TYPES:[Ljava/lang/String; = null
+.field private static final DIGEST_ALGORITHM:Ljava/lang/String; = "SHA-256"
+
+.field private static final TAG:Ljava/lang/String; = "ManifestDigest"
 
 .field private static final TO_STRING_PREFIX:Ljava/lang/String; = "ManifestDigest {mDigest="
 
@@ -29,33 +31,9 @@
 
 # direct methods
 .method static constructor <clinit>()V
-    .locals 3
+    .locals 1
 
     .prologue
-    const/4 v0, 0x3
-
-    new-array v0, v0, [Ljava/lang/String;
-
-    const/4 v1, 0x0
-
-    const-string v2, "SHA1-Digest"
-
-    aput-object v2, v0, v1
-
-    const/4 v1, 0x1
-
-    const-string v2, "SHA-Digest"
-
-    aput-object v2, v0, v1
-
-    const/4 v1, 0x2
-
-    const-string v2, "MD5-Digest"
-
-    aput-object v2, v0, v1
-
-    sput-object v0, Landroid/content/pm/ManifestDigest;->DIGEST_TYPES:[Ljava/lang/String;
-
     new-instance v0, Landroid/content/pm/ManifestDigest$1;
 
     invoke-direct {v0}, Landroid/content/pm/ManifestDigest$1;-><init>()V
@@ -104,69 +82,116 @@
     return-void
 .end method
 
-.method static fromAttributes(Ljava/util/jar/Attributes;)Landroid/content/pm/ManifestDigest;
-    .locals 6
-    .parameter "attributes"
+.method static fromInputStream(Ljava/io/InputStream;)Landroid/content/pm/ManifestDigest;
+    .locals 8
+    .parameter "fileIs"
 
     .prologue
-    const/4 v4, 0x0
+    const/4 v5, 0x0
 
-    if-nez p0, :cond_1
+    if-nez p0, :cond_0
+
+    :goto_0
+    return-object v5
 
     :cond_0
-    :goto_0
-    return-object v4
+    :try_start_0
+    const-string v6, "SHA-256"
 
-    :cond_1
-    const/4 v1, 0x0
-
-    .local v1, encodedDigest:Ljava/lang/String;
-    const/4 v2, 0x0
-
-    .local v2, i:I
-    :goto_1
-    sget-object v5, Landroid/content/pm/ManifestDigest;->DIGEST_TYPES:[Ljava/lang/String;
-
-    array-length v5, v5
-
-    if-ge v2, v5, :cond_2
-
-    sget-object v5, Landroid/content/pm/ManifestDigest;->DIGEST_TYPES:[Ljava/lang/String;
-
-    aget-object v5, v5, v2
-
-    invoke-virtual {p0, v5}, Ljava/util/jar/Attributes;->getValue(Ljava/lang/String;)Ljava/lang/String;
+    invoke-static {v6}, Ljava/security/MessageDigest;->getInstance(Ljava/lang/String;)Ljava/security/MessageDigest;
+    :try_end_0
+    .catch Ljava/security/NoSuchAlgorithmException; {:try_start_0 .. :try_end_0} :catch_0
 
     move-result-object v3
 
-    .local v3, value:Ljava/lang/String;
-    if-eqz v3, :cond_3
+    .local v3, md:Ljava/security/MessageDigest;
+    new-instance v1, Ljava/security/DigestInputStream;
 
-    move-object v1, v3
+    new-instance v6, Ljava/io/BufferedInputStream;
 
-    .end local v3           #value:Ljava/lang/String;
-    :cond_2
-    if-eqz v1, :cond_0
+    invoke-direct {v6, p0}, Ljava/io/BufferedInputStream;-><init>(Ljava/io/InputStream;)V
 
-    const/4 v4, 0x0
+    invoke-direct {v1, v6, v3}, Ljava/security/DigestInputStream;-><init>(Ljava/io/InputStream;Ljava/security/MessageDigest;)V
 
-    invoke-static {v1, v4}, Landroid/util/Base64;->decode(Ljava/lang/String;I)[B
+    .local v1, dis:Ljava/security/DigestInputStream;
+    const/16 v6, 0x2000
+
+    :try_start_1
+    new-array v4, v6, [B
+
+    .local v4, readBuffer:[B
+    :cond_1
+    const/4 v6, 0x0
+
+    array-length v7, v4
+
+    invoke-virtual {v1, v4, v6, v7}, Ljava/security/DigestInputStream;->read([BII)I
+    :try_end_1
+    .catchall {:try_start_1 .. :try_end_1} :catchall_0
+    .catch Ljava/io/IOException; {:try_start_1 .. :try_end_1} :catch_1
+
+    move-result v6
+
+    const/4 v7, -0x1
+
+    if-ne v6, v7, :cond_1
+
+    invoke-static {v1}, Llibcore/io/IoUtils;->closeQuietly(Ljava/lang/AutoCloseable;)V
+
+    invoke-virtual {v3}, Ljava/security/MessageDigest;->digest()[B
 
     move-result-object v0
 
     .local v0, digest:[B
-    new-instance v4, Landroid/content/pm/ManifestDigest;
+    new-instance v5, Landroid/content/pm/ManifestDigest;
 
-    invoke-direct {v4, v0}, Landroid/content/pm/ManifestDigest;-><init>([B)V
+    invoke-direct {v5, v0}, Landroid/content/pm/ManifestDigest;-><init>([B)V
 
     goto :goto_0
 
     .end local v0           #digest:[B
-    .restart local v3       #value:Ljava/lang/String;
-    :cond_3
-    add-int/lit8 v2, v2, 0x1
+    .end local v1           #dis:Ljava/security/DigestInputStream;
+    .end local v3           #md:Ljava/security/MessageDigest;
+    .end local v4           #readBuffer:[B
+    :catch_0
+    move-exception v2
 
-    goto :goto_1
+    .local v2, e:Ljava/security/NoSuchAlgorithmException;
+    new-instance v5, Ljava/lang/RuntimeException;
+
+    const-string v6, "SHA-256 must be available"
+
+    invoke-direct {v5, v6, v2}, Ljava/lang/RuntimeException;-><init>(Ljava/lang/String;Ljava/lang/Throwable;)V
+
+    throw v5
+
+    .end local v2           #e:Ljava/security/NoSuchAlgorithmException;
+    .restart local v1       #dis:Ljava/security/DigestInputStream;
+    .restart local v3       #md:Ljava/security/MessageDigest;
+    :catch_1
+    move-exception v2
+
+    .local v2, e:Ljava/io/IOException;
+    :try_start_2
+    const-string v6, "ManifestDigest"
+
+    const-string v7, "Could not read manifest"
+
+    invoke-static {v6, v7}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
+    :try_end_2
+    .catchall {:try_start_2 .. :try_end_2} :catchall_0
+
+    invoke-static {v1}, Llibcore/io/IoUtils;->closeQuietly(Ljava/lang/AutoCloseable;)V
+
+    goto :goto_0
+
+    .end local v2           #e:Ljava/io/IOException;
+    :catchall_0
+    move-exception v5
+
+    invoke-static {v1}, Llibcore/io/IoUtils;->closeQuietly(Ljava/lang/AutoCloseable;)V
+
+    throw v5
 .end method
 
 

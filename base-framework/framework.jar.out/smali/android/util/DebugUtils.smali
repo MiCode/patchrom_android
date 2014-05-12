@@ -191,7 +191,9 @@
 
     move-result-object v11
 
-    invoke-virtual {v11}, Ljava/lang/String;->toUpperCase()Ljava/lang/String;
+    sget-object v12, Ljava/util/Locale;->ROOT:Ljava/util/Locale;
+
+    invoke-virtual {v11, v12}, Ljava/lang/String;->toUpperCase(Ljava/util/Locale;)Ljava/lang/String;
 
     move-result-object v11
 

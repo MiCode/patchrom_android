@@ -945,5 +945,5 @@
 
     const/4 v3, 0x1
 
-    goto/16 :goto_0
+    goto :goto_0
 .end method

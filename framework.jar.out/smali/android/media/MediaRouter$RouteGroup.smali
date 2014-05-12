@@ -629,7 +629,7 @@
     .local v0, count:I
     if-nez v0, :cond_0
 
-    invoke-static {p0}, Landroid/media/MediaRouter;->removeRoute(Landroid/media/MediaRouter$RouteInfo;)V
+    invoke-static {p0}, Landroid/media/MediaRouter;->removeRouteStatic(Landroid/media/MediaRouter$RouteInfo;)V
 
     :goto_0
     return-void

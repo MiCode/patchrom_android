@@ -1,4 +1,4 @@
-.class public Lcom/android/server/pm/Installer;
+.class public final Lcom/android/server/pm/Installer;
 .super Ljava/lang/Object;
 .source "Installer.java"
 
@@ -586,18 +586,6 @@
 
 
 # virtual methods
-.method public callExecute(Ljava/lang/String;)I
-    .locals 1
-    .parameter "cmd"
-
-    .prologue
-    invoke-direct {p0, p1}, Lcom/android/server/pm/Installer;->execute(Ljava/lang/String;)I
-
-    move-result v0
-
-    return v0
-.end method
-
 .method public clearUserData(Ljava/lang/String;I)I
     .locals 3
     .parameter "name"
@@ -630,55 +618,6 @@
     move-result v1
 
     return v1
-.end method
-
-.method public cloneUserData(IIZ)I
-    .locals 3
-    .parameter "srcUserId"
-    .parameter "targetUserId"
-    .parameter "copyData"
-
-    .prologue
-    const/16 v2, 0x20
-
-    new-instance v0, Ljava/lang/StringBuilder;
-
-    const-string v1, "cloneuserdata"
-
-    invoke-direct {v0, v1}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
-
-    .local v0, builder:Ljava/lang/StringBuilder;
-    invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
-
-    invoke-virtual {v0, p1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
-
-    invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
-
-    invoke-virtual {v0, p2}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
-
-    invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
-
-    if-eqz p3, :cond_0
-
-    const/16 v1, 0x31
-
-    :goto_0
-    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
-
-    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v1
-
-    invoke-direct {p0, v1}, Lcom/android/server/pm/Installer;->execute(Ljava/lang/String;)I
-
-    move-result v1
-
-    return v1
-
-    :cond_0
-    const/16 v1, 0x30
-
-    goto :goto_0
 .end method
 
 .method public createUserData(Ljava/lang/String;II)I
@@ -873,11 +812,12 @@
     return v1
 .end method
 
-.method public getSizeInfo(Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Landroid/content/pm/PackageStats;)I
+.method public getSizeInfo(Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Landroid/content/pm/PackageStats;)I
     .locals 7
     .parameter "pkgName"
     .parameter "persona"
     .parameter "apkPath"
+    .parameter "libDirPath"
     .parameter "fwdLockApkPath"
     .parameter "asecPath"
     .parameter "pStats"
@@ -922,6 +862,14 @@
     :goto_1
     invoke-virtual {v0, p5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
+    invoke-virtual {v0, v6}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
+
+    if-eqz p6, :cond_3
+
+    .end local p6
+    :goto_2
+    invoke-virtual {v0, p6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
     invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
     move-result-object v5
@@ -944,16 +892,17 @@
 
     const/4 v6, 0x5
 
-    if-eq v5, v6, :cond_3
+    if-eq v5, v6, :cond_4
 
     :cond_0
-    :goto_2
+    :goto_3
     return v4
 
     .end local v2           #res:[Ljava/lang/String;
     .end local v3           #s:Ljava/lang/String;
     .restart local p4
     .restart local p5
+    .restart local p6
     :cond_1
     const-string p4, "!"
 
@@ -966,9 +915,15 @@
     goto :goto_1
 
     .end local p5
+    :cond_3
+    const-string p6, "!"
+
+    goto :goto_2
+
+    .end local p6
     .restart local v2       #res:[Ljava/lang/String;
     .restart local v3       #s:Ljava/lang/String;
-    :cond_3
+    :cond_4
     const/4 v5, 0x1
 
     :try_start_0
@@ -978,7 +933,7 @@
 
     move-result-wide v5
 
-    iput-wide v5, p6, Landroid/content/pm/PackageStats;->codeSize:J
+    iput-wide v5, p7, Landroid/content/pm/PackageStats;->codeSize:J
 
     const/4 v5, 0x2
 
@@ -988,7 +943,7 @@
 
     move-result-wide v5
 
-    iput-wide v5, p6, Landroid/content/pm/PackageStats;->dataSize:J
+    iput-wide v5, p7, Landroid/content/pm/PackageStats;->dataSize:J
 
     const/4 v5, 0x3
 
@@ -998,7 +953,7 @@
 
     move-result-wide v5
 
-    iput-wide v5, p6, Landroid/content/pm/PackageStats;->cacheSize:J
+    iput-wide v5, p7, Landroid/content/pm/PackageStats;->cacheSize:J
 
     const/4 v5, 0x4
 
@@ -1008,7 +963,7 @@
 
     move-result-wide v5
 
-    iput-wide v5, p6, Landroid/content/pm/PackageStats;->externalCodeSize:J
+    iput-wide v5, p7, Landroid/content/pm/PackageStats;->externalCodeSize:J
 
     const/4 v5, 0x0
 
@@ -1020,20 +975,21 @@
 
     move-result v4
 
-    goto :goto_2
+    goto :goto_3
 
     :catch_0
     move-exception v1
 
     .local v1, e:Ljava/lang/NumberFormatException;
-    goto :goto_2
+    goto :goto_3
 .end method
 
-.method public install(Ljava/lang/String;II)I
+.method public install(Ljava/lang/String;IILjava/lang/String;)I
     .locals 3
     .parameter "name"
     .parameter "uid"
     .parameter "gid"
+    .parameter "seinfo"
 
     .prologue
     const/16 v2, 0x20
@@ -1057,6 +1013,14 @@
 
     invoke-virtual {v0, p3}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
+    invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
+
+    if-eqz p4, :cond_0
+
+    .end local p4
+    :goto_0
+    invoke-virtual {v0, p4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
     invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
     move-result-object v1
@@ -1066,6 +1030,12 @@
     move-result v1
 
     return v1
+
+    .restart local p4
+    :cond_0
+    const-string p4, "!"
+
+    goto :goto_0
 .end method
 
 .method public linkNativeLibraryDirectory(Ljava/lang/String;Ljava/lang/String;I)I

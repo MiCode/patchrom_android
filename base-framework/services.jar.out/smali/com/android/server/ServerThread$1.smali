@@ -8,7 +8,7 @@
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/android/server/ServerThread;->run()V
+    value = Lcom/android/server/ServerThread;->initAndLoop()V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -40,7 +40,7 @@
     .locals 2
 
     .prologue
-    const/4 v0, -0x2
+    const/4 v0, -0x4
 
     invoke-static {v0}, Landroid/os/Process;->setThreadPriority(I)V
 
@@ -56,7 +56,7 @@
 
     const-string v0, "SystemServer"
 
-    const-string v1, "Enabled StrictMode logging for UI Looper"
+    const-string v1, "Enabled StrictMode logging for WM Looper"
 
     invoke-static {v0, v1}, Landroid/util/Slog;->i(Ljava/lang/String;Ljava/lang/String;)I
 

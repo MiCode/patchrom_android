@@ -32,6 +32,10 @@
 
 .field static final TRANSACTION_getCurrentFailedPasswordAttempts:I = 0x17
 
+.field static final TRANSACTION_getDeviceOwner:I = 0x34
+
+.field static final TRANSACTION_getDeviceOwnerName:I = 0x35
+
 .field static final TRANSACTION_getGlobalProxyAdmin:I = 0x20
 
 .field static final TRANSACTION_getKeyguardDisabledFeatures:I = 0x27
@@ -70,9 +74,13 @@
 
 .field static final TRANSACTION_hasGrantedPolicy:I = 0x2e
 
+.field static final TRANSACTION_installCaCert:I = 0x36
+
 .field static final TRANSACTION_isActivePasswordSufficient:I = 0x16
 
 .field static final TRANSACTION_isAdminActive:I = 0x29
+
+.field static final TRANSACTION_isDeviceOwner:I = 0x33
 
 .field static final TRANSACTION_lockNow:I = 0x1d
 
@@ -91,6 +99,8 @@
 .field static final TRANSACTION_setActivePasswordState:I = 0x2f
 
 .field static final TRANSACTION_setCameraDisabled:I = 0x24
+
+.field static final TRANSACTION_setDeviceOwner:I = 0x32
 
 .field static final TRANSACTION_setGlobalProxy:I = 0x1f
 
@@ -121,6 +131,8 @@
 .field static final TRANSACTION_setPasswordQuality:I = 0x1
 
 .field static final TRANSACTION_setStorageEncryption:I = 0x21
+
+.field static final TRANSACTION_uninstallCaCert:I = 0x37
 
 .field static final TRANSACTION_wipeData:I = 0x1e
 
@@ -2894,7 +2906,203 @@
 
     goto/16 :goto_0
 
-    nop
+    .end local v2           #_arg0:I
+    :sswitch_32
+    const-string v1, "android.app.admin.IDevicePolicyManager"
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v1}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v2
+
+    .local v2, _arg0:Ljava/lang/String;
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v3
+
+    .local v3, _arg1:Ljava/lang/String;
+    move-object/from16 v0, p0
+
+    invoke-virtual {v0, v2, v3}, Landroid/app/admin/IDevicePolicyManager$Stub;->setDeviceOwner(Ljava/lang/String;Ljava/lang/String;)Z
+
+    move-result v13
+
+    .restart local v13       #_result:Z
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    if-eqz v13, :cond_32
+
+    const/4 v1, 0x1
+
+    :goto_33
+    move-object/from16 v0, p3
+
+    invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeInt(I)V
+
+    const/4 v1, 0x1
+
+    goto/16 :goto_0
+
+    :cond_32
+    const/4 v1, 0x0
+
+    goto :goto_33
+
+    .end local v2           #_arg0:Ljava/lang/String;
+    .end local v3           #_arg1:Ljava/lang/String;
+    .end local v13           #_result:Z
+    :sswitch_33
+    const-string v1, "android.app.admin.IDevicePolicyManager"
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v1}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v2
+
+    .restart local v2       #_arg0:Ljava/lang/String;
+    move-object/from16 v0, p0
+
+    invoke-virtual {v0, v2}, Landroid/app/admin/IDevicePolicyManager$Stub;->isDeviceOwner(Ljava/lang/String;)Z
+
+    move-result v13
+
+    .restart local v13       #_result:Z
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    if-eqz v13, :cond_33
+
+    const/4 v1, 0x1
+
+    :goto_34
+    move-object/from16 v0, p3
+
+    invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeInt(I)V
+
+    const/4 v1, 0x1
+
+    goto/16 :goto_0
+
+    :cond_33
+    const/4 v1, 0x0
+
+    goto :goto_34
+
+    .end local v2           #_arg0:Ljava/lang/String;
+    .end local v13           #_result:Z
+    :sswitch_34
+    const-string v1, "android.app.admin.IDevicePolicyManager"
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v1}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    invoke-virtual/range {p0 .. p0}, Landroid/app/admin/IDevicePolicyManager$Stub;->getDeviceOwner()Ljava/lang/String;
+
+    move-result-object v13
+
+    .local v13, _result:Ljava/lang/String;
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    move-object/from16 v0, p3
+
+    invoke-virtual {v0, v13}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
+
+    const/4 v1, 0x1
+
+    goto/16 :goto_0
+
+    .end local v13           #_result:Ljava/lang/String;
+    :sswitch_35
+    const-string v1, "android.app.admin.IDevicePolicyManager"
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v1}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    invoke-virtual/range {p0 .. p0}, Landroid/app/admin/IDevicePolicyManager$Stub;->getDeviceOwnerName()Ljava/lang/String;
+
+    move-result-object v13
+
+    .restart local v13       #_result:Ljava/lang/String;
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    move-object/from16 v0, p3
+
+    invoke-virtual {v0, v13}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
+
+    const/4 v1, 0x1
+
+    goto/16 :goto_0
+
+    .end local v13           #_result:Ljava/lang/String;
+    :sswitch_36
+    const-string v1, "android.app.admin.IDevicePolicyManager"
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v1}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->createByteArray()[B
+
+    move-result-object v2
+
+    .local v2, _arg0:[B
+    move-object/from16 v0, p0
+
+    invoke-virtual {v0, v2}, Landroid/app/admin/IDevicePolicyManager$Stub;->installCaCert([B)Z
+
+    move-result v13
+
+    .local v13, _result:Z
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    if-eqz v13, :cond_34
+
+    const/4 v1, 0x1
+
+    :goto_35
+    move-object/from16 v0, p3
+
+    invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeInt(I)V
+
+    const/4 v1, 0x1
+
+    goto/16 :goto_0
+
+    :cond_34
+    const/4 v1, 0x0
+
+    goto :goto_35
+
+    .end local v2           #_arg0:[B
+    .end local v13           #_result:Z
+    :sswitch_37
+    const-string v1, "android.app.admin.IDevicePolicyManager"
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v1}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->createByteArray()[B
+
+    move-result-object v2
+
+    .restart local v2       #_arg0:[B
+    move-object/from16 v0, p0
+
+    invoke-virtual {v0, v2}, Landroid/app/admin/IDevicePolicyManager$Stub;->uninstallCaCert([B)V
+
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    const/4 v1, 0x1
+
+    goto/16 :goto_0
 
     :sswitch_data_0
     .sparse-switch
@@ -2947,6 +3155,12 @@
         0x2f -> :sswitch_2f
         0x30 -> :sswitch_30
         0x31 -> :sswitch_31
+        0x32 -> :sswitch_32
+        0x33 -> :sswitch_33
+        0x34 -> :sswitch_34
+        0x35 -> :sswitch_35
+        0x36 -> :sswitch_36
+        0x37 -> :sswitch_37
         0x5f4e5446 -> :sswitch_0
     .end sparse-switch
 .end method

@@ -1532,7 +1532,9 @@
     const/4 v8, -0x1
 
     :goto_0
-    invoke-virtual {p0, p1, v8, v6}, Landroid/widget/Gallery;->addViewInLayout(Landroid/view/View;ILandroid/view/ViewGroup$LayoutParams;)Z
+    const/4 v9, 0x1
+
+    invoke-virtual {p0, p1, v8, v6, v9}, Landroid/widget/Gallery;->addViewInLayout(Landroid/view/View;ILandroid/view/ViewGroup$LayoutParams;Z)Z
 
     if-nez p2, :cond_2
 
@@ -2478,16 +2480,12 @@
     .parameter "event"
 
     .prologue
-    sparse-switch p1, :sswitch_data_0
-
-    invoke-super {p0, p1, p2}, Landroid/widget/AbsSpinner;->onKeyUp(ILandroid/view/KeyEvent;)Z
+    invoke-static {p1}, Landroid/view/KeyEvent;->isConfirmKey(I)Z
 
     move-result v1
 
-    :goto_0
-    return v1
+    if-eqz v1, :cond_1
 
-    :sswitch_0
     iget-boolean v1, p0, Landroid/widget/Gallery;->mReceivedInvokeKeyDown:Z
 
     if-eqz v1, :cond_0
@@ -2543,13 +2541,15 @@
 
     const/4 v1, 0x1
 
-    goto :goto_0
+    :goto_0
+    return v1
 
-    :sswitch_data_0
-    .sparse-switch
-        0x17 -> :sswitch_0
-        0x42 -> :sswitch_0
-    .end sparse-switch
+    :cond_1
+    invoke-super {p0, p1, p2}, Landroid/widget/AbsSpinner;->onKeyUp(ILandroid/view/KeyEvent;)Z
+
+    move-result v1
+
+    goto :goto_0
 .end method
 
 .method protected onLayout(ZIIII)V

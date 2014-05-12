@@ -15,6 +15,8 @@
 
 
 # static fields
+.field public static final ACCESSIBILITY_FEATURES:Ljava/lang/String; = "android.permission-group.ACCESSIBILITY_FEATURES"
+
 .field public static final ACCOUNTS:Ljava/lang/String; = "android.permission-group.ACCOUNTS"
 
 .field public static final AFFECTS_BATTERY:Ljava/lang/String; = "android.permission-group.AFFECTS_BATTERY"

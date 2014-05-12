@@ -208,10 +208,17 @@
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
     .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
 
-    :goto_0
     invoke-static {v0}, Landroid/os/Process;->setThreadPriority(I)V
 
+    :goto_0
     return-void
+
+    :catch_0
+    move-exception v1
+
+    invoke-static {v0}, Landroid/os/Process;->setThreadPriority(I)V
+
+    goto :goto_0
 
     :catchall_0
     move-exception v1
@@ -219,9 +226,4 @@
     invoke-static {v0}, Landroid/os/Process;->setThreadPriority(I)V
 
     throw v1
-
-    :catch_0
-    move-exception v1
-
-    goto :goto_0
 .end method

@@ -198,6 +198,14 @@
     .end annotation
 .end method
 
+.method public abstract sync(Landroid/content/SyncRequest;)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
 .method public abstract unregisterContentObserver(Landroid/database/IContentObserver;)V
     .annotation system Ldalvik/annotation/Throws;
         value = {

@@ -1,11 +1,14 @@
 .class Landroid/widget/AbsListView$3;
-.super Landroid/view/inputmethod/InputConnectionWrapper;
+.super Ljava/lang/Object;
 .source "AbsListView.java"
+
+# interfaces
+.implements Ljava/lang/Runnable;
 
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Landroid/widget/AbsListView;->onCreateInputConnection(Landroid/view/inputmethod/EditorInfo;)Landroid/view/inputmethod/InputConnection;
+    value = Landroid/widget/AbsListView;->onTouchUp(Landroid/view/MotionEvent;)V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -17,102 +20,77 @@
 # instance fields
 .field final synthetic this$0:Landroid/widget/AbsListView;
 
+.field final synthetic val$child:Landroid/view/View;
+
+.field final synthetic val$performClick:Landroid/widget/AbsListView$PerformClick;
+
 
 # direct methods
-.method constructor <init>(Landroid/widget/AbsListView;Landroid/view/inputmethod/InputConnection;Z)V
+.method constructor <init>(Landroid/widget/AbsListView;Landroid/view/View;Landroid/widget/AbsListView$PerformClick;)V
     .locals 0
     .parameter
-    .parameter "x0"
-    .parameter "x1"
+    .parameter
+    .parameter
 
     .prologue
     iput-object p1, p0, Landroid/widget/AbsListView$3;->this$0:Landroid/widget/AbsListView;
 
-    invoke-direct {p0, p2, p3}, Landroid/view/inputmethod/InputConnectionWrapper;-><init>(Landroid/view/inputmethod/InputConnection;Z)V
+    iput-object p2, p0, Landroid/widget/AbsListView$3;->val$child:Landroid/view/View;
+
+    iput-object p3, p0, Landroid/widget/AbsListView$3;->val$performClick:Landroid/widget/AbsListView$PerformClick;
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
 .end method
 
 
 # virtual methods
-.method public performEditorAction(I)Z
-    .locals 4
-    .parameter "editorAction"
+.method public run()V
+    .locals 3
 
     .prologue
+    const/4 v2, 0x0
+
+    iget-object v0, p0, Landroid/widget/AbsListView$3;->this$0:Landroid/widget/AbsListView;
+
     const/4 v1, 0x0
 
-    const/4 v2, 0x6
+    #setter for: Landroid/widget/AbsListView;->mTouchModeReset:Ljava/lang/Runnable;
+    invoke-static {v0, v1}, Landroid/widget/AbsListView;->access$1002(Landroid/widget/AbsListView;Ljava/lang/Runnable;)Ljava/lang/Runnable;
 
-    if-ne p1, v2, :cond_1
+    iget-object v0, p0, Landroid/widget/AbsListView$3;->this$0:Landroid/widget/AbsListView;
 
-    iget-object v2, p0, Landroid/widget/AbsListView$3;->this$0:Landroid/widget/AbsListView;
+    const/4 v1, -0x1
 
-    invoke-virtual {v2}, Landroid/widget/AbsListView;->getContext()Landroid/content/Context;
+    iput v1, v0, Landroid/widget/AbsListView;->mTouchMode:I
 
-    move-result-object v2
+    iget-object v0, p0, Landroid/widget/AbsListView$3;->val$child:Landroid/view/View;
 
-    const-string v3, "input_method"
+    invoke-virtual {v0, v2}, Landroid/view/View;->setPressed(Z)V
 
-    invoke-virtual {v2, v3}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
+    iget-object v0, p0, Landroid/widget/AbsListView$3;->this$0:Landroid/widget/AbsListView;
 
-    move-result-object v0
+    invoke-virtual {v0, v2}, Landroid/widget/AbsListView;->setPressed(Z)V
 
-    check-cast v0, Landroid/view/inputmethod/InputMethodManager;
+    iget-object v0, p0, Landroid/widget/AbsListView$3;->this$0:Landroid/widget/AbsListView;
 
-    .local v0, imm:Landroid/view/inputmethod/InputMethodManager;
+    iget-boolean v0, v0, Landroid/widget/AbsListView;->mDataChanged:Z
+
+    if-nez v0, :cond_0
+
+    iget-object v0, p0, Landroid/widget/AbsListView$3;->this$0:Landroid/widget/AbsListView;
+
+    invoke-virtual {v0}, Landroid/widget/AbsListView;->isAttachedToWindow()Z
+
+    move-result v0
+
     if-eqz v0, :cond_0
 
-    iget-object v2, p0, Landroid/widget/AbsListView$3;->this$0:Landroid/widget/AbsListView;
+    iget-object v0, p0, Landroid/widget/AbsListView$3;->val$performClick:Landroid/widget/AbsListView$PerformClick;
 
-    invoke-virtual {v2}, Landroid/widget/AbsListView;->getWindowToken()Landroid/os/IBinder;
-
-    move-result-object v2
-
-    invoke-virtual {v0, v2, v1}, Landroid/view/inputmethod/InputMethodManager;->hideSoftInputFromWindow(Landroid/os/IBinder;I)Z
+    invoke-virtual {v0}, Landroid/widget/AbsListView$PerformClick;->run()V
 
     :cond_0
-    const/4 v1, 0x1
-
-    .end local v0           #imm:Landroid/view/inputmethod/InputMethodManager;
-    :cond_1
-    return v1
-.end method
-
-.method public reportFullscreenMode(Z)Z
-    .locals 1
-    .parameter "enabled"
-
-    .prologue
-    iget-object v0, p0, Landroid/widget/AbsListView$3;->this$0:Landroid/widget/AbsListView;
-
-    #getter for: Landroid/widget/AbsListView;->mDefInputConnection:Landroid/view/inputmethod/InputConnection;
-    invoke-static {v0}, Landroid/widget/AbsListView;->access$3300(Landroid/widget/AbsListView;)Landroid/view/inputmethod/InputConnection;
-
-    move-result-object v0
-
-    invoke-interface {v0, p1}, Landroid/view/inputmethod/InputConnection;->reportFullscreenMode(Z)Z
-
-    move-result v0
-
-    return v0
-.end method
-
-.method public sendKeyEvent(Landroid/view/KeyEvent;)Z
-    .locals 1
-    .parameter "event"
-
-    .prologue
-    iget-object v0, p0, Landroid/widget/AbsListView$3;->this$0:Landroid/widget/AbsListView;
-
-    #getter for: Landroid/widget/AbsListView;->mDefInputConnection:Landroid/view/inputmethod/InputConnection;
-    invoke-static {v0}, Landroid/widget/AbsListView;->access$3300(Landroid/widget/AbsListView;)Landroid/view/inputmethod/InputConnection;
-
-    move-result-object v0
-
-    invoke-interface {v0, p1}, Landroid/view/inputmethod/InputConnection;->sendKeyEvent(Landroid/view/KeyEvent;)Z
-
-    move-result v0
-
-    return v0
+    return-void
 .end method

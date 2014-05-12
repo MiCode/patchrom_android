@@ -148,3 +148,14 @@
 
     return-object v0
 .end method
+
+
+# virtual methods
+.method public getValue()I
+    .locals 1
+
+    .prologue
+    iget v0, p0, Landroid/webkit/WebSettings$ZoomDensity;->value:I
+
+    return v0
+.end method

@@ -259,9 +259,10 @@
     return-void
 .end method
 
-.method public resized(Landroid/graphics/Rect;Landroid/graphics/Rect;Landroid/graphics/Rect;ZLandroid/content/res/Configuration;)V
+.method public resized(Landroid/graphics/Rect;Landroid/graphics/Rect;Landroid/graphics/Rect;Landroid/graphics/Rect;ZLandroid/content/res/Configuration;)V
     .locals 4
     .parameter "frame"
+    .parameter "overscanInsets"
     .parameter "contentInsets"
     .parameter "visibleInsets"
     .parameter "reportDraw"
@@ -274,7 +275,7 @@
 
     const/16 v3, 0x272e
 
-    if-eqz p4, :cond_0
+    if-eqz p5, :cond_0
 
     const/4 v1, 0x1
 

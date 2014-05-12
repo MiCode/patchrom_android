@@ -10,7 +10,6 @@
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
         Lcom/android/server/StatusBarManagerService$NotificationCallbacks;,
-        Lcom/android/server/StatusBarManagerService$StatusRecord;,
         Lcom/android/server/StatusBarManagerService$DisableRecord;
     }
 .end annotation
@@ -66,18 +65,7 @@
             "Ljava/util/HashMap",
             "<",
             "Landroid/os/IBinder;",
-            "Lcom/android/internal/statusbar/StatusBarNotification;",
-            ">;"
-        }
-    .end annotation
-.end field
-
-.field mStatusRecords:Ljava/util/ArrayList;
-    .annotation system Ldalvik/annotation/Signature;
-        value = {
-            "Ljava/util/ArrayList",
-            "<",
-            "Lcom/android/server/StatusBarManagerService$StatusRecord;",
+            "Landroid/service/notification/StatusBarNotification;",
             ">;"
         }
     .end annotation
@@ -125,12 +113,6 @@
 
     iput-object v1, p0, Lcom/android/server/StatusBarManagerService;->mDisableRecords:Ljava/util/ArrayList;
 
-    new-instance v1, Ljava/util/ArrayList;
-
-    invoke-direct {v1}, Ljava/util/ArrayList;-><init>()V
-
-    iput-object v1, p0, Lcom/android/server/StatusBarManagerService;->mStatusRecords:Ljava/util/ArrayList;
-
     new-instance v1, Landroid/os/Binder;
 
     invoke-direct {v1}, Landroid/os/Binder;-><init>()V
@@ -176,7 +158,7 @@
     .local v0, res:Landroid/content/res/Resources;
     iget-object v1, p0, Lcom/android/server/StatusBarManagerService;->mIcons:Lcom/android/internal/statusbar/StatusBarIconList;
 
-    const v2, 0x1070013
+    const v2, 0x1070009
 
     invoke-virtual {v0, v2}, Landroid/content/res/Resources;->getStringArray(I)[Ljava/lang/String;
 
@@ -355,7 +337,7 @@
 
 
 # virtual methods
-.method public addNotification(Lcom/android/internal/statusbar/StatusBarNotification;)Landroid/os/IBinder;
+.method public addNotification(Landroid/service/notification/StatusBarNotification;)Landroid/os/IBinder;
     .locals 3
     .parameter "notification"
 
@@ -383,7 +365,7 @@
     :try_start_1
     iget-object v1, p0, Lcom/android/server/StatusBarManagerService;->mBar:Lcom/android/internal/statusbar/IStatusBar;
 
-    invoke-interface {v1, v0, p1}, Lcom/android/internal/statusbar/IStatusBar;->addNotification(Landroid/os/IBinder;Lcom/android/internal/statusbar/StatusBarNotification;)V
+    invoke-interface {v1, v0, p1}, Lcom/android/internal/statusbar/IStatusBar;->addNotification(Landroid/os/IBinder;Landroid/service/notification/StatusBarNotification;)V
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
     .catch Landroid/os/RemoteException; {:try_start_1 .. :try_end_1} :catch_0
@@ -586,7 +568,7 @@
 
     check-cast v1, Ljava/util/Map$Entry;
 
-    .local v1, e:Ljava/util/Map$Entry;,"Ljava/util/Map$Entry<Landroid/os/IBinder;Lcom/android/internal/statusbar/StatusBarNotification;>;"
+    .local v1, e:Ljava/util/Map$Entry;,"Ljava/util/Map$Entry<Landroid/os/IBinder;Landroid/service/notification/StatusBarNotification;>;"
     const-string v7, "  %2d: %s\n"
 
     const/4 v5, 0x2
@@ -607,9 +589,9 @@
 
     move-result-object v5
 
-    check-cast v5, Lcom/android/internal/statusbar/StatusBarNotification;
+    check-cast v5, Landroid/service/notification/StatusBarNotification;
 
-    invoke-virtual {v5}, Lcom/android/internal/statusbar/StatusBarNotification;->toString()Ljava/lang/String;
+    invoke-virtual {v5}, Landroid/service/notification/StatusBarNotification;->toString()Ljava/lang/String;
 
     move-result-object v5
 
@@ -623,7 +605,7 @@
 
     goto :goto_1
 
-    .end local v1           #e:Ljava/util/Map$Entry;,"Ljava/util/Map$Entry<Landroid/os/IBinder;Lcom/android/internal/statusbar/StatusBarNotification;>;"
+    .end local v1           #e:Ljava/util/Map$Entry;,"Ljava/util/Map$Entry<Landroid/os/IBinder;Landroid/service/notification/StatusBarNotification;>;"
     .end local v2           #i:I
     .end local v3           #i$:Ljava/util/Iterator;
     :catchall_0
@@ -1045,114 +1027,6 @@
     goto :goto_1
 .end method
 
-.method manageStatusListLocked(ILandroid/os/IBinder;Ljava/lang/String;)V
-    .locals 7
-    .parameter "what"
-    .parameter "token"
-    .parameter "pkg"
-
-    .prologue
-    const/4 v6, 0x0
-
-    iget-object v5, p0, Lcom/android/server/StatusBarManagerService;->mStatusRecords:Ljava/util/ArrayList;
-
-    invoke-virtual {v5}, Ljava/util/ArrayList;->size()I
-
-    move-result v0
-
-    .local v0, N:I
-    const/4 v4, 0x0
-
-    .local v4, tok:Lcom/android/server/StatusBarManagerService$StatusRecord;
-    const/4 v2, 0x0
-
-    .local v2, i:I
-    :goto_0
-    if-ge v2, v0, :cond_0
-
-    iget-object v5, p0, Lcom/android/server/StatusBarManagerService;->mStatusRecords:Ljava/util/ArrayList;
-
-    invoke-virtual {v5, v2}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
-
-    move-result-object v3
-
-    check-cast v3, Lcom/android/server/StatusBarManagerService$StatusRecord;
-
-    .local v3, t:Lcom/android/server/StatusBarManagerService$StatusRecord;
-    iget-object v5, v3, Lcom/android/server/StatusBarManagerService$StatusRecord;->token:Landroid/os/IBinder;
-
-    if-ne v5, p2, :cond_3
-
-    move-object v4, v3
-
-    .end local v3           #t:Lcom/android/server/StatusBarManagerService$StatusRecord;
-    :cond_0
-    if-eqz p1, :cond_1
-
-    invoke-interface {p2}, Landroid/os/IBinder;->isBinderAlive()Z
-
-    move-result v5
-
-    if-nez v5, :cond_4
-
-    :cond_1
-    if-eqz v4, :cond_2
-
-    iget-object v5, p0, Lcom/android/server/StatusBarManagerService;->mStatusRecords:Ljava/util/ArrayList;
-
-    invoke-virtual {v5, v2}, Ljava/util/ArrayList;->remove(I)Ljava/lang/Object;
-
-    iget-object v5, v4, Lcom/android/server/StatusBarManagerService$StatusRecord;->token:Landroid/os/IBinder;
-
-    invoke-interface {v5, v4, v6}, Landroid/os/IBinder;->unlinkToDeath(Landroid/os/IBinder$DeathRecipient;I)Z
-
-    :cond_2
-    :goto_1
-    return-void
-
-    .restart local v3       #t:Lcom/android/server/StatusBarManagerService$StatusRecord;
-    :cond_3
-    add-int/lit8 v2, v2, 0x1
-
-    goto :goto_0
-
-    .end local v3           #t:Lcom/android/server/StatusBarManagerService$StatusRecord;
-    :cond_4
-    if-nez v4, :cond_5
-
-    new-instance v4, Lcom/android/server/StatusBarManagerService$StatusRecord;
-
-    .end local v4           #tok:Lcom/android/server/StatusBarManagerService$StatusRecord;
-    const/4 v5, 0x0
-
-    invoke-direct {v4, p0, v5}, Lcom/android/server/StatusBarManagerService$StatusRecord;-><init>(Lcom/android/server/StatusBarManagerService;Lcom/android/server/StatusBarManagerService$1;)V
-
-    .restart local v4       #tok:Lcom/android/server/StatusBarManagerService$StatusRecord;
-    const/4 v5, 0x0
-
-    :try_start_0
-    invoke-interface {p2, v4, v5}, Landroid/os/IBinder;->linkToDeath(Landroid/os/IBinder$DeathRecipient;I)V
-    :try_end_0
-    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
-
-    iget-object v5, p0, Lcom/android/server/StatusBarManagerService;->mStatusRecords:Ljava/util/ArrayList;
-
-    invoke-virtual {v5, v4}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
-
-    :cond_5
-    iput-object p2, v4, Lcom/android/server/StatusBarManagerService$StatusRecord;->token:Landroid/os/IBinder;
-
-    iput-object p3, v4, Lcom/android/server/StatusBarManagerService$StatusRecord;->pkg:Ljava/lang/String;
-
-    goto :goto_1
-
-    :catch_0
-    move-exception v1
-
-    .local v1, ex:Landroid/os/RemoteException;
-    goto :goto_1
-.end method
-
 .method public onClearAllNotifications()V
     .locals 1
 
@@ -1303,7 +1177,7 @@
             ">;",
             "Ljava/util/List",
             "<",
-            "Lcom/android/internal/statusbar/StatusBarNotification;",
+            "Landroid/service/notification/StatusBarNotification;",
             ">;[I",
             "Ljava/util/List",
             "<",
@@ -1314,7 +1188,7 @@
 
     .prologue
     .local p3, notificationKeys:Ljava/util/List;,"Ljava/util/List<Landroid/os/IBinder;>;"
-    .local p4, notifications:Ljava/util/List;,"Ljava/util/List<Lcom/android/internal/statusbar/StatusBarNotification;>;"
+    .local p4, notifications:Ljava/util/List;,"Ljava/util/List<Landroid/service/notification/StatusBarNotification;>;"
     .local p6, binders:Ljava/util/List;,"Ljava/util/List<Landroid/os/IBinder;>;"
     const/4 v3, 0x1
 
@@ -1388,7 +1262,7 @@
 
     check-cast v0, Ljava/util/Map$Entry;
 
-    .local v0, e:Ljava/util/Map$Entry;,"Ljava/util/Map$Entry<Landroid/os/IBinder;Lcom/android/internal/statusbar/StatusBarNotification;>;"
+    .local v0, e:Ljava/util/Map$Entry;,"Ljava/util/Map$Entry<Landroid/os/IBinder;Landroid/service/notification/StatusBarNotification;>;"
     invoke-interface {v0}, Ljava/util/Map$Entry;->getKey()Ljava/lang/Object;
 
     move-result-object v2
@@ -1403,7 +1277,7 @@
 
     goto :goto_0
 
-    .end local v0           #e:Ljava/util/Map$Entry;,"Ljava/util/Map$Entry<Landroid/os/IBinder;Lcom/android/internal/statusbar/StatusBarNotification;>;"
+    .end local v0           #e:Ljava/util/Map$Entry;,"Ljava/util/Map$Entry<Landroid/os/IBinder;Landroid/service/notification/StatusBarNotification;>;"
     .end local v1           #i$:Ljava/util/Iterator;
     :catchall_0
     move-exception v2
@@ -1646,9 +1520,9 @@
 
     move-result-object v0
 
-    check-cast v0, Lcom/android/internal/statusbar/StatusBarNotification;
+    check-cast v0, Landroid/service/notification/StatusBarNotification;
 
-    .local v0, n:Lcom/android/internal/statusbar/StatusBarNotification;
+    .local v0, n:Landroid/service/notification/StatusBarNotification;
     if-nez v0, :cond_0
 
     const-string v1, "StatusBarManagerService"
@@ -1700,7 +1574,7 @@
 
     goto :goto_0
 
-    .end local v0           #n:Lcom/android/internal/statusbar/StatusBarNotification;
+    .end local v0           #n:Landroid/service/notification/StatusBarNotification;
     :catchall_0
     move-exception v1
 
@@ -1710,7 +1584,7 @@
 
     throw v1
 
-    .restart local v0       #n:Lcom/android/internal/statusbar/StatusBarNotification;
+    .restart local v0       #n:Landroid/service/notification/StatusBarNotification;
     :catch_0
     move-exception v1
 
@@ -2017,54 +1891,16 @@
 .end method
 
 .method public setStatus(ILandroid/os/IBinder;Ljava/lang/String;Landroid/os/Bundle;)V
-    .locals 2
+    .locals 0
     .parameter "what"
     .parameter "token"
     .parameter "action"
     .parameter "ext"
 
     .prologue
-    iget-object v1, p0, Lcom/android/server/StatusBarManagerService;->mLock:Ljava/lang/Object;
-
-    monitor-enter v1
-
-    :try_start_0
-    invoke-virtual {p0, p1, p2, p3}, Lcom/android/server/StatusBarManagerService;->manageStatusListLocked(ILandroid/os/IBinder;Ljava/lang/String;)V
-
-    iget-object v0, p0, Lcom/android/server/StatusBarManagerService;->mBar:Lcom/android/internal/statusbar/IStatusBar;
-    :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
-
-    if-eqz v0, :cond_0
-
-    :try_start_1
-    iget-object v0, p0, Lcom/android/server/StatusBarManagerService;->mBar:Lcom/android/internal/statusbar/IStatusBar;
-
-    invoke-interface {v0, p1, p3, p4}, Lcom/android/internal/statusbar/IStatusBar;->setStatus(ILjava/lang/String;Landroid/os/Bundle;)V
-    :try_end_1
-    .catchall {:try_start_1 .. :try_end_1} :catchall_0
-    .catch Landroid/os/RemoteException; {:try_start_1 .. :try_end_1} :catch_0
-
-    :cond_0
-    :goto_0
-    :try_start_2
-    monitor-exit v1
+    invoke-static {p0, p1, p2, p3, p4}, Lcom/android/server/Injector$StatusBarManagerServiceHook;->setStatus(Lcom/android/server/StatusBarManagerService;ILandroid/os/IBinder;Ljava/lang/String;Landroid/os/Bundle;)V
 
     return-void
-
-    :catchall_0
-    move-exception v0
-
-    monitor-exit v1
-    :try_end_2
-    .catchall {:try_start_2 .. :try_end_2} :catchall_0
-
-    throw v0
-
-    :catch_0
-    move-exception v0
-
-    goto :goto_0
 .end method
 
 .method public setSystemUiVisibility(II)V
@@ -2106,6 +1942,33 @@
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
     throw v0
+.end method
+
+.method public setWindowState(II)V
+    .locals 1
+    .parameter "window"
+    .parameter "state"
+
+    .prologue
+    iget-object v0, p0, Lcom/android/server/StatusBarManagerService;->mBar:Lcom/android/internal/statusbar/IStatusBar;
+
+    if-eqz v0, :cond_0
+
+    :try_start_0
+    iget-object v0, p0, Lcom/android/server/StatusBarManagerService;->mBar:Lcom/android/internal/statusbar/IStatusBar;
+
+    invoke-interface {v0, p1, p2}, Lcom/android/internal/statusbar/IStatusBar;->setWindowState(II)V
+    :try_end_0
+    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
+
+    :cond_0
+    :goto_0
+    return-void
+
+    :catch_0
+    move-exception v0
+
+    goto :goto_0
 .end method
 
 .method public toggleRecentApps()V
@@ -2169,7 +2032,7 @@
     throw v0
 .end method
 
-.method public updateNotification(Landroid/os/IBinder;Lcom/android/internal/statusbar/StatusBarNotification;)V
+.method public updateNotification(Landroid/os/IBinder;Landroid/service/notification/StatusBarNotification;)V
     .locals 4
     .parameter "key"
     .parameter "notification"
@@ -2236,7 +2099,7 @@
     :try_start_2
     iget-object v0, p0, Lcom/android/server/StatusBarManagerService;->mBar:Lcom/android/internal/statusbar/IStatusBar;
 
-    invoke-interface {v0, p1, p2}, Lcom/android/internal/statusbar/IStatusBar;->updateNotification(Landroid/os/IBinder;Lcom/android/internal/statusbar/StatusBarNotification;)V
+    invoke-interface {v0, p1, p2}, Lcom/android/internal/statusbar/IStatusBar;->updateNotification(Landroid/os/IBinder;Landroid/service/notification/StatusBarNotification;)V
     :try_end_2
     .catchall {:try_start_2 .. :try_end_2} :catchall_0
     .catch Landroid/os/RemoteException; {:try_start_2 .. :try_end_2} :catch_0

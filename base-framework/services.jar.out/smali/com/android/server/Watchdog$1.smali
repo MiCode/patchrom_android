@@ -17,9 +17,9 @@
 # instance fields
 .field final synthetic this$0:Lcom/android/server/Watchdog;
 
-.field final synthetic val$name:Ljava/lang/String;
-
 .field final synthetic val$stack:Ljava/io/File;
+
+.field final synthetic val$subject:Ljava/lang/String;
 
 
 # direct methods
@@ -33,7 +33,7 @@
     .prologue
     iput-object p1, p0, Lcom/android/server/Watchdog$1;->this$0:Lcom/android/server/Watchdog;
 
-    iput-object p3, p0, Lcom/android/server/Watchdog$1;->val$name:Ljava/lang/String;
+    iput-object p3, p0, Lcom/android/server/Watchdog$1;->val$subject:Ljava/lang/String;
 
     iput-object p4, p0, Lcom/android/server/Watchdog$1;->val$stack:Ljava/io/File;
 
@@ -58,7 +58,7 @@
 
     const-string v3, "system_server"
 
-    iget-object v6, p0, Lcom/android/server/Watchdog$1;->val$name:Ljava/lang/String;
+    iget-object v6, p0, Lcom/android/server/Watchdog$1;->val$subject:Ljava/lang/String;
 
     iget-object v8, p0, Lcom/android/server/Watchdog$1;->val$stack:Ljava/io/File;
 

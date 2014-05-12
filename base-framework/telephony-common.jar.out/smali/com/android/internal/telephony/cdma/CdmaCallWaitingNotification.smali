@@ -4,7 +4,7 @@
 
 
 # static fields
-.field static final LOG_TAG:Ljava/lang/String; = "CDMA"
+.field static final LOG_TAG:Ljava/lang/String; = "CdmaCallWaitingNotification"
 
 
 # instance fields
@@ -70,7 +70,7 @@
     .prologue
     packed-switch p0, :pswitch_data_0
 
-    const-string v0, "CDMA"
+    const-string v0, "CdmaCallWaitingNotification"
 
     new-instance v1, Ljava/lang/StringBuilder;
 
@@ -90,7 +90,7 @@
 
     move-result-object v1
 
-    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v0, v1}, Landroid/telephony/Rlog;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     sget v0, Lcom/android/internal/telephony/PhoneConstants;->PRESENTATION_UNKNOWN:I
 

@@ -64,7 +64,45 @@
     goto :goto_0
 .end method
 
-.method public static native decodeStream(Ljava/io/InputStream;)Landroid/graphics/Movie;
+.method public static decodeStream(Ljava/io/InputStream;)Landroid/graphics/Movie;
+    .locals 2
+    .parameter "is"
+
+    .prologue
+    if-nez p0, :cond_0
+
+    const/4 v1, 0x0
+
+    :goto_0
+    return-object v1
+
+    :cond_0
+    instance-of v1, p0, Landroid/content/res/AssetManager$AssetInputStream;
+
+    if-eqz v1, :cond_1
+
+    check-cast p0, Landroid/content/res/AssetManager$AssetInputStream;
+
+    .end local p0
+    invoke-virtual {p0}, Landroid/content/res/AssetManager$AssetInputStream;->getAssetInt()I
+
+    move-result v0
+
+    .local v0, asset:I
+    invoke-static {v0}, Landroid/graphics/Movie;->nativeDecodeAsset(I)Landroid/graphics/Movie;
+
+    move-result-object v1
+
+    goto :goto_0
+
+    .end local v0           #asset:I
+    .restart local p0
+    :cond_1
+    invoke-static {p0}, Landroid/graphics/Movie;->nativeDecodeStream(Ljava/io/InputStream;)Landroid/graphics/Movie;
+
+    move-result-object v1
+
+    goto :goto_0
 .end method
 
 .method private static decodeTempStream(Ljava/io/InputStream;)Landroid/graphics/Movie;
@@ -91,6 +129,12 @@
     move-exception v1
 
     goto :goto_0
+.end method
+
+.method private static native nativeDecodeAsset(I)Landroid/graphics/Movie;
+.end method
+
+.method private static native nativeDecodeStream(Ljava/io/InputStream;)Landroid/graphics/Movie;
 .end method
 
 .method private static native nativeDestructor(I)V

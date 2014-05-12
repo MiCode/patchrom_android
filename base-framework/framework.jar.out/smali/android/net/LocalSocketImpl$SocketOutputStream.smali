@@ -49,6 +49,60 @@
     return-void
 .end method
 
+.method public flush()V
+    .locals 4
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Ljava/io/IOException;
+        }
+    .end annotation
+
+    .prologue
+    iget-object v2, p0, Landroid/net/LocalSocketImpl$SocketOutputStream;->this$0:Landroid/net/LocalSocketImpl;
+
+    #getter for: Landroid/net/LocalSocketImpl;->fd:Ljava/io/FileDescriptor;
+    invoke-static {v2}, Landroid/net/LocalSocketImpl;->access$000(Landroid/net/LocalSocketImpl;)Ljava/io/FileDescriptor;
+
+    move-result-object v1
+
+    .local v1, myFd:Ljava/io/FileDescriptor;
+    if-nez v1, :cond_0
+
+    new-instance v2, Ljava/io/IOException;
+
+    const-string v3, "socket closed"
+
+    invoke-direct {v2, v3}, Ljava/io/IOException;-><init>(Ljava/lang/String;)V
+
+    throw v2
+
+    :cond_0
+    :goto_0
+    iget-object v2, p0, Landroid/net/LocalSocketImpl$SocketOutputStream;->this$0:Landroid/net/LocalSocketImpl;
+
+    #calls: Landroid/net/LocalSocketImpl;->pending_native(Ljava/io/FileDescriptor;)I
+    invoke-static {v2, v1}, Landroid/net/LocalSocketImpl;->access$800(Landroid/net/LocalSocketImpl;Ljava/io/FileDescriptor;)I
+
+    move-result v2
+
+    if-lez v2, :cond_1
+
+    const-wide/16 v2, 0xa
+
+    :try_start_0
+    invoke-static {v2, v3}, Ljava/lang/Thread;->sleep(J)V
+    :try_end_0
+    .catch Ljava/lang/InterruptedException; {:try_start_0 .. :try_end_0} :catch_0
+
+    goto :goto_0
+
+    :catch_0
+    move-exception v0
+
+    :cond_1
+    return-void
+.end method
+
 .method public write(I)V
     .locals 4
     .parameter "b"

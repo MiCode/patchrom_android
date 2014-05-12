@@ -8,7 +8,7 @@
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Landroid/view/ViewRootImpl;->profileRendering(Z)V
+    value = Landroid/view/ViewRootImpl;->disposeResizeBuffer()V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -37,59 +37,20 @@
 
 # virtual methods
 .method public run()V
-    .locals 3
+    .locals 2
 
     .prologue
-    const-string v1, "ViewRootImpl"
+    iget-object v0, p0, Landroid/view/ViewRootImpl$1;->this$0:Landroid/view/ViewRootImpl;
 
-    const-string v2, "Starting profiling thread"
+    iget-object v0, v0, Landroid/view/ViewRootImpl;->mResizeBuffer:Landroid/view/HardwareLayer;
 
-    invoke-static {v1, v2}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-virtual {v0}, Landroid/view/HardwareLayer;->destroy()V
 
-    :goto_0
-    iget-object v1, p0, Landroid/view/ViewRootImpl$1;->this$0:Landroid/view/ViewRootImpl;
+    iget-object v0, p0, Landroid/view/ViewRootImpl$1;->this$0:Landroid/view/ViewRootImpl;
 
-    #getter for: Landroid/view/ViewRootImpl;->mRenderProfilingEnabled:Z
-    invoke-static {v1}, Landroid/view/ViewRootImpl;->access$000(Landroid/view/ViewRootImpl;)Z
+    const/4 v1, 0x0
 
-    move-result v1
+    iput-object v1, v0, Landroid/view/ViewRootImpl;->mResizeBuffer:Landroid/view/HardwareLayer;
 
-    if-eqz v1, :cond_0
-
-    iget-object v1, p0, Landroid/view/ViewRootImpl$1;->this$0:Landroid/view/ViewRootImpl;
-
-    iget-object v1, v1, Landroid/view/ViewRootImpl;->mAttachInfo:Landroid/view/View$AttachInfo;
-
-    iget-object v1, v1, Landroid/view/View$AttachInfo;->mHandler:Landroid/os/Handler;
-
-    new-instance v2, Landroid/view/ViewRootImpl$1$1;
-
-    invoke-direct {v2, p0}, Landroid/view/ViewRootImpl$1$1;-><init>(Landroid/view/ViewRootImpl$1;)V
-
-    invoke-virtual {v1, v2}, Landroid/os/Handler;->post(Ljava/lang/Runnable;)Z
-
-    const-wide/16 v1, 0xf
-
-    :try_start_0
-    invoke-static {v1, v2}, Ljava/lang/Thread;->sleep(J)V
-    :try_end_0
-    .catch Ljava/lang/InterruptedException; {:try_start_0 .. :try_end_0} :catch_0
-
-    goto :goto_0
-
-    :catch_0
-    move-exception v0
-
-    .local v0, e:Ljava/lang/InterruptedException;
-    const-string v1, "ViewRootImpl"
-
-    const-string v2, "Exiting profiling thread"
-
-    invoke-static {v1, v2}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
-
-    goto :goto_0
-
-    .end local v0           #e:Ljava/lang/InterruptedException;
-    :cond_0
     return-void
 .end method

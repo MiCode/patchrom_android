@@ -37,53 +37,13 @@
 
 # virtual methods
 .method public run()V
-    .locals 2
+    .locals 1
 
     .prologue
     iget-object v0, p0, Landroid/widget/TextView$3;->this$0:Landroid/widget/TextView;
 
-    #getter for: Landroid/widget/TextView;->mCurrentTextServicesLocaleLock:Ljava/util/concurrent/locks/ReentrantLock;
-    invoke-static {v0}, Landroid/widget/TextView;->access$200(Landroid/widget/TextView;)Ljava/util/concurrent/locks/ReentrantLock;
-
-    move-result-object v0
-
-    invoke-virtual {v0}, Ljava/util/concurrent/locks/ReentrantLock;->tryLock()Z
-
-    move-result v0
-
-    if-eqz v0, :cond_0
-
-    :try_start_0
-    iget-object v0, p0, Landroid/widget/TextView$3;->this$0:Landroid/widget/TextView;
-
     #calls: Landroid/widget/TextView;->updateTextServicesLocaleLocked()V
-    invoke-static {v0}, Landroid/widget/TextView;->access$300(Landroid/widget/TextView;)V
-    :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+    invoke-static {v0}, Landroid/widget/TextView;->access$200(Landroid/widget/TextView;)V
 
-    iget-object v0, p0, Landroid/widget/TextView$3;->this$0:Landroid/widget/TextView;
-
-    #getter for: Landroid/widget/TextView;->mCurrentTextServicesLocaleLock:Ljava/util/concurrent/locks/ReentrantLock;
-    invoke-static {v0}, Landroid/widget/TextView;->access$200(Landroid/widget/TextView;)Ljava/util/concurrent/locks/ReentrantLock;
-
-    move-result-object v0
-
-    invoke-virtual {v0}, Ljava/util/concurrent/locks/ReentrantLock;->unlock()V
-
-    :cond_0
     return-void
-
-    :catchall_0
-    move-exception v0
-
-    iget-object v1, p0, Landroid/widget/TextView$3;->this$0:Landroid/widget/TextView;
-
-    #getter for: Landroid/widget/TextView;->mCurrentTextServicesLocaleLock:Ljava/util/concurrent/locks/ReentrantLock;
-    invoke-static {v1}, Landroid/widget/TextView;->access$200(Landroid/widget/TextView;)Ljava/util/concurrent/locks/ReentrantLock;
-
-    move-result-object v1
-
-    invoke-virtual {v1}, Ljava/util/concurrent/locks/ReentrantLock;->unlock()V
-
-    throw v0
 .end method

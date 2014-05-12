@@ -70,6 +70,22 @@
 
     iput-boolean v1, p0, Landroid/util/LongSparseArray;->mGarbage:Z
 
+    if-nez p1, :cond_0
+
+    sget-object v0, Landroid/util/ContainerHelpers;->EMPTY_LONGS:[J
+
+    iput-object v0, p0, Landroid/util/LongSparseArray;->mKeys:[J
+
+    sget-object v0, Landroid/util/ContainerHelpers;->EMPTY_OBJECTS:[Ljava/lang/Object;
+
+    iput-object v0, p0, Landroid/util/LongSparseArray;->mValues:[Ljava/lang/Object;
+
+    :goto_0
+    iput v1, p0, Landroid/util/LongSparseArray;->mSize:I
+
+    return-void
+
+    :cond_0
     invoke-static {p1}, Lcom/android/internal/util/ArrayUtils;->idealLongArraySize(I)I
 
     move-result p1
@@ -82,78 +98,7 @@
 
     iput-object v0, p0, Landroid/util/LongSparseArray;->mValues:[Ljava/lang/Object;
 
-    iput v1, p0, Landroid/util/LongSparseArray;->mSize:I
-
-    return-void
-.end method
-
-.method private static binarySearch([JIIJ)I
-    .locals 5
-    .parameter "a"
-    .parameter "start"
-    .parameter "len"
-    .parameter "key"
-
-    .prologue
-    add-int v1, p1, p2
-
-    .local v1, high:I
-    add-int/lit8 v2, p1, -0x1
-
-    .local v2, low:I
-    :goto_0
-    sub-int v3, v1, v2
-
-    const/4 v4, 0x1
-
-    if-le v3, v4, :cond_1
-
-    add-int v3, v1, v2
-
-    div-int/lit8 v0, v3, 0x2
-
-    .local v0, guess:I
-    aget-wide v3, p0, v0
-
-    cmp-long v3, v3, p3
-
-    if-gez v3, :cond_0
-
-    move v2, v0
-
     goto :goto_0
-
-    :cond_0
-    move v1, v0
-
-    goto :goto_0
-
-    .end local v0           #guess:I
-    :cond_1
-    add-int v3, p1, p2
-
-    if-ne v1, v3, :cond_3
-
-    add-int v3, p1, p2
-
-    xor-int/lit8 v1, v3, -0x1
-
-    .end local v1           #high:I
-    :cond_2
-    :goto_1
-    return v1
-
-    .restart local v1       #high:I
-    :cond_3
-    aget-wide v3, p0, v1
-
-    cmp-long v3, v3, p3
-
-    if-eqz v3, :cond_2
-
-    xor-int/lit8 v1, v1, -0x1
-
-    goto :goto_1
 .end method
 
 .method private gc()V
@@ -442,18 +387,16 @@
 .end method
 
 .method public delete(J)V
-    .locals 4
+    .locals 3
     .parameter "key"
 
     .prologue
     .local p0, this:Landroid/util/LongSparseArray;,"Landroid/util/LongSparseArray<TE;>;"
     iget-object v1, p0, Landroid/util/LongSparseArray;->mKeys:[J
 
-    const/4 v2, 0x0
+    iget v2, p0, Landroid/util/LongSparseArray;->mSize:I
 
-    iget v3, p0, Landroid/util/LongSparseArray;->mSize:I
-
-    invoke-static {v1, v2, v3, p1, p2}, Landroid/util/LongSparseArray;->binarySearch([JIIJ)I
+    invoke-static {v1, v2, p1, p2}, Landroid/util/ContainerHelpers;->binarySearch([JIJ)I
 
     move-result v0
 
@@ -503,7 +446,7 @@
 .end method
 
 .method public get(JLjava/lang/Object;)Ljava/lang/Object;
-    .locals 4
+    .locals 3
     .parameter "key"
     .parameter
     .annotation system Ldalvik/annotation/Signature;
@@ -517,11 +460,9 @@
     .local p3, valueIfKeyNotFound:Ljava/lang/Object;,"TE;"
     iget-object v1, p0, Landroid/util/LongSparseArray;->mKeys:[J
 
-    const/4 v2, 0x0
+    iget v2, p0, Landroid/util/LongSparseArray;->mSize:I
 
-    iget v3, p0, Landroid/util/LongSparseArray;->mSize:I
-
-    invoke-static {v1, v2, v3, p1, p2}, Landroid/util/LongSparseArray;->binarySearch([JIIJ)I
+    invoke-static {v1, v2, p1, p2}, Landroid/util/ContainerHelpers;->binarySearch([JIJ)I
 
     move-result v0
 
@@ -551,7 +492,7 @@
 .end method
 
 .method public indexOfKey(J)I
-    .locals 3
+    .locals 2
     .parameter "key"
 
     .prologue
@@ -565,11 +506,9 @@
     :cond_0
     iget-object v0, p0, Landroid/util/LongSparseArray;->mKeys:[J
 
-    const/4 v1, 0x0
+    iget v1, p0, Landroid/util/LongSparseArray;->mSize:I
 
-    iget v2, p0, Landroid/util/LongSparseArray;->mSize:I
-
-    invoke-static {v0, v1, v2, p1, p2}, Landroid/util/LongSparseArray;->binarySearch([JIIJ)I
+    invoke-static {v0, v1, p1, p2}, Landroid/util/ContainerHelpers;->binarySearch([JIJ)I
 
     move-result v0
 
@@ -664,7 +603,7 @@
 
     iget v5, p0, Landroid/util/LongSparseArray;->mSize:I
 
-    invoke-static {v4, v6, v5, p1, p2}, Landroid/util/LongSparseArray;->binarySearch([JIIJ)I
+    invoke-static {v4, v5, p1, p2}, Landroid/util/ContainerHelpers;->binarySearch([JIJ)I
 
     move-result v0
 
@@ -722,7 +661,7 @@
 
     iget v5, p0, Landroid/util/LongSparseArray;->mSize:I
 
-    invoke-static {v4, v6, v5, p1, p2}, Landroid/util/LongSparseArray;->binarySearch([JIIJ)I
+    invoke-static {v4, v5, p1, p2}, Landroid/util/ContainerHelpers;->binarySearch([JIJ)I
 
     move-result v4
 
@@ -905,6 +844,97 @@
     iget v0, p0, Landroid/util/LongSparseArray;->mSize:I
 
     return v0
+.end method
+
+.method public toString()Ljava/lang/String;
+    .locals 6
+
+    .prologue
+    .local p0, this:Landroid/util/LongSparseArray;,"Landroid/util/LongSparseArray<TE;>;"
+    invoke-virtual {p0}, Landroid/util/LongSparseArray;->size()I
+
+    move-result v5
+
+    if-gtz v5, :cond_0
+
+    const-string v5, "{}"
+
+    :goto_0
+    return-object v5
+
+    :cond_0
+    new-instance v0, Ljava/lang/StringBuilder;
+
+    iget v5, p0, Landroid/util/LongSparseArray;->mSize:I
+
+    mul-int/lit8 v5, v5, 0x1c
+
+    invoke-direct {v0, v5}, Ljava/lang/StringBuilder;-><init>(I)V
+
+    .local v0, buffer:Ljava/lang/StringBuilder;
+    const/16 v5, 0x7b
+
+    invoke-virtual {v0, v5}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
+
+    const/4 v1, 0x0
+
+    .local v1, i:I
+    :goto_1
+    iget v5, p0, Landroid/util/LongSparseArray;->mSize:I
+
+    if-ge v1, v5, :cond_3
+
+    if-lez v1, :cond_1
+
+    const-string v5, ", "
+
+    invoke-virtual {v0, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    :cond_1
+    invoke-virtual {p0, v1}, Landroid/util/LongSparseArray;->keyAt(I)J
+
+    move-result-wide v2
+
+    .local v2, key:J
+    invoke-virtual {v0, v2, v3}, Ljava/lang/StringBuilder;->append(J)Ljava/lang/StringBuilder;
+
+    const/16 v5, 0x3d
+
+    invoke-virtual {v0, v5}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
+
+    invoke-virtual {p0, v1}, Landroid/util/LongSparseArray;->valueAt(I)Ljava/lang/Object;
+
+    move-result-object v4
+
+    .local v4, value:Ljava/lang/Object;
+    if-eq v4, p0, :cond_2
+
+    invoke-virtual {v0, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    :goto_2
+    add-int/lit8 v1, v1, 0x1
+
+    goto :goto_1
+
+    :cond_2
+    const-string v5, "(this Map)"
+
+    invoke-virtual {v0, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    goto :goto_2
+
+    .end local v2           #key:J
+    .end local v4           #value:Ljava/lang/Object;
+    :cond_3
+    const/16 v5, 0x7d
+
+    invoke-virtual {v0, v5}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
+
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v5
+
+    goto :goto_0
 .end method
 
 .method public valueAt(I)Ljava/lang/Object;

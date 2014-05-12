@@ -50,7 +50,11 @@
     move-result-object v2
 
     .local v2, output:Landroid/filterfw/core/Frame;
-    invoke-virtual {v1}, Ljava/lang/String;->toUpperCase()Ljava/lang/String;
+    invoke-static {}, Ljava/util/Locale;->getDefault()Ljava/util/Locale;
+
+    move-result-object v3
+
+    invoke-virtual {v1, v3}, Ljava/lang/String;->toUpperCase(Ljava/util/Locale;)Ljava/lang/String;
 
     move-result-object v3
 

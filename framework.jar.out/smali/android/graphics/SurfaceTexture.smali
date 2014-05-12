@@ -14,7 +14,11 @@
 
 
 # instance fields
+.field private mBufferQueue:I
+
 .field private mEventHandler:Landroid/graphics/SurfaceTexture$EventHandler;
+
+.field private mFrameAvailableListener:I
 
 .field private mOnFrameAvailableListener:Landroid/graphics/SurfaceTexture$OnFrameAvailableListener;
 
@@ -36,21 +40,49 @@
     .parameter "texName"
 
     .prologue
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
     const/4 v0, 0x0
 
-    invoke-direct {p0, p1, v0}, Landroid/graphics/SurfaceTexture;-><init>(IZ)V
+    invoke-direct {p0, p1, v0}, Landroid/graphics/SurfaceTexture;->init(IZ)V
 
     return-void
 .end method
 
 .method public constructor <init>(IZ)V
-    .locals 2
+    .locals 0
     .parameter "texName"
-    .parameter "allowSynchronousMode"
+    .parameter "singleBufferMode"
 
     .prologue
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
+    invoke-direct {p0, p1, p2}, Landroid/graphics/SurfaceTexture;->init(IZ)V
+
+    return-void
+.end method
+
+.method static synthetic access$000(Landroid/graphics/SurfaceTexture;)Landroid/graphics/SurfaceTexture$OnFrameAvailableListener;
+    .locals 1
+    .parameter "x0"
+
+    .prologue
+    iget-object v0, p0, Landroid/graphics/SurfaceTexture;->mOnFrameAvailableListener:Landroid/graphics/SurfaceTexture$OnFrameAvailableListener;
+
+    return-object v0
+.end method
+
+.method private init(IZ)V
+    .locals 2
+    .parameter "texName"
+    .parameter "singleBufferMode"
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/view/Surface$OutOfResourcesException;
+        }
+    .end annotation
+
+    .prologue
     invoke-static {}, Landroid/os/Looper;->myLooper()Landroid/os/Looper;
 
     move-result-object v0
@@ -69,7 +101,7 @@
 
     invoke-direct {v1, p0}, Ljava/lang/ref/WeakReference;-><init>(Ljava/lang/Object;)V
 
-    invoke-direct {p0, p1, v1, p2}, Landroid/graphics/SurfaceTexture;->nativeInit(ILjava/lang/Object;Z)V
+    invoke-direct {p0, p1, p2, v1}, Landroid/graphics/SurfaceTexture;->nativeInit(IZLjava/lang/Object;)V
 
     return-void
 
@@ -96,16 +128,6 @@
     goto :goto_0
 .end method
 
-.method static synthetic access$000(Landroid/graphics/SurfaceTexture;)Landroid/graphics/SurfaceTexture$OnFrameAvailableListener;
-    .locals 1
-    .parameter "x0"
-
-    .prologue
-    iget-object v0, p0, Landroid/graphics/SurfaceTexture;->mOnFrameAvailableListener:Landroid/graphics/SurfaceTexture$OnFrameAvailableListener;
-
-    return-object v0
-.end method
-
 .method private native nativeAttachToGLContext(I)I
 .end method
 
@@ -127,10 +149,18 @@
 .method private native nativeGetTransformMatrix([F)V
 .end method
 
-.method private native nativeInit(ILjava/lang/Object;Z)V
+.method private native nativeInit(IZLjava/lang/Object;)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/view/Surface$OutOfResourcesException;
+        }
+    .end annotation
 .end method
 
 .method private native nativeRelease()V
+.end method
+
+.method private native nativeReleaseTexImage()V
 .end method
 
 .method private native nativeSetDefaultBufferSize(II)V
@@ -197,7 +227,7 @@
 
     new-instance v1, Ljava/lang/RuntimeException;
 
-    const-string v2, "Error during detachFromGLContext (see logcat for details)"
+    const-string v2, "Error during attachToGLContext (see logcat for details)"
 
     invoke-direct {v1, v2}, Ljava/lang/RuntimeException;-><init>(Ljava/lang/String;)V
 
@@ -295,6 +325,15 @@
 
     .prologue
     invoke-direct {p0}, Landroid/graphics/SurfaceTexture;->nativeRelease()V
+
+    return-void
+.end method
+
+.method public releaseTexImage()V
+    .locals 0
+
+    .prologue
+    invoke-direct {p0}, Landroid/graphics/SurfaceTexture;->nativeReleaseTexImage()V
 
     return-void
 .end method

@@ -8,7 +8,7 @@
 
 
 # instance fields
-.field final mSessionCache:Lorg/apache/harmony/xnet/provider/jsse/SSLClientSessionCache;
+.field final mSessionCache:Lcom/android/org/conscrypt/SSLClientSessionCache;
 
 
 # direct methods
@@ -30,16 +30,16 @@
     .local v1, dir:Ljava/io/File;
     const/4 v0, 0x0
 
-    .local v0, cache:Lorg/apache/harmony/xnet/provider/jsse/SSLClientSessionCache;
+    .local v0, cache:Lcom/android/org/conscrypt/SSLClientSessionCache;
     :try_start_0
-    invoke-static {v1}, Lorg/apache/harmony/xnet/provider/jsse/FileClientSessionCache;->usingDirectory(Ljava/io/File;)Lorg/apache/harmony/xnet/provider/jsse/SSLClientSessionCache;
+    invoke-static {v1}, Lcom/android/org/conscrypt/FileClientSessionCache;->usingDirectory(Ljava/io/File;)Lcom/android/org/conscrypt/SSLClientSessionCache;
     :try_end_0
     .catch Ljava/io/IOException; {:try_start_0 .. :try_end_0} :catch_0
 
     move-result-object v0
 
     :goto_0
-    iput-object v0, p0, Landroid/net/SSLSessionCache;->mSessionCache:Lorg/apache/harmony/xnet/provider/jsse/SSLClientSessionCache;
+    iput-object v0, p0, Landroid/net/SSLSessionCache;->mSessionCache:Lcom/android/org/conscrypt/SSLClientSessionCache;
 
     return-void
 
@@ -84,11 +84,11 @@
     .prologue
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    invoke-static {p1}, Lorg/apache/harmony/xnet/provider/jsse/FileClientSessionCache;->usingDirectory(Ljava/io/File;)Lorg/apache/harmony/xnet/provider/jsse/SSLClientSessionCache;
+    invoke-static {p1}, Lcom/android/org/conscrypt/FileClientSessionCache;->usingDirectory(Ljava/io/File;)Lcom/android/org/conscrypt/SSLClientSessionCache;
 
     move-result-object v0
 
-    iput-object v0, p0, Landroid/net/SSLSessionCache;->mSessionCache:Lorg/apache/harmony/xnet/provider/jsse/SSLClientSessionCache;
+    iput-object v0, p0, Landroid/net/SSLSessionCache;->mSessionCache:Lcom/android/org/conscrypt/SSLClientSessionCache;
 
     return-void
 .end method

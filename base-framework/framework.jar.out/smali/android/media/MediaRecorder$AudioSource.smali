@@ -19,9 +19,11 @@
 
 .field public static final DEFAULT:I = 0x0
 
+.field protected static final HOTWORD:I = 0x7cf
+
 .field public static final MIC:I = 0x1
 
-.field public static final REMOTE_SUBMIX_SOURCE:I = 0x8
+.field public static final REMOTE_SUBMIX:I = 0x8
 
 .field public static final VOICE_CALL:I = 0x4
 

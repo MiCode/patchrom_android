@@ -8,8 +8,6 @@
 
 .field public static final BROWSER_SNAP_CENTER:I = 0x11206
 
-.field public static final BROWSER_TEXT_SIZE_CHANGE:I = 0x11207
-
 .field public static final BROWSER_ZOOM_LEVEL_CHANGE:I = 0x111d5
 
 
@@ -65,39 +63,6 @@
     const/4 v1, 0x0
 
     new-array v1, v1, [Ljava/lang/Object;
-
-    invoke-static {v0, v1}, Landroid/util/EventLog;->writeEvent(I[Ljava/lang/Object;)I
-
-    return-void
-.end method
-
-.method public static writeBrowserTextSizeChange(II)V
-    .locals 4
-    .parameter "oldsize"
-    .parameter "newsize"
-
-    .prologue
-    const v0, 0x11207
-
-    const/4 v1, 0x2
-
-    new-array v1, v1, [Ljava/lang/Object;
-
-    const/4 v2, 0x0
-
-    invoke-static {p0}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
-
-    move-result-object v3
-
-    aput-object v3, v1, v2
-
-    const/4 v2, 0x1
-
-    invoke-static {p1}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
-
-    move-result-object v3
-
-    aput-object v3, v1, v2
 
     invoke-static {v0, v1}, Landroid/util/EventLog;->writeEvent(I[Ljava/lang/Object;)I
 

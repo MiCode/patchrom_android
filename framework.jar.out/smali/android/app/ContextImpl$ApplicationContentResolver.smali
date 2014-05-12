@@ -120,6 +120,22 @@
     return-object v0
 .end method
 
+.method public appNotRespondingViaProvider(Landroid/content/IContentProvider;)V
+    .locals 2
+    .parameter "icp"
+
+    .prologue
+    iget-object v0, p0, Landroid/app/ContextImpl$ApplicationContentResolver;->mMainThread:Landroid/app/ActivityThread;
+
+    invoke-interface {p1}, Landroid/content/IContentProvider;->asBinder()Landroid/os/IBinder;
+
+    move-result-object v1
+
+    invoke-virtual {v0, v1}, Landroid/app/ActivityThread;->appNotRespondingViaProvider(Landroid/os/IBinder;)V
+
+    return-void
+.end method
+
 .method public releaseProvider(Landroid/content/IContentProvider;)Z
     .locals 2
     .parameter "provider"

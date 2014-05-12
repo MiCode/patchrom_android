@@ -44,14 +44,42 @@
     move-result-object v0
 
     .local v0, action:Ljava/lang/String;
+    iget-object v2, p0, Landroid/net/CaptivePortalTracker$1;->this$0:Landroid/net/CaptivePortalTracker;
+
+    #getter for: Landroid/net/CaptivePortalTracker;->mDeviceProvisioned:Z
+    invoke-static {v2}, Landroid/net/CaptivePortalTracker;->access$500(Landroid/net/CaptivePortalTracker;)Z
+
+    move-result v2
+
+    if-eqz v2, :cond_0
+
     const-string v2, "android.net.conn.CONNECTIVITY_CHANGE"
 
     invoke-virtual {v0, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
     move-result v2
 
-    if-eqz v2, :cond_0
+    if-nez v2, :cond_1
 
+    :cond_0
+    iget-object v2, p0, Landroid/net/CaptivePortalTracker$1;->this$0:Landroid/net/CaptivePortalTracker;
+
+    #getter for: Landroid/net/CaptivePortalTracker;->mDeviceProvisioned:Z
+    invoke-static {v2}, Landroid/net/CaptivePortalTracker;->access$500(Landroid/net/CaptivePortalTracker;)Z
+
+    move-result v2
+
+    if-nez v2, :cond_2
+
+    const-string v2, "android.net.conn.CONNECTIVITY_CHANGE_IMMEDIATE"
+
+    invoke-virtual {v0, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v2
+
+    if-eqz v2, :cond_2
+
+    :cond_1
     const-string v2, "networkInfo"
 
     invoke-virtual {p2, v2}, Landroid/content/Intent;->getParcelableExtra(Ljava/lang/String;)Landroid/os/Parcelable;
@@ -74,6 +102,6 @@
     invoke-virtual {v2, v3}, Landroid/net/CaptivePortalTracker;->sendMessage(Landroid/os/Message;)V
 
     .end local v1           #info:Landroid/net/NetworkInfo;
-    :cond_0
+    :cond_2
     return-void
 .end method

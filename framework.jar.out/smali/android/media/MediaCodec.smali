@@ -32,6 +32,12 @@
 
 .field public static final INFO_TRY_AGAIN_LATER:I = -0x1
 
+.field public static final PARAMETER_KEY_REQUEST_SYNC_FRAME:Ljava/lang/String; = "request-sync"
+
+.field public static final PARAMETER_KEY_SUSPEND:Ljava/lang/String; = "drop-input-frames"
+
+.field public static final PARAMETER_KEY_VIDEO_BITRATE:Ljava/lang/String; = "video-bitrate"
+
 .field public static final VIDEO_SCALING_MODE_SCALE_TO_FIT:I = 0x1
 
 .field public static final VIDEO_SCALING_MODE_SCALE_TO_FIT_WITH_CROPPING:I = 0x2
@@ -141,6 +147,9 @@
 .method private final native native_setup(Ljava/lang/String;ZZ)V
 .end method
 
+.method private final native setParameters([Ljava/lang/String;[Ljava/lang/Object;)V
+.end method
+
 
 # virtual methods
 .method public configure(Landroid/media/MediaFormat;Landroid/view/Surface;Landroid/media/MediaCrypto;I)V
@@ -237,6 +246,9 @@
     return-void
 .end method
 
+.method public final native createInputSurface()Landroid/view/Surface;
+.end method
+
 .method public final native dequeueInputBuffer(J)I
 .end method
 
@@ -255,6 +267,25 @@
 .method public final native flush()V
 .end method
 
+.method public getCodecInfo()Landroid/media/MediaCodecInfo;
+    .locals 1
+
+    .prologue
+    invoke-virtual {p0}, Landroid/media/MediaCodec;->getName()Ljava/lang/String;
+
+    move-result-object v0
+
+    invoke-static {v0}, Landroid/media/MediaCodecList;->findCodecByName(Ljava/lang/String;)I
+
+    move-result v0
+
+    invoke-static {v0}, Landroid/media/MediaCodecList;->getCodecInfoAt(I)Landroid/media/MediaCodecInfo;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
 .method public getInputBuffers()[Ljava/nio/ByteBuffer;
     .locals 1
 
@@ -266,6 +297,9 @@
     move-result-object v0
 
     return-object v0
+.end method
+
+.method public final native getName()Ljava/lang/String;
 .end method
 
 .method public getOutputBuffers()[Ljava/nio/ByteBuffer;
@@ -318,7 +352,80 @@
 .method public final native releaseOutputBuffer(IZ)V
 .end method
 
+.method public final setParameters(Landroid/os/Bundle;)V
+    .locals 6
+    .parameter "params"
+
+    .prologue
+    if-nez p1, :cond_0
+
+    :goto_0
+    return-void
+
+    :cond_0
+    invoke-virtual {p1}, Landroid/os/Bundle;->size()I
+
+    move-result v5
+
+    new-array v3, v5, [Ljava/lang/String;
+
+    .local v3, keys:[Ljava/lang/String;
+    invoke-virtual {p1}, Landroid/os/Bundle;->size()I
+
+    move-result v5
+
+    new-array v4, v5, [Ljava/lang/Object;
+
+    .local v4, values:[Ljava/lang/Object;
+    const/4 v0, 0x0
+
+    .local v0, i:I
+    invoke-virtual {p1}, Landroid/os/Bundle;->keySet()Ljava/util/Set;
+
+    move-result-object v5
+
+    invoke-interface {v5}, Ljava/util/Set;->iterator()Ljava/util/Iterator;
+
+    move-result-object v1
+
+    .local v1, i$:Ljava/util/Iterator;
+    :goto_1
+    invoke-interface {v1}, Ljava/util/Iterator;->hasNext()Z
+
+    move-result v5
+
+    if-eqz v5, :cond_1
+
+    invoke-interface {v1}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+
+    move-result-object v2
+
+    check-cast v2, Ljava/lang/String;
+
+    .local v2, key:Ljava/lang/String;
+    aput-object v2, v3, v0
+
+    invoke-virtual {p1, v2}, Landroid/os/Bundle;->get(Ljava/lang/String;)Ljava/lang/Object;
+
+    move-result-object v5
+
+    aput-object v5, v4, v0
+
+    add-int/lit8 v0, v0, 0x1
+
+    goto :goto_1
+
+    .end local v2           #key:Ljava/lang/String;
+    :cond_1
+    invoke-direct {p0, v3, v4}, Landroid/media/MediaCodec;->setParameters([Ljava/lang/String;[Ljava/lang/Object;)V
+
+    goto :goto_0
+.end method
+
 .method public final native setVideoScalingMode(I)V
+.end method
+
+.method public final native signalEndOfInputStream()V
 .end method
 
 .method public final native start()V

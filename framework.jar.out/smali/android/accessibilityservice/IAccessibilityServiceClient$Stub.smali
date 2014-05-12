@@ -26,11 +26,15 @@
 # static fields
 .field private static final DESCRIPTOR:Ljava/lang/String; = "android.accessibilityservice.IAccessibilityServiceClient"
 
+.field static final TRANSACTION_clearAccessibilityNodeInfoCache:I = 0x5
+
 .field static final TRANSACTION_onAccessibilityEvent:I = 0x2
 
 .field static final TRANSACTION_onGesture:I = 0x4
 
 .field static final TRANSACTION_onInterrupt:I = 0x3
+
+.field static final TRANSACTION_onKeyEvent:I = 0x6
 
 .field static final TRANSACTION_setConnection:I = 0x1
 
@@ -209,6 +213,54 @@
 
     goto :goto_0
 
+    .end local v0           #_arg0:I
+    :sswitch_5
+    const-string v3, "android.accessibilityservice.IAccessibilityServiceClient"
+
+    invoke-virtual {p2, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    invoke-virtual {p0}, Landroid/accessibilityservice/IAccessibilityServiceClient$Stub;->clearAccessibilityNodeInfoCache()V
+
+    goto :goto_0
+
+    :sswitch_6
+    const-string v3, "android.accessibilityservice.IAccessibilityServiceClient"
+
+    invoke-virtual {p2, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    invoke-virtual {p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v3
+
+    if-eqz v3, :cond_1
+
+    sget-object v3, Landroid/view/KeyEvent;->CREATOR:Landroid/os/Parcelable$Creator;
+
+    invoke-interface {v3, p2}, Landroid/os/Parcelable$Creator;->createFromParcel(Landroid/os/Parcel;)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Landroid/view/KeyEvent;
+
+    .local v0, _arg0:Landroid/view/KeyEvent;
+    :goto_2
+    invoke-virtual {p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v1
+
+    .restart local v1       #_arg1:I
+    invoke-virtual {p0, v0, v1}, Landroid/accessibilityservice/IAccessibilityServiceClient$Stub;->onKeyEvent(Landroid/view/KeyEvent;I)V
+
+    goto :goto_0
+
+    .end local v0           #_arg0:Landroid/view/KeyEvent;
+    .end local v1           #_arg1:I
+    :cond_1
+    const/4 v0, 0x0
+
+    .restart local v0       #_arg0:Landroid/view/KeyEvent;
+    goto :goto_2
+
     nop
 
     :sswitch_data_0
@@ -217,6 +269,8 @@
         0x2 -> :sswitch_2
         0x3 -> :sswitch_3
         0x4 -> :sswitch_4
+        0x5 -> :sswitch_5
+        0x6 -> :sswitch_6
         0x5f4e5446 -> :sswitch_0
     .end sparse-switch
 .end method

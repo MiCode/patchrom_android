@@ -43,9 +43,19 @@
 
 # direct methods
 .method static constructor <clinit>()V
-    .locals 3
+    .locals 8
 
     .prologue
+    const v7, -0x333334
+
+    const v6, -0x777778
+
+    const v5, -0xbbbbbc
+
+    const v4, -0xff0001
+
+    const v3, -0xff0100
+
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
@@ -68,9 +78,7 @@
 
     const-string v1, "darkgray"
 
-    const v2, -0xbbbbbc
-
-    invoke-static {v2}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+    invoke-static {v5}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
     move-result-object v2
 
@@ -80,9 +88,7 @@
 
     const-string v1, "gray"
 
-    const v2, -0x777778
-
-    invoke-static {v2}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+    invoke-static {v6}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
     move-result-object v2
 
@@ -92,9 +98,7 @@
 
     const-string v1, "lightgray"
 
-    const v2, -0x333334
-
-    invoke-static {v2}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+    invoke-static {v7}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
     move-result-object v2
 
@@ -128,9 +132,7 @@
 
     const-string v1, "green"
 
-    const v2, -0xff0100
-
-    invoke-static {v2}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+    invoke-static {v3}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
     move-result-object v2
 
@@ -164,9 +166,7 @@
 
     const-string v1, "cyan"
 
-    const v2, -0xff0001
-
-    invoke-static {v2}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+    invoke-static {v4}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
     move-result-object v2
 
@@ -177,6 +177,140 @@
     const-string v1, "magenta"
 
     const v2, -0xff01
+
+    invoke-static {v2}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v2
+
+    invoke-virtual {v0, v1, v2}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+
+    sget-object v0, Landroid/graphics/Color;->sColorNameMap:Ljava/util/HashMap;
+
+    const-string v1, "aqua"
+
+    invoke-static {v4}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v2
+
+    invoke-virtual {v0, v1, v2}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+
+    sget-object v0, Landroid/graphics/Color;->sColorNameMap:Ljava/util/HashMap;
+
+    const-string v1, "fuchsia"
+
+    const v2, -0xff01
+
+    invoke-static {v2}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v2
+
+    invoke-virtual {v0, v1, v2}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+
+    sget-object v0, Landroid/graphics/Color;->sColorNameMap:Ljava/util/HashMap;
+
+    const-string v1, "darkgrey"
+
+    invoke-static {v5}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v2
+
+    invoke-virtual {v0, v1, v2}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+
+    sget-object v0, Landroid/graphics/Color;->sColorNameMap:Ljava/util/HashMap;
+
+    const-string v1, "grey"
+
+    invoke-static {v6}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v2
+
+    invoke-virtual {v0, v1, v2}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+
+    sget-object v0, Landroid/graphics/Color;->sColorNameMap:Ljava/util/HashMap;
+
+    const-string v1, "lightgrey"
+
+    invoke-static {v7}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v2
+
+    invoke-virtual {v0, v1, v2}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+
+    sget-object v0, Landroid/graphics/Color;->sColorNameMap:Ljava/util/HashMap;
+
+    const-string v1, "lime"
+
+    invoke-static {v3}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v2
+
+    invoke-virtual {v0, v1, v2}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+
+    sget-object v0, Landroid/graphics/Color;->sColorNameMap:Ljava/util/HashMap;
+
+    const-string v1, "maroon"
+
+    const/high16 v2, -0x80
+
+    invoke-static {v2}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v2
+
+    invoke-virtual {v0, v1, v2}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+
+    sget-object v0, Landroid/graphics/Color;->sColorNameMap:Ljava/util/HashMap;
+
+    const-string v1, "navy"
+
+    const v2, -0xffff80
+
+    invoke-static {v2}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v2
+
+    invoke-virtual {v0, v1, v2}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+
+    sget-object v0, Landroid/graphics/Color;->sColorNameMap:Ljava/util/HashMap;
+
+    const-string v1, "olive"
+
+    const v2, -0x7f8000
+
+    invoke-static {v2}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v2
+
+    invoke-virtual {v0, v1, v2}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+
+    sget-object v0, Landroid/graphics/Color;->sColorNameMap:Ljava/util/HashMap;
+
+    const-string v1, "purple"
+
+    const v2, -0x7fff80
+
+    invoke-static {v2}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v2
+
+    invoke-virtual {v0, v1, v2}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+
+    sget-object v0, Landroid/graphics/Color;->sColorNameMap:Ljava/util/HashMap;
+
+    const-string v1, "silver"
+
+    const v2, -0x3f3f40
+
+    invoke-static {v2}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v2
+
+    invoke-virtual {v0, v1, v2}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+
+    sget-object v0, Landroid/graphics/Color;->sColorNameMap:Ljava/util/HashMap;
+
+    const-string v1, "teal"
+
+    const v2, -0xff7f80
 
     invoke-static {v2}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
@@ -560,6 +694,56 @@
     return-void
 .end method
 
+.method public static getHtmlColor(Ljava/lang/String;)I
+    .locals 5
+    .parameter "color"
+
+    .prologue
+    const/4 v2, -0x1
+
+    sget-object v3, Landroid/graphics/Color;->sColorNameMap:Ljava/util/HashMap;
+
+    sget-object v4, Ljava/util/Locale;->ROOT:Ljava/util/Locale;
+
+    invoke-virtual {p0, v4}, Ljava/lang/String;->toLowerCase(Ljava/util/Locale;)Ljava/lang/String;
+
+    move-result-object v4
+
+    invoke-virtual {v3, v4}, Ljava/util/HashMap;->get(Ljava/lang/Object;)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Ljava/lang/Integer;
+
+    .local v0, i:Ljava/lang/Integer;
+    if-eqz v0, :cond_0
+
+    invoke-virtual {v0}, Ljava/lang/Integer;->intValue()I
+
+    move-result v2
+
+    :goto_0
+    return v2
+
+    :cond_0
+    const/4 v3, -0x1
+
+    :try_start_0
+    invoke-static {p0, v3}, Lcom/android/internal/util/XmlUtils;->convertValueToInt(Ljava/lang/CharSequence;I)I
+    :try_end_0
+    .catch Ljava/lang/NumberFormatException; {:try_start_0 .. :try_end_0} :catch_0
+
+    move-result v2
+
+    goto :goto_0
+
+    :catch_0
+    move-exception v1
+
+    .local v1, nfe:Ljava/lang/NumberFormatException;
+    goto :goto_0
+.end method
+
 .method public static green(I)I
     .locals 1
     .parameter "color"
@@ -767,7 +951,7 @@
     :cond_2
     sget-object v2, Landroid/graphics/Color;->sColorNameMap:Ljava/util/HashMap;
 
-    sget-object v3, Ljava/util/Locale;->US:Ljava/util/Locale;
+    sget-object v3, Ljava/util/Locale;->ROOT:Ljava/util/Locale;
 
     invoke-virtual {p0, v3}, Ljava/lang/String;->toLowerCase(Ljava/util/Locale;)Ljava/lang/String;
 

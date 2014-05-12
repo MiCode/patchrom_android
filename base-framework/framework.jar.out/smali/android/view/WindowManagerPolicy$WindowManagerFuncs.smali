@@ -23,13 +23,13 @@
 
 
 # virtual methods
-.method public abstract addFakeWindow(Landroid/os/Looper;Landroid/view/InputEventReceiver$Factory;Ljava/lang/String;IIZZZ)Landroid/view/WindowManagerPolicy$FakeWindow;
+.method public abstract addFakeWindow(Landroid/os/Looper;Landroid/view/InputEventReceiver$Factory;Ljava/lang/String;IIIZZZ)Landroid/view/WindowManagerPolicy$FakeWindow;
 .end method
 
 .method public abstract getLidState()I
 .end method
 
-.method public abstract monitorInput(Ljava/lang/String;)Landroid/view/InputChannel;
+.method public abstract getWindowManagerLock()Ljava/lang/Object;
 .end method
 
 .method public abstract rebootSafeMode(Z)V
@@ -38,8 +38,14 @@
 .method public abstract reevaluateStatusBarVisibility()V
 .end method
 
+.method public abstract registerPointerEventListener(Landroid/view/WindowManagerPolicy$PointerEventListener;)V
+.end method
+
 .method public abstract shutdown(Z)V
 .end method
 
 .method public abstract switchKeyboardLayout(II)V
+.end method
+
+.method public abstract unregisterPointerEventListener(Landroid/view/WindowManagerPolicy$PointerEventListener;)V
 .end method

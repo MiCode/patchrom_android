@@ -1,11 +1,11 @@
 .class Lcom/android/server/LocationManagerService$1;
-.super Landroid/database/ContentObserver;
+.super Landroid/app/AppOpsManager$OnOpChangedInternalListener;
 .source "LocationManagerService.java"
 
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/android/server/LocationManagerService;->init()V
+    value = Lcom/android/server/LocationManagerService;->systemRunning()V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -19,51 +19,94 @@
 
 
 # direct methods
-.method constructor <init>(Lcom/android/server/LocationManagerService;Landroid/os/Handler;)V
+.method constructor <init>(Lcom/android/server/LocationManagerService;)V
     .locals 0
     .parameter
-    .parameter "x0"
 
     .prologue
     iput-object p1, p0, Lcom/android/server/LocationManagerService$1;->this$0:Lcom/android/server/LocationManagerService;
 
-    invoke-direct {p0, p2}, Landroid/database/ContentObserver;-><init>(Landroid/os/Handler;)V
+    invoke-direct {p0}, Landroid/app/AppOpsManager$OnOpChangedInternalListener;-><init>()V
 
     return-void
 .end method
 
 
 # virtual methods
-.method public onChange(Z)V
-    .locals 2
-    .parameter "selfChange"
+.method public onOpChanged(ILjava/lang/String;)V
+    .locals 4
+    .parameter "op"
+    .parameter "packageName"
 
     .prologue
-    iget-object v0, p0, Lcom/android/server/LocationManagerService$1;->this$0:Lcom/android/server/LocationManagerService;
+    iget-object v2, p0, Lcom/android/server/LocationManagerService$1;->this$0:Lcom/android/server/LocationManagerService;
 
     #getter for: Lcom/android/server/LocationManagerService;->mLock:Ljava/lang/Object;
-    invoke-static {v0}, Lcom/android/server/LocationManagerService;->access$100(Lcom/android/server/LocationManagerService;)Ljava/lang/Object;
+    invoke-static {v2}, Lcom/android/server/LocationManagerService;->access$000(Lcom/android/server/LocationManagerService;)Ljava/lang/Object;
+
+    move-result-object v3
+
+    monitor-enter v3
+
+    :try_start_0
+    iget-object v2, p0, Lcom/android/server/LocationManagerService$1;->this$0:Lcom/android/server/LocationManagerService;
+
+    #getter for: Lcom/android/server/LocationManagerService;->mReceivers:Ljava/util/HashMap;
+    invoke-static {v2}, Lcom/android/server/LocationManagerService;->access$100(Lcom/android/server/LocationManagerService;)Ljava/util/HashMap;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/util/HashMap;->values()Ljava/util/Collection;
+
+    move-result-object v2
+
+    invoke-interface {v2}, Ljava/util/Collection;->iterator()Ljava/util/Iterator;
+
+    move-result-object v0
+
+    .local v0, i$:Ljava/util/Iterator;
+    :goto_0
+    invoke-interface {v0}, Ljava/util/Iterator;->hasNext()Z
+
+    move-result v2
+
+    if-eqz v2, :cond_0
+
+    invoke-interface {v0}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
     move-result-object v1
 
-    monitor-enter v1
+    check-cast v1, Lcom/android/server/LocationManagerService$Receiver;
 
-    :try_start_0
-    iget-object v0, p0, Lcom/android/server/LocationManagerService$1;->this$0:Lcom/android/server/LocationManagerService;
+    .local v1, receiver:Lcom/android/server/LocationManagerService$Receiver;
+    const/4 v2, 0x1
 
-    #calls: Lcom/android/server/LocationManagerService;->updateProvidersLocked()V
-    invoke-static {v0}, Lcom/android/server/LocationManagerService;->access$200(Lcom/android/server/LocationManagerService;)V
+    invoke-virtual {v1, v2}, Lcom/android/server/LocationManagerService$Receiver;->updateMonitoring(Z)V
 
-    monitor-exit v1
+    goto :goto_0
 
-    return-void
-
+    .end local v0           #i$:Ljava/util/Iterator;
+    .end local v1           #receiver:Lcom/android/server/LocationManagerService$Receiver;
     :catchall_0
-    move-exception v0
+    move-exception v2
 
-    monitor-exit v1
+    monitor-exit v3
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    throw v0
+    throw v2
+
+    .restart local v0       #i$:Ljava/util/Iterator;
+    :cond_0
+    :try_start_1
+    iget-object v2, p0, Lcom/android/server/LocationManagerService$1;->this$0:Lcom/android/server/LocationManagerService;
+
+    #calls: Lcom/android/server/LocationManagerService;->applyAllProviderRequirementsLocked()V
+    invoke-static {v2}, Lcom/android/server/LocationManagerService;->access$200(Lcom/android/server/LocationManagerService;)V
+
+    monitor-exit v3
+    :try_end_1
+    .catchall {:try_start_1 .. :try_end_1} :catchall_0
+
+    return-void
 .end method

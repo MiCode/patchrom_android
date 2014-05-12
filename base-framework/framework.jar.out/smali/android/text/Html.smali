@@ -513,13 +513,9 @@
     :cond_3
     if-eqz v5, :cond_4
 
-    new-instance v8, Ljava/lang/StringBuilder;
+    const-string v8, "<div "
 
-    invoke-direct {v8}, Ljava/lang/StringBuilder;-><init>()V
-
-    const-string v9, "<div "
-
-    invoke-virtual {v8, v9}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {p0, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v8
 
@@ -530,14 +526,6 @@
     const-string v9, ">"
 
     invoke-virtual {v8, v9}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v8
-
-    invoke-virtual {v8}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v8
-
-    invoke-virtual {p0, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     :cond_4
     invoke-static {p0, p1, v2, v6}, Landroid/text/Html;->withinDiv(Ljava/lang/StringBuilder;Landroid/text/Spanned;II)V
@@ -1094,132 +1082,182 @@
 .end method
 
 .method private static withinStyle(Ljava/lang/StringBuilder;Ljava/lang/CharSequence;II)V
-    .locals 5
+    .locals 10
     .parameter "out"
     .parameter "text"
     .parameter "start"
     .parameter "end"
 
     .prologue
-    const/16 v4, 0x20
+    const v9, 0xdfff
 
-    move v1, p2
+    const v8, 0xd800
 
-    .local v1, i:I
+    const v7, 0xdc00
+
+    const/16 v6, 0x20
+
+    move v3, p2
+
+    .local v3, i:I
     :goto_0
-    if-ge v1, p3, :cond_7
+    if-ge v3, p3, :cond_9
 
-    invoke-interface {p1, v1}, Ljava/lang/CharSequence;->charAt(I)C
+    invoke-interface {p1, v3}, Ljava/lang/CharSequence;->charAt(I)C
 
     move-result v0
 
     .local v0, c:C
-    const/16 v2, 0x3c
+    const/16 v4, 0x3c
 
-    if-ne v0, v2, :cond_0
+    if-ne v0, v4, :cond_1
 
-    const-string v2, "&lt;"
+    const-string v4, "&lt;"
 
-    invoke-virtual {p0, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {p0, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
+    :cond_0
     :goto_1
-    add-int/lit8 v1, v1, 0x1
+    add-int/lit8 v3, v3, 0x1
 
     goto :goto_0
 
-    :cond_0
-    const/16 v2, 0x3e
-
-    if-ne v0, v2, :cond_1
-
-    const-string v2, "&gt;"
-
-    invoke-virtual {p0, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    goto :goto_1
-
     :cond_1
-    const/16 v2, 0x26
+    const/16 v4, 0x3e
 
-    if-ne v0, v2, :cond_2
+    if-ne v0, v4, :cond_2
 
-    const-string v2, "&amp;"
+    const-string v4, "&gt;"
 
-    invoke-virtual {p0, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {p0, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     goto :goto_1
 
     :cond_2
-    const/16 v2, 0x7e
+    const/16 v4, 0x26
 
-    if-gt v0, v2, :cond_3
+    if-ne v0, v4, :cond_3
 
-    if-ge v0, v4, :cond_4
+    const-string v4, "&amp;"
 
-    :cond_3
-    new-instance v2, Ljava/lang/StringBuilder;
-
-    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
-
-    const-string v3, "&#"
-
-    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v2
-
-    invoke-virtual {v2, v0}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
-
-    move-result-object v2
-
-    const-string v3, ";"
-
-    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v2
-
-    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v2
-
-    invoke-virtual {p0, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {p0, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     goto :goto_1
 
-    :cond_4
-    if-ne v0, v4, :cond_6
+    :cond_3
+    if-lt v0, v8, :cond_4
 
-    :goto_2
-    add-int/lit8 v2, v1, 0x1
+    if-gt v0, v9, :cond_4
 
-    if-ge v2, p3, :cond_5
+    if-ge v0, v7, :cond_0
 
-    add-int/lit8 v2, v1, 0x1
+    add-int/lit8 v4, v3, 0x1
 
-    invoke-interface {p1, v2}, Ljava/lang/CharSequence;->charAt(I)C
+    if-ge v4, p3, :cond_0
+
+    add-int/lit8 v4, v3, 0x1
+
+    invoke-interface {p1, v4}, Ljava/lang/CharSequence;->charAt(I)C
 
     move-result v2
 
-    if-ne v2, v4, :cond_5
+    .local v2, d:C
+    if-lt v2, v7, :cond_0
 
-    const-string v2, "&nbsp;"
+    if-gt v2, v9, :cond_0
 
-    invoke-virtual {p0, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    add-int/lit8 v3, v3, 0x1
 
-    add-int/lit8 v1, v1, 0x1
+    const/high16 v4, 0x1
 
-    goto :goto_2
+    sub-int v5, v0, v8
+
+    shl-int/lit8 v5, v5, 0xa
+
+    or-int/2addr v4, v5
+
+    sub-int v5, v2, v7
+
+    or-int v1, v4, v5
+
+    .local v1, codepoint:I
+    const-string v4, "&#"
+
+    invoke-virtual {p0, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v4
+
+    invoke-virtual {v4, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v4
+
+    const-string v5, ";"
+
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    goto :goto_1
+
+    .end local v1           #codepoint:I
+    .end local v2           #d:C
+    :cond_4
+    const/16 v4, 0x7e
+
+    if-gt v0, v4, :cond_5
+
+    if-ge v0, v6, :cond_6
 
     :cond_5
-    invoke-virtual {p0, v4}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
+    const-string v4, "&#"
+
+    invoke-virtual {p0, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v4
+
+    invoke-virtual {v4, v0}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v4
+
+    const-string v5, ";"
+
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     goto :goto_1
 
     :cond_6
+    if-ne v0, v6, :cond_8
+
+    :goto_2
+    add-int/lit8 v4, v3, 0x1
+
+    if-ge v4, p3, :cond_7
+
+    add-int/lit8 v4, v3, 0x1
+
+    invoke-interface {p1, v4}, Ljava/lang/CharSequence;->charAt(I)C
+
+    move-result v4
+
+    if-ne v4, v6, :cond_7
+
+    const-string v4, "&nbsp;"
+
+    invoke-virtual {p0, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    add-int/lit8 v3, v3, 0x1
+
+    goto :goto_2
+
+    :cond_7
+    invoke-virtual {p0, v6}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
+
+    goto :goto_1
+
+    :cond_8
     invoke-virtual {p0, v0}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
 
     goto :goto_1
 
     .end local v0           #c:C
-    :cond_7
+    :cond_9
     return-void
 .end method

@@ -48,12 +48,12 @@
     :try_start_0
     iget-object v0, p0, Lcom/android/server/am/UsageStatsService$2;->this$0:Lcom/android/server/am/UsageStatsService;
 
-    #getter for: Lcom/android/server/am/UsageStatsService;->mLastResumeTimes:Ljava/util/Map;
-    invoke-static {v0}, Lcom/android/server/am/UsageStatsService;->access$300(Lcom/android/server/am/UsageStatsService;)Ljava/util/Map;
+    #getter for: Lcom/android/server/am/UsageStatsService;->mLastResumeTimes:Landroid/util/ArrayMap;
+    invoke-static {v0}, Lcom/android/server/am/UsageStatsService;->access$300(Lcom/android/server/am/UsageStatsService;)Landroid/util/ArrayMap;
 
     move-result-object v0
 
-    invoke-interface {v0, p1}, Ljava/util/Map;->remove(Ljava/lang/Object;)Ljava/lang/Object;
+    invoke-virtual {v0, p1}, Landroid/util/ArrayMap;->remove(Ljava/lang/Object;)Ljava/lang/Object;
 
     monitor-exit v1
 

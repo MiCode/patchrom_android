@@ -82,13 +82,13 @@
 .end method
 
 .method private static compressDnsName(Ljava/lang/String;)Ljava/lang/String;
-    .locals 9
+    .locals 10
     .parameter "dnsName"
 
     .prologue
-    const/4 v8, 0x1
+    const/4 v9, 0x1
 
-    const/4 v7, 0x0
+    const/4 v8, 0x0
 
     new-instance v3, Ljava/lang/StringBuffer;
 
@@ -134,21 +134,23 @@
 
     if-lez v4, :cond_1
 
-    const-string v4, "%02x"
+    sget-object v4, Ljava/util/Locale;->US:Ljava/util/Locale;
 
-    new-array v5, v8, [Ljava/lang/Object;
+    const-string v5, "%02x"
+
+    new-array v6, v9, [Ljava/lang/Object;
 
     invoke-virtual {p0}, Ljava/lang/String;->length()I
 
-    move-result v6
+    move-result v7
 
-    invoke-static {v6}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+    invoke-static {v7}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
-    move-result-object v6
+    move-result-object v7
 
-    aput-object v6, v5, v7
+    aput-object v7, v6, v8
 
-    invoke-static {v4, v5}, Ljava/lang/String;->format(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+    invoke-static {v4, v5, v6}, Ljava/lang/String;->format(Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
 
     move-result-object v4
 
@@ -172,7 +174,7 @@
     goto :goto_1
 
     :cond_2
-    invoke-virtual {p0, v7, v1}, Ljava/lang/String;->substring(II)Ljava/lang/String;
+    invoke-virtual {p0, v8, v1}, Ljava/lang/String;->substring(II)Ljava/lang/String;
 
     move-result-object v2
 
@@ -183,21 +185,23 @@
 
     move-result-object p0
 
-    const-string v4, "%02x"
+    sget-object v4, Ljava/util/Locale;->US:Ljava/util/Locale;
 
-    new-array v5, v8, [Ljava/lang/Object;
+    const-string v5, "%02x"
+
+    new-array v6, v9, [Ljava/lang/Object;
 
     invoke-virtual {v2}, Ljava/lang/String;->length()I
 
-    move-result v6
+    move-result v7
 
-    invoke-static {v6}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+    invoke-static {v7}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
-    move-result-object v6
+    move-result-object v7
 
-    aput-object v6, v5, v7
+    aput-object v7, v6, v8
 
-    invoke-static {v4, v5}, Ljava/lang/String;->format(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+    invoke-static {v4, v5, v6}, Ljava/lang/String;->format(Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
 
     move-result-object v4
 
@@ -217,7 +221,7 @@
 .end method
 
 .method private static createPtrServiceQuery(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
-    .locals 6
+    .locals 7
     .parameter "instanceName"
     .parameter "serviceType"
 
@@ -268,21 +272,23 @@
     move-result-object v0
 
     .local v0, data:[B
-    const-string v2, "%02x"
+    sget-object v2, Ljava/util/Locale;->US:Ljava/util/Locale;
 
-    new-array v3, v4, [Ljava/lang/Object;
+    const-string v3, "%02x"
 
-    const/4 v4, 0x0
+    new-array v4, v4, [Ljava/lang/Object;
 
-    array-length v5, v0
+    const/4 v5, 0x0
 
-    invoke-static {v5}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+    array-length v6, v0
 
-    move-result-object v5
+    invoke-static {v6}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
-    aput-object v5, v3, v4
+    move-result-object v6
 
-    invoke-static {v2, v3}, Ljava/lang/String;->format(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+    aput-object v6, v4, v5
+
+    invoke-static {v2, v3, v4}, Ljava/lang/String;->format(Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
 
     move-result-object v2
 
@@ -306,15 +312,15 @@
 .end method
 
 .method static createRequest(Ljava/lang/String;II)Ljava/lang/String;
-    .locals 6
+    .locals 7
     .parameter "dnsName"
     .parameter "dnsType"
     .parameter "version"
 
     .prologue
-    const/4 v5, 0x1
+    const/4 v6, 0x1
 
-    const/4 v4, 0x0
+    const/4 v5, 0x0
 
     new-instance v0, Ljava/lang/StringBuffer;
 
@@ -325,7 +331,9 @@
 
     if-ne p1, v1, :cond_0
 
-    invoke-virtual {p0}, Ljava/lang/String;->toLowerCase()Ljava/lang/String;
+    sget-object v1, Ljava/util/Locale;->ROOT:Ljava/util/Locale;
+
+    invoke-virtual {p0, v1}, Ljava/lang/String;->toLowerCase(Ljava/util/Locale;)Ljava/lang/String;
 
     move-result-object p0
 
@@ -336,33 +344,37 @@
 
     invoke-virtual {v0, v1}, Ljava/lang/StringBuffer;->append(Ljava/lang/String;)Ljava/lang/StringBuffer;
 
-    const-string v1, "%04x"
+    sget-object v1, Ljava/util/Locale;->US:Ljava/util/Locale;
 
-    new-array v2, v5, [Ljava/lang/Object;
+    const-string v2, "%04x"
+
+    new-array v3, v6, [Ljava/lang/Object;
 
     invoke-static {p1}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
-    move-result-object v3
+    move-result-object v4
 
-    aput-object v3, v2, v4
+    aput-object v4, v3, v5
 
-    invoke-static {v1, v2}, Ljava/lang/String;->format(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+    invoke-static {v1, v2, v3}, Ljava/lang/String;->format(Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
 
     move-result-object v1
 
     invoke-virtual {v0, v1}, Ljava/lang/StringBuffer;->append(Ljava/lang/String;)Ljava/lang/StringBuffer;
 
-    const-string v1, "%02x"
+    sget-object v1, Ljava/util/Locale;->US:Ljava/util/Locale;
 
-    new-array v2, v5, [Ljava/lang/Object;
+    const-string v2, "%02x"
+
+    new-array v3, v6, [Ljava/lang/Object;
 
     invoke-static {p2}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
-    move-result-object v3
+    move-result-object v4
 
-    aput-object v3, v2, v4
+    aput-object v4, v3, v5
 
-    invoke-static {v1, v2}, Ljava/lang/String;->format(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+    invoke-static {v1, v2, v3}, Ljava/lang/String;->format(Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
 
     move-result-object v1
 

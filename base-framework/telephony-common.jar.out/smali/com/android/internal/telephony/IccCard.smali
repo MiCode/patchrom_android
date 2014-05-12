@@ -10,16 +10,25 @@
 .method public abstract changeIccLockPassword(Ljava/lang/String;Ljava/lang/String;Landroid/os/Message;)V
 .end method
 
+.method public abstract getIccFdnAvailable()Z
+.end method
+
 .method public abstract getIccFdnEnabled()Z
 .end method
 
-.method public abstract getIccFileHandler()Lcom/android/internal/telephony/IccFileHandler;
+.method public abstract getIccFileHandler()Lcom/android/internal/telephony/uicc/IccFileHandler;
 .end method
 
 .method public abstract getIccLockEnabled()Z
 .end method
 
-.method public abstract getIccRecords()Lcom/android/internal/telephony/IccRecords;
+.method public abstract getIccPin2Blocked()Z
+.end method
+
+.method public abstract getIccPuk2Blocked()Z
+.end method
+
+.method public abstract getIccRecords()Lcom/android/internal/telephony/uicc/IccRecords;
 .end method
 
 .method public abstract getServiceProviderName()Ljava/lang/String;
@@ -31,7 +40,7 @@
 .method public abstract hasIccCard()Z
 .end method
 
-.method public abstract isApplicationOnIcc(Lcom/android/internal/telephony/IccCardApplicationStatus$AppType;)Z
+.method public abstract isApplicationOnIcc(Lcom/android/internal/telephony/uicc/IccCardApplicationStatus$AppType;)Z
 .end method
 
 .method public abstract registerForAbsent(Landroid/os/Handler;ILjava/lang/Object;)V

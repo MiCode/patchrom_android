@@ -1,4 +1,4 @@
-.class Lcom/android/server/am/ActivityResult;
+.class final Lcom/android/server/am/ActivityResult;
 .super Landroid/app/ResultInfo;
 .source "ActivityResult.java"
 

@@ -50,10 +50,6 @@
 .field private mDeceleration:F
 
 .field private mDecelerationScale:F
-    .annotation build Landroid/annotation/MiuiHook;
-        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_FIELD:Landroid/annotation/MiuiHook$MiuiHookType;
-    .end annotation
-.end field
 
 .field private mDuration:I
 
@@ -78,10 +74,6 @@
 .field private mState:I
 
 .field private mTotalOverDistance:I
-    .annotation build Landroid/annotation/MiuiHook;
-        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_FIELD:Landroid/annotation/MiuiHook$MiuiHookType;
-    .end annotation
-.end field
 
 .field private mVelocity:I
 
@@ -1291,9 +1283,6 @@
 .method continueWhenFinished(Z)Z
     .locals 8
     .parameter "springOverScrollEnable"
-    .annotation build Landroid/annotation/MiuiHook;
-        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
-    .end annotation
 
     .prologue
     const/4 v3, 0x0
@@ -1615,9 +1604,6 @@
 .method setDecelerationScale(F)V
     .locals 0
     .parameter "scale"
-    .annotation build Landroid/annotation/MiuiHook;
-        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
-    .end annotation
 
     .prologue
     iput p1, p0, Landroid/widget/OverScroller$SplineOverScroller;->mDecelerationScale:F
@@ -1652,9 +1638,6 @@
 .method setTotalOverDistance(I)V
     .locals 0
     .parameter "distance"
-    .annotation build Landroid/annotation/MiuiHook;
-        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
-    .end annotation
 
     .prologue
     iput p1, p0, Landroid/widget/OverScroller$SplineOverScroller;->mTotalOverDistance:I
@@ -2177,9 +2160,6 @@
 .method update(Z)Z
     .locals 21
     .parameter "force"
-    .annotation build Landroid/annotation/MiuiHook;
-        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
-    .end annotation
 
     .prologue
     invoke-static {}, Landroid/view/animation/AnimationUtils;->currentAnimationTimeMillis()J
@@ -2631,4 +2611,13 @@
     iput v0, p0, Landroid/widget/OverScroller$SplineOverScroller;->mCurrentPosition:I
 
     return-void
+.end method
+
+.method public getState()I
+    .locals 1
+
+    .prologue
+    iget v0, p0, Landroid/widget/OverScroller$SplineOverScroller;->mState:I
+
+    return v0
 .end method

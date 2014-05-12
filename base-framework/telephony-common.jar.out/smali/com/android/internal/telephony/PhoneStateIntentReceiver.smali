@@ -11,9 +11,7 @@
 # static fields
 .field private static final DBG:Z = false
 
-.field private static final LOG_TAG:Ljava/lang/String; = "PHONE"
-
-.field private static final NOTIF_MAX:I = 0x20
+.field private static final LOG_TAG:Ljava/lang/String; = "PhoneStatIntentReceiver"
 
 .field private static final NOTIF_PHONE:I = 0x1
 
@@ -28,8 +26,6 @@
 .field private mContext:Landroid/content/Context;
 
 .field private mFilter:Landroid/content/IntentFilter;
-
-.field private mLocationEventWhat:I
 
 .field mPhoneState:Lcom/android/internal/telephony/PhoneConstants$State;
 
@@ -445,7 +441,7 @@
     move-exception v1
 
     .local v1, ex:Ljava/lang/Exception;
-    const-string v4, "PHONE"
+    const-string v4, "PhoneStatIntentReceiver"
 
     new-instance v5, Ljava/lang/StringBuilder;
 
@@ -465,7 +461,7 @@
 
     move-result-object v5
 
-    invoke-static {v4, v5}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v4, v5}, Landroid/telephony/Rlog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     invoke-virtual {v1}, Ljava/lang/Exception;->printStackTrace()V
 

@@ -1,4 +1,4 @@
-.class Lcom/android/server/am/CoreSettingsObserver;
+.class final Lcom/android/server/am/CoreSettingsObserver;
 .super Landroid/database/ContentObserver;
 .source "CoreSettingsObserver.java"
 

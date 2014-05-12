@@ -15,6 +15,24 @@
 
 
 # static fields
+.field public static final ACCESSIBILITY_CAPTIONING_BACKGROUND_COLOR:Ljava/lang/String; = "accessibility_captioning_background_color"
+
+.field public static final ACCESSIBILITY_CAPTIONING_EDGE_COLOR:Ljava/lang/String; = "accessibility_captioning_edge_color"
+
+.field public static final ACCESSIBILITY_CAPTIONING_EDGE_TYPE:Ljava/lang/String; = "accessibility_captioning_edge_type"
+
+.field public static final ACCESSIBILITY_CAPTIONING_ENABLED:Ljava/lang/String; = "accessibility_captioning_enabled"
+
+.field public static final ACCESSIBILITY_CAPTIONING_FONT_SCALE:Ljava/lang/String; = "accessibility_captioning_font_scale"
+
+.field public static final ACCESSIBILITY_CAPTIONING_FOREGROUND_COLOR:Ljava/lang/String; = "accessibility_captioning_foreground_color"
+
+.field public static final ACCESSIBILITY_CAPTIONING_LOCALE:Ljava/lang/String; = "accessibility_captioning_locale"
+
+.field public static final ACCESSIBILITY_CAPTIONING_PRESET:Ljava/lang/String; = "accessibility_captioning_preset"
+
+.field public static final ACCESSIBILITY_CAPTIONING_TYPEFACE:Ljava/lang/String; = "accessibility_captioning_typeface"
+
 .field public static final ACCESSIBILITY_DISPLAY_MAGNIFICATION_AUTO_UPDATE:Ljava/lang/String; = "accessibility_display_magnification_auto_update"
 
 .field public static final ACCESSIBILITY_DISPLAY_MAGNIFICATION_ENABLED:Ljava/lang/String; = "accessibility_display_magnification_enabled"
@@ -57,12 +75,19 @@
 
 .field public static final BACKUP_TRANSPORT:Ljava/lang/String; = "backup_transport"
 
+.field public static final BAR_SERVICE_COMPONENT:Ljava/lang/String; = "bar_service_component"
+
+.field public static final BLUETOOTH_HCI_LOG:Ljava/lang/String; = "bluetooth_hci_log"
+
 .field public static final BLUETOOTH_ON:Ljava/lang/String; = "bluetooth_on"
     .annotation runtime Ljava/lang/Deprecated;
     .end annotation
 .end field
 
 .field public static final BUGREPORT_IN_POWER_MENU:Ljava/lang/String; = "bugreport_in_power_menu"
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
+.end field
 
 .field public static final CONTENT_URI:Landroid/net/Uri; = null
 
@@ -89,12 +114,20 @@
 
 .field public static final ENABLED_INPUT_METHODS:Ljava/lang/String; = "enabled_input_methods"
 
+.field public static final ENABLED_NOTIFICATION_LISTENERS:Ljava/lang/String; = "enabled_notification_listeners"
+
+.field public static final ENABLED_ON_FIRST_BOOT_SYSTEM_PRINT_SERVICES:Ljava/lang/String; = "enabled_on_first_boot_system_print_services"
+
+.field public static final ENABLED_PRINT_SERVICES:Ljava/lang/String; = "enabled_print_services"
+
 .field public static final ENHANCED_VOICE_PRIVACY_ENABLED:Ljava/lang/String; = "enhanced_voice_privacy_enabled"
 
 .field public static final HTTP_PROXY:Ljava/lang/String; = "http_proxy"
     .annotation runtime Ljava/lang/Deprecated;
     .end annotation
 .end field
+
+.field public static final IMMERSIVE_MODE_CONFIRMATIONS:Ljava/lang/String; = "immersive_mode_confirmations"
 
 .field public static final INCALL_POWER_BUTTON_BEHAVIOR:Ljava/lang/String; = "incall_power_button_behavior"
 
@@ -115,7 +148,20 @@
 
 .field public static final LAST_SETUP_SHOWN:Ljava/lang/String; = "last_setup_shown"
 
+.field public static final LOCATION_MODE:Ljava/lang/String; = "location_mode"
+
+.field public static final LOCATION_MODE_BATTERY_SAVING:I = 0x2
+
+.field public static final LOCATION_MODE_HIGH_ACCURACY:I = 0x3
+
+.field public static final LOCATION_MODE_OFF:I = 0x0
+
+.field public static final LOCATION_MODE_SENSORS_ONLY:I = 0x1
+
 .field public static final LOCATION_PROVIDERS_ALLOWED:Ljava/lang/String; = "location_providers_allowed"
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
+.end field
 
 .field public static final LOCK_BIOMETRIC_WEAK_FLAGS:Ljava/lang/String; = "lock_biometric_weak_flags"
 
@@ -182,13 +228,21 @@
     .end annotation
 .end field
 
+.field public static final NFC_PAYMENT_DEFAULT_COMPONENT:Ljava/lang/String; = "nfc_payment_default_component"
+
+.field public static final PACKAGE_VERIFIER_USER_CONSENT:Ljava/lang/String; = "package_verifier_user_consent"
+
 .field public static final PARENTAL_CONTROL_ENABLED:Ljava/lang/String; = "parental_control_enabled"
 
 .field public static final PARENTAL_CONTROL_LAST_UPDATE:Ljava/lang/String; = "parental_control_last_update"
 
 .field public static final PARENTAL_CONTROL_REDIRECT_URL:Ljava/lang/String; = "parental_control_redirect_url"
 
+.field public static final PAYMENT_SERVICE_SEARCH_URI:Ljava/lang/String; = "payment_service_search_uri"
+
 .field public static final PREFERRED_TTY_MODE:Ljava/lang/String; = "preferred_tty_mode"
+
+.field public static final PRINT_SERVICE_SEARCH_URI:Ljava/lang/String; = "print_service_search_uri"
 
 .field public static final SCREENSAVER_ACTIVATE_ON_DOCK:Ljava/lang/String; = "screensaver_activate_on_dock"
 
@@ -247,6 +301,8 @@
 .field public static final SETTINGS_CLASSNAME:Ljava/lang/String; = "settings_classname"
 
 .field public static final SETTINGS_TO_BACKUP:[Ljava/lang/String; = null
+
+.field public static final SMS_DEFAULT_APPLICATION:Ljava/lang/String; = "sms_default_application"
 
 .field public static final SPELL_CHECKER_ENABLED:Ljava/lang/String; = "spell_checker_enabled"
 
@@ -484,6 +540,12 @@
     sget-object v0, Landroid/provider/Settings$Secure;->MOVED_TO_GLOBAL:Ljava/util/HashSet;
 
     const-string v1, "bluetooth_on"
+
+    invoke-virtual {v0, v1}, Ljava/util/HashSet;->add(Ljava/lang/Object;)Z
+
+    sget-object v0, Landroid/provider/Settings$Secure;->MOVED_TO_GLOBAL:Ljava/util/HashSet;
+
+    const-string v1, "bugreport_in_power_menu"
 
     invoke-virtual {v0, v1}, Ljava/util/HashSet;->add(Ljava/lang/Object;)Z
 
@@ -778,48 +840,6 @@
     sget-object v0, Landroid/provider/Settings$Secure;->MOVED_TO_GLOBAL:Ljava/util/HashSet;
 
     const-string v1, "tether_supported"
-
-    invoke-virtual {v0, v1}, Ljava/util/HashSet;->add(Ljava/lang/Object;)Z
-
-    sget-object v0, Landroid/provider/Settings$Secure;->MOVED_TO_GLOBAL:Ljava/util/HashSet;
-
-    const-string v1, "throttle_help_uri"
-
-    invoke-virtual {v0, v1}, Ljava/util/HashSet;->add(Ljava/lang/Object;)Z
-
-    sget-object v0, Landroid/provider/Settings$Secure;->MOVED_TO_GLOBAL:Ljava/util/HashSet;
-
-    const-string v1, "throttle_max_ntp_cache_age_sec"
-
-    invoke-virtual {v0, v1}, Ljava/util/HashSet;->add(Ljava/lang/Object;)Z
-
-    sget-object v0, Landroid/provider/Settings$Secure;->MOVED_TO_GLOBAL:Ljava/util/HashSet;
-
-    const-string v1, "throttle_notification_type"
-
-    invoke-virtual {v0, v1}, Ljava/util/HashSet;->add(Ljava/lang/Object;)Z
-
-    sget-object v0, Landroid/provider/Settings$Secure;->MOVED_TO_GLOBAL:Ljava/util/HashSet;
-
-    const-string v1, "throttle_polling_sec"
-
-    invoke-virtual {v0, v1}, Ljava/util/HashSet;->add(Ljava/lang/Object;)Z
-
-    sget-object v0, Landroid/provider/Settings$Secure;->MOVED_TO_GLOBAL:Ljava/util/HashSet;
-
-    const-string v1, "throttle_reset_day"
-
-    invoke-virtual {v0, v1}, Ljava/util/HashSet;->add(Ljava/lang/Object;)Z
-
-    sget-object v0, Landroid/provider/Settings$Secure;->MOVED_TO_GLOBAL:Ljava/util/HashSet;
-
-    const-string v1, "throttle_threshold_bytes"
-
-    invoke-virtual {v0, v1}, Ljava/util/HashSet;->add(Ljava/lang/Object;)Z
-
-    sget-object v0, Landroid/provider/Settings$Secure;->MOVED_TO_GLOBAL:Ljava/util/HashSet;
-
-    const-string v1, "throttle_value_kbitsps"
 
     invoke-virtual {v0, v1}, Ljava/util/HashSet;->add(Ljava/lang/Object;)Z
 
@@ -1177,13 +1197,7 @@
 
     invoke-virtual {v0, v1}, Ljava/util/HashSet;->add(Ljava/lang/Object;)Z
 
-    sget-object v0, Landroid/provider/Settings$Secure;->MOVED_TO_GLOBAL:Ljava/util/HashSet;
-
-    const-string v1, "preferred_cdma_subscription"
-
-    invoke-virtual {v0, v1}, Ljava/util/HashSet;->add(Ljava/lang/Object;)Z
-
-    const/16 v0, 0x21
+    const/16 v0, 0x27
 
     new-array v0, v0, [Ljava/lang/String;
 
@@ -1277,109 +1291,145 @@
 
     const/16 v1, 0xf
 
-    const-string v2, "tts_use_defaults"
+    const-string v2, "accessibility_captioning_enabled"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x10
 
-    const-string v2, "tts_default_rate"
+    const-string v2, "accessibility_captioning_locale"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x11
 
-    const-string v2, "tts_default_pitch"
+    const-string v2, "accessibility_captioning_background_color"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x12
 
-    const-string v2, "tts_default_synth"
+    const-string v2, "accessibility_captioning_foreground_color"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x13
 
-    const-string v2, "tts_default_lang"
+    const-string v2, "accessibility_captioning_edge_type"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x14
 
-    const-string v2, "tts_default_country"
+    const-string v2, "accessibility_captioning_edge_color"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x15
 
-    const-string v2, "tts_enabled_plugins"
+    const-string v2, "accessibility_captioning_typeface"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x16
 
-    const-string v2, "tts_default_locale"
+    const-string v2, "accessibility_captioning_font_scale"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x17
 
-    const-string v2, "wifi_networks_available_notification_on"
+    const-string v2, "tts_use_defaults"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x18
 
-    const-string v2, "wifi_networks_available_repeat_delay"
+    const-string v2, "tts_default_rate"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x19
 
-    const-string v2, "wifi_num_open_networks_kept"
+    const-string v2, "tts_default_pitch"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x1a
 
-    const-string v2, "mount_play_not_snd"
+    const-string v2, "tts_default_synth"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x1b
 
-    const-string v2, "mount_ums_autostart"
+    const-string v2, "tts_default_lang"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x1c
 
-    const-string v2, "mount_ums_prompt"
+    const-string v2, "tts_default_country"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x1d
 
-    const-string v2, "mount_ums_notify_enabled"
+    const-string v2, "tts_enabled_plugins"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x1e
 
-    const-string v2, "ui_night_mode"
+    const-string v2, "tts_default_locale"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x1f
 
-    const-string v2, "lock_screen_owner_info"
+    const-string v2, "wifi_networks_available_notification_on"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x20
 
-    const-string v2, "lock_screen_owner_info_enabled"
+    const-string v2, "wifi_networks_available_repeat_delay"
+
+    aput-object v2, v0, v1
+
+    const/16 v1, 0x21
+
+    const-string v2, "wifi_num_open_networks_kept"
+
+    aput-object v2, v0, v1
+
+    const/16 v1, 0x22
+
+    const-string v2, "mount_play_not_snd"
+
+    aput-object v2, v0, v1
+
+    const/16 v1, 0x23
+
+    const-string v2, "mount_ums_autostart"
+
+    aput-object v2, v0, v1
+
+    const/16 v1, 0x24
+
+    const-string v2, "mount_ums_prompt"
+
+    aput-object v2, v0, v1
+
+    const/16 v1, 0x25
+
+    const-string v2, "mount_ums_notify_enabled"
+
+    aput-object v2, v0, v1
+
+    const/16 v1, 0x26
+
+    const-string v2, "ui_night_mode"
 
     aput-object v2, v0, v1
 
@@ -1570,6 +1620,22 @@
     .end annotation
 
     .prologue
+    const-string v2, "location_mode"
+
+    invoke-virtual {v2, p1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v2
+
+    if-eqz v2, :cond_0
+
+    invoke-static {p0, p2}, Landroid/provider/Settings$Secure;->getLocationModeForUser(Landroid/content/ContentResolver;I)I
+
+    move-result v2
+
+    :goto_0
+    return v2
+
+    :cond_0
     invoke-static {p0, p1, p2}, Landroid/provider/Settings$Secure;->getStringForUser(Landroid/content/ContentResolver;Ljava/lang/String;I)Ljava/lang/String;
 
     move-result-object v1
@@ -1582,7 +1648,7 @@
 
     move-result v2
 
-    return v2
+    goto :goto_0
 
     :catch_0
     move-exception v0
@@ -1596,13 +1662,32 @@
 .end method
 
 .method public static getIntForUser(Landroid/content/ContentResolver;Ljava/lang/String;II)I
-    .locals 2
+    .locals 3
     .parameter "cr"
     .parameter "name"
     .parameter "def"
     .parameter "userHandle"
 
     .prologue
+    const-string v2, "location_mode"
+
+    invoke-virtual {v2, p1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v2
+
+    if-eqz v2, :cond_1
+
+    invoke-static {p0, p3}, Landroid/provider/Settings$Secure;->getLocationModeForUser(Landroid/content/ContentResolver;I)I
+
+    move-result p2
+
+    .end local p2
+    :cond_0
+    :goto_0
+    return p2
+
+    .restart local p2
+    :cond_1
     invoke-static {p0, p1, p3}, Landroid/provider/Settings$Secure;->getStringForUser(Landroid/content/ContentResolver;Ljava/lang/String;I)Ljava/lang/String;
 
     move-result-object v1
@@ -1617,16 +1702,92 @@
 
     move-result p2
 
-    .end local p2
-    :cond_0
-    :goto_0
-    return p2
+    goto :goto_0
 
-    .restart local p2
     :catch_0
     move-exception v0
 
     .local v0, e:Ljava/lang/NumberFormatException;
+    goto :goto_0
+.end method
+
+.method private static final getLocationModeForUser(Landroid/content/ContentResolver;I)I
+    .locals 4
+    .parameter "cr"
+    .parameter "userId"
+
+    .prologue
+    invoke-static {}, Landroid/provider/Settings;->access$000()Ljava/lang/Object;
+
+    move-result-object v3
+
+    monitor-enter v3
+
+    :try_start_0
+    const-string v2, "gps"
+
+    invoke-static {p0, v2, p1}, Landroid/provider/Settings$Secure;->isLocationProviderEnabledForUser(Landroid/content/ContentResolver;Ljava/lang/String;I)Z
+
+    move-result v0
+
+    .local v0, gpsEnabled:Z
+    const-string v2, "network"
+
+    invoke-static {p0, v2, p1}, Landroid/provider/Settings$Secure;->isLocationProviderEnabledForUser(Landroid/content/ContentResolver;Ljava/lang/String;I)Z
+
+    move-result v1
+
+    .local v1, networkEnabled:Z
+    if-eqz v0, :cond_0
+
+    if-eqz v1, :cond_0
+
+    const/4 v2, 0x3
+
+    monitor-exit v3
+
+    :goto_0
+    return v2
+
+    :cond_0
+    if-eqz v0, :cond_1
+
+    const/4 v2, 0x1
+
+    monitor-exit v3
+
+    goto :goto_0
+
+    .end local v0           #gpsEnabled:Z
+    .end local v1           #networkEnabled:Z
+    :catchall_0
+    move-exception v2
+
+    monitor-exit v3
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    throw v2
+
+    .restart local v0       #gpsEnabled:Z
+    .restart local v1       #networkEnabled:Z
+    :cond_1
+    if-eqz v1, :cond_2
+
+    const/4 v2, 0x2
+
+    :try_start_1
+    monitor-exit v3
+
+    goto :goto_0
+
+    :cond_2
+    const/4 v2, 0x0
+
+    monitor-exit v3
+    :try_end_1
+    .catchall {:try_start_1 .. :try_end_1} :catchall_0
+
     goto :goto_0
 .end method
 
@@ -2011,6 +2172,8 @@
     .locals 1
     .parameter "cr"
     .parameter "provider"
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
 
     .prologue
     invoke-static {}, Landroid/os/UserHandle;->myUserId()I
@@ -2029,6 +2192,8 @@
     .parameter "cr"
     .parameter "provider"
     .parameter "userId"
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
 
     .prologue
     const-string v1, "location_providers_allowed"
@@ -2110,6 +2275,22 @@
     .parameter "userHandle"
 
     .prologue
+    const-string v0, "location_mode"
+
+    invoke-virtual {v0, p1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_0
+
+    invoke-static {p0, p2, p3}, Landroid/provider/Settings$Secure;->setLocationModeForUser(Landroid/content/ContentResolver;II)Z
+
+    move-result v0
+
+    :goto_0
+    return v0
+
+    :cond_0
     invoke-static {p2}, Ljava/lang/Integer;->toString(I)Ljava/lang/String;
 
     move-result-object v0
@@ -2118,7 +2299,7 @@
 
     move-result v0
 
-    return v0
+    goto :goto_0
 .end method
 
 .method public static putLong(Landroid/content/ContentResolver;Ljava/lang/String;J)Z
@@ -2243,39 +2424,170 @@
     goto :goto_0
 .end method
 
+.method private static final setLocationModeForUser(Landroid/content/ContentResolver;II)Z
+    .locals 8
+    .parameter "cr"
+    .parameter "mode"
+    .parameter "userId"
+
+    .prologue
+    invoke-static {}, Landroid/provider/Settings;->access$000()Ljava/lang/Object;
+
+    move-result-object v5
+
+    monitor-enter v5
+
+    const/4 v0, 0x0
+
+    .local v0, gps:Z
+    const/4 v2, 0x0
+
+    .local v2, network:Z
+    packed-switch p1, :pswitch_data_0
+
+    :try_start_0
+    new-instance v4, Ljava/lang/IllegalArgumentException;
+
+    new-instance v6, Ljava/lang/StringBuilder;
+
+    invoke-direct {v6}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v7, "Invalid location mode: "
+
+    invoke-virtual {v6, v7}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v6
+
+    invoke-virtual {v6, p1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v6
+
+    invoke-virtual {v6}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v6
+
+    invoke-direct {v4, v6}, Ljava/lang/IllegalArgumentException;-><init>(Ljava/lang/String;)V
+
+    throw v4
+
+    :catchall_0
+    move-exception v4
+
+    monitor-exit v5
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    throw v4
+
+    :pswitch_0
+    const/4 v0, 0x1
+
+    :goto_0
+    :pswitch_1
+    :try_start_1
+    const-string v4, "gps"
+
+    invoke-static {p0, v4, v0, p2}, Landroid/provider/Settings$Secure;->setLocationProviderEnabledForUser(Landroid/content/ContentResolver;Ljava/lang/String;ZI)Z
+
+    move-result v1
+
+    .local v1, gpsSuccess:Z
+    const-string v4, "network"
+
+    invoke-static {p0, v4, v2, p2}, Landroid/provider/Settings$Secure;->setLocationProviderEnabledForUser(Landroid/content/ContentResolver;Ljava/lang/String;ZI)Z
+
+    move-result v3
+
+    .local v3, nlpSuccess:Z
+    if-eqz v1, :cond_0
+
+    if-eqz v3, :cond_0
+
+    const/4 v4, 0x1
+
+    :goto_1
+    monitor-exit v5
+    :try_end_1
+    .catchall {:try_start_1 .. :try_end_1} :catchall_0
+
+    return v4
+
+    .end local v1           #gpsSuccess:Z
+    .end local v3           #nlpSuccess:Z
+    :pswitch_2
+    const/4 v2, 0x1
+
+    goto :goto_0
+
+    :pswitch_3
+    const/4 v0, 0x1
+
+    const/4 v2, 0x1
+
+    goto :goto_0
+
+    .restart local v1       #gpsSuccess:Z
+    .restart local v3       #nlpSuccess:Z
+    :cond_0
+    const/4 v4, 0x0
+
+    goto :goto_1
+
+    nop
+
+    :pswitch_data_0
+    .packed-switch 0x0
+        :pswitch_1
+        :pswitch_0
+        :pswitch_2
+        :pswitch_3
+    .end packed-switch
+.end method
+
 .method public static final setLocationProviderEnabled(Landroid/content/ContentResolver;Ljava/lang/String;Z)V
     .locals 1
     .parameter "cr"
     .parameter "provider"
     .parameter "enabled"
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
 
     .prologue
     invoke-static {}, Landroid/os/UserHandle;->myUserId()I
 
     move-result v0
 
-    invoke-static {p0, p1, p2, v0}, Landroid/provider/Settings$Secure;->setLocationProviderEnabledForUser(Landroid/content/ContentResolver;Ljava/lang/String;ZI)V
+    invoke-static {p0, p1, p2, v0}, Landroid/provider/Settings$Secure;->setLocationProviderEnabledForUser(Landroid/content/ContentResolver;Ljava/lang/String;ZI)Z
 
     return-void
 .end method
 
-.method public static final setLocationProviderEnabledForUser(Landroid/content/ContentResolver;Ljava/lang/String;ZI)V
-    .locals 2
+.method public static final setLocationProviderEnabledForUser(Landroid/content/ContentResolver;Ljava/lang/String;ZI)Z
+    .locals 3
     .parameter "cr"
     .parameter "provider"
     .parameter "enabled"
     .parameter "userId"
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
 
     .prologue
+    invoke-static {}, Landroid/provider/Settings;->access$000()Ljava/lang/Object;
+
+    move-result-object v1
+
+    monitor-enter v1
+
     if-eqz p2, :cond_0
 
+    :try_start_0
     new-instance v0, Ljava/lang/StringBuilder;
 
     invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v1, "+"
+    const-string v2, "+"
 
-    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v0
 
@@ -2292,16 +2604,20 @@
 
     invoke-static {p0, v0, p1, p3}, Landroid/provider/Settings$Secure;->putStringForUser(Landroid/content/ContentResolver;Ljava/lang/String;Ljava/lang/String;I)Z
 
-    return-void
+    move-result v0
+
+    monitor-exit v1
+
+    return v0
 
     :cond_0
     new-instance v0, Ljava/lang/StringBuilder;
 
     invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v1, "-"
+    const-string v2, "-"
 
-    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v0
 
@@ -2314,4 +2630,13 @@
     move-result-object p1
 
     goto :goto_0
+
+    :catchall_0
+    move-exception v0
+
+    monitor-exit v1
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    throw v0
 .end method

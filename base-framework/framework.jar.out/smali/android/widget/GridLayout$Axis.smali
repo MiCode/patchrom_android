@@ -1488,7 +1488,9 @@
 
     .end local v0           #arc:Landroid/widget/GridLayout$Arc;
     :cond_2
-    sget-object v4, Landroid/widget/GridLayout;->TAG:Ljava/lang/String;
+    iget-object v4, p0, Landroid/widget/GridLayout$Axis;->this$0:Landroid/widget/GridLayout;
+
+    iget-object v4, v4, Landroid/widget/GridLayout;->mPrinter:Landroid/util/Printer;
 
     new-instance v5, Ljava/lang/StringBuilder;
 
@@ -1512,13 +1514,7 @@
 
     move-result-object v5
 
-    const-string v6, " are inconsistent; "
-
-    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v5
-
-    const-string v6, "permanently removing: "
+    const-string v6, " are inconsistent; permanently removing: "
 
     invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -1542,7 +1538,7 @@
 
     move-result-object v5
 
-    invoke-static {v4, v5}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-interface {v4, v5}, Landroid/util/Printer;->println(Ljava/lang/String;)V
 
     return-void
 .end method

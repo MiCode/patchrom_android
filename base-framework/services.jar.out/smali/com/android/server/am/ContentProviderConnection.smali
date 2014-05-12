@@ -1,4 +1,4 @@
-.class public Lcom/android/server/am/ContentProviderConnection;
+.class public final Lcom/android/server/am/ContentProviderConnection;
 .super Landroid/os/Binder;
 .source "ContentProviderConnection.java"
 

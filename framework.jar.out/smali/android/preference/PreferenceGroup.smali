@@ -471,6 +471,38 @@
     return v0
 .end method
 
+.method public notifyDependencyChange(Z)V
+    .locals 3
+    .parameter "disableDependents"
+
+    .prologue
+    invoke-super {p0, p1}, Landroid/preference/Preference;->notifyDependencyChange(Z)V
+
+    invoke-virtual {p0}, Landroid/preference/PreferenceGroup;->getPreferenceCount()I
+
+    move-result v1
+
+    .local v1, preferenceCount:I
+    const/4 v0, 0x0
+
+    .local v0, i:I
+    :goto_0
+    if-ge v0, v1, :cond_0
+
+    invoke-virtual {p0, v0}, Landroid/preference/PreferenceGroup;->getPreference(I)Landroid/preference/Preference;
+
+    move-result-object v2
+
+    invoke-virtual {v2, p0, p1}, Landroid/preference/Preference;->onParentChanged(Landroid/preference/Preference;Z)V
+
+    add-int/lit8 v0, v0, 0x1
+
+    goto :goto_0
+
+    :cond_0
+    return-void
+.end method
+
 .method protected onAttachedToActivity()V
     .locals 3
 
@@ -511,17 +543,12 @@
     .parameter "preference"
 
     .prologue
-    invoke-super {p0}, Landroid/preference/Preference;->isEnabled()Z
+    invoke-virtual {p0}, Landroid/preference/PreferenceGroup;->shouldDisableDependents()Z
 
     move-result v0
 
-    if-nez v0, :cond_0
+    invoke-virtual {p1, p0, v0}, Landroid/preference/Preference;->onParentChanged(Landroid/preference/Preference;Z)V
 
-    const/4 v0, 0x0
-
-    invoke-virtual {p1, v0}, Landroid/preference/Preference;->setEnabled(Z)V
-
-    :cond_0
     const/4 v0, 0x1
 
     return v0
@@ -609,38 +636,6 @@
     invoke-virtual {p0}, Landroid/preference/PreferenceGroup;->notifyHierarchyChanged()V
 
     return v0
-.end method
-
-.method public setEnabled(Z)V
-    .locals 3
-    .parameter "enabled"
-
-    .prologue
-    invoke-super {p0, p1}, Landroid/preference/Preference;->setEnabled(Z)V
-
-    invoke-virtual {p0}, Landroid/preference/PreferenceGroup;->getPreferenceCount()I
-
-    move-result v1
-
-    .local v1, preferenceCount:I
-    const/4 v0, 0x0
-
-    .local v0, i:I
-    :goto_0
-    if-ge v0, v1, :cond_0
-
-    invoke-virtual {p0, v0}, Landroid/preference/PreferenceGroup;->getPreference(I)Landroid/preference/Preference;
-
-    move-result-object v2
-
-    invoke-virtual {v2, p1}, Landroid/preference/Preference;->setEnabled(Z)V
-
-    add-int/lit8 v0, v0, 0x1
-
-    goto :goto_0
-
-    :cond_0
-    return-void
 .end method
 
 .method public setOrderingAsAdded(Z)V

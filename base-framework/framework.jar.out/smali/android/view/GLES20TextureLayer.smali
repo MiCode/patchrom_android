@@ -77,7 +77,7 @@
 .end method
 
 .method getSurfaceTexture()Landroid/graphics/SurfaceTexture;
-    .locals 3
+    .locals 2
 
     .prologue
     iget-object v0, p0, Landroid/view/GLES20TextureLayer;->mSurface:Landroid/graphics/SurfaceTexture;
@@ -88,9 +88,7 @@
 
     iget v1, p0, Landroid/view/GLES20TextureLayer;->mTexture:I
 
-    const/4 v2, 0x0
-
-    invoke-direct {v0, v1, v2}, Landroid/graphics/SurfaceTexture;-><init>(IZ)V
+    invoke-direct {v0, v1}, Landroid/graphics/SurfaceTexture;-><init>(I)V
 
     iput-object v0, p0, Landroid/view/GLES20TextureLayer;->mSurface:Landroid/graphics/SurfaceTexture;
 
@@ -201,6 +199,17 @@
 .method start(Landroid/graphics/Canvas;)Landroid/view/HardwareCanvas;
     .locals 1
     .parameter "currentCanvas"
+
+    .prologue
+    const/4 v0, 0x0
+
+    return-object v0
+.end method
+
+.method start(Landroid/graphics/Canvas;Landroid/graphics/Rect;)Landroid/view/HardwareCanvas;
+    .locals 1
+    .parameter "currentCanvas"
+    .parameter "dirty"
 
     .prologue
     const/4 v0, 0x0

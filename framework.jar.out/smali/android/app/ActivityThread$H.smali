@@ -51,6 +51,8 @@
 
 .field public static final HIDE_WINDOW:I = 0x6a
 
+.field public static final INSTALL_PROVIDER:I = 0x91
+
 .field public static final LAUNCH_ACTIVITY:I = 0x64
 
 .field public static final LOW_MEMORY:I = 0x7c
@@ -68,6 +70,8 @@
 .field public static final RELAUNCH_ACTIVITY:I = 0x7e
 
 .field public static final REMOVE_PROVIDER:I = 0x83
+
+.field public static final REQUEST_ASSIST_CONTEXT_EXTRAS:I = 0x8f
 
 .field public static final REQUEST_THUMBNAIL:I = 0x75
 
@@ -92,6 +96,8 @@
 .field public static final STOP_SERVICE:I = 0x74
 
 .field public static final SUICIDE:I = 0x82
+
+.field public static final TRANSLUCENT_CONVERSION_COMPLETE:I = 0x90
 
 .field public static final TRIM_MEMORY:I = 0x8c
 
@@ -278,9 +284,9 @@
     .prologue
     const/4 v6, 0x0
 
-    const/4 v4, 0x1
-
     const/4 v5, 0x0
+
+    const/4 v4, 0x1
 
     const-wide/16 v8, 0x40
 
@@ -318,7 +324,7 @@
     iget-object v3, p0, Landroid/app/ActivityThread$H;->this$0:Landroid/app/ActivityThread;
 
     #calls: Landroid/app/ActivityThread;->handleLaunchActivity(Landroid/app/ActivityThread$ActivityClientRecord;Landroid/content/Intent;)V
-    invoke-static {v3, v2, v6}, Landroid/app/ActivityThread;->access$600(Landroid/app/ActivityThread;Landroid/app/ActivityThread$ActivityClientRecord;Landroid/content/Intent;)V
+    invoke-static {v3, v2, v6}, Landroid/app/ActivityThread;->access$800(Landroid/app/ActivityThread;Landroid/app/ActivityThread$ActivityClientRecord;Landroid/content/Intent;)V
 
     invoke-static {v8, v9}, Landroid/os/Trace;->traceEnd(J)V
 
@@ -338,7 +344,7 @@
     iget-object v3, p0, Landroid/app/ActivityThread$H;->this$0:Landroid/app/ActivityThread;
 
     #calls: Landroid/app/ActivityThread;->handleRelaunchActivity(Landroid/app/ActivityThread$ActivityClientRecord;)V
-    invoke-static {v3, v2}, Landroid/app/ActivityThread;->access$700(Landroid/app/ActivityThread;Landroid/app/ActivityThread$ActivityClientRecord;)V
+    invoke-static {v3, v2}, Landroid/app/ActivityThread;->access$900(Landroid/app/ActivityThread;Landroid/app/ActivityThread$ActivityClientRecord;)V
 
     invoke-static {v8, v9}, Landroid/os/Trace;->traceEnd(J)V
 
@@ -364,7 +370,7 @@
     iget v7, p1, Landroid/os/Message;->arg2:I
 
     #calls: Landroid/app/ActivityThread;->handlePauseActivity(Landroid/os/IBinder;ZZI)V
-    invoke-static {v6, v3, v5, v4, v7}, Landroid/app/ActivityThread;->access$800(Landroid/app/ActivityThread;Landroid/os/IBinder;ZZI)V
+    invoke-static {v6, v3, v5, v4, v7}, Landroid/app/ActivityThread;->access$1000(Landroid/app/ActivityThread;Landroid/os/IBinder;ZZI)V
 
     invoke-direct {p0}, Landroid/app/ActivityThread$H;->maybeSnapshot()V
 
@@ -398,7 +404,7 @@
     iget v7, p1, Landroid/os/Message;->arg2:I
 
     #calls: Landroid/app/ActivityThread;->handlePauseActivity(Landroid/os/IBinder;ZZI)V
-    invoke-static {v6, v3, v4, v5, v7}, Landroid/app/ActivityThread;->access$800(Landroid/app/ActivityThread;Landroid/os/IBinder;ZZI)V
+    invoke-static {v6, v3, v4, v5, v7}, Landroid/app/ActivityThread;->access$1000(Landroid/app/ActivityThread;Landroid/os/IBinder;ZZI)V
 
     invoke-static {v8, v9}, Landroid/os/Trace;->traceEnd(J)V
 
@@ -418,7 +424,7 @@
     iget v6, p1, Landroid/os/Message;->arg2:I
 
     #calls: Landroid/app/ActivityThread;->handleStopActivity(Landroid/os/IBinder;ZI)V
-    invoke-static {v5, v3, v4, v6}, Landroid/app/ActivityThread;->access$900(Landroid/app/ActivityThread;Landroid/os/IBinder;ZI)V
+    invoke-static {v5, v3, v4, v6}, Landroid/app/ActivityThread;->access$1100(Landroid/app/ActivityThread;Landroid/os/IBinder;ZI)V
 
     invoke-static {v8, v9}, Landroid/os/Trace;->traceEnd(J)V
 
@@ -438,7 +444,7 @@
     iget v6, p1, Landroid/os/Message;->arg2:I
 
     #calls: Landroid/app/ActivityThread;->handleStopActivity(Landroid/os/IBinder;ZI)V
-    invoke-static {v4, v3, v5, v6}, Landroid/app/ActivityThread;->access$900(Landroid/app/ActivityThread;Landroid/os/IBinder;ZI)V
+    invoke-static {v4, v3, v5, v6}, Landroid/app/ActivityThread;->access$1100(Landroid/app/ActivityThread;Landroid/os/IBinder;ZI)V
 
     invoke-static {v8, v9}, Landroid/os/Trace;->traceEnd(J)V
 
@@ -456,7 +462,7 @@
     check-cast v3, Landroid/os/IBinder;
 
     #calls: Landroid/app/ActivityThread;->handleWindowVisibility(Landroid/os/IBinder;Z)V
-    invoke-static {v5, v3, v4}, Landroid/app/ActivityThread;->access$1000(Landroid/app/ActivityThread;Landroid/os/IBinder;Z)V
+    invoke-static {v5, v3, v4}, Landroid/app/ActivityThread;->access$1200(Landroid/app/ActivityThread;Landroid/os/IBinder;Z)V
 
     invoke-static {v8, v9}, Landroid/os/Trace;->traceEnd(J)V
 
@@ -474,7 +480,7 @@
     check-cast v3, Landroid/os/IBinder;
 
     #calls: Landroid/app/ActivityThread;->handleWindowVisibility(Landroid/os/IBinder;Z)V
-    invoke-static {v4, v3, v5}, Landroid/app/ActivityThread;->access$1000(Landroid/app/ActivityThread;Landroid/os/IBinder;Z)V
+    invoke-static {v4, v3, v5}, Landroid/app/ActivityThread;->access$1200(Landroid/app/ActivityThread;Landroid/os/IBinder;Z)V
 
     invoke-static {v8, v9}, Landroid/os/Trace;->traceEnd(J)V
 
@@ -516,7 +522,7 @@
     check-cast v3, Landroid/app/ActivityThread$ResultData;
 
     #calls: Landroid/app/ActivityThread;->handleSendResult(Landroid/app/ActivityThread$ResultData;)V
-    invoke-static {v4, v3}, Landroid/app/ActivityThread;->access$1100(Landroid/app/ActivityThread;Landroid/app/ActivityThread$ResultData;)V
+    invoke-static {v4, v3}, Landroid/app/ActivityThread;->access$1300(Landroid/app/ActivityThread;Landroid/app/ActivityThread$ResultData;)V
 
     invoke-static {v8, v9}, Landroid/os/Trace;->traceEnd(J)V
 
@@ -541,7 +547,7 @@
     iget v7, p1, Landroid/os/Message;->arg2:I
 
     #calls: Landroid/app/ActivityThread;->handleDestroyActivity(Landroid/os/IBinder;ZIZ)V
-    invoke-static {v6, v3, v4, v7, v5}, Landroid/app/ActivityThread;->access$1200(Landroid/app/ActivityThread;Landroid/os/IBinder;ZIZ)V
+    invoke-static {v6, v3, v4, v7, v5}, Landroid/app/ActivityThread;->access$1400(Landroid/app/ActivityThread;Landroid/os/IBinder;ZIZ)V
 
     invoke-static {v8, v9}, Landroid/os/Trace;->traceEnd(J)V
 
@@ -565,7 +571,7 @@
     iget-object v3, p0, Landroid/app/ActivityThread$H;->this$0:Landroid/app/ActivityThread;
 
     #calls: Landroid/app/ActivityThread;->handleBindApplication(Landroid/app/ActivityThread$AppBindData;)V
-    invoke-static {v3, v1}, Landroid/app/ActivityThread;->access$1300(Landroid/app/ActivityThread;Landroid/app/ActivityThread$AppBindData;)V
+    invoke-static {v3, v1}, Landroid/app/ActivityThread;->access$1500(Landroid/app/ActivityThread;Landroid/app/ActivityThread$AppBindData;)V
 
     invoke-static {v8, v9}, Landroid/os/Trace;->traceEnd(J)V
 
@@ -606,7 +612,7 @@
     check-cast v3, Landroid/app/ActivityThread$NewIntentData;
 
     #calls: Landroid/app/ActivityThread;->handleNewIntent(Landroid/app/ActivityThread$NewIntentData;)V
-    invoke-static {v4, v3}, Landroid/app/ActivityThread;->access$1400(Landroid/app/ActivityThread;Landroid/app/ActivityThread$NewIntentData;)V
+    invoke-static {v4, v3}, Landroid/app/ActivityThread;->access$1600(Landroid/app/ActivityThread;Landroid/app/ActivityThread$NewIntentData;)V
 
     invoke-static {v8, v9}, Landroid/os/Trace;->traceEnd(J)V
 
@@ -624,7 +630,7 @@
     check-cast v3, Landroid/app/ActivityThread$ReceiverData;
 
     #calls: Landroid/app/ActivityThread;->handleReceiver(Landroid/app/ActivityThread$ReceiverData;)V
-    invoke-static {v4, v3}, Landroid/app/ActivityThread;->access$1500(Landroid/app/ActivityThread;Landroid/app/ActivityThread$ReceiverData;)V
+    invoke-static {v4, v3}, Landroid/app/ActivityThread;->access$1700(Landroid/app/ActivityThread;Landroid/app/ActivityThread$ReceiverData;)V
 
     invoke-direct {p0}, Landroid/app/ActivityThread$H;->maybeSnapshot()V
 
@@ -644,7 +650,7 @@
     check-cast v3, Landroid/app/ActivityThread$CreateServiceData;
 
     #calls: Landroid/app/ActivityThread;->handleCreateService(Landroid/app/ActivityThread$CreateServiceData;)V
-    invoke-static {v4, v3}, Landroid/app/ActivityThread;->access$1600(Landroid/app/ActivityThread;Landroid/app/ActivityThread$CreateServiceData;)V
+    invoke-static {v4, v3}, Landroid/app/ActivityThread;->access$1800(Landroid/app/ActivityThread;Landroid/app/ActivityThread$CreateServiceData;)V
 
     invoke-static {v8, v9}, Landroid/os/Trace;->traceEnd(J)V
 
@@ -662,7 +668,7 @@
     check-cast v3, Landroid/app/ActivityThread$BindServiceData;
 
     #calls: Landroid/app/ActivityThread;->handleBindService(Landroid/app/ActivityThread$BindServiceData;)V
-    invoke-static {v4, v3}, Landroid/app/ActivityThread;->access$1700(Landroid/app/ActivityThread;Landroid/app/ActivityThread$BindServiceData;)V
+    invoke-static {v4, v3}, Landroid/app/ActivityThread;->access$1900(Landroid/app/ActivityThread;Landroid/app/ActivityThread$BindServiceData;)V
 
     invoke-static {v8, v9}, Landroid/os/Trace;->traceEnd(J)V
 
@@ -680,7 +686,7 @@
     check-cast v3, Landroid/app/ActivityThread$BindServiceData;
 
     #calls: Landroid/app/ActivityThread;->handleUnbindService(Landroid/app/ActivityThread$BindServiceData;)V
-    invoke-static {v4, v3}, Landroid/app/ActivityThread;->access$1800(Landroid/app/ActivityThread;Landroid/app/ActivityThread$BindServiceData;)V
+    invoke-static {v4, v3}, Landroid/app/ActivityThread;->access$2000(Landroid/app/ActivityThread;Landroid/app/ActivityThread$BindServiceData;)V
 
     invoke-static {v8, v9}, Landroid/os/Trace;->traceEnd(J)V
 
@@ -698,7 +704,7 @@
     check-cast v3, Landroid/app/ActivityThread$ServiceArgsData;
 
     #calls: Landroid/app/ActivityThread;->handleServiceArgs(Landroid/app/ActivityThread$ServiceArgsData;)V
-    invoke-static {v4, v3}, Landroid/app/ActivityThread;->access$1900(Landroid/app/ActivityThread;Landroid/app/ActivityThread$ServiceArgsData;)V
+    invoke-static {v4, v3}, Landroid/app/ActivityThread;->access$2100(Landroid/app/ActivityThread;Landroid/app/ActivityThread$ServiceArgsData;)V
 
     invoke-static {v8, v9}, Landroid/os/Trace;->traceEnd(J)V
 
@@ -716,7 +722,7 @@
     check-cast v3, Landroid/os/IBinder;
 
     #calls: Landroid/app/ActivityThread;->handleStopService(Landroid/os/IBinder;)V
-    invoke-static {v4, v3}, Landroid/app/ActivityThread;->access$2000(Landroid/app/ActivityThread;Landroid/os/IBinder;)V
+    invoke-static {v4, v3}, Landroid/app/ActivityThread;->access$2200(Landroid/app/ActivityThread;Landroid/os/IBinder;)V
 
     invoke-direct {p0}, Landroid/app/ActivityThread$H;->maybeSnapshot()V
 
@@ -736,7 +742,7 @@
     check-cast v3, Landroid/os/IBinder;
 
     #calls: Landroid/app/ActivityThread;->handleRequestThumbnail(Landroid/os/IBinder;)V
-    invoke-static {v4, v3}, Landroid/app/ActivityThread;->access$2100(Landroid/app/ActivityThread;Landroid/os/IBinder;)V
+    invoke-static {v4, v3}, Landroid/app/ActivityThread;->access$2300(Landroid/app/ActivityThread;Landroid/os/IBinder;)V
 
     invoke-static {v8, v9}, Landroid/os/Trace;->traceEnd(J)V
 
@@ -801,7 +807,7 @@
     check-cast v3, Landroid/app/ActivityThread$DumpComponentInfo;
 
     #calls: Landroid/app/ActivityThread;->handleDumpService(Landroid/app/ActivityThread$DumpComponentInfo;)V
-    invoke-static {v4, v3}, Landroid/app/ActivityThread;->access$2200(Landroid/app/ActivityThread;Landroid/app/ActivityThread$DumpComponentInfo;)V
+    invoke-static {v4, v3}, Landroid/app/ActivityThread;->access$2400(Landroid/app/ActivityThread;Landroid/app/ActivityThread$DumpComponentInfo;)V
 
     goto/16 :goto_0
 
@@ -870,7 +876,7 @@
     check-cast v3, Landroid/app/ActivityThread$CreateBackupAgentData;
 
     #calls: Landroid/app/ActivityThread;->handleCreateBackupAgent(Landroid/app/ActivityThread$CreateBackupAgentData;)V
-    invoke-static {v4, v3}, Landroid/app/ActivityThread;->access$2300(Landroid/app/ActivityThread;Landroid/app/ActivityThread$CreateBackupAgentData;)V
+    invoke-static {v4, v3}, Landroid/app/ActivityThread;->access$2500(Landroid/app/ActivityThread;Landroid/app/ActivityThread$CreateBackupAgentData;)V
 
     invoke-static {v8, v9}, Landroid/os/Trace;->traceEnd(J)V
 
@@ -888,7 +894,7 @@
     check-cast v3, Landroid/app/ActivityThread$CreateBackupAgentData;
 
     #calls: Landroid/app/ActivityThread;->handleDestroyBackupAgent(Landroid/app/ActivityThread$CreateBackupAgentData;)V
-    invoke-static {v4, v3}, Landroid/app/ActivityThread;->access$2400(Landroid/app/ActivityThread;Landroid/app/ActivityThread$CreateBackupAgentData;)V
+    invoke-static {v4, v3}, Landroid/app/ActivityThread;->access$2600(Landroid/app/ActivityThread;Landroid/app/ActivityThread$CreateBackupAgentData;)V
 
     invoke-static {v8, v9}, Landroid/os/Trace;->traceEnd(J)V
 
@@ -986,7 +992,7 @@
     check-cast v3, Landroid/app/ActivityThread$DumpComponentInfo;
 
     #calls: Landroid/app/ActivityThread;->handleDumpActivity(Landroid/app/ActivityThread$DumpComponentInfo;)V
-    invoke-static {v4, v3}, Landroid/app/ActivityThread;->access$2500(Landroid/app/ActivityThread;Landroid/app/ActivityThread$DumpComponentInfo;)V
+    invoke-static {v4, v3}, Landroid/app/ActivityThread;->access$2700(Landroid/app/ActivityThread;Landroid/app/ActivityThread$DumpComponentInfo;)V
 
     goto/16 :goto_0
 
@@ -998,7 +1004,7 @@
     check-cast v3, Landroid/app/ActivityThread$DumpComponentInfo;
 
     #calls: Landroid/app/ActivityThread;->handleDumpProvider(Landroid/app/ActivityThread$DumpComponentInfo;)V
-    invoke-static {v4, v3}, Landroid/app/ActivityThread;->access$2600(Landroid/app/ActivityThread;Landroid/app/ActivityThread$DumpComponentInfo;)V
+    invoke-static {v4, v3}, Landroid/app/ActivityThread;->access$2800(Landroid/app/ActivityThread;Landroid/app/ActivityThread$DumpComponentInfo;)V
 
     goto/16 :goto_0
 
@@ -1019,7 +1025,7 @@
 
     :goto_5
     #calls: Landroid/app/ActivityThread;->handleSleeping(Landroid/os/IBinder;Z)V
-    invoke-static {v6, v3, v4}, Landroid/app/ActivityThread;->access$2700(Landroid/app/ActivityThread;Landroid/os/IBinder;Z)V
+    invoke-static {v6, v3, v4}, Landroid/app/ActivityThread;->access$2900(Landroid/app/ActivityThread;Landroid/os/IBinder;Z)V
 
     invoke-static {v8, v9}, Landroid/os/Trace;->traceEnd(J)V
 
@@ -1042,7 +1048,7 @@
     check-cast v3, Landroid/os/Bundle;
 
     #calls: Landroid/app/ActivityThread;->handleSetCoreSettings(Landroid/os/Bundle;)V
-    invoke-static {v4, v3}, Landroid/app/ActivityThread;->access$2800(Landroid/app/ActivityThread;Landroid/os/Bundle;)V
+    invoke-static {v4, v3}, Landroid/app/ActivityThread;->access$3000(Landroid/app/ActivityThread;Landroid/os/Bundle;)V
 
     invoke-static {v8, v9}, Landroid/os/Trace;->traceEnd(J)V
 
@@ -1056,7 +1062,7 @@
     check-cast v3, Landroid/app/ActivityThread$UpdateCompatibilityData;
 
     #calls: Landroid/app/ActivityThread;->handleUpdatePackageCompatibilityInfo(Landroid/app/ActivityThread$UpdateCompatibilityData;)V
-    invoke-static {v4, v3}, Landroid/app/ActivityThread;->access$2900(Landroid/app/ActivityThread;Landroid/app/ActivityThread$UpdateCompatibilityData;)V
+    invoke-static {v4, v3}, Landroid/app/ActivityThread;->access$3100(Landroid/app/ActivityThread;Landroid/app/ActivityThread$UpdateCompatibilityData;)V
 
     goto/16 :goto_0
 
@@ -1085,6 +1091,51 @@
     invoke-virtual {v4, v3, v5}, Landroid/app/ActivityThread;->handleUnstableProviderDied(Landroid/os/IBinder;Z)V
 
     goto/16 :goto_0
+
+    :pswitch_2b
+    iget-object v4, p0, Landroid/app/ActivityThread$H;->this$0:Landroid/app/ActivityThread;
+
+    iget-object v3, p1, Landroid/os/Message;->obj:Ljava/lang/Object;
+
+    check-cast v3, Landroid/app/ActivityThread$RequestAssistContextExtras;
+
+    invoke-virtual {v4, v3}, Landroid/app/ActivityThread;->handleRequestAssistContextExtras(Landroid/app/ActivityThread$RequestAssistContextExtras;)V
+
+    goto/16 :goto_0
+
+    :pswitch_2c
+    iget-object v6, p0, Landroid/app/ActivityThread$H;->this$0:Landroid/app/ActivityThread;
+
+    iget-object v3, p1, Landroid/os/Message;->obj:Ljava/lang/Object;
+
+    check-cast v3, Landroid/os/IBinder;
+
+    iget v7, p1, Landroid/os/Message;->arg1:I
+
+    if-ne v7, v4, :cond_8
+
+    :goto_6
+    invoke-virtual {v6, v3, v4}, Landroid/app/ActivityThread;->handleTranslucentConversionComplete(Landroid/os/IBinder;Z)V
+
+    goto/16 :goto_0
+
+    :cond_8
+    move v4, v5
+
+    goto :goto_6
+
+    :pswitch_2d
+    iget-object v4, p0, Landroid/app/ActivityThread$H;->this$0:Landroid/app/ActivityThread;
+
+    iget-object v3, p1, Landroid/os/Message;->obj:Ljava/lang/Object;
+
+    check-cast v3, Landroid/content/pm/ProviderInfo;
+
+    invoke-virtual {v4, v3}, Landroid/app/ActivityThread;->handleInstallProvider(Landroid/content/pm/ProviderInfo;)V
+
+    goto/16 :goto_0
+
+    nop
 
     :pswitch_data_0
     .packed-switch 0x64
@@ -1131,5 +1182,8 @@
         :pswitch_29
         :pswitch_25
         :pswitch_2a
+        :pswitch_2b
+        :pswitch_2c
+        :pswitch_2d
     .end packed-switch
 .end method

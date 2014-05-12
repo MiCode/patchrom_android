@@ -16,6 +16,8 @@
 
 
 # instance fields
+.field public final mAllowedResolutionLevel:I
+
 .field mDistanceToCenter:D
 
 .field public final mExpireAt:J
@@ -30,12 +32,16 @@
 
 .field mState:I
 
+.field public final mUid:I
+
 
 # direct methods
-.method public constructor <init>(Landroid/location/Geofence;JLjava/lang/String;Landroid/app/PendingIntent;)V
+.method public constructor <init>(Landroid/location/Geofence;JIILjava/lang/String;Landroid/app/PendingIntent;)V
     .locals 3
     .parameter "fence"
     .parameter "expireAt"
+    .parameter "allowedResolutionLevel"
+    .parameter "uid"
     .parameter "packageName"
     .parameter "intent"
 
@@ -54,9 +60,13 @@
 
     iput-wide p2, p0, Lcom/android/server/location/GeofenceState;->mExpireAt:J
 
-    iput-object p4, p0, Lcom/android/server/location/GeofenceState;->mPackageName:Ljava/lang/String;
+    iput p4, p0, Lcom/android/server/location/GeofenceState;->mAllowedResolutionLevel:I
 
-    iput-object p5, p0, Lcom/android/server/location/GeofenceState;->mIntent:Landroid/app/PendingIntent;
+    iput p5, p0, Lcom/android/server/location/GeofenceState;->mUid:I
+
+    iput-object p6, p0, Lcom/android/server/location/GeofenceState;->mPackageName:Ljava/lang/String;
+
+    iput-object p7, p0, Lcom/android/server/location/GeofenceState;->mIntent:Landroid/app/PendingIntent;
 
     new-instance v0, Landroid/location/Location;
 

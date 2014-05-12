@@ -3355,6 +3355,12 @@
     .parameter "where"
 
     .prologue
+    const-wide/16 v22, 0x8
+
+    const-string v24, "setupGridItem"
+
+    invoke-static/range {v22 .. v24}, Landroid/os/Trace;->traceBegin(JLjava/lang/String;)V
+
     if-eqz p6, :cond_7
 
     invoke-virtual/range {p0 .. p0}, Landroid/widget/GridView;->shouldShowSelector()Z
@@ -3715,6 +3721,10 @@
     invoke-virtual/range {p1 .. p1}, Landroid/view/View;->jumpDrawablesToCurrentState()V
 
     :cond_6
+    const-wide/16 v22, 0x8
+
+    invoke-static/range {v22 .. v23}, Landroid/os/Trace;->traceEnd(J)V
+
     return-void
 
     .end local v5           #absoluteGravity:I
@@ -3911,6 +3921,8 @@
     invoke-virtual {v0, v1}, Landroid/view/View;->offsetTopAndBottom(I)V
 
     goto/16 :goto_a
+
+    nop
 
     :pswitch_data_0
     .packed-switch 0x1
@@ -4910,7 +4922,6 @@
 
     if-nez v3, :cond_1
 
-    :goto_0
     const/16 v19, 0x0
 
     move/from16 v0, v19
@@ -4920,6 +4931,7 @@
     iput-boolean v0, v1, Landroid/widget/GridView;->mBlockLayoutRequests:Z
 
     :cond_1
+    :goto_0
     return-void
 
     :cond_2
@@ -5050,13 +5062,24 @@
     invoke-virtual/range {p0 .. p0}, Landroid/widget/GridView;->resetList()V
 
     invoke-virtual/range {p0 .. p0}, Landroid/widget/GridView;->invokeOnItemScrollListener()V
+    :try_end_1
+    .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
     if-nez v3, :cond_1
+
+    const/16 v19, 0x0
+
+    move/from16 v0, v19
+
+    move-object/from16 v1, p0
+
+    iput-boolean v0, v1, Landroid/widget/GridView;->mBlockLayoutRequests:Z
 
     goto :goto_0
 
     .end local v8           #dataChanged:Z
     :pswitch_1
+    :try_start_2
     move-object/from16 v0, p0
 
     iget v0, v0, Landroid/widget/GridView;->mNextSelectedPosition:I
@@ -5331,8 +5354,18 @@
 
     :cond_c
     invoke-virtual/range {p0 .. p0}, Landroid/widget/GridView;->invokeOnItemScrollListener()V
+    :try_end_2
+    .catchall {:try_start_2 .. :try_end_2} :catchall_0
 
     if-nez v3, :cond_1
+
+    const/16 v19, 0x0
+
+    move/from16 v0, v19
+
+    move-object/from16 v1, p0
+
+    iput-boolean v0, v1, Landroid/widget/GridView;->mBlockLayoutRequests:Z
 
     goto/16 :goto_0
 
@@ -5341,6 +5374,7 @@
     :pswitch_3
     if-eqz v14, :cond_d
 
+    :try_start_3
     invoke-virtual {v14}, Landroid/view/View;->getTop()I
 
     move-result v19
@@ -5354,7 +5388,7 @@
     move-result-object v18
 
     .restart local v18       #sel:Landroid/view/View;
-    goto :goto_4
+    goto/16 :goto_4
 
     .end local v18           #sel:Landroid/view/View;
     :cond_d
@@ -5385,8 +5419,8 @@
 
     .restart local v18       #sel:Landroid/view/View;
     invoke-direct/range {p0 .. p0}, Landroid/widget/GridView;->adjustViewsUpOrDown()V
-    :try_end_1
-    .catchall {:try_start_1 .. :try_end_1} :catchall_0
+    :try_end_3
+    .catchall {:try_start_3 .. :try_end_3} :catchall_0
 
     goto/16 :goto_4
 
@@ -5428,7 +5462,7 @@
     .restart local v16       #oldSel:Landroid/view/View;
     .restart local v17       #recycleBin:Landroid/widget/AbsListView$RecycleBin;
     :pswitch_5
-    :try_start_2
+    :try_start_4
     move-object/from16 v0, p0
 
     iget v0, v0, Landroid/widget/GridView;->mItemCount:I
@@ -5771,10 +5805,12 @@
     move-object/from16 v19, v0
 
     invoke-virtual/range {v19 .. v19}, Landroid/graphics/Rect;->setEmpty()V
-    :try_end_2
-    .catchall {:try_start_2 .. :try_end_2} :catchall_0
+    :try_end_4
+    .catchall {:try_start_4 .. :try_end_4} :catchall_0
 
     goto/16 :goto_5
+
+    nop
 
     :pswitch_data_0
     .packed-switch 0x1
@@ -5955,21 +5991,140 @@
 .end method
 
 .method public onInitializeAccessibilityNodeInfo(Landroid/view/accessibility/AccessibilityNodeInfo;)V
-    .locals 1
+    .locals 4
     .parameter "info"
 
     .prologue
     invoke-super {p0, p1}, Landroid/widget/AbsListView;->onInitializeAccessibilityNodeInfo(Landroid/view/accessibility/AccessibilityNodeInfo;)V
 
-    const-class v0, Landroid/widget/GridView;
+    const-class v3, Landroid/widget/GridView;
 
-    invoke-virtual {v0}, Ljava/lang/Class;->getName()Ljava/lang/String;
+    invoke-virtual {v3}, Ljava/lang/Class;->getName()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-virtual {p1, v3}, Landroid/view/accessibility/AccessibilityNodeInfo;->setClassName(Ljava/lang/CharSequence;)V
+
+    invoke-virtual {p0}, Landroid/widget/GridView;->getNumColumns()I
+
+    move-result v1
+
+    .local v1, columnsCount:I
+    invoke-virtual {p0}, Landroid/widget/GridView;->getCount()I
+
+    move-result v3
+
+    div-int v2, v3, v1
+
+    .local v2, rowsCount:I
+    const/4 v3, 0x0
+
+    invoke-static {v1, v2, v3}, Landroid/view/accessibility/AccessibilityNodeInfo$CollectionInfo;->obtain(IIZ)Landroid/view/accessibility/AccessibilityNodeInfo$CollectionInfo;
 
     move-result-object v0
 
-    invoke-virtual {p1, v0}, Landroid/view/accessibility/AccessibilityNodeInfo;->setClassName(Ljava/lang/CharSequence;)V
+    .local v0, collectionInfo:Landroid/view/accessibility/AccessibilityNodeInfo$CollectionInfo;
+    invoke-virtual {p1, v0}, Landroid/view/accessibility/AccessibilityNodeInfo;->setCollectionInfo(Landroid/view/accessibility/AccessibilityNodeInfo$CollectionInfo;)V
 
     return-void
+.end method
+
+.method public onInitializeAccessibilityNodeInfoForItem(Landroid/view/View;ILandroid/view/accessibility/AccessibilityNodeInfo;)V
+    .locals 12
+    .parameter "view"
+    .parameter "position"
+    .parameter "info"
+
+    .prologue
+    const/4 v9, 0x1
+
+    invoke-super {p0, p1, p2, p3}, Landroid/widget/AbsListView;->onInitializeAccessibilityNodeInfoForItem(Landroid/view/View;ILandroid/view/accessibility/AccessibilityNodeInfo;)V
+
+    invoke-virtual {p0}, Landroid/widget/GridView;->getCount()I
+
+    move-result v2
+
+    .local v2, count:I
+    invoke-virtual {p0}, Landroid/widget/GridView;->getNumColumns()I
+
+    move-result v1
+
+    .local v1, columnsCount:I
+    div-int v8, v2, v1
+
+    .local v8, rowsCount:I
+    iget-boolean v10, p0, Landroid/widget/GridView;->mStackFromBottom:Z
+
+    if-nez v10, :cond_0
+
+    rem-int v0, p2, v1
+
+    .local v0, column:I
+    div-int v7, p2, v1
+
+    .local v7, row:I
+    :goto_0
+    invoke-virtual {p1}, Landroid/view/View;->getLayoutParams()Landroid/view/ViewGroup$LayoutParams;
+
+    move-result-object v6
+
+    check-cast v6, Landroid/widget/AbsListView$LayoutParams;
+
+    .local v6, lp:Landroid/widget/AbsListView$LayoutParams;
+    if-eqz v6, :cond_1
+
+    iget v10, v6, Landroid/widget/AbsListView$LayoutParams;->viewType:I
+
+    const/4 v11, -0x2
+
+    if-eq v10, v11, :cond_1
+
+    move v4, v9
+
+    .local v4, isHeading:Z
+    :goto_1
+    invoke-static {v0, v9, v7, v9, v4}, Landroid/view/accessibility/AccessibilityNodeInfo$CollectionItemInfo;->obtain(IIIIZ)Landroid/view/accessibility/AccessibilityNodeInfo$CollectionItemInfo;
+
+    move-result-object v5
+
+    .local v5, itemInfo:Landroid/view/accessibility/AccessibilityNodeInfo$CollectionItemInfo;
+    invoke-virtual {p3, v5}, Landroid/view/accessibility/AccessibilityNodeInfo;->setCollectionItemInfo(Landroid/view/accessibility/AccessibilityNodeInfo$CollectionItemInfo;)V
+
+    return-void
+
+    .end local v0           #column:I
+    .end local v4           #isHeading:Z
+    .end local v5           #itemInfo:Landroid/view/accessibility/AccessibilityNodeInfo$CollectionItemInfo;
+    .end local v6           #lp:Landroid/widget/AbsListView$LayoutParams;
+    .end local v7           #row:I
+    :cond_0
+    add-int/lit8 v10, v2, -0x1
+
+    sub-int v3, v10, p2
+
+    .local v3, invertedIndex:I
+    add-int/lit8 v10, v1, -0x1
+
+    rem-int v11, v3, v1
+
+    sub-int v0, v10, v11
+
+    .restart local v0       #column:I
+    add-int/lit8 v10, v8, -0x1
+
+    div-int v11, v3, v1
+
+    sub-int v7, v10, v11
+
+    .restart local v7       #row:I
+    goto :goto_0
+
+    .end local v3           #invertedIndex:I
+    .restart local v6       #lp:Landroid/widget/AbsListView$LayoutParams;
+    :cond_1
+    const/4 v4, 0x0
+
+    goto :goto_1
 .end method
 
 .method public onKeyDown(ILandroid/view/KeyEvent;)Z

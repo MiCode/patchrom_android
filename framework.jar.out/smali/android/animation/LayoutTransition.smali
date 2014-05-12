@@ -12,6 +12,8 @@
 
 
 # static fields
+.field private static ACCEL_DECEL_INTERPOLATOR:Landroid/animation/TimeInterpolator; = null
+
 .field public static final APPEARING:I = 0x2
 
 .field public static final CHANGE_APPEARING:I = 0x0
@@ -19,6 +21,8 @@
 .field public static final CHANGE_DISAPPEARING:I = 0x1
 
 .field public static final CHANGING:I = 0x4
+
+.field private static DECEL_INTERPOLATOR:Landroid/animation/TimeInterpolator; = null
 
 .field private static DEFAULT_DURATION:J = 0x0L
 
@@ -43,6 +47,16 @@
 .field private static defaultFadeIn:Landroid/animation/ObjectAnimator;
 
 .field private static defaultFadeOut:Landroid/animation/ObjectAnimator;
+
+.field private static sAppearingInterpolator:Landroid/animation/TimeInterpolator;
+
+.field private static sChangingAppearingInterpolator:Landroid/animation/TimeInterpolator;
+
+.field private static sChangingDisappearingInterpolator:Landroid/animation/TimeInterpolator;
+
+.field private static sChangingInterpolator:Landroid/animation/TimeInterpolator;
+
+.field private static sDisappearingInterpolator:Landroid/animation/TimeInterpolator;
 
 
 # instance fields
@@ -179,6 +193,38 @@
 
     sput-wide v0, Landroid/animation/LayoutTransition;->DEFAULT_DURATION:J
 
+    new-instance v0, Landroid/view/animation/AccelerateDecelerateInterpolator;
+
+    invoke-direct {v0}, Landroid/view/animation/AccelerateDecelerateInterpolator;-><init>()V
+
+    sput-object v0, Landroid/animation/LayoutTransition;->ACCEL_DECEL_INTERPOLATOR:Landroid/animation/TimeInterpolator;
+
+    new-instance v0, Landroid/view/animation/DecelerateInterpolator;
+
+    invoke-direct {v0}, Landroid/view/animation/DecelerateInterpolator;-><init>()V
+
+    sput-object v0, Landroid/animation/LayoutTransition;->DECEL_INTERPOLATOR:Landroid/animation/TimeInterpolator;
+
+    sget-object v0, Landroid/animation/LayoutTransition;->ACCEL_DECEL_INTERPOLATOR:Landroid/animation/TimeInterpolator;
+
+    sput-object v0, Landroid/animation/LayoutTransition;->sAppearingInterpolator:Landroid/animation/TimeInterpolator;
+
+    sget-object v0, Landroid/animation/LayoutTransition;->ACCEL_DECEL_INTERPOLATOR:Landroid/animation/TimeInterpolator;
+
+    sput-object v0, Landroid/animation/LayoutTransition;->sDisappearingInterpolator:Landroid/animation/TimeInterpolator;
+
+    sget-object v0, Landroid/animation/LayoutTransition;->DECEL_INTERPOLATOR:Landroid/animation/TimeInterpolator;
+
+    sput-object v0, Landroid/animation/LayoutTransition;->sChangingAppearingInterpolator:Landroid/animation/TimeInterpolator;
+
+    sget-object v0, Landroid/animation/LayoutTransition;->DECEL_INTERPOLATOR:Landroid/animation/TimeInterpolator;
+
+    sput-object v0, Landroid/animation/LayoutTransition;->sChangingDisappearingInterpolator:Landroid/animation/TimeInterpolator;
+
+    sget-object v0, Landroid/animation/LayoutTransition;->DECEL_INTERPOLATOR:Landroid/animation/TimeInterpolator;
+
+    sput-object v0, Landroid/animation/LayoutTransition;->sChangingInterpolator:Landroid/animation/TimeInterpolator;
+
     return-void
 .end method
 
@@ -246,33 +292,23 @@
 
     iput-wide v11, p0, Landroid/animation/LayoutTransition;->mChangingStagger:J
 
-    new-instance v6, Landroid/view/animation/AccelerateDecelerateInterpolator;
-
-    invoke-direct {v6}, Landroid/view/animation/AccelerateDecelerateInterpolator;-><init>()V
+    sget-object v6, Landroid/animation/LayoutTransition;->sAppearingInterpolator:Landroid/animation/TimeInterpolator;
 
     iput-object v6, p0, Landroid/animation/LayoutTransition;->mAppearingInterpolator:Landroid/animation/TimeInterpolator;
 
-    new-instance v6, Landroid/view/animation/AccelerateDecelerateInterpolator;
-
-    invoke-direct {v6}, Landroid/view/animation/AccelerateDecelerateInterpolator;-><init>()V
+    sget-object v6, Landroid/animation/LayoutTransition;->sDisappearingInterpolator:Landroid/animation/TimeInterpolator;
 
     iput-object v6, p0, Landroid/animation/LayoutTransition;->mDisappearingInterpolator:Landroid/animation/TimeInterpolator;
 
-    new-instance v6, Landroid/view/animation/DecelerateInterpolator;
-
-    invoke-direct {v6}, Landroid/view/animation/DecelerateInterpolator;-><init>()V
+    sget-object v6, Landroid/animation/LayoutTransition;->sChangingAppearingInterpolator:Landroid/animation/TimeInterpolator;
 
     iput-object v6, p0, Landroid/animation/LayoutTransition;->mChangingAppearingInterpolator:Landroid/animation/TimeInterpolator;
 
-    new-instance v6, Landroid/view/animation/DecelerateInterpolator;
-
-    invoke-direct {v6}, Landroid/view/animation/DecelerateInterpolator;-><init>()V
+    sget-object v6, Landroid/animation/LayoutTransition;->sChangingDisappearingInterpolator:Landroid/animation/TimeInterpolator;
 
     iput-object v6, p0, Landroid/animation/LayoutTransition;->mChangingDisappearingInterpolator:Landroid/animation/TimeInterpolator;
 
-    new-instance v6, Landroid/view/animation/DecelerateInterpolator;
-
-    invoke-direct {v6}, Landroid/view/animation/DecelerateInterpolator;-><init>()V
+    sget-object v6, Landroid/animation/LayoutTransition;->sChangingInterpolator:Landroid/animation/TimeInterpolator;
 
     iput-object v6, p0, Landroid/animation/LayoutTransition;->mChangingInterpolator:Landroid/animation/TimeInterpolator;
 
@@ -563,6 +599,8 @@
 
     return-void
 
+    nop
+
     :array_0
     .array-data 0x4
         0x0t 0x0t 0x0t 0x0t
@@ -632,7 +670,65 @@
     return-object v0
 .end method
 
-.method static synthetic access$1000(Landroid/animation/LayoutTransition;)Z
+.method static synthetic access$1000()Landroid/animation/TimeInterpolator;
+    .locals 1
+
+    .prologue
+    sget-object v0, Landroid/animation/LayoutTransition;->sChangingDisappearingInterpolator:Landroid/animation/TimeInterpolator;
+
+    return-object v0
+.end method
+
+.method static synthetic access$1100(Landroid/animation/LayoutTransition;)J
+    .locals 2
+    .parameter "x0"
+
+    .prologue
+    iget-wide v0, p0, Landroid/animation/LayoutTransition;->mChangingDelay:J
+
+    return-wide v0
+.end method
+
+.method static synthetic access$1200(Landroid/animation/LayoutTransition;)J
+    .locals 2
+    .parameter "x0"
+
+    .prologue
+    iget-wide v0, p0, Landroid/animation/LayoutTransition;->mChangingStagger:J
+
+    return-wide v0
+.end method
+
+.method static synthetic access$1300(Landroid/animation/LayoutTransition;)Landroid/animation/TimeInterpolator;
+    .locals 1
+    .parameter "x0"
+
+    .prologue
+    iget-object v0, p0, Landroid/animation/LayoutTransition;->mChangingInterpolator:Landroid/animation/TimeInterpolator;
+
+    return-object v0
+.end method
+
+.method static synthetic access$1400()Landroid/animation/TimeInterpolator;
+    .locals 1
+
+    .prologue
+    sget-object v0, Landroid/animation/LayoutTransition;->sChangingInterpolator:Landroid/animation/TimeInterpolator;
+
+    return-object v0
+.end method
+
+.method static synthetic access$1500(Landroid/animation/LayoutTransition;)Ljava/util/LinkedHashMap;
+    .locals 1
+    .parameter "x0"
+
+    .prologue
+    iget-object v0, p0, Landroid/animation/LayoutTransition;->currentChangingAnimations:Ljava/util/LinkedHashMap;
+
+    return-object v0
+.end method
+
+.method static synthetic access$1600(Landroid/animation/LayoutTransition;)Z
     .locals 1
     .parameter "x0"
 
@@ -644,7 +740,7 @@
     return v0
 .end method
 
-.method static synthetic access$1100(Landroid/animation/LayoutTransition;)Ljava/util/ArrayList;
+.method static synthetic access$1700(Landroid/animation/LayoutTransition;)Ljava/util/ArrayList;
     .locals 1
     .parameter "x0"
 
@@ -654,7 +750,7 @@
     return-object v0
 .end method
 
-.method static synthetic access$1200(Landroid/animation/LayoutTransition;)Ljava/util/LinkedHashMap;
+.method static synthetic access$1800(Landroid/animation/LayoutTransition;)Ljava/util/LinkedHashMap;
     .locals 1
     .parameter "x0"
 
@@ -664,7 +760,7 @@
     return-object v0
 .end method
 
-.method static synthetic access$1300(Landroid/animation/LayoutTransition;)Ljava/util/LinkedHashMap;
+.method static synthetic access$1900(Landroid/animation/LayoutTransition;)Ljava/util/LinkedHashMap;
     .locals 1
     .parameter "x0"
 
@@ -719,7 +815,26 @@
     return-wide v0
 .end method
 
-.method static synthetic access$500(Landroid/animation/LayoutTransition;)J
+.method static synthetic access$500(Landroid/animation/LayoutTransition;)Landroid/animation/TimeInterpolator;
+    .locals 1
+    .parameter "x0"
+
+    .prologue
+    iget-object v0, p0, Landroid/animation/LayoutTransition;->mChangingAppearingInterpolator:Landroid/animation/TimeInterpolator;
+
+    return-object v0
+.end method
+
+.method static synthetic access$600()Landroid/animation/TimeInterpolator;
+    .locals 1
+
+    .prologue
+    sget-object v0, Landroid/animation/LayoutTransition;->sChangingAppearingInterpolator:Landroid/animation/TimeInterpolator;
+
+    return-object v0
+.end method
+
+.method static synthetic access$700(Landroid/animation/LayoutTransition;)J
     .locals 2
     .parameter "x0"
 
@@ -729,7 +844,7 @@
     return-wide v0
 .end method
 
-.method static synthetic access$600(Landroid/animation/LayoutTransition;)J
+.method static synthetic access$800(Landroid/animation/LayoutTransition;)J
     .locals 2
     .parameter "x0"
 
@@ -739,32 +854,12 @@
     return-wide v0
 .end method
 
-.method static synthetic access$700(Landroid/animation/LayoutTransition;)J
-    .locals 2
-    .parameter "x0"
-
-    .prologue
-    iget-wide v0, p0, Landroid/animation/LayoutTransition;->mChangingDelay:J
-
-    return-wide v0
-.end method
-
-.method static synthetic access$800(Landroid/animation/LayoutTransition;)J
-    .locals 2
-    .parameter "x0"
-
-    .prologue
-    iget-wide v0, p0, Landroid/animation/LayoutTransition;->mChangingStagger:J
-
-    return-wide v0
-.end method
-
-.method static synthetic access$900(Landroid/animation/LayoutTransition;)Ljava/util/LinkedHashMap;
+.method static synthetic access$900(Landroid/animation/LayoutTransition;)Landroid/animation/TimeInterpolator;
     .locals 1
     .parameter "x0"
 
     .prologue
-    iget-object v0, p0, Landroid/animation/LayoutTransition;->currentChangingAnimations:Ljava/util/LinkedHashMap;
+    iget-object v0, p0, Landroid/animation/LayoutTransition;->mChangingDisappearingInterpolator:Landroid/animation/TimeInterpolator;
 
     return-object v0
 .end method
@@ -1064,7 +1159,7 @@
 
     move-result v5
 
-    if-eqz v5, :cond_3
+    if-eqz v5, :cond_4
 
     iget-object v5, p0, Landroid/animation/LayoutTransition;->mListeners:Ljava/util/ArrayList;
 
@@ -1085,7 +1180,7 @@
 
     move-result v5
 
-    if-eqz v5, :cond_3
+    if-eqz v5, :cond_4
 
     invoke-interface {v2}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
@@ -1121,9 +1216,20 @@
 
     invoke-virtual {v0, v5, v6}, Landroid/animation/Animator;->setDuration(J)Landroid/animation/Animator;
 
+    iget-object v5, p0, Landroid/animation/LayoutTransition;->mAppearingInterpolator:Landroid/animation/TimeInterpolator;
+
+    sget-object v6, Landroid/animation/LayoutTransition;->sAppearingInterpolator:Landroid/animation/TimeInterpolator;
+
+    if-eq v5, v6, :cond_2
+
+    iget-object v5, p0, Landroid/animation/LayoutTransition;->mAppearingInterpolator:Landroid/animation/TimeInterpolator;
+
+    invoke-virtual {v0, v5}, Landroid/animation/Animator;->setInterpolator(Landroid/animation/TimeInterpolator;)V
+
+    :cond_2
     instance-of v5, v0, Landroid/animation/ObjectAnimator;
 
-    if-eqz v5, :cond_2
+    if-eqz v5, :cond_3
 
     move-object v5, v0
 
@@ -1133,7 +1239,7 @@
 
     invoke-virtual {v5, v6, v7}, Landroid/animation/ObjectAnimator;->setCurrentPlayTime(J)V
 
-    :cond_2
+    :cond_3
     new-instance v5, Landroid/animation/LayoutTransition$5;
 
     invoke-direct {v5, p0, p2, p1}, Landroid/animation/LayoutTransition$5;-><init>(Landroid/animation/LayoutTransition;Landroid/view/View;Landroid/view/ViewGroup;)V
@@ -1147,7 +1253,7 @@
     invoke-virtual {v0}, Landroid/animation/Animator;->start()V
 
     .end local v0           #anim:Landroid/animation/Animator;
-    :cond_3
+    :cond_4
     return-void
 .end method
 
@@ -1381,7 +1487,7 @@
 
     move-result v6
 
-    if-eqz v6, :cond_3
+    if-eqz v6, :cond_4
 
     iget-object v6, p0, Landroid/animation/LayoutTransition;->mListeners:Ljava/util/ArrayList;
 
@@ -1402,7 +1508,7 @@
 
     move-result v6
 
-    if-eqz v6, :cond_3
+    if-eqz v6, :cond_4
 
     invoke-interface {v2}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
@@ -1436,6 +1542,17 @@
 
     invoke-virtual {v0, v6, v7}, Landroid/animation/Animator;->setDuration(J)Landroid/animation/Animator;
 
+    iget-object v6, p0, Landroid/animation/LayoutTransition;->mDisappearingInterpolator:Landroid/animation/TimeInterpolator;
+
+    sget-object v7, Landroid/animation/LayoutTransition;->sDisappearingInterpolator:Landroid/animation/TimeInterpolator;
+
+    if-eq v6, v7, :cond_2
+
+    iget-object v6, p0, Landroid/animation/LayoutTransition;->mDisappearingInterpolator:Landroid/animation/TimeInterpolator;
+
+    invoke-virtual {v0, v6}, Landroid/animation/Animator;->setInterpolator(Landroid/animation/TimeInterpolator;)V
+
+    :cond_2
     invoke-virtual {v0, p2}, Landroid/animation/Animator;->setTarget(Ljava/lang/Object;)V
 
     invoke-virtual {p2}, Landroid/view/View;->getAlpha()F
@@ -1451,7 +1568,7 @@
 
     instance-of v6, v0, Landroid/animation/ObjectAnimator;
 
-    if-eqz v6, :cond_2
+    if-eqz v6, :cond_3
 
     move-object v6, v0
 
@@ -1461,7 +1578,7 @@
 
     invoke-virtual {v6, v7, v8}, Landroid/animation/ObjectAnimator;->setCurrentPlayTime(J)V
 
-    :cond_2
+    :cond_3
     iget-object v6, p0, Landroid/animation/LayoutTransition;->currentDisappearingAnimations:Ljava/util/LinkedHashMap;
 
     invoke-virtual {v6, p2, v0}, Ljava/util/LinkedHashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
@@ -1470,7 +1587,7 @@
 
     .end local v0           #anim:Landroid/animation/Animator;
     .end local v5           #preAnimAlpha:F
-    :cond_3
+    :cond_4
     return-void
 .end method
 

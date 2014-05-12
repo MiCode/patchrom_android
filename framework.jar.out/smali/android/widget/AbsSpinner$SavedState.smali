@@ -47,7 +47,7 @@
     return-void
 .end method
 
-.method private constructor <init>(Landroid/os/Parcel;)V
+.method constructor <init>(Landroid/os/Parcel;)V
     .locals 2
     .parameter "in"
 
@@ -65,17 +65,6 @@
     move-result v0
 
     iput v0, p0, Landroid/widget/AbsSpinner$SavedState;->position:I
-
-    return-void
-.end method
-
-.method synthetic constructor <init>(Landroid/os/Parcel;Landroid/widget/AbsSpinner$1;)V
-    .locals 0
-    .parameter "x0"
-    .parameter "x1"
-
-    .prologue
-    invoke-direct {p0, p1}, Landroid/widget/AbsSpinner$SavedState;-><init>(Landroid/os/Parcel;)V
 
     return-void
 .end method

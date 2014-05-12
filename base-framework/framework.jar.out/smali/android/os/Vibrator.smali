@@ -21,6 +21,12 @@
 .method public abstract hasVibrator()Z
 .end method
 
+.method public abstract vibrate(ILjava/lang/String;J)V
+.end method
+
+.method public abstract vibrate(ILjava/lang/String;[JI)V
+.end method
+
 .method public abstract vibrate(J)V
 .end method
 

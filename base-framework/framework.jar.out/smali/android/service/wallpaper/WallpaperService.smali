@@ -56,8 +56,6 @@
     .end annotation
 .end field
 
-.field private mCallbackLooper:Landroid/os/Looper;
-
 
 # direct methods
 .method public constructor <init>()V
@@ -75,17 +73,7 @@
     return-void
 .end method
 
-.method static synthetic access$200(Landroid/service/wallpaper/WallpaperService;)Landroid/os/Looper;
-    .locals 1
-    .parameter "x0"
-
-    .prologue
-    iget-object v0, p0, Landroid/service/wallpaper/WallpaperService;->mCallbackLooper:Landroid/os/Looper;
-
-    return-object v0
-.end method
-
-.method static synthetic access$300(Landroid/service/wallpaper/WallpaperService;)Ljava/util/ArrayList;
+.method static synthetic access$200(Landroid/service/wallpaper/WallpaperService;)Ljava/util/ArrayList;
     .locals 1
     .parameter "x0"
 
@@ -218,16 +206,6 @@
     iget-object v1, p0, Landroid/service/wallpaper/WallpaperService;->mActiveEngines:Ljava/util/ArrayList;
 
     invoke-virtual {v1}, Ljava/util/ArrayList;->clear()V
-
-    return-void
-.end method
-
-.method public setCallbackLooper(Landroid/os/Looper;)V
-    .locals 0
-    .parameter "looper"
-
-    .prologue
-    iput-object p1, p0, Landroid/service/wallpaper/WallpaperService;->mCallbackLooper:Landroid/os/Looper;
 
     return-void
 .end method

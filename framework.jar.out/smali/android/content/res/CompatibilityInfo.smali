@@ -820,12 +820,21 @@
 .end method
 
 .method public equals(Ljava/lang/Object;)Z
-    .locals 6
+    .locals 7
     .parameter "o"
 
     .prologue
-    const/4 v3, 0x0
+    const/4 v3, 0x1
 
+    const/4 v4, 0x0
+
+    if-ne p0, p1, :cond_1
+
+    :cond_0
+    :goto_0
+    return v3
+
+    :cond_1
     :try_start_0
     move-object v0, p1
 
@@ -834,44 +843,52 @@
     move-object v2, v0
 
     .local v2, oc:Landroid/content/res/CompatibilityInfo;
-    iget v4, p0, Landroid/content/res/CompatibilityInfo;->mCompatibilityFlags:I
+    iget v5, p0, Landroid/content/res/CompatibilityInfo;->mCompatibilityFlags:I
 
-    iget v5, v2, Landroid/content/res/CompatibilityInfo;->mCompatibilityFlags:I
+    iget v6, v2, Landroid/content/res/CompatibilityInfo;->mCompatibilityFlags:I
 
-    if-eq v4, v5, :cond_1
+    if-eq v5, v6, :cond_2
 
-    .end local v2           #oc:Landroid/content/res/CompatibilityInfo;
-    :cond_0
-    :goto_0
-    return v3
+    move v3, v4
 
-    .restart local v2       #oc:Landroid/content/res/CompatibilityInfo;
-    :cond_1
-    iget v4, p0, Landroid/content/res/CompatibilityInfo;->applicationDensity:I
+    goto :goto_0
 
-    iget v5, v2, Landroid/content/res/CompatibilityInfo;->applicationDensity:I
+    :cond_2
+    iget v5, p0, Landroid/content/res/CompatibilityInfo;->applicationDensity:I
 
-    if-ne v4, v5, :cond_0
+    iget v6, v2, Landroid/content/res/CompatibilityInfo;->applicationDensity:I
 
-    iget v4, p0, Landroid/content/res/CompatibilityInfo;->applicationScale:F
+    if-eq v5, v6, :cond_3
 
-    iget v5, v2, Landroid/content/res/CompatibilityInfo;->applicationScale:F
+    move v3, v4
 
-    cmpl-float v4, v4, v5
+    goto :goto_0
 
-    if-nez v4, :cond_0
+    :cond_3
+    iget v5, p0, Landroid/content/res/CompatibilityInfo;->applicationScale:F
 
-    iget v4, p0, Landroid/content/res/CompatibilityInfo;->applicationInvertedScale:F
+    iget v6, v2, Landroid/content/res/CompatibilityInfo;->applicationScale:F
 
-    iget v5, v2, Landroid/content/res/CompatibilityInfo;->applicationInvertedScale:F
+    cmpl-float v5, v5, v6
+
+    if-eqz v5, :cond_4
+
+    move v3, v4
+
+    goto :goto_0
+
+    :cond_4
+    iget v5, p0, Landroid/content/res/CompatibilityInfo;->applicationInvertedScale:F
+
+    iget v6, v2, Landroid/content/res/CompatibilityInfo;->applicationInvertedScale:F
     :try_end_0
     .catch Ljava/lang/ClassCastException; {:try_start_0 .. :try_end_0} :catch_0
 
-    cmpl-float v4, v4, v5
+    cmpl-float v5, v5, v6
 
-    if-nez v4, :cond_0
+    if-eqz v5, :cond_0
 
-    const/4 v3, 0x1
+    move v3, v4
 
     goto :goto_0
 
@@ -880,6 +897,8 @@
     move-exception v1
 
     .local v1, e:Ljava/lang/ClassCastException;
+    move v3, v4
+
     goto :goto_0
 .end method
 

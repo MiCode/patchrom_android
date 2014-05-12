@@ -31,6 +31,14 @@
     .end annotation
 .end method
 
+.method public abstract clearUsbDebuggingKeys()V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
 .method public abstract denyUsbDebugging()V
     .annotation system Ldalvik/annotation/Throws;
         value = {

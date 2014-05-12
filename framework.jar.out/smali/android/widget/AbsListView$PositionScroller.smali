@@ -60,7 +60,7 @@
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     #getter for: Landroid/widget/AbsListView;->mContext:Landroid/content/Context;
-    invoke-static {p1}, Landroid/widget/AbsListView;->access$2900(Landroid/widget/AbsListView;)Landroid/content/Context;
+    invoke-static {p1}, Landroid/widget/AbsListView;->access$3200(Landroid/widget/AbsListView;)Landroid/content/Context;
 
     move-result-object v0
 

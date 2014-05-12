@@ -25,6 +25,8 @@
 
 .field private final mRefreshRate:F
 
+.field private final mSecure:Z
+
 .field private mSurface:Landroid/view/Surface;
 
 .field private mSurfaceTexture:Landroid/graphics/SurfaceTexture;
@@ -35,7 +37,7 @@
 
 
 # direct methods
-.method public constructor <init>(Lcom/android/server/display/OverlayDisplayAdapter;Landroid/os/IBinder;Ljava/lang/String;IIFILandroid/graphics/SurfaceTexture;)V
+.method public constructor <init>(Lcom/android/server/display/OverlayDisplayAdapter;Landroid/os/IBinder;Ljava/lang/String;IIFIZLandroid/graphics/SurfaceTexture;)V
     .locals 0
     .parameter
     .parameter "displayToken"
@@ -44,6 +46,7 @@
     .parameter "height"
     .parameter "refreshRate"
     .parameter "densityDpi"
+    .parameter "secure"
     .parameter "surfaceTexture"
 
     .prologue
@@ -61,42 +64,50 @@
 
     iput p7, p0, Lcom/android/server/display/OverlayDisplayAdapter$OverlayDisplayDevice;->mDensityDpi:I
 
-    iput-object p8, p0, Lcom/android/server/display/OverlayDisplayAdapter$OverlayDisplayDevice;->mSurfaceTexture:Landroid/graphics/SurfaceTexture;
+    iput-boolean p8, p0, Lcom/android/server/display/OverlayDisplayAdapter$OverlayDisplayDevice;->mSecure:Z
+
+    iput-object p9, p0, Lcom/android/server/display/OverlayDisplayAdapter$OverlayDisplayDevice;->mSurfaceTexture:Landroid/graphics/SurfaceTexture;
 
     return-void
 .end method
 
 
 # virtual methods
-.method public clearSurfaceTextureLocked()V
-    .locals 1
+.method public destroyLocked()V
+    .locals 2
 
     .prologue
-    iget-object v0, p0, Lcom/android/server/display/OverlayDisplayAdapter$OverlayDisplayDevice;->mSurfaceTexture:Landroid/graphics/SurfaceTexture;
+    const/4 v1, 0x0
+
+    iput-object v1, p0, Lcom/android/server/display/OverlayDisplayAdapter$OverlayDisplayDevice;->mSurfaceTexture:Landroid/graphics/SurfaceTexture;
+
+    iget-object v0, p0, Lcom/android/server/display/OverlayDisplayAdapter$OverlayDisplayDevice;->mSurface:Landroid/view/Surface;
 
     if-eqz v0, :cond_0
 
-    const/4 v0, 0x0
+    iget-object v0, p0, Lcom/android/server/display/OverlayDisplayAdapter$OverlayDisplayDevice;->mSurface:Landroid/view/Surface;
 
-    iput-object v0, p0, Lcom/android/server/display/OverlayDisplayAdapter$OverlayDisplayDevice;->mSurfaceTexture:Landroid/graphics/SurfaceTexture;
+    invoke-virtual {v0}, Landroid/view/Surface;->release()V
+
+    iput-object v1, p0, Lcom/android/server/display/OverlayDisplayAdapter$OverlayDisplayDevice;->mSurface:Landroid/view/Surface;
 
     :cond_0
-    iget-object v0, p0, Lcom/android/server/display/OverlayDisplayAdapter$OverlayDisplayDevice;->this$0:Lcom/android/server/display/OverlayDisplayAdapter;
+    invoke-virtual {p0}, Lcom/android/server/display/OverlayDisplayAdapter$OverlayDisplayDevice;->getDisplayTokenLocked()Landroid/os/IBinder;
 
-    invoke-virtual {v0}, Lcom/android/server/display/OverlayDisplayAdapter;->sendTraversalRequestLocked()V
+    move-result-object v0
+
+    invoke-static {v0}, Landroid/view/SurfaceControl;->destroyDisplay(Landroid/os/IBinder;)V
 
     return-void
 .end method
 
 .method public getDisplayDeviceInfoLocked()Lcom/android/server/display/DisplayDeviceInfo;
-    .locals 3
+    .locals 2
 
     .prologue
-    const/4 v2, 0x0
-
     iget-object v0, p0, Lcom/android/server/display/OverlayDisplayAdapter$OverlayDisplayDevice;->mInfo:Lcom/android/server/display/DisplayDeviceInfo;
 
-    if-nez v0, :cond_0
+    if-nez v0, :cond_1
 
     new-instance v0, Lcom/android/server/display/DisplayDeviceInfo;
 
@@ -152,8 +163,23 @@
 
     iget-object v0, p0, Lcom/android/server/display/OverlayDisplayAdapter$OverlayDisplayDevice;->mInfo:Lcom/android/server/display/DisplayDeviceInfo;
 
-    iput v2, v0, Lcom/android/server/display/DisplayDeviceInfo;->flags:I
+    const/16 v1, 0x40
 
+    iput v1, v0, Lcom/android/server/display/DisplayDeviceInfo;->flags:I
+
+    iget-boolean v0, p0, Lcom/android/server/display/OverlayDisplayAdapter$OverlayDisplayDevice;->mSecure:Z
+
+    if-eqz v0, :cond_0
+
+    iget-object v0, p0, Lcom/android/server/display/OverlayDisplayAdapter$OverlayDisplayDevice;->mInfo:Lcom/android/server/display/DisplayDeviceInfo;
+
+    iget v1, v0, Lcom/android/server/display/DisplayDeviceInfo;->flags:I
+
+    or-int/lit8 v1, v1, 0x4
+
+    iput v1, v0, Lcom/android/server/display/DisplayDeviceInfo;->flags:I
+
+    :cond_0
     iget-object v0, p0, Lcom/android/server/display/OverlayDisplayAdapter$OverlayDisplayDevice;->mInfo:Lcom/android/server/display/DisplayDeviceInfo;
 
     const/4 v1, 0x4
@@ -162,9 +188,11 @@
 
     iget-object v0, p0, Lcom/android/server/display/OverlayDisplayAdapter$OverlayDisplayDevice;->mInfo:Lcom/android/server/display/DisplayDeviceInfo;
 
-    iput v2, v0, Lcom/android/server/display/DisplayDeviceInfo;->touch:I
+    const/4 v1, 0x0
 
-    :cond_0
+    iput v1, v0, Lcom/android/server/display/DisplayDeviceInfo;->touch:I
+
+    :cond_1
     iget-object v0, p0, Lcom/android/server/display/OverlayDisplayAdapter$OverlayDisplayDevice;->mInfo:Lcom/android/server/display/DisplayDeviceInfo;
 
     return-object v0
@@ -174,11 +202,9 @@
     .locals 2
 
     .prologue
-    const/4 v1, 0x0
-
     iget-object v0, p0, Lcom/android/server/display/OverlayDisplayAdapter$OverlayDisplayDevice;->mSurfaceTexture:Landroid/graphics/SurfaceTexture;
 
-    if-eqz v0, :cond_2
+    if-eqz v0, :cond_1
 
     iget-object v0, p0, Lcom/android/server/display/OverlayDisplayAdapter$OverlayDisplayDevice;->mSurface:Landroid/view/Surface;
 
@@ -198,21 +224,5 @@
     invoke-virtual {p0, v0}, Lcom/android/server/display/OverlayDisplayAdapter$OverlayDisplayDevice;->setSurfaceInTransactionLocked(Landroid/view/Surface;)V
 
     :cond_1
-    :goto_0
     return-void
-
-    :cond_2
-    invoke-virtual {p0, v1}, Lcom/android/server/display/OverlayDisplayAdapter$OverlayDisplayDevice;->setSurfaceInTransactionLocked(Landroid/view/Surface;)V
-
-    iget-object v0, p0, Lcom/android/server/display/OverlayDisplayAdapter$OverlayDisplayDevice;->mSurface:Landroid/view/Surface;
-
-    if-eqz v0, :cond_1
-
-    iget-object v0, p0, Lcom/android/server/display/OverlayDisplayAdapter$OverlayDisplayDevice;->mSurface:Landroid/view/Surface;
-
-    invoke-virtual {v0}, Landroid/view/Surface;->destroy()V
-
-    iput-object v1, p0, Lcom/android/server/display/OverlayDisplayAdapter$OverlayDisplayDevice;->mSurface:Landroid/view/Surface;
-
-    goto :goto_0
 .end method

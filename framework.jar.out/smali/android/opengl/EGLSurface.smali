@@ -32,24 +32,15 @@
     return v1
 
     :cond_1
-    if-eqz p1, :cond_2
+    instance-of v3, p1, Landroid/opengl/EGLSurface;
 
-    invoke-virtual {p0}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
+    if-nez v3, :cond_2
 
-    move-result-object v3
-
-    invoke-virtual {p1}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
-
-    move-result-object v4
-
-    if-eq v3, v4, :cond_3
-
-    :cond_2
     move v1, v2
 
     goto :goto_0
 
-    :cond_3
+    :cond_2
     move-object v0, p1
 
     check-cast v0, Landroid/opengl/EGLSurface;

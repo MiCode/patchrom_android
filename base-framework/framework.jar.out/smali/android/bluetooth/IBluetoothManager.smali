@@ -47,6 +47,14 @@
     .end annotation
 .end method
 
+.method public abstract getBluetoothGatt()Landroid/bluetooth/IBluetoothGatt;
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
 .method public abstract getName()Ljava/lang/String;
     .annotation system Ldalvik/annotation/Throws;
         value = {

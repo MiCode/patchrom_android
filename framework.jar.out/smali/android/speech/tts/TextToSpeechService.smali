@@ -7,10 +7,12 @@
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
         Landroid/speech/tts/TextToSpeechService$CallbackMap;,
+        Landroid/speech/tts/TextToSpeechService$LoadLanguageItem;,
         Landroid/speech/tts/TextToSpeechService$SilenceSpeechItem;,
         Landroid/speech/tts/TextToSpeechService$AudioSpeechItem;,
-        Landroid/speech/tts/TextToSpeechService$SynthesisToFileSpeechItem;,
+        Landroid/speech/tts/TextToSpeechService$SynthesisToFileOutputStreamSpeechItem;,
         Landroid/speech/tts/TextToSpeechService$SynthesisSpeechItem;,
+        Landroid/speech/tts/TextToSpeechService$UtteranceSpeechItem;,
         Landroid/speech/tts/TextToSpeechService$SpeechItem;,
         Landroid/speech/tts/TextToSpeechService$UtteranceProgressDispatcher;,
         Landroid/speech/tts/TextToSpeechService$SynthHandler;,
@@ -21,8 +23,6 @@
 
 # static fields
 .field private static final DBG:Z = false
-
-.field private static final MAX_SPEECH_ITEM_CHAR_LENGTH:I = 0xfa0
 
 .field private static final SYNTH_THREAD_NAME:Ljava/lang/String; = "SynthThread"
 

@@ -103,29 +103,6 @@
 .method public abstract getAllowUniversalAccessFromFileURLs()Z
 .end method
 
-.method public declared-synchronized getBlockFloatPopupWindows()Z
-    .locals 1
-
-    .prologue
-    monitor-enter p0
-
-    :try_start_0
-    new-instance v0, Landroid/webkit/MustOverrideException;
-
-    invoke-direct {v0}, Landroid/webkit/MustOverrideException;-><init>()V
-
-    throw v0
-    :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
-
-    :catchall_0
-    move-exception v0
-
-    monitor-exit p0
-
-    throw v0
-.end method
-
 .method public declared-synchronized getBlockNetworkImage()Z
     .locals 1
 
@@ -242,6 +219,8 @@
 
 .method public declared-synchronized getDatabasePath()Ljava/lang/String;
     .locals 1
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
 
     .prologue
     monitor-enter p0
@@ -494,6 +473,8 @@
 
 .method public getLightTouchEnabled()Z
     .locals 1
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
 
     .prologue
     new-instance v0, Landroid/webkit/MustOverrideException;
@@ -609,6 +590,8 @@
 
 .method public declared-synchronized getPluginState()Landroid/webkit/WebSettings$PluginState;
     .locals 1
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
 
     .prologue
     monitor-enter p0
@@ -716,6 +699,8 @@
 
 .method public getSavePassword()Z
     .locals 1
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
 
     .prologue
     new-instance v0, Landroid/webkit/MustOverrideException;
@@ -973,30 +958,6 @@
     throw v0
 .end method
 
-.method public declared-synchronized setBlockFloatPopupWindows(Z)V
-    .locals 1
-    .parameter "flag"
-
-    .prologue
-    monitor-enter p0
-
-    :try_start_0
-    new-instance v0, Landroid/webkit/MustOverrideException;
-
-    invoke-direct {v0}, Landroid/webkit/MustOverrideException;-><init>()V
-
-    throw v0
-    :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
-
-    :catchall_0
-    move-exception v0
-
-    monitor-exit p0
-
-    throw v0
-.end method
-
 .method public declared-synchronized getUserAgentString()Ljava/lang/String;
     .locals 1
 
@@ -1077,6 +1038,8 @@
 .method public declared-synchronized setAppCacheMaxSize(J)V
     .locals 1
     .parameter "appCacheMaxSize"
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
 
     .prologue
     monitor-enter p0
@@ -1245,6 +1208,8 @@
 .method public declared-synchronized setDatabasePath(Ljava/lang/String;)V
     .locals 1
     .parameter "databasePath"
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
 
     .prologue
     monitor-enter p0
@@ -1341,6 +1306,8 @@
 .method public setDefaultZoom(Landroid/webkit/WebSettings$ZoomDensity;)V
     .locals 1
     .parameter "zoom"
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
 
     .prologue
     new-instance v0, Landroid/webkit/MustOverrideException;
@@ -1571,6 +1538,8 @@
 .method public setLightTouchEnabled(Z)V
     .locals 1
     .parameter "enabled"
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
 
     .prologue
     new-instance v0, Landroid/webkit/MustOverrideException;
@@ -1705,6 +1674,8 @@
 .method public declared-synchronized setPluginState(Landroid/webkit/WebSettings$PluginState;)V
     .locals 1
     .parameter "state"
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
 
     .prologue
     monitor-enter p0
@@ -1769,6 +1740,8 @@
 .method public declared-synchronized setRenderPriority(Landroid/webkit/WebSettings$RenderPriority;)V
     .locals 1
     .parameter "priority"
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
 
     .prologue
     monitor-enter p0
@@ -1829,6 +1802,8 @@
 .method public setSavePassword(Z)V
     .locals 1
     .parameter "save"
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
 
     .prologue
     new-instance v0, Landroid/webkit/MustOverrideException;

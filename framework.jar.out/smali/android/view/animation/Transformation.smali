@@ -4,13 +4,13 @@
 
 
 # static fields
-.field public static TYPE_ALPHA:I
+.field public static final TYPE_ALPHA:I = 0x1
 
-.field public static TYPE_BOTH:I
+.field public static final TYPE_BOTH:I = 0x3
 
-.field public static TYPE_IDENTITY:I
+.field public static final TYPE_IDENTITY:I = 0x0
 
-.field public static TYPE_MATRIX:I
+.field public static final TYPE_MATRIX:I = 0x2
 
 
 # instance fields
@@ -22,33 +22,6 @@
 
 
 # direct methods
-.method static constructor <clinit>()V
-    .locals 2
-
-    .prologue
-    const/4 v0, 0x0
-
-    sput v0, Landroid/view/animation/Transformation;->TYPE_IDENTITY:I
-
-    const/4 v0, 0x1
-
-    sput v0, Landroid/view/animation/Transformation;->TYPE_ALPHA:I
-
-    const/4 v0, 0x2
-
-    sput v0, Landroid/view/animation/Transformation;->TYPE_MATRIX:I
-
-    sget v0, Landroid/view/animation/Transformation;->TYPE_ALPHA:I
-
-    sget v1, Landroid/view/animation/Transformation;->TYPE_MATRIX:I
-
-    or-int/2addr v0, v1
-
-    sput v0, Landroid/view/animation/Transformation;->TYPE_BOTH:I
-
-    return-void
-.end method
-
 .method public constructor <init>()V
     .locals 0
 
@@ -81,7 +54,7 @@
 
     iput v0, p0, Landroid/view/animation/Transformation;->mAlpha:F
 
-    sget v0, Landroid/view/animation/Transformation;->TYPE_BOTH:I
+    const/4 v0, 0x3
 
     iput v0, p0, Landroid/view/animation/Transformation;->mTransformationType:I
 

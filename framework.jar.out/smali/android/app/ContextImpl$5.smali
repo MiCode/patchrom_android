@@ -1,5 +1,5 @@
 .class final Landroid/app/ContextImpl$5;
-.super Landroid/app/ContextImpl$StaticServiceFetcher;
+.super Landroid/app/ContextImpl$ServiceFetcher;
 .source "ContextImpl.java"
 
 
@@ -19,32 +19,31 @@
     .locals 0
 
     .prologue
-    invoke-direct {p0}, Landroid/app/ContextImpl$StaticServiceFetcher;-><init>()V
+    invoke-direct {p0}, Landroid/app/ContextImpl$ServiceFetcher;-><init>()V
 
     return-void
 .end method
 
 
 # virtual methods
-.method public createStaticService()Ljava/lang/Object;
+.method public createService(Landroid/app/ContextImpl;)Ljava/lang/Object;
     .locals 3
+    .parameter "ctx"
 
     .prologue
-    const-string v2, "alarm"
+    new-instance v0, Landroid/app/ActivityManager;
 
-    invoke-static {v2}, Landroid/os/ServiceManager;->getService(Ljava/lang/String;)Landroid/os/IBinder;
-
-    move-result-object v0
-
-    .local v0, b:Landroid/os/IBinder;
-    invoke-static {v0}, Landroid/app/IAlarmManager$Stub;->asInterface(Landroid/os/IBinder;)Landroid/app/IAlarmManager;
+    invoke-virtual {p1}, Landroid/app/ContextImpl;->getOuterContext()Landroid/content/Context;
 
     move-result-object v1
 
-    .local v1, service:Landroid/app/IAlarmManager;
-    new-instance v2, Landroid/app/AlarmManager;
+    iget-object v2, p1, Landroid/app/ContextImpl;->mMainThread:Landroid/app/ActivityThread;
 
-    invoke-direct {v2, v1}, Landroid/app/AlarmManager;-><init>(Landroid/app/IAlarmManager;)V
+    invoke-virtual {v2}, Landroid/app/ActivityThread;->getHandler()Landroid/os/Handler;
 
-    return-object v2
+    move-result-object v2
+
+    invoke-direct {v0, v1, v2}, Landroid/app/ActivityManager;-><init>(Landroid/content/Context;Landroid/os/Handler;)V
+
+    return-object v0
 .end method

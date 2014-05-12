@@ -113,27 +113,27 @@
 
     .prologue
     :try_start_0
-    invoke-static {}, Lorg/apache/harmony/xnet/provider/jsse/SSLParametersImpl;->getDefaultTrustManager()Ljavax/net/ssl/X509TrustManager;
+    invoke-static {}, Lcom/android/org/conscrypt/SSLParametersImpl;->getDefaultTrustManager()Ljavax/net/ssl/X509TrustManager;
 
     move-result-object v2
 
     .local v2, x509TrustManager:Ljavax/net/ssl/X509TrustManager;
-    instance-of v3, v2, Lorg/apache/harmony/xnet/provider/jsse/TrustManagerImpl;
+    instance-of v3, v2, Lcom/android/org/conscrypt/TrustManagerImpl;
 
     if-eqz v3, :cond_0
 
     move-object v0, v2
 
-    check-cast v0, Lorg/apache/harmony/xnet/provider/jsse/TrustManagerImpl;
+    check-cast v0, Lcom/android/org/conscrypt/TrustManagerImpl;
 
     move-object v1, v0
 
-    .local v1, trustManager:Lorg/apache/harmony/xnet/provider/jsse/TrustManagerImpl;
-    invoke-virtual {v1}, Lorg/apache/harmony/xnet/provider/jsse/TrustManagerImpl;->handleTrustStorageUpdate()V
+    .local v1, trustManager:Lcom/android/org/conscrypt/TrustManagerImpl;
+    invoke-virtual {v1}, Lcom/android/org/conscrypt/TrustManagerImpl;->handleTrustStorageUpdate()V
     :try_end_0
     .catch Ljava/security/KeyManagementException; {:try_start_0 .. :try_end_0} :catch_0
 
-    .end local v1           #trustManager:Lorg/apache/harmony/xnet/provider/jsse/TrustManagerImpl;
+    .end local v1           #trustManager:Lcom/android/org/conscrypt/TrustManagerImpl;
     :cond_0
     :goto_0
     return-void
@@ -145,7 +145,7 @@
 .end method
 
 .method public static verifyServerCertificates([[BLjava/lang/String;Ljava/lang/String;)Landroid/net/http/SslError;
-    .locals 4
+    .locals 6
     .parameter "certChain"
     .parameter "domain"
     .parameter "authType"
@@ -158,51 +158,84 @@
     .prologue
     if-eqz p0, :cond_0
 
-    array-length v2, p0
+    array-length v4, p0
 
-    if-nez v2, :cond_1
+    if-nez v4, :cond_1
 
     :cond_0
-    new-instance v2, Ljava/lang/IllegalArgumentException;
+    new-instance v4, Ljava/lang/IllegalArgumentException;
 
-    const-string v3, "bad certificate chain"
+    const-string v5, "bad certificate chain"
 
-    invoke-direct {v2, v3}, Ljava/lang/IllegalArgumentException;-><init>(Ljava/lang/String;)V
+    invoke-direct {v4, v5}, Ljava/lang/IllegalArgumentException;-><init>(Ljava/lang/String;)V
 
-    throw v2
+    throw v4
 
     :cond_1
-    array-length v2, p0
+    array-length v4, p0
 
-    new-array v1, v2, [Ljava/security/cert/X509Certificate;
+    new-array v3, v4, [Ljava/security/cert/X509Certificate;
 
-    .local v1, serverCertificates:[Ljava/security/cert/X509Certificate;
-    const/4 v0, 0x0
+    .local v3, serverCertificates:[Ljava/security/cert/X509Certificate;
+    :try_start_0
+    const-string v4, "X.509"
 
-    .local v0, i:I
+    invoke-static {v4}, Ljava/security/cert/CertificateFactory;->getInstance(Ljava/lang/String;)Ljava/security/cert/CertificateFactory;
+
+    move-result-object v0
+
+    .local v0, cf:Ljava/security/cert/CertificateFactory;
+    const/4 v2, 0x0
+
+    .local v2, i:I
     :goto_0
-    array-length v2, p0
+    array-length v4, p0
 
-    if-ge v0, v2, :cond_2
+    if-ge v2, v4, :cond_2
 
-    new-instance v2, Lorg/apache/harmony/security/provider/cert/X509CertImpl;
+    new-instance v4, Ljava/io/ByteArrayInputStream;
 
-    aget-object v3, p0, v0
+    aget-object v5, p0, v2
 
-    invoke-direct {v2, v3}, Lorg/apache/harmony/security/provider/cert/X509CertImpl;-><init>([B)V
+    invoke-direct {v4, v5}, Ljava/io/ByteArrayInputStream;-><init>([B)V
 
-    aput-object v2, v1, v0
+    invoke-virtual {v0, v4}, Ljava/security/cert/CertificateFactory;->generateCertificate(Ljava/io/InputStream;)Ljava/security/cert/Certificate;
 
-    add-int/lit8 v0, v0, 0x1
+    move-result-object v4
+
+    check-cast v4, Ljava/security/cert/X509Certificate;
+
+    aput-object v4, v3, v2
+    :try_end_0
+    .catch Ljava/security/cert/CertificateException; {:try_start_0 .. :try_end_0} :catch_0
+
+    add-int/lit8 v2, v2, 0x1
 
     goto :goto_0
 
+    .end local v0           #cf:Ljava/security/cert/CertificateFactory;
+    .end local v2           #i:I
+    :catch_0
+    move-exception v1
+
+    .local v1, e:Ljava/security/cert/CertificateException;
+    new-instance v4, Ljava/io/IOException;
+
+    const-string v5, "can\'t read certificate"
+
+    invoke-direct {v4, v5, v1}, Ljava/io/IOException;-><init>(Ljava/lang/String;Ljava/lang/Throwable;)V
+
+    throw v4
+
+    .end local v1           #e:Ljava/security/cert/CertificateException;
+    .restart local v0       #cf:Ljava/security/cert/CertificateFactory;
+    .restart local v2       #i:I
     :cond_2
-    invoke-static {v1, p1, p2}, Landroid/net/http/CertificateChainValidator;->verifyServerDomainAndCertificates([Ljava/security/cert/X509Certificate;Ljava/lang/String;Ljava/lang/String;)Landroid/net/http/SslError;
+    invoke-static {v3, p1, p2}, Landroid/net/http/CertificateChainValidator;->verifyServerDomainAndCertificates([Ljava/security/cert/X509Certificate;Ljava/lang/String;Ljava/lang/String;)Landroid/net/http/SslError;
 
-    move-result-object v2
+    move-result-object v4
 
-    return-object v2
+    return-object v4
 .end method
 
 .method private static verifyServerDomainAndCertificates([Ljava/security/cert/X509Certificate;Ljava/lang/String;Ljava/lang/String;)Landroid/net/http/SslError;
@@ -266,25 +299,25 @@
 
     :cond_2
     :try_start_0
-    invoke-static {}, Lorg/apache/harmony/xnet/provider/jsse/SSLParametersImpl;->getDefaultTrustManager()Ljavax/net/ssl/X509TrustManager;
+    invoke-static {}, Lcom/android/org/conscrypt/SSLParametersImpl;->getDefaultTrustManager()Ljavax/net/ssl/X509TrustManager;
 
     move-result-object v5
 
     .local v5, x509TrustManager:Ljavax/net/ssl/X509TrustManager;
-    instance-of v6, v5, Lorg/apache/harmony/xnet/provider/jsse/TrustManagerImpl;
+    instance-of v6, v5, Lcom/android/org/conscrypt/TrustManagerImpl;
 
     if-eqz v6, :cond_3
 
     move-object v0, v5
 
-    check-cast v0, Lorg/apache/harmony/xnet/provider/jsse/TrustManagerImpl;
+    check-cast v0, Lcom/android/org/conscrypt/TrustManagerImpl;
 
     move-object v3, v0
 
-    .local v3, trustManager:Lorg/apache/harmony/xnet/provider/jsse/TrustManagerImpl;
-    invoke-virtual {v3, p0, p2, p1}, Lorg/apache/harmony/xnet/provider/jsse/TrustManagerImpl;->checkServerTrusted([Ljava/security/cert/X509Certificate;Ljava/lang/String;Ljava/lang/String;)Ljava/util/List;
+    .local v3, trustManager:Lcom/android/org/conscrypt/TrustManagerImpl;
+    invoke-virtual {v3, p0, p2, p1}, Lcom/android/org/conscrypt/TrustManagerImpl;->checkServerTrusted([Ljava/security/cert/X509Certificate;Ljava/lang/String;Ljava/lang/String;)Ljava/util/List;
 
-    .end local v3           #trustManager:Lorg/apache/harmony/xnet/provider/jsse/TrustManagerImpl;
+    .end local v3           #trustManager:Lcom/android/org/conscrypt/TrustManagerImpl;
     :goto_1
     const/4 v6, 0x0
 

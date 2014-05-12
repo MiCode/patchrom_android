@@ -319,10 +319,8 @@
     const/4 v1, 0x0
 
     .local v1, binder:Landroid/os/IBinder;
-    const/4 v2, 0x0
-
     :try_start_0
-    invoke-virtual {p2, v2}, Landroid/content/Intent;->setAllowFds(Z)V
+    invoke-virtual {p2}, Landroid/content/Intent;->prepareToLeaveProcess()V
 
     invoke-virtual {p1}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
 

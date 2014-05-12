@@ -88,20 +88,30 @@
 
 # virtual methods
 .method end(Landroid/graphics/Canvas;)V
-    .locals 1
+    .locals 2
     .parameter "currentCanvas"
 
     .prologue
-    instance-of v0, p1, Landroid/view/GLES20Canvas;
+    invoke-virtual {p0}, Landroid/view/GLES20RenderLayer;->getCanvas()Landroid/view/HardwareCanvas;
 
+    move-result-object v0
+
+    .local v0, canvas:Landroid/view/HardwareCanvas;
     if-eqz v0, :cond_0
+
+    invoke-virtual {v0}, Landroid/view/HardwareCanvas;->onPostDraw()V
+
+    :cond_0
+    instance-of v1, p1, Landroid/view/GLES20Canvas;
+
+    if-eqz v1, :cond_1
 
     check-cast p1, Landroid/view/GLES20Canvas;
 
     .end local p1
     invoke-virtual {p1}, Landroid/view/GLES20Canvas;->resume()V
 
-    :cond_0
+    :cond_1
     return-void
 .end method
 
@@ -281,9 +291,24 @@
     .parameter "currentCanvas"
 
     .prologue
-    instance-of v0, p1, Landroid/view/GLES20Canvas;
+    const/4 v0, 0x0
 
-    if-eqz v0, :cond_0
+    invoke-virtual {p0, p1, v0}, Landroid/view/GLES20RenderLayer;->start(Landroid/graphics/Canvas;Landroid/graphics/Rect;)Landroid/view/HardwareCanvas;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method start(Landroid/graphics/Canvas;Landroid/graphics/Rect;)Landroid/view/HardwareCanvas;
+    .locals 3
+    .parameter "currentCanvas"
+    .parameter "dirty"
+
+    .prologue
+    instance-of v1, p1, Landroid/view/GLES20Canvas;
+
+    if-eqz v1, :cond_0
 
     check-cast p1, Landroid/view/GLES20Canvas;
 
@@ -294,6 +319,15 @@
     invoke-virtual {p0}, Landroid/view/GLES20RenderLayer;->getCanvas()Landroid/view/HardwareCanvas;
 
     move-result-object v0
+
+    .local v0, canvas:Landroid/view/HardwareCanvas;
+    iget v1, p0, Landroid/view/GLES20RenderLayer;->mWidth:I
+
+    iget v2, p0, Landroid/view/GLES20RenderLayer;->mHeight:I
+
+    invoke-virtual {v0, v1, v2}, Landroid/view/HardwareCanvas;->setViewport(II)V
+
+    invoke-virtual {v0, p2}, Landroid/view/HardwareCanvas;->onPreDraw(Landroid/graphics/Rect;)I
 
     return-object v0
 .end method

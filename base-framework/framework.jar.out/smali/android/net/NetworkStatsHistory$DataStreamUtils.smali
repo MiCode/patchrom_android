@@ -42,6 +42,17 @@
     move-result v1
 
     .local v1, size:I
+    if-gez v1, :cond_0
+
+    new-instance v3, Ljava/net/ProtocolException;
+
+    const-string v4, "negative array size"
+
+    invoke-direct {v3, v4}, Ljava/net/ProtocolException;-><init>(Ljava/lang/String;)V
+
+    throw v3
+
+    :cond_0
     new-array v2, v1, [J
 
     .local v2, values:[J
@@ -51,7 +62,7 @@
     :goto_0
     array-length v3, v2
 
-    if-ge v0, v3, :cond_0
+    if-ge v0, v3, :cond_1
 
     invoke-virtual {p0}, Ljava/io/DataInputStream;->readLong()J
 
@@ -63,7 +74,7 @@
 
     goto :goto_0
 
-    :cond_0
+    :cond_1
     return-object v2
 .end method
 
@@ -148,6 +159,17 @@
     return-object v2
 
     :cond_1
+    if-gez v1, :cond_2
+
+    new-instance v3, Ljava/net/ProtocolException;
+
+    const-string v4, "negative array size"
+
+    invoke-direct {v3, v4}, Ljava/net/ProtocolException;-><init>(Ljava/lang/String;)V
+
+    throw v3
+
+    :cond_2
     new-array v2, v1, [J
 
     .local v2, values:[J

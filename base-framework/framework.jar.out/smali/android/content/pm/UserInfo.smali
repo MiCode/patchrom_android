@@ -319,6 +319,29 @@
     goto :goto_0
 .end method
 
+.method public isRestricted()Z
+    .locals 2
+
+    .prologue
+    iget v0, p0, Landroid/content/pm/UserInfo;->flags:I
+
+    and-int/lit8 v0, v0, 0x8
+
+    const/16 v1, 0x8
+
+    if-ne v0, v1, :cond_0
+
+    const/4 v0, 0x1
+
+    :goto_0
+    return v0
+
+    :cond_0
+    const/4 v0, 0x0
+
+    goto :goto_0
+.end method
+
 .method public toString()Ljava/lang/String;
     .locals 2
 

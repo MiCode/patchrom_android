@@ -93,7 +93,7 @@
 
 
 # direct methods
-.method constructor <init>(Landroid/app/Activity;I)V
+.method public constructor <init>(Landroid/app/Activity;I)V
     .locals 2
     .parameter "activity"
     .parameter "firstRequestCode"

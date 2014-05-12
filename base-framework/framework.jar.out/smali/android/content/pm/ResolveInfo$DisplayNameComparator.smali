@@ -28,14 +28,14 @@
 
 
 # instance fields
-.field private mPM:Landroid/content/pm/PackageManager;
+.field private final mCollator:Ljava/text/Collator;
 
-.field private final sCollator:Ljava/text/Collator;
+.field private mPM:Landroid/content/pm/PackageManager;
 
 
 # direct methods
 .method public constructor <init>(Landroid/content/pm/PackageManager;)V
-    .locals 1
+    .locals 2
     .parameter "pm"
 
     .prologue
@@ -45,9 +45,15 @@
 
     move-result-object v0
 
-    iput-object v0, p0, Landroid/content/pm/ResolveInfo$DisplayNameComparator;->sCollator:Ljava/text/Collator;
+    iput-object v0, p0, Landroid/content/pm/ResolveInfo$DisplayNameComparator;->mCollator:Ljava/text/Collator;
 
     iput-object p1, p0, Landroid/content/pm/ResolveInfo$DisplayNameComparator;->mPM:Landroid/content/pm/PackageManager;
+
+    iget-object v0, p0, Landroid/content/pm/ResolveInfo$DisplayNameComparator;->mCollator:Ljava/text/Collator;
+
+    const/4 v1, 0x0
+
+    invoke-virtual {v0, v1}, Ljava/text/Collator;->setStrength(I)V
 
     return-void
 .end method
@@ -88,7 +94,7 @@
     iget-object v1, v2, Landroid/content/pm/ActivityInfo;->name:Ljava/lang/String;
 
     :cond_1
-    iget-object v2, p0, Landroid/content/pm/ResolveInfo$DisplayNameComparator;->sCollator:Ljava/text/Collator;
+    iget-object v2, p0, Landroid/content/pm/ResolveInfo$DisplayNameComparator;->mCollator:Ljava/text/Collator;
 
     invoke-virtual {v0}, Ljava/lang/Object;->toString()Ljava/lang/String;
 

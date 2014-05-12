@@ -240,6 +240,10 @@
 
     sget-object v0, Landroid/renderscript/Sampler$Value;->CLAMP:Landroid/renderscript/Sampler$Value;
 
+    if-eq p1, v0, :cond_0
+
+    sget-object v0, Landroid/renderscript/Sampler$Value;->MIRRORED_REPEAT:Landroid/renderscript/Sampler$Value;
+
     if-ne p1, v0, :cond_1
 
     :cond_0
@@ -267,6 +271,10 @@
     if-eq p1, v0, :cond_0
 
     sget-object v0, Landroid/renderscript/Sampler$Value;->CLAMP:Landroid/renderscript/Sampler$Value;
+
+    if-eq p1, v0, :cond_0
+
+    sget-object v0, Landroid/renderscript/Sampler$Value;->MIRRORED_REPEAT:Landroid/renderscript/Sampler$Value;
 
     if-ne p1, v0, :cond_1
 

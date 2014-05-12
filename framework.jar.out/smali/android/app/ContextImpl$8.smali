@@ -31,9 +31,9 @@
     .parameter "ctx"
 
     .prologue
-    invoke-static {}, Landroid/bluetooth/BluetoothAdapter;->getDefaultAdapter()Landroid/bluetooth/BluetoothAdapter;
+    new-instance v0, Landroid/media/MediaRouter;
 
-    move-result-object v0
+    invoke-direct {v0, p1}, Landroid/media/MediaRouter;-><init>(Landroid/content/Context;)V
 
     return-object v0
 .end method

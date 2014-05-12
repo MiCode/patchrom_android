@@ -270,7 +270,7 @@
 
     move-result-object v3
 
-    const/high16 v4, 0x800
+    const/high16 v4, 0x400
 
     invoke-virtual {v3, v4}, Landroid/content/Intent;->addFlags(I)Landroid/content/Intent;
 

@@ -26,14 +26,14 @@
 
 
 # virtual methods
-.method public getService(Landroid/app/ContextImpl;)Ljava/lang/Object;
+.method public createService(Landroid/app/ContextImpl;)Ljava/lang/Object;
     .locals 1
     .parameter "ctx"
 
     .prologue
-    new-instance v0, Landroid/app/KeyguardManager;
+    invoke-static {}, Landroid/view/textservice/TextServicesManager;->getInstance()Landroid/view/textservice/TextServicesManager;
 
-    invoke-direct {v0}, Landroid/app/KeyguardManager;-><init>()V
+    move-result-object v0
 
     return-object v0
 .end method

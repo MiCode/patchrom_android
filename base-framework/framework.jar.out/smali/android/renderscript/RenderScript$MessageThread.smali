@@ -15,11 +15,15 @@
 
 
 # static fields
+.field static final RS_ERROR_FATAL_DEBUG:I = 0x800
+
 .field static final RS_ERROR_FATAL_UNKNOWN:I = 0x1000
 
 .field static final RS_MESSAGE_TO_CLIENT_ERROR:I = 0x3
 
 .field static final RS_MESSAGE_TO_CLIENT_EXCEPTION:I = 0x1
+
+.field static final RS_MESSAGE_TO_CLIENT_NEW_BUFFER:I = 0x5
 
 .field static final RS_MESSAGE_TO_CLIENT_NONE:I = 0x0
 
@@ -84,11 +88,10 @@
 
     invoke-virtual {v5, v6}, Landroid/renderscript/RenderScript;->nContextInitToClient(I)V
 
-    :cond_0
     :goto_0
     iget-boolean v5, p0, Landroid/renderscript/RenderScript$MessageThread;->mRun:Z
 
-    if-eqz v5, :cond_7
+    if-eqz v5, :cond_9
 
     aput v8, v2, v8
 
@@ -117,13 +120,13 @@
     aget v4, v5, v8
 
     .local v4, subID:I
-    if-ne v1, v9, :cond_4
+    if-ne v1, v9, :cond_3
 
     shr-int/lit8 v5, v3, 0x2
 
     array-length v6, v2
 
-    if-lt v5, v6, :cond_1
+    if-lt v5, v6, :cond_0
 
     add-int/lit8 v5, v3, 0x3
 
@@ -131,7 +134,7 @@
 
     new-array v2, v5, [I
 
-    :cond_1
+    :cond_0
     iget-object v5, p0, Landroid/renderscript/RenderScript$MessageThread;->mRS:Landroid/renderscript/RenderScript;
 
     iget-object v6, p0, Landroid/renderscript/RenderScript$MessageThread;->mRS:Landroid/renderscript/RenderScript;
@@ -142,22 +145,22 @@
 
     move-result v5
 
-    if-eq v5, v9, :cond_2
+    if-eq v5, v9, :cond_1
 
     new-instance v5, Landroid/renderscript/RSDriverException;
 
-    const-string v6, "Error processing message from Renderscript."
+    const-string v6, "Error processing message from RenderScript."
 
     invoke-direct {v5, v6}, Landroid/renderscript/RSDriverException;-><init>(Ljava/lang/String;)V
 
     throw v5
 
-    :cond_2
+    :cond_1
     iget-object v5, p0, Landroid/renderscript/RenderScript$MessageThread;->mRS:Landroid/renderscript/RenderScript;
 
     iget-object v5, v5, Landroid/renderscript/RenderScript;->mMessageCallback:Landroid/renderscript/RenderScript$RSMessageHandler;
 
-    if-eqz v5, :cond_3
+    if-eqz v5, :cond_2
 
     iget-object v5, p0, Landroid/renderscript/RenderScript$MessageThread;->mRS:Landroid/renderscript/RenderScript;
 
@@ -185,7 +188,7 @@
 
     goto :goto_0
 
-    :cond_3
+    :cond_2
     new-instance v5, Landroid/renderscript/RSInvalidStateException;
 
     const-string v6, "Received a message from the script with no message handler installed."
@@ -194,10 +197,10 @@
 
     throw v5
 
-    :cond_4
+    :cond_3
     const/4 v5, 0x3
 
-    if-ne v1, v5, :cond_6
+    if-ne v1, v5, :cond_7
 
     iget-object v5, p0, Landroid/renderscript/RenderScript$MessageThread;->mRS:Landroid/renderscript/RenderScript;
 
@@ -212,8 +215,27 @@
     .local v0, e:Ljava/lang/String;
     const/16 v5, 0x1000
 
+    if-ge v4, v5, :cond_4
+
+    const/16 v5, 0x800
+
     if-lt v4, v5, :cond_5
 
+    iget-object v5, p0, Landroid/renderscript/RenderScript$MessageThread;->mRS:Landroid/renderscript/RenderScript;
+
+    iget-object v5, v5, Landroid/renderscript/RenderScript;->mContextType:Landroid/renderscript/RenderScript$ContextType;
+
+    sget-object v6, Landroid/renderscript/RenderScript$ContextType;->DEBUG:Landroid/renderscript/RenderScript$ContextType;
+
+    if-ne v5, v6, :cond_4
+
+    iget-object v5, p0, Landroid/renderscript/RenderScript$MessageThread;->mRS:Landroid/renderscript/RenderScript;
+
+    iget-object v5, v5, Landroid/renderscript/RenderScript;->mErrorCallback:Landroid/renderscript/RenderScript$RSErrorHandler;
+
+    if-nez v5, :cond_5
+
+    :cond_4
     new-instance v5, Landroid/renderscript/RSRuntimeException;
 
     new-instance v6, Ljava/lang/StringBuilder;
@@ -253,7 +275,7 @@
 
     iget-object v5, v5, Landroid/renderscript/RenderScript;->mErrorCallback:Landroid/renderscript/RenderScript$RSErrorHandler;
 
-    if-eqz v5, :cond_0
+    if-eqz v5, :cond_6
 
     iget-object v5, p0, Landroid/renderscript/RenderScript$MessageThread;->mRS:Landroid/renderscript/RenderScript;
 
@@ -275,8 +297,42 @@
 
     goto/16 :goto_0
 
-    .end local v0           #e:Ljava/lang/String;
     :cond_6
+    const-string v5, "RenderScript_jni"
+
+    new-instance v6, Ljava/lang/StringBuilder;
+
+    invoke-direct {v6}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v7, "non fatal RS error, "
+
+    invoke-virtual {v6, v7}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v6
+
+    invoke-virtual {v6, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v6
+
+    invoke-virtual {v6}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v6
+
+    invoke-static {v5, v6}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+
+    goto/16 :goto_0
+
+    .end local v0           #e:Ljava/lang/String;
+    :cond_7
+    const/4 v5, 0x5
+
+    if-ne v1, v5, :cond_8
+
+    invoke-static {v4}, Landroid/renderscript/Allocation;->sendBufferNotification(I)V
+
+    goto/16 :goto_0
+
+    :cond_8
     const-wide/16 v5, 0x1
 
     const/4 v7, 0x0
@@ -296,12 +352,6 @@
     .end local v1           #msg:I
     .end local v3           #size:I
     .end local v4           #subID:I
-    :cond_7
-    const-string v5, "RenderScript_jni"
-
-    const-string v6, "MessageThread exiting."
-
-    invoke-static {v5, v6}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
-
+    :cond_9
     return-void
 .end method

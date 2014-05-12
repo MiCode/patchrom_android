@@ -51,9 +51,13 @@
 
 .field private static final FIRST_RIGHT_TO_LEFT:C = '\u0590'
 
+.field public static final FIRST_SPAN:I = 0x1
+
 .field public static final FOREGROUND_COLOR_SPAN:I = 0x2
 
 .field private static HEBR_SCRIPT_SUBTAG:Ljava/lang/String; = null
+
+.field public static final LAST_SPAN:I = 0x17
 
 .field public static final LEADING_MARGIN_SPAN:I = 0xa
 
@@ -78,6 +82,8 @@
 .field public static final SUGGESTION_SPAN:I = 0x13
 
 .field public static final SUPERSCRIPT_SPAN:I = 0xe
+
+.field private static final TAG:Ljava/lang/String; = "TextUtils"
 
 .field public static final TEXT_APPEARANCE_SPAN:I = 0x11
 
@@ -1083,7 +1089,7 @@
 
     move-result-object v0
 
-    const v1, 0x1040074
+    const v1, 0x1040050
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getString(I)Ljava/lang/String;
 
@@ -1117,7 +1123,7 @@
 
     move-result-object v0
 
-    const v1, 0x1040073
+    const v1, 0x104004f
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getString(I)Ljava/lang/String;
 
@@ -2203,69 +2209,77 @@
 .end method
 
 .method public static getLayoutDirectionFromLocale(Ljava/util/Locale;)I
-    .locals 2
+    .locals 4
     .parameter "locale"
 
     .prologue
+    const/4 v1, 0x1
+
+    const/4 v2, 0x0
+
     if-eqz p0, :cond_2
 
-    sget-object v1, Ljava/util/Locale;->ROOT:Ljava/util/Locale;
+    sget-object v3, Ljava/util/Locale;->ROOT:Ljava/util/Locale;
 
-    invoke-virtual {p0, v1}, Ljava/util/Locale;->equals(Ljava/lang/Object;)Z
+    invoke-virtual {p0, v3}, Ljava/util/Locale;->equals(Ljava/lang/Object;)Z
 
-    move-result v1
+    move-result v3
 
-    if-nez v1, :cond_2
+    if-nez v3, :cond_2
 
     invoke-virtual {p0}, Ljava/util/Locale;->toString()Ljava/lang/String;
 
-    move-result-object v1
+    move-result-object v3
 
-    invoke-static {v1}, Llibcore/icu/ICU;->addLikelySubtags(Ljava/lang/String;)Ljava/lang/String;
+    invoke-static {v3}, Llibcore/icu/ICU;->addLikelySubtags(Ljava/lang/String;)Ljava/lang/String;
 
-    move-result-object v1
+    move-result-object v3
 
-    invoke-static {v1}, Llibcore/icu/ICU;->getScript(Ljava/lang/String;)Ljava/lang/String;
+    invoke-static {v3}, Llibcore/icu/ICU;->getScript(Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v0
 
     .local v0, scriptSubtag:Ljava/lang/String;
-    if-nez v0, :cond_0
+    if-nez v0, :cond_1
 
     invoke-static {p0}, Landroid/text/TextUtils;->getLayoutDirectionFromFirstChar(Ljava/util/Locale;)I
 
     move-result v1
 
     .end local v0           #scriptSubtag:Ljava/lang/String;
+    :cond_0
     :goto_0
     return v1
 
     .restart local v0       #scriptSubtag:Ljava/lang/String;
-    :cond_0
-    sget-object v1, Landroid/text/TextUtils;->ARAB_SCRIPT_SUBTAG:Ljava/lang/String;
-
-    invoke-virtual {v0, v1}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
-
-    move-result v1
-
-    if-nez v1, :cond_1
-
-    sget-object v1, Landroid/text/TextUtils;->HEBR_SCRIPT_SUBTAG:Ljava/lang/String;
-
-    invoke-virtual {v0, v1}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
-
-    move-result v1
-
-    if-eqz v1, :cond_2
-
     :cond_1
-    const/4 v1, 0x1
+    sget-object v3, Landroid/text/TextUtils;->ARAB_SCRIPT_SUBTAG:Ljava/lang/String;
 
-    goto :goto_0
+    invoke-virtual {v0, v3}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
+
+    move-result v3
+
+    if-nez v3, :cond_0
+
+    sget-object v3, Landroid/text/TextUtils;->HEBR_SCRIPT_SUBTAG:Ljava/lang/String;
+
+    invoke-virtual {v0, v3}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
+
+    move-result v3
+
+    if-nez v3, :cond_0
 
     .end local v0           #scriptSubtag:Ljava/lang/String;
     :cond_2
-    const/4 v1, 0x0
+    const-string v3, "debug.force_rtl"
+
+    invoke-static {v3, v2}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
+
+    move-result v3
+
+    if-nez v3, :cond_0
+
+    move v1, v2
 
     goto :goto_0
 .end method
@@ -3261,7 +3275,7 @@
 
     move-result-object v1
 
-    const v2, 0x1040509
+    const v2, 0x1040539
 
     invoke-virtual {v1, v2}, Landroid/content/res/Resources;->getText(I)Ljava/lang/CharSequence;
 
@@ -4269,25 +4283,27 @@
 .end method
 
 .method public static writeToParcel(Ljava/lang/CharSequence;Landroid/os/Parcel;I)V
-    .locals 9
+    .locals 12
     .parameter "cs"
     .parameter "p"
     .parameter "parcelableFlags"
 
     .prologue
-    const/4 v8, 0x0
+    const/4 v11, 0x1
 
-    instance-of v6, p0, Landroid/text/Spanned;
+    const/4 v10, 0x0
 
-    if-eqz v6, :cond_3
+    instance-of v7, p0, Landroid/text/Spanned;
 
-    invoke-virtual {p1, v8}, Landroid/os/Parcel;->writeInt(I)V
+    if-eqz v7, :cond_5
+
+    invoke-virtual {p1, v10}, Landroid/os/Parcel;->writeInt(I)V
 
     invoke-virtual {p0}, Ljava/lang/Object;->toString()Ljava/lang/String;
 
-    move-result-object v6
+    move-result-object v7
 
-    invoke-virtual {p1, v6}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
+    invoke-virtual {p1, v7}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
     move-object v5, p0
 
@@ -4296,11 +4312,11 @@
     .local v5, sp:Landroid/text/Spanned;
     invoke-interface {p0}, Ljava/lang/CharSequence;->length()I
 
-    move-result v6
+    move-result v7
 
-    const-class v7, Ljava/lang/Object;
+    const-class v8, Ljava/lang/Object;
 
-    invoke-interface {v5, v8, v6, v7}, Landroid/text/Spanned;->getSpans(IILjava/lang/Class;)[Ljava/lang/Object;
+    invoke-interface {v5, v10, v7, v8}, Landroid/text/Spanned;->getSpans(IILjava/lang/Class;)[Ljava/lang/Object;
 
     move-result-object v2
 
@@ -4309,9 +4325,9 @@
 
     .local v0, i:I
     :goto_0
-    array-length v6, v2
+    array-length v7, v2
 
-    if-ge v0, v6, :cond_2
+    if-ge v0, v7, :cond_4
 
     aget-object v1, v2, v0
 
@@ -4319,9 +4335,9 @@
     aget-object v3, v2, v0
 
     .local v3, prop:Ljava/lang/Object;
-    instance-of v6, v3, Landroid/text/style/CharacterStyle;
+    instance-of v7, v3, Landroid/text/style/CharacterStyle;
 
-    if-eqz v6, :cond_0
+    if-eqz v7, :cond_0
 
     check-cast v3, Landroid/text/style/CharacterStyle;
 
@@ -4331,9 +4347,9 @@
     move-result-object v3
 
     :cond_0
-    instance-of v6, v3, Landroid/text/ParcelableSpan;
+    instance-of v7, v3, Landroid/text/ParcelableSpan;
 
-    if-eqz v6, :cond_1
+    if-eqz v7, :cond_2
 
     move-object v4, v3
 
@@ -4344,49 +4360,106 @@
 
     move-result v6
 
+    .local v6, spanTypeId:I
+    if-lt v6, v11, :cond_1
+
+    const/16 v7, 0x17
+
+    if-le v6, v7, :cond_3
+
+    :cond_1
+    const-string v7, "TextUtils"
+
+    new-instance v8, Ljava/lang/StringBuilder;
+
+    invoke-direct {v8}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v9, "external class \""
+
+    invoke-virtual {v8, v9}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v8
+
+    invoke-virtual {v4}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
+
+    move-result-object v9
+
+    invoke-virtual {v9}, Ljava/lang/Class;->getSimpleName()Ljava/lang/String;
+
+    move-result-object v9
+
+    invoke-virtual {v8, v9}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v8
+
+    const-string v9, "\" is attempting to use the frameworks-only ParcelableSpan"
+
+    invoke-virtual {v8, v9}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v8
+
+    const-string v9, " interface"
+
+    invoke-virtual {v8, v9}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v8
+
+    invoke-virtual {v8}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v8
+
+    invoke-static {v7, v8}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+
+    .end local v4           #ps:Landroid/text/ParcelableSpan;
+    .end local v6           #spanTypeId:I
+    :cond_2
+    :goto_1
+    add-int/lit8 v0, v0, 0x1
+
+    goto :goto_0
+
+    .restart local v4       #ps:Landroid/text/ParcelableSpan;
+    .restart local v6       #spanTypeId:I
+    :cond_3
     invoke-virtual {p1, v6}, Landroid/os/Parcel;->writeInt(I)V
 
     invoke-interface {v4, p1, p2}, Landroid/text/ParcelableSpan;->writeToParcel(Landroid/os/Parcel;I)V
 
     invoke-static {p1, v5, v1}, Landroid/text/TextUtils;->writeWhere(Landroid/os/Parcel;Landroid/text/Spanned;Ljava/lang/Object;)V
 
-    .end local v4           #ps:Landroid/text/ParcelableSpan;
-    :cond_1
-    add-int/lit8 v0, v0, 0x1
-
-    goto :goto_0
+    goto :goto_1
 
     .end local v1           #o:Ljava/lang/Object;
-    :cond_2
-    invoke-virtual {p1, v8}, Landroid/os/Parcel;->writeInt(I)V
+    .end local v4           #ps:Landroid/text/ParcelableSpan;
+    .end local v6           #spanTypeId:I
+    :cond_4
+    invoke-virtual {p1, v10}, Landroid/os/Parcel;->writeInt(I)V
 
     .end local v0           #i:I
     .end local v2           #os:[Ljava/lang/Object;
     .end local v5           #sp:Landroid/text/Spanned;
-    :goto_1
+    :goto_2
     return-void
 
-    :cond_3
-    const/4 v6, 0x1
+    :cond_5
+    invoke-virtual {p1, v11}, Landroid/os/Parcel;->writeInt(I)V
 
-    invoke-virtual {p1, v6}, Landroid/os/Parcel;->writeInt(I)V
-
-    if-eqz p0, :cond_4
+    if-eqz p0, :cond_6
 
     invoke-virtual {p0}, Ljava/lang/Object;->toString()Ljava/lang/String;
 
-    move-result-object v6
+    move-result-object v7
 
-    invoke-virtual {p1, v6}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
+    invoke-virtual {p1, v7}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
-    goto :goto_1
+    goto :goto_2
 
-    :cond_4
-    const/4 v6, 0x0
+    :cond_6
+    const/4 v7, 0x0
 
-    invoke-virtual {p1, v6}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
+    invoke-virtual {p1, v7}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
-    goto :goto_1
+    goto :goto_2
 .end method
 
 .method private static writeWhere(Landroid/os/Parcel;Landroid/text/Spanned;Ljava/lang/Object;)V

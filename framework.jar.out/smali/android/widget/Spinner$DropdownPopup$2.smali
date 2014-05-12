@@ -8,7 +8,7 @@
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Landroid/widget/Spinner$DropdownPopup;->show()V
+    value = Landroid/widget/Spinner$DropdownPopup;->show(II)V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -45,7 +45,7 @@
     iget-object v0, v0, Landroid/widget/Spinner$DropdownPopup;->this$0:Landroid/widget/Spinner;
 
     #calls: Landroid/widget/Spinner;->isVisibleToUser()Z
-    invoke-static {v0}, Landroid/widget/Spinner;->access$400(Landroid/widget/Spinner;)Z
+    invoke-static {v0}, Landroid/widget/Spinner;->access$600(Landroid/widget/Spinner;)Z
 
     move-result v0
 
@@ -55,6 +55,18 @@
 
     invoke-virtual {v0}, Landroid/widget/Spinner$DropdownPopup;->dismiss()V
 
-    :cond_0
+    :goto_0
     return-void
+
+    :cond_0
+    iget-object v0, p0, Landroid/widget/Spinner$DropdownPopup$2;->this$1:Landroid/widget/Spinner$DropdownPopup;
+
+    invoke-virtual {v0}, Landroid/widget/Spinner$DropdownPopup;->computeContentWidth()V
+
+    iget-object v0, p0, Landroid/widget/Spinner$DropdownPopup$2;->this$1:Landroid/widget/Spinner$DropdownPopup;
+
+    #calls: Landroid/widget/ListPopupWindow;->show()V
+    invoke-static {v0}, Landroid/widget/Spinner$DropdownPopup;->access$701(Landroid/widget/Spinner$DropdownPopup;)V
+
+    goto :goto_0
 .end method

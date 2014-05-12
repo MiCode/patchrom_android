@@ -252,9 +252,11 @@
     .prologue
     packed-switch p1, :pswitch_data_0
 
-    invoke-static {p1}, Landroid/app/DownloadManager$Injector;->getPausedReason(I)J
+    invoke-static {p1}, Landroid/app/Injector$DownloadManagerHook$CursorTranslator;->getPausedReason(I)I
 
-    move-result-wide v0
+    move-result v0
+
+    int-to-long v0, v0
 
     :goto_0
     return-wide v0
@@ -506,7 +508,7 @@
 
     if-eqz v0, :cond_0
 
-    invoke-static {p0}, Landroid/app/DownloadManager$Injector;->getLocalUri(Landroid/app/DownloadManager$CursorTranslator;)Ljava/lang/String;
+    invoke-static {p0}, Landroid/app/Injector$DownloadManagerHook$CursorTranslator;->getLocalUri(Landroid/app/DownloadManager$CursorTranslator;)Ljava/lang/String;
 
     move-result-object v0
 

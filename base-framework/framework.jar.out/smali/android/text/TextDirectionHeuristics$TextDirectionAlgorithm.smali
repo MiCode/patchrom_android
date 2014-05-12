@@ -15,5 +15,5 @@
 
 
 # virtual methods
-.method public abstract checkRtl([CII)Landroid/text/TextDirectionHeuristics$TriState;
+.method public abstract checkRtl(Ljava/lang/CharSequence;II)I
 .end method

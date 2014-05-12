@@ -350,7 +350,7 @@
     if-eqz v2, :cond_0
 
     #getter for: Landroid/widget/TextView;->mLayout:Landroid/text/Layout;
-    invoke-static {v2}, Landroid/widget/TextView;->access$500(Landroid/widget/TextView;)Landroid/text/Layout;
+    invoke-static {v2}, Landroid/widget/TextView;->access$400(Landroid/widget/TextView;)Landroid/text/Layout;
 
     move-result-object v4
 
@@ -380,7 +380,7 @@
 
     .local v3, textWidth:I
     #getter for: Landroid/widget/TextView;->mLayout:Landroid/text/Layout;
-    invoke-static {v2}, Landroid/widget/TextView;->access$500(Landroid/widget/TextView;)Landroid/text/Layout;
+    invoke-static {v2}, Landroid/widget/TextView;->access$400(Landroid/widget/TextView;)Landroid/text/Layout;
 
     move-result-object v4
 

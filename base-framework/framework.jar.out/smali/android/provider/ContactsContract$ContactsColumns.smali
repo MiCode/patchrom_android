@@ -15,6 +15,8 @@
 
 
 # static fields
+.field public static final CONTACT_LAST_UPDATED_TIMESTAMP:Ljava/lang/String; = "contact_last_updated_timestamp"
+
 .field public static final DISPLAY_NAME:Ljava/lang/String; = "display_name"
 
 .field public static final HAS_PHONE_NUMBER:Ljava/lang/String; = "has_phone_number"

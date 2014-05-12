@@ -19,25 +19,19 @@
 
 
 # direct methods
-.method private constructor <init>(Lcom/android/server/LocationManagerService;)V
-    .locals 0
+.method public constructor <init>(Lcom/android/server/LocationManagerService;Landroid/os/Looper;)V
+    .locals 2
     .parameter
+    .parameter "looper"
 
     .prologue
     iput-object p1, p0, Lcom/android/server/LocationManagerService$LocationWorkerHandler;->this$0:Lcom/android/server/LocationManagerService;
 
-    invoke-direct {p0}, Landroid/os/Handler;-><init>()V
+    const/4 v0, 0x0
 
-    return-void
-.end method
+    const/4 v1, 0x1
 
-.method synthetic constructor <init>(Lcom/android/server/LocationManagerService;Lcom/android/server/LocationManagerService$1;)V
-    .locals 0
-    .parameter "x0"
-    .parameter "x1"
-
-    .prologue
-    invoke-direct {p0, p1}, Lcom/android/server/LocationManagerService$LocationWorkerHandler;-><init>(Lcom/android/server/LocationManagerService;)V
+    invoke-direct {p0, p2, v0, v1}, Landroid/os/Handler;-><init>(Landroid/os/Looper;Landroid/os/Handler$Callback;Z)V
 
     return-void
 .end method
@@ -71,7 +65,7 @@
 
     :goto_1
     #calls: Lcom/android/server/LocationManagerService;->handleLocationChanged(Landroid/location/Location;Z)V
-    invoke-static {v2, v0, v1}, Lcom/android/server/LocationManagerService;->access$1300(Lcom/android/server/LocationManagerService;Landroid/location/Location;Z)V
+    invoke-static {v2, v0, v1}, Lcom/android/server/LocationManagerService;->access$1600(Lcom/android/server/LocationManagerService;Landroid/location/Location;Z)V
 
     goto :goto_0
 

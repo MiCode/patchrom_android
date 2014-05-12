@@ -11,44 +11,40 @@
 .end annotation
 
 
-# static fields
-.field private static final LOG_TAG:Ljava/lang/String; = "SMS"
-
-
 # instance fields
-.field protected emailBody:Ljava/lang/String;
+.field protected mEmailBody:Ljava/lang/String;
 
-.field protected emailFrom:Ljava/lang/String;
+.field protected mEmailFrom:Ljava/lang/String;
 
-.field protected indexOnIcc:I
+.field protected mIndexOnIcc:I
 
-.field protected isEmail:Z
+.field protected mIsEmail:Z
 
-.field protected isMwi:Z
+.field protected mIsMwi:Z
+
+.field protected mMessageBody:Ljava/lang/String;
+
+.field public mMessageRef:I
+
+.field protected mMwiDontStore:Z
+
+.field protected mMwiSense:Z
+
+.field protected mOriginatingAddress:Lcom/android/internal/telephony/SmsAddress;
 
 .field protected mPdu:[B
 
-.field protected messageBody:Ljava/lang/String;
+.field protected mPseudoSubject:Ljava/lang/String;
 
-.field public messageRef:I
+.field protected mScAddress:Ljava/lang/String;
 
-.field protected mwiDontStore:Z
+.field protected mScTimeMillis:J
 
-.field protected mwiSense:Z
+.field protected mStatusOnIcc:I
 
-.field protected originatingAddress:Lcom/android/internal/telephony/SmsAddress;
+.field protected mUserData:[B
 
-.field protected pseudoSubject:Ljava/lang/String;
-
-.field protected scAddress:Ljava/lang/String;
-
-.field protected scTimeMillis:J
-
-.field protected statusOnIcc:I
-
-.field protected userData:[B
-
-.field protected userDataHeader:Lcom/android/internal/telephony/SmsHeader;
+.field protected mUserDataHeader:Lcom/android/internal/telephony/SmsHeader;
 
 
 # direct methods
@@ -60,9 +56,9 @@
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    iput v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->statusOnIcc:I
+    iput v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->mStatusOnIcc:I
 
-    iput v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->indexOnIcc:I
+    iput v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->mIndexOnIcc:I
 
     return-void
 .end method
@@ -75,7 +71,7 @@
     .prologue
     const/4 v3, 0x2
 
-    iget-object v1, p0, Lcom/android/internal/telephony/SmsMessageBase;->messageBody:Ljava/lang/String;
+    iget-object v1, p0, Lcom/android/internal/telephony/SmsMessageBase;->mMessageBody:Ljava/lang/String;
 
     const-string v2, "( /)|( )"
 
@@ -96,21 +92,21 @@
 
     aget-object v1, v0, v1
 
-    iput-object v1, p0, Lcom/android/internal/telephony/SmsMessageBase;->emailFrom:Ljava/lang/String;
+    iput-object v1, p0, Lcom/android/internal/telephony/SmsMessageBase;->mEmailFrom:Ljava/lang/String;
 
     const/4 v1, 0x1
 
     aget-object v1, v0, v1
 
-    iput-object v1, p0, Lcom/android/internal/telephony/SmsMessageBase;->emailBody:Ljava/lang/String;
+    iput-object v1, p0, Lcom/android/internal/telephony/SmsMessageBase;->mEmailBody:Ljava/lang/String;
 
-    iget-object v1, p0, Lcom/android/internal/telephony/SmsMessageBase;->emailFrom:Ljava/lang/String;
+    iget-object v1, p0, Lcom/android/internal/telephony/SmsMessageBase;->mEmailFrom:Ljava/lang/String;
 
     invoke-static {v1}, Landroid/provider/Telephony$Mms;->isEmailAddress(Ljava/lang/String;)Z
 
     move-result v1
 
-    iput-boolean v1, p0, Lcom/android/internal/telephony/SmsMessageBase;->isEmail:Z
+    iput-boolean v1, p0, Lcom/android/internal/telephony/SmsMessageBase;->mIsEmail:Z
 
     goto :goto_0
 .end method
@@ -119,11 +115,11 @@
     .locals 1
 
     .prologue
-    iget-boolean v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->isEmail:Z
+    iget-boolean v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->mIsEmail:Z
 
     if-eqz v0, :cond_0
 
-    iget-object v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->emailBody:Ljava/lang/String;
+    iget-object v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->mEmailBody:Ljava/lang/String;
 
     :goto_0
     return-object v0
@@ -140,11 +136,11 @@
     .locals 1
 
     .prologue
-    iget-boolean v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->isEmail:Z
+    iget-boolean v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->mIsEmail:Z
 
     if-eqz v0, :cond_0
 
-    iget-object v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->emailFrom:Ljava/lang/String;
+    iget-object v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->mEmailFrom:Ljava/lang/String;
 
     :goto_0
     return-object v0
@@ -161,7 +157,7 @@
     .locals 1
 
     .prologue
-    iget-object v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->emailBody:Ljava/lang/String;
+    iget-object v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->mEmailBody:Ljava/lang/String;
 
     return-object v0
 .end method
@@ -170,7 +166,7 @@
     .locals 1
 
     .prologue
-    iget-object v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->emailFrom:Ljava/lang/String;
+    iget-object v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->mEmailFrom:Ljava/lang/String;
 
     return-object v0
 .end method
@@ -179,7 +175,7 @@
     .locals 1
 
     .prologue
-    iget v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->indexOnIcc:I
+    iget v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->mIndexOnIcc:I
 
     return v0
 .end method
@@ -188,7 +184,7 @@
     .locals 1
 
     .prologue
-    iget-object v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->messageBody:Ljava/lang/String;
+    iget-object v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->mMessageBody:Ljava/lang/String;
 
     return-object v0
 .end method
@@ -200,7 +196,7 @@
     .locals 1
 
     .prologue
-    iget-object v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->originatingAddress:Lcom/android/internal/telephony/SmsAddress;
+    iget-object v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->mOriginatingAddress:Lcom/android/internal/telephony/SmsAddress;
 
     if-nez v0, :cond_0
 
@@ -210,7 +206,7 @@
     return-object v0
 
     :cond_0
-    iget-object v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->originatingAddress:Lcom/android/internal/telephony/SmsAddress;
+    iget-object v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->mOriginatingAddress:Lcom/android/internal/telephony/SmsAddress;
 
     invoke-virtual {v0}, Lcom/android/internal/telephony/SmsAddress;->getAddressString()Ljava/lang/String;
 
@@ -235,7 +231,7 @@
     .locals 1
 
     .prologue
-    iget-object v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->pseudoSubject:Ljava/lang/String;
+    iget-object v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->mPseudoSubject:Ljava/lang/String;
 
     if-nez v0, :cond_0
 
@@ -245,7 +241,7 @@
     return-object v0
 
     :cond_0
-    iget-object v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->pseudoSubject:Ljava/lang/String;
+    iget-object v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->mPseudoSubject:Ljava/lang/String;
 
     goto :goto_0
 .end method
@@ -254,7 +250,7 @@
     .locals 1
 
     .prologue
-    iget-object v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->scAddress:Ljava/lang/String;
+    iget-object v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->mScAddress:Ljava/lang/String;
 
     return-object v0
 .end method
@@ -266,7 +262,7 @@
     .locals 1
 
     .prologue
-    iget v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->statusOnIcc:I
+    iget v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->mStatusOnIcc:I
 
     return v0
 .end method
@@ -275,7 +271,7 @@
     .locals 2
 
     .prologue
-    iget-wide v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->scTimeMillis:J
+    iget-wide v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->mScTimeMillis:J
 
     return-wide v0
 .end method
@@ -284,7 +280,7 @@
     .locals 1
 
     .prologue
-    iget-object v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->userData:[B
+    iget-object v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->mUserData:[B
 
     return-object v0
 .end method
@@ -293,7 +289,7 @@
     .locals 1
 
     .prologue
-    iget-object v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->userDataHeader:Lcom/android/internal/telephony/SmsHeader;
+    iget-object v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->mUserDataHeader:Lcom/android/internal/telephony/SmsHeader;
 
     return-object v0
 .end method
@@ -305,7 +301,7 @@
     .locals 1
 
     .prologue
-    iget-boolean v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->isEmail:Z
+    iget-boolean v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->mIsEmail:Z
 
     return v0
 .end method
@@ -332,11 +328,11 @@
     .locals 1
 
     .prologue
-    iget-object v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->originatingAddress:Lcom/android/internal/telephony/SmsAddress;
+    iget-object v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->mOriginatingAddress:Lcom/android/internal/telephony/SmsAddress;
 
     if-eqz v0, :cond_0
 
-    iget-object v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->originatingAddress:Lcom/android/internal/telephony/SmsAddress;
+    iget-object v0, p0, Lcom/android/internal/telephony/SmsMessageBase;->mOriginatingAddress:Lcom/android/internal/telephony/SmsAddress;
 
     invoke-virtual {v0}, Lcom/android/internal/telephony/SmsAddress;->couldBeEmailGateway()Z
 

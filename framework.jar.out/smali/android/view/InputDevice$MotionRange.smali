@@ -25,11 +25,13 @@
 
 .field private mMin:F
 
+.field private mResolution:F
+
 .field private mSource:I
 
 
 # direct methods
-.method private constructor <init>(IIFFFF)V
+.method private constructor <init>(IIFFFFF)V
     .locals 0
     .parameter "axis"
     .parameter "source"
@@ -37,6 +39,7 @@
     .parameter "max"
     .parameter "flat"
     .parameter "fuzz"
+    .parameter "resolution"
 
     .prologue
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -53,10 +56,12 @@
 
     iput p6, p0, Landroid/view/InputDevice$MotionRange;->mFuzz:F
 
+    iput p7, p0, Landroid/view/InputDevice$MotionRange;->mResolution:F
+
     return-void
 .end method
 
-.method synthetic constructor <init>(IIFFFFLandroid/view/InputDevice$1;)V
+.method synthetic constructor <init>(IIFFFFFLandroid/view/InputDevice$1;)V
     .locals 0
     .parameter "x0"
     .parameter "x1"
@@ -65,9 +70,10 @@
     .parameter "x4"
     .parameter "x5"
     .parameter "x6"
+    .parameter "x7"
 
     .prologue
-    invoke-direct/range {p0 .. p6}, Landroid/view/InputDevice$MotionRange;-><init>(IIFFFF)V
+    invoke-direct/range {p0 .. p7}, Landroid/view/InputDevice$MotionRange;-><init>(IIFFFFF)V
 
     return-void
 .end method
@@ -132,6 +138,16 @@
     return v0
 .end method
 
+.method static synthetic access$800(Landroid/view/InputDevice$MotionRange;)F
+    .locals 1
+    .parameter "x0"
+
+    .prologue
+    iget v0, p0, Landroid/view/InputDevice$MotionRange;->mResolution:F
+
+    return v0
+.end method
+
 
 # virtual methods
 .method public getAxis()I
@@ -192,6 +208,15 @@
     return v0
 .end method
 
+.method public getResolution()F
+    .locals 1
+
+    .prologue
+    iget v0, p0, Landroid/view/InputDevice$MotionRange;->mResolution:F
+
+    return v0
+.end method
+
 .method public getSource()I
     .locals 1
 
@@ -199,4 +224,28 @@
     iget v0, p0, Landroid/view/InputDevice$MotionRange;->mSource:I
 
     return v0
+.end method
+
+.method public isFromSource(I)Z
+    .locals 1
+    .parameter "source"
+
+    .prologue
+    invoke-virtual {p0}, Landroid/view/InputDevice$MotionRange;->getSource()I
+
+    move-result v0
+
+    and-int/2addr v0, p1
+
+    if-ne v0, p1, :cond_0
+
+    const/4 v0, 0x1
+
+    :goto_0
+    return v0
+
+    :cond_0
+    const/4 v0, 0x0
+
+    goto :goto_0
 .end method

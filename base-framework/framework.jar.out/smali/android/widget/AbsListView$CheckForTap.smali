@@ -160,7 +160,7 @@
     iget-object v4, p0, Landroid/widget/AbsListView$CheckForTap;->this$0:Landroid/widget/AbsListView;
 
     #getter for: Landroid/widget/AbsListView;->mPendingCheckForLongPress:Landroid/widget/AbsListView$CheckForLongPress;
-    invoke-static {v4}, Landroid/widget/AbsListView;->access$500(Landroid/widget/AbsListView;)Landroid/widget/AbsListView$CheckForLongPress;
+    invoke-static {v4}, Landroid/widget/AbsListView;->access$700(Landroid/widget/AbsListView;)Landroid/widget/AbsListView$CheckForLongPress;
 
     move-result-object v4
 
@@ -177,13 +177,13 @@
     invoke-direct {v5, v6, v7}, Landroid/widget/AbsListView$CheckForLongPress;-><init>(Landroid/widget/AbsListView;Landroid/widget/AbsListView$1;)V
 
     #setter for: Landroid/widget/AbsListView;->mPendingCheckForLongPress:Landroid/widget/AbsListView$CheckForLongPress;
-    invoke-static {v4, v5}, Landroid/widget/AbsListView;->access$502(Landroid/widget/AbsListView;Landroid/widget/AbsListView$CheckForLongPress;)Landroid/widget/AbsListView$CheckForLongPress;
+    invoke-static {v4, v5}, Landroid/widget/AbsListView;->access$702(Landroid/widget/AbsListView;Landroid/widget/AbsListView$CheckForLongPress;)Landroid/widget/AbsListView$CheckForLongPress;
 
     :cond_1
     iget-object v4, p0, Landroid/widget/AbsListView$CheckForTap;->this$0:Landroid/widget/AbsListView;
 
     #getter for: Landroid/widget/AbsListView;->mPendingCheckForLongPress:Landroid/widget/AbsListView$CheckForLongPress;
-    invoke-static {v4}, Landroid/widget/AbsListView;->access$500(Landroid/widget/AbsListView;)Landroid/widget/AbsListView$CheckForLongPress;
+    invoke-static {v4}, Landroid/widget/AbsListView;->access$700(Landroid/widget/AbsListView;)Landroid/widget/AbsListView$CheckForLongPress;
 
     move-result-object v4
 
@@ -194,7 +194,7 @@
     iget-object v5, p0, Landroid/widget/AbsListView$CheckForTap;->this$0:Landroid/widget/AbsListView;
 
     #getter for: Landroid/widget/AbsListView;->mPendingCheckForLongPress:Landroid/widget/AbsListView$CheckForLongPress;
-    invoke-static {v5}, Landroid/widget/AbsListView;->access$500(Landroid/widget/AbsListView;)Landroid/widget/AbsListView$CheckForLongPress;
+    invoke-static {v5}, Landroid/widget/AbsListView;->access$700(Landroid/widget/AbsListView;)Landroid/widget/AbsListView$CheckForLongPress;
 
     move-result-object v5
 

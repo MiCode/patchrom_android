@@ -159,11 +159,11 @@
     .prologue
     const/4 v3, 0x0
 
-    const v1, 0x10900be
+    const v1, 0x1090094
 
     invoke-virtual {p0, v1}, Landroid/app/SearchDialog;->setContentView(I)V
 
-    const v1, 0x102035f
+    const v1, 0x1020318
 
     invoke-virtual {p0, v1}, Landroid/app/SearchDialog;->findViewById(I)Landroid/view/View;
 
@@ -174,7 +174,7 @@
     .local v0, searchBar:Landroid/app/SearchDialog$SearchBar;
     invoke-virtual {v0, p0}, Landroid/app/SearchDialog$SearchBar;->setSearchDialog(Landroid/app/SearchDialog;)V
 
-    const v1, 0x1020361
+    const v1, 0x102031a
 
     invoke-virtual {p0, v1}, Landroid/app/SearchDialog;->findViewById(I)Landroid/view/View;
 
@@ -228,7 +228,7 @@
 
     iget-object v1, p0, Landroid/app/SearchDialog;->mSearchView:Landroid/widget/SearchView;
 
-    const v2, 0x1020363
+    const v2, 0x102031c
 
     invoke-virtual {v1, v2}, Landroid/widget/SearchView;->findViewById(I)Landroid/view/View;
 
@@ -240,7 +240,7 @@
 
     iget-object v1, p0, Landroid/app/SearchDialog;->mSearchView:Landroid/widget/SearchView;
 
-    const v2, 0x1020368
+    const v2, 0x1020321
 
     invoke-virtual {v1, v2}, Landroid/widget/SearchView;->findViewById(I)Landroid/view/View;
 
@@ -250,7 +250,7 @@
 
     iput-object v1, p0, Landroid/app/SearchDialog;->mSearchAutoComplete:Landroid/widget/AutoCompleteTextView;
 
-    const v1, 0x1020360
+    const v1, 0x1020319
 
     invoke-virtual {p0, v1}, Landroid/app/SearchDialog;->findViewById(I)Landroid/view/View;
 
@@ -262,7 +262,7 @@
 
     iget-object v1, p0, Landroid/app/SearchDialog;->mSearchView:Landroid/widget/SearchView;
 
-    const v2, 0x1020367
+    const v2, 0x1020320
 
     invoke-virtual {v1, v2}, Landroid/widget/SearchView;->findViewById(I)Landroid/view/View;
 
@@ -278,7 +278,7 @@
 
     move-result-object v1
 
-    const v2, 0x10804ea
+    const v2, 0x108053c
 
     invoke-virtual {v1, v2}, Landroid/content/res/Resources;->getDrawable(I)Landroid/graphics/drawable/Drawable;
 
@@ -614,59 +614,6 @@
     goto :goto_0
 .end method
 
-.method private miuiUpdateSearchAppIcon()Z
-    .locals 6
-
-    .prologue
-    const/4 v1, 0x0
-
-    .local v1, retval:Z
-    iget-object v2, p0, Landroid/app/SearchDialog;->mContext:Landroid/content/Context;
-
-    invoke-static {v2}, Lmiui/util/UiUtils;->isV5Ui(Landroid/content/Context;)Z
-
-    move-result v2
-
-    if-eqz v2, :cond_0
-
-    iget-object v2, p0, Landroid/app/SearchDialog;->mAppIcon:Landroid/widget/ImageView;
-
-    const/16 v3, 0x8
-
-    invoke-virtual {v2, v3}, Landroid/widget/ImageView;->setVisibility(I)V
-
-    iget-object v2, p0, Landroid/app/SearchDialog;->mCloseSearch:Landroid/view/View;
-
-    invoke-virtual {v2}, Landroid/view/View;->getParent()Landroid/view/ViewParent;
-
-    move-result-object v0
-
-    check-cast v0, Landroid/view/ViewGroup;
-
-    .local v0, parent:Landroid/view/ViewGroup;
-    const/4 v2, 0x0
-
-    invoke-virtual {v0}, Landroid/view/ViewGroup;->getPaddingTop()I
-
-    move-result v3
-
-    invoke-virtual {v0}, Landroid/view/ViewGroup;->getPaddingRight()I
-
-    move-result v4
-
-    invoke-virtual {v0}, Landroid/view/ViewGroup;->getPaddingBottom()I
-
-    move-result v5
-
-    invoke-virtual {v0, v2, v3, v4, v5}, Landroid/view/ViewGroup;->setPadding(IIII)V
-
-    const/4 v1, 0x1
-
-    .end local v0           #parent:Landroid/view/ViewGroup;
-    :cond_0
-    return v1
-.end method
-
 .method private onClosePressed()Z
     .locals 1
 
@@ -706,7 +653,7 @@
 
     move-result-object v1
 
-    const v2, 0x10103f4
+    const v2, 0x101041d
 
     const/4 v3, 0x1
 
@@ -829,15 +776,15 @@
     .prologue
     const/4 v7, 0x0
 
-    invoke-direct {p0}, Landroid/app/SearchDialog;->miuiUpdateSearchAppIcon()Z
+    invoke-static {p0}, Landroid/app/Injector$SearchDialogHook;->before_updateSearchAppIcon(Landroid/app/SearchDialog;)Z
 
     move-result v4
 
-    if-eqz v4, :cond_miui_0
+    if-eqz v4, :cond_0
 
     return-void
 
-    :cond_miui_0
+    :cond_0
     invoke-virtual {p0}, Landroid/app/SearchDialog;->getContext()Landroid/content/Context;
 
     move-result-object v4
@@ -1147,6 +1094,24 @@
 
 
 # virtual methods
+.method getAppIcon()Landroid/widget/ImageView;
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Landroid/app/SearchDialog;->mAppIcon:Landroid/widget/ImageView;
+
+    return-object v0
+.end method
+
+.method getCloseSearch()Landroid/view/View;
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Landroid/app/SearchDialog;->mCloseSearch:Landroid/view/View;
+
+    return-object v0
+.end method
+
 .method public hide()V
     .locals 3
 

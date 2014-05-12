@@ -8,7 +8,7 @@
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Landroid/media/RemoteDisplay;->notifyDisplayConnected(Landroid/view/Surface;III)V
+    value = Landroid/media/RemoteDisplay;->notifyDisplayConnected(Landroid/view/Surface;IIII)V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -24,14 +24,17 @@
 
 .field final synthetic val$height:I
 
+.field final synthetic val$session:I
+
 .field final synthetic val$surface:Landroid/view/Surface;
 
 .field final synthetic val$width:I
 
 
 # direct methods
-.method constructor <init>(Landroid/media/RemoteDisplay;Landroid/view/Surface;III)V
+.method constructor <init>(Landroid/media/RemoteDisplay;Landroid/view/Surface;IIII)V
     .locals 0
+    .parameter
     .parameter
     .parameter
     .parameter
@@ -49,6 +52,8 @@
 
     iput p5, p0, Landroid/media/RemoteDisplay$1;->val$flags:I
 
+    iput p6, p0, Landroid/media/RemoteDisplay$1;->val$session:I
+
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
@@ -57,7 +62,7 @@
 
 # virtual methods
 .method public run()V
-    .locals 5
+    .locals 6
 
     .prologue
     iget-object v0, p0, Landroid/media/RemoteDisplay$1;->this$0:Landroid/media/RemoteDisplay;
@@ -75,7 +80,9 @@
 
     iget v4, p0, Landroid/media/RemoteDisplay$1;->val$flags:I
 
-    invoke-interface {v0, v1, v2, v3, v4}, Landroid/media/RemoteDisplay$Listener;->onDisplayConnected(Landroid/view/Surface;III)V
+    iget v5, p0, Landroid/media/RemoteDisplay$1;->val$session:I
+
+    invoke-interface/range {v0 .. v5}, Landroid/media/RemoteDisplay$Listener;->onDisplayConnected(Landroid/view/Surface;IIII)V
 
     return-void
 .end method

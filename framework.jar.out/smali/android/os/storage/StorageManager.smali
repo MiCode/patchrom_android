@@ -20,6 +20,12 @@
 
 
 # static fields
+.field private static final DEFAULT_FULL_THRESHOLD_BYTES:J = 0x100000L
+
+.field private static final DEFAULT_THRESHOLD_MAX_BYTES:J = 0x1f400000L
+
+.field private static final DEFAULT_THRESHOLD_PERCENTAGE:I = 0xa
+
 .field private static final TAG:Ljava/lang/String; = "StorageManager"
 
 
@@ -43,12 +49,15 @@
 
 .field private final mObbActionListener:Landroid/os/storage/StorageManager$ObbActionListener;
 
-.field mTgtLooper:Landroid/os/Looper;
+.field private final mResolver:Landroid/content/ContentResolver;
+
+.field private final mTgtLooper:Landroid/os/Looper;
 
 
 # direct methods
-.method public constructor <init>(Landroid/os/Looper;)V
+.method public constructor <init>(Landroid/content/ContentResolver;Landroid/os/Looper;)V
     .locals 2
+    .parameter "resolver"
     .parameter "tgtLooper"
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -81,6 +90,10 @@
 
     iput-object v0, p0, Landroid/os/storage/StorageManager;->mObbActionListener:Landroid/os/storage/StorageManager$ObbActionListener;
 
+    iput-object p1, p0, Landroid/os/storage/StorageManager;->mResolver:Landroid/content/ContentResolver;
+
+    iput-object p2, p0, Landroid/os/storage/StorageManager;->mTgtLooper:Landroid/os/Looper;
+
     const-string v0, "mount"
 
     invoke-static {v0}, Landroid/os/ServiceManager;->getService(Ljava/lang/String;)Landroid/os/IBinder;
@@ -103,13 +116,8 @@
 
     invoke-static {v0, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
 
-    :goto_0
-    return-void
-
     :cond_0
-    iput-object p1, p0, Landroid/os/storage/StorageManager;->mTgtLooper:Landroid/os/Looper;
-
-    goto :goto_0
+    return-void
 .end method
 
 .method static synthetic access$000(Landroid/os/storage/StorageManager;)Ljava/util/List;
@@ -132,6 +140,16 @@
     move-result v0
 
     return v0
+.end method
+
+.method static synthetic access$400(Landroid/os/storage/StorageManager;)Landroid/os/Looper;
+    .locals 1
+    .parameter "x0"
+
+    .prologue
+    iget-object v0, p0, Landroid/os/storage/StorageManager;->mTgtLooper:Landroid/os/Looper;
+
+    return-object v0
 .end method
 
 .method public static from(Landroid/content/Context;)Landroid/os/storage/StorageManager;
@@ -321,6 +339,71 @@
     move-result-object v0
 
     return-object v0
+.end method
+
+.method public getStorageFullBytes(Ljava/io/File;)J
+    .locals 4
+    .parameter "path"
+
+    .prologue
+    iget-object v0, p0, Landroid/os/storage/StorageManager;->mResolver:Landroid/content/ContentResolver;
+
+    const-string v1, "sys_storage_full_threshold_bytes"
+
+    const-wide/32 v2, 0x100000
+
+    invoke-static {v0, v1, v2, v3}, Landroid/provider/Settings$Global;->getLong(Landroid/content/ContentResolver;Ljava/lang/String;J)J
+
+    move-result-wide v0
+
+    return-wide v0
+.end method
+
+.method public getStorageLowBytes(Ljava/io/File;)J
+    .locals 10
+    .parameter "path"
+
+    .prologue
+    iget-object v6, p0, Landroid/os/storage/StorageManager;->mResolver:Landroid/content/ContentResolver;
+
+    const-string v7, "sys_storage_threshold_percentage"
+
+    const/16 v8, 0xa
+
+    invoke-static {v6, v7, v8}, Landroid/provider/Settings$Global;->getInt(Landroid/content/ContentResolver;Ljava/lang/String;I)I
+
+    move-result v6
+
+    int-to-long v2, v6
+
+    .local v2, lowPercent:J
+    invoke-virtual {p1}, Ljava/io/File;->getTotalSpace()J
+
+    move-result-wide v6
+
+    mul-long/2addr v6, v2
+
+    const-wide/16 v8, 0x64
+
+    div-long v0, v6, v8
+
+    .local v0, lowBytes:J
+    iget-object v6, p0, Landroid/os/storage/StorageManager;->mResolver:Landroid/content/ContentResolver;
+
+    const-string v7, "sys_storage_threshold_max_bytes"
+
+    const-wide/32 v8, 0x1f400000
+
+    invoke-static {v6, v7, v8, v9}, Landroid/provider/Settings$Global;->getLong(Landroid/content/ContentResolver;Ljava/lang/String;J)J
+
+    move-result-wide v4
+
+    .local v4, maxLowBytes:J
+    invoke-static {v0, v1, v4, v5}, Ljava/lang/Math;->min(JJ)J
+
+    move-result-wide v6
+
+    return-wide v6
 .end method
 
 .method public getVolumeList()[Landroid/os/storage/StorageVolume;

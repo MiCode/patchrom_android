@@ -104,7 +104,7 @@
     .parameter "inflater"
 
     .prologue
-    const v3, 0x1090044
+    const v3, 0x1090045
 
     const/4 v4, 0x0
 
@@ -131,7 +131,7 @@
     check-cast v1, Landroid/widget/TextView;
 
     .local v1, messageView:Landroid/widget/TextView;
-    const v3, 0x1020282
+    const v3, 0x102029a
 
     invoke-virtual {v2, v3}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 

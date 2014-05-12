@@ -104,209 +104,239 @@
 
 # virtual methods
 .method public addURI(Ljava/lang/String;Ljava/lang/String;I)V
-    .locals 12
+    .locals 14
     .parameter "authority"
     .parameter "path"
     .parameter "code"
 
     .prologue
-    const/4 v9, 0x0
-
     if-gez p3, :cond_0
 
-    new-instance v9, Ljava/lang/IllegalArgumentException;
+    new-instance v11, Ljava/lang/IllegalArgumentException;
 
-    new-instance v10, Ljava/lang/StringBuilder;
+    new-instance v12, Ljava/lang/StringBuilder;
 
-    invoke-direct {v10}, Ljava/lang/StringBuilder;-><init>()V
+    invoke-direct {v12}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v11, "code "
+    const-string v13, "code "
 
-    invoke-virtual {v10, v11}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {v12, v13}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v10
+    move-result-object v12
 
-    invoke-virtual {v10, p3}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+    move/from16 v0, p3
 
-    move-result-object v10
+    invoke-virtual {v12, v0}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
-    const-string v11, " is invalid: it must be positive"
+    move-result-object v12
 
-    invoke-virtual {v10, v11}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    const-string v13, " is invalid: it must be positive"
 
-    move-result-object v10
+    invoke-virtual {v12, v13}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    invoke-virtual {v10}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    move-result-object v12
 
-    move-result-object v10
+    invoke-virtual {v12}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    invoke-direct {v9, v10}, Ljava/lang/IllegalArgumentException;-><init>(Ljava/lang/String;)V
+    move-result-object v12
 
-    throw v9
+    invoke-direct {v11, v12}, Ljava/lang/IllegalArgumentException;-><init>(Ljava/lang/String;)V
+
+    throw v11
 
     :cond_0
-    if-eqz p2, :cond_3
+    const/4 v10, 0x0
 
-    sget-object v10, Landroid/content/UriMatcher;->PATH_SPLIT_PATTERN:Ljava/util/regex/Pattern;
+    .local v10, tokens:[Ljava/lang/String;
+    if-eqz p2, :cond_2
 
-    invoke-virtual {v10, p2}, Ljava/util/regex/Pattern;->split(Ljava/lang/CharSequence;)[Ljava/lang/String;
+    move-object/from16 v5, p2
 
-    move-result-object v8
+    .local v5, newPath:Ljava/lang/String;
+    invoke-virtual/range {p2 .. p2}, Ljava/lang/String;->length()I
 
-    .local v8, tokens:[Ljava/lang/String;
-    :goto_0
-    if-eqz v8, :cond_4
+    move-result v11
 
-    array-length v6, v8
+    if-lez v11, :cond_1
 
-    .local v6, numTokens:I
-    :goto_1
-    move-object v4, p0
+    const/4 v11, 0x0
 
-    .local v4, node:Landroid/content/UriMatcher;
-    const/4 v2, -0x1
+    move-object/from16 v0, p2
 
-    .local v2, i:I
-    :goto_2
-    if-ge v2, v6, :cond_9
+    invoke-virtual {v0, v11}, Ljava/lang/String;->charAt(I)C
 
-    if-gez v2, :cond_5
+    move-result v11
 
-    move-object v7, p1
+    const/16 v12, 0x2f
 
-    .local v7, token:Ljava/lang/String;
-    :goto_3
-    iget-object v1, v4, Landroid/content/UriMatcher;->mChildren:Ljava/util/ArrayList;
+    if-ne v11, v12, :cond_1
 
-    .local v1, children:Ljava/util/ArrayList;,"Ljava/util/ArrayList<Landroid/content/UriMatcher;>;"
-    invoke-virtual {v1}, Ljava/util/ArrayList;->size()I
+    const/4 v11, 0x1
 
-    move-result v5
+    move-object/from16 v0, p2
 
-    .local v5, numChildren:I
-    const/4 v3, 0x0
+    invoke-virtual {v0, v11}, Ljava/lang/String;->substring(I)Ljava/lang/String;
 
-    .local v3, j:I
-    :goto_4
-    if-ge v3, v5, :cond_1
+    move-result-object v5
 
-    invoke-virtual {v1, v3}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
-
-    move-result-object v0
-
-    check-cast v0, Landroid/content/UriMatcher;
-
-    .local v0, child:Landroid/content/UriMatcher;
-    iget-object v10, v0, Landroid/content/UriMatcher;->mText:Ljava/lang/String;
-
-    invoke-virtual {v7, v10}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v10
-
-    if-eqz v10, :cond_6
-
-    move-object v4, v0
-
-    .end local v0           #child:Landroid/content/UriMatcher;
     :cond_1
-    if-ne v3, v5, :cond_2
+    sget-object v11, Landroid/content/UriMatcher;->PATH_SPLIT_PATTERN:Ljava/util/regex/Pattern;
 
-    new-instance v0, Landroid/content/UriMatcher;
+    invoke-virtual {v11, v5}, Ljava/util/regex/Pattern;->split(Ljava/lang/CharSequence;)[Ljava/lang/String;
 
-    invoke-direct {v0}, Landroid/content/UriMatcher;-><init>()V
+    move-result-object v10
 
-    .restart local v0       #child:Landroid/content/UriMatcher;
-    const-string v10, "#"
-
-    invoke-virtual {v7, v10}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v10
-
-    if-eqz v10, :cond_7
-
-    const/4 v10, 0x1
-
-    iput v10, v0, Landroid/content/UriMatcher;->mWhich:I
-
-    :goto_5
-    iput-object v7, v0, Landroid/content/UriMatcher;->mText:Ljava/lang/String;
-
-    iget-object v10, v4, Landroid/content/UriMatcher;->mChildren:Ljava/util/ArrayList;
-
-    invoke-virtual {v10, v0}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
-
-    move-object v4, v0
-
-    .end local v0           #child:Landroid/content/UriMatcher;
+    .end local v5           #newPath:Ljava/lang/String;
     :cond_2
-    add-int/lit8 v2, v2, 0x1
+    if-eqz v10, :cond_5
 
-    goto :goto_2
+    array-length v8, v10
 
-    .end local v1           #children:Ljava/util/ArrayList;,"Ljava/util/ArrayList<Landroid/content/UriMatcher;>;"
-    .end local v2           #i:I
-    .end local v3           #j:I
-    .end local v4           #node:Landroid/content/UriMatcher;
-    .end local v5           #numChildren:I
-    .end local v6           #numTokens:I
-    .end local v7           #token:Ljava/lang/String;
-    .end local v8           #tokens:[Ljava/lang/String;
+    .local v8, numTokens:I
+    :goto_0
+    move-object v6, p0
+
+    .local v6, node:Landroid/content/UriMatcher;
+    const/4 v3, -0x1
+
+    .local v3, i:I
+    :goto_1
+    if-ge v3, v8, :cond_a
+
+    if-gez v3, :cond_6
+
+    move-object v9, p1
+
+    .local v9, token:Ljava/lang/String;
+    :goto_2
+    iget-object v2, v6, Landroid/content/UriMatcher;->mChildren:Ljava/util/ArrayList;
+
+    .local v2, children:Ljava/util/ArrayList;,"Ljava/util/ArrayList<Landroid/content/UriMatcher;>;"
+    invoke-virtual {v2}, Ljava/util/ArrayList;->size()I
+
+    move-result v7
+
+    .local v7, numChildren:I
+    const/4 v4, 0x0
+
+    .local v4, j:I
+    :goto_3
+    if-ge v4, v7, :cond_3
+
+    invoke-virtual {v2, v4}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
+
+    move-result-object v1
+
+    check-cast v1, Landroid/content/UriMatcher;
+
+    .local v1, child:Landroid/content/UriMatcher;
+    iget-object v11, v1, Landroid/content/UriMatcher;->mText:Ljava/lang/String;
+
+    invoke-virtual {v9, v11}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v11
+
+    if-eqz v11, :cond_7
+
+    move-object v6, v1
+
+    .end local v1           #child:Landroid/content/UriMatcher;
     :cond_3
+    if-ne v4, v7, :cond_4
+
+    new-instance v1, Landroid/content/UriMatcher;
+
+    invoke-direct {v1}, Landroid/content/UriMatcher;-><init>()V
+
+    .restart local v1       #child:Landroid/content/UriMatcher;
+    const-string v11, "#"
+
+    invoke-virtual {v9, v11}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v11
+
+    if-eqz v11, :cond_8
+
+    const/4 v11, 0x1
+
+    iput v11, v1, Landroid/content/UriMatcher;->mWhich:I
+
+    :goto_4
+    iput-object v9, v1, Landroid/content/UriMatcher;->mText:Ljava/lang/String;
+
+    iget-object v11, v6, Landroid/content/UriMatcher;->mChildren:Ljava/util/ArrayList;
+
+    invoke-virtual {v11, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
+
+    move-object v6, v1
+
+    .end local v1           #child:Landroid/content/UriMatcher;
+    :cond_4
+    add-int/lit8 v3, v3, 0x1
+
+    goto :goto_1
+
+    .end local v2           #children:Ljava/util/ArrayList;,"Ljava/util/ArrayList<Landroid/content/UriMatcher;>;"
+    .end local v3           #i:I
+    .end local v4           #j:I
+    .end local v6           #node:Landroid/content/UriMatcher;
+    .end local v7           #numChildren:I
+    .end local v8           #numTokens:I
+    .end local v9           #token:Ljava/lang/String;
+    :cond_5
     const/4 v8, 0x0
 
     goto :goto_0
 
-    .restart local v8       #tokens:[Ljava/lang/String;
-    :cond_4
-    move v6, v9
+    .restart local v3       #i:I
+    .restart local v6       #node:Landroid/content/UriMatcher;
+    .restart local v8       #numTokens:I
+    :cond_6
+    aget-object v9, v10, v3
 
-    goto :goto_1
+    goto :goto_2
 
-    .restart local v2       #i:I
-    .restart local v4       #node:Landroid/content/UriMatcher;
-    .restart local v6       #numTokens:I
-    :cond_5
-    aget-object v7, v8, v2
+    .restart local v1       #child:Landroid/content/UriMatcher;
+    .restart local v2       #children:Ljava/util/ArrayList;,"Ljava/util/ArrayList<Landroid/content/UriMatcher;>;"
+    .restart local v4       #j:I
+    .restart local v7       #numChildren:I
+    .restart local v9       #token:Ljava/lang/String;
+    :cond_7
+    add-int/lit8 v4, v4, 0x1
 
     goto :goto_3
 
-    .restart local v0       #child:Landroid/content/UriMatcher;
-    .restart local v1       #children:Ljava/util/ArrayList;,"Ljava/util/ArrayList<Landroid/content/UriMatcher;>;"
-    .restart local v3       #j:I
-    .restart local v5       #numChildren:I
-    .restart local v7       #token:Ljava/lang/String;
-    :cond_6
-    add-int/lit8 v3, v3, 0x1
+    :cond_8
+    const-string v11, "*"
+
+    invoke-virtual {v9, v11}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v11
+
+    if-eqz v11, :cond_9
+
+    const/4 v11, 0x2
+
+    iput v11, v1, Landroid/content/UriMatcher;->mWhich:I
 
     goto :goto_4
 
-    :cond_7
-    const-string v10, "*"
-
-    invoke-virtual {v7, v10}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v10
-
-    if-eqz v10, :cond_8
-
-    const/4 v10, 0x2
-
-    iput v10, v0, Landroid/content/UriMatcher;->mWhich:I
-
-    goto :goto_5
-
-    :cond_8
-    iput v9, v0, Landroid/content/UriMatcher;->mWhich:I
-
-    goto :goto_5
-
-    .end local v0           #child:Landroid/content/UriMatcher;
-    .end local v1           #children:Ljava/util/ArrayList;,"Ljava/util/ArrayList<Landroid/content/UriMatcher;>;"
-    .end local v3           #j:I
-    .end local v5           #numChildren:I
-    .end local v7           #token:Ljava/lang/String;
     :cond_9
-    iput p3, v4, Landroid/content/UriMatcher;->mCode:I
+    const/4 v11, 0x0
+
+    iput v11, v1, Landroid/content/UriMatcher;->mWhich:I
+
+    goto :goto_4
+
+    .end local v1           #child:Landroid/content/UriMatcher;
+    .end local v2           #children:Ljava/util/ArrayList;,"Ljava/util/ArrayList<Landroid/content/UriMatcher;>;"
+    .end local v4           #j:I
+    .end local v7           #numChildren:I
+    .end local v9           #token:Ljava/lang/String;
+    :cond_a
+    move/from16 v0, p3
+
+    iput v0, v6, Landroid/content/UriMatcher;->mCode:I
 
     return-void
 .end method

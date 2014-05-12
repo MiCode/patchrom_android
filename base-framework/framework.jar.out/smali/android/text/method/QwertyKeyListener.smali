@@ -989,15 +989,13 @@
     move-result v19
 
     .local v19, activeEnd:I
-    invoke-virtual/range {p4 .. p4}, Landroid/view/KeyEvent;->getMetaState()I
+    move-object/from16 v0, p2
+
+    move-object/from16 v1, p4
+
+    invoke-static {v0, v1}, Landroid/text/method/QwertyKeyListener;->getMetaState(Ljava/lang/CharSequence;Landroid/view/KeyEvent;)I
 
     move-result v5
-
-    invoke-static/range {p2 .. p2}, Landroid/text/method/QwertyKeyListener;->getMetaState(Ljava/lang/CharSequence;)I
-
-    move-result v6
-
-    or-int/2addr v5, v6
 
     move-object/from16 v0, p4
 
@@ -1260,6 +1258,8 @@
     move/from16 v29, v23
 
     const/16 v37, 0x1
+
+    const/16 v25, 0x0
 
     .end local v18           #accent:C
     .end local v23           #composed:I

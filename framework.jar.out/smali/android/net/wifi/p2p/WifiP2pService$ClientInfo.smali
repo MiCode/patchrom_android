@@ -82,7 +82,7 @@
     return-void
 .end method
 
-.method static synthetic access$12300(Landroid/net/wifi/p2p/WifiP2pService$ClientInfo;)Landroid/util/SparseArray;
+.method static synthetic access$12200(Landroid/net/wifi/p2p/WifiP2pService$ClientInfo;)Landroid/util/SparseArray;
     .locals 1
     .parameter "x0"
 
@@ -92,7 +92,7 @@
     return-object v0
 .end method
 
-.method static synthetic access$12400(Landroid/net/wifi/p2p/WifiP2pService$ClientInfo;)Ljava/util/List;
+.method static synthetic access$12300(Landroid/net/wifi/p2p/WifiP2pService$ClientInfo;)Ljava/util/List;
     .locals 1
     .parameter "x0"
 
@@ -102,7 +102,7 @@
     return-object v0
 .end method
 
-.method static synthetic access$12500(Landroid/net/wifi/p2p/WifiP2pService$ClientInfo;)Landroid/os/Messenger;
+.method static synthetic access$12400(Landroid/net/wifi/p2p/WifiP2pService$ClientInfo;)Landroid/os/Messenger;
     .locals 1
     .parameter "x0"
 

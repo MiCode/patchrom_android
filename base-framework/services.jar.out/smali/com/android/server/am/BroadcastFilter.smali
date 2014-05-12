@@ -1,4 +1,4 @@
-.class Lcom/android/server/am/BroadcastFilter;
+.class final Lcom/android/server/am/BroadcastFilter;
 .super Landroid/content/IntentFilter;
 .source "BroadcastFilter.java"
 

@@ -30,6 +30,8 @@
 
 .field static final TRANSACTION_clearDefaults:I = 0xe
 
+.field static final TRANSACTION_clearUsbDebuggingKeys:I = 0x13
+
 .field static final TRANSACTION_denyUsbDebugging:I = 0x12
 
 .field static final TRANSACTION_getCurrentAccessory:I = 0x3
@@ -849,6 +851,19 @@
 
     goto/16 :goto_0
 
+    :sswitch_13
+    const-string v4, "android.hardware.usb.IUsbManager"
+
+    invoke-virtual {p2, v4}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    invoke-virtual {p0}, Landroid/hardware/usb/IUsbManager$Stub;->clearUsbDebuggingKeys()V
+
+    invoke-virtual {p3}, Landroid/os/Parcel;->writeNoException()V
+
+    goto/16 :goto_0
+
+    nop
+
     :sswitch_data_0
     .sparse-switch
         0x1 -> :sswitch_1
@@ -869,6 +884,7 @@
         0x10 -> :sswitch_10
         0x11 -> :sswitch_11
         0x12 -> :sswitch_12
+        0x13 -> :sswitch_13
         0x5f4e5446 -> :sswitch_0
     .end sparse-switch
 .end method

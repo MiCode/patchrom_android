@@ -1,4 +1,4 @@
-.class interface abstract Landroid/accessibilityservice/AccessibilityService$Callbacks;
+.class public interface abstract Landroid/accessibilityservice/AccessibilityService$Callbacks;
 .super Ljava/lang/Object;
 .source "AccessibilityService.java"
 
@@ -9,7 +9,7 @@
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
-    accessFlags = 0x608
+    accessFlags = 0x609
     name = "Callbacks"
 .end annotation
 
@@ -22,6 +22,9 @@
 .end method
 
 .method public abstract onInterrupt()V
+.end method
+
+.method public abstract onKeyEvent(Landroid/view/KeyEvent;)Z
 .end method
 
 .method public abstract onServiceConnected()V

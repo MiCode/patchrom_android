@@ -154,7 +154,7 @@
 .end method
 
 .method protected lookup(Landroid/view/KeyEvent;Landroid/text/Spannable;)I
-    .locals 3
+    .locals 2
     .parameter "event"
     .parameter "content"
 
@@ -163,15 +163,9 @@
 
     move-result-object v0
 
-    invoke-virtual {p1}, Landroid/view/KeyEvent;->getMetaState()I
+    invoke-static {p2, p1}, Landroid/text/method/NumberKeyListener;->getMetaState(Ljava/lang/CharSequence;Landroid/view/KeyEvent;)I
 
     move-result v1
-
-    invoke-static {p2}, Landroid/text/method/NumberKeyListener;->getMetaState(Ljava/lang/CharSequence;)I
-
-    move-result v2
-
-    or-int/2addr v1, v2
 
     invoke-virtual {p1, v0, v1}, Landroid/view/KeyEvent;->getMatch([CI)C
 

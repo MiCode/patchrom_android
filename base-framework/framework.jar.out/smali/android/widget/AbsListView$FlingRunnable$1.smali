@@ -45,7 +45,7 @@
     iget-object v4, v4, Landroid/widget/AbsListView$FlingRunnable;->this$0:Landroid/widget/AbsListView;
 
     #getter for: Landroid/widget/AbsListView;->mActivePointerId:I
-    invoke-static {v4}, Landroid/widget/AbsListView;->access$800(Landroid/widget/AbsListView;)I
+    invoke-static {v4}, Landroid/widget/AbsListView;->access$1100(Landroid/widget/AbsListView;)I
 
     move-result v0
 
@@ -55,7 +55,7 @@
     iget-object v4, v4, Landroid/widget/AbsListView$FlingRunnable;->this$0:Landroid/widget/AbsListView;
 
     #getter for: Landroid/widget/AbsListView;->mVelocityTracker:Landroid/view/VelocityTracker;
-    invoke-static {v4}, Landroid/widget/AbsListView;->access$900(Landroid/widget/AbsListView;)Landroid/view/VelocityTracker;
+    invoke-static {v4}, Landroid/widget/AbsListView;->access$1200(Landroid/widget/AbsListView;)Landroid/view/VelocityTracker;
 
     move-result-object v2
 
@@ -63,7 +63,7 @@
     iget-object v4, p0, Landroid/widget/AbsListView$FlingRunnable$1;->this$1:Landroid/widget/AbsListView$FlingRunnable;
 
     #getter for: Landroid/widget/AbsListView$FlingRunnable;->mScroller:Landroid/widget/OverScroller;
-    invoke-static {v4}, Landroid/widget/AbsListView$FlingRunnable;->access$1000(Landroid/widget/AbsListView$FlingRunnable;)Landroid/widget/OverScroller;
+    invoke-static {v4}, Landroid/widget/AbsListView$FlingRunnable;->access$1300(Landroid/widget/AbsListView$FlingRunnable;)Landroid/widget/OverScroller;
 
     move-result-object v1
 
@@ -86,7 +86,7 @@
     iget-object v5, v5, Landroid/widget/AbsListView$FlingRunnable;->this$0:Landroid/widget/AbsListView;
 
     #getter for: Landroid/widget/AbsListView;->mMaximumVelocity:I
-    invoke-static {v5}, Landroid/widget/AbsListView;->access$1100(Landroid/widget/AbsListView;)I
+    invoke-static {v5}, Landroid/widget/AbsListView;->access$1400(Landroid/widget/AbsListView;)I
 
     move-result v5
 
@@ -110,7 +110,7 @@
     iget-object v5, v5, Landroid/widget/AbsListView$FlingRunnable;->this$0:Landroid/widget/AbsListView;
 
     #getter for: Landroid/widget/AbsListView;->mMinimumVelocity:I
-    invoke-static {v5}, Landroid/widget/AbsListView;->access$1200(Landroid/widget/AbsListView;)I
+    invoke-static {v5}, Landroid/widget/AbsListView;->access$1500(Landroid/widget/AbsListView;)I
 
     move-result v5
 

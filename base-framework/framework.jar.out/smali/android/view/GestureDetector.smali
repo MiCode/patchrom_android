@@ -16,6 +16,9 @@
 
 # static fields
 #the value of this static final field might be set in the static constructor
+.field private static final DOUBLE_TAP_MIN_TIME:I = 0x0
+
+#the value of this static final field might be set in the static constructor
 .field private static final DOUBLE_TAP_TIMEOUT:I = 0x0
 
 #the value of this static final field might be set in the static constructor
@@ -36,6 +39,8 @@
 .field private mAlwaysInTapRegion:Z
 
 .field private mCurrentDownEvent:Landroid/view/MotionEvent;
+
+.field private mDeferConfirmSingleTap:Z
 
 .field private mDoubleTapListener:Landroid/view/GestureDetector$OnDoubleTapListener;
 
@@ -98,6 +103,12 @@
     move-result v0
 
     sput v0, Landroid/view/GestureDetector;->DOUBLE_TAP_TIMEOUT:I
+
+    invoke-static {}, Landroid/view/ViewConfiguration;->getDoubleTapMinTime()I
+
+    move-result v0
+
+    sput v0, Landroid/view/GestureDetector;->DOUBLE_TAP_MIN_TIME:I
 
     return-void
 .end method
@@ -272,6 +283,17 @@
     return v0
 .end method
 
+.method static synthetic access$502(Landroid/view/GestureDetector;Z)Z
+    .locals 0
+    .parameter "x0"
+    .parameter "x1"
+
+    .prologue
+    iput-boolean p1, p0, Landroid/view/GestureDetector;->mDeferConfirmSingleTap:Z
+
+    return p1
+.end method
+
 .method private cancel()V
     .locals 3
 
@@ -311,6 +333,8 @@
     iput-boolean v2, p0, Landroid/view/GestureDetector;->mAlwaysInTapRegion:Z
 
     iput-boolean v2, p0, Landroid/view/GestureDetector;->mAlwaysInBiggerTapRegion:Z
+
+    iput-boolean v2, p0, Landroid/view/GestureDetector;->mDeferConfirmSingleTap:Z
 
     iget-boolean v0, p0, Landroid/view/GestureDetector;->mInLongPress:Z
 
@@ -352,6 +376,8 @@
 
     iput-boolean v2, p0, Landroid/view/GestureDetector;->mAlwaysInBiggerTapRegion:Z
 
+    iput-boolean v2, p0, Landroid/view/GestureDetector;->mDeferConfirmSingleTap:Z
+
     iget-boolean v0, p0, Landroid/view/GestureDetector;->mInLongPress:Z
 
     if-eqz v0, :cond_0
@@ -371,6 +397,10 @@
     const/4 v1, 0x3
 
     invoke-virtual {v0, v1}, Landroid/os/Handler;->removeMessages(I)V
+
+    const/4 v0, 0x0
+
+    iput-boolean v0, p0, Landroid/view/GestureDetector;->mDeferConfirmSingleTap:Z
 
     const/4 v0, 0x1
 
@@ -489,82 +519,91 @@
 .end method
 
 .method private isConsideredDoubleTap(Landroid/view/MotionEvent;Landroid/view/MotionEvent;Landroid/view/MotionEvent;)Z
-    .locals 7
+    .locals 9
     .parameter "firstDown"
     .parameter "firstUp"
     .parameter "secondDown"
 
     .prologue
-    const/4 v2, 0x0
+    const/4 v4, 0x0
 
-    iget-boolean v3, p0, Landroid/view/GestureDetector;->mAlwaysInBiggerTapRegion:Z
+    iget-boolean v5, p0, Landroid/view/GestureDetector;->mAlwaysInBiggerTapRegion:Z
 
-    if-nez v3, :cond_1
+    if-nez v5, :cond_1
 
     :cond_0
     :goto_0
-    return v2
+    return v4
 
     :cond_1
     invoke-virtual {p3}, Landroid/view/MotionEvent;->getEventTime()J
 
-    move-result-wide v3
+    move-result-wide v5
 
     invoke-virtual {p2}, Landroid/view/MotionEvent;->getEventTime()J
 
-    move-result-wide v5
+    move-result-wide v7
 
-    sub-long/2addr v3, v5
+    sub-long v0, v5, v7
 
+    .local v0, deltaTime:J
     sget v5, Landroid/view/GestureDetector;->DOUBLE_TAP_TIMEOUT:I
 
     int-to-long v5, v5
 
-    cmp-long v3, v3, v5
+    cmp-long v5, v0, v5
 
-    if-gtz v3, :cond_0
+    if-gtz v5, :cond_0
+
+    sget v5, Landroid/view/GestureDetector;->DOUBLE_TAP_MIN_TIME:I
+
+    int-to-long v5, v5
+
+    cmp-long v5, v0, v5
+
+    if-ltz v5, :cond_0
 
     invoke-virtual {p1}, Landroid/view/MotionEvent;->getX()F
 
-    move-result v3
+    move-result v5
 
-    float-to-int v3, v3
+    float-to-int v5, v5
 
     invoke-virtual {p3}, Landroid/view/MotionEvent;->getX()F
 
-    move-result v4
+    move-result v6
 
-    float-to-int v4, v4
+    float-to-int v6, v6
 
-    sub-int v0, v3, v4
+    sub-int v2, v5, v6
 
-    .local v0, deltaX:I
+    .local v2, deltaX:I
     invoke-virtual {p1}, Landroid/view/MotionEvent;->getY()F
 
-    move-result v3
+    move-result v5
 
-    float-to-int v3, v3
+    float-to-int v5, v5
 
     invoke-virtual {p3}, Landroid/view/MotionEvent;->getY()F
 
-    move-result v4
+    move-result v6
 
-    float-to-int v4, v4
+    float-to-int v6, v6
 
-    sub-int v1, v3, v4
+    sub-int v3, v5, v6
 
-    .local v1, deltaY:I
-    mul-int v3, v0, v0
+    .local v3, deltaY:I
+    mul-int v5, v2, v2
 
-    mul-int v4, v1, v1
+    mul-int v6, v3, v3
 
-    add-int/2addr v3, v4
+    add-int/2addr v5, v6
 
-    iget v4, p0, Landroid/view/GestureDetector;->mDoubleTapSlopSquare:I
+    iget v6, p0, Landroid/view/GestureDetector;->mDoubleTapSlopSquare:I
 
-    if-ge v3, v4, :cond_0
+    if-ge v5, v6, :cond_0
 
-    const/4 v2, 0x1
+    const/4 v4, 0x1
 
     goto :goto_0
 .end method
@@ -1212,6 +1251,14 @@
 
     iput-boolean v0, v1, Landroid/view/GestureDetector;->mInLongPress:Z
 
+    const/16 v35, 0x0
+
+    move/from16 v0, v35
+
+    move-object/from16 v1, p0
+
+    iput-boolean v0, v1, Landroid/view/GestureDetector;->mDeferConfirmSingleTap:Z
+
     move-object/from16 v0, p0
 
     iget-boolean v0, v0, Landroid/view/GestureDetector;->mIsLongpressEnabled:Z
@@ -1697,6 +1744,14 @@
 
     iput-boolean v0, v1, Landroid/view/GestureDetector;->mIsDoubleTapping:Z
 
+    const/16 v35, 0x0
+
+    move/from16 v0, v35
+
+    move-object/from16 v1, p0
+
+    iput-boolean v0, v1, Landroid/view/GestureDetector;->mDeferConfirmSingleTap:Z
+
     move-object/from16 v0, p0
 
     iget-object v0, v0, Landroid/view/GestureDetector;->mHandler:Landroid/os/Handler;
@@ -1771,7 +1826,35 @@
 
     move-result v16
 
-    goto :goto_8
+    move-object/from16 v0, p0
+
+    iget-boolean v0, v0, Landroid/view/GestureDetector;->mDeferConfirmSingleTap:Z
+
+    move/from16 v35, v0
+
+    if-eqz v35, :cond_14
+
+    move-object/from16 v0, p0
+
+    iget-object v0, v0, Landroid/view/GestureDetector;->mDoubleTapListener:Landroid/view/GestureDetector$OnDoubleTapListener;
+
+    move-object/from16 v35, v0
+
+    if-eqz v35, :cond_14
+
+    move-object/from16 v0, p0
+
+    iget-object v0, v0, Landroid/view/GestureDetector;->mDoubleTapListener:Landroid/view/GestureDetector$OnDoubleTapListener;
+
+    move-object/from16 v35, v0
+
+    move-object/from16 v0, v35
+
+    move-object/from16 v1, p1
+
+    invoke-interface {v0, v1}, Landroid/view/GestureDetector$OnDoubleTapListener;->onSingleTapConfirmed(Landroid/view/MotionEvent;)Z
+
+    goto/16 :goto_8
 
     :cond_19
     move-object/from16 v0, p0

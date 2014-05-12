@@ -56,7 +56,7 @@
 
     invoke-virtual {v0, p0}, Landroid/content/Context;->unregisterReceiver(Landroid/content/BroadcastReceiver;)V
 
-    invoke-static {p1}, Lcom/android/server/power/ShutdownThread$Injector;->onDismiss(Landroid/content/DialogInterface;)V
+    invoke-static {p1}, Lcom/android/server/power/Injector$ShutdownThreadHook;->onDismiss(Landroid/content/DialogInterface;)V
 
     return-void
 .end method

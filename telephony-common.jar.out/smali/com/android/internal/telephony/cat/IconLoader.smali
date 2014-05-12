@@ -50,7 +50,7 @@
 
 .field private mRecordNumbers:[I
 
-.field private mSimFH:Lcom/android/internal/telephony/IccFileHandler;
+.field private mSimFH:Lcom/android/internal/telephony/uicc/IccFileHandler;
 
 .field private mState:I
 
@@ -67,7 +67,7 @@
     return-void
 .end method
 
-.method private constructor <init>(Landroid/os/Looper;Lcom/android/internal/telephony/IccFileHandler;)V
+.method private constructor <init>(Landroid/os/Looper;Lcom/android/internal/telephony/uicc/IccFileHandler;)V
     .locals 2
     .parameter "looper"
     .parameter "fh"
@@ -85,7 +85,7 @@
 
     iput-object v1, p0, Lcom/android/internal/telephony/cat/IconLoader;->mCurrentIcon:Landroid/graphics/Bitmap;
 
-    iput-object v1, p0, Lcom/android/internal/telephony/cat/IconLoader;->mSimFH:Lcom/android/internal/telephony/IccFileHandler;
+    iput-object v1, p0, Lcom/android/internal/telephony/cat/IconLoader;->mSimFH:Lcom/android/internal/telephony/uicc/IccFileHandler;
 
     iput-object v1, p0, Lcom/android/internal/telephony/cat/IconLoader;->mEndMsg:Landroid/os/Message;
 
@@ -101,7 +101,7 @@
 
     iput-object v1, p0, Lcom/android/internal/telephony/cat/IconLoader;->mIconsCache:Ljava/util/HashMap;
 
-    iput-object p2, p0, Lcom/android/internal/telephony/cat/IconLoader;->mSimFH:Lcom/android/internal/telephony/IccFileHandler;
+    iput-object p2, p0, Lcom/android/internal/telephony/cat/IconLoader;->mSimFH:Lcom/android/internal/telephony/uicc/IccFileHandler;
 
     new-instance v0, Ljava/util/HashMap;
 
@@ -134,7 +134,7 @@
     goto :goto_0
 .end method
 
-.method static getInstance(Landroid/os/Handler;Lcom/android/internal/telephony/IccFileHandler;)Lcom/android/internal/telephony/cat/IconLoader;
+.method static getInstance(Landroid/os/Handler;Lcom/android/internal/telephony/uicc/IccFileHandler;)Lcom/android/internal/telephony/cat/IconLoader;
     .locals 3
     .parameter "caller"
     .parameter "fh"
@@ -167,7 +167,7 @@
 
     move-result-object v2
 
-    invoke-direct {v1, v2, p1}, Lcom/android/internal/telephony/cat/IconLoader;-><init>(Landroid/os/Looper;Lcom/android/internal/telephony/IccFileHandler;)V
+    invoke-direct {v1, v2, p1}, Lcom/android/internal/telephony/cat/IconLoader;-><init>(Landroid/os/Looper;Lcom/android/internal/telephony/uicc/IccFileHandler;)V
 
     goto :goto_0
 
@@ -698,11 +698,11 @@
     move-result-object v5
 
     .local v5, msg:Landroid/os/Message;
-    iget-object v0, p0, Lcom/android/internal/telephony/cat/IconLoader;->mSimFH:Lcom/android/internal/telephony/IccFileHandler;
+    iget-object v0, p0, Lcom/android/internal/telephony/cat/IconLoader;->mSimFH:Lcom/android/internal/telephony/uicc/IccFileHandler;
 
     iget-object v1, p0, Lcom/android/internal/telephony/cat/IconLoader;->mId:Lcom/android/internal/telephony/cat/ImageDescriptor;
 
-    iget v1, v1, Lcom/android/internal/telephony/cat/ImageDescriptor;->imageId:I
+    iget v1, v1, Lcom/android/internal/telephony/cat/ImageDescriptor;->mImageId:I
 
     iget-object v2, p0, Lcom/android/internal/telephony/cat/IconLoader;->mIconData:[B
 
@@ -716,7 +716,7 @@
 
     aget-byte v3, v3, v6
 
-    invoke-virtual/range {v0 .. v5}, Lcom/android/internal/telephony/IccFileHandler;->loadEFImgTransparent(IIIILandroid/os/Message;)V
+    invoke-virtual/range {v0 .. v5}, Lcom/android/internal/telephony/uicc/IccFileHandler;->loadEFImgTransparent(IIIILandroid/os/Message;)V
 
     return-void
 .end method
@@ -734,19 +734,19 @@
     move-result-object v5
 
     .local v5, msg:Landroid/os/Message;
-    iget-object v0, p0, Lcom/android/internal/telephony/cat/IconLoader;->mSimFH:Lcom/android/internal/telephony/IccFileHandler;
+    iget-object v0, p0, Lcom/android/internal/telephony/cat/IconLoader;->mSimFH:Lcom/android/internal/telephony/uicc/IccFileHandler;
 
     iget-object v1, p0, Lcom/android/internal/telephony/cat/IconLoader;->mId:Lcom/android/internal/telephony/cat/ImageDescriptor;
 
-    iget v1, v1, Lcom/android/internal/telephony/cat/ImageDescriptor;->imageId:I
+    iget v1, v1, Lcom/android/internal/telephony/cat/ImageDescriptor;->mImageId:I
 
     iget-object v3, p0, Lcom/android/internal/telephony/cat/IconLoader;->mId:Lcom/android/internal/telephony/cat/ImageDescriptor;
 
-    iget v4, v3, Lcom/android/internal/telephony/cat/ImageDescriptor;->length:I
+    iget v4, v3, Lcom/android/internal/telephony/cat/ImageDescriptor;->mLength:I
 
     move v3, v2
 
-    invoke-virtual/range {v0 .. v5}, Lcom/android/internal/telephony/IccFileHandler;->loadEFImgTransparent(IIIILandroid/os/Message;)V
+    invoke-virtual/range {v0 .. v5}, Lcom/android/internal/telephony/uicc/IccFileHandler;->loadEFImgTransparent(IIIILandroid/os/Message;)V
 
     return-void
 .end method
@@ -776,11 +776,11 @@
     move-result-object v0
 
     .local v0, msg:Landroid/os/Message;
-    iget-object v1, p0, Lcom/android/internal/telephony/cat/IconLoader;->mSimFH:Lcom/android/internal/telephony/IccFileHandler;
+    iget-object v1, p0, Lcom/android/internal/telephony/cat/IconLoader;->mSimFH:Lcom/android/internal/telephony/uicc/IccFileHandler;
 
     iget v2, p0, Lcom/android/internal/telephony/cat/IconLoader;->mRecordNumber:I
 
-    invoke-virtual {v1, v2, v0}, Lcom/android/internal/telephony/IccFileHandler;->loadEFImgLinearFixed(ILandroid/os/Message;)V
+    invoke-virtual {v1, v2, v0}, Lcom/android/internal/telephony/uicc/IccFileHandler;->loadEFImgLinearFixed(ILandroid/os/Message;)V
 
     goto :goto_0
 .end method
@@ -922,7 +922,7 @@
     .local v4, rawData:[B
     iget-object v5, p0, Lcom/android/internal/telephony/cat/IconLoader;->mId:Lcom/android/internal/telephony/cat/ImageDescriptor;
 
-    iget v5, v5, Lcom/android/internal/telephony/cat/ImageDescriptor;->codingScheme:I
+    iget v5, v5, Lcom/android/internal/telephony/cat/ImageDescriptor;->mCodingScheme:I
 
     const/16 v6, 0x11
 
@@ -955,7 +955,7 @@
     :cond_2
     iget-object v5, p0, Lcom/android/internal/telephony/cat/IconLoader;->mId:Lcom/android/internal/telephony/cat/ImageDescriptor;
 
-    iget v5, v5, Lcom/android/internal/telephony/cat/ImageDescriptor;->codingScheme:I
+    iget v5, v5, Lcom/android/internal/telephony/cat/ImageDescriptor;->mCodingScheme:I
 
     const/16 v6, 0x21
 

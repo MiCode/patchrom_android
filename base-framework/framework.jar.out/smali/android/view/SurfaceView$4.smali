@@ -56,46 +56,14 @@
 
     iget-boolean v6, v6, Landroid/view/SurfaceView;->mDrawingStopped:Z
 
-    if-nez v6, :cond_2
+    if-nez v6, :cond_0
 
     iget-object v6, p0, Landroid/view/SurfaceView$4;->this$0:Landroid/view/SurfaceView;
 
     iget-object v6, v6, Landroid/view/SurfaceView;->mWindow:Landroid/view/SurfaceView$MyWindow;
 
-    if-eqz v6, :cond_2
+    if-eqz v6, :cond_0
 
-    if-nez p1, :cond_1
-
-    iget-object v6, p0, Landroid/view/SurfaceView$4;->this$0:Landroid/view/SurfaceView;
-
-    iget-object v6, v6, Landroid/view/SurfaceView;->mTmpDirty:Landroid/graphics/Rect;
-
-    if-nez v6, :cond_0
-
-    iget-object v6, p0, Landroid/view/SurfaceView$4;->this$0:Landroid/view/SurfaceView;
-
-    new-instance v7, Landroid/graphics/Rect;
-
-    invoke-direct {v7}, Landroid/graphics/Rect;-><init>()V
-
-    iput-object v7, v6, Landroid/view/SurfaceView;->mTmpDirty:Landroid/graphics/Rect;
-
-    :cond_0
-    iget-object v6, p0, Landroid/view/SurfaceView$4;->this$0:Landroid/view/SurfaceView;
-
-    iget-object v6, v6, Landroid/view/SurfaceView;->mTmpDirty:Landroid/graphics/Rect;
-
-    iget-object v7, p0, Landroid/view/SurfaceView$4;->this$0:Landroid/view/SurfaceView;
-
-    iget-object v7, v7, Landroid/view/SurfaceView;->mSurfaceFrame:Landroid/graphics/Rect;
-
-    invoke-virtual {v6, v7}, Landroid/graphics/Rect;->set(Landroid/graphics/Rect;)V
-
-    iget-object v6, p0, Landroid/view/SurfaceView$4;->this$0:Landroid/view/SurfaceView;
-
-    iget-object p1, v6, Landroid/view/SurfaceView;->mTmpDirty:Landroid/graphics/Rect;
-
-    :cond_1
     :try_start_0
     iget-object v6, p0, Landroid/view/SurfaceView$4;->this$0:Landroid/view/SurfaceView;
 
@@ -107,9 +75,9 @@
 
     move-result-object v0
 
-    :cond_2
+    :cond_0
     :goto_0
-    if-eqz v0, :cond_3
+    if-eqz v0, :cond_1
 
     iget-object v6, p0, Landroid/view/SurfaceView$4;->this$0:Landroid/view/SurfaceView;
 
@@ -137,7 +105,7 @@
     goto :goto_0
 
     .end local v1           #e:Ljava/lang/Exception;
-    :cond_3
+    :cond_1
     invoke-static {}, Landroid/os/SystemClock;->uptimeMillis()J
 
     move-result-wide v4
@@ -154,7 +122,7 @@
     .local v2, nextTime:J
     cmp-long v6, v2, v4
 
-    if-lez v6, :cond_4
+    if-lez v6, :cond_2
 
     sub-long v6, v2, v4
 
@@ -168,7 +136,7 @@
 
     move-result-wide v4
 
-    :cond_4
+    :cond_2
     iget-object v6, p0, Landroid/view/SurfaceView$4;->this$0:Landroid/view/SurfaceView;
 
     iput-wide v4, v6, Landroid/view/SurfaceView;->mLastLockTime:J
@@ -282,7 +250,7 @@
 
 .method public lockCanvas(Landroid/graphics/Rect;)Landroid/graphics/Canvas;
     .locals 1
-    .parameter "dirty"
+    .parameter "inOutDirty"
 
     .prologue
     invoke-direct {p0, p1}, Landroid/view/SurfaceView$4;->internalLockCanvas(Landroid/graphics/Rect;)Landroid/graphics/Canvas;

@@ -92,18 +92,18 @@
     .prologue
     packed-switch p0, :pswitch_data_0
 
-    const v0, 0x10402c8
+    const v0, 0x10402ea
 
     :goto_0
     return v0
 
     :pswitch_0
-    const v0, 0x10402c6
+    const v0, 0x10402e8
 
     goto :goto_0
 
     :pswitch_1
-    const v0, 0x10402c7
+    const v0, 0x10402e9
 
     goto :goto_0
 

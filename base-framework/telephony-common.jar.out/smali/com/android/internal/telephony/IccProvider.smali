@@ -235,7 +235,7 @@
     .prologue
     const/4 v1, 0x0
 
-    .local v1, adnRecords:Ljava/util/List;,"Ljava/util/List<Lcom/android/internal/telephony/AdnRecord;>;"
+    .local v1, adnRecords:Ljava/util/List;,"Ljava/util/List<Lcom/android/internal/telephony/uicc/AdnRecord;>;"
     :try_start_0
     const-string v5, "simphonebook"
 
@@ -284,9 +284,9 @@
 
     move-result-object v5
 
-    check-cast v5, Lcom/android/internal/telephony/AdnRecord;
+    check-cast v5, Lcom/android/internal/telephony/uicc/AdnRecord;
 
-    invoke-direct {p0, v5, v2, v3}, Lcom/android/internal/telephony/IccProvider;->loadRecord(Lcom/android/internal/telephony/AdnRecord;Landroid/database/MatrixCursor;I)V
+    invoke-direct {p0, v5, v2, v3}, Lcom/android/internal/telephony/IccProvider;->loadRecord(Lcom/android/internal/telephony/uicc/AdnRecord;Landroid/database/MatrixCursor;I)V
 
     add-int/lit8 v3, v3, 0x1
 
@@ -300,7 +300,7 @@
 
     const-string v6, "Cannot load ADN records"
 
-    invoke-static {v5, v6}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v5, v6}, Landroid/telephony/Rlog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
     new-instance v2, Landroid/database/MatrixCursor;
 
@@ -322,14 +322,14 @@
     goto :goto_0
 .end method
 
-.method private loadRecord(Lcom/android/internal/telephony/AdnRecord;Landroid/database/MatrixCursor;I)V
+.method private loadRecord(Lcom/android/internal/telephony/uicc/AdnRecord;Landroid/database/MatrixCursor;I)V
     .locals 11
     .parameter "record"
     .parameter "cursor"
     .parameter "id"
 
     .prologue
-    invoke-virtual {p1}, Lcom/android/internal/telephony/AdnRecord;->isEmpty()Z
+    invoke-virtual {p1}, Lcom/android/internal/telephony/uicc/AdnRecord;->isEmpty()Z
 
     move-result v9
 
@@ -340,12 +340,12 @@
     new-array v2, v9, [Ljava/lang/Object;
 
     .local v2, contact:[Ljava/lang/Object;
-    invoke-virtual {p1}, Lcom/android/internal/telephony/AdnRecord;->getAlphaTag()Ljava/lang/String;
+    invoke-virtual {p1}, Lcom/android/internal/telephony/uicc/AdnRecord;->getAlphaTag()Ljava/lang/String;
 
     move-result-object v0
 
     .local v0, alphaTag:Ljava/lang/String;
-    invoke-virtual {p1}, Lcom/android/internal/telephony/AdnRecord;->getNumber()Ljava/lang/String;
+    invoke-virtual {p1}, Lcom/android/internal/telephony/uicc/AdnRecord;->getNumber()Ljava/lang/String;
 
     move-result-object v8
 
@@ -358,7 +358,7 @@
 
     aput-object v8, v2, v9
 
-    invoke-virtual {p1}, Lcom/android/internal/telephony/AdnRecord;->getEmails()[Ljava/lang/String;
+    invoke-virtual {p1}, Lcom/android/internal/telephony/uicc/AdnRecord;->getEmails()[Ljava/lang/String;
 
     move-result-object v5
 
@@ -453,7 +453,7 @@
 
     move-result-object v1
 
-    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v0, v1}, Landroid/telephony/Rlog;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     return-void
 .end method
@@ -642,72 +642,20 @@
     :goto_1
     add-int/lit8 v9, v9, -0x1
 
-    if-ltz v9, :cond_5
+    if-ltz v9, :cond_4
 
     aget-object v11, v13, v9
 
     .local v11, param:Ljava/lang/String;
     const-string v1, "="
 
-    invoke-virtual {v11, v1}, Ljava/lang/String;->split(Ljava/lang/String;)[Ljava/lang/String;
+    const/4 v15, 0x2
+
+    invoke-virtual {v11, v1, v15}, Ljava/lang/String;->split(Ljava/lang/String;I)[Ljava/lang/String;
 
     move-result-object v10
 
     .local v10, pair:[Ljava/lang/String;
-    array-length v1, v10
-
-    const/4 v15, 0x2
-
-    if-eq v1, v15, :cond_1
-
-    const-string v1, "IccProvider"
-
-    new-instance v15, Ljava/lang/StringBuilder;
-
-    invoke-direct {v15}, Ljava/lang/StringBuilder;-><init>()V
-
-    const-string v16, "resolve: bad whereClause parameter: "
-
-    invoke-virtual/range {v15 .. v16}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v15
-
-    invoke-virtual {v15, v11}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v15
-
-    invoke-virtual {v15}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v15
-
-    invoke-static {v1, v15}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
-
-    goto :goto_1
-
-    .end local v2           #efType:I
-    .end local v3           #tag:Ljava/lang/String;
-    .end local v4           #number:Ljava/lang/String;
-    .end local v5           #emails:[Ljava/lang/String;
-    .end local v6           #pin2:Ljava/lang/String;
-    .end local v9           #n:I
-    .end local v10           #pair:[Ljava/lang/String;
-    .end local v11           #param:Ljava/lang/String;
-    .end local v13           #tokens:[Ljava/lang/String;
-    :pswitch_1
-    const/16 v2, 0x6f3b
-
-    .restart local v2       #efType:I
-    goto :goto_0
-
-    .restart local v3       #tag:Ljava/lang/String;
-    .restart local v4       #number:Ljava/lang/String;
-    .restart local v5       #emails:[Ljava/lang/String;
-    .restart local v6       #pin2:Ljava/lang/String;
-    .restart local v9       #n:I
-    .restart local v10       #pair:[Ljava/lang/String;
-    .restart local v11       #param:Ljava/lang/String;
-    .restart local v13       #tokens:[Ljava/lang/String;
-    :cond_1
     const/4 v1, 0x0
 
     aget-object v1, v10, v1
@@ -732,7 +680,7 @@
 
     move-result v1
 
-    if-eqz v1, :cond_2
+    if-eqz v1, :cond_1
 
     move-object/from16 v0, p0
 
@@ -742,14 +690,41 @@
 
     goto :goto_1
 
-    :cond_2
+    .end local v2           #efType:I
+    .end local v3           #tag:Ljava/lang/String;
+    .end local v4           #number:Ljava/lang/String;
+    .end local v5           #emails:[Ljava/lang/String;
+    .end local v6           #pin2:Ljava/lang/String;
+    .end local v7           #key:Ljava/lang/String;
+    .end local v9           #n:I
+    .end local v10           #pair:[Ljava/lang/String;
+    .end local v11           #param:Ljava/lang/String;
+    .end local v13           #tokens:[Ljava/lang/String;
+    .end local v14           #val:Ljava/lang/String;
+    :pswitch_1
+    const/16 v2, 0x6f3b
+
+    .restart local v2       #efType:I
+    goto :goto_0
+
+    .restart local v3       #tag:Ljava/lang/String;
+    .restart local v4       #number:Ljava/lang/String;
+    .restart local v5       #emails:[Ljava/lang/String;
+    .restart local v6       #pin2:Ljava/lang/String;
+    .restart local v7       #key:Ljava/lang/String;
+    .restart local v9       #n:I
+    .restart local v10       #pair:[Ljava/lang/String;
+    .restart local v11       #param:Ljava/lang/String;
+    .restart local v13       #tokens:[Ljava/lang/String;
+    .restart local v14       #val:Ljava/lang/String;
+    :cond_1
     const-string v1, "number"
 
     invoke-virtual {v1, v7}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
     move-result v1
 
-    if-eqz v1, :cond_3
+    if-eqz v1, :cond_2
 
     move-object/from16 v0, p0
 
@@ -759,20 +734,20 @@
 
     goto :goto_1
 
-    :cond_3
+    :cond_2
     const-string v1, "emails"
 
     invoke-virtual {v1, v7}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
     move-result v1
 
-    if-eqz v1, :cond_4
+    if-eqz v1, :cond_3
 
     const/4 v5, 0x0
 
     goto :goto_1
 
-    :cond_4
+    :cond_3
     const-string v1, "pin2"
 
     invoke-virtual {v1, v7}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
@@ -793,8 +768,24 @@
     .end local v10           #pair:[Ljava/lang/String;
     .end local v11           #param:Ljava/lang/String;
     .end local v14           #val:Ljava/lang/String;
-    :cond_5
+    :cond_4
     invoke-static {v4}, Landroid/text/TextUtils;->isEmpty(Ljava/lang/CharSequence;)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_5
+
+    const/4 v1, 0x0
+
+    :goto_2
+    return v1
+
+    :cond_5
+    const/16 v1, 0x6f3b
+
+    if-ne v2, v1, :cond_6
+
+    invoke-static {v6}, Landroid/text/TextUtils;->isEmpty(Ljava/lang/CharSequence;)Z
 
     move-result v1
 
@@ -802,25 +793,9 @@
 
     const/4 v1, 0x0
 
-    :goto_2
-    return v1
-
-    :cond_6
-    const/16 v1, 0x6f3b
-
-    if-ne v2, v1, :cond_7
-
-    invoke-static {v6}, Landroid/text/TextUtils;->isEmpty(Ljava/lang/CharSequence;)Z
-
-    move-result v1
-
-    if-eqz v1, :cond_7
-
-    const/4 v1, 0x0
-
     goto :goto_2
 
-    :cond_7
+    :cond_6
     move-object/from16 v1, p0
 
     invoke-direct/range {v1 .. v6}, Lcom/android/internal/telephony/IccProvider;->deleteIccRecordFromEf(ILjava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;)Z
@@ -828,13 +803,13 @@
     move-result v12
 
     .local v12, success:Z
-    if-nez v12, :cond_8
+    if-nez v12, :cond_7
 
     const/4 v1, 0x0
 
     goto :goto_2
 
-    :cond_8
+    :cond_7
     const/4 v1, 0x1
 
     goto :goto_2

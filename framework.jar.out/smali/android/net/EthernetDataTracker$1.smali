@@ -40,16 +40,16 @@
     .locals 6
 
     .prologue
-    new-instance v0, Landroid/net/DhcpInfoInternal;
+    new-instance v0, Landroid/net/DhcpResults;
 
-    invoke-direct {v0}, Landroid/net/DhcpInfoInternal;-><init>()V
+    invoke-direct {v0}, Landroid/net/DhcpResults;-><init>()V
 
-    .local v0, dhcpInfoInternal:Landroid/net/DhcpInfoInternal;
+    .local v0, dhcpResults:Landroid/net/DhcpResults;
     invoke-static {}, Landroid/net/EthernetDataTracker;->access$000()Ljava/lang/String;
 
     move-result-object v2
 
-    invoke-static {v2, v0}, Landroid/net/NetworkUtils;->runDhcp(Ljava/lang/String;Landroid/net/DhcpInfoInternal;)Z
+    invoke-static {v2, v0}, Landroid/net/NetworkUtils;->runDhcp(Ljava/lang/String;Landroid/net/DhcpResults;)Z
 
     move-result v2
 
@@ -87,32 +87,21 @@
     :cond_0
     iget-object v2, p0, Landroid/net/EthernetDataTracker$1;->this$0:Landroid/net/EthernetDataTracker;
 
-    invoke-virtual {v0}, Landroid/net/DhcpInfoInternal;->makeLinkProperties()Landroid/net/LinkProperties;
+    iget-object v3, v0, Landroid/net/DhcpResults;->linkProperties:Landroid/net/LinkProperties;
 
-    move-result-object v3
-
-    #setter for: Landroid/net/EthernetDataTracker;->mLinkProperties:Landroid/net/LinkProperties;
-    invoke-static {v2, v3}, Landroid/net/EthernetDataTracker;->access$502(Landroid/net/EthernetDataTracker;Landroid/net/LinkProperties;)Landroid/net/LinkProperties;
+    iput-object v3, v2, Landroid/net/EthernetDataTracker;->mLinkProperties:Landroid/net/LinkProperties;
 
     iget-object v2, p0, Landroid/net/EthernetDataTracker$1;->this$0:Landroid/net/EthernetDataTracker;
 
-    #getter for: Landroid/net/EthernetDataTracker;->mLinkProperties:Landroid/net/LinkProperties;
-    invoke-static {v2}, Landroid/net/EthernetDataTracker;->access$500(Landroid/net/EthernetDataTracker;)Landroid/net/LinkProperties;
+    iget-object v2, v2, Landroid/net/EthernetDataTracker;->mNetworkInfo:Landroid/net/NetworkInfo;
 
-    move-result-object v2
+    const/4 v3, 0x1
 
-    invoke-static {}, Landroid/net/EthernetDataTracker;->access$000()Ljava/lang/String;
-
-    move-result-object v3
-
-    invoke-virtual {v2, v3}, Landroid/net/LinkProperties;->setInterfaceName(Ljava/lang/String;)V
+    invoke-virtual {v2, v3}, Landroid/net/NetworkInfo;->setIsAvailable(Z)V
 
     iget-object v2, p0, Landroid/net/EthernetDataTracker$1;->this$0:Landroid/net/EthernetDataTracker;
 
-    #getter for: Landroid/net/EthernetDataTracker;->mNetworkInfo:Landroid/net/NetworkInfo;
-    invoke-static {v2}, Landroid/net/EthernetDataTracker;->access$200(Landroid/net/EthernetDataTracker;)Landroid/net/NetworkInfo;
-
-    move-result-object v2
+    iget-object v2, v2, Landroid/net/EthernetDataTracker;->mNetworkInfo:Landroid/net/NetworkInfo;
 
     sget-object v3, Landroid/net/NetworkInfo$DetailedState;->CONNECTED:Landroid/net/NetworkInfo$DetailedState;
 
@@ -121,7 +110,7 @@
     iget-object v5, p0, Landroid/net/EthernetDataTracker$1;->this$0:Landroid/net/EthernetDataTracker;
 
     #getter for: Landroid/net/EthernetDataTracker;->mHwAddr:Ljava/lang/String;
-    invoke-static {v5}, Landroid/net/EthernetDataTracker;->access$600(Landroid/net/EthernetDataTracker;)Ljava/lang/String;
+    invoke-static {v5}, Landroid/net/EthernetDataTracker;->access$400(Landroid/net/EthernetDataTracker;)Ljava/lang/String;
 
     move-result-object v5
 
@@ -130,18 +119,15 @@
     iget-object v2, p0, Landroid/net/EthernetDataTracker$1;->this$0:Landroid/net/EthernetDataTracker;
 
     #getter for: Landroid/net/EthernetDataTracker;->mCsHandler:Landroid/os/Handler;
-    invoke-static {v2}, Landroid/net/EthernetDataTracker;->access$700(Landroid/net/EthernetDataTracker;)Landroid/os/Handler;
+    invoke-static {v2}, Landroid/net/EthernetDataTracker;->access$500(Landroid/net/EthernetDataTracker;)Landroid/os/Handler;
 
     move-result-object v2
 
-    const/4 v3, 0x1
+    const/high16 v3, 0x7
 
     iget-object v4, p0, Landroid/net/EthernetDataTracker$1;->this$0:Landroid/net/EthernetDataTracker;
 
-    #getter for: Landroid/net/EthernetDataTracker;->mNetworkInfo:Landroid/net/NetworkInfo;
-    invoke-static {v4}, Landroid/net/EthernetDataTracker;->access$200(Landroid/net/EthernetDataTracker;)Landroid/net/NetworkInfo;
-
-    move-result-object v4
+    iget-object v4, v4, Landroid/net/EthernetDataTracker;->mNetworkInfo:Landroid/net/NetworkInfo;
 
     invoke-virtual {v2, v3, v4}, Landroid/os/Handler;->obtainMessage(ILjava/lang/Object;)Landroid/os/Message;
 

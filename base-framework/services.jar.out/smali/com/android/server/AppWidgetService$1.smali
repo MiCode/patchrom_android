@@ -5,7 +5,7 @@
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/android/server/AppWidgetService;->systemReady(Z)V
+    value = Lcom/android/server/AppWidgetService;->systemRunning(Z)V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;

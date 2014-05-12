@@ -70,6 +70,8 @@
 
 .field static final TRANSACTION_isUsbMassStorageEnabled:I = 0x5
 
+.field static final TRANSACTION_mkdirs:I = 0x23
+
 .field static final TRANSACTION_mountObb:I = 0x16
 
 .field static final TRANSACTION_mountSecureContainer:I = 0xe
@@ -158,7 +160,7 @@
 .end method
 
 .method public onTransact(ILandroid/os/Parcel;Landroid/os/Parcel;I)Z
-    .locals 36
+    .locals 37
     .parameter "code"
     .parameter "data"
     .parameter "reply"
@@ -203,12 +205,12 @@
 
     invoke-static {v4}, Landroid/os/storage/IMountServiceListener$Stub;->asInterface(Landroid/os/IBinder;)Landroid/os/storage/IMountServiceListener;
 
-    move-result-object v23
+    move-result-object v24
 
-    .local v23, listener:Landroid/os/storage/IMountServiceListener;
+    .local v24, listener:Landroid/os/storage/IMountServiceListener;
     move-object/from16 v0, p0
 
-    move-object/from16 v1, v23
+    move-object/from16 v1, v24
 
     invoke-virtual {v0, v1}, Landroid/os/storage/IMountService$Stub;->registerListener(Landroid/os/storage/IMountServiceListener;)V
 
@@ -218,7 +220,7 @@
 
     goto :goto_0
 
-    .end local v23           #listener:Landroid/os/storage/IMountServiceListener;
+    .end local v24           #listener:Landroid/os/storage/IMountServiceListener;
     :sswitch_2
     const-string v4, "IMountService"
 
@@ -232,12 +234,12 @@
 
     invoke-static {v4}, Landroid/os/storage/IMountServiceListener$Stub;->asInterface(Landroid/os/IBinder;)Landroid/os/storage/IMountServiceListener;
 
-    move-result-object v23
+    move-result-object v24
 
-    .restart local v23       #listener:Landroid/os/storage/IMountServiceListener;
+    .restart local v24       #listener:Landroid/os/storage/IMountServiceListener;
     move-object/from16 v0, p0
 
-    move-object/from16 v1, v23
+    move-object/from16 v1, v24
 
     invoke-virtual {v0, v1}, Landroid/os/storage/IMountService$Stub;->unregisterListener(Landroid/os/storage/IMountServiceListener;)V
 
@@ -247,7 +249,7 @@
 
     goto :goto_0
 
-    .end local v23           #listener:Landroid/os/storage/IMountServiceListener;
+    .end local v24           #listener:Landroid/os/storage/IMountServiceListener;
     :sswitch_3
     const-string v4, "IMountService"
 
@@ -257,12 +259,12 @@
 
     invoke-virtual/range {p0 .. p0}, Landroid/os/storage/IMountService$Stub;->isUsbMassStorageConnected()Z
 
-    move-result v32
+    move-result v33
 
-    .local v32, result:Z
+    .local v33, result:Z
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    if-eqz v32, :cond_0
+    if-eqz v33, :cond_0
 
     const/4 v4, 0x1
 
@@ -280,7 +282,7 @@
 
     goto :goto_1
 
-    .end local v32           #result:Z
+    .end local v33           #result:Z
     :sswitch_4
     const-string v4, "IMountService"
 
@@ -294,13 +296,13 @@
 
     if-eqz v4, :cond_1
 
-    const/16 v18, 0x1
+    const/16 v19, 0x1
 
-    .local v18, enable:Z
+    .local v19, enable:Z
     :goto_2
     move-object/from16 v0, p0
 
-    move/from16 v1, v18
+    move/from16 v1, v19
 
     invoke-virtual {v0, v1}, Landroid/os/storage/IMountService$Stub;->setUsbMassStorageEnabled(Z)V
 
@@ -310,9 +312,9 @@
 
     goto :goto_0
 
-    .end local v18           #enable:Z
+    .end local v19           #enable:Z
     :cond_1
-    const/16 v18, 0x0
+    const/16 v19, 0x0
 
     goto :goto_2
 
@@ -325,12 +327,12 @@
 
     invoke-virtual/range {p0 .. p0}, Landroid/os/storage/IMountService$Stub;->isUsbMassStorageEnabled()Z
 
-    move-result v32
+    move-result v33
 
-    .restart local v32       #result:Z
+    .restart local v33       #result:Z
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    if-eqz v32, :cond_2
+    if-eqz v33, :cond_2
 
     const/4 v4, 0x1
 
@@ -348,7 +350,7 @@
 
     goto :goto_3
 
-    .end local v32           #result:Z
+    .end local v33           #result:Z
     :sswitch_6
     const-string v4, "IMountService"
 
@@ -358,18 +360,116 @@
 
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
-    move-result-object v24
+    move-result-object v25
 
-    .local v24, mountPoint:Ljava/lang/String;
+    .local v25, mountPoint:Ljava/lang/String;
     move-object/from16 v0, p0
 
-    move-object/from16 v1, v24
+    move-object/from16 v1, v25
 
     invoke-virtual {v0, v1}, Landroid/os/storage/IMountService$Stub;->mountVolume(Ljava/lang/String;)I
 
+    move-result v34
+
+    .local v34, resultCode:I
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    move-object/from16 v0, p3
+
+    move/from16 v1, v34
+
+    invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeInt(I)V
+
+    const/4 v4, 0x1
+
+    goto/16 :goto_0
+
+    .end local v25           #mountPoint:Ljava/lang/String;
+    .end local v34           #resultCode:I
+    :sswitch_7
+    const-string v4, "IMountService"
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v25
+
+    .restart local v25       #mountPoint:Ljava/lang/String;
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v4
+
+    if-eqz v4, :cond_3
+
+    const/16 v21, 0x1
+
+    .local v21, force:Z
+    :goto_4
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v4
+
+    if-eqz v4, :cond_4
+
+    const/16 v32, 0x1
+
+    .local v32, removeEncrypt:Z
+    :goto_5
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, v25
+
+    move/from16 v2, v21
+
+    move/from16 v3, v32
+
+    invoke-virtual {v0, v1, v2, v3}, Landroid/os/storage/IMountService$Stub;->unmountVolume(Ljava/lang/String;ZZ)V
+
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    const/4 v4, 0x1
+
+    goto/16 :goto_0
+
+    .end local v21           #force:Z
+    .end local v32           #removeEncrypt:Z
+    :cond_3
+    const/16 v21, 0x0
+
+    goto :goto_4
+
+    .restart local v21       #force:Z
+    :cond_4
+    const/16 v32, 0x0
+
+    goto :goto_5
+
+    .end local v21           #force:Z
+    .end local v25           #mountPoint:Ljava/lang/String;
+    :sswitch_8
+    const-string v4, "IMountService"
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v25
+
+    .restart local v25       #mountPoint:Ljava/lang/String;
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, v25
+
+    invoke-virtual {v0, v1}, Landroid/os/storage/IMountService$Stub;->formatVolume(Ljava/lang/String;)I
+
     move-result v33
 
-    .local v33, resultCode:I
+    .local v33, result:I
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
     move-object/from16 v0, p3
@@ -382,106 +482,8 @@
 
     goto/16 :goto_0
 
-    .end local v24           #mountPoint:Ljava/lang/String;
-    .end local v33           #resultCode:I
-    :sswitch_7
-    const-string v4, "IMountService"
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v4}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
-
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
-
-    move-result-object v24
-
-    .restart local v24       #mountPoint:Ljava/lang/String;
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
-
-    move-result v4
-
-    if-eqz v4, :cond_3
-
-    const/16 v20, 0x1
-
-    .local v20, force:Z
-    :goto_4
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
-
-    move-result v4
-
-    if-eqz v4, :cond_4
-
-    const/16 v31, 0x1
-
-    .local v31, removeEncrypt:Z
-    :goto_5
-    move-object/from16 v0, p0
-
-    move-object/from16 v1, v24
-
-    move/from16 v2, v20
-
-    move/from16 v3, v31
-
-    invoke-virtual {v0, v1, v2, v3}, Landroid/os/storage/IMountService$Stub;->unmountVolume(Ljava/lang/String;ZZ)V
-
-    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
-
-    const/4 v4, 0x1
-
-    goto/16 :goto_0
-
-    .end local v20           #force:Z
-    .end local v31           #removeEncrypt:Z
-    :cond_3
-    const/16 v20, 0x0
-
-    goto :goto_4
-
-    .restart local v20       #force:Z
-    :cond_4
-    const/16 v31, 0x0
-
-    goto :goto_5
-
-    .end local v20           #force:Z
-    .end local v24           #mountPoint:Ljava/lang/String;
-    :sswitch_8
-    const-string v4, "IMountService"
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v4}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
-
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
-
-    move-result-object v24
-
-    .restart local v24       #mountPoint:Ljava/lang/String;
-    move-object/from16 v0, p0
-
-    move-object/from16 v1, v24
-
-    invoke-virtual {v0, v1}, Landroid/os/storage/IMountService$Stub;->formatVolume(Ljava/lang/String;)I
-
-    move-result v32
-
-    .local v32, result:I
-    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
-
-    move-object/from16 v0, p3
-
-    move/from16 v1, v32
-
-    invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeInt(I)V
-
-    const/4 v4, 0x1
-
-    goto/16 :goto_0
-
-    .end local v24           #mountPoint:Ljava/lang/String;
-    .end local v32           #result:I
+    .end local v25           #mountPoint:Ljava/lang/String;
+    .end local v33           #result:I
     :sswitch_9
     const-string v4, "IMountService"
 
@@ -491,23 +493,23 @@
 
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
-    move-result-object v29
+    move-result-object v30
 
-    .local v29, path:Ljava/lang/String;
+    .local v30, path:Ljava/lang/String;
     move-object/from16 v0, p0
 
-    move-object/from16 v1, v29
+    move-object/from16 v1, v30
 
     invoke-virtual {v0, v1}, Landroid/os/storage/IMountService$Stub;->getStorageUsers(Ljava/lang/String;)[I
 
-    move-result-object v30
+    move-result-object v31
 
-    .local v30, pids:[I
+    .local v31, pids:[I
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
     move-object/from16 v0, p3
 
-    move-object/from16 v1, v30
+    move-object/from16 v1, v31
 
     invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeIntArray([I)V
 
@@ -515,8 +517,8 @@
 
     goto/16 :goto_0
 
-    .end local v29           #path:Ljava/lang/String;
-    .end local v30           #pids:[I
+    .end local v30           #path:Ljava/lang/String;
+    .end local v31           #pids:[I
     :sswitch_a
     const-string v4, "IMountService"
 
@@ -526,23 +528,23 @@
 
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
-    move-result-object v24
+    move-result-object v25
 
-    .restart local v24       #mountPoint:Ljava/lang/String;
+    .restart local v25       #mountPoint:Ljava/lang/String;
     move-object/from16 v0, p0
 
-    move-object/from16 v1, v24
+    move-object/from16 v1, v25
 
     invoke-virtual {v0, v1}, Landroid/os/storage/IMountService$Stub;->getVolumeState(Ljava/lang/String;)Ljava/lang/String;
 
-    move-result-object v34
+    move-result-object v35
 
-    .local v34, state:Ljava/lang/String;
+    .local v35, state:Ljava/lang/String;
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
     move-object/from16 v0, p3
 
-    move-object/from16 v1, v34
+    move-object/from16 v1, v35
 
     invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
@@ -550,8 +552,8 @@
 
     goto/16 :goto_0
 
-    .end local v24           #mountPoint:Ljava/lang/String;
-    .end local v34           #state:Ljava/lang/String;
+    .end local v25           #mountPoint:Ljava/lang/String;
+    .end local v35           #state:Ljava/lang/String;
     :sswitch_b
     const-string v4, "IMountService"
 
@@ -598,14 +600,14 @@
 
     invoke-virtual/range {v4 .. v10}, Landroid/os/storage/IMountService$Stub;->createSecureContainer(Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;IZ)I
 
-    move-result v33
+    move-result v34
 
-    .restart local v33       #resultCode:I
+    .restart local v34       #resultCode:I
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
     move-object/from16 v0, p3
 
-    move/from16 v1, v33
+    move/from16 v1, v34
 
     invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeInt(I)V
 
@@ -614,7 +616,7 @@
     goto/16 :goto_0
 
     .end local v10           #external:Z
-    .end local v33           #resultCode:I
+    .end local v34           #resultCode:I
     :cond_5
     const/4 v10, 0x0
 
@@ -641,14 +643,14 @@
 
     invoke-virtual {v0, v5}, Landroid/os/storage/IMountService$Stub;->finalizeSecureContainer(Ljava/lang/String;)I
 
-    move-result v33
+    move-result v34
 
-    .restart local v33       #resultCode:I
+    .restart local v34       #resultCode:I
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
     move-object/from16 v0, p3
 
-    move/from16 v1, v33
+    move/from16 v1, v34
 
     invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeInt(I)V
 
@@ -657,7 +659,7 @@
     goto/16 :goto_0
 
     .end local v5           #id:Ljava/lang/String;
-    .end local v33           #resultCode:I
+    .end local v34           #resultCode:I
     :sswitch_d
     const-string v4, "IMountService"
 
@@ -676,24 +678,24 @@
 
     if-eqz v4, :cond_6
 
-    const/16 v20, 0x1
+    const/16 v21, 0x1
 
-    .restart local v20       #force:Z
+    .restart local v21       #force:Z
     :goto_7
     move-object/from16 v0, p0
 
-    move/from16 v1, v20
+    move/from16 v1, v21
 
     invoke-virtual {v0, v5, v1}, Landroid/os/storage/IMountService$Stub;->destroySecureContainer(Ljava/lang/String;Z)I
 
-    move-result v33
+    move-result v34
 
-    .restart local v33       #resultCode:I
+    .restart local v34       #resultCode:I
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
     move-object/from16 v0, p3
 
-    move/from16 v1, v33
+    move/from16 v1, v34
 
     invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeInt(I)V
 
@@ -701,10 +703,10 @@
 
     goto/16 :goto_0
 
-    .end local v20           #force:Z
-    .end local v33           #resultCode:I
+    .end local v21           #force:Z
+    .end local v34           #resultCode:I
     :cond_6
-    const/16 v20, 0x0
+    const/16 v21, 0x0
 
     goto :goto_7
 
@@ -735,14 +737,14 @@
 
     invoke-virtual {v0, v5, v8, v9}, Landroid/os/storage/IMountService$Stub;->mountSecureContainer(Ljava/lang/String;Ljava/lang/String;I)I
 
-    move-result v33
+    move-result v34
 
-    .restart local v33       #resultCode:I
+    .restart local v34       #resultCode:I
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
     move-object/from16 v0, p3
 
-    move/from16 v1, v33
+    move/from16 v1, v34
 
     invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeInt(I)V
 
@@ -753,7 +755,7 @@
     .end local v5           #id:Ljava/lang/String;
     .end local v8           #key:Ljava/lang/String;
     .end local v9           #ownerUid:I
-    .end local v33           #resultCode:I
+    .end local v34           #resultCode:I
     :sswitch_f
     const-string v4, "IMountService"
 
@@ -772,24 +774,24 @@
 
     if-eqz v4, :cond_7
 
-    const/16 v20, 0x1
+    const/16 v21, 0x1
 
-    .restart local v20       #force:Z
+    .restart local v21       #force:Z
     :goto_8
     move-object/from16 v0, p0
 
-    move/from16 v1, v20
+    move/from16 v1, v21
 
     invoke-virtual {v0, v5, v1}, Landroid/os/storage/IMountService$Stub;->unmountSecureContainer(Ljava/lang/String;Z)I
 
-    move-result v33
+    move-result v34
 
-    .restart local v33       #resultCode:I
+    .restart local v34       #resultCode:I
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
     move-object/from16 v0, p3
 
-    move/from16 v1, v33
+    move/from16 v1, v34
 
     invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeInt(I)V
 
@@ -797,10 +799,10 @@
 
     goto/16 :goto_0
 
-    .end local v20           #force:Z
-    .end local v33           #resultCode:I
+    .end local v21           #force:Z
+    .end local v34           #resultCode:I
     :cond_7
-    const/16 v20, 0x0
+    const/16 v21, 0x0
 
     goto :goto_8
 
@@ -821,12 +823,12 @@
 
     invoke-virtual {v0, v5}, Landroid/os/storage/IMountService$Stub;->isSecureContainerMounted(Ljava/lang/String;)Z
 
-    move-result v35
+    move-result v36
 
-    .local v35, status:Z
+    .local v36, status:Z
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    if-eqz v35, :cond_8
+    if-eqz v36, :cond_8
 
     const/4 v4, 0x1
 
@@ -845,7 +847,7 @@
     goto :goto_9
 
     .end local v5           #id:Ljava/lang/String;
-    .end local v35           #status:Z
+    .end local v36           #status:Z
     :sswitch_11
     const-string v4, "IMountService"
 
@@ -855,30 +857,30 @@
 
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
-    move-result-object v27
+    move-result-object v28
 
-    .local v27, oldId:Ljava/lang/String;
+    .local v28, oldId:Ljava/lang/String;
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
-    move-result-object v26
+    move-result-object v27
 
-    .local v26, newId:Ljava/lang/String;
+    .local v27, newId:Ljava/lang/String;
     move-object/from16 v0, p0
 
-    move-object/from16 v1, v27
+    move-object/from16 v1, v28
 
-    move-object/from16 v2, v26
+    move-object/from16 v2, v27
 
     invoke-virtual {v0, v1, v2}, Landroid/os/storage/IMountService$Stub;->renameSecureContainer(Ljava/lang/String;Ljava/lang/String;)I
 
-    move-result v33
+    move-result v34
 
-    .restart local v33       #resultCode:I
+    .restart local v34       #resultCode:I
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
     move-object/from16 v0, p3
 
-    move/from16 v1, v33
+    move/from16 v1, v34
 
     invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeInt(I)V
 
@@ -886,9 +888,9 @@
 
     goto/16 :goto_0
 
-    .end local v26           #newId:Ljava/lang/String;
-    .end local v27           #oldId:Ljava/lang/String;
-    .end local v33           #resultCode:I
+    .end local v27           #newId:Ljava/lang/String;
+    .end local v28           #oldId:Ljava/lang/String;
+    .end local v34           #resultCode:I
     :sswitch_12
     const-string v4, "IMountService"
 
@@ -905,14 +907,14 @@
 
     invoke-virtual {v0, v5}, Landroid/os/storage/IMountService$Stub;->getSecureContainerPath(Ljava/lang/String;)Ljava/lang/String;
 
-    move-result-object v29
+    move-result-object v30
 
-    .restart local v29       #path:Ljava/lang/String;
+    .restart local v30       #path:Ljava/lang/String;
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
     move-object/from16 v0, p3
 
-    move-object/from16 v1, v29
+    move-object/from16 v1, v30
 
     invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
@@ -921,7 +923,7 @@
     goto/16 :goto_0
 
     .end local v5           #id:Ljava/lang/String;
-    .end local v29           #path:Ljava/lang/String;
+    .end local v30           #path:Ljava/lang/String;
     :sswitch_13
     const-string v4, "IMountService"
 
@@ -931,14 +933,14 @@
 
     invoke-virtual/range {p0 .. p0}, Landroid/os/storage/IMountService$Stub;->getSecureContainerList()[Ljava/lang/String;
 
-    move-result-object v22
+    move-result-object v23
 
-    .local v22, ids:[Ljava/lang/String;
+    .local v23, ids:[Ljava/lang/String;
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
     move-object/from16 v0, p3
 
-    move-object/from16 v1, v22
+    move-object/from16 v1, v23
 
     invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeStringArray([Ljava/lang/String;)V
 
@@ -946,7 +948,7 @@
 
     goto/16 :goto_0
 
-    .end local v22           #ids:[Ljava/lang/String;
+    .end local v23           #ids:[Ljava/lang/String;
     :sswitch_14
     const-string v4, "IMountService"
 
@@ -1051,18 +1053,18 @@
 
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
-    move-result-object v19
+    move-result-object v20
 
-    .local v19, filename:Ljava/lang/String;
+    .local v20, filename:Ljava/lang/String;
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
 
     move-result v4
 
     if-eqz v4, :cond_9
 
-    const/16 v20, 0x1
+    const/16 v21, 0x1
 
-    .restart local v20       #force:Z
+    .restart local v21       #force:Z
     :goto_a
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readStrongBinder()Landroid/os/IBinder;
 
@@ -1080,9 +1082,9 @@
     .restart local v16       #nonce:I
     move-object/from16 v0, p0
 
-    move-object/from16 v1, v19
+    move-object/from16 v1, v20
 
-    move/from16 v2, v20
+    move/from16 v2, v21
 
     move/from16 v3, v16
 
@@ -1096,13 +1098,13 @@
 
     .end local v15           #observer:Landroid/os/storage/IObbActionListener;
     .end local v16           #nonce:I
-    .end local v20           #force:Z
+    .end local v21           #force:Z
     :cond_9
-    const/16 v20, 0x0
+    const/16 v21, 0x0
 
     goto :goto_a
 
-    .end local v19           #filename:Ljava/lang/String;
+    .end local v20           #filename:Ljava/lang/String;
     :sswitch_18
     const-string v4, "IMountService"
 
@@ -1112,21 +1114,21 @@
 
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
-    move-result-object v19
+    move-result-object v20
 
-    .restart local v19       #filename:Ljava/lang/String;
+    .restart local v20       #filename:Ljava/lang/String;
     move-object/from16 v0, p0
 
-    move-object/from16 v1, v19
+    move-object/from16 v1, v20
 
     invoke-virtual {v0, v1}, Landroid/os/storage/IMountService$Stub;->isObbMounted(Ljava/lang/String;)Z
 
-    move-result v35
+    move-result v36
 
-    .restart local v35       #status:Z
+    .restart local v36       #status:Z
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    if-eqz v35, :cond_a
+    if-eqz v36, :cond_a
 
     const/4 v4, 0x1
 
@@ -1144,8 +1146,8 @@
 
     goto :goto_b
 
-    .end local v19           #filename:Ljava/lang/String;
-    .end local v35           #status:Z
+    .end local v20           #filename:Ljava/lang/String;
+    .end local v36           #status:Z
     :sswitch_19
     const-string v4, "IMountService"
 
@@ -1155,23 +1157,23 @@
 
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
-    move-result-object v19
+    move-result-object v20
 
-    .restart local v19       #filename:Ljava/lang/String;
+    .restart local v20       #filename:Ljava/lang/String;
     move-object/from16 v0, p0
 
-    move-object/from16 v1, v19
+    move-object/from16 v1, v20
 
     invoke-virtual {v0, v1}, Landroid/os/storage/IMountService$Stub;->getMountedObbPath(Ljava/lang/String;)Ljava/lang/String;
 
-    move-result-object v25
+    move-result-object v26
 
-    .local v25, mountedPath:Ljava/lang/String;
+    .local v26, mountedPath:Ljava/lang/String;
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
     move-object/from16 v0, p3
 
-    move-object/from16 v1, v25
+    move-object/from16 v1, v26
 
     invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
@@ -1179,8 +1181,8 @@
 
     goto/16 :goto_0
 
-    .end local v19           #filename:Ljava/lang/String;
-    .end local v25           #mountedPath:Ljava/lang/String;
+    .end local v20           #filename:Ljava/lang/String;
+    .end local v26           #mountedPath:Ljava/lang/String;
     :sswitch_1a
     const-string v4, "IMountService"
 
@@ -1190,12 +1192,12 @@
 
     invoke-virtual/range {p0 .. p0}, Landroid/os/storage/IMountService$Stub;->isExternalStorageEmulated()Z
 
-    move-result v17
+    move-result v18
 
-    .local v17, emulated:Z
+    .local v18, emulated:Z
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    if-eqz v17, :cond_b
+    if-eqz v18, :cond_b
 
     const/4 v4, 0x1
 
@@ -1213,7 +1215,7 @@
 
     goto :goto_c
 
-    .end local v17           #emulated:Z
+    .end local v18           #emulated:Z
     :sswitch_1b
     const-string v4, "IMountService"
 
@@ -1223,23 +1225,23 @@
 
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
-    move-result-object v28
+    move-result-object v29
 
-    .local v28, password:Ljava/lang/String;
+    .local v29, password:Ljava/lang/String;
     move-object/from16 v0, p0
 
-    move-object/from16 v1, v28
+    move-object/from16 v1, v29
 
     invoke-virtual {v0, v1}, Landroid/os/storage/IMountService$Stub;->decryptStorage(Ljava/lang/String;)I
 
-    move-result v32
+    move-result v33
 
-    .restart local v32       #result:I
+    .restart local v33       #result:I
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
     move-object/from16 v0, p3
 
-    move/from16 v1, v32
+    move/from16 v1, v33
 
     invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeInt(I)V
 
@@ -1247,8 +1249,8 @@
 
     goto/16 :goto_0
 
-    .end local v28           #password:Ljava/lang/String;
-    .end local v32           #result:I
+    .end local v29           #password:Ljava/lang/String;
+    .end local v33           #result:I
     :sswitch_1c
     const-string v4, "IMountService"
 
@@ -1258,23 +1260,23 @@
 
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
-    move-result-object v28
+    move-result-object v29
 
-    .restart local v28       #password:Ljava/lang/String;
+    .restart local v29       #password:Ljava/lang/String;
     move-object/from16 v0, p0
 
-    move-object/from16 v1, v28
+    move-object/from16 v1, v29
 
     invoke-virtual {v0, v1}, Landroid/os/storage/IMountService$Stub;->encryptStorage(Ljava/lang/String;)I
 
-    move-result v32
+    move-result v33
 
-    .restart local v32       #result:I
+    .restart local v33       #result:I
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
     move-object/from16 v0, p3
 
-    move/from16 v1, v32
+    move/from16 v1, v33
 
     invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeInt(I)V
 
@@ -1282,8 +1284,8 @@
 
     goto/16 :goto_0
 
-    .end local v28           #password:Ljava/lang/String;
-    .end local v32           #result:I
+    .end local v29           #password:Ljava/lang/String;
+    .end local v33           #result:I
     :sswitch_1d
     const-string v4, "IMountService"
 
@@ -1293,23 +1295,23 @@
 
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
-    move-result-object v28
+    move-result-object v29
 
-    .restart local v28       #password:Ljava/lang/String;
+    .restart local v29       #password:Ljava/lang/String;
     move-object/from16 v0, p0
 
-    move-object/from16 v1, v28
+    move-object/from16 v1, v29
 
     invoke-virtual {v0, v1}, Landroid/os/storage/IMountService$Stub;->changeEncryptionPassword(Ljava/lang/String;)I
 
-    move-result v32
+    move-result v33
 
-    .restart local v32       #result:I
+    .restart local v33       #result:I
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
     move-object/from16 v0, p3
 
-    move/from16 v1, v32
+    move/from16 v1, v33
 
     invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeInt(I)V
 
@@ -1317,8 +1319,8 @@
 
     goto/16 :goto_0
 
-    .end local v28           #password:Ljava/lang/String;
-    .end local v32           #result:I
+    .end local v29           #password:Ljava/lang/String;
+    .end local v33           #result:I
     :sswitch_1e
     const-string v4, "IMountService"
 
@@ -1328,16 +1330,16 @@
 
     invoke-virtual/range {p0 .. p0}, Landroid/os/storage/IMountService$Stub;->getVolumeList()[Landroid/os/storage/StorageVolume;
 
-    move-result-object v32
+    move-result-object v33
 
-    .local v32, result:[Landroid/os/storage/StorageVolume;
+    .local v33, result:[Landroid/os/storage/StorageVolume;
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
     const/4 v4, 0x1
 
     move-object/from16 v0, p3
 
-    move-object/from16 v1, v32
+    move-object/from16 v1, v33
 
     invoke-virtual {v0, v1, v4}, Landroid/os/Parcel;->writeTypedArray([Landroid/os/Parcelable;I)V
 
@@ -1345,7 +1347,7 @@
 
     goto/16 :goto_0
 
-    .end local v32           #result:[Landroid/os/storage/StorageVolume;
+    .end local v33           #result:[Landroid/os/storage/StorageVolume;
     :sswitch_1f
     const-string v4, "IMountService"
 
@@ -1362,14 +1364,14 @@
 
     invoke-virtual {v0, v5}, Landroid/os/storage/IMountService$Stub;->getSecureContainerFilesystemPath(Ljava/lang/String;)Ljava/lang/String;
 
-    move-result-object v29
+    move-result-object v30
 
-    .restart local v29       #path:Ljava/lang/String;
+    .restart local v30       #path:Ljava/lang/String;
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
     move-object/from16 v0, p3
 
-    move-object/from16 v1, v29
+    move-object/from16 v1, v30
 
     invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
@@ -1378,7 +1380,7 @@
     goto/16 :goto_0
 
     .end local v5           #id:Ljava/lang/String;
-    .end local v29           #path:Ljava/lang/String;
+    .end local v30           #path:Ljava/lang/String;
     :sswitch_20
     const-string v4, "IMountService"
 
@@ -1388,14 +1390,14 @@
 
     invoke-virtual/range {p0 .. p0}, Landroid/os/storage/IMountService$Stub;->getEncryptionState()I
 
-    move-result v32
+    move-result v33
 
-    .local v32, result:I
+    .local v33, result:I
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
     move-object/from16 v0, p3
 
-    move/from16 v1, v32
+    move/from16 v1, v33
 
     invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeInt(I)V
 
@@ -1403,7 +1405,7 @@
 
     goto/16 :goto_0
 
-    .end local v32           #result:I
+    .end local v33           #result:I
     :sswitch_21
     const-string v4, "IMountService"
 
@@ -1418,25 +1420,69 @@
     .restart local v5       #id:Ljava/lang/String;
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
 
-    move-result v21
+    move-result v22
 
-    .local v21, gid:I
+    .local v22, gid:I
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
-    move-result-object v19
+    move-result-object v20
 
-    .restart local v19       #filename:Ljava/lang/String;
+    .restart local v20       #filename:Ljava/lang/String;
     move-object/from16 v0, p0
 
-    move/from16 v1, v21
+    move/from16 v1, v22
 
-    move-object/from16 v2, v19
+    move-object/from16 v2, v20
 
     invoke-virtual {v0, v5, v1, v2}, Landroid/os/storage/IMountService$Stub;->fixPermissionsSecureContainer(Ljava/lang/String;ILjava/lang/String;)I
 
+    move-result v34
+
+    .restart local v34       #resultCode:I
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    move-object/from16 v0, p3
+
+    move/from16 v1, v34
+
+    invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeInt(I)V
+
+    const/4 v4, 0x1
+
+    goto/16 :goto_0
+
+    .end local v5           #id:Ljava/lang/String;
+    .end local v20           #filename:Ljava/lang/String;
+    .end local v22           #gid:I
+    .end local v34           #resultCode:I
+    :sswitch_22
+    const-string v4, "IMountService"
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v17
+
+    .local v17, callingPkg:Ljava/lang/String;
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v30
+
+    .restart local v30       #path:Ljava/lang/String;
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, v17
+
+    move-object/from16 v2, v30
+
+    invoke-virtual {v0, v1, v2}, Landroid/os/storage/IMountService$Stub;->mkdirs(Ljava/lang/String;Ljava/lang/String;)I
+
     move-result v33
 
-    .restart local v33       #resultCode:I
+    .restart local v33       #result:I
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
     move-object/from16 v0, p3
@@ -1486,6 +1532,7 @@
         0x1f -> :sswitch_1f
         0x20 -> :sswitch_20
         0x22 -> :sswitch_21
+        0x23 -> :sswitch_22
         0x5f4e5446 -> :sswitch_0
     .end sparse-switch
 .end method

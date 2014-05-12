@@ -41,7 +41,7 @@
 .end method
 
 .method public static newInstance(Ljava/lang/String;)Landroid/net/wifi/p2p/nsd/WifiP2pUpnpServiceRequest;
-    .locals 5
+    .locals 6
     .parameter "st"
 
     .prologue
@@ -61,23 +61,25 @@
     invoke-direct {v0}, Ljava/lang/StringBuffer;-><init>()V
 
     .local v0, sb:Ljava/lang/StringBuffer;
-    const-string v1, "%02x"
+    sget-object v1, Ljava/util/Locale;->US:Ljava/util/Locale;
 
-    const/4 v2, 0x1
+    const-string v2, "%02x"
 
-    new-array v2, v2, [Ljava/lang/Object;
+    const/4 v3, 0x1
 
-    const/4 v3, 0x0
+    new-array v3, v3, [Ljava/lang/Object;
 
-    const/16 v4, 0x10
+    const/4 v4, 0x0
 
-    invoke-static {v4}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+    const/16 v5, 0x10
 
-    move-result-object v4
+    invoke-static {v5}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
-    aput-object v4, v2, v3
+    move-result-object v5
 
-    invoke-static {v1, v2}, Ljava/lang/String;->format(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+    aput-object v5, v3, v4
+
+    invoke-static {v1, v2, v3}, Ljava/lang/String;->format(Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
 
     move-result-object v1
 

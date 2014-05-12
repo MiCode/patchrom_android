@@ -31,19 +31,21 @@
     .parameter "ctx"
 
     .prologue
-    new-instance v0, Landroid/app/ActivityManager;
+    const-string v2, "account"
 
-    invoke-virtual {p1}, Landroid/app/ContextImpl;->getOuterContext()Landroid/content/Context;
+    invoke-static {v2}, Landroid/os/ServiceManager;->getService(Ljava/lang/String;)Landroid/os/IBinder;
+
+    move-result-object v0
+
+    .local v0, b:Landroid/os/IBinder;
+    invoke-static {v0}, Landroid/accounts/IAccountManager$Stub;->asInterface(Landroid/os/IBinder;)Landroid/accounts/IAccountManager;
 
     move-result-object v1
 
-    iget-object v2, p1, Landroid/app/ContextImpl;->mMainThread:Landroid/app/ActivityThread;
+    .local v1, service:Landroid/accounts/IAccountManager;
+    new-instance v2, Landroid/accounts/AccountManager;
 
-    invoke-virtual {v2}, Landroid/app/ActivityThread;->getHandler()Landroid/os/Handler;
+    invoke-direct {v2, p1, v1}, Landroid/accounts/AccountManager;-><init>(Landroid/content/Context;Landroid/accounts/IAccountManager;)V
 
-    move-result-object v2
-
-    invoke-direct {v0, v1, v2}, Landroid/app/ActivityManager;-><init>(Landroid/content/Context;Landroid/os/Handler;)V
-
-    return-object v0
+    return-object v2
 .end method

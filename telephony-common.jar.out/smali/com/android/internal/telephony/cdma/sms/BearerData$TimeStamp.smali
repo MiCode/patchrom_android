@@ -52,7 +52,7 @@
 
     aget-byte v7, p0, v7
 
-    invoke-static {v7}, Lcom/android/internal/telephony/IccUtils;->cdmaBcdByteToInt(B)I
+    invoke-static {v7}, Lcom/android/internal/telephony/uicc/IccUtils;->cdmaBcdByteToInt(B)I
 
     move-result v6
 
@@ -83,7 +83,7 @@
 
     aget-byte v7, p0, v9
 
-    invoke-static {v7}, Lcom/android/internal/telephony/IccUtils;->cdmaBcdByteToInt(B)I
+    invoke-static {v7}, Lcom/android/internal/telephony/uicc/IccUtils;->cdmaBcdByteToInt(B)I
 
     move-result v3
 
@@ -115,7 +115,7 @@
 
     aget-byte v7, p0, v7
 
-    invoke-static {v7}, Lcom/android/internal/telephony/IccUtils;->cdmaBcdByteToInt(B)I
+    invoke-static {v7}, Lcom/android/internal/telephony/uicc/IccUtils;->cdmaBcdByteToInt(B)I
 
     move-result v0
 
@@ -138,7 +138,7 @@
 
     aget-byte v7, p0, v7
 
-    invoke-static {v7}, Lcom/android/internal/telephony/IccUtils;->cdmaBcdByteToInt(B)I
+    invoke-static {v7}, Lcom/android/internal/telephony/uicc/IccUtils;->cdmaBcdByteToInt(B)I
 
     move-result v1
 
@@ -161,7 +161,7 @@
 
     aget-byte v7, p0, v7
 
-    invoke-static {v7}, Lcom/android/internal/telephony/IccUtils;->cdmaBcdByteToInt(B)I
+    invoke-static {v7}, Lcom/android/internal/telephony/uicc/IccUtils;->cdmaBcdByteToInt(B)I
 
     move-result v2
 
@@ -182,7 +182,7 @@
 
     aget-byte v7, p0, v7
 
-    invoke-static {v7}, Lcom/android/internal/telephony/IccUtils;->cdmaBcdByteToInt(B)I
+    invoke-static {v7}, Lcom/android/internal/telephony/uicc/IccUtils;->cdmaBcdByteToInt(B)I
 
     move-result v4
 

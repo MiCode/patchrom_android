@@ -1,4 +1,4 @@
-.class Lcom/android/server/am/AppWaitingForDebuggerDialog;
+.class final Lcom/android/server/am/AppWaitingForDebuggerDialog;
 .super Lcom/android/server/am/BaseErrorDialog;
 .source "AppWaitingForDebuggerDialog.java"
 

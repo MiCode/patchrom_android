@@ -112,8 +112,9 @@
     throw v4
 .end method
 
-.method public keyDispatchingTimedOut()Z
+.method public keyDispatchingTimedOut(Ljava/lang/String;)Z
     .locals 6
+    .parameter "reason"
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -137,6 +138,8 @@
     const-string v3, "android.view.IApplicationToken"
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->writeInterfaceToken(Ljava/lang/String;)V
+
+    invoke-virtual {v0, p1}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
     iget-object v3, p0, Landroid/view/IApplicationToken$Stub$Proxy;->mRemote:Landroid/os/IBinder;
 

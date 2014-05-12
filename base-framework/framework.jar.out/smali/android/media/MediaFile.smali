@@ -890,13 +890,13 @@
 .end method
 
 .method public static getFileType(Ljava/lang/String;)Landroid/media/MediaFile$MediaFileType;
-    .locals 3
+    .locals 4
     .parameter "path"
 
     .prologue
-    const-string v1, "."
+    const/16 v1, 0x2e
 
-    invoke-virtual {p0, v1}, Ljava/lang/String;->lastIndexOf(Ljava/lang/String;)I
+    invoke-virtual {p0, v1}, Ljava/lang/String;->lastIndexOf(I)I
 
     move-result v0
 
@@ -917,7 +917,9 @@
 
     move-result-object v2
 
-    invoke-virtual {v2}, Ljava/lang/String;->toUpperCase()Ljava/lang/String;
+    sget-object v3, Ljava/util/Locale;->ROOT:Ljava/util/Locale;
+
+    invoke-virtual {v2, v3}, Ljava/lang/String;->toUpperCase(Ljava/util/Locale;)Ljava/lang/String;
 
     move-result-object v2
 
@@ -960,7 +962,7 @@
 .end method
 
 .method public static getFormatCode(Ljava/lang/String;Ljava/lang/String;)I
-    .locals 4
+    .locals 5
     .parameter "fileName"
     .parameter "mimeType"
 
@@ -1002,7 +1004,9 @@
 
     move-result-object v3
 
-    invoke-virtual {v3}, Ljava/lang/String;->toUpperCase()Ljava/lang/String;
+    sget-object v4, Ljava/util/Locale;->ROOT:Ljava/util/Locale;
+
+    invoke-virtual {v3, v4}, Ljava/lang/String;->toUpperCase(Ljava/util/Locale;)Ljava/lang/String;
 
     move-result-object v0
 

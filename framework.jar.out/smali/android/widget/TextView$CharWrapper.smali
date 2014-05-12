@@ -256,52 +256,6 @@
     return v0
 .end method
 
-.method public getTextRunAdvances(IIIII[FILandroid/graphics/Paint;I)F
-    .locals 10
-    .parameter "start"
-    .parameter "end"
-    .parameter "contextStart"
-    .parameter "contextEnd"
-    .parameter "flags"
-    .parameter "advances"
-    .parameter "advancesIndex"
-    .parameter "p"
-    .parameter "reserved"
-
-    .prologue
-    sub-int v3, p2, p1
-
-    .local v3, count:I
-    sub-int v5, p4, p3
-
-    .local v5, contextCount:I
-    iget-object v1, p0, Landroid/widget/TextView$CharWrapper;->mChars:[C
-
-    iget v0, p0, Landroid/widget/TextView$CharWrapper;->mStart:I
-
-    add-int v2, p1, v0
-
-    iget v0, p0, Landroid/widget/TextView$CharWrapper;->mStart:I
-
-    add-int v4, p3, v0
-
-    move-object/from16 v0, p8
-
-    move v6, p5
-
-    move-object/from16 v7, p6
-
-    move/from16 v8, p7
-
-    move/from16 v9, p9
-
-    invoke-virtual/range {v0 .. v9}, Landroid/graphics/Paint;->getTextRunAdvances([CIIIII[FII)F
-
-    move-result v0
-
-    return v0
-.end method
-
 .method public getTextRunCursor(IIIIILandroid/graphics/Paint;)I
     .locals 7
     .parameter "contextStart"

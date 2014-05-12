@@ -14,6 +14,8 @@
 
 .field public static final APPWIDGET_SERVICE:Ljava/lang/String; = "appwidget"
 
+.field public static final APP_OPS_SERVICE:Ljava/lang/String; = "appops"
+
 .field public static final AUDIO_SERVICE:Ljava/lang/String; = "audio"
 
 .field public static final BACKUP_SERVICE:Ljava/lang/String; = "backup"
@@ -34,15 +36,23 @@
 
 .field public static final BIND_NOT_VISIBLE:I = 0x40000000
 
-.field public static final BIND_VISIBLE:I = 0x100
+.field public static final BIND_SHOWING_UI:I = 0x20000000
+
+.field public static final BIND_VISIBLE:I = 0x10000000
 
 .field public static final BIND_WAIVE_PRIORITY:I = 0x20
 
 .field public static final BLUETOOTH_SERVICE:Ljava/lang/String; = "bluetooth"
 
+.field public static final CAMERA_SERVICE:Ljava/lang/String; = "camera"
+
+.field public static final CAPTIONING_SERVICE:Ljava/lang/String; = "captioning"
+
 .field public static final CLIPBOARD_SERVICE:Ljava/lang/String; = "clipboard"
 
 .field public static final CONNECTIVITY_SERVICE:Ljava/lang/String; = "connectivity"
+
+.field public static final CONSUMER_IR_SERVICE:Ljava/lang/String; = "consumer_ir"
 
 .field public static final CONTEXT_IGNORE_SECURITY:I = 0x2
 
@@ -104,9 +114,11 @@
 
 .field public static final POWER_SERVICE:Ljava/lang/String; = "power"
 
-.field public static final SCHEDULING_POLICY_SERVICE:Ljava/lang/String; = "scheduling_policy"
+.field public static final PRINT_SERVICE:Ljava/lang/String; = "print"
 
 .field public static final SEARCH_SERVICE:Ljava/lang/String; = "search"
+
+.field public static final SECURITY_SERVICE:Ljava/lang/String; = "security"
 
 .field public static final SENSOR_SERVICE:Ljava/lang/String; = "sensor"
 
@@ -121,8 +133,6 @@
 .field public static final TELEPHONY_SERVICE:Ljava/lang/String; = "phone"
 
 .field public static final TEXT_SERVICES_MANAGER_SERVICE:Ljava/lang/String; = "textservices"
-
-.field public static final THROTTLE_SERVICE:Ljava/lang/String; = "throttle"
 
 .field public static final UI_MODE_SERVICE:Ljava/lang/String; = "uimode"
 
@@ -159,11 +169,30 @@
 .end method
 
 .method public bindService(Landroid/content/Intent;Landroid/content/ServiceConnection;II)Z
-    .locals 2
+    .locals 1
     .parameter "service"
     .parameter "conn"
     .parameter "flags"
     .parameter "userHandle"
+
+    .prologue
+    new-instance v0, Landroid/os/UserHandle;
+
+    invoke-direct {v0, p4}, Landroid/os/UserHandle;-><init>(I)V
+
+    invoke-virtual {p0, p1, p2, p3, v0}, Landroid/content/Context;->bindServiceAsUser(Landroid/content/Intent;Landroid/content/ServiceConnection;ILandroid/os/UserHandle;)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public bindServiceAsUser(Landroid/content/Intent;Landroid/content/ServiceConnection;ILandroid/os/UserHandle;)Z
+    .locals 2
+    .parameter "service"
+    .parameter "conn"
+    .parameter "flags"
+    .parameter "user"
 
     .prologue
     new-instance v0, Ljava/lang/RuntimeException;
@@ -271,13 +300,13 @@
 .method public abstract getAssets()Landroid/content/res/AssetManager;
 .end method
 
+.method public abstract getBasePackageName()Ljava/lang/String;
+.end method
+
 .method public abstract getCacheDir()Ljava/io/File;
 .end method
 
 .method public abstract getClassLoader()Ljava/lang/ClassLoader;
-.end method
-
-.method public abstract getCompatibilityInfo(I)Landroid/view/CompatibilityInfoHolder;
 .end method
 
 .method public abstract getContentResolver()Landroid/content/ContentResolver;
@@ -289,10 +318,19 @@
 .method public abstract getDir(Ljava/lang/String;I)Ljava/io/File;
 .end method
 
+.method public abstract getDisplayAdjustments(I)Landroid/view/DisplayAdjustments;
+.end method
+
 .method public abstract getExternalCacheDir()Ljava/io/File;
 .end method
 
+.method public abstract getExternalCacheDirs()[Ljava/io/File;
+.end method
+
 .method public abstract getExternalFilesDir(Ljava/lang/String;)Ljava/io/File;
+.end method
+
+.method public abstract getExternalFilesDirs(Ljava/lang/String;)[Ljava/io/File;
 .end method
 
 .method public abstract getFileStreamPath(Ljava/lang/String;)Ljava/io/File;
@@ -305,6 +343,12 @@
 .end method
 
 .method public abstract getObbDir()Ljava/io/File;
+.end method
+
+.method public abstract getObbDirs()[Ljava/io/File;
+.end method
+
+.method public abstract getOpPackageName()Ljava/lang/String;
 .end method
 
 .method public abstract getPackageCodePath()Ljava/lang/String;
@@ -390,6 +434,9 @@
     const/4 v0, 0x0
 
     return v0
+.end method
+
+.method public abstract getUserId()I
 .end method
 
 .method public abstract getWallpaper()Landroid/graphics/drawable/Drawable;
@@ -560,6 +607,9 @@
 .method public abstract sendBroadcast(Landroid/content/Intent;Ljava/lang/String;)V
 .end method
 
+.method public abstract sendBroadcast(Landroid/content/Intent;Ljava/lang/String;I)V
+.end method
+
 .method public abstract sendBroadcastAsUser(Landroid/content/Intent;Landroid/os/UserHandle;)V
 .end method
 
@@ -567,6 +617,9 @@
 .end method
 
 .method public abstract sendOrderedBroadcast(Landroid/content/Intent;Ljava/lang/String;)V
+.end method
+
+.method public abstract sendOrderedBroadcast(Landroid/content/Intent;Ljava/lang/String;ILandroid/content/BroadcastReceiver;Landroid/os/Handler;ILjava/lang/String;Landroid/os/Bundle;)V
 .end method
 
 .method public abstract sendOrderedBroadcast(Landroid/content/Intent;Ljava/lang/String;Landroid/content/BroadcastReceiver;Landroid/os/Handler;ILjava/lang/String;Landroid/os/Bundle;)V

@@ -491,7 +491,7 @@
 .end method
 
 .method public getHexString()Ljava/lang/String;
-    .locals 8
+    .locals 9
 
     .prologue
     const-string v1, "0x"
@@ -522,23 +522,25 @@
 
     move-result-object v3
 
-    const-string v4, "%02x"
+    sget-object v4, Ljava/util/Locale;->US:Ljava/util/Locale;
 
-    const/4 v5, 0x1
+    const-string v5, "%02x"
 
-    new-array v5, v5, [Ljava/lang/Object;
+    const/4 v6, 0x1
 
-    const/4 v6, 0x0
+    new-array v6, v6, [Ljava/lang/Object;
 
-    aget-byte v7, v2, v0
+    const/4 v7, 0x0
 
-    invoke-static {v7}, Ljava/lang/Byte;->valueOf(B)Ljava/lang/Byte;
+    aget-byte v8, v2, v0
 
-    move-result-object v7
+    invoke-static {v8}, Ljava/lang/Byte;->valueOf(B)Ljava/lang/Byte;
 
-    aput-object v7, v5, v6
+    move-result-object v8
 
-    invoke-static {v4, v5}, Ljava/lang/String;->format(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+    aput-object v8, v6, v7
+
+    invoke-static {v4, v5, v6}, Ljava/lang/String;->format(Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
 
     move-result-object v4
 

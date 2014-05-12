@@ -66,7 +66,11 @@
 
 .field public static final LEFT:Landroid/widget/GridLayout$Alignment; = null
 
+.field static final LOG_PRINTER:Landroid/util/Printer; = null
+
 .field static final MAX_SIZE:I = 0x186a0
+
+.field static final NO_PRINTER:Landroid/util/Printer; = null
 
 .field private static final ORIENTATION:I = 0x0
 
@@ -77,8 +81,6 @@
 .field private static final ROW_ORDER_PRESERVED:I = 0x2
 
 .field public static final START:Landroid/widget/GridLayout$Alignment; = null
-
-.field static final TAG:Ljava/lang/String; = null
 
 .field public static final TOP:Landroid/widget/GridLayout$Alignment; = null
 
@@ -96,49 +98,63 @@
 
 
 # instance fields
-.field alignmentMode:I
+.field mAlignmentMode:I
 
-.field defaultGap:I
+.field mDefaultGap:I
 
-.field final horizontalAxis:Landroid/widget/GridLayout$Axis;
+.field final mHorizontalAxis:Landroid/widget/GridLayout$Axis;
 
-.field lastLayoutParamsHashCode:I
+.field mLastLayoutParamsHashCode:I
 
-.field orientation:I
+.field mOrientation:I
 
-.field useDefaultMargins:Z
+.field mPrinter:Landroid/util/Printer;
 
-.field final verticalAxis:Landroid/widget/GridLayout$Axis;
+.field mUseDefaultMargins:Z
+
+.field final mVerticalAxis:Landroid/widget/GridLayout$Axis;
 
 
 # direct methods
 .method static constructor <clinit>()V
-    .locals 2
+    .locals 3
 
     .prologue
-    const-class v0, Landroid/widget/GridLayout;
+    new-instance v0, Landroid/util/LogPrinter;
 
-    invoke-virtual {v0}, Ljava/lang/Class;->getName()Ljava/lang/String;
+    const/4 v1, 0x3
 
-    move-result-object v0
+    const-class v2, Landroid/widget/GridLayout;
 
-    sput-object v0, Landroid/widget/GridLayout;->TAG:Ljava/lang/String;
+    invoke-virtual {v2}, Ljava/lang/Class;->getName()Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-direct {v0, v1, v2}, Landroid/util/LogPrinter;-><init>(ILjava/lang/String;)V
+
+    sput-object v0, Landroid/widget/GridLayout;->LOG_PRINTER:Landroid/util/Printer;
 
     new-instance v0, Landroid/widget/GridLayout$1;
 
     invoke-direct {v0}, Landroid/widget/GridLayout$1;-><init>()V
 
-    sput-object v0, Landroid/widget/GridLayout;->UNDEFINED_ALIGNMENT:Landroid/widget/GridLayout$Alignment;
+    sput-object v0, Landroid/widget/GridLayout;->NO_PRINTER:Landroid/util/Printer;
 
     new-instance v0, Landroid/widget/GridLayout$2;
 
     invoke-direct {v0}, Landroid/widget/GridLayout$2;-><init>()V
 
-    sput-object v0, Landroid/widget/GridLayout;->LEADING:Landroid/widget/GridLayout$Alignment;
+    sput-object v0, Landroid/widget/GridLayout;->UNDEFINED_ALIGNMENT:Landroid/widget/GridLayout$Alignment;
 
     new-instance v0, Landroid/widget/GridLayout$3;
 
     invoke-direct {v0}, Landroid/widget/GridLayout$3;-><init>()V
+
+    sput-object v0, Landroid/widget/GridLayout;->LEADING:Landroid/widget/GridLayout$Alignment;
+
+    new-instance v0, Landroid/widget/GridLayout$4;
+
+    invoke-direct {v0}, Landroid/widget/GridLayout$4;-><init>()V
 
     sput-object v0, Landroid/widget/GridLayout;->TRAILING:Landroid/widget/GridLayout$Alignment;
 
@@ -178,21 +194,21 @@
 
     sput-object v0, Landroid/widget/GridLayout;->RIGHT:Landroid/widget/GridLayout$Alignment;
 
-    new-instance v0, Landroid/widget/GridLayout$5;
-
-    invoke-direct {v0}, Landroid/widget/GridLayout$5;-><init>()V
-
-    sput-object v0, Landroid/widget/GridLayout;->CENTER:Landroid/widget/GridLayout$Alignment;
-
     new-instance v0, Landroid/widget/GridLayout$6;
 
     invoke-direct {v0}, Landroid/widget/GridLayout$6;-><init>()V
 
-    sput-object v0, Landroid/widget/GridLayout;->BASELINE:Landroid/widget/GridLayout$Alignment;
+    sput-object v0, Landroid/widget/GridLayout;->CENTER:Landroid/widget/GridLayout$Alignment;
 
     new-instance v0, Landroid/widget/GridLayout$7;
 
     invoke-direct {v0}, Landroid/widget/GridLayout$7;-><init>()V
+
+    sput-object v0, Landroid/widget/GridLayout;->BASELINE:Landroid/widget/GridLayout$Alignment;
+
+    new-instance v0, Landroid/widget/GridLayout$8;
+
+    invoke-direct {v0}, Landroid/widget/GridLayout$8;-><init>()V
 
     sput-object v0, Landroid/widget/GridLayout;->FILL:Landroid/widget/GridLayout$Alignment;
 
@@ -243,33 +259,37 @@
 
     invoke-direct {v1, p0, v3, v4}, Landroid/widget/GridLayout$Axis;-><init>(Landroid/widget/GridLayout;ZLandroid/widget/GridLayout$1;)V
 
-    iput-object v1, p0, Landroid/widget/GridLayout;->horizontalAxis:Landroid/widget/GridLayout$Axis;
+    iput-object v1, p0, Landroid/widget/GridLayout;->mHorizontalAxis:Landroid/widget/GridLayout$Axis;
 
     new-instance v1, Landroid/widget/GridLayout$Axis;
 
     invoke-direct {v1, p0, v2, v4}, Landroid/widget/GridLayout$Axis;-><init>(Landroid/widget/GridLayout;ZLandroid/widget/GridLayout$1;)V
 
-    iput-object v1, p0, Landroid/widget/GridLayout;->verticalAxis:Landroid/widget/GridLayout$Axis;
+    iput-object v1, p0, Landroid/widget/GridLayout;->mVerticalAxis:Landroid/widget/GridLayout$Axis;
 
-    iput v2, p0, Landroid/widget/GridLayout;->orientation:I
+    iput v2, p0, Landroid/widget/GridLayout;->mOrientation:I
 
-    iput-boolean v2, p0, Landroid/widget/GridLayout;->useDefaultMargins:Z
+    iput-boolean v2, p0, Landroid/widget/GridLayout;->mUseDefaultMargins:Z
 
-    iput v3, p0, Landroid/widget/GridLayout;->alignmentMode:I
+    iput v3, p0, Landroid/widget/GridLayout;->mAlignmentMode:I
 
-    iput v2, p0, Landroid/widget/GridLayout;->lastLayoutParamsHashCode:I
+    iput v2, p0, Landroid/widget/GridLayout;->mLastLayoutParamsHashCode:I
+
+    sget-object v1, Landroid/widget/GridLayout;->LOG_PRINTER:Landroid/util/Printer;
+
+    iput-object v1, p0, Landroid/widget/GridLayout;->mPrinter:Landroid/util/Printer;
 
     invoke-virtual {p1}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
 
     move-result-object v1
 
-    const v2, 0x1050048
+    const v2, 0x105004a
 
     invoke-virtual {v1, v2}, Landroid/content/res/Resources;->getDimensionPixelOffset(I)I
 
     move-result v1
 
-    iput v1, p0, Landroid/widget/GridLayout;->defaultGap:I
+    iput v1, p0, Landroid/widget/GridLayout;->mDefaultGap:I
 
     sget-object v1, Lcom/android/internal/R$styleable;->GridLayout:[I
 
@@ -371,6 +391,29 @@
     invoke-static {p0}, Landroid/widget/GridLayout;->handleInvalidParams(Ljava/lang/String;)V
 
     return-void
+.end method
+
+.method static adjust(II)I
+    .locals 2
+    .parameter "measureSpec"
+    .parameter "delta"
+
+    .prologue
+    add-int v0, p0, p1
+
+    invoke-static {v0}, Landroid/view/View$MeasureSpec;->getSize(I)I
+
+    move-result v0
+
+    invoke-static {p0}, Landroid/view/View$MeasureSpec;->getMode(I)I
+
+    move-result v1
+
+    invoke-static {v0, v1}, Landroid/view/View$MeasureSpec;->makeMeasureSpec(II)I
+
+    move-result v0
+
+    return v0
 .end method
 
 .method static append([Ljava/lang/Object;[Ljava/lang/Object;)[Ljava/lang/Object;
@@ -502,7 +545,7 @@
     :cond_0
     if-eqz p2, :cond_5
 
-    iget-object v0, p0, Landroid/widget/GridLayout;->horizontalAxis:Landroid/widget/GridLayout$Axis;
+    iget-object v0, p0, Landroid/widget/GridLayout;->mHorizontalAxis:Landroid/widget/GridLayout$Axis;
 
     .local v0, axis:Landroid/widget/GridLayout$Axis;
     :goto_2
@@ -604,7 +647,7 @@
     .restart local v3       #span:Landroid/widget/GridLayout$Interval;
     .restart local v4       #spec:Landroid/widget/GridLayout$Spec;
     :cond_5
-    iget-object v0, p0, Landroid/widget/GridLayout;->verticalAxis:Landroid/widget/GridLayout$Axis;
+    iget-object v0, p0, Landroid/widget/GridLayout;->mVerticalAxis:Landroid/widget/GridLayout$Axis;
 
     goto :goto_2
 .end method
@@ -718,7 +761,7 @@
     .locals 2
 
     .prologue
-    iget v0, p0, Landroid/widget/GridLayout;->lastLayoutParamsHashCode:I
+    iget v0, p0, Landroid/widget/GridLayout;->mLastLayoutParamsHashCode:I
 
     if-nez v0, :cond_1
 
@@ -728,14 +771,14 @@
 
     move-result v0
 
-    iput v0, p0, Landroid/widget/GridLayout;->lastLayoutParamsHashCode:I
+    iput v0, p0, Landroid/widget/GridLayout;->mLastLayoutParamsHashCode:I
 
     :cond_0
     :goto_0
     return-void
 
     :cond_1
-    iget v0, p0, Landroid/widget/GridLayout;->lastLayoutParamsHashCode:I
+    iget v0, p0, Landroid/widget/GridLayout;->mLastLayoutParamsHashCode:I
 
     invoke-direct {p0}, Landroid/widget/GridLayout;->computeLayoutParamsHashCode()I
 
@@ -743,11 +786,11 @@
 
     if-eq v0, v1, :cond_0
 
-    sget-object v0, Landroid/widget/GridLayout;->TAG:Ljava/lang/String;
+    iget-object v0, p0, Landroid/widget/GridLayout;->mPrinter:Landroid/util/Printer;
 
     const-string v1, "The fields of some layout parameters were modified in between layout operations. Check the javadoc for GridLayout.LayoutParams#rowSpec."
 
-    invoke-static {v0, v1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-interface {v0, v1}, Landroid/util/Printer;->println(Ljava/lang/String;)V
 
     invoke-direct {p0}, Landroid/widget/GridLayout;->invalidateStructure()V
 
@@ -762,15 +805,15 @@
     .parameter "rtl"
 
     .prologue
-    new-instance v0, Landroid/widget/GridLayout$4;
+    new-instance v0, Landroid/widget/GridLayout$5;
 
-    invoke-direct {v0, p0, p1}, Landroid/widget/GridLayout$4;-><init>(Landroid/widget/GridLayout$Alignment;Landroid/widget/GridLayout$Alignment;)V
+    invoke-direct {v0, p0, p1}, Landroid/widget/GridLayout$5;-><init>(Landroid/widget/GridLayout$Alignment;Landroid/widget/GridLayout$Alignment;)V
 
     return-object v0
 .end method
 
 .method private drawLine(Landroid/graphics/Canvas;IIIILandroid/graphics/Paint;)V
-    .locals 9
+    .locals 7
     .parameter "graphics"
     .parameter "x1"
     .parameter "y1"
@@ -779,16 +822,6 @@
     .parameter "paint"
 
     .prologue
-    invoke-virtual {p0}, Landroid/widget/GridLayout;->getPaddingLeft()I
-
-    move-result v6
-
-    .local v6, dx:I
-    invoke-virtual {p0}, Landroid/widget/GridLayout;->getPaddingTop()I
-
-    move-result v7
-
-    .local v7, dy:I
     invoke-virtual {p0}, Landroid/widget/GridLayout;->isLayoutRtl()Z
 
     move-result v0
@@ -797,28 +830,20 @@
 
     invoke-virtual {p0}, Landroid/widget/GridLayout;->getWidth()I
 
-    move-result v8
+    move-result v6
 
-    .local v8, width:I
-    sub-int v0, v8, v6
-
-    sub-int/2addr v0, p2
+    .local v6, width:I
+    sub-int v0, v6, p2
 
     int-to-float v1, v0
 
-    add-int v0, v7, p3
+    int-to-float v2, p3
 
-    int-to-float v2, v0
-
-    sub-int v0, v8, v6
-
-    sub-int/2addr v0, p4
+    sub-int v0, v6, p4
 
     int-to-float v3, v0
 
-    add-int v0, v7, p5
-
-    int-to-float v4, v0
+    int-to-float v4, p5
 
     move-object v0, p1
 
@@ -826,26 +851,18 @@
 
     invoke-virtual/range {v0 .. v5}, Landroid/graphics/Canvas;->drawLine(FFFFLandroid/graphics/Paint;)V
 
-    .end local v8           #width:I
+    .end local v6           #width:I
     :goto_0
     return-void
 
     :cond_0
-    add-int v0, v6, p2
+    int-to-float v1, p2
 
-    int-to-float v1, v0
+    int-to-float v2, p3
 
-    add-int v0, v7, p3
+    int-to-float v3, p4
 
-    int-to-float v2, v0
-
-    add-int v0, v6, p4
-
-    int-to-float v3, v0
-
-    add-int v0, v7, p5
-
-    int-to-float v4, v0
+    int-to-float v4, p5
 
     move-object v0, p1
 
@@ -1010,7 +1027,7 @@
 
     const/4 v5, 0x0
 
-    iget-boolean v6, p0, Landroid/widget/GridLayout;->useDefaultMargins:Z
+    iget-boolean v6, p0, Landroid/widget/GridLayout;->mUseDefaultMargins:Z
 
     if-nez v6, :cond_0
 
@@ -1026,7 +1043,7 @@
     :goto_1
     if-eqz p3, :cond_3
 
-    iget-object v0, p0, Landroid/widget/GridLayout;->horizontalAxis:Landroid/widget/GridLayout$Axis;
+    iget-object v0, p0, Landroid/widget/GridLayout;->mHorizontalAxis:Landroid/widget/GridLayout$Axis;
 
     .local v0, axis:Landroid/widget/GridLayout$Axis;
     :goto_2
@@ -1074,7 +1091,7 @@
 
     .restart local v4       #spec:Landroid/widget/GridLayout$Spec;
     :cond_3
-    iget-object v0, p0, Landroid/widget/GridLayout;->verticalAxis:Landroid/widget/GridLayout$Axis;
+    iget-object v0, p0, Landroid/widget/GridLayout;->mVerticalAxis:Landroid/widget/GridLayout$Axis;
 
     goto :goto_2
 
@@ -1131,7 +1148,7 @@
     return v0
 
     :cond_0
-    iget v0, p0, Landroid/widget/GridLayout;->defaultGap:I
+    iget v0, p0, Landroid/widget/GridLayout;->mDefaultGap:I
 
     div-int/lit8 v0, v0, 0x2
 
@@ -1146,19 +1163,11 @@
     .parameter "leading"
 
     .prologue
-    if-eqz p2, :cond_0
-
-    const/4 v0, 0x0
-
-    :goto_0
-    return v0
-
-    :cond_0
     invoke-direct {p0, p1, p3, p4}, Landroid/widget/GridLayout;->getDefaultMargin(Landroid/view/View;ZZ)I
 
     move-result v0
 
-    goto :goto_0
+    return v0
 .end method
 
 .method private getMargin(Landroid/view/View;ZZ)I
@@ -1168,7 +1177,7 @@
     .parameter "leading"
 
     .prologue
-    iget v5, p0, Landroid/widget/GridLayout;->alignmentMode:I
+    iget v5, p0, Landroid/widget/GridLayout;->mAlignmentMode:I
 
     const/4 v6, 0x1
 
@@ -1184,7 +1193,7 @@
     :cond_0
     if-eqz p2, :cond_1
 
-    iget-object v0, p0, Landroid/widget/GridLayout;->horizontalAxis:Landroid/widget/GridLayout$Axis;
+    iget-object v0, p0, Landroid/widget/GridLayout;->mHorizontalAxis:Landroid/widget/GridLayout$Axis;
 
     .local v0, axis:Landroid/widget/GridLayout$Axis;
     :goto_1
@@ -1225,7 +1234,7 @@
     .end local v3           #margins:[I
     .end local v4           #spec:Landroid/widget/GridLayout$Spec;
     :cond_1
-    iget-object v0, p0, Landroid/widget/GridLayout;->verticalAxis:Landroid/widget/GridLayout$Axis;
+    iget-object v0, p0, Landroid/widget/GridLayout;->mVerticalAxis:Landroid/widget/GridLayout$Axis;
 
     goto :goto_1
 
@@ -1254,65 +1263,26 @@
 .end method
 
 .method private getMeasurement(Landroid/view/View;Z)I
-    .locals 4
+    .locals 1
     .parameter "c"
     .parameter "horizontal"
 
     .prologue
-    if-eqz p2, :cond_1
+    if-eqz p2, :cond_0
 
     invoke-virtual {p1}, Landroid/view/View;->getMeasuredWidth()I
 
-    move-result v1
+    move-result v0
 
-    .local v1, result:I
     :goto_0
-    invoke-virtual {p0}, Landroid/widget/GridLayout;->getLayoutMode()I
+    return v0
 
-    move-result v2
-
-    const/4 v3, 0x1
-
-    if-ne v2, v3, :cond_0
-
-    invoke-virtual {p1}, Landroid/view/View;->getOpticalInsets()Landroid/graphics/Insets;
-
-    move-result-object v0
-
-    .local v0, insets:Landroid/graphics/Insets;
-    if-eqz p2, :cond_2
-
-    iget v2, v0, Landroid/graphics/Insets;->left:I
-
-    iget v3, v0, Landroid/graphics/Insets;->right:I
-
-    add-int/2addr v2, v3
-
-    :goto_1
-    sub-int/2addr v1, v2
-
-    .end local v0           #insets:Landroid/graphics/Insets;
-    .end local v1           #result:I
     :cond_0
-    return v1
-
-    :cond_1
     invoke-virtual {p1}, Landroid/view/View;->getMeasuredHeight()I
 
-    move-result v1
+    move-result v0
 
     goto :goto_0
-
-    .restart local v0       #insets:Landroid/graphics/Insets;
-    .restart local v1       #result:I
-    :cond_2
-    iget v2, v0, Landroid/graphics/Insets;->top:I
-
-    iget v3, v0, Landroid/graphics/Insets;->bottom:I
-
-    add-int/2addr v2, v3
-
-    goto :goto_1
 .end method
 
 .method private getTotalMargin(Landroid/view/View;Z)I
@@ -1374,13 +1344,13 @@
     .prologue
     const/4 v0, 0x0
 
-    iput v0, p0, Landroid/widget/GridLayout;->lastLayoutParamsHashCode:I
+    iput v0, p0, Landroid/widget/GridLayout;->mLastLayoutParamsHashCode:I
 
-    iget-object v0, p0, Landroid/widget/GridLayout;->horizontalAxis:Landroid/widget/GridLayout$Axis;
+    iget-object v0, p0, Landroid/widget/GridLayout;->mHorizontalAxis:Landroid/widget/GridLayout$Axis;
 
     invoke-virtual {v0}, Landroid/widget/GridLayout$Axis;->invalidateStructure()V
 
-    iget-object v0, p0, Landroid/widget/GridLayout;->verticalAxis:Landroid/widget/GridLayout$Axis;
+    iget-object v0, p0, Landroid/widget/GridLayout;->mVerticalAxis:Landroid/widget/GridLayout$Axis;
 
     invoke-virtual {v0}, Landroid/widget/GridLayout$Axis;->invalidateStructure()V
 
@@ -1393,19 +1363,19 @@
     .locals 1
 
     .prologue
-    iget-object v0, p0, Landroid/widget/GridLayout;->horizontalAxis:Landroid/widget/GridLayout$Axis;
+    iget-object v0, p0, Landroid/widget/GridLayout;->mHorizontalAxis:Landroid/widget/GridLayout$Axis;
 
     if-eqz v0, :cond_0
 
-    iget-object v0, p0, Landroid/widget/GridLayout;->verticalAxis:Landroid/widget/GridLayout$Axis;
+    iget-object v0, p0, Landroid/widget/GridLayout;->mVerticalAxis:Landroid/widget/GridLayout$Axis;
 
     if-eqz v0, :cond_0
 
-    iget-object v0, p0, Landroid/widget/GridLayout;->horizontalAxis:Landroid/widget/GridLayout$Axis;
+    iget-object v0, p0, Landroid/widget/GridLayout;->mHorizontalAxis:Landroid/widget/GridLayout$Axis;
 
     invoke-virtual {v0}, Landroid/widget/GridLayout$Axis;->invalidateValues()V
 
-    iget-object v0, p0, Landroid/widget/GridLayout;->verticalAxis:Landroid/widget/GridLayout$Axis;
+    iget-object v0, p0, Landroid/widget/GridLayout;->mVerticalAxis:Landroid/widget/GridLayout$Axis;
 
     invoke-virtual {v0}, Landroid/widget/GridLayout$Axis;->invalidateValues()V
 
@@ -1446,7 +1416,7 @@
 .end method
 
 .method private measureChildWithMargins2(Landroid/view/View;IIII)V
-    .locals 4
+    .locals 3
     .parameter "child"
     .parameter "parentWidthSpec"
     .parameter "parentHeightSpec"
@@ -1454,38 +1424,22 @@
     .parameter "childHeight"
 
     .prologue
-    iget v2, p0, Landroid/widget/GridLayout;->mPaddingLeft:I
+    const/4 v2, 0x1
 
-    iget v3, p0, Landroid/widget/GridLayout;->mPaddingRight:I
+    invoke-direct {p0, p1, v2}, Landroid/widget/GridLayout;->getTotalMargin(Landroid/view/View;Z)I
 
-    add-int/2addr v2, v3
-
-    const/4 v3, 0x1
-
-    invoke-direct {p0, p1, v3}, Landroid/widget/GridLayout;->getTotalMargin(Landroid/view/View;Z)I
-
-    move-result v3
-
-    add-int/2addr v2, v3
+    move-result v2
 
     invoke-static {p2, v2, p4}, Landroid/widget/GridLayout;->getChildMeasureSpec(III)I
 
     move-result v1
 
     .local v1, childWidthSpec:I
-    iget v2, p0, Landroid/widget/GridLayout;->mPaddingTop:I
+    const/4 v2, 0x0
 
-    iget v3, p0, Landroid/widget/GridLayout;->mPaddingBottom:I
+    invoke-direct {p0, p1, v2}, Landroid/widget/GridLayout;->getTotalMargin(Landroid/view/View;Z)I
 
-    add-int/2addr v2, v3
-
-    const/4 v3, 0x0
-
-    invoke-direct {p0, p1, v3}, Landroid/widget/GridLayout;->getTotalMargin(Landroid/view/View;Z)I
-
-    move-result v3
-
-    add-int/2addr v2, v3
+    move-result v2
 
     invoke-static {p3, v2, p5}, Landroid/widget/GridLayout;->getChildMeasureSpec(III)I
 
@@ -1571,7 +1525,7 @@
     :cond_2
     move-object/from16 v0, p0
 
-    iget v2, v0, Landroid/widget/GridLayout;->orientation:I
+    iget v2, v0, Landroid/widget/GridLayout;->mOrientation:I
 
     if-nez v2, :cond_3
 
@@ -1608,7 +1562,7 @@
 
     move-object/from16 v0, p0
 
-    iget-object v14, v0, Landroid/widget/GridLayout;->horizontalAxis:Landroid/widget/GridLayout$Axis;
+    iget-object v14, v0, Landroid/widget/GridLayout;->mHorizontalAxis:Landroid/widget/GridLayout$Axis;
 
     .local v14, axis:Landroid/widget/GridLayout$Axis;
     :goto_4
@@ -1686,7 +1640,7 @@
     :cond_5
     move-object/from16 v0, p0
 
-    iget-object v14, v0, Landroid/widget/GridLayout;->verticalAxis:Landroid/widget/GridLayout$Axis;
+    iget-object v14, v0, Landroid/widget/GridLayout;->mVerticalAxis:Landroid/widget/GridLayout$Axis;
 
     goto :goto_4
 
@@ -1862,7 +1816,7 @@
     .prologue
     move-object/from16 v0, p0
 
-    iget v0, v0, Landroid/widget/GridLayout;->orientation:I
+    iget v0, v0, Landroid/widget/GridLayout;->mOrientation:I
 
     move/from16 v19, v0
 
@@ -1876,7 +1830,7 @@
 
     move-object/from16 v0, p0
 
-    iget-object v3, v0, Landroid/widget/GridLayout;->horizontalAxis:Landroid/widget/GridLayout$Axis;
+    iget-object v3, v0, Landroid/widget/GridLayout;->mHorizontalAxis:Landroid/widget/GridLayout$Axis;
 
     .local v3, axis:Landroid/widget/GridLayout$Axis;
     :goto_1
@@ -2033,7 +1987,7 @@
     :cond_4
     move-object/from16 v0, p0
 
-    iget-object v3, v0, Landroid/widget/GridLayout;->verticalAxis:Landroid/widget/GridLayout$Axis;
+    iget-object v3, v0, Landroid/widget/GridLayout;->mVerticalAxis:Landroid/widget/GridLayout$Axis;
 
     goto :goto_1
 
@@ -2272,7 +2226,7 @@
     .locals 1
 
     .prologue
-    iget v0, p0, Landroid/widget/GridLayout;->alignmentMode:I
+    iget v0, p0, Landroid/widget/GridLayout;->mAlignmentMode:I
 
     return v0
 .end method
@@ -2281,7 +2235,7 @@
     .locals 1
 
     .prologue
-    iget-object v0, p0, Landroid/widget/GridLayout;->horizontalAxis:Landroid/widget/GridLayout$Axis;
+    iget-object v0, p0, Landroid/widget/GridLayout;->mHorizontalAxis:Landroid/widget/GridLayout$Axis;
 
     invoke-virtual {v0}, Landroid/widget/GridLayout$Axis;->getCount()I
 
@@ -2391,16 +2345,25 @@
     .locals 1
 
     .prologue
-    iget v0, p0, Landroid/widget/GridLayout;->orientation:I
+    iget v0, p0, Landroid/widget/GridLayout;->mOrientation:I
 
     return v0
+.end method
+
+.method public getPrinter()Landroid/util/Printer;
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Landroid/widget/GridLayout;->mPrinter:Landroid/util/Printer;
+
+    return-object v0
 .end method
 
 .method public getRowCount()I
     .locals 1
 
     .prologue
-    iget-object v0, p0, Landroid/widget/GridLayout;->verticalAxis:Landroid/widget/GridLayout$Axis;
+    iget-object v0, p0, Landroid/widget/GridLayout;->mVerticalAxis:Landroid/widget/GridLayout$Axis;
 
     invoke-virtual {v0}, Landroid/widget/GridLayout$Axis;->getCount()I
 
@@ -2413,7 +2376,7 @@
     .locals 1
 
     .prologue
-    iget-boolean v0, p0, Landroid/widget/GridLayout;->useDefaultMargins:Z
+    iget-boolean v0, p0, Landroid/widget/GridLayout;->mUseDefaultMargins:Z
 
     return v0
 .end method
@@ -2422,7 +2385,7 @@
     .locals 1
 
     .prologue
-    iget-object v0, p0, Landroid/widget/GridLayout;->horizontalAxis:Landroid/widget/GridLayout$Axis;
+    iget-object v0, p0, Landroid/widget/GridLayout;->mHorizontalAxis:Landroid/widget/GridLayout$Axis;
 
     invoke-virtual {v0}, Landroid/widget/GridLayout$Axis;->isOrderPreserved()Z
 
@@ -2435,7 +2398,7 @@
     .locals 1
 
     .prologue
-    iget-object v0, p0, Landroid/widget/GridLayout;->verticalAxis:Landroid/widget/GridLayout$Axis;
+    iget-object v0, p0, Landroid/widget/GridLayout;->mVerticalAxis:Landroid/widget/GridLayout$Axis;
 
     invoke-virtual {v0}, Landroid/widget/GridLayout$Axis;->isOrderPreserved()Z
 
@@ -2467,265 +2430,251 @@
 .end method
 
 .method protected onDebugDraw(Landroid/graphics/Canvas;)V
-    .locals 22
+    .locals 20
     .parameter "canvas"
 
     .prologue
-    invoke-virtual/range {p0 .. p0}, Landroid/widget/GridLayout;->getHeight()I
+    new-instance v7, Landroid/graphics/Paint;
 
-    move-result v2
+    invoke-direct {v7}, Landroid/graphics/Paint;-><init>()V
 
-    invoke-virtual/range {p0 .. p0}, Landroid/widget/GridLayout;->getPaddingTop()I
+    .local v7, paint:Landroid/graphics/Paint;
+    sget-object v1, Landroid/graphics/Paint$Style;->STROKE:Landroid/graphics/Paint$Style;
 
-    move-result v3
+    invoke-virtual {v7, v1}, Landroid/graphics/Paint;->setStyle(Landroid/graphics/Paint$Style;)V
 
-    sub-int/2addr v2, v3
+    const/16 v1, 0x32
 
-    invoke-virtual/range {p0 .. p0}, Landroid/widget/GridLayout;->getPaddingBottom()I
-
-    move-result v3
-
-    sub-int v16, v2, v3
-
-    .local v16, height:I
-    invoke-virtual/range {p0 .. p0}, Landroid/widget/GridLayout;->getWidth()I
-
-    move-result v2
-
-    invoke-virtual/range {p0 .. p0}, Landroid/widget/GridLayout;->getPaddingLeft()I
-
-    move-result v3
-
-    sub-int/2addr v2, v3
-
-    invoke-virtual/range {p0 .. p0}, Landroid/widget/GridLayout;->getPaddingRight()I
-
-    move-result v3
-
-    sub-int v19, v2, v3
-
-    .local v19, width:I
-    new-instance v8, Landroid/graphics/Paint;
-
-    invoke-direct {v8}, Landroid/graphics/Paint;-><init>()V
-
-    .local v8, paint:Landroid/graphics/Paint;
-    sget-object v2, Landroid/graphics/Paint$Style;->STROKE:Landroid/graphics/Paint$Style;
-
-    invoke-virtual {v8, v2}, Landroid/graphics/Paint;->setStyle(Landroid/graphics/Paint$Style;)V
-
-    const/16 v2, 0x32
-
-    const/16 v3, 0xff
+    const/16 v2, 0xff
 
     const/16 v5, 0xff
 
-    const/16 v6, 0xff
+    const/16 v8, 0xff
 
-    invoke-static {v2, v3, v5, v6}, Landroid/graphics/Color;->argb(IIII)I
+    invoke-static {v1, v2, v5, v8}, Landroid/graphics/Color;->argb(IIII)I
+
+    move-result v1
+
+    invoke-virtual {v7, v1}, Landroid/graphics/Paint;->setColor(I)V
+
+    invoke-virtual/range {p0 .. p0}, Landroid/widget/GridLayout;->getOpticalInsets()Landroid/graphics/Insets;
+
+    move-result-object v16
+
+    .local v16, insets:Landroid/graphics/Insets;
+    invoke-virtual/range {p0 .. p0}, Landroid/widget/GridLayout;->getPaddingTop()I
+
+    move-result v1
+
+    move-object/from16 v0, v16
+
+    iget v2, v0, Landroid/graphics/Insets;->top:I
+
+    add-int v4, v1, v2
+
+    .local v4, top:I
+    invoke-virtual/range {p0 .. p0}, Landroid/widget/GridLayout;->getPaddingLeft()I
+
+    move-result v1
+
+    move-object/from16 v0, v16
+
+    iget v2, v0, Landroid/graphics/Insets;->left:I
+
+    add-int v10, v1, v2
+
+    .local v10, left:I
+    invoke-virtual/range {p0 .. p0}, Landroid/widget/GridLayout;->getWidth()I
+
+    move-result v1
+
+    invoke-virtual/range {p0 .. p0}, Landroid/widget/GridLayout;->getPaddingRight()I
 
     move-result v2
 
-    invoke-virtual {v8, v2}, Landroid/graphics/Paint;->setColor(I)V
+    sub-int/2addr v1, v2
 
+    move-object/from16 v0, v16
+
+    iget v2, v0, Landroid/graphics/Insets;->right:I
+
+    sub-int v12, v1, v2
+
+    .local v12, right:I
+    invoke-virtual/range {p0 .. p0}, Landroid/widget/GridLayout;->getHeight()I
+
+    move-result v1
+
+    invoke-virtual/range {p0 .. p0}, Landroid/widget/GridLayout;->getPaddingBottom()I
+
+    move-result v2
+
+    sub-int/2addr v1, v2
+
+    move-object/from16 v0, v16
+
+    iget v2, v0, Landroid/graphics/Insets;->bottom:I
+
+    sub-int v6, v1, v2
+
+    .local v6, bottom:I
     move-object/from16 v0, p0
 
-    iget-object v2, v0, Landroid/widget/GridLayout;->horizontalAxis:Landroid/widget/GridLayout$Axis;
+    iget-object v1, v0, Landroid/widget/GridLayout;->mHorizontalAxis:Landroid/widget/GridLayout$Axis;
 
-    iget-object v0, v2, Landroid/widget/GridLayout$Axis;->locations:[I
+    iget-object v0, v1, Landroid/widget/GridLayout$Axis;->locations:[I
 
-    move-object/from16 v20, v0
+    move-object/from16 v18, v0
 
-    .local v20, xs:[I
-    if-eqz v20, :cond_0
+    .local v18, xs:[I
+    if-eqz v18, :cond_0
 
-    const/16 v17, 0x0
+    const/4 v15, 0x0
 
-    .local v17, i:I
-    move-object/from16 v0, v20
+    .local v15, i:I
+    move-object/from16 v0, v18
 
     array-length v0, v0
 
-    move/from16 v18, v0
+    move/from16 v17, v0
 
-    .local v18, length:I
+    .local v17, length:I
     :goto_0
     move/from16 v0, v17
 
-    move/from16 v1, v18
+    if-ge v15, v0, :cond_0
 
-    if-ge v0, v1, :cond_0
+    aget v1, v18, v15
 
-    aget v4, v20, v17
+    add-int v3, v10, v1
 
-    .local v4, x:I
-    const/4 v5, 0x0
+    .local v3, x:I
+    move-object/from16 v1, p0
 
-    add-int/lit8 v7, v16, -0x1
+    move-object/from16 v2, p1
 
-    move-object/from16 v2, p0
+    move v5, v3
 
-    move-object/from16 v3, p1
+    invoke-direct/range {v1 .. v7}, Landroid/widget/GridLayout;->drawLine(Landroid/graphics/Canvas;IIIILandroid/graphics/Paint;)V
 
-    move v6, v4
-
-    invoke-direct/range {v2 .. v8}, Landroid/widget/GridLayout;->drawLine(Landroid/graphics/Canvas;IIIILandroid/graphics/Paint;)V
-
-    add-int/lit8 v17, v17, 0x1
+    add-int/lit8 v15, v15, 0x1
 
     goto :goto_0
 
-    .end local v4           #x:I
-    .end local v17           #i:I
-    .end local v18           #length:I
+    .end local v3           #x:I
+    .end local v15           #i:I
+    .end local v17           #length:I
     :cond_0
     move-object/from16 v0, p0
 
-    iget-object v2, v0, Landroid/widget/GridLayout;->verticalAxis:Landroid/widget/GridLayout$Axis;
+    iget-object v1, v0, Landroid/widget/GridLayout;->mVerticalAxis:Landroid/widget/GridLayout$Axis;
 
-    iget-object v0, v2, Landroid/widget/GridLayout$Axis;->locations:[I
+    iget-object v0, v1, Landroid/widget/GridLayout$Axis;->locations:[I
 
-    move-object/from16 v21, v0
+    move-object/from16 v19, v0
 
-    .local v21, ys:[I
-    if-eqz v21, :cond_1
+    .local v19, ys:[I
+    if-eqz v19, :cond_1
 
-    const/16 v17, 0x0
+    const/4 v15, 0x0
 
-    .restart local v17       #i:I
-    move-object/from16 v0, v21
+    .restart local v15       #i:I
+    move-object/from16 v0, v19
 
     array-length v0, v0
 
-    move/from16 v18, v0
+    move/from16 v17, v0
 
-    .restart local v18       #length:I
+    .restart local v17       #length:I
     :goto_1
     move/from16 v0, v17
 
-    move/from16 v1, v18
+    if-ge v15, v0, :cond_1
 
-    if-ge v0, v1, :cond_1
+    aget v1, v19, v15
 
-    aget v12, v21, v17
+    add-int v11, v4, v1
 
-    .local v12, y:I
-    const/4 v11, 0x0
+    .local v11, y:I
+    move-object/from16 v8, p0
 
-    add-int/lit8 v13, v19, -0x1
+    move-object/from16 v9, p1
 
-    move-object/from16 v9, p0
+    move v13, v11
 
-    move-object/from16 v10, p1
+    move-object v14, v7
 
-    move v14, v12
+    invoke-direct/range {v8 .. v14}, Landroid/widget/GridLayout;->drawLine(Landroid/graphics/Canvas;IIIILandroid/graphics/Paint;)V
 
-    move-object v15, v8
-
-    invoke-direct/range {v9 .. v15}, Landroid/widget/GridLayout;->drawLine(Landroid/graphics/Canvas;IIIILandroid/graphics/Paint;)V
-
-    add-int/lit8 v17, v17, 0x1
+    add-int/lit8 v15, v15, 0x1
 
     goto :goto_1
 
-    .end local v12           #y:I
-    .end local v17           #i:I
-    .end local v18           #length:I
+    .end local v11           #y:I
+    .end local v15           #i:I
+    .end local v17           #length:I
     :cond_1
     invoke-super/range {p0 .. p1}, Landroid/view/ViewGroup;->onDebugDraw(Landroid/graphics/Canvas;)V
 
     return-void
 .end method
 
-.method protected onDebugDrawMargins(Landroid/graphics/Canvas;)V
-    .locals 11
+.method protected onDebugDrawMargins(Landroid/graphics/Canvas;Landroid/graphics/Paint;)V
+    .locals 9
     .parameter "canvas"
+    .parameter "paint"
 
     .prologue
-    const/4 v10, 0x0
+    const/4 v8, 0x1
 
-    const/4 v9, 0x1
+    const/4 v7, 0x0
 
-    new-instance v3, Landroid/widget/GridLayout$LayoutParams;
+    new-instance v2, Landroid/widget/GridLayout$LayoutParams;
 
-    invoke-direct {v3}, Landroid/widget/GridLayout$LayoutParams;-><init>()V
+    invoke-direct {v2}, Landroid/widget/GridLayout$LayoutParams;-><init>()V
 
-    .local v3, lp:Landroid/widget/GridLayout$LayoutParams;
+    .local v2, lp:Landroid/widget/GridLayout$LayoutParams;
     const/4 v1, 0x0
 
     .local v1, i:I
     :goto_0
     invoke-virtual {p0}, Landroid/widget/GridLayout;->getChildCount()I
 
-    move-result v4
+    move-result v3
 
-    if-ge v1, v4, :cond_1
+    if-ge v1, v3, :cond_0
 
     invoke-virtual {p0, v1}, Landroid/widget/GridLayout;->getChildAt(I)Landroid/view/View;
 
     move-result-object v0
 
     .local v0, c:Landroid/view/View;
-    invoke-virtual {p0}, Landroid/widget/GridLayout;->getLayoutMode()I
+    invoke-virtual {p0, v0, v8, v8}, Landroid/widget/GridLayout;->getMargin1(Landroid/view/View;ZZ)I
+
+    move-result v3
+
+    invoke-virtual {p0, v0, v7, v8}, Landroid/widget/GridLayout;->getMargin1(Landroid/view/View;ZZ)I
 
     move-result v4
 
-    if-ne v4, v9, :cond_0
-
-    invoke-virtual {v0}, Landroid/view/View;->getOpticalInsets()Landroid/graphics/Insets;
-
-    move-result-object v2
-
-    .local v2, insets:Landroid/graphics/Insets;
-    :goto_1
-    invoke-virtual {p0, v0, v9, v9}, Landroid/widget/GridLayout;->getMargin1(Landroid/view/View;ZZ)I
-
-    move-result v4
-
-    iget v5, v2, Landroid/graphics/Insets;->left:I
-
-    sub-int/2addr v4, v5
-
-    invoke-virtual {p0, v0, v10, v9}, Landroid/widget/GridLayout;->getMargin1(Landroid/view/View;ZZ)I
+    invoke-virtual {p0, v0, v8, v7}, Landroid/widget/GridLayout;->getMargin1(Landroid/view/View;ZZ)I
 
     move-result v5
 
-    iget v6, v2, Landroid/graphics/Insets;->top:I
-
-    sub-int/2addr v5, v6
-
-    invoke-virtual {p0, v0, v9, v10}, Landroid/widget/GridLayout;->getMargin1(Landroid/view/View;ZZ)I
+    invoke-virtual {p0, v0, v7, v7}, Landroid/widget/GridLayout;->getMargin1(Landroid/view/View;ZZ)I
 
     move-result v6
 
-    iget v7, v2, Landroid/graphics/Insets;->right:I
+    invoke-virtual {v2, v3, v4, v5, v6}, Landroid/widget/GridLayout$LayoutParams;->setMargins(IIII)V
 
-    sub-int/2addr v6, v7
-
-    invoke-virtual {p0, v0, v10, v10}, Landroid/widget/GridLayout;->getMargin1(Landroid/view/View;ZZ)I
-
-    move-result v7
-
-    iget v8, v2, Landroid/graphics/Insets;->bottom:I
-
-    sub-int/2addr v7, v8
-
-    invoke-virtual {v3, v4, v5, v6, v7}, Landroid/widget/GridLayout$LayoutParams;->setMargins(IIII)V
-
-    invoke-virtual {v3, v0, p1}, Landroid/widget/GridLayout$LayoutParams;->onDebugDraw(Landroid/view/View;Landroid/graphics/Canvas;)V
+    invoke-virtual {v2, v0, p1, p2}, Landroid/widget/GridLayout$LayoutParams;->onDebugDraw(Landroid/view/View;Landroid/graphics/Canvas;Landroid/graphics/Paint;)V
 
     add-int/lit8 v1, v1, 0x1
 
     goto :goto_0
 
-    .end local v2           #insets:Landroid/graphics/Insets;
-    :cond_0
-    sget-object v2, Landroid/graphics/Insets;->NONE:Landroid/graphics/Insets;
-
-    goto :goto_1
-
     .end local v0           #c:Landroid/view/View;
-    :cond_1
+    :cond_0
     return-void
 .end method
 
@@ -2766,7 +2715,7 @@
 .end method
 
 .method protected onLayout(ZIIII)V
-    .locals 53
+    .locals 51
     .parameter "changed"
     .parameter "left"
     .parameter "top"
@@ -2776,55 +2725,55 @@
     .prologue
     invoke-direct/range {p0 .. p0}, Landroid/widget/GridLayout;->consistencyCheck()V
 
-    sub-int v44, p4, p2
+    sub-int v43, p4, p2
 
-    .local v44, targetWidth:I
-    sub-int v43, p5, p3
+    .local v43, targetWidth:I
+    sub-int v42, p5, p3
 
-    .local v43, targetHeight:I
+    .local v42, targetHeight:I
     invoke-virtual/range {p0 .. p0}, Landroid/widget/GridLayout;->getPaddingLeft()I
-
-    move-result v35
-
-    .local v35, paddingLeft:I
-    invoke-virtual/range {p0 .. p0}, Landroid/widget/GridLayout;->getPaddingTop()I
-
-    move-result v37
-
-    .local v37, paddingTop:I
-    invoke-virtual/range {p0 .. p0}, Landroid/widget/GridLayout;->getPaddingRight()I
-
-    move-result v36
-
-    .local v36, paddingRight:I
-    invoke-virtual/range {p0 .. p0}, Landroid/widget/GridLayout;->getPaddingBottom()I
 
     move-result v34
 
-    .local v34, paddingBottom:I
+    .local v34, paddingLeft:I
+    invoke-virtual/range {p0 .. p0}, Landroid/widget/GridLayout;->getPaddingTop()I
+
+    move-result v36
+
+    .local v36, paddingTop:I
+    invoke-virtual/range {p0 .. p0}, Landroid/widget/GridLayout;->getPaddingRight()I
+
+    move-result v35
+
+    .local v35, paddingRight:I
+    invoke-virtual/range {p0 .. p0}, Landroid/widget/GridLayout;->getPaddingBottom()I
+
+    move-result v33
+
+    .local v33, paddingBottom:I
     move-object/from16 v0, p0
 
-    iget-object v3, v0, Landroid/widget/GridLayout;->horizontalAxis:Landroid/widget/GridLayout$Axis;
+    iget-object v3, v0, Landroid/widget/GridLayout;->mHorizontalAxis:Landroid/widget/GridLayout$Axis;
 
-    sub-int v6, v44, v35
+    sub-int v6, v43, v34
 
-    sub-int v6, v6, v36
+    sub-int v6, v6, v35
 
     invoke-virtual {v3, v6}, Landroid/widget/GridLayout$Axis;->layout(I)V
 
     move-object/from16 v0, p0
 
-    iget-object v3, v0, Landroid/widget/GridLayout;->verticalAxis:Landroid/widget/GridLayout$Axis;
+    iget-object v3, v0, Landroid/widget/GridLayout;->mVerticalAxis:Landroid/widget/GridLayout$Axis;
 
-    sub-int v6, v43, v37
+    sub-int v6, v42, v36
 
-    sub-int v6, v6, v34
+    sub-int v6, v6, v33
 
     invoke-virtual {v3, v6}, Landroid/widget/GridLayout$Axis;->layout(I)V
 
     move-object/from16 v0, p0
 
-    iget-object v3, v0, Landroid/widget/GridLayout;->horizontalAxis:Landroid/widget/GridLayout$Axis;
+    iget-object v3, v0, Landroid/widget/GridLayout;->mHorizontalAxis:Landroid/widget/GridLayout$Axis;
 
     invoke-virtual {v3}, Landroid/widget/GridLayout$Axis;->getLocations()[I
 
@@ -2833,13 +2782,13 @@
     .local v26, hLocations:[I
     move-object/from16 v0, p0
 
-    iget-object v3, v0, Landroid/widget/GridLayout;->verticalAxis:Landroid/widget/GridLayout$Axis;
+    iget-object v3, v0, Landroid/widget/GridLayout;->mVerticalAxis:Landroid/widget/GridLayout$Axis;
 
     invoke-virtual {v3}, Landroid/widget/GridLayout$Axis;->getLocations()[I
 
-    move-result-object v47
+    move-result-object v45
 
-    .local v47, vLocations:[I
+    .local v45, vLocations:[I
     const/16 v28, 0x0
 
     .local v28, i:I
@@ -2851,7 +2800,7 @@
     :goto_0
     move/from16 v0, v28
 
-    if-ge v0, v12, :cond_6
+    if-ge v0, v12, :cond_4
 
     move-object/from16 v0, p0
 
@@ -2880,23 +2829,23 @@
 
     invoke-virtual {v0, v4}, Landroid/widget/GridLayout;->getLayoutParams(Landroid/view/View;)Landroid/widget/GridLayout$LayoutParams;
 
-    move-result-object v31
+    move-result-object v30
 
-    .local v31, lp:Landroid/widget/GridLayout$LayoutParams;
-    move-object/from16 v0, v31
+    .local v30, lp:Landroid/widget/GridLayout$LayoutParams;
+    move-object/from16 v0, v30
 
     iget-object v0, v0, Landroid/widget/GridLayout$LayoutParams;->columnSpec:Landroid/widget/GridLayout$Spec;
 
     move-object/from16 v20, v0
 
     .local v20, columnSpec:Landroid/widget/GridLayout$Spec;
-    move-object/from16 v0, v31
+    move-object/from16 v0, v30
 
     iget-object v0, v0, Landroid/widget/GridLayout$LayoutParams;->rowSpec:Landroid/widget/GridLayout$Spec;
 
-    move-object/from16 v40, v0
+    move-object/from16 v39, v0
 
-    .local v40, rowSpec:Landroid/widget/GridLayout$Spec;
+    .local v39, rowSpec:Landroid/widget/GridLayout$Spec;
     move-object/from16 v0, v20
 
     iget-object v0, v0, Landroid/widget/GridLayout$Spec;->span:Landroid/widget/GridLayout$Interval;
@@ -2904,45 +2853,45 @@
     move-object/from16 v19, v0
 
     .local v19, colSpan:Landroid/widget/GridLayout$Interval;
-    move-object/from16 v0, v40
+    move-object/from16 v0, v39
 
     iget-object v0, v0, Landroid/widget/GridLayout$Spec;->span:Landroid/widget/GridLayout$Interval;
 
-    move-object/from16 v39, v0
+    move-object/from16 v38, v0
 
-    .local v39, rowSpan:Landroid/widget/GridLayout$Interval;
+    .local v38, rowSpan:Landroid/widget/GridLayout$Interval;
     move-object/from16 v0, v19
 
     iget v3, v0, Landroid/widget/GridLayout$Interval;->min:I
 
-    aget v49, v26, v3
+    aget v47, v26, v3
 
-    .local v49, x1:I
-    move-object/from16 v0, v39
+    .local v47, x1:I
+    move-object/from16 v0, v38
 
     iget v3, v0, Landroid/widget/GridLayout$Interval;->min:I
 
-    aget v51, v47, v3
+    aget v49, v45, v3
 
-    .local v51, y1:I
+    .local v49, y1:I
     move-object/from16 v0, v19
 
     iget v3, v0, Landroid/widget/GridLayout$Interval;->max:I
 
-    aget v50, v26, v3
+    aget v48, v26, v3
 
-    .local v50, x2:I
-    move-object/from16 v0, v39
+    .local v48, x2:I
+    move-object/from16 v0, v38
 
     iget v3, v0, Landroid/widget/GridLayout$Interval;->max:I
 
-    aget v52, v47, v3
+    aget v50, v45, v3
 
-    .local v52, y2:I
-    sub-int v18, v50, v49
+    .local v50, y2:I
+    sub-int v18, v48, v47
 
     .local v18, cellWidth:I
-    sub-int v17, v52, v51
+    sub-int v17, v50, v49
 
     .local v17, cellHeight:I
     const/4 v3, 0x1
@@ -2951,18 +2900,18 @@
 
     invoke-direct {v0, v4, v3}, Landroid/widget/GridLayout;->getMeasurement(Landroid/view/View;Z)I
 
-    move-result v33
+    move-result v32
 
-    .local v33, pWidth:I
+    .local v32, pWidth:I
     const/4 v3, 0x0
 
     move-object/from16 v0, p0
 
     invoke-direct {v0, v4, v3}, Landroid/widget/GridLayout;->getMeasurement(Landroid/view/View;Z)I
 
-    move-result v32
+    move-result v31
 
-    .local v32, pHeight:I
+    .local v31, pHeight:I
     move-object/from16 v0, v20
 
     iget-object v3, v0, Landroid/widget/GridLayout$Spec;->alignment:Landroid/widget/GridLayout$Alignment;
@@ -2976,7 +2925,7 @@
     move-result-object v5
 
     .local v5, hAlign:Landroid/widget/GridLayout$Alignment;
-    move-object/from16 v0, v40
+    move-object/from16 v0, v39
 
     iget-object v3, v0, Landroid/widget/GridLayout$Spec;->alignment:Landroid/widget/GridLayout$Alignment;
 
@@ -2991,7 +2940,7 @@
     .local v9, vAlign:Landroid/widget/GridLayout$Alignment;
     move-object/from16 v0, p0
 
-    iget-object v3, v0, Landroid/widget/GridLayout;->horizontalAxis:Landroid/widget/GridLayout$Axis;
+    iget-object v3, v0, Landroid/widget/GridLayout;->mHorizontalAxis:Landroid/widget/GridLayout$Axis;
 
     invoke-virtual {v3}, Landroid/widget/GridLayout$Axis;->getGroupBounds()Landroid/widget/GridLayout$PackedMap;
 
@@ -3008,7 +2957,7 @@
     .local v2, boundsX:Landroid/widget/GridLayout$Bounds;
     move-object/from16 v0, p0
 
-    iget-object v3, v0, Landroid/widget/GridLayout;->verticalAxis:Landroid/widget/GridLayout$Axis;
+    iget-object v3, v0, Landroid/widget/GridLayout;->mVerticalAxis:Landroid/widget/GridLayout$Axis;
 
     invoke-virtual {v3}, Landroid/widget/GridLayout$Axis;->getGroupBounds()Landroid/widget/GridLayout$PackedMap;
 
@@ -3059,9 +3008,9 @@
 
     invoke-direct {v0, v4, v3, v6}, Landroid/widget/GridLayout;->getMargin(Landroid/view/View;ZZ)I
 
-    move-result v30
+    move-result v29
 
-    .local v30, leftMargin:I
+    .local v29, leftMargin:I
     const/4 v3, 0x0
 
     const/4 v6, 0x1
@@ -3070,9 +3019,9 @@
 
     invoke-direct {v0, v4, v3, v6}, Landroid/widget/GridLayout;->getMargin(Landroid/view/View;ZZ)I
 
-    move-result v45
+    move-result v44
 
-    .local v45, topMargin:I
+    .local v44, topMargin:I
     const/4 v3, 0x1
 
     const/4 v6, 0x0
@@ -3081,9 +3030,9 @@
 
     invoke-direct {v0, v4, v3, v6}, Landroid/widget/GridLayout;->getMargin(Landroid/view/View;ZZ)I
 
-    move-result v38
+    move-result v37
 
-    .local v38, rightMargin:I
+    .local v37, rightMargin:I
     const/4 v3, 0x0
 
     const/4 v6, 0x0
@@ -3095,13 +3044,13 @@
     move-result v15
 
     .local v15, bottomMargin:I
-    add-int v41, v30, v38
+    add-int v40, v29, v37
 
-    .local v41, sumMarginsX:I
-    add-int v42, v45, v15
+    .local v40, sumMarginsX:I
+    add-int v41, v44, v15
 
-    .local v42, sumMarginsY:I
-    add-int v6, v33, v41
+    .local v41, sumMarginsY:I
+    add-int v6, v32, v40
 
     const/4 v7, 0x1
 
@@ -3112,7 +3061,7 @@
     move-result v13
 
     .local v13, alignmentOffsetX:I
-    add-int v10, v32, v42
+    add-int v10, v31, v41
 
     const/4 v11, 0x0
 
@@ -3127,25 +3076,25 @@
     move-result v14
 
     .local v14, alignmentOffsetY:I
-    sub-int v3, v18, v41
+    sub-int v3, v18, v40
 
-    move/from16 v0, v33
+    move/from16 v0, v32
 
     invoke-virtual {v5, v4, v0, v3}, Landroid/widget/GridLayout$Alignment;->getSizeInCell(Landroid/view/View;II)I
 
-    move-result v48
+    move-result v46
 
-    .local v48, width:I
-    sub-int v3, v17, v42
+    .local v46, width:I
+    sub-int v3, v17, v41
 
-    move/from16 v0, v32
+    move/from16 v0, v31
 
     invoke-virtual {v9, v4, v0, v3}, Landroid/widget/GridLayout$Alignment;->getSizeInCell(Landroid/view/View;II)I
 
     move-result v27
 
     .local v27, height:I
-    add-int v3, v49, v24
+    add-int v3, v47, v24
 
     add-int v23, v3, v13
 
@@ -3154,87 +3103,30 @@
 
     move-result v3
 
-    if-nez v3, :cond_4
+    if-nez v3, :cond_3
 
-    add-int v3, v35, v30
+    add-int v3, v34, v29
 
     add-int v21, v3, v23
 
     .local v21, cx:I
     :goto_2
-    add-int v3, v37, v51
+    add-int v3, v36, v49
 
     add-int v3, v3, v25
 
     add-int/2addr v3, v14
 
-    add-int v22, v3, v45
+    add-int v22, v3, v44
 
     .local v22, cy:I
-    invoke-virtual/range {p0 .. p0}, Landroid/widget/GridLayout;->getLayoutMode()I
-
-    move-result v3
-
-    const/4 v6, 0x1
-
-    if-ne v3, v6, :cond_5
-
-    const/16 v46, 0x1
-
-    .local v46, useLayoutBounds:Z
-    :goto_3
-    if-eqz v46, :cond_1
-
-    invoke-virtual {v4}, Landroid/view/View;->getOpticalInsets()Landroid/graphics/Insets;
-
-    move-result-object v29
-
-    .local v29, insets:Landroid/graphics/Insets;
-    move-object/from16 v0, v29
-
-    iget v3, v0, Landroid/graphics/Insets;->left:I
-
-    sub-int v21, v21, v3
-
-    move-object/from16 v0, v29
-
-    iget v3, v0, Landroid/graphics/Insets;->top:I
-
-    sub-int v22, v22, v3
-
-    move-object/from16 v0, v29
-
-    iget v3, v0, Landroid/graphics/Insets;->left:I
-
-    move-object/from16 v0, v29
-
-    iget v6, v0, Landroid/graphics/Insets;->right:I
-
-    add-int/2addr v3, v6
-
-    add-int v48, v48, v3
-
-    move-object/from16 v0, v29
-
-    iget v3, v0, Landroid/graphics/Insets;->top:I
-
-    move-object/from16 v0, v29
-
-    iget v6, v0, Landroid/graphics/Insets;->bottom:I
-
-    add-int/2addr v3, v6
-
-    add-int v27, v27, v3
-
-    .end local v29           #insets:Landroid/graphics/Insets;
-    :cond_1
     invoke-virtual {v4}, Landroid/view/View;->getMeasuredWidth()I
 
     move-result v3
 
-    move/from16 v0, v48
+    move/from16 v0, v46
 
-    if-ne v0, v3, :cond_2
+    if-ne v0, v3, :cond_1
 
     invoke-virtual {v4}, Landroid/view/View;->getMeasuredHeight()I
 
@@ -3242,12 +3134,12 @@
 
     move/from16 v0, v27
 
-    if-eq v0, v3, :cond_3
+    if-eq v0, v3, :cond_2
 
-    :cond_2
+    :cond_1
     const/high16 v3, 0x4000
 
-    move/from16 v0, v48
+    move/from16 v0, v46
 
     invoke-static {v0, v3}, Landroid/view/View$MeasureSpec;->makeMeasureSpec(II)I
 
@@ -3263,8 +3155,8 @@
 
     invoke-virtual {v4, v3, v6}, Landroid/view/View;->measure(II)V
 
-    :cond_3
-    add-int v3, v21, v48
+    :cond_2
+    add-int v3, v21, v46
 
     add-int v6, v22, v27
 
@@ -3278,24 +3170,16 @@
 
     .end local v21           #cx:I
     .end local v22           #cy:I
-    .end local v46           #useLayoutBounds:Z
-    :cond_4
-    sub-int v3, v44, v48
+    :cond_3
+    sub-int v3, v43, v46
 
-    sub-int v3, v3, v36
+    sub-int v3, v3, v35
 
-    sub-int v3, v3, v38
+    sub-int v3, v3, v37
 
     sub-int v21, v3, v23
 
     goto :goto_2
-
-    .restart local v21       #cx:I
-    .restart local v22       #cy:I
-    :cond_5
-    const/16 v46, 0x0
-
-    goto :goto_3
 
     .end local v2           #boundsX:Landroid/widget/GridLayout$Bounds;
     .end local v4           #c:Landroid/view/View;
@@ -3309,147 +3193,157 @@
     .end local v18           #cellWidth:I
     .end local v19           #colSpan:Landroid/widget/GridLayout$Interval;
     .end local v20           #columnSpec:Landroid/widget/GridLayout$Spec;
-    .end local v21           #cx:I
-    .end local v22           #cy:I
     .end local v23           #dx:I
     .end local v24           #gravityOffsetX:I
     .end local v25           #gravityOffsetY:I
     .end local v27           #height:I
-    .end local v30           #leftMargin:I
-    .end local v31           #lp:Landroid/widget/GridLayout$LayoutParams;
-    .end local v32           #pHeight:I
-    .end local v33           #pWidth:I
-    .end local v38           #rightMargin:I
-    .end local v39           #rowSpan:Landroid/widget/GridLayout$Interval;
-    .end local v40           #rowSpec:Landroid/widget/GridLayout$Spec;
-    .end local v41           #sumMarginsX:I
-    .end local v42           #sumMarginsY:I
-    .end local v45           #topMargin:I
-    .end local v48           #width:I
-    .end local v49           #x1:I
-    .end local v50           #x2:I
-    .end local v51           #y1:I
-    .end local v52           #y2:I
-    :cond_6
+    .end local v29           #leftMargin:I
+    .end local v30           #lp:Landroid/widget/GridLayout$LayoutParams;
+    .end local v31           #pHeight:I
+    .end local v32           #pWidth:I
+    .end local v37           #rightMargin:I
+    .end local v38           #rowSpan:Landroid/widget/GridLayout$Interval;
+    .end local v39           #rowSpec:Landroid/widget/GridLayout$Spec;
+    .end local v40           #sumMarginsX:I
+    .end local v41           #sumMarginsY:I
+    .end local v44           #topMargin:I
+    .end local v46           #width:I
+    .end local v47           #x1:I
+    .end local v48           #x2:I
+    .end local v49           #y1:I
+    .end local v50           #y2:I
+    :cond_4
     return-void
 .end method
 
 .method protected onMeasure(II)V
-    .locals 9
+    .locals 11
     .parameter "widthSpec"
     .parameter "heightSpec"
 
     .prologue
-    const/4 v8, 0x0
+    const/4 v10, 0x0
 
     invoke-direct {p0}, Landroid/widget/GridLayout;->consistencyCheck()V
 
     invoke-direct {p0}, Landroid/widget/GridLayout;->invalidateValues()V
 
-    const/4 v6, 0x1
-
-    invoke-direct {p0, p1, p2, v6}, Landroid/widget/GridLayout;->measureChildrenWithMargins(IIZ)V
-
-    iget v6, p0, Landroid/widget/GridLayout;->orientation:I
-
-    if-nez v6, :cond_0
-
-    iget-object v6, p0, Landroid/widget/GridLayout;->horizontalAxis:Landroid/widget/GridLayout$Axis;
-
-    invoke-virtual {v6, p1}, Landroid/widget/GridLayout$Axis;->getMeasure(I)I
-
-    move-result v5
-
-    .local v5, width:I
-    invoke-direct {p0, p1, p2, v8}, Landroid/widget/GridLayout;->measureChildrenWithMargins(IIZ)V
-
-    iget-object v6, p0, Landroid/widget/GridLayout;->verticalAxis:Landroid/widget/GridLayout$Axis;
-
-    invoke-virtual {v6, p2}, Landroid/widget/GridLayout$Axis;->getMeasure(I)I
-
-    move-result v1
-
-    .local v1, height:I
-    :goto_0
     invoke-virtual {p0}, Landroid/widget/GridLayout;->getPaddingLeft()I
 
-    move-result v6
+    move-result v8
 
     invoke-virtual {p0}, Landroid/widget/GridLayout;->getPaddingRight()I
 
-    move-result v7
+    move-result v9
 
-    add-int v0, v6, v7
+    add-int v0, v8, v9
 
     .local v0, hPadding:I
     invoke-virtual {p0}, Landroid/widget/GridLayout;->getPaddingTop()I
 
-    move-result v6
+    move-result v8
 
     invoke-virtual {p0}, Landroid/widget/GridLayout;->getPaddingBottom()I
 
-    move-result v7
+    move-result v9
 
-    add-int v4, v6, v7
+    add-int v5, v8, v9
 
-    .local v4, vPadding:I
-    add-int v6, v0, v5
+    .local v5, vPadding:I
+    neg-int v8, v0
 
-    invoke-virtual {p0}, Landroid/widget/GridLayout;->getSuggestedMinimumWidth()I
-
-    move-result v7
-
-    invoke-static {v6, v7}, Ljava/lang/Math;->max(II)I
-
-    move-result v3
-
-    .local v3, measuredWidth:I
-    add-int v6, v4, v1
-
-    invoke-virtual {p0}, Landroid/widget/GridLayout;->getSuggestedMinimumHeight()I
+    invoke-static {p1, v8}, Landroid/widget/GridLayout;->adjust(II)I
 
     move-result v7
 
-    invoke-static {v6, v7}, Ljava/lang/Math;->max(II)I
+    .local v7, widthSpecSansPadding:I
+    neg-int v8, v5
+
+    invoke-static {p2, v8}, Landroid/widget/GridLayout;->adjust(II)I
 
     move-result v2
 
-    .local v2, measuredHeight:I
-    invoke-static {v3, p1, v8}, Landroid/widget/GridLayout;->resolveSizeAndState(III)I
+    .local v2, heightSpecSansPadding:I
+    const/4 v8, 0x1
+
+    invoke-direct {p0, v7, v2, v8}, Landroid/widget/GridLayout;->measureChildrenWithMargins(IIZ)V
+
+    iget v8, p0, Landroid/widget/GridLayout;->mOrientation:I
+
+    if-nez v8, :cond_0
+
+    iget-object v8, p0, Landroid/widget/GridLayout;->mHorizontalAxis:Landroid/widget/GridLayout$Axis;
+
+    invoke-virtual {v8, v7}, Landroid/widget/GridLayout$Axis;->getMeasure(I)I
 
     move-result v6
 
-    invoke-static {v2, p2, v8}, Landroid/widget/GridLayout;->resolveSizeAndState(III)I
+    .local v6, widthSansPadding:I
+    invoke-direct {p0, v7, v2, v10}, Landroid/widget/GridLayout;->measureChildrenWithMargins(IIZ)V
 
-    move-result v7
+    iget-object v8, p0, Landroid/widget/GridLayout;->mVerticalAxis:Landroid/widget/GridLayout$Axis;
 
-    invoke-virtual {p0, v6, v7}, Landroid/widget/GridLayout;->setMeasuredDimension(II)V
-
-    return-void
-
-    .end local v0           #hPadding:I
-    .end local v1           #height:I
-    .end local v2           #measuredHeight:I
-    .end local v3           #measuredWidth:I
-    .end local v4           #vPadding:I
-    .end local v5           #width:I
-    :cond_0
-    iget-object v6, p0, Landroid/widget/GridLayout;->verticalAxis:Landroid/widget/GridLayout$Axis;
-
-    invoke-virtual {v6, p2}, Landroid/widget/GridLayout$Axis;->getMeasure(I)I
+    invoke-virtual {v8, v2}, Landroid/widget/GridLayout$Axis;->getMeasure(I)I
 
     move-result v1
 
-    .restart local v1       #height:I
-    invoke-direct {p0, p1, p2, v8}, Landroid/widget/GridLayout;->measureChildrenWithMargins(IIZ)V
+    .local v1, heightSansPadding:I
+    :goto_0
+    add-int v8, v6, v0
 
-    iget-object v6, p0, Landroid/widget/GridLayout;->horizontalAxis:Landroid/widget/GridLayout$Axis;
+    invoke-virtual {p0}, Landroid/widget/GridLayout;->getSuggestedMinimumWidth()I
 
-    invoke-virtual {v6, p1}, Landroid/widget/GridLayout$Axis;->getMeasure(I)I
+    move-result v9
 
-    move-result v5
+    invoke-static {v8, v9}, Ljava/lang/Math;->max(II)I
 
-    .restart local v5       #width:I
+    move-result v4
+
+    .local v4, measuredWidth:I
+    add-int v8, v1, v5
+
+    invoke-virtual {p0}, Landroid/widget/GridLayout;->getSuggestedMinimumHeight()I
+
+    move-result v9
+
+    invoke-static {v8, v9}, Ljava/lang/Math;->max(II)I
+
+    move-result v3
+
+    .local v3, measuredHeight:I
+    invoke-static {v4, p1, v10}, Landroid/widget/GridLayout;->resolveSizeAndState(III)I
+
+    move-result v8
+
+    invoke-static {v3, p2, v10}, Landroid/widget/GridLayout;->resolveSizeAndState(III)I
+
+    move-result v9
+
+    invoke-virtual {p0, v8, v9}, Landroid/widget/GridLayout;->setMeasuredDimension(II)V
+
+    return-void
+
+    .end local v1           #heightSansPadding:I
+    .end local v3           #measuredHeight:I
+    .end local v4           #measuredWidth:I
+    .end local v6           #widthSansPadding:I
+    :cond_0
+    iget-object v8, p0, Landroid/widget/GridLayout;->mVerticalAxis:Landroid/widget/GridLayout$Axis;
+
+    invoke-virtual {v8, v2}, Landroid/widget/GridLayout$Axis;->getMeasure(I)I
+
+    move-result v1
+
+    .restart local v1       #heightSansPadding:I
+    invoke-direct {p0, v7, v2, v10}, Landroid/widget/GridLayout;->measureChildrenWithMargins(IIZ)V
+
+    iget-object v8, p0, Landroid/widget/GridLayout;->mHorizontalAxis:Landroid/widget/GridLayout$Axis;
+
+    invoke-virtual {v8, v7}, Landroid/widget/GridLayout$Axis;->getMeasure(I)I
+
+    move-result v6
+
+    .restart local v6       #widthSansPadding:I
     goto :goto_0
 .end method
 
@@ -3517,7 +3411,7 @@
     .parameter "alignmentMode"
 
     .prologue
-    iput p1, p0, Landroid/widget/GridLayout;->alignmentMode:I
+    iput p1, p0, Landroid/widget/GridLayout;->mAlignmentMode:I
 
     invoke-virtual {p0}, Landroid/widget/GridLayout;->requestLayout()V
 
@@ -3529,7 +3423,7 @@
     .parameter "columnCount"
 
     .prologue
-    iget-object v0, p0, Landroid/widget/GridLayout;->horizontalAxis:Landroid/widget/GridLayout$Axis;
+    iget-object v0, p0, Landroid/widget/GridLayout;->mHorizontalAxis:Landroid/widget/GridLayout$Axis;
 
     invoke-virtual {v0, p1}, Landroid/widget/GridLayout$Axis;->setCount(I)V
 
@@ -3545,7 +3439,7 @@
     .parameter "columnOrderPreserved"
 
     .prologue
-    iget-object v0, p0, Landroid/widget/GridLayout;->horizontalAxis:Landroid/widget/GridLayout$Axis;
+    iget-object v0, p0, Landroid/widget/GridLayout;->mHorizontalAxis:Landroid/widget/GridLayout$Axis;
 
     invoke-virtual {v0, p1}, Landroid/widget/GridLayout$Axis;->setOrderPreserved(Z)V
 
@@ -3561,11 +3455,11 @@
     .parameter "orientation"
 
     .prologue
-    iget v0, p0, Landroid/widget/GridLayout;->orientation:I
+    iget v0, p0, Landroid/widget/GridLayout;->mOrientation:I
 
     if-eq v0, p1, :cond_0
 
-    iput p1, p0, Landroid/widget/GridLayout;->orientation:I
+    iput p1, p0, Landroid/widget/GridLayout;->mOrientation:I
 
     invoke-direct {p0}, Landroid/widget/GridLayout;->invalidateStructure()V
 
@@ -3575,12 +3469,28 @@
     return-void
 .end method
 
+.method public setPrinter(Landroid/util/Printer;)V
+    .locals 0
+    .parameter "printer"
+
+    .prologue
+    if-nez p1, :cond_0
+
+    sget-object p1, Landroid/widget/GridLayout;->NO_PRINTER:Landroid/util/Printer;
+
+    .end local p1
+    :cond_0
+    iput-object p1, p0, Landroid/widget/GridLayout;->mPrinter:Landroid/util/Printer;
+
+    return-void
+.end method
+
 .method public setRowCount(I)V
     .locals 1
     .parameter "rowCount"
 
     .prologue
-    iget-object v0, p0, Landroid/widget/GridLayout;->verticalAxis:Landroid/widget/GridLayout$Axis;
+    iget-object v0, p0, Landroid/widget/GridLayout;->mVerticalAxis:Landroid/widget/GridLayout$Axis;
 
     invoke-virtual {v0, p1}, Landroid/widget/GridLayout$Axis;->setCount(I)V
 
@@ -3596,7 +3506,7 @@
     .parameter "rowOrderPreserved"
 
     .prologue
-    iget-object v0, p0, Landroid/widget/GridLayout;->verticalAxis:Landroid/widget/GridLayout$Axis;
+    iget-object v0, p0, Landroid/widget/GridLayout;->mVerticalAxis:Landroid/widget/GridLayout$Axis;
 
     invoke-virtual {v0, p1}, Landroid/widget/GridLayout$Axis;->setOrderPreserved(Z)V
 
@@ -3612,7 +3522,7 @@
     .parameter "useDefaultMargins"
 
     .prologue
-    iput-boolean p1, p0, Landroid/widget/GridLayout;->useDefaultMargins:Z
+    iput-boolean p1, p0, Landroid/widget/GridLayout;->mUseDefaultMargins:Z
 
     invoke-virtual {p0}, Landroid/widget/GridLayout;->requestLayout()V
 

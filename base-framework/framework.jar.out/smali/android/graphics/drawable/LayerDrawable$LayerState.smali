@@ -15,6 +15,8 @@
 
 
 # instance fields
+.field private mAutoMirrored:Z
+
 .field private mCanConstantState:Z
 
 .field mChangingConfigurations:I
@@ -38,7 +40,7 @@
 
 # direct methods
 .method constructor <init>(Landroid/graphics/drawable/LayerDrawable$LayerState;Landroid/graphics/drawable/LayerDrawable;Landroid/content/res/Resources;)V
-    .locals 6
+    .locals 7
     .parameter "orig"
     .parameter "owner"
     .parameter "res"
@@ -111,6 +113,16 @@
 
     invoke-virtual {v5, p2}, Landroid/graphics/drawable/Drawable;->setCallback(Landroid/graphics/drawable/Drawable$Callback;)V
 
+    iget-object v5, v4, Landroid/graphics/drawable/LayerDrawable$ChildDrawable;->mDrawable:Landroid/graphics/drawable/Drawable;
+
+    iget-object v6, v2, Landroid/graphics/drawable/LayerDrawable$ChildDrawable;->mDrawable:Landroid/graphics/drawable/Drawable;
+
+    invoke-virtual {v6}, Landroid/graphics/drawable/Drawable;->getLayoutDirection()I
+
+    move-result v6
+
+    invoke-virtual {v5, v6}, Landroid/graphics/drawable/Drawable;->setLayoutDirection(I)V
+
     iget v5, v2, Landroid/graphics/drawable/LayerDrawable$ChildDrawable;->mInsetL:I
 
     iput v5, v4, Landroid/graphics/drawable/LayerDrawable$ChildDrawable;->mInsetL:I
@@ -175,6 +187,10 @@
 
     iput-boolean v5, p0, Landroid/graphics/drawable/LayerDrawable$LayerState;->mCheckedConstantState:Z
 
+    iget-boolean v5, p1, Landroid/graphics/drawable/LayerDrawable$LayerState;->mAutoMirrored:Z
+
+    iput-boolean v5, p0, Landroid/graphics/drawable/LayerDrawable$LayerState;->mAutoMirrored:Z
+
     .end local v0           #N:I
     .end local v1           #i:I
     .end local v3           #origChildDrawable:[Landroid/graphics/drawable/LayerDrawable$ChildDrawable;
@@ -189,6 +205,27 @@
     iput-object v5, p0, Landroid/graphics/drawable/LayerDrawable$LayerState;->mChildren:[Landroid/graphics/drawable/LayerDrawable$ChildDrawable;
 
     goto :goto_2
+.end method
+
+.method static synthetic access$000(Landroid/graphics/drawable/LayerDrawable$LayerState;)Z
+    .locals 1
+    .parameter "x0"
+
+    .prologue
+    iget-boolean v0, p0, Landroid/graphics/drawable/LayerDrawable$LayerState;->mAutoMirrored:Z
+
+    return v0
+.end method
+
+.method static synthetic access$002(Landroid/graphics/drawable/LayerDrawable$LayerState;Z)Z
+    .locals 0
+    .parameter "x0"
+    .parameter "x1"
+
+    .prologue
+    iput-boolean p1, p0, Landroid/graphics/drawable/LayerDrawable$LayerState;->mAutoMirrored:Z
+
+    return p1
 .end method
 
 

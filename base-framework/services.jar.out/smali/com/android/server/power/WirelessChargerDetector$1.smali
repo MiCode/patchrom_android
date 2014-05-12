@@ -46,34 +46,53 @@
 .end method
 
 .method public onSensorChanged(Landroid/hardware/SensorEvent;)V
-    .locals 7
+    .locals 6
     .parameter "event"
 
     .prologue
     iget-object v0, p0, Lcom/android/server/power/WirelessChargerDetector$1;->this$0:Lcom/android/server/power/WirelessChargerDetector;
 
-    iget-wide v1, p1, Landroid/hardware/SensorEvent;->timestamp:J
+    #getter for: Lcom/android/server/power/WirelessChargerDetector;->mLock:Ljava/lang/Object;
+    invoke-static {v0}, Lcom/android/server/power/WirelessChargerDetector;->access$000(Lcom/android/server/power/WirelessChargerDetector;)Ljava/lang/Object;
+
+    move-result-object v1
+
+    monitor-enter v1
+
+    :try_start_0
+    iget-object v0, p0, Lcom/android/server/power/WirelessChargerDetector$1;->this$0:Lcom/android/server/power/WirelessChargerDetector;
+
+    iget-object v2, p1, Landroid/hardware/SensorEvent;->values:[F
+
+    const/4 v3, 0x0
+
+    aget v2, v2, v3
 
     iget-object v3, p1, Landroid/hardware/SensorEvent;->values:[F
 
-    const/4 v4, 0x0
+    const/4 v4, 0x1
 
     aget v3, v3, v4
 
     iget-object v4, p1, Landroid/hardware/SensorEvent;->values:[F
 
-    const/4 v5, 0x1
+    const/4 v5, 0x2
 
     aget v4, v4, v5
 
-    iget-object v5, p1, Landroid/hardware/SensorEvent;->values:[F
+    #calls: Lcom/android/server/power/WirelessChargerDetector;->processSampleLocked(FFF)V
+    invoke-static {v0, v2, v3, v4}, Lcom/android/server/power/WirelessChargerDetector;->access$100(Lcom/android/server/power/WirelessChargerDetector;FFF)V
 
-    const/4 v6, 0x2
-
-    aget v5, v5, v6
-
-    #calls: Lcom/android/server/power/WirelessChargerDetector;->processSample(JFFF)V
-    invoke-static/range {v0 .. v5}, Lcom/android/server/power/WirelessChargerDetector;->access$000(Lcom/android/server/power/WirelessChargerDetector;JFFF)V
+    monitor-exit v1
 
     return-void
+
+    :catchall_0
+    move-exception v0
+
+    monitor-exit v1
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    throw v0
 .end method

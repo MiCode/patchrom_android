@@ -90,7 +90,7 @@
     const/4 v1, 0x1
 
     #setter for: Landroid/view/View;->mHasPerformedLongPress:Z
-    invoke-static {v0, v1}, Landroid/view/View;->access$2302(Landroid/view/View;Z)Z
+    invoke-static {v0, v1}, Landroid/view/View;->access$2502(Landroid/view/View;Z)Z
 
     :cond_0
     return-void

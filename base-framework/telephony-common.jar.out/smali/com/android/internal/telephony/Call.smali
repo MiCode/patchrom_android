@@ -14,9 +14,20 @@
 # instance fields
 .field protected final LOG_TAG:Ljava/lang/String;
 
-.field protected isGeneric:Z
+.field public mConnections:Ljava/util/ArrayList;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "Ljava/util/ArrayList",
+            "<",
+            "Lcom/android/internal/telephony/Connection;",
+            ">;"
+        }
+    .end annotation
+.end field
 
-.field public state:Lcom/android/internal/telephony/Call$State;
+.field protected mIsGeneric:Z
+
+.field public mState:Lcom/android/internal/telephony/Call$State;
 
 
 # direct methods
@@ -26,17 +37,23 @@
     .prologue
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    sget-object v0, Lcom/android/internal/telephony/Call$State;->IDLE:Lcom/android/internal/telephony/Call$State;
-
-    iput-object v0, p0, Lcom/android/internal/telephony/Call;->state:Lcom/android/internal/telephony/Call$State;
-
-    const/4 v0, 0x0
-
-    iput-boolean v0, p0, Lcom/android/internal/telephony/Call;->isGeneric:Z
-
     const-string v0, "Call"
 
     iput-object v0, p0, Lcom/android/internal/telephony/Call;->LOG_TAG:Ljava/lang/String;
+
+    sget-object v0, Lcom/android/internal/telephony/Call$State;->IDLE:Lcom/android/internal/telephony/Call$State;
+
+    iput-object v0, p0, Lcom/android/internal/telephony/Call;->mState:Lcom/android/internal/telephony/Call$State;
+
+    new-instance v0, Ljava/util/ArrayList;
+
+    invoke-direct {v0}, Ljava/util/ArrayList;-><init>()V
+
+    iput-object v0, p0, Lcom/android/internal/telephony/Call;->mConnections:Ljava/util/ArrayList;
+
+    const/4 v0, 0x0
+
+    iput-boolean v0, p0, Lcom/android/internal/telephony/Call;->mIsGeneric:Z
 
     return-void
 .end method
@@ -66,7 +83,7 @@
 
     move-result-object v2
 
-    .local v2, l:Ljava/util/List;
+    .local v2, l:Ljava/util/List;,"Ljava/util/List<Lcom/android/internal/telephony/Connection;>;"
     invoke-interface {v2}, Ljava/util/List;->size()I
 
     move-result v8
@@ -135,7 +152,7 @@
 
     move-result-object v3
 
-    .local v3, l:Ljava/util/List;
+    .local v3, l:Ljava/util/List;,"Ljava/util/List<Lcom/android/internal/telephony/Connection;>;"
     invoke-interface {v3}, Ljava/util/List;->size()I
 
     move-result v9
@@ -203,7 +220,7 @@
 
     move-result-object v2
 
-    .local v2, l:Ljava/util/List;
+    .local v2, l:Ljava/util/List;,"Ljava/util/List<Lcom/android/internal/telephony/Connection;>;"
     invoke-interface {v2}, Ljava/util/List;->size()I
 
     move-result v8
@@ -266,7 +283,7 @@
 
     move-result-object v2
 
-    .local v2, l:Ljava/util/List;
+    .local v2, l:Ljava/util/List;,"Ljava/util/List<Lcom/android/internal/telephony/Connection;>;"
     invoke-interface {v2}, Ljava/util/List;->size()I
 
     move-result v9
@@ -329,7 +346,7 @@
     .locals 1
 
     .prologue
-    iget-object v0, p0, Lcom/android/internal/telephony/Call;->state:Lcom/android/internal/telephony/Call$State;
+    iget-object v0, p0, Lcom/android/internal/telephony/Call;->mState:Lcom/android/internal/telephony/Call$State;
 
     return-object v0
 .end method
@@ -389,7 +406,7 @@
 
     move-result-object v2
 
-    invoke-static {v1, v2}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v1, v2}, Landroid/telephony/Rlog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
     goto :goto_0
 .end method
@@ -426,7 +443,7 @@
 
     move-result-object v0
 
-    .local v0, connections:Ljava/util/List;
+    .local v0, connections:Ljava/util/List;,"Ljava/util/List<Lcom/android/internal/telephony/Connection;>;"
     if-nez v0, :cond_1
 
     :cond_0
@@ -464,7 +481,7 @@
     .locals 1
 
     .prologue
-    iget-boolean v0, p0, Lcom/android/internal/telephony/Call;->isGeneric:Z
+    iget-boolean v0, p0, Lcom/android/internal/telephony/Call;->mIsGeneric:Z
 
     return v0
 .end method
@@ -517,7 +534,7 @@
     .parameter "generic"
 
     .prologue
-    iput-boolean p1, p0, Lcom/android/internal/telephony/Call;->isGeneric:Z
+    iput-boolean p1, p0, Lcom/android/internal/telephony/Call;->mIsGeneric:Z
 
     return-void
 .end method

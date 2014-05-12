@@ -18,6 +18,8 @@
 
 .field public static final EXTRA_CA_CERTIFICATES_NAME:Ljava/lang/String; = "ca_certificates_name"
 
+.field public static final EXTRA_INSTALL_AS_UID:Ljava/lang/String; = "install_as_uid"
+
 .field public static final EXTRA_PRIVATE_KEY:Ljava/lang/String; = "PKEY"
 
 .field public static final EXTRA_PUBLIC_KEY:Ljava/lang/String; = "KEY"
@@ -31,6 +33,8 @@
 .field public static final EXTRA_USER_PRIVATE_KEY_NAME:Ljava/lang/String; = "user_private_key_name"
 
 .field public static final INSTALL_ACTION:Ljava/lang/String; = "android.credentials.INSTALL"
+
+.field public static final INSTALL_AS_USER_ACTION:Ljava/lang/String; = "android.credentials.INSTALL_AS_USER"
 
 .field public static final LOCKDOWN_VPN:Ljava/lang/String; = "LOCKDOWN_VPN"
 
@@ -87,7 +91,7 @@
     .local v0, bai:Ljava/io/ByteArrayInputStream;
     new-instance v5, Ljava/io/InputStreamReader;
 
-    sget-object v7, Ljava/nio/charset/Charsets;->US_ASCII:Ljava/nio/charset/Charset;
+    sget-object v7, Ljava/nio/charset/StandardCharsets;->US_ASCII:Ljava/nio/charset/Charset;
 
     invoke-direct {v5, v0, v7}, Ljava/io/InputStreamReader;-><init>(Ljava/io/InputStream;Ljava/nio/charset/Charset;)V
 
@@ -202,7 +206,7 @@
     .local v1, bao:Ljava/io/ByteArrayOutputStream;
     new-instance v6, Ljava/io/OutputStreamWriter;
 
-    sget-object v7, Ljava/nio/charset/Charsets;->US_ASCII:Ljava/nio/charset/Charset;
+    sget-object v7, Ljava/nio/charset/StandardCharsets;->US_ASCII:Ljava/nio/charset/Charset;
 
     invoke-direct {v6, v1, v7}, Ljava/io/OutputStreamWriter;-><init>(Ljava/io/OutputStream;Ljava/nio/charset/Charset;)V
 

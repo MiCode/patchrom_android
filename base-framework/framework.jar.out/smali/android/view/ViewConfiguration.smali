@@ -6,6 +6,8 @@
 # static fields
 .field private static final DEFAULT_LONG_PRESS_TIMEOUT:I = 0x1f4
 
+.field private static final DOUBLE_TAP_MIN_TIME:I = 0x28
+
 .field private static final DOUBLE_TAP_SLOP:I = 0x64
 
 .field private static final DOUBLE_TAP_TIMEOUT:I = 0x12c
@@ -372,12 +374,6 @@
 
     .local v9, wm:Landroid/view/IWindowManager;
     :try_start_0
-    invoke-interface {v9}, Landroid/view/IWindowManager;->hasSystemNavBar()Z
-
-    move-result v10
-
-    if-nez v10, :cond_2
-
     invoke-interface {v9}, Landroid/view/IWindowManager;->hasNavigationBar()Z
 
     move-result v10
@@ -398,7 +394,7 @@
     .end local v9           #wm:Landroid/view/IWindowManager;
     :cond_0
     :goto_2
-    const v10, 0x1110013
+    const v10, 0x1110014
 
     invoke-virtual {v5, v10}, Landroid/content/res/Resources;->getBoolean(I)Z
 
@@ -502,6 +498,15 @@
 
     :cond_0
     return-object v0
+.end method
+
+.method public static getDoubleTapMinTime()I
+    .locals 1
+
+    .prologue
+    const/16 v0, 0x28
+
+    return v0
 .end method
 
 .method public static getDoubleTapSlop()I

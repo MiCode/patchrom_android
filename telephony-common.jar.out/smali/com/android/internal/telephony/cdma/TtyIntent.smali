@@ -4,8 +4,6 @@
 
 
 # static fields
-.field private static final TAG:Ljava/lang/String; = "TtyIntent"
-
 .field public static final TTY_ENABLED:Ljava/lang/String; = "ttyEnabled"
 
 .field public static final TTY_ENABLED_CHANGE_ACTION:Ljava/lang/String; = "com.android.internal.telephony.cdma.intent.action.TTY_ENABLED_CHANGE"

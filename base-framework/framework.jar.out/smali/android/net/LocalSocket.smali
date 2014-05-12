@@ -6,6 +6,16 @@
 .implements Ljava/io/Closeable;
 
 
+# static fields
+.field public static final SOCKET_DGRAM:I = 0x1
+
+.field public static final SOCKET_SEQPACKET:I = 0x3
+
+.field public static final SOCKET_STREAM:I = 0x2
+
+.field static final SOCKET_UNKNOWN:I
+
+
 # instance fields
 .field private impl:Landroid/net/LocalSocketImpl;
 
@@ -17,10 +27,24 @@
 
 .field private localAddress:Landroid/net/LocalSocketAddress;
 
+.field private final sockType:I
+
 
 # direct methods
 .method public constructor <init>()V
+    .locals 1
+
+    .prologue
+    const/4 v0, 0x2
+
+    invoke-direct {p0, v0}, Landroid/net/LocalSocket;-><init>(I)V
+
+    return-void
+.end method
+
+.method public constructor <init>(I)V
     .locals 2
+    .parameter "sockType"
 
     .prologue
     const/4 v1, 0x0
@@ -29,7 +53,7 @@
 
     invoke-direct {v0}, Landroid/net/LocalSocketImpl;-><init>()V
 
-    invoke-direct {p0, v0}, Landroid/net/LocalSocket;-><init>(Landroid/net/LocalSocketImpl;)V
+    invoke-direct {p0, v0, p1}, Landroid/net/LocalSocket;-><init>(Landroid/net/LocalSocketImpl;I)V
 
     iput-boolean v1, p0, Landroid/net/LocalSocket;->isBound:Z
 
@@ -38,9 +62,10 @@
     return-void
 .end method
 
-.method constructor <init>(Landroid/net/LocalSocketImpl;)V
+.method constructor <init>(Landroid/net/LocalSocketImpl;I)V
     .locals 1
     .parameter "impl"
+    .parameter "sockType"
 
     .prologue
     const/4 v0, 0x0
@@ -48,6 +73,8 @@
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     iput-object p1, p0, Landroid/net/LocalSocket;->impl:Landroid/net/LocalSocketImpl;
+
+    iput p2, p0, Landroid/net/LocalSocket;->sockType:I
 
     iput-boolean v0, p0, Landroid/net/LocalSocket;->isConnected:Z
 
@@ -57,7 +84,7 @@
 .end method
 
 .method public constructor <init>(Ljava/io/FileDescriptor;)V
-    .locals 2
+    .locals 3
     .parameter "fd"
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -66,17 +93,19 @@
     .end annotation
 
     .prologue
-    const/4 v1, 0x1
+    const/4 v2, 0x1
 
     new-instance v0, Landroid/net/LocalSocketImpl;
 
     invoke-direct {v0, p1}, Landroid/net/LocalSocketImpl;-><init>(Ljava/io/FileDescriptor;)V
 
-    invoke-direct {p0, v0}, Landroid/net/LocalSocket;-><init>(Landroid/net/LocalSocketImpl;)V
+    const/4 v1, 0x0
 
-    iput-boolean v1, p0, Landroid/net/LocalSocket;->isBound:Z
+    invoke-direct {p0, v0, v1}, Landroid/net/LocalSocket;-><init>(Landroid/net/LocalSocketImpl;I)V
 
-    iput-boolean v1, p0, Landroid/net/LocalSocket;->isConnected:Z
+    iput-boolean v2, p0, Landroid/net/LocalSocket;->isBound:Z
+
+    iput-boolean v2, p0, Landroid/net/LocalSocket;->isConnected:Z
 
     return-void
 .end method
@@ -106,9 +135,9 @@
     :try_start_1
     iget-object v0, p0, Landroid/net/LocalSocket;->impl:Landroid/net/LocalSocketImpl;
 
-    const/4 v1, 0x1
+    iget v1, p0, Landroid/net/LocalSocket;->sockType:I
 
-    invoke-virtual {v0, v1}, Landroid/net/LocalSocketImpl;->create(Z)V
+    invoke-virtual {v0, v1}, Landroid/net/LocalSocketImpl;->create(I)V
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 

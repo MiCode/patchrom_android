@@ -59,6 +59,8 @@
 
 .method public clearUsernamePassword()V
     .locals 1
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
 
     .prologue
     new-instance v0, Landroid/webkit/MustOverrideException;
@@ -92,6 +94,8 @@
 
 .method public hasUsernamePassword()Z
     .locals 1
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
 
     .prologue
     new-instance v0, Landroid/webkit/MustOverrideException;

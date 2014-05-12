@@ -28,4 +28,6 @@
 
 .field public static final DIRTY:Ljava/lang/String; = "dirty"
 
+.field public static final MUTATORS:Ljava/lang/String; = "mutators"
+
 .field public static final _SYNC_ID:Ljava/lang/String; = "_sync_id"

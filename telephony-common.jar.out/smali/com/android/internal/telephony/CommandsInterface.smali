@@ -172,6 +172,9 @@
 .method public abstract getCdmaSubscriptionSource(Landroid/os/Message;)V
 .end method
 
+.method public abstract getCellInfoList(Landroid/os/Message;)V
+.end method
+
 .method public abstract getCurrentCalls(Landroid/os/Message;)V
 .end method
 
@@ -200,6 +203,9 @@
 .end method
 
 .method public abstract getIccCardStatus(Landroid/os/Message;)V
+.end method
+
+.method public abstract getImsRegistrationState(Landroid/os/Message;)V
 .end method
 
 .method public abstract getLastCallFailCause(Landroid/os/Message;)V
@@ -240,6 +246,9 @@
 .end method
 
 .method public abstract getRadioState()Lcom/android/internal/telephony/CommandsInterface$RadioState;
+.end method
+
+.method public abstract getRilVersion()I
 .end method
 
 .method public abstract getSignalStrength(Landroid/os/Message;)V
@@ -323,6 +332,9 @@
 .method public abstract registerForCdmaSubscriptionChanged(Landroid/os/Handler;ILjava/lang/Object;)V
 .end method
 
+.method public abstract registerForCellInfoList(Landroid/os/Handler;ILjava/lang/Object;)V
+.end method
+
 .method public abstract registerForDataNetworkStateChanged(Landroid/os/Handler;ILjava/lang/Object;)V
 .end method
 
@@ -336,6 +348,9 @@
 .end method
 
 .method public abstract registerForIccStatusChanged(Landroid/os/Handler;ILjava/lang/Object;)V
+.end method
+
+.method public abstract registerForImsNetworkStateChanged(Landroid/os/Handler;ILjava/lang/Object;)V
 .end method
 
 .method public abstract registerForInCallVoicePrivacyOff(Landroid/os/Handler;ILjava/lang/Object;)V
@@ -419,6 +434,12 @@
 .method public abstract sendEnvelopeWithStatus(Ljava/lang/String;Landroid/os/Message;)V
 .end method
 
+.method public abstract sendImsCdmaSms([BIILandroid/os/Message;)V
+.end method
+
+.method public abstract sendImsGsmSms(Ljava/lang/String;Ljava/lang/String;IILandroid/os/Message;)V
+.end method
+
 .method public abstract sendSMS(Ljava/lang/String;Ljava/lang/String;Landroid/os/Message;)V
 .end method
 
@@ -446,13 +467,16 @@
 .method public abstract setCdmaBroadcastActivation(ZLandroid/os/Message;)V
 .end method
 
-.method public abstract setCdmaBroadcastConfig([ILandroid/os/Message;)V
+.method public abstract setCdmaBroadcastConfig([Lcom/android/internal/telephony/cdma/CdmaSmsBroadcastConfigInfo;Landroid/os/Message;)V
 .end method
 
 .method public abstract setCdmaRoamingPreference(ILandroid/os/Message;)V
 .end method
 
 .method public abstract setCdmaSubscriptionSource(ILandroid/os/Message;)V
+.end method
+
+.method public abstract setCellInfoListRate(ILandroid/os/Message;)V
 .end method
 
 .method public abstract setCurrentPreferredNetworkType()V
@@ -471,6 +495,9 @@
 .end method
 
 .method public abstract setGsmBroadcastConfig([Lcom/android/internal/telephony/gsm/SmsBroadcastConfigInfo;Landroid/os/Message;)V
+.end method
+
+.method public abstract setInitialAttachApn(Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Landroid/os/Message;)V
 .end method
 
 .method public abstract setLocationUpdates(ZLandroid/os/Message;)V
@@ -665,6 +692,9 @@
 .method public abstract unregisterForCdmaSubscriptionChanged(Landroid/os/Handler;)V
 .end method
 
+.method public abstract unregisterForCellInfoList(Landroid/os/Handler;)V
+.end method
+
 .method public abstract unregisterForDataNetworkStateChanged(Landroid/os/Handler;)V
 .end method
 
@@ -678,6 +708,9 @@
 .end method
 
 .method public abstract unregisterForIccStatusChanged(Landroid/os/Handler;)V
+.end method
+
+.method public abstract unregisterForImsNetworkStateChanged(Landroid/os/Handler;)V
 .end method
 
 .method public abstract unregisterForInCallVoicePrivacyOff(Landroid/os/Handler;)V

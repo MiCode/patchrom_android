@@ -453,7 +453,7 @@
     move-exception v3
 
     .local v3, e:Ljava/io/UnsupportedEncodingException;
-    const-string v7, "Renderscript shader creation"
+    const-string v7, "RenderScript shader creation"
 
     const-string v8, "Could not decode shader string"
 

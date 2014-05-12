@@ -33,7 +33,7 @@
     .prologue
     new-instance v0, Landroid/os/SystemVibrator;
 
-    invoke-direct {v0}, Landroid/os/SystemVibrator;-><init>()V
+    invoke-direct {v0, p1}, Landroid/os/SystemVibrator;-><init>(Landroid/content/Context;)V
 
     return-object v0
 .end method

@@ -81,6 +81,8 @@
 
 .field private mRingerModeReceiver:Landroid/content/BroadcastReceiver;
 
+.field private final mShowSilentToggle:Z
+
 .field private mSilentModeAction:Lcom/android/internal/policy/impl/GlobalActions$Action;
 
 .field private final mWindowManagerFuncs:Landroid/view/WindowManagerPolicy$WindowManagerFuncs;
@@ -260,12 +262,34 @@
     :goto_0
     iput-boolean v4, p0, Lcom/android/internal/policy/impl/GlobalActions;->mHasVibrator:Z
 
+    iget-object v4, p0, Lcom/android/internal/policy/impl/GlobalActions;->mContext:Landroid/content/Context;
+
+    invoke-virtual {v4}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
+
+    move-result-object v4
+
+    const v7, 0x1110057
+
+    invoke-virtual {v4, v7}, Landroid/content/res/Resources;->getBoolean(I)Z
+
+    move-result v4
+
+    if-nez v4, :cond_1
+
+    :goto_1
+    iput-boolean v5, p0, Lcom/android/internal/policy/impl/GlobalActions;->mShowSilentToggle:Z
+
     return-void
 
     :cond_0
     move v4, v6
 
     goto :goto_0
+
+    :cond_1
+    move v5, v6
+
+    goto :goto_1
 .end method
 
 .method static synthetic access$000(Lcom/android/internal/policy/impl/GlobalActions;)Z
@@ -462,7 +486,7 @@
 .end method
 
 .method private addUsersToMenu(Ljava/util/ArrayList;)V
-    .locals 13
+    .locals 12
     .parameter
     .annotation system Ldalvik/annotation/Signature;
         value = {
@@ -476,9 +500,9 @@
 
     .prologue
     .local p1, items:Ljava/util/ArrayList;,"Ljava/util/ArrayList<Lcom/android/internal/policy/impl/GlobalActions$Action;>;"
-    const/4 v12, 0x0
+    const/4 v11, 0x0
 
-    const/4 v11, 0x1
+    const/4 v10, 0x1
 
     iget-object v1, p0, Lcom/android/internal/policy/impl/GlobalActions;->mContext:Landroid/content/Context;
 
@@ -492,34 +516,26 @@
 
     invoke-virtual {v1}, Landroid/os/UserManager;->getUsers()Ljava/util/List;
 
-    move-result-object v10
+    move-result-object v9
 
-    .local v10, users:Ljava/util/List;,"Ljava/util/List<Landroid/content/pm/UserInfo;>;"
-    invoke-interface {v10}, Ljava/util/List;->size()I
+    .local v9, users:Ljava/util/List;,"Ljava/util/List<Landroid/content/pm/UserInfo;>;"
+    invoke-interface {v9}, Ljava/util/List;->size()I
 
     move-result v1
 
-    if-le v1, v11, :cond_6
+    if-le v1, v10, :cond_6
 
-    :try_start_0
-    invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
-
-    move-result-object v1
-
-    invoke-interface {v1}, Landroid/app/IActivityManager;->getCurrentUser()Landroid/content/pm/UserInfo;
-    :try_end_0
-    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
+    invoke-direct {p0}, Lcom/android/internal/policy/impl/GlobalActions;->getCurrentUser()Landroid/content/pm/UserInfo;
 
     move-result-object v6
 
     .local v6, currentUser:Landroid/content/pm/UserInfo;
-    :goto_0
-    invoke-interface {v10}, Ljava/util/List;->iterator()Ljava/util/Iterator;
+    invoke-interface {v9}, Ljava/util/List;->iterator()Ljava/util/Iterator;
 
     move-result-object v7
 
     .local v7, i$:Ljava/util/Iterator;
-    :goto_1
+    :goto_0
     invoke-interface {v7}, Ljava/util/Iterator;->hasNext()Z
 
     move-result v1
@@ -539,10 +555,10 @@
 
     if-nez v1, :cond_0
 
-    move v8, v11
+    move v8, v10
 
     .local v8, isCurrentUser:Z
-    :goto_2
+    :goto_1
     iget-object v1, v5, Landroid/content/pm/UserInfo;->iconPath:Ljava/lang/String;
 
     if-eqz v1, :cond_3
@@ -554,10 +570,10 @@
     move-result-object v3
 
     .local v3, icon:Landroid/graphics/drawable/Drawable;
-    :goto_3
+    :goto_2
     new-instance v0, Lcom/android/internal/policy/impl/GlobalActions$5;
 
-    const v2, 0x1080325
+    const v2, 0x1080338
 
     new-instance v4, Ljava/lang/StringBuilder;
 
@@ -569,7 +585,7 @@
 
     iget-object v1, v5, Landroid/content/pm/UserInfo;->name:Ljava/lang/String;
 
-    :goto_4
+    :goto_3
     invoke-virtual {v4, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
@@ -578,7 +594,7 @@
 
     const-string v1, " \u2714"
 
-    :goto_5
+    :goto_4
     invoke-virtual {v4, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v1
@@ -594,30 +610,15 @@
     .local v0, switchToUser:Lcom/android/internal/policy/impl/GlobalActions$SinglePressAction;
     invoke-virtual {p1, v0}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
-    goto :goto_1
+    goto :goto_0
 
     .end local v0           #switchToUser:Lcom/android/internal/policy/impl/GlobalActions$SinglePressAction;
     .end local v3           #icon:Landroid/graphics/drawable/Drawable;
-    .end local v5           #user:Landroid/content/pm/UserInfo;
-    .end local v6           #currentUser:Landroid/content/pm/UserInfo;
-    .end local v7           #i$:Ljava/util/Iterator;
     .end local v8           #isCurrentUser:Z
-    :catch_0
-    move-exception v9
-
-    .local v9, re:Landroid/os/RemoteException;
-    const/4 v6, 0x0
-
-    .restart local v6       #currentUser:Landroid/content/pm/UserInfo;
-    goto :goto_0
-
-    .end local v9           #re:Landroid/os/RemoteException;
-    .restart local v5       #user:Landroid/content/pm/UserInfo;
-    .restart local v7       #i$:Ljava/util/Iterator;
     :cond_0
-    move v8, v12
+    move v8, v11
 
-    goto :goto_2
+    goto :goto_1
 
     :cond_1
     iget v1, v6, Landroid/content/pm/UserInfo;->id:I
@@ -626,31 +627,31 @@
 
     if-ne v1, v2, :cond_2
 
-    move v8, v11
+    move v8, v10
 
-    goto :goto_2
+    goto :goto_1
 
     :cond_2
-    move v8, v12
+    move v8, v11
 
-    goto :goto_2
+    goto :goto_1
 
     .restart local v8       #isCurrentUser:Z
     :cond_3
     const/4 v3, 0x0
 
-    goto :goto_3
+    goto :goto_2
 
     .restart local v3       #icon:Landroid/graphics/drawable/Drawable;
     :cond_4
     const-string v1, "Primary"
 
-    goto :goto_4
+    goto :goto_3
 
     :cond_5
     const-string v1, ""
 
-    goto :goto_5
+    goto :goto_4
 
     .end local v3           #icon:Landroid/graphics/drawable/Drawable;
     .end local v5           #user:Landroid/content/pm/UserInfo;
@@ -772,7 +773,7 @@
 
     iget-boolean v0, p0, Lcom/android/internal/policy/impl/GlobalActions;->mHasVibrator:Z
 
-    if-nez v0, :cond_2
+    if-nez v0, :cond_3
 
     new-instance v0, Lcom/android/internal/policy/impl/GlobalActions$SilentModeToggleAction;
 
@@ -783,15 +784,15 @@
     :goto_0
     new-instance v0, Lcom/android/internal/policy/impl/GlobalActions$1;
 
-    const v2, 0x10802da
+    const v2, 0x10802e9
 
-    const v3, 0x10802db
+    const v3, 0x10802ea
 
-    const v4, 0x10400ed
+    const v4, 0x10400cd
 
-    const v5, 0x10400ee
+    const v5, 0x10400ce
 
-    const v6, 0x10400ef
+    const v6, 0x10400cf
 
     move-object v1, p0
 
@@ -813,7 +814,7 @@
 
     const v2, 0x1080030
 
-    const v3, 0x10400e6
+    const v3, 0x10400c6
 
     invoke-direct {v1, p0, v2, v3}, Lcom/android/internal/policy/impl/GlobalActions$2;-><init>(Lcom/android/internal/policy/impl/GlobalActions;II)V
 
@@ -833,7 +834,13 @@
 
     const-string v1, "bugreport_in_power_menu"
 
-    invoke-static {v0, v1, v9}, Landroid/provider/Settings$Secure;->getInt(Landroid/content/ContentResolver;Ljava/lang/String;I)I
+    invoke-static {v0, v1, v9}, Landroid/provider/Settings$Global;->getInt(Landroid/content/ContentResolver;Ljava/lang/String;I)I
+
+    move-result v0
+
+    if-eqz v0, :cond_0
+
+    invoke-direct {p0}, Lcom/android/internal/policy/impl/GlobalActions;->isCurrentUserOwner()Z
 
     move-result v0
 
@@ -843,34 +850,39 @@
 
     new-instance v1, Lcom/android/internal/policy/impl/GlobalActions$3;
 
-    const v2, 0x1080525
+    const v2, 0x108058d
 
-    const v3, 0x10400e7
+    const v3, 0x10400c7
 
     invoke-direct {v1, p0, v2, v3}, Lcom/android/internal/policy/impl/GlobalActions$3;-><init>(Lcom/android/internal/policy/impl/GlobalActions;II)V
 
     invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
     :cond_0
+    iget-boolean v0, p0, Lcom/android/internal/policy/impl/GlobalActions;->mShowSilentToggle:Z
+
+    if-eqz v0, :cond_1
+
     iget-object v0, p0, Lcom/android/internal/policy/impl/GlobalActions;->mItems:Ljava/util/ArrayList;
 
     iget-object v1, p0, Lcom/android/internal/policy/impl/GlobalActions;->mSilentModeAction:Lcom/android/internal/policy/impl/GlobalActions$Action;
 
     invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
+    :cond_1
     const-string v0, "fw.power_user_switcher"
 
     invoke-static {v0, v9}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
 
     move-result v0
 
-    if-eqz v0, :cond_1
+    if-eqz v0, :cond_2
 
     iget-object v0, p0, Lcom/android/internal/policy/impl/GlobalActions;->mItems:Ljava/util/ArrayList;
 
     invoke-direct {p0, v0}, Lcom/android/internal/policy/impl/GlobalActions;->addUsersToMenu(Ljava/util/ArrayList;)V
 
-    :cond_1
+    :cond_2
     new-instance v0, Lcom/android/internal/policy/impl/GlobalActions$MyAdapter;
 
     const/4 v1, 0x0
@@ -939,7 +951,7 @@
 
     .end local v7           #dialog:Lcom/android/internal/policy/impl/GlobalActions$GlobalActionsDialog;
     .end local v8           #params:Lcom/android/internal/app/AlertController$AlertParams;
-    :cond_2
+    :cond_3
     new-instance v0, Lcom/android/internal/policy/impl/GlobalActions$SilentModeTriStateAction;
 
     iget-object v1, p0, Lcom/android/internal/policy/impl/GlobalActions;->mContext:Landroid/content/Context;
@@ -953,6 +965,33 @@
     iput-object v0, p0, Lcom/android/internal/policy/impl/GlobalActions;->mSilentModeAction:Lcom/android/internal/policy/impl/GlobalActions$Action;
 
     goto/16 :goto_0
+.end method
+
+.method private getCurrentUser()Landroid/content/pm/UserInfo;
+    .locals 2
+
+    .prologue
+    :try_start_0
+    invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
+
+    move-result-object v1
+
+    invoke-interface {v1}, Landroid/app/IActivityManager;->getCurrentUser()Landroid/content/pm/UserInfo;
+    :try_end_0
+    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
+
+    move-result-object v1
+
+    :goto_0
+    return-object v1
+
+    :catch_0
+    move-exception v0
+
+    .local v0, re:Landroid/os/RemoteException;
+    const/4 v1, 0x0
+
+    goto :goto_0
 .end method
 
 .method private handleShow()V
@@ -1011,6 +1050,35 @@
     invoke-virtual {v1, v2}, Landroid/view/View;->setSystemUiVisibility(I)V
 
     return-void
+.end method
+
+.method private isCurrentUserOwner()Z
+    .locals 2
+
+    .prologue
+    invoke-direct {p0}, Lcom/android/internal/policy/impl/GlobalActions;->getCurrentUser()Landroid/content/pm/UserInfo;
+
+    move-result-object v0
+
+    .local v0, currentUser:Landroid/content/pm/UserInfo;
+    if-eqz v0, :cond_0
+
+    invoke-virtual {v0}, Landroid/content/pm/UserInfo;->isPrimary()Z
+
+    move-result v1
+
+    if-eqz v1, :cond_1
+
+    :cond_0
+    const/4 v1, 0x1
+
+    :goto_0
+    return v1
+
+    :cond_1
+    const/4 v1, 0x0
+
+    goto :goto_0
 .end method
 
 .method private onAirplaneModeChanged()V
@@ -1099,6 +1167,10 @@
 
     invoke-virtual {v1, v2}, Landroid/view/Window;->setType(I)V
 
+    iget-boolean v1, p0, Lcom/android/internal/policy/impl/GlobalActions;->mShowSilentToggle:Z
+
+    if-eqz v1, :cond_0
+
     new-instance v0, Landroid/content/IntentFilter;
 
     const-string v1, "android.media.RINGER_MODE_CHANGED"
@@ -1112,6 +1184,8 @@
 
     invoke-virtual {v1, v2, v0}, Landroid/content/Context;->registerReceiver(Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;)Landroid/content/Intent;
 
+    .end local v0           #filter:Landroid/content/IntentFilter;
+    :cond_0
     return-void
 .end method
 
@@ -1197,17 +1271,36 @@
 .end method
 
 .method public onDismiss(Landroid/content/DialogInterface;)V
-    .locals 2
+    .locals 3
     .parameter "dialog"
 
     .prologue
-    iget-object v0, p0, Lcom/android/internal/policy/impl/GlobalActions;->mContext:Landroid/content/Context;
+    iget-boolean v1, p0, Lcom/android/internal/policy/impl/GlobalActions;->mShowSilentToggle:Z
 
-    iget-object v1, p0, Lcom/android/internal/policy/impl/GlobalActions;->mRingerModeReceiver:Landroid/content/BroadcastReceiver;
+    if-eqz v1, :cond_0
 
-    invoke-virtual {v0, v1}, Landroid/content/Context;->unregisterReceiver(Landroid/content/BroadcastReceiver;)V
+    :try_start_0
+    iget-object v1, p0, Lcom/android/internal/policy/impl/GlobalActions;->mContext:Landroid/content/Context;
 
+    iget-object v2, p0, Lcom/android/internal/policy/impl/GlobalActions;->mRingerModeReceiver:Landroid/content/BroadcastReceiver;
+
+    invoke-virtual {v1, v2}, Landroid/content/Context;->unregisterReceiver(Landroid/content/BroadcastReceiver;)V
+    :try_end_0
+    .catch Ljava/lang/IllegalArgumentException; {:try_start_0 .. :try_end_0} :catch_0
+
+    :cond_0
+    :goto_0
     return-void
+
+    :catch_0
+    move-exception v0
+
+    .local v0, ie:Ljava/lang/IllegalArgumentException;
+    const-string v1, "GlobalActions"
+
+    invoke-static {v1, v0}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/Throwable;)I
+
+    goto :goto_0
 .end method
 
 .method public showDialog(ZZ)V

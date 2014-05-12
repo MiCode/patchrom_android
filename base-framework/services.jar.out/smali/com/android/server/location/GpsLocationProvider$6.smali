@@ -1,5 +1,5 @@
 .class Lcom/android/server/location/GpsLocationProvider$6;
-.super Landroid/location/INetInitiatedListener$Stub;
+.super Landroid/location/IGpsGeofenceHardware$Stub;
 .source "GpsLocationProvider.java"
 
 
@@ -26,64 +26,81 @@
     .prologue
     iput-object p1, p0, Lcom/android/server/location/GpsLocationProvider$6;->this$0:Lcom/android/server/location/GpsLocationProvider;
 
-    invoke-direct {p0}, Landroid/location/INetInitiatedListener$Stub;-><init>()V
+    invoke-direct {p0}, Landroid/location/IGpsGeofenceHardware$Stub;-><init>()V
 
     return-void
 .end method
 
 
 # virtual methods
-.method public sendNiResponse(II)Z
-    .locals 3
-    .parameter "notificationId"
-    .parameter "userResponse"
+.method public addCircularHardwareGeofence(IDDDIIII)Z
+    .locals 1
+    .parameter "geofenceId"
+    .parameter "latitude"
+    .parameter "longitude"
+    .parameter "radius"
+    .parameter "lastTransition"
+    .parameter "monitorTransitions"
+    .parameter "notificationResponsiveness"
+    .parameter "unknownTimer"
 
     .prologue
-    invoke-static {}, Lcom/android/server/location/GpsLocationProvider;->access$100()Z
+    #calls: Lcom/android/server/location/GpsLocationProvider;->native_add_geofence(IDDDIIII)Z
+    invoke-static/range {p1 .. p11}, Lcom/android/server/location/GpsLocationProvider;->access$1700(IDDDIIII)Z
 
     move-result v0
 
-    if-eqz v0, :cond_0
+    return v0
+.end method
 
-    const-string v0, "GpsLocationProvider"
+.method public isHardwareGeofenceSupported()Z
+    .locals 1
 
-    new-instance v1, Ljava/lang/StringBuilder;
+    .prologue
+    #calls: Lcom/android/server/location/GpsLocationProvider;->native_is_geofence_supported()Z
+    invoke-static {}, Lcom/android/server/location/GpsLocationProvider;->access$1600()Z
 
-    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+    move-result v0
 
-    const-string v2, "sendNiResponse, notifId: "
+    return v0
+.end method
 
-    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+.method public pauseHardwareGeofence(I)Z
+    .locals 1
+    .parameter "geofenceId"
 
-    move-result-object v1
+    .prologue
+    #calls: Lcom/android/server/location/GpsLocationProvider;->native_pause_geofence(I)Z
+    invoke-static {p1}, Lcom/android/server/location/GpsLocationProvider;->access$1900(I)Z
 
-    invoke-virtual {v1, p1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+    move-result v0
 
-    move-result-object v1
+    return v0
+.end method
 
-    const-string v2, ", response: "
+.method public removeHardwareGeofence(I)Z
+    .locals 1
+    .parameter "geofenceId"
 
-    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    .prologue
+    #calls: Lcom/android/server/location/GpsLocationProvider;->native_remove_geofence(I)Z
+    invoke-static {p1}, Lcom/android/server/location/GpsLocationProvider;->access$1800(I)Z
 
-    move-result-object v1
+    move-result v0
 
-    invoke-virtual {v1, p2}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+    return v0
+.end method
 
-    move-result-object v1
+.method public resumeHardwareGeofence(II)Z
+    .locals 1
+    .parameter "geofenceId"
+    .parameter "monitorTransition"
 
-    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    .prologue
+    #calls: Lcom/android/server/location/GpsLocationProvider;->native_resume_geofence(II)Z
+    invoke-static {p1, p2}, Lcom/android/server/location/GpsLocationProvider;->access$2000(II)Z
 
-    move-result-object v1
-
-    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
-
-    :cond_0
-    iget-object v0, p0, Lcom/android/server/location/GpsLocationProvider$6;->this$0:Lcom/android/server/location/GpsLocationProvider;
-
-    #calls: Lcom/android/server/location/GpsLocationProvider;->native_send_ni_response(II)V
-    invoke-static {v0, p1, p2}, Lcom/android/server/location/GpsLocationProvider;->access$1600(Lcom/android/server/location/GpsLocationProvider;II)V
-
-    const/4 v0, 0x1
+    move-result v0
 
     return v0
 .end method

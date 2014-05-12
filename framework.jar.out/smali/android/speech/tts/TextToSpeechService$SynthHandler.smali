@@ -150,34 +150,49 @@
 
 # virtual methods
 .method public enqueueSpeechItem(ILandroid/speech/tts/TextToSpeechService$SpeechItem;)I
-    .locals 5
+    .locals 6
     .parameter "queueMode"
     .parameter "speechItem"
 
     .prologue
-    const/4 v2, -0x1
+    const/4 v3, -0x1
 
-    invoke-virtual {p2}, Landroid/speech/tts/TextToSpeechService$SpeechItem;->isValid()Z
+    const/4 v2, 0x0
 
-    move-result v3
+    .local v2, utterenceProgress:Landroid/speech/tts/TextToSpeechService$UtteranceProgressDispatcher;
+    instance-of v4, p2, Landroid/speech/tts/TextToSpeechService$UtteranceProgressDispatcher;
 
-    if-nez v3, :cond_0
+    if-eqz v4, :cond_0
 
-    invoke-virtual {p2}, Landroid/speech/tts/TextToSpeechService$SpeechItem;->dispatchOnError()V
+    move-object v2, p2
 
-    :goto_0
-    return v2
+    check-cast v2, Landroid/speech/tts/TextToSpeechService$UtteranceProgressDispatcher;
 
     :cond_0
-    if-nez p1, :cond_2
+    invoke-virtual {p2}, Landroid/speech/tts/TextToSpeechService$SpeechItem;->isValid()Z
+
+    move-result v4
+
+    if-nez v4, :cond_2
+
+    if-eqz v2, :cond_1
+
+    invoke-interface {v2}, Landroid/speech/tts/TextToSpeechService$UtteranceProgressDispatcher;->dispatchOnError()V
+
+    :cond_1
+    :goto_0
+    return v3
+
+    :cond_2
+    if-nez p1, :cond_4
 
     invoke-virtual {p2}, Landroid/speech/tts/TextToSpeechService$SpeechItem;->getCallerIdentity()Ljava/lang/Object;
 
-    move-result-object v3
+    move-result-object v4
 
-    invoke-virtual {p0, v3}, Landroid/speech/tts/TextToSpeechService$SynthHandler;->stopForApp(Ljava/lang/Object;)I
+    invoke-virtual {p0, v4}, Landroid/speech/tts/TextToSpeechService$SynthHandler;->stopForApp(Ljava/lang/Object;)I
 
-    :cond_1
+    :cond_3
     :goto_1
     new-instance v1, Landroid/speech/tts/TextToSpeechService$SynthHandler$1;
 
@@ -191,26 +206,26 @@
     .local v0, msg:Landroid/os/Message;
     invoke-virtual {p2}, Landroid/speech/tts/TextToSpeechService$SpeechItem;->getCallerIdentity()Ljava/lang/Object;
 
-    move-result-object v3
+    move-result-object v4
 
-    iput-object v3, v0, Landroid/os/Message;->obj:Ljava/lang/Object;
+    iput-object v4, v0, Landroid/os/Message;->obj:Ljava/lang/Object;
 
     invoke-virtual {p0, v0}, Landroid/speech/tts/TextToSpeechService$SynthHandler;->sendMessage(Landroid/os/Message;)Z
 
-    move-result v3
+    move-result v4
 
-    if-eqz v3, :cond_3
+    if-eqz v4, :cond_5
 
-    const/4 v2, 0x0
+    const/4 v3, 0x0
 
     goto :goto_0
 
     .end local v0           #msg:Landroid/os/Message;
     .end local v1           #runnable:Ljava/lang/Runnable;
-    :cond_2
-    const/4 v3, 0x2
+    :cond_4
+    const/4 v4, 0x2
 
-    if-ne p1, v3, :cond_1
+    if-ne p1, v4, :cond_3
 
     invoke-virtual {p0}, Landroid/speech/tts/TextToSpeechService$SynthHandler;->stopAll()I
 
@@ -218,14 +233,16 @@
 
     .restart local v0       #msg:Landroid/os/Message;
     .restart local v1       #runnable:Ljava/lang/Runnable;
-    :cond_3
-    const-string v3, "TextToSpeechService"
+    :cond_5
+    const-string v4, "TextToSpeechService"
 
-    const-string v4, "SynthThread has quit"
+    const-string v5, "SynthThread has quit"
 
-    invoke-static {v3, v4}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v4, v5}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    invoke-virtual {p2}, Landroid/speech/tts/TextToSpeechService$SpeechItem;->dispatchOnError()V
+    if-eqz v2, :cond_1
+
+    invoke-interface {v2}, Landroid/speech/tts/TextToSpeechService$UtteranceProgressDispatcher;->dispatchOnError()V
 
     goto :goto_0
 .end method

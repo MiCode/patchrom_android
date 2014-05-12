@@ -45,7 +45,7 @@
 
     .prologue
     #calls: Lcom/android/internal/policy/impl/PhoneWindow$PanelFeatureState$SavedState;->readFromParcel(Landroid/os/Parcel;)Lcom/android/internal/policy/impl/PhoneWindow$PanelFeatureState$SavedState;
-    invoke-static {p1}, Lcom/android/internal/policy/impl/PhoneWindow$PanelFeatureState$SavedState;->access$1900(Landroid/os/Parcel;)Lcom/android/internal/policy/impl/PhoneWindow$PanelFeatureState$SavedState;
+    invoke-static {p1}, Lcom/android/internal/policy/impl/PhoneWindow$PanelFeatureState$SavedState;->access$2100(Landroid/os/Parcel;)Lcom/android/internal/policy/impl/PhoneWindow$PanelFeatureState$SavedState;
 
     move-result-object v0
 

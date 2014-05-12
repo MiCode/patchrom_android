@@ -68,14 +68,14 @@
     .local p0, this:Landroid/os/RemoteCallbackList$Callback;,"Landroid/os/RemoteCallbackList<TE;>.Callback;"
     iget-object v0, p0, Landroid/os/RemoteCallbackList$Callback;->this$0:Landroid/os/RemoteCallbackList;
 
-    iget-object v1, v0, Landroid/os/RemoteCallbackList;->mCallbacks:Ljava/util/HashMap;
+    iget-object v1, v0, Landroid/os/RemoteCallbackList;->mCallbacks:Landroid/util/ArrayMap;
 
     monitor-enter v1
 
     :try_start_0
     iget-object v0, p0, Landroid/os/RemoteCallbackList$Callback;->this$0:Landroid/os/RemoteCallbackList;
 
-    iget-object v0, v0, Landroid/os/RemoteCallbackList;->mCallbacks:Ljava/util/HashMap;
+    iget-object v0, v0, Landroid/os/RemoteCallbackList;->mCallbacks:Landroid/util/ArrayMap;
 
     iget-object v2, p0, Landroid/os/RemoteCallbackList$Callback;->mCallback:Landroid/os/IInterface;
 
@@ -83,7 +83,7 @@
 
     move-result-object v2
 
-    invoke-virtual {v0, v2}, Ljava/util/HashMap;->remove(Ljava/lang/Object;)Ljava/lang/Object;
+    invoke-virtual {v0, v2}, Landroid/util/ArrayMap;->remove(Ljava/lang/Object;)Ljava/lang/Object;
 
     monitor-exit v1
     :try_end_0

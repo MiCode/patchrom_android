@@ -43,16 +43,24 @@
     .prologue
     iget-object v0, p0, Landroid/app/ActivityThread$2;->this$0:Landroid/app/ActivityThread;
 
-    iget-object v1, v0, Landroid/app/ActivityThread;->mPackages:Ljava/util/HashMap;
+    #getter for: Landroid/app/ActivityThread;->mResourcesManager:Landroid/app/ResourcesManager;
+    invoke-static {v0}, Landroid/app/ActivityThread;->access$200(Landroid/app/ActivityThread;)Landroid/app/ResourcesManager;
+
+    move-result-object v1
 
     monitor-enter v1
 
     :try_start_0
     iget-object v0, p0, Landroid/app/ActivityThread$2;->this$0:Landroid/app/ActivityThread;
 
+    #getter for: Landroid/app/ActivityThread;->mResourcesManager:Landroid/app/ResourcesManager;
+    invoke-static {v0}, Landroid/app/ActivityThread;->access$200(Landroid/app/ActivityThread;)Landroid/app/ResourcesManager;
+
+    move-result-object v0
+
     const/4 v2, 0x0
 
-    invoke-virtual {v0, p1, v2}, Landroid/app/ActivityThread;->applyConfigurationToResourcesLocked(Landroid/content/res/Configuration;Landroid/content/res/CompatibilityInfo;)Z
+    invoke-virtual {v0, p1, v2}, Landroid/app/ResourcesManager;->applyConfigurationToResourcesLocked(Landroid/content/res/Configuration;Landroid/content/res/CompatibilityInfo;)Z
 
     move-result v0
 
@@ -83,8 +91,8 @@
 
     const/16 v2, 0x76
 
-    #calls: Landroid/app/ActivityThread;->queueOrSendMessage(ILjava/lang/Object;)V
-    invoke-static {v0, v2, p1}, Landroid/app/ActivityThread;->access$300(Landroid/app/ActivityThread;ILjava/lang/Object;)V
+    #calls: Landroid/app/ActivityThread;->sendMessage(ILjava/lang/Object;)V
+    invoke-static {v0, v2, p1}, Landroid/app/ActivityThread;->access$400(Landroid/app/ActivityThread;ILjava/lang/Object;)V
 
     :cond_1
     monitor-exit v1

@@ -11,7 +11,6 @@
 # annotations
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
-        Landroid/app/NativeActivity$InputMethodCallback;,
         Landroid/app/NativeActivity$NativeContentView;
     }
 .end annotation
@@ -35,8 +34,6 @@
 .field private mDispatchingUnhandledKey:Z
 
 .field private mIMM:Landroid/view/inputmethod/InputMethodManager;
-
-.field private mInputMethodCallback:Landroid/app/NativeActivity$InputMethodCallback;
 
 .field mLastContentHeight:I
 
@@ -69,33 +66,24 @@
     return-void
 .end method
 
-.method static synthetic access$000(Landroid/app/NativeActivity;)I
+.method private static getAbsolutePath(Ljava/io/File;)Ljava/lang/String;
     .locals 1
-    .parameter "x0"
+    .parameter "file"
 
     .prologue
-    iget v0, p0, Landroid/app/NativeActivity;->mNativeHandle:I
+    if-eqz p0, :cond_0
 
-    return v0
-.end method
+    invoke-virtual {p0}, Ljava/io/File;->getAbsolutePath()Ljava/lang/String;
 
-.method static synthetic access$100(Landroid/app/NativeActivity;IIZ)V
-    .locals 0
-    .parameter "x0"
-    .parameter "x1"
-    .parameter "x2"
-    .parameter "x3"
+    move-result-object v0
 
-    .prologue
-    invoke-direct {p0, p1, p2, p3}, Landroid/app/NativeActivity;->finishPreDispatchKeyEventNative(IIZ)V
+    :goto_0
+    return-object v0
 
-    return-void
-.end method
+    :cond_0
+    const/4 v0, 0x0
 
-.method private native dispatchKeyEventNative(ILandroid/view/KeyEvent;)V
-.end method
-
-.method private native finishPreDispatchKeyEventNative(IIZ)V
+    goto :goto_0
 .end method
 
 .method private native loadNativeCode(Ljava/lang/String;Ljava/lang/String;Landroid/os/MessageQueue;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILandroid/content/res/AssetManager;[B)I
@@ -107,10 +95,10 @@
 .method private native onContentRectChangedNative(IIIII)V
 .end method
 
-.method private native onInputChannelCreatedNative(ILandroid/view/InputChannel;)V
+.method private native onInputQueueCreatedNative(II)V
 .end method
 
-.method private native onInputChannelDestroyedNative(ILandroid/view/InputChannel;)V
+.method private native onInputQueueDestroyedNative(II)V
 .end method
 
 .method private native onLowMemoryNative(I)V
@@ -151,82 +139,6 @@
 
 
 # virtual methods
-.method public dispatchKeyEvent(Landroid/view/KeyEvent;)Z
-    .locals 1
-    .parameter "event"
-
-    .prologue
-    iget-boolean v0, p0, Landroid/app/NativeActivity;->mDispatchingUnhandledKey:Z
-
-    if-eqz v0, :cond_0
-
-    invoke-super {p0, p1}, Landroid/app/Activity;->dispatchKeyEvent(Landroid/view/KeyEvent;)Z
-
-    move-result v0
-
-    :goto_0
-    return v0
-
-    :cond_0
-    iget v0, p0, Landroid/app/NativeActivity;->mNativeHandle:I
-
-    invoke-direct {p0, v0, p1}, Landroid/app/NativeActivity;->dispatchKeyEventNative(ILandroid/view/KeyEvent;)V
-
-    const/4 v0, 0x1
-
-    goto :goto_0
-.end method
-
-.method dispatchUnhandledKeyEvent(Landroid/view/KeyEvent;)Z
-    .locals 3
-    .parameter "event"
-
-    .prologue
-    const/4 v2, 0x0
-
-    const/4 v1, 0x1
-
-    :try_start_0
-    iput-boolean v1, p0, Landroid/app/NativeActivity;->mDispatchingUnhandledKey:Z
-
-    invoke-virtual {p0}, Landroid/app/NativeActivity;->getWindow()Landroid/view/Window;
-
-    move-result-object v1
-
-    invoke-virtual {v1}, Landroid/view/Window;->getDecorView()Landroid/view/View;
-
-    move-result-object v0
-
-    .local v0, decor:Landroid/view/View;
-    if-eqz v0, :cond_0
-
-    invoke-virtual {v0, p1}, Landroid/view/View;->dispatchKeyEvent(Landroid/view/KeyEvent;)Z
-    :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
-
-    move-result v1
-
-    iput-boolean v2, p0, Landroid/app/NativeActivity;->mDispatchingUnhandledKey:Z
-
-    :goto_0
-    return v1
-
-    :cond_0
-    iput-boolean v2, p0, Landroid/app/NativeActivity;->mDispatchingUnhandledKey:Z
-
-    move v1, v2
-
-    goto :goto_0
-
-    .end local v0           #decor:Landroid/view/View;
-    :catchall_0
-    move-exception v1
-
-    iput-boolean v2, p0, Landroid/app/NativeActivity;->mDispatchingUnhandledKey:Z
-
-    throw v1
-.end method
-
 .method hideIme(I)V
     .locals 2
     .parameter "mode"
@@ -288,16 +200,6 @@
     move-object/from16 v0, p0
 
     iput-object v1, v0, Landroid/app/NativeActivity;->mIMM:Landroid/view/inputmethod/InputMethodManager;
-
-    new-instance v1, Landroid/app/NativeActivity$InputMethodCallback;
-
-    move-object/from16 v0, p0
-
-    invoke-direct {v1, v0}, Landroid/app/NativeActivity$InputMethodCallback;-><init>(Landroid/app/NativeActivity;)V
-
-    move-object/from16 v0, p0
-
-    iput-object v1, v0, Landroid/app/NativeActivity;->mInputMethodCallback:Landroid/app/NativeActivity$InputMethodCallback;
 
     invoke-virtual/range {p0 .. p0}, Landroid/app/NativeActivity;->getWindow()Landroid/view/Window;
 
@@ -522,7 +424,7 @@
 
     move-result-object v1
 
-    invoke-virtual {v1}, Ljava/io/File;->toString()Ljava/lang/String;
+    invoke-static {v1}, Landroid/app/NativeActivity;->getAbsolutePath(Ljava/io/File;)Ljava/lang/String;
 
     move-result-object v5
 
@@ -530,17 +432,19 @@
 
     move-result-object v1
 
-    invoke-virtual {v1}, Ljava/io/File;->toString()Ljava/lang/String;
+    invoke-static {v1}, Landroid/app/NativeActivity;->getAbsolutePath(Ljava/io/File;)Ljava/lang/String;
 
     move-result-object v6
 
-    iget-object v1, v11, Landroid/content/pm/ActivityInfo;->packageName:Ljava/lang/String;
+    const/4 v1, 0x0
 
-    invoke-static {v1}, Landroid/os/Environment;->getExternalStorageAppFilesDirectory(Ljava/lang/String;)Ljava/io/File;
+    move-object/from16 v0, p0
+
+    invoke-virtual {v0, v1}, Landroid/app/NativeActivity;->getExternalFilesDir(Ljava/lang/String;)Ljava/io/File;
 
     move-result-object v1
 
-    invoke-virtual {v1}, Ljava/io/File;->toString()Ljava/lang/String;
+    invoke-static {v1}, Landroid/app/NativeActivity;->getAbsolutePath(Ljava/io/File;)Ljava/lang/String;
 
     move-result-object v7
 
@@ -632,11 +536,11 @@
 
     iget-object v1, p0, Landroid/app/NativeActivity;->mCurInputQueue:Landroid/view/InputQueue;
 
-    invoke-virtual {v1}, Landroid/view/InputQueue;->getInputChannel()Landroid/view/InputChannel;
+    invoke-virtual {v1}, Landroid/view/InputQueue;->getNativePtr()I
 
-    move-result-object v1
+    move-result v1
 
-    invoke-direct {p0, v0, v1}, Landroid/app/NativeActivity;->onInputChannelDestroyedNative(ILandroid/view/InputChannel;)V
+    invoke-direct {p0, v0, v1}, Landroid/app/NativeActivity;->onInputQueueDestroyedNative(II)V
 
     iput-object v2, p0, Landroid/app/NativeActivity;->mCurInputQueue:Landroid/view/InputQueue;
 
@@ -754,11 +658,11 @@
 
     iget v0, p0, Landroid/app/NativeActivity;->mNativeHandle:I
 
-    invoke-virtual {p1}, Landroid/view/InputQueue;->getInputChannel()Landroid/view/InputChannel;
+    invoke-virtual {p1}, Landroid/view/InputQueue;->getNativePtr()I
 
-    move-result-object v1
+    move-result v1
 
-    invoke-direct {p0, v0, v1}, Landroid/app/NativeActivity;->onInputChannelCreatedNative(ILandroid/view/InputChannel;)V
+    invoke-direct {p0, v0, v1}, Landroid/app/NativeActivity;->onInputQueueCreatedNative(II)V
 
     :cond_0
     return-void
@@ -769,21 +673,21 @@
     .parameter "queue"
 
     .prologue
-    const/4 v0, 0x0
-
-    iput-object v0, p0, Landroid/app/NativeActivity;->mCurInputQueue:Landroid/view/InputQueue;
-
     iget-boolean v0, p0, Landroid/app/NativeActivity;->mDestroyed:Z
 
     if-nez v0, :cond_0
 
     iget v0, p0, Landroid/app/NativeActivity;->mNativeHandle:I
 
-    invoke-virtual {p1}, Landroid/view/InputQueue;->getInputChannel()Landroid/view/InputChannel;
+    invoke-virtual {p1}, Landroid/view/InputQueue;->getNativePtr()I
 
-    move-result-object v1
+    move-result v1
 
-    invoke-direct {p0, v0, v1}, Landroid/app/NativeActivity;->onInputChannelDestroyedNative(ILandroid/view/InputChannel;)V
+    invoke-direct {p0, v0, v1}, Landroid/app/NativeActivity;->onInputQueueDestroyedNative(II)V
+
+    const/4 v0, 0x0
+
+    iput-object v0, p0, Landroid/app/NativeActivity;->mCurInputQueue:Landroid/view/InputQueue;
 
     :cond_0
     return-void
@@ -899,21 +803,6 @@
     invoke-direct {p0, v0, p1}, Landroid/app/NativeActivity;->onWindowFocusChangedNative(IZ)V
 
     :cond_0
-    return-void
-.end method
-
-.method preDispatchKeyEvent(Landroid/view/KeyEvent;I)V
-    .locals 2
-    .parameter "event"
-    .parameter "seq"
-
-    .prologue
-    iget-object v0, p0, Landroid/app/NativeActivity;->mIMM:Landroid/view/inputmethod/InputMethodManager;
-
-    iget-object v1, p0, Landroid/app/NativeActivity;->mInputMethodCallback:Landroid/app/NativeActivity$InputMethodCallback;
-
-    invoke-virtual {v0, p0, p2, p1, v1}, Landroid/view/inputmethod/InputMethodManager;->dispatchKeyEvent(Landroid/content/Context;ILandroid/view/KeyEvent;Landroid/view/inputmethod/InputMethodManager$FinishedEventCallback;)V
-
     return-void
 .end method
 

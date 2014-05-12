@@ -586,6 +586,7 @@
         0x7f -> :sswitch_1
         0x82 -> :sswitch_2
         0xa4 -> :sswitch_0
+        0xde -> :sswitch_2
     .end sparse-switch
 .end method
 
@@ -724,6 +725,7 @@
         0x7f -> :sswitch_1
         0x82 -> :sswitch_1
         0xa4 -> :sswitch_0
+        0xde -> :sswitch_1
     .end sparse-switch
 .end method
 

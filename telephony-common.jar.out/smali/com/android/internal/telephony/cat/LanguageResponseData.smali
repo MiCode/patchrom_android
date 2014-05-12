@@ -4,7 +4,7 @@
 
 
 # instance fields
-.field private lang:Ljava/lang/String;
+.field private mLang:Ljava/lang/String;
 
 
 # direct methods
@@ -15,7 +15,7 @@
     .prologue
     invoke-direct {p0}, Lcom/android/internal/telephony/cat/ResponseData;-><init>()V
 
-    iput-object p1, p0, Lcom/android/internal/telephony/cat/LanguageResponseData;->lang:Ljava/lang/String;
+    iput-object p1, p0, Lcom/android/internal/telephony/cat/LanguageResponseData;->mLang:Ljava/lang/String;
 
     return-void
 .end method
@@ -44,11 +44,11 @@
     .local v5, tag:I
     invoke-virtual {p1, v5}, Ljava/io/ByteArrayOutputStream;->write(I)V
 
-    iget-object v6, p0, Lcom/android/internal/telephony/cat/LanguageResponseData;->lang:Ljava/lang/String;
+    iget-object v6, p0, Lcom/android/internal/telephony/cat/LanguageResponseData;->mLang:Ljava/lang/String;
 
     if-eqz v6, :cond_2
 
-    iget-object v6, p0, Lcom/android/internal/telephony/cat/LanguageResponseData;->lang:Ljava/lang/String;
+    iget-object v6, p0, Lcom/android/internal/telephony/cat/LanguageResponseData;->mLang:Ljava/lang/String;
 
     invoke-virtual {v6}, Ljava/lang/String;->length()I
 
@@ -56,7 +56,7 @@
 
     if-lez v6, :cond_2
 
-    iget-object v6, p0, Lcom/android/internal/telephony/cat/LanguageResponseData;->lang:Ljava/lang/String;
+    iget-object v6, p0, Lcom/android/internal/telephony/cat/LanguageResponseData;->mLang:Ljava/lang/String;
 
     invoke-static {v6}, Lcom/android/internal/telephony/GsmAlphabet;->stringToGsm8BitPacked(Ljava/lang/String;)[B
 

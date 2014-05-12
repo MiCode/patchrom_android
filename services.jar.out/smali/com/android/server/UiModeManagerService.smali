@@ -3,14 +3,6 @@
 .source "UiModeManagerService.java"
 
 
-# annotations
-.annotation system Ldalvik/annotation/MemberClasses;
-    value = {
-        Lcom/android/server/UiModeManagerService$Injector;
-    }
-.end annotation
-
-
 # static fields
 .field private static final ENABLE_LAUNCH_CAR_DOCK_APP:Z = true
 
@@ -38,7 +30,7 @@
 
 .field private mCurUiMode:I
 
-.field private final mDefaultUiModeType:I
+.field private mDefaultUiModeType:I
 
 .field private final mDeskModeKeepsScreenOn:Z
 
@@ -55,8 +47,6 @@
 .field final mLock:Ljava/lang/Object;
 
 .field private mNightMode:I
-
-.field mNormalType:I
 
 .field private mNotificationManager:Landroid/app/NotificationManager;
 
@@ -106,8 +96,6 @@
     const/4 v2, 0x0
 
     invoke-direct {p0}, Landroid/app/IUiModeManager$Stub;-><init>()V
-
-    iput v1, p0, Lcom/android/server/UiModeManagerService;->mNormalType:I
 
     new-instance v0, Landroid/os/Handler;
 
@@ -199,10 +187,6 @@
 
     invoke-virtual {v0, v3, v4}, Landroid/content/Context;->registerReceiver(Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;)Landroid/content/Intent;
 
-    iget-object v0, p0, Lcom/android/server/UiModeManagerService;->mContext:Landroid/content/Context;
-
-    invoke-static {p0, v0}, Lcom/android/server/UiModeManagerService$Injector;->registerUIModeScaleChangedObserver(Lcom/android/server/UiModeManagerService;Landroid/content/Context;)V
-
     const-string v0, "power"
 
     invoke-virtual {p1, v0}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
@@ -233,7 +217,7 @@
 
     move-result-object v0
 
-    const v3, 0x10e0012
+    const v3, 0x10e0017
 
     invoke-virtual {v0, v3}, Landroid/content/res/Resources;->getInteger(I)I
 
@@ -245,7 +229,7 @@
 
     move-result-object v0
 
-    const v3, 0x10e0014
+    const v3, 0x10e0019
 
     invoke-virtual {v0, v3}, Landroid/content/res/Resources;->getInteger(I)I
 
@@ -262,7 +246,7 @@
 
     move-result-object v0
 
-    const v3, 0x10e0013
+    const v3, 0x10e0018
 
     invoke-virtual {v0, v3}, Landroid/content/res/Resources;->getInteger(I)I
 
@@ -306,6 +290,8 @@
     iget-object v2, p0, Lcom/android/server/UiModeManagerService;->mHandler:Landroid/os/Handler;
 
     invoke-virtual {v0, v1, v2}, Lcom/android/server/TwilightService;->registerListener(Lcom/android/server/TwilightService$TwilightListener;Landroid/os/Handler;)V
+
+    invoke-static {p0, p1}, Lcom/android/server/Injector$UiModeManagerServiceHook;->registerUIModeScaleChangedOjbserver(Lcom/android/server/UiModeManagerService;Landroid/content/Context;)V
 
     return-void
 
@@ -393,7 +379,7 @@
     .prologue
     const/4 v4, 0x0
 
-    const v10, 0x1040493
+    const v10, 0x10404c1
 
     const/4 v1, 0x0
 
@@ -469,7 +455,7 @@
     invoke-direct {v6}, Landroid/app/Notification;-><init>()V
 
     .local v6, n:Landroid/app/Notification;
-    const v0, 0x108051b
+    const v0, 0x1080583
 
     iput v0, v6, Landroid/app/Notification;->icon:I
 
@@ -495,7 +481,7 @@
 
     iget-object v0, p0, Lcom/android/server/UiModeManagerService;->mContext:Landroid/content/Context;
 
-    const v3, 0x1040494
+    const v3, 0x10404c2
 
     invoke-virtual {v0, v3}, Landroid/content/Context;->getString(I)Ljava/lang/String;
 
@@ -615,7 +601,7 @@
 .end method
 
 .method private sendConfigurationAndStartDreamOrDockAppLocked(Ljava/lang/String;)V
-    .locals 14
+    .locals 15
     .parameter "category"
 
     .prologue
@@ -625,19 +611,19 @@
 
     invoke-direct {p0}, Lcom/android/server/UiModeManagerService;->updateConfigurationLocked()V
 
-    const/4 v11, 0x0
+    const/4 v12, 0x0
 
-    .local v11, dockAppStarted:Z
+    .local v12, dockAppStarted:Z
     if-eqz p1, :cond_0
 
-    invoke-static {p1}, Lcom/android/server/UiModeManagerService;->buildHomeIntent(Ljava/lang/String;)Landroid/content/Intent;
+    invoke-static/range {p1 .. p1}, Lcom/android/server/UiModeManagerService;->buildHomeIntent(Ljava/lang/String;)Landroid/content/Intent;
 
-    move-result-object v2
+    move-result-object v3
 
-    .local v2, homeIntent:Landroid/content/Intent;
+    .local v3, homeIntent:Landroid/content/Intent;
     iget-object v0, p0, Lcom/android/server/UiModeManagerService;->mContext:Landroid/content/Context;
 
-    invoke-static {v0, v2}, Landroid/service/dreams/Sandman;->shouldStartDockApp(Landroid/content/Context;Landroid/content/Intent;)Z
+    invoke-static {v0, v3}, Landroid/service/dreams/Sandman;->shouldStartDockApp(Landroid/content/Context;Landroid/content/Intent;)Z
 
     move-result v0
 
@@ -650,7 +636,7 @@
 
     const/4 v1, 0x0
 
-    const/4 v3, 0x0
+    const/4 v2, 0x0
 
     const/4 v4, 0x0
 
@@ -660,32 +646,34 @@
 
     const/4 v7, 0x0
 
-    iget-object v8, p0, Lcom/android/server/UiModeManagerService;->mConfiguration:Landroid/content/res/Configuration;
+    const/4 v8, 0x0
 
-    const/4 v9, 0x0
+    iget-object v9, p0, Lcom/android/server/UiModeManagerService;->mConfiguration:Landroid/content/res/Configuration;
 
-    const/4 v10, -0x2
+    const/4 v10, 0x0
 
-    invoke-interface/range {v0 .. v10}, Landroid/app/IActivityManager;->startActivityWithConfig(Landroid/app/IApplicationThread;Landroid/content/Intent;Ljava/lang/String;Landroid/os/IBinder;Ljava/lang/String;IILandroid/content/res/Configuration;Landroid/os/Bundle;I)I
+    const/4 v11, -0x2
+
+    invoke-interface/range {v0 .. v11}, Landroid/app/IActivityManager;->startActivityWithConfig(Landroid/app/IApplicationThread;Ljava/lang/String;Landroid/content/Intent;Ljava/lang/String;Landroid/os/IBinder;Ljava/lang/String;IILandroid/content/res/Configuration;Landroid/os/Bundle;I)I
     :try_end_0
     .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
 
-    move-result v13
+    move-result v14
 
-    .local v13, result:I
-    if-ltz v13, :cond_2
+    .local v14, result:I
+    if-ltz v14, :cond_2
 
-    const/4 v11, 0x1
+    const/4 v12, 0x1
 
-    .end local v2           #homeIntent:Landroid/content/Intent;
-    .end local v13           #result:I
+    .end local v3           #homeIntent:Landroid/content/Intent;
+    .end local v14           #result:I
     :cond_0
     :goto_0
     invoke-direct {p0}, Lcom/android/server/UiModeManagerService;->sendConfigurationLocked()V
 
     if-eqz p1, :cond_1
 
-    if-nez v11, :cond_1
+    if-nez v12, :cond_1
 
     iget-object v0, p0, Lcom/android/server/UiModeManagerService;->mContext:Landroid/content/Context;
 
@@ -694,12 +682,12 @@
     :cond_1
     return-void
 
-    .restart local v2       #homeIntent:Landroid/content/Intent;
-    .restart local v13       #result:I
+    .restart local v3       #homeIntent:Landroid/content/Intent;
+    .restart local v14       #result:I
     :cond_2
     const/4 v0, -0x1
 
-    if-eq v13, v0, :cond_0
+    if-eq v14, v0, :cond_0
 
     :try_start_1
     sget-object v0, Lcom/android/server/UiModeManagerService;->TAG:Ljava/lang/String;
@@ -708,23 +696,23 @@
 
     invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v3, "Could not start dock app: "
+    const-string v2, "Could not start dock app: "
 
-    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v1
-
-    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v1
 
-    const-string v3, ", startActivityWithConfig result "
-
-    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
 
     move-result-object v1
 
-    invoke-virtual {v1, v13}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+    const-string v2, ", startActivityWithConfig result "
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1, v14}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
     move-result-object v1
 
@@ -738,24 +726,24 @@
 
     goto :goto_0
 
-    .end local v13           #result:I
+    .end local v14           #result:I
     :catch_0
-    move-exception v12
+    move-exception v13
 
-    .local v12, ex:Landroid/os/RemoteException;
+    .local v13, ex:Landroid/os/RemoteException;
     sget-object v0, Lcom/android/server/UiModeManagerService;->TAG:Ljava/lang/String;
 
     new-instance v1, Ljava/lang/StringBuilder;
 
     invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v3, "Could not start dock app: "
+    const-string v2, "Could not start dock app: "
 
-    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v1
 
-    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
 
     move-result-object v1
 
@@ -763,7 +751,7 @@
 
     move-result-object v1
 
-    invoke-static {v0, v1, v12}, Landroid/util/Slog;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+    invoke-static {v0, v1, v13}, Landroid/util/Slog;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
 
     goto :goto_0
 .end method
@@ -964,7 +952,7 @@
 
     .end local v0           #uiMode:I
     :cond_2
-    iget v0, p0, Lcom/android/server/UiModeManagerService;->mNormalType:I
+    iget v0, p0, Lcom/android/server/UiModeManagerService;->mDefaultUiModeType:I
 
     goto :goto_0
 
@@ -1740,6 +1728,16 @@
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
     throw v0
+.end method
+
+.method setDefaultUiModeType(I)V
+    .locals 0
+    .parameter "type"
+
+    .prologue
+    iput p1, p0, Lcom/android/server/UiModeManagerService;->mDefaultUiModeType:I
+
+    return-void
 .end method
 
 .method public setNightMode(I)V

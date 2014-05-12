@@ -219,6 +219,10 @@
 
     if-eqz v8, :cond_1
 
+    iget-boolean v8, p0, Landroid/widget/AbsSeekBar;->mMirrorForRtl:Z
+
+    if-eqz v8, :cond_1
+
     sub-int v2, v0, v5
 
     .local v2, left:I
@@ -279,6 +283,10 @@
     invoke-virtual {p0}, Landroid/widget/AbsSeekBar;->isLayoutRtl()Z
 
     move-result v6
+
+    if-eqz v6, :cond_2
+
+    iget-boolean v6, p0, Landroid/widget/AbsSeekBar;->mMirrorForRtl:Z
 
     if-eqz v6, :cond_2
 

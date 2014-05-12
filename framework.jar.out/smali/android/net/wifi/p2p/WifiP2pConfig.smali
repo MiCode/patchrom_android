@@ -53,6 +53,10 @@
     .prologue
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
+    const-string v0, ""
+
+    iput-object v0, p0, Landroid/net/wifi/p2p/WifiP2pConfig;->deviceAddress:Ljava/lang/String;
+
     const/4 v0, -0x1
 
     iput v0, p0, Landroid/net/wifi/p2p/WifiP2pConfig;->groupOwnerIntent:I
@@ -82,6 +86,10 @@
 
     .prologue
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    const-string v0, ""
+
+    iput-object v0, p0, Landroid/net/wifi/p2p/WifiP2pConfig;->deviceAddress:Ljava/lang/String;
 
     const/4 v0, -0x1
 
@@ -134,6 +142,10 @@
     const/4 v6, 0x2
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    const-string v4, ""
+
+    iput-object v4, p0, Landroid/net/wifi/p2p/WifiP2pConfig;->deviceAddress:Ljava/lang/String;
 
     const/4 v4, -0x1
 
@@ -274,6 +286,17 @@
     const/4 v0, 0x0
 
     return v0
+.end method
+
+.method invalidate()V
+    .locals 1
+
+    .prologue
+    const-string v0, ""
+
+    iput-object v0, p0, Landroid/net/wifi/p2p/WifiP2pConfig;->deviceAddress:Ljava/lang/String;
+
+    return-void
 .end method
 
 .method public toString()Ljava/lang/String;

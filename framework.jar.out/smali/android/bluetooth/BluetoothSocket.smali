@@ -366,6 +366,8 @@
 
     invoke-static {v2, v3}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
 
+    invoke-virtual {v0}, Landroid/bluetooth/BluetoothSocket;->close()V
+
     new-instance v2, Ljava/io/IOException;
 
     const-string v3, "bt socket acept failed"
@@ -417,79 +419,81 @@
 .end method
 
 .method private convertAddr([B)Ljava/lang/String;
-    .locals 8
+    .locals 9
     .parameter "addr"
 
     .prologue
-    const/4 v7, 0x4
+    const/4 v8, 0x4
 
-    const/4 v6, 0x3
+    const/4 v7, 0x3
 
-    const/4 v5, 0x2
+    const/4 v6, 0x2
 
-    const/4 v4, 0x1
+    const/4 v5, 0x1
 
-    const/4 v3, 0x0
+    const/4 v4, 0x0
 
-    const-string v0, "%02X:%02X:%02X:%02X:%02X:%02X"
+    sget-object v0, Ljava/util/Locale;->US:Ljava/util/Locale;
 
-    const/4 v1, 0x6
+    const-string v1, "%02X:%02X:%02X:%02X:%02X:%02X"
 
-    new-array v1, v1, [Ljava/lang/Object;
+    const/4 v2, 0x6
 
-    aget-byte v2, p1, v3
+    new-array v2, v2, [Ljava/lang/Object;
 
-    invoke-static {v2}, Ljava/lang/Byte;->valueOf(B)Ljava/lang/Byte;
-
-    move-result-object v2
-
-    aput-object v2, v1, v3
-
-    aget-byte v2, p1, v4
-
-    invoke-static {v2}, Ljava/lang/Byte;->valueOf(B)Ljava/lang/Byte;
-
-    move-result-object v2
-
-    aput-object v2, v1, v4
-
-    aget-byte v2, p1, v5
-
-    invoke-static {v2}, Ljava/lang/Byte;->valueOf(B)Ljava/lang/Byte;
-
-    move-result-object v2
-
-    aput-object v2, v1, v5
-
-    aget-byte v2, p1, v6
-
-    invoke-static {v2}, Ljava/lang/Byte;->valueOf(B)Ljava/lang/Byte;
-
-    move-result-object v2
-
-    aput-object v2, v1, v6
-
-    aget-byte v2, p1, v7
-
-    invoke-static {v2}, Ljava/lang/Byte;->valueOf(B)Ljava/lang/Byte;
-
-    move-result-object v2
-
-    aput-object v2, v1, v7
-
-    const/4 v2, 0x5
-
-    const/4 v3, 0x5
-
-    aget-byte v3, p1, v3
+    aget-byte v3, p1, v4
 
     invoke-static {v3}, Ljava/lang/Byte;->valueOf(B)Ljava/lang/Byte;
 
     move-result-object v3
 
-    aput-object v3, v1, v2
+    aput-object v3, v2, v4
 
-    invoke-static {v0, v1}, Ljava/lang/String;->format(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+    aget-byte v3, p1, v5
+
+    invoke-static {v3}, Ljava/lang/Byte;->valueOf(B)Ljava/lang/Byte;
+
+    move-result-object v3
+
+    aput-object v3, v2, v5
+
+    aget-byte v3, p1, v6
+
+    invoke-static {v3}, Ljava/lang/Byte;->valueOf(B)Ljava/lang/Byte;
+
+    move-result-object v3
+
+    aput-object v3, v2, v6
+
+    aget-byte v3, p1, v7
+
+    invoke-static {v3}, Ljava/lang/Byte;->valueOf(B)Ljava/lang/Byte;
+
+    move-result-object v3
+
+    aput-object v3, v2, v7
+
+    aget-byte v3, p1, v8
+
+    invoke-static {v3}, Ljava/lang/Byte;->valueOf(B)Ljava/lang/Byte;
+
+    move-result-object v3
+
+    aput-object v3, v2, v8
+
+    const/4 v3, 0x5
+
+    const/4 v4, 0x5
+
+    aget-byte v4, p1, v4
+
+    invoke-static {v4}, Ljava/lang/Byte;->valueOf(B)Ljava/lang/Byte;
+
+    move-result-object v4
+
+    aput-object v4, v2, v3
+
+    invoke-static {v0, v1, v2}, Ljava/lang/String;->format(Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
 
     move-result-object v0
 
@@ -1550,6 +1554,22 @@
     invoke-super {p0}, Ljava/lang/Object;->finalize()V
 
     throw v0
+.end method
+
+.method flush()V
+    .locals 1
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Ljava/io/IOException;
+        }
+    .end annotation
+
+    .prologue
+    iget-object v0, p0, Landroid/bluetooth/BluetoothSocket;->mSocketOS:Ljava/io/OutputStream;
+
+    invoke-virtual {v0}, Ljava/io/OutputStream;->flush()V
+
+    return-void
 .end method
 
 .method public getInputStream()Ljava/io/InputStream;

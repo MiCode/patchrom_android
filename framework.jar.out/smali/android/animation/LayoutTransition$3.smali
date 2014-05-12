@@ -165,6 +165,7 @@
 
     packed-switch v10, :pswitch_data_0
 
+    :cond_4
     :goto_2
     iget-object v10, p0, Landroid/animation/LayoutTransition$3;->val$anim:Landroid/animation/Animator;
 
@@ -179,7 +180,7 @@
     iget-object v10, p0, Landroid/animation/LayoutTransition$3;->this$0:Landroid/animation/LayoutTransition;
 
     #getter for: Landroid/animation/LayoutTransition;->currentChangingAnimations:Ljava/util/LinkedHashMap;
-    invoke-static {v10}, Landroid/animation/LayoutTransition;->access$900(Landroid/animation/LayoutTransition;)Ljava/util/LinkedHashMap;
+    invoke-static {v10}, Landroid/animation/LayoutTransition;->access$1500(Landroid/animation/LayoutTransition;)Ljava/util/LinkedHashMap;
 
     move-result-object v10
 
@@ -192,11 +193,11 @@
     check-cast v4, Landroid/animation/Animator;
 
     .local v4, prevAnimation:Landroid/animation/Animator;
-    if-eqz v4, :cond_4
+    if-eqz v4, :cond_5
 
     invoke-virtual {v4}, Landroid/animation/Animator;->cancel()V
 
-    :cond_4
+    :cond_5
     iget-object v10, p0, Landroid/animation/LayoutTransition$3;->this$0:Landroid/animation/LayoutTransition;
 
     #getter for: Landroid/animation/LayoutTransition;->pendingAnimations:Ljava/util/HashMap;
@@ -213,7 +214,7 @@
     check-cast v3, Landroid/animation/Animator;
 
     .local v3, pendingAnimation:Landroid/animation/Animator;
-    if-eqz v3, :cond_5
+    if-eqz v3, :cond_6
 
     iget-object v10, p0, Landroid/animation/LayoutTransition$3;->this$0:Landroid/animation/LayoutTransition;
 
@@ -226,11 +227,11 @@
 
     invoke-virtual {v10, v11}, Ljava/util/HashMap;->remove(Ljava/lang/Object;)Ljava/lang/Object;
 
-    :cond_5
+    :cond_6
     iget-object v10, p0, Landroid/animation/LayoutTransition$3;->this$0:Landroid/animation/LayoutTransition;
 
     #getter for: Landroid/animation/LayoutTransition;->currentChangingAnimations:Ljava/util/LinkedHashMap;
-    invoke-static {v10}, Landroid/animation/LayoutTransition;->access$900(Landroid/animation/LayoutTransition;)Ljava/util/LinkedHashMap;
+    invoke-static {v10}, Landroid/animation/LayoutTransition;->access$1500(Landroid/animation/LayoutTransition;)Ljava/util/LinkedHashMap;
 
     move-result-object v10
 
@@ -293,42 +294,36 @@
 
     invoke-static {v10, v11, v12}, Landroid/animation/LayoutTransition;->access$314(Landroid/animation/LayoutTransition;J)J
 
-    goto :goto_2
+    iget-object v10, p0, Landroid/animation/LayoutTransition$3;->this$0:Landroid/animation/LayoutTransition;
+
+    #getter for: Landroid/animation/LayoutTransition;->mChangingAppearingInterpolator:Landroid/animation/TimeInterpolator;
+    invoke-static {v10}, Landroid/animation/LayoutTransition;->access$500(Landroid/animation/LayoutTransition;)Landroid/animation/TimeInterpolator;
+
+    move-result-object v10
+
+    invoke-static {}, Landroid/animation/LayoutTransition;->access$600()Landroid/animation/TimeInterpolator;
+
+    move-result-object v11
+
+    if-eq v10, v11, :cond_4
+
+    iget-object v10, p0, Landroid/animation/LayoutTransition$3;->val$anim:Landroid/animation/Animator;
+
+    iget-object v11, p0, Landroid/animation/LayoutTransition$3;->this$0:Landroid/animation/LayoutTransition;
+
+    #getter for: Landroid/animation/LayoutTransition;->mChangingAppearingInterpolator:Landroid/animation/TimeInterpolator;
+    invoke-static {v11}, Landroid/animation/LayoutTransition;->access$500(Landroid/animation/LayoutTransition;)Landroid/animation/TimeInterpolator;
+
+    move-result-object v11
+
+    invoke-virtual {v10, v11}, Landroid/animation/Animator;->setInterpolator(Landroid/animation/TimeInterpolator;)V
+
+    goto/16 :goto_2
 
     :pswitch_1
     iget-object v10, p0, Landroid/animation/LayoutTransition$3;->this$0:Landroid/animation/LayoutTransition;
 
     #getter for: Landroid/animation/LayoutTransition;->mChangingDisappearingDelay:J
-    invoke-static {v10}, Landroid/animation/LayoutTransition;->access$500(Landroid/animation/LayoutTransition;)J
-
-    move-result-wide v10
-
-    iget-object v12, p0, Landroid/animation/LayoutTransition$3;->this$0:Landroid/animation/LayoutTransition;
-
-    #getter for: Landroid/animation/LayoutTransition;->staggerDelay:J
-    invoke-static {v12}, Landroid/animation/LayoutTransition;->access$300(Landroid/animation/LayoutTransition;)J
-
-    move-result-wide v12
-
-    add-long v6, v10, v12
-
-    iget-object v10, p0, Landroid/animation/LayoutTransition$3;->this$0:Landroid/animation/LayoutTransition;
-
-    iget-object v11, p0, Landroid/animation/LayoutTransition$3;->this$0:Landroid/animation/LayoutTransition;
-
-    #getter for: Landroid/animation/LayoutTransition;->mChangingDisappearingStagger:J
-    invoke-static {v11}, Landroid/animation/LayoutTransition;->access$600(Landroid/animation/LayoutTransition;)J
-
-    move-result-wide v11
-
-    invoke-static {v10, v11, v12}, Landroid/animation/LayoutTransition;->access$314(Landroid/animation/LayoutTransition;J)J
-
-    goto/16 :goto_2
-
-    :pswitch_2
-    iget-object v10, p0, Landroid/animation/LayoutTransition$3;->this$0:Landroid/animation/LayoutTransition;
-
-    #getter for: Landroid/animation/LayoutTransition;->mChangingDelay:J
     invoke-static {v10}, Landroid/animation/LayoutTransition;->access$700(Landroid/animation/LayoutTransition;)J
 
     move-result-wide v10
@@ -346,12 +341,90 @@
 
     iget-object v11, p0, Landroid/animation/LayoutTransition$3;->this$0:Landroid/animation/LayoutTransition;
 
-    #getter for: Landroid/animation/LayoutTransition;->mChangingStagger:J
+    #getter for: Landroid/animation/LayoutTransition;->mChangingDisappearingStagger:J
     invoke-static {v11}, Landroid/animation/LayoutTransition;->access$800(Landroid/animation/LayoutTransition;)J
 
     move-result-wide v11
 
     invoke-static {v10, v11, v12}, Landroid/animation/LayoutTransition;->access$314(Landroid/animation/LayoutTransition;J)J
+
+    iget-object v10, p0, Landroid/animation/LayoutTransition$3;->this$0:Landroid/animation/LayoutTransition;
+
+    #getter for: Landroid/animation/LayoutTransition;->mChangingDisappearingInterpolator:Landroid/animation/TimeInterpolator;
+    invoke-static {v10}, Landroid/animation/LayoutTransition;->access$900(Landroid/animation/LayoutTransition;)Landroid/animation/TimeInterpolator;
+
+    move-result-object v10
+
+    invoke-static {}, Landroid/animation/LayoutTransition;->access$1000()Landroid/animation/TimeInterpolator;
+
+    move-result-object v11
+
+    if-eq v10, v11, :cond_4
+
+    iget-object v10, p0, Landroid/animation/LayoutTransition$3;->val$anim:Landroid/animation/Animator;
+
+    iget-object v11, p0, Landroid/animation/LayoutTransition$3;->this$0:Landroid/animation/LayoutTransition;
+
+    #getter for: Landroid/animation/LayoutTransition;->mChangingDisappearingInterpolator:Landroid/animation/TimeInterpolator;
+    invoke-static {v11}, Landroid/animation/LayoutTransition;->access$900(Landroid/animation/LayoutTransition;)Landroid/animation/TimeInterpolator;
+
+    move-result-object v11
+
+    invoke-virtual {v10, v11}, Landroid/animation/Animator;->setInterpolator(Landroid/animation/TimeInterpolator;)V
+
+    goto/16 :goto_2
+
+    :pswitch_2
+    iget-object v10, p0, Landroid/animation/LayoutTransition$3;->this$0:Landroid/animation/LayoutTransition;
+
+    #getter for: Landroid/animation/LayoutTransition;->mChangingDelay:J
+    invoke-static {v10}, Landroid/animation/LayoutTransition;->access$1100(Landroid/animation/LayoutTransition;)J
+
+    move-result-wide v10
+
+    iget-object v12, p0, Landroid/animation/LayoutTransition$3;->this$0:Landroid/animation/LayoutTransition;
+
+    #getter for: Landroid/animation/LayoutTransition;->staggerDelay:J
+    invoke-static {v12}, Landroid/animation/LayoutTransition;->access$300(Landroid/animation/LayoutTransition;)J
+
+    move-result-wide v12
+
+    add-long v6, v10, v12
+
+    iget-object v10, p0, Landroid/animation/LayoutTransition$3;->this$0:Landroid/animation/LayoutTransition;
+
+    iget-object v11, p0, Landroid/animation/LayoutTransition$3;->this$0:Landroid/animation/LayoutTransition;
+
+    #getter for: Landroid/animation/LayoutTransition;->mChangingStagger:J
+    invoke-static {v11}, Landroid/animation/LayoutTransition;->access$1200(Landroid/animation/LayoutTransition;)J
+
+    move-result-wide v11
+
+    invoke-static {v10, v11, v12}, Landroid/animation/LayoutTransition;->access$314(Landroid/animation/LayoutTransition;J)J
+
+    iget-object v10, p0, Landroid/animation/LayoutTransition$3;->this$0:Landroid/animation/LayoutTransition;
+
+    #getter for: Landroid/animation/LayoutTransition;->mChangingInterpolator:Landroid/animation/TimeInterpolator;
+    invoke-static {v10}, Landroid/animation/LayoutTransition;->access$1300(Landroid/animation/LayoutTransition;)Landroid/animation/TimeInterpolator;
+
+    move-result-object v10
+
+    invoke-static {}, Landroid/animation/LayoutTransition;->access$1400()Landroid/animation/TimeInterpolator;
+
+    move-result-object v11
+
+    if-eq v10, v11, :cond_4
+
+    iget-object v10, p0, Landroid/animation/LayoutTransition$3;->val$anim:Landroid/animation/Animator;
+
+    iget-object v11, p0, Landroid/animation/LayoutTransition$3;->this$0:Landroid/animation/LayoutTransition;
+
+    #getter for: Landroid/animation/LayoutTransition;->mChangingInterpolator:Landroid/animation/TimeInterpolator;
+    invoke-static {v11}, Landroid/animation/LayoutTransition;->access$1300(Landroid/animation/LayoutTransition;)Landroid/animation/TimeInterpolator;
+
+    move-result-object v11
+
+    invoke-virtual {v10, v11}, Landroid/animation/Animator;->setInterpolator(Landroid/animation/TimeInterpolator;)V
 
     goto/16 :goto_2
 

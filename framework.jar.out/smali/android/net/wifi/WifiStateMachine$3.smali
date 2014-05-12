@@ -57,7 +57,7 @@
     const/4 v2, 0x1
 
     #calls: Landroid/net/wifi/WifiStateMachine;->handleScreenStateChanged(Z)V
-    invoke-static {v1, v2}, Landroid/net/wifi/WifiStateMachine;->access$000(Landroid/net/wifi/WifiStateMachine;Z)V
+    invoke-static {v1, v2}, Landroid/net/wifi/WifiStateMachine;->access$100(Landroid/net/wifi/WifiStateMachine;Z)V
 
     :cond_0
     :goto_0
@@ -70,14 +70,30 @@
 
     move-result v1
 
-    if-eqz v1, :cond_0
+    if-eqz v1, :cond_2
 
     iget-object v1, p0, Landroid/net/wifi/WifiStateMachine$3;->this$0:Landroid/net/wifi/WifiStateMachine;
 
     const/4 v2, 0x0
 
     #calls: Landroid/net/wifi/WifiStateMachine;->handleScreenStateChanged(Z)V
-    invoke-static {v1, v2}, Landroid/net/wifi/WifiStateMachine;->access$000(Landroid/net/wifi/WifiStateMachine;Z)V
+    invoke-static {v1, v2}, Landroid/net/wifi/WifiStateMachine;->access$100(Landroid/net/wifi/WifiStateMachine;Z)V
+
+    goto :goto_0
+
+    :cond_2
+    const-string v1, "com.android.server.WifiManager.action.REFRESH_BATCHED_SCAN"
+
+    invoke-virtual {v0, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_0
+
+    iget-object v1, p0, Landroid/net/wifi/WifiStateMachine$3;->this$0:Landroid/net/wifi/WifiStateMachine;
+
+    #calls: Landroid/net/wifi/WifiStateMachine;->startNextBatchedScanAsync()V
+    invoke-static {v1}, Landroid/net/wifi/WifiStateMachine;->access$200(Landroid/net/wifi/WifiStateMachine;)V
 
     goto :goto_0
 .end method

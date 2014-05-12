@@ -22,6 +22,12 @@
 
 .field private static final TAG:Ljava/lang/String; = "DisplayManager"
 
+.field public static final VIRTUAL_DISPLAY_FLAG_PRESENTATION:I = 0x2
+
+.field public static final VIRTUAL_DISPLAY_FLAG_PUBLIC:I = 0x1
+
+.field public static final VIRTUAL_DISPLAY_FLAG_SECURE:I = 0x4
+
 
 # instance fields
 .field private final mContext:Landroid/content/Context;
@@ -90,7 +96,54 @@
     return-void
 .end method
 
-.method private addMatchingDisplaysLocked(Ljava/util/ArrayList;[II)V
+.method private addAllDisplaysLocked(Ljava/util/ArrayList;[I)V
+    .locals 4
+    .parameter
+    .parameter "displayIds"
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(",
+            "Ljava/util/ArrayList",
+            "<",
+            "Landroid/view/Display;",
+            ">;[I)V"
+        }
+    .end annotation
+
+    .prologue
+    .local p1, displays:Ljava/util/ArrayList;,"Ljava/util/ArrayList<Landroid/view/Display;>;"
+    const/4 v1, 0x0
+
+    .local v1, i:I
+    :goto_0
+    array-length v2, p2
+
+    if-ge v1, v2, :cond_1
+
+    aget v2, p2, v1
+
+    const/4 v3, 0x1
+
+    invoke-direct {p0, v2, v3}, Landroid/hardware/display/DisplayManager;->getOrCreateDisplayLocked(IZ)Landroid/view/Display;
+
+    move-result-object v0
+
+    .local v0, display:Landroid/view/Display;
+    if-eqz v0, :cond_0
+
+    invoke-virtual {p1, v0}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
+
+    :cond_0
+    add-int/lit8 v1, v1, 0x1
+
+    goto :goto_0
+
+    .end local v0           #display:Landroid/view/Display;
+    :cond_1
+    return-void
+.end method
+
+.method private addPresentationDisplaysLocked(Ljava/util/ArrayList;[II)V
     .locals 4
     .parameter
     .parameter "displayIds"
@@ -113,7 +166,7 @@
     :goto_0
     array-length v2, p2
 
-    if-ge v1, v2, :cond_2
+    if-ge v1, v2, :cond_1
 
     aget v2, p2, v1
 
@@ -124,26 +177,31 @@
     move-result-object v0
 
     .local v0, display:Landroid/view/Display;
-    if-eqz v0, :cond_1
+    if-eqz v0, :cond_0
 
-    if-ltz p3, :cond_0
+    invoke-virtual {v0}, Landroid/view/Display;->getFlags()I
+
+    move-result v2
+
+    and-int/lit8 v2, v2, 0x8
+
+    if-eqz v2, :cond_0
 
     invoke-virtual {v0}, Landroid/view/Display;->getType()I
 
     move-result v2
 
-    if-ne v2, p3, :cond_1
+    if-ne v2, p3, :cond_0
 
-    :cond_0
     invoke-virtual {p1, v0}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
-    :cond_1
+    :cond_0
     add-int/lit8 v1, v1, 0x1
 
     goto :goto_0
 
     .end local v0           #display:Landroid/view/Display;
-    :cond_2
+    :cond_1
     return-void
 .end method
 
@@ -168,11 +226,11 @@
 
     iget-object v2, p0, Landroid/hardware/display/DisplayManager;->mContext:Landroid/content/Context;
 
-    invoke-virtual {v2, p1}, Landroid/content/Context;->getCompatibilityInfo(I)Landroid/view/CompatibilityInfoHolder;
+    invoke-virtual {v2, p1}, Landroid/content/Context;->getDisplayAdjustments(I)Landroid/view/DisplayAdjustments;
 
     move-result-object v2
 
-    invoke-virtual {v1, p1, v2}, Landroid/hardware/display/DisplayManagerGlobal;->getCompatibleDisplay(ILandroid/view/CompatibilityInfoHolder;)Landroid/view/Display;
+    invoke-virtual {v1, p1, v2}, Landroid/hardware/display/DisplayManagerGlobal;->getCompatibleDisplay(ILandroid/view/DisplayAdjustments;)Landroid/view/Display;
 
     move-result-object v0
 
@@ -212,6 +270,39 @@
     invoke-virtual {v0, p1}, Landroid/hardware/display/DisplayManagerGlobal;->connectWifiDisplay(Ljava/lang/String;)V
 
     return-void
+.end method
+
+.method public createVirtualDisplay(Ljava/lang/String;IIILandroid/view/Surface;I)Landroid/hardware/display/VirtualDisplay;
+    .locals 8
+    .parameter "name"
+    .parameter "width"
+    .parameter "height"
+    .parameter "densityDpi"
+    .parameter "surface"
+    .parameter "flags"
+
+    .prologue
+    iget-object v0, p0, Landroid/hardware/display/DisplayManager;->mGlobal:Landroid/hardware/display/DisplayManagerGlobal;
+
+    iget-object v1, p0, Landroid/hardware/display/DisplayManager;->mContext:Landroid/content/Context;
+
+    move-object v2, p1
+
+    move v3, p2
+
+    move v4, p3
+
+    move v5, p4
+
+    move-object v6, p5
+
+    move v7, p6
+
+    invoke-virtual/range {v0 .. v7}, Landroid/hardware/display/DisplayManagerGlobal;->createVirtualDisplay(Landroid/content/Context;Ljava/lang/String;IIILandroid/view/Surface;I)Landroid/hardware/display/VirtualDisplay;
+
+    move-result-object v0
+
+    return-object v0
 .end method
 
 .method public disconnectWifiDisplay()V
@@ -301,9 +392,7 @@
     :try_start_0
     iget-object v1, p0, Landroid/hardware/display/DisplayManager;->mTempDisplays:Ljava/util/ArrayList;
 
-    const/4 v3, -0x1
-
-    invoke-direct {p0, v1, v0, v3}, Landroid/hardware/display/DisplayManager;->addMatchingDisplaysLocked(Ljava/util/ArrayList;[II)V
+    invoke-direct {p0, v1, v0}, Landroid/hardware/display/DisplayManager;->addAllDisplaysLocked(Ljava/util/ArrayList;[I)V
 
     :cond_0
     :goto_0
@@ -350,19 +439,25 @@
 
     const/4 v3, 0x3
 
-    invoke-direct {p0, v1, v0, v3}, Landroid/hardware/display/DisplayManager;->addMatchingDisplaysLocked(Ljava/util/ArrayList;[II)V
+    invoke-direct {p0, v1, v0, v3}, Landroid/hardware/display/DisplayManager;->addPresentationDisplaysLocked(Ljava/util/ArrayList;[II)V
 
     iget-object v1, p0, Landroid/hardware/display/DisplayManager;->mTempDisplays:Ljava/util/ArrayList;
 
     const/4 v3, 0x2
 
-    invoke-direct {p0, v1, v0, v3}, Landroid/hardware/display/DisplayManager;->addMatchingDisplaysLocked(Ljava/util/ArrayList;[II)V
+    invoke-direct {p0, v1, v0, v3}, Landroid/hardware/display/DisplayManager;->addPresentationDisplaysLocked(Ljava/util/ArrayList;[II)V
 
     iget-object v1, p0, Landroid/hardware/display/DisplayManager;->mTempDisplays:Ljava/util/ArrayList;
 
     const/4 v3, 0x4
 
-    invoke-direct {p0, v1, v0, v3}, Landroid/hardware/display/DisplayManager;->addMatchingDisplaysLocked(Ljava/util/ArrayList;[II)V
+    invoke-direct {p0, v1, v0, v3}, Landroid/hardware/display/DisplayManager;->addPresentationDisplaysLocked(Ljava/util/ArrayList;[II)V
+
+    iget-object v1, p0, Landroid/hardware/display/DisplayManager;->mTempDisplays:Ljava/util/ArrayList;
+
+    const/4 v3, 0x5
+
+    invoke-direct {p0, v1, v0, v3}, Landroid/hardware/display/DisplayManager;->addPresentationDisplaysLocked(Ljava/util/ArrayList;[II)V
     :try_end_2
     .catchall {:try_start_2 .. :try_end_2} :catchall_0
 
@@ -401,6 +496,17 @@
     return-object v0
 .end method
 
+.method public pauseWifiDisplay()V
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Landroid/hardware/display/DisplayManager;->mGlobal:Landroid/hardware/display/DisplayManagerGlobal;
+
+    invoke-virtual {v0}, Landroid/hardware/display/DisplayManagerGlobal;->pauseWifiDisplay()V
+
+    return-void
+.end method
+
 .method public registerDisplayListener(Landroid/hardware/display/DisplayManager$DisplayListener;Landroid/os/Handler;)V
     .locals 1
     .parameter "listener"
@@ -427,13 +533,35 @@
     return-void
 .end method
 
-.method public scanWifiDisplays()V
+.method public resumeWifiDisplay()V
     .locals 1
 
     .prologue
     iget-object v0, p0, Landroid/hardware/display/DisplayManager;->mGlobal:Landroid/hardware/display/DisplayManagerGlobal;
 
-    invoke-virtual {v0}, Landroid/hardware/display/DisplayManagerGlobal;->scanWifiDisplays()V
+    invoke-virtual {v0}, Landroid/hardware/display/DisplayManagerGlobal;->resumeWifiDisplay()V
+
+    return-void
+.end method
+
+.method public startWifiDisplayScan()V
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Landroid/hardware/display/DisplayManager;->mGlobal:Landroid/hardware/display/DisplayManagerGlobal;
+
+    invoke-virtual {v0}, Landroid/hardware/display/DisplayManagerGlobal;->startWifiDisplayScan()V
+
+    return-void
+.end method
+
+.method public stopWifiDisplayScan()V
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Landroid/hardware/display/DisplayManager;->mGlobal:Landroid/hardware/display/DisplayManagerGlobal;
+
+    invoke-virtual {v0}, Landroid/hardware/display/DisplayManagerGlobal;->stopWifiDisplayScan()V
 
     return-void
 .end method

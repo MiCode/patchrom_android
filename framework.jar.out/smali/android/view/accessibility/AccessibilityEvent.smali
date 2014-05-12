@@ -7,6 +7,14 @@
 
 
 # static fields
+.field public static final CONTENT_CHANGE_TYPE_CONTENT_DESCRIPTION:I = 0x4
+
+.field public static final CONTENT_CHANGE_TYPE_SUBTREE:I = 0x1
+
+.field public static final CONTENT_CHANGE_TYPE_TEXT:I = 0x2
+
+.field public static final CONTENT_CHANGE_TYPE_UNDEFINED:I = 0x0
+
 .field public static final CREATOR:Landroid/os/Parcelable$Creator; = null
     .annotation system Ldalvik/annotation/Signature;
         value = {
@@ -75,25 +83,28 @@
 
 .field public static final TYPE_WINDOW_STATE_CHANGED:I = 0x20
 
-.field private static sPool:Landroid/view/accessibility/AccessibilityEvent;
-
-.field private static final sPoolLock:Ljava/lang/Object;
-
-.field private static sPoolSize:I
+.field private static final sPool:Landroid/util/Pools$SynchronizedPool;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "Landroid/util/Pools$SynchronizedPool",
+            "<",
+            "Landroid/view/accessibility/AccessibilityEvent;",
+            ">;"
+        }
+    .end annotation
+.end field
 
 
 # instance fields
 .field mAction:I
 
+.field mContentChangeTypes:I
+
 .field private mEventTime:J
 
 .field private mEventType:I
 
-.field private mIsInPool:Z
-
 .field mMovementGranularity:I
-
-.field private mNext:Landroid/view/accessibility/AccessibilityEvent;
 
 .field private mPackageName:Ljava/lang/CharSequence;
 
@@ -111,14 +122,16 @@
 
 # direct methods
 .method static constructor <clinit>()V
-    .locals 1
+    .locals 2
 
     .prologue
-    new-instance v0, Ljava/lang/Object;
+    new-instance v0, Landroid/util/Pools$SynchronizedPool;
 
-    invoke-direct {v0}, Ljava/lang/Object;-><init>()V
+    const/16 v1, 0xa
 
-    sput-object v0, Landroid/view/accessibility/AccessibilityEvent;->sPoolLock:Ljava/lang/Object;
+    invoke-direct {v0, v1}, Landroid/util/Pools$SynchronizedPool;-><init>(I)V
+
+    sput-object v0, Landroid/view/accessibility/AccessibilityEvent;->sPool:Landroid/util/Pools$SynchronizedPool;
 
     new-instance v0, Landroid/view/accessibility/AccessibilityEvent$1;
 
@@ -145,128 +158,420 @@
 .end method
 
 .method public static eventTypeToString(I)Ljava/lang/String;
-    .locals 1
+    .locals 5
     .parameter "eventType"
 
     .prologue
-    sparse-switch p0, :sswitch_data_0
+    const/4 v4, 0x1
 
-    const/4 v0, 0x0
+    const/4 v3, -0x1
+
+    if-ne p0, v3, :cond_0
+
+    const-string v3, "TYPES_ALL_MASK"
 
     :goto_0
-    return-object v0
+    return-object v3
+
+    :cond_0
+    new-instance v0, Ljava/lang/StringBuilder;
+
+    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+
+    .local v0, builder:Ljava/lang/StringBuilder;
+    const/4 v1, 0x0
+
+    .local v1, eventTypeCount:I
+    :goto_1
+    if-eqz p0, :cond_17
+
+    invoke-static {p0}, Ljava/lang/Integer;->numberOfTrailingZeros(I)I
+
+    move-result v3
+
+    shl-int v2, v4, v3
+
+    .local v2, eventTypeFlag:I
+    xor-int/lit8 v3, v2, -0x1
+
+    and-int/2addr p0, v3
+
+    sparse-switch v2, :sswitch_data_0
+
+    goto :goto_1
 
     :sswitch_0
-    const-string v0, "TYPE_VIEW_CLICKED"
+    if-lez v1, :cond_1
 
-    goto :goto_0
+    const-string v3, ", "
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    :cond_1
+    const-string v3, "TYPE_VIEW_CLICKED"
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    add-int/lit8 v1, v1, 0x1
+
+    goto :goto_1
 
     :sswitch_1
-    const-string v0, "TYPE_VIEW_LONG_CLICKED"
+    if-lez v1, :cond_2
 
-    goto :goto_0
+    const-string v3, ", "
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    :cond_2
+    const-string v3, "TYPE_VIEW_LONG_CLICKED"
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    add-int/lit8 v1, v1, 0x1
+
+    goto :goto_1
 
     :sswitch_2
-    const-string v0, "TYPE_VIEW_SELECTED"
+    if-lez v1, :cond_3
 
-    goto :goto_0
+    const-string v3, ", "
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    :cond_3
+    const-string v3, "TYPE_VIEW_SELECTED"
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    add-int/lit8 v1, v1, 0x1
+
+    goto :goto_1
 
     :sswitch_3
-    const-string v0, "TYPE_VIEW_FOCUSED"
+    if-lez v1, :cond_4
 
-    goto :goto_0
+    const-string v3, ", "
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    :cond_4
+    const-string v3, "TYPE_VIEW_FOCUSED"
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    add-int/lit8 v1, v1, 0x1
+
+    goto :goto_1
 
     :sswitch_4
-    const-string v0, "TYPE_VIEW_TEXT_CHANGED"
+    if-lez v1, :cond_5
 
-    goto :goto_0
+    const-string v3, ", "
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    :cond_5
+    const-string v3, "TYPE_VIEW_TEXT_CHANGED"
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    add-int/lit8 v1, v1, 0x1
+
+    goto :goto_1
 
     :sswitch_5
-    const-string v0, "TYPE_WINDOW_STATE_CHANGED"
+    if-lez v1, :cond_6
 
-    goto :goto_0
+    const-string v3, ", "
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    :cond_6
+    const-string v3, "TYPE_WINDOW_STATE_CHANGED"
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    add-int/lit8 v1, v1, 0x1
+
+    goto :goto_1
 
     :sswitch_6
-    const-string v0, "TYPE_VIEW_HOVER_ENTER"
+    if-lez v1, :cond_7
 
-    goto :goto_0
+    const-string v3, ", "
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    :cond_7
+    const-string v3, "TYPE_VIEW_HOVER_ENTER"
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    add-int/lit8 v1, v1, 0x1
+
+    goto :goto_1
 
     :sswitch_7
-    const-string v0, "TYPE_VIEW_HOVER_EXIT"
+    if-lez v1, :cond_8
 
-    goto :goto_0
+    const-string v3, ", "
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    :cond_8
+    const-string v3, "TYPE_VIEW_HOVER_EXIT"
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    add-int/lit8 v1, v1, 0x1
+
+    goto/16 :goto_1
 
     :sswitch_8
-    const-string v0, "TYPE_NOTIFICATION_STATE_CHANGED"
+    if-lez v1, :cond_9
 
-    goto :goto_0
+    const-string v3, ", "
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    :cond_9
+    const-string v3, "TYPE_NOTIFICATION_STATE_CHANGED"
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    add-int/lit8 v1, v1, 0x1
+
+    goto/16 :goto_1
 
     :sswitch_9
-    const-string v0, "TYPE_TOUCH_EXPLORATION_GESTURE_START"
+    if-lez v1, :cond_a
 
-    goto :goto_0
+    const-string v3, ", "
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    :cond_a
+    const-string v3, "TYPE_TOUCH_EXPLORATION_GESTURE_START"
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    add-int/lit8 v1, v1, 0x1
+
+    goto/16 :goto_1
 
     :sswitch_a
-    const-string v0, "TYPE_TOUCH_EXPLORATION_GESTURE_END"
+    if-lez v1, :cond_b
 
-    goto :goto_0
+    const-string v3, ", "
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    :cond_b
+    const-string v3, "TYPE_TOUCH_EXPLORATION_GESTURE_END"
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    add-int/lit8 v1, v1, 0x1
+
+    goto/16 :goto_1
 
     :sswitch_b
-    const-string v0, "TYPE_WINDOW_CONTENT_CHANGED"
+    if-lez v1, :cond_c
 
-    goto :goto_0
+    const-string v3, ", "
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    :cond_c
+    const-string v3, "TYPE_WINDOW_CONTENT_CHANGED"
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    add-int/lit8 v1, v1, 0x1
+
+    goto/16 :goto_1
 
     :sswitch_c
-    const-string v0, "TYPE_VIEW_TEXT_SELECTION_CHANGED"
+    if-lez v1, :cond_d
 
-    goto :goto_0
+    const-string v3, ", "
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    :cond_d
+    const-string v3, "TYPE_VIEW_TEXT_SELECTION_CHANGED"
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    add-int/lit8 v1, v1, 0x1
+
+    goto/16 :goto_1
 
     :sswitch_d
-    const-string v0, "TYPE_VIEW_SCROLLED"
+    if-lez v1, :cond_e
 
-    goto :goto_0
+    const-string v3, ", "
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    :cond_e
+    const-string v3, "TYPE_VIEW_SCROLLED"
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    add-int/lit8 v1, v1, 0x1
+
+    goto/16 :goto_1
 
     :sswitch_e
-    const-string v0, "TYPE_ANNOUNCEMENT"
+    if-lez v1, :cond_f
 
-    goto :goto_0
+    const-string v3, ", "
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    :cond_f
+    const-string v3, "TYPE_ANNOUNCEMENT"
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    add-int/lit8 v1, v1, 0x1
+
+    goto/16 :goto_1
 
     :sswitch_f
-    const-string v0, "TYPE_VIEW_ACCESSIBILITY_FOCUSED"
+    if-lez v1, :cond_10
 
-    goto :goto_0
+    const-string v3, ", "
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    :cond_10
+    const-string v3, "TYPE_VIEW_ACCESSIBILITY_FOCUSED"
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    add-int/lit8 v1, v1, 0x1
+
+    goto/16 :goto_1
 
     :sswitch_10
-    const-string v0, "TYPE_VIEW_ACCESSIBILITY_FOCUS_CLEARED"
+    if-lez v1, :cond_11
 
-    goto :goto_0
+    const-string v3, ", "
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    :cond_11
+    const-string v3, "TYPE_VIEW_ACCESSIBILITY_FOCUS_CLEARED"
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    add-int/lit8 v1, v1, 0x1
+
+    goto/16 :goto_1
 
     :sswitch_11
-    const-string v0, "TYPE_CURRENT_AT_GRANULARITY_MOVEMENT_CHANGED"
+    if-lez v1, :cond_12
 
-    goto :goto_0
+    const-string v3, ", "
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    :cond_12
+    const-string v3, "TYPE_VIEW_TEXT_TRAVERSED_AT_MOVEMENT_GRANULARITY"
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    add-int/lit8 v1, v1, 0x1
+
+    goto/16 :goto_1
 
     :sswitch_12
-    const-string v0, "TYPE_GESTURE_DETECTION_START"
+    if-lez v1, :cond_13
 
-    goto :goto_0
+    const-string v3, ", "
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    :cond_13
+    const-string v3, "TYPE_GESTURE_DETECTION_START"
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    add-int/lit8 v1, v1, 0x1
+
+    goto/16 :goto_1
 
     :sswitch_13
-    const-string v0, "TYPE_GESTURE_DETECTION_END"
+    if-lez v1, :cond_14
 
-    goto :goto_0
+    const-string v3, ", "
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    :cond_14
+    const-string v3, "TYPE_GESTURE_DETECTION_END"
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    add-int/lit8 v1, v1, 0x1
+
+    goto/16 :goto_1
 
     :sswitch_14
-    const-string v0, "TYPE_TOUCH_INTERACTION_START"
+    if-lez v1, :cond_15
 
-    goto :goto_0
+    const-string v3, ", "
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    :cond_15
+    const-string v3, "TYPE_TOUCH_INTERACTION_START"
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    add-int/lit8 v1, v1, 0x1
+
+    goto/16 :goto_1
 
     :sswitch_15
-    const-string v0, "TYPE_TOUCH_INTERACTION_END"
+    if-lez v1, :cond_16
 
-    goto :goto_0
+    const-string v3, ", "
 
-    nop
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    :cond_16
+    const-string v3, "TYPE_TOUCH_INTERACTION_END"
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    add-int/lit8 v1, v1, 0x1
+
+    goto/16 :goto_1
+
+    .end local v2           #eventTypeFlag:I
+    :cond_17
+    if-le v1, v4, :cond_18
+
+    const/4 v3, 0x0
+
+    const/16 v4, 0x5b
+
+    invoke-virtual {v0, v3, v4}, Ljava/lang/StringBuilder;->insert(IC)Ljava/lang/StringBuilder;
+
+    const/16 v3, 0x5d
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
+
+    :cond_18
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v3
+
+    goto/16 :goto_0
 
     :sswitch_data_0
     .sparse-switch
@@ -296,64 +601,32 @@
 .end method
 
 .method public static obtain()Landroid/view/accessibility/AccessibilityEvent;
-    .locals 3
+    .locals 2
 
     .prologue
-    sget-object v2, Landroid/view/accessibility/AccessibilityEvent;->sPoolLock:Ljava/lang/Object;
+    sget-object v1, Landroid/view/accessibility/AccessibilityEvent;->sPool:Landroid/util/Pools$SynchronizedPool;
 
-    monitor-enter v2
+    invoke-virtual {v1}, Landroid/util/Pools$SynchronizedPool;->acquire()Ljava/lang/Object;
 
-    :try_start_0
-    sget-object v1, Landroid/view/accessibility/AccessibilityEvent;->sPool:Landroid/view/accessibility/AccessibilityEvent;
+    move-result-object v0
 
-    if-eqz v1, :cond_0
-
-    sget-object v0, Landroid/view/accessibility/AccessibilityEvent;->sPool:Landroid/view/accessibility/AccessibilityEvent;
+    check-cast v0, Landroid/view/accessibility/AccessibilityEvent;
 
     .local v0, event:Landroid/view/accessibility/AccessibilityEvent;
-    sget-object v1, Landroid/view/accessibility/AccessibilityEvent;->sPool:Landroid/view/accessibility/AccessibilityEvent;
-
-    iget-object v1, v1, Landroid/view/accessibility/AccessibilityEvent;->mNext:Landroid/view/accessibility/AccessibilityEvent;
-
-    sput-object v1, Landroid/view/accessibility/AccessibilityEvent;->sPool:Landroid/view/accessibility/AccessibilityEvent;
-
-    sget v1, Landroid/view/accessibility/AccessibilityEvent;->sPoolSize:I
-
-    add-int/lit8 v1, v1, -0x1
-
-    sput v1, Landroid/view/accessibility/AccessibilityEvent;->sPoolSize:I
-
-    const/4 v1, 0x0
-
-    iput-object v1, v0, Landroid/view/accessibility/AccessibilityEvent;->mNext:Landroid/view/accessibility/AccessibilityEvent;
-
-    const/4 v1, 0x0
-
-    iput-boolean v1, v0, Landroid/view/accessibility/AccessibilityEvent;->mIsInPool:Z
-
-    monitor-exit v2
+    if-eqz v0, :cond_0
 
     .end local v0           #event:Landroid/view/accessibility/AccessibilityEvent;
     :goto_0
     return-object v0
 
+    .restart local v0       #event:Landroid/view/accessibility/AccessibilityEvent;
     :cond_0
     new-instance v0, Landroid/view/accessibility/AccessibilityEvent;
 
+    .end local v0           #event:Landroid/view/accessibility/AccessibilityEvent;
     invoke-direct {v0}, Landroid/view/accessibility/AccessibilityEvent;-><init>()V
 
-    monitor-exit v2
-
     goto :goto_0
-
-    :catchall_0
-    move-exception v1
-
-    monitor-exit v2
-    :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
-
-    throw v1
 .end method
 
 .method public static obtain(I)Landroid/view/accessibility/AccessibilityEvent;
@@ -697,6 +970,8 @@
 
     iput v3, p0, Landroid/view/accessibility/AccessibilityEvent;->mAction:I
 
+    iput v3, p0, Landroid/view/accessibility/AccessibilityEvent;->mContentChangeTypes:I
+
     const/4 v1, 0x0
 
     iput-object v1, p0, Landroid/view/accessibility/AccessibilityEvent;->mPackageName:Ljava/lang/CharSequence;
@@ -746,6 +1021,15 @@
 
     .prologue
     iget v0, p0, Landroid/view/accessibility/AccessibilityEvent;->mAction:I
+
+    return v0
+.end method
+
+.method public getContentChangeTypes()I
+    .locals 1
+
+    .prologue
+    iget v0, p0, Landroid/view/accessibility/AccessibilityEvent;->mContentChangeTypes:I
 
     return v0
 .end method
@@ -834,6 +1118,10 @@
 
     iput v0, p0, Landroid/view/accessibility/AccessibilityEvent;->mAction:I
 
+    iget v0, p1, Landroid/view/accessibility/AccessibilityEvent;->mContentChangeTypes:I
+
+    iput v0, p0, Landroid/view/accessibility/AccessibilityEvent;->mContentChangeTypes:I
+
     iget-wide v0, p1, Landroid/view/accessibility/AccessibilityEvent;->mEventTime:J
 
     iput-wide v0, p0, Landroid/view/accessibility/AccessibilityEvent;->mEventTime:J
@@ -878,6 +1166,12 @@
     move-result v3
 
     iput v3, p0, Landroid/view/accessibility/AccessibilityEvent;->mAction:I
+
+    invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
+
+    move-result v3
+
+    iput v3, p0, Landroid/view/accessibility/AccessibilityEvent;->mContentChangeTypes:I
 
     sget-object v3, Landroid/text/TextUtils;->CHAR_SEQUENCE_CREATOR:Landroid/os/Parcelable$Creator;
 
@@ -948,64 +1242,16 @@
 .end method
 
 .method public recycle()V
-    .locals 3
+    .locals 1
 
     .prologue
-    iget-boolean v0, p0, Landroid/view/accessibility/AccessibilityEvent;->mIsInPool:Z
-
-    if-eqz v0, :cond_0
-
-    new-instance v0, Ljava/lang/IllegalStateException;
-
-    const-string v1, "Event already recycled!"
-
-    invoke-direct {v0, v1}, Ljava/lang/IllegalStateException;-><init>(Ljava/lang/String;)V
-
-    throw v0
-
-    :cond_0
     invoke-virtual {p0}, Landroid/view/accessibility/AccessibilityEvent;->clear()V
 
-    sget-object v1, Landroid/view/accessibility/AccessibilityEvent;->sPoolLock:Ljava/lang/Object;
+    sget-object v0, Landroid/view/accessibility/AccessibilityEvent;->sPool:Landroid/util/Pools$SynchronizedPool;
 
-    monitor-enter v1
-
-    :try_start_0
-    sget v0, Landroid/view/accessibility/AccessibilityEvent;->sPoolSize:I
-
-    const/16 v2, 0xa
-
-    if-gt v0, v2, :cond_1
-
-    sget-object v0, Landroid/view/accessibility/AccessibilityEvent;->sPool:Landroid/view/accessibility/AccessibilityEvent;
-
-    iput-object v0, p0, Landroid/view/accessibility/AccessibilityEvent;->mNext:Landroid/view/accessibility/AccessibilityEvent;
-
-    sput-object p0, Landroid/view/accessibility/AccessibilityEvent;->sPool:Landroid/view/accessibility/AccessibilityEvent;
-
-    const/4 v0, 0x1
-
-    iput-boolean v0, p0, Landroid/view/accessibility/AccessibilityEvent;->mIsInPool:Z
-
-    sget v0, Landroid/view/accessibility/AccessibilityEvent;->sPoolSize:I
-
-    add-int/lit8 v0, v0, 0x1
-
-    sput v0, Landroid/view/accessibility/AccessibilityEvent;->sPoolSize:I
-
-    :cond_1
-    monitor-exit v1
+    invoke-virtual {v0, p0}, Landroid/util/Pools$SynchronizedPool;->release(Ljava/lang/Object;)Z
 
     return-void
-
-    :catchall_0
-    move-exception v0
-
-    monitor-exit v1
-    :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
-
-    throw v0
 .end method
 
 .method public setAction(I)V
@@ -1016,6 +1262,18 @@
     invoke-virtual {p0}, Landroid/view/accessibility/AccessibilityEvent;->enforceNotSealed()V
 
     iput p1, p0, Landroid/view/accessibility/AccessibilityEvent;->mAction:I
+
+    return-void
+.end method
+
+.method public setContentChangeTypes(I)V
+    .locals 0
+    .parameter "changeTypes"
+
+    .prologue
+    invoke-virtual {p0}, Landroid/view/accessibility/AccessibilityEvent;->enforceNotSealed()V
+
+    iput p1, p0, Landroid/view/accessibility/AccessibilityEvent;->mContentChangeTypes:I
 
     return-void
 .end method
@@ -1223,6 +1481,10 @@
     invoke-virtual {p1, v3}, Landroid/os/Parcel;->writeInt(I)V
 
     iget v3, p0, Landroid/view/accessibility/AccessibilityEvent;->mAction:I
+
+    invoke-virtual {p1, v3}, Landroid/os/Parcel;->writeInt(I)V
+
+    iget v3, p0, Landroid/view/accessibility/AccessibilityEvent;->mContentChangeTypes:I
 
     invoke-virtual {p1, v3}, Landroid/os/Parcel;->writeInt(I)V
 

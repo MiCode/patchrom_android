@@ -15,6 +15,7 @@
 
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
+        Landroid/provider/ContactsContract$CommonDataKinds$Contactables;,
         Landroid/provider/ContactsContract$CommonDataKinds$Callable;,
         Landroid/provider/ContactsContract$CommonDataKinds$Identity;,
         Landroid/provider/ContactsContract$CommonDataKinds$SipAddress;,

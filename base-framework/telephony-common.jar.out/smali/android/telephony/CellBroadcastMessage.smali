@@ -1330,45 +1330,16 @@
 .end method
 
 .method public isEmergencyAlertMessage()Z
-    .locals 4
+    .locals 1
 
     .prologue
-    const/4 v1, 0x0
+    iget-object v0, p0, Landroid/telephony/CellBroadcastMessage;->mSmsCbMessage:Landroid/telephony/SmsCbMessage;
 
-    iget-object v2, p0, Landroid/telephony/CellBroadcastMessage;->mSmsCbMessage:Landroid/telephony/SmsCbMessage;
+    invoke-virtual {v0}, Landroid/telephony/SmsCbMessage;->isEmergencyMessage()Z
 
-    invoke-virtual {v2}, Landroid/telephony/SmsCbMessage;->isEmergencyMessage()Z
+    move-result v0
 
-    move-result v2
-
-    if-nez v2, :cond_1
-
-    :cond_0
-    :goto_0
-    return v1
-
-    :cond_1
-    iget-object v2, p0, Landroid/telephony/CellBroadcastMessage;->mSmsCbMessage:Landroid/telephony/SmsCbMessage;
-
-    invoke-virtual {v2}, Landroid/telephony/SmsCbMessage;->getCmasWarningInfo()Landroid/telephony/SmsCbCmasInfo;
-
-    move-result-object v0
-
-    .local v0, cmasInfo:Landroid/telephony/SmsCbCmasInfo;
-    if-eqz v0, :cond_2
-
-    invoke-virtual {v0}, Landroid/telephony/SmsCbCmasInfo;->getMessageClass()I
-
-    move-result v2
-
-    const/4 v3, 0x3
-
-    if-eq v2, v3, :cond_0
-
-    :cond_2
-    const/4 v1, 0x1
-
-    goto :goto_0
+    return v0
 .end method
 
 .method public isEtwsEmergencyUserAlert()Z

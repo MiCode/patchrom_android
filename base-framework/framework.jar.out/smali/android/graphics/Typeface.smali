@@ -353,9 +353,6 @@
 .method private static native nativeUnref(I)V
 .end method
 
-.method public static native setGammaForText(FF)V
-.end method
-
 
 # virtual methods
 .method public equals(Ljava/lang/Object;)Z

@@ -92,7 +92,7 @@
 
 # virtual methods
 .method public connect()V
-    .locals 3
+    .locals 4
 
     .prologue
     monitor-enter p0
@@ -113,6 +113,16 @@
     invoke-direct {v0, v1}, Landroid/content/Intent;-><init>(Ljava/lang/String;)V
 
     .local v0, intent:Landroid/content/Intent;
+    new-instance v1, Landroid/content/ComponentName;
+
+    const-string v2, "com.android.providers.media"
+
+    const-string v3, "com.android.providers.media.MediaScannerService"
+
+    invoke-direct {v1, v2, v3}, Landroid/content/ComponentName;-><init>(Ljava/lang/String;Ljava/lang/String;)V
+
+    invoke-virtual {v0, v1}, Landroid/content/Intent;->setComponent(Landroid/content/ComponentName;)Landroid/content/Intent;
+
     iget-object v1, p0, Landroid/media/MediaScannerConnection;->mContext:Landroid/content/Context;
 
     const/4 v2, 0x1

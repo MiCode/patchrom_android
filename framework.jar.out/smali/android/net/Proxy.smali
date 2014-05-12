@@ -6,8 +6,7 @@
 # annotations
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
-        Landroid/net/Proxy$AndroidProxySelectorRoutePlanner;,
-        Landroid/net/Proxy$Injector;
+        Landroid/net/Proxy$AndroidProxySelectorRoutePlanner;
     }
 .end annotation
 
@@ -32,6 +31,8 @@
 .field private static final TAG:Ljava/lang/String; = "Proxy"
 
 .field private static sConnectivityManager:Landroid/net/ConnectivityManager;
+
+.field private static final sDefaultProxySelector:Ljava/net/ProxySelector;
 
 
 # direct methods
@@ -58,6 +59,12 @@
     move-result-object v0
 
     sput-object v0, Landroid/net/Proxy;->EXCLLIST_PATTERN:Ljava/util/regex/Pattern;
+
+    invoke-static {}, Ljava/net/ProxySelector;->getDefault()Ljava/net/ProxySelector;
+
+    move-result-object v0
+
+    sput-object v0, Landroid/net/Proxy;->sDefaultProxySelector:Ljava/net/ProxySelector;
 
     return-void
 .end method
@@ -260,6 +267,12 @@
     .parameter "url"
 
     .prologue
+    invoke-static {p0, p1}, Landroid/net/Injector$ProxyHook;->getPreferredHttpHost(Landroid/content/Context;Ljava/lang/String;)Lorg/apache/http/HttpHost;
+
+    move-result-object v0
+
+    return-object v0
+
     invoke-static {p0, p1}, Landroid/net/Proxy;->getProxy(Landroid/content/Context;Ljava/lang/String;)Ljava/net/Proxy;
 
     move-result-object v0
@@ -288,7 +301,7 @@
     .local v1, sa:Ljava/net/InetSocketAddress;
     new-instance v2, Lorg/apache/http/HttpHost;
 
-    invoke-static {v1}, Landroid/net/Proxy$Injector;->getHostName(Ljava/net/InetSocketAddress;)Ljava/lang/String;
+    invoke-virtual {v1}, Ljava/net/InetSocketAddress;->getHostName()Ljava/lang/String;
 
     move-result-object v3
 
@@ -439,19 +452,22 @@
 .end method
 
 .method public static final setHttpProxySystemProperty(Landroid/net/ProxyProperties;)V
-    .locals 4
+    .locals 5
     .parameter "p"
 
     .prologue
     const/4 v1, 0x0
 
     .local v1, host:Ljava/lang/String;
-    const/4 v2, 0x0
+    const/4 v3, 0x0
 
-    .local v2, port:Ljava/lang/String;
+    .local v3, port:Ljava/lang/String;
     const/4 v0, 0x0
 
     .local v0, exclList:Ljava/lang/String;
+    const/4 v2, 0x0
+
+    .local v2, pacFileUrl:Ljava/lang/String;
     if-eqz p0, :cond_0
 
     invoke-virtual {p0}, Landroid/net/ProxyProperties;->getHost()Ljava/lang/String;
@@ -460,27 +476,32 @@
 
     invoke-virtual {p0}, Landroid/net/ProxyProperties;->getPort()I
 
-    move-result v3
+    move-result v4
 
-    invoke-static {v3}, Ljava/lang/Integer;->toString(I)Ljava/lang/String;
+    invoke-static {v4}, Ljava/lang/Integer;->toString(I)Ljava/lang/String;
 
-    move-result-object v2
+    move-result-object v3
 
     invoke-virtual {p0}, Landroid/net/ProxyProperties;->getExclusionList()Ljava/lang/String;
 
     move-result-object v0
 
+    invoke-virtual {p0}, Landroid/net/ProxyProperties;->getPacFileUrl()Ljava/lang/String;
+
+    move-result-object v2
+
     :cond_0
-    invoke-static {v1, v2, v0}, Landroid/net/Proxy;->setHttpProxySystemProperty(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+    invoke-static {v1, v3, v0, v2}, Landroid/net/Proxy;->setHttpProxySystemProperty(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
 
     return-void
 .end method
 
-.method public static final setHttpProxySystemProperty(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+.method public static final setHttpProxySystemProperty(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
     .locals 2
     .parameter "host"
     .parameter "port"
     .parameter "exclList"
+    .parameter "pacFileUrl"
 
     .prologue
     if-eqz p2, :cond_0
@@ -527,6 +548,19 @@
     invoke-static {v0, p2}, Ljava/lang/System;->setProperty(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     :goto_2
+    invoke-static {p3}, Landroid/text/TextUtils;->isEmpty(Ljava/lang/CharSequence;)Z
+
+    move-result v0
+
+    if-nez v0, :cond_4
+
+    new-instance v0, Landroid/net/PacProxySelector;
+
+    invoke-direct {v0}, Landroid/net/PacProxySelector;-><init>()V
+
+    invoke-static {v0}, Ljava/net/ProxySelector;->setDefault(Ljava/net/ProxySelector;)V
+
+    :goto_3
     return-void
 
     :cond_1
@@ -561,6 +595,13 @@
     invoke-static {v0}, Ljava/lang/System;->clearProperty(Ljava/lang/String;)Ljava/lang/String;
 
     goto :goto_2
+
+    :cond_4
+    sget-object v0, Landroid/net/Proxy;->sDefaultProxySelector:Ljava/net/ProxySelector;
+
+    invoke-static {v0}, Ljava/net/ProxySelector;->setDefault(Ljava/net/ProxySelector;)V
+
+    goto :goto_3
 .end method
 
 .method public static validate(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V

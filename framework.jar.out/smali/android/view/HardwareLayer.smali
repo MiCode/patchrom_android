@@ -138,6 +138,9 @@
 .method abstract start(Landroid/graphics/Canvas;)Landroid/view/HardwareCanvas;
 .end method
 
+.method abstract start(Landroid/graphics/Canvas;Landroid/graphics/Rect;)Landroid/view/HardwareCanvas;
+.end method
+
 .method update(IIZ)V
     .locals 0
     .parameter "width"

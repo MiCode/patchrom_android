@@ -29,41 +29,26 @@
     return-void
 .end method
 
-.method public static native init1([Ljava/lang/String;)V
-.end method
-
-.method public static final init2()V
-    .locals 3
-
-    .prologue
-    const-string v1, "SystemServer"
-
-    const-string v2, "Entered the Android system server!"
-
-    invoke-static {v1, v2}, Landroid/util/Slog;->i(Ljava/lang/String;Ljava/lang/String;)I
-
-    new-instance v0, Lcom/android/server/ServerThread;
-
-    invoke-direct {v0}, Lcom/android/server/ServerThread;-><init>()V
-
-    .local v0, thr:Ljava/lang/Thread;
-    const-string v1, "android.server.ServerThread"
-
-    invoke-virtual {v0, v1}, Ljava/lang/Thread;->setName(Ljava/lang/String;)V
-
-    invoke-virtual {v0}, Ljava/lang/Thread;->start()V
-
-    return-void
-.end method
-
 .method public static main([Ljava/lang/String;)V
-    .locals 6
+    .locals 7
     .parameter "args"
 
     .prologue
     const-wide/32 v4, 0x5265c00
 
     const-wide/32 v2, 0x36ee80
+
+    const-string v0, "persist.sys.dalvik.vm.lib"
+
+    invoke-static {}, Ldalvik/system/VMRuntime;->getRuntime()Ldalvik/system/VMRuntime;
+
+    move-result-object v1
+
+    invoke-virtual {v1}, Ldalvik/system/VMRuntime;->vmLibrary()Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-static {v0, v1}, Landroid/os/SystemProperties;->set(Ljava/lang/String;Ljava/lang/String;)V
 
     invoke-static {}, Ljava/lang/System;->currentTimeMillis()J
 
@@ -121,11 +106,31 @@
 
     invoke-virtual {v0, v1}, Ldalvik/system/VMRuntime;->setTargetHeapUtilization(F)F
 
+    const/4 v0, 0x1
+
+    invoke-static {v0}, Landroid/os/Environment;->setUserRequired(Z)V
+
     const-string v0, "android_servers"
 
     invoke-static {v0}, Ljava/lang/System;->loadLibrary(Ljava/lang/String;)V
 
-    invoke-static {p0}, Lcom/android/server/SystemServer;->init1([Ljava/lang/String;)V
+    const-string v0, "SystemServer"
+
+    const-string v1, "Entered the Android system server!"
+
+    invoke-static {v0, v1}, Landroid/util/Slog;->i(Ljava/lang/String;Ljava/lang/String;)I
+
+    invoke-static {}, Lcom/android/server/SystemServer;->nativeInit()V
+
+    new-instance v6, Lcom/android/server/ServerThread;
+
+    invoke-direct {v6}, Lcom/android/server/ServerThread;-><init>()V
+
+    .local v6, thr:Lcom/android/server/ServerThread;
+    invoke-virtual {v6}, Lcom/android/server/ServerThread;->initAndLoop()V
 
     return-void
+.end method
+
+.method private static native nativeInit()V
 .end method

@@ -8,7 +8,7 @@
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Landroid/widget/Spinner$DropdownPopup;->show()V
+    value = Landroid/widget/Spinner$DropdownPopup;->show(II)V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;

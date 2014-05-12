@@ -15,17 +15,17 @@
 
 
 # instance fields
-.field public mEriIconIndex:I
+.field mEriIconIndex:I
 
-.field public mEriIconMode:I
+.field mEriIconMode:I
 
-.field public mEriIconText:Ljava/lang/String;
+.field mEriIconText:Ljava/lang/String;
 
 .field final synthetic this$0:Lcom/android/internal/telephony/cdma/EriManager;
 
 
 # direct methods
-.method public constructor <init>(Lcom/android/internal/telephony/cdma/EriManager;IILjava/lang/String;)V
+.method constructor <init>(Lcom/android/internal/telephony/cdma/EriManager;IILjava/lang/String;)V
     .locals 0
     .parameter
     .parameter "eriIconIndex"

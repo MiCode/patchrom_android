@@ -15,7 +15,7 @@
 
 
 # virtual methods
-.method public abstract onInformationRequested(IIII)V
+.method public abstract enableRemoteControlDisplay(Landroid/media/IRemoteControlDisplay;Z)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -23,7 +23,39 @@
     .end annotation
 .end method
 
-.method public abstract plugRemoteControlDisplay(Landroid/media/IRemoteControlDisplay;)V
+.method public abstract informationRequestForDisplay(Landroid/media/IRemoteControlDisplay;II)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract onInformationRequested(II)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract plugRemoteControlDisplay(Landroid/media/IRemoteControlDisplay;II)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract seekTo(IJ)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract setBitmapSizeForDisplay(Landroid/media/IRemoteControlDisplay;II)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -39,7 +71,23 @@
     .end annotation
 .end method
 
+.method public abstract setWantsSyncForDisplay(Landroid/media/IRemoteControlDisplay;Z)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
 .method public abstract unplugRemoteControlDisplay(Landroid/media/IRemoteControlDisplay;)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract updateMetadata(IILandroid/media/Rating;)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;

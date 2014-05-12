@@ -40,26 +40,26 @@
 
 # virtual methods
 .method public createFromParcel(Landroid/os/Parcel;)Landroid/net/RouteInfo;
-    .locals 7
+    .locals 8
     .parameter "in"
 
     .prologue
-    const/4 v6, 0x1
+    const/4 v7, 0x1
 
     const/4 v2, 0x0
 
     .local v2, destAddr:Ljava/net/InetAddress;
-    const/4 v4, 0x0
+    const/4 v5, 0x0
 
-    .local v4, prefix:I
+    .local v5, prefix:I
     const/4 v3, 0x0
 
     .local v3, gateway:Ljava/net/InetAddress;
     invoke-virtual {p1}, Landroid/os/Parcel;->readByte()B
 
-    move-result v5
+    move-result v6
 
-    if-ne v5, v6, :cond_0
+    if-ne v6, v7, :cond_0
 
     invoke-virtual {p1}, Landroid/os/Parcel;->createByteArray()[B
 
@@ -68,7 +68,7 @@
     .local v0, addr:[B
     invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
 
-    move-result v4
+    move-result v5
 
     :try_start_0
     invoke-static {v0}, Ljava/net/InetAddress;->getByAddress([B)Ljava/net/InetAddress;
@@ -82,9 +82,9 @@
     :goto_0
     invoke-virtual {p1}, Landroid/os/Parcel;->readByte()B
 
-    move-result v5
+    move-result v6
 
-    if-ne v5, v6, :cond_1
+    if-ne v6, v7, :cond_1
 
     invoke-virtual {p1}, Landroid/os/Parcel;->createByteArray()[B
 
@@ -101,6 +101,11 @@
     .end local v0           #addr:[B
     :cond_1
     :goto_1
+    invoke-virtual {p1}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v4
+
+    .local v4, iface:Ljava/lang/String;
     const/4 v1, 0x0
 
     .local v1, dest:Landroid/net/LinkAddress;
@@ -109,25 +114,26 @@
     new-instance v1, Landroid/net/LinkAddress;
 
     .end local v1           #dest:Landroid/net/LinkAddress;
-    invoke-direct {v1, v2, v4}, Landroid/net/LinkAddress;-><init>(Ljava/net/InetAddress;I)V
+    invoke-direct {v1, v2, v5}, Landroid/net/LinkAddress;-><init>(Ljava/net/InetAddress;I)V
 
     .restart local v1       #dest:Landroid/net/LinkAddress;
     :cond_2
-    new-instance v5, Landroid/net/RouteInfo;
+    new-instance v6, Landroid/net/RouteInfo;
 
-    invoke-direct {v5, v1, v3}, Landroid/net/RouteInfo;-><init>(Landroid/net/LinkAddress;Ljava/net/InetAddress;)V
+    invoke-direct {v6, v1, v3, v4}, Landroid/net/RouteInfo;-><init>(Landroid/net/LinkAddress;Ljava/net/InetAddress;Ljava/lang/String;)V
 
-    return-object v5
+    return-object v6
 
     .end local v1           #dest:Landroid/net/LinkAddress;
+    .end local v4           #iface:Ljava/lang/String;
     .restart local v0       #addr:[B
     :catch_0
-    move-exception v5
+    move-exception v6
 
     goto :goto_0
 
     :catch_1
-    move-exception v5
+    move-exception v6
 
     goto :goto_1
 .end method

@@ -15,11 +15,11 @@
 # static fields
 .field private static final DBG:Z = true
 
-.field public static final ERI_FROM_FILE_SYSTEM:I = 0x1
+.field static final ERI_FROM_FILE_SYSTEM:I = 0x1
 
-.field public static final ERI_FROM_MODEM:I = 0x2
+.field static final ERI_FROM_MODEM:I = 0x2
 
-.field public static final ERI_FROM_XML:I = 0x0
+.field static final ERI_FROM_XML:I = 0x0
 
 .field private static final LOG_TAG:Ljava/lang/String; = "CDMA"
 
@@ -27,15 +27,13 @@
 
 
 # instance fields
-.field private isEriFileLoaded:Z
-
 .field private mContext:Landroid/content/Context;
 
 .field private mEriFile:Lcom/android/internal/telephony/cdma/EriManager$EriFile;
 
 .field private mEriFileSource:I
 
-.field private mPhone:Lcom/android/internal/telephony/PhoneBase;
+.field private mIsEriFileLoaded:Z
 
 
 # direct methods
@@ -51,8 +49,6 @@
     const/4 v0, 0x0
 
     iput v0, p0, Lcom/android/internal/telephony/cdma/EriManager;->mEriFileSource:I
-
-    iput-object p1, p0, Lcom/android/internal/telephony/cdma/EriManager;->mPhone:Lcom/android/internal/telephony/PhoneBase;
 
     iput-object p2, p0, Lcom/android/internal/telephony/cdma/EriManager;->mContext:Landroid/content/Context;
 
@@ -73,9 +69,9 @@
     .parameter "defRoamInd"
 
     .prologue
-    const v10, 0x10400ad
+    const v10, 0x104008a
 
-    const v9, 0x10400ab
+    const v9, 0x1040088
 
     const/4 v8, 0x2
 
@@ -83,7 +79,7 @@
 
     const/4 v7, 0x0
 
-    iget-boolean v4, p0, Lcom/android/internal/telephony/cdma/EriManager;->isEriFileLoaded:Z
+    iget-boolean v4, p0, Lcom/android/internal/telephony/cdma/EriManager;->mIsEriFileLoaded:Z
 
     if-eqz v4, :cond_0
 
@@ -96,11 +92,11 @@
 
     new-instance v2, Lcom/android/internal/telephony/cdma/EriManager$EriDisplayInformation;
 
-    iget v4, v1, Lcom/android/internal/telephony/cdma/EriInfo;->mIconIndex:I
+    iget v4, v1, Lcom/android/internal/telephony/cdma/EriInfo;->iconIndex:I
 
-    iget v5, v1, Lcom/android/internal/telephony/cdma/EriInfo;->mIconMode:I
+    iget v5, v1, Lcom/android/internal/telephony/cdma/EriInfo;->iconMode:I
 
-    iget-object v6, v1, Lcom/android/internal/telephony/cdma/EriInfo;->mEriText:Ljava/lang/String;
+    iget-object v6, v1, Lcom/android/internal/telephony/cdma/EriInfo;->eriText:Ljava/lang/String;
 
     invoke-direct {v2, p0, v4, v5, v6}, Lcom/android/internal/telephony/cdma/EriManager$EriDisplayInformation;-><init>(Lcom/android/internal/telephony/cdma/EriManager;IILjava/lang/String;)V
 
@@ -117,7 +113,7 @@
     :cond_0
     packed-switch p1, :pswitch_data_0
 
-    iget-boolean v4, p0, Lcom/android/internal/telephony/cdma/EriManager;->isEriFileLoaded:Z
+    iget-boolean v4, p0, Lcom/android/internal/telephony/cdma/EriManager;->mIsEriFileLoaded:Z
 
     if-nez v4, :cond_2
 
@@ -125,7 +121,7 @@
 
     const-string v5, "ERI File not loaded"
 
-    invoke-static {v4, v5}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v4, v5}, Landroid/telephony/Rlog;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     if-le p2, v8, :cond_1
 
@@ -176,7 +172,7 @@
 
     iget-object v4, p0, Lcom/android/internal/telephony/cdma/EriManager;->mContext:Landroid/content/Context;
 
-    const v5, 0x10400ac
+    const v5, 0x1040089
 
     invoke-virtual {v4, v5}, Landroid/content/Context;->getText(I)Ljava/lang/CharSequence;
 
@@ -216,7 +212,7 @@
 
     iget-object v4, p0, Lcom/android/internal/telephony/cdma/EriManager;->mContext:Landroid/content/Context;
 
-    const v5, 0x10400ae
+    const v5, 0x104008b
 
     invoke-virtual {v4, v5}, Landroid/content/Context;->getText(I)Ljava/lang/CharSequence;
 
@@ -237,7 +233,7 @@
 
     iget-object v4, p0, Lcom/android/internal/telephony/cdma/EriManager;->mContext:Landroid/content/Context;
 
-    const v5, 0x10400af
+    const v5, 0x104008c
 
     invoke-virtual {v4, v5}, Landroid/content/Context;->getText(I)Ljava/lang/CharSequence;
 
@@ -258,7 +254,7 @@
 
     iget-object v4, p0, Lcom/android/internal/telephony/cdma/EriManager;->mContext:Landroid/content/Context;
 
-    const v5, 0x10400b0
+    const v5, 0x104008d
 
     invoke-virtual {v4, v5}, Landroid/content/Context;->getText(I)Ljava/lang/CharSequence;
 
@@ -279,7 +275,7 @@
 
     iget-object v4, p0, Lcom/android/internal/telephony/cdma/EriManager;->mContext:Landroid/content/Context;
 
-    const v5, 0x10400b1
+    const v5, 0x104008e
 
     invoke-virtual {v4, v5}, Landroid/content/Context;->getText(I)Ljava/lang/CharSequence;
 
@@ -300,7 +296,7 @@
 
     iget-object v4, p0, Lcom/android/internal/telephony/cdma/EriManager;->mContext:Landroid/content/Context;
 
-    const v5, 0x10400b2
+    const v5, 0x104008f
 
     invoke-virtual {v4, v5}, Landroid/content/Context;->getText(I)Ljava/lang/CharSequence;
 
@@ -321,7 +317,7 @@
 
     iget-object v4, p0, Lcom/android/internal/telephony/cdma/EriManager;->mContext:Landroid/content/Context;
 
-    const v5, 0x10400b3
+    const v5, 0x1040090
 
     invoke-virtual {v4, v5}, Landroid/content/Context;->getText(I)Ljava/lang/CharSequence;
 
@@ -342,7 +338,7 @@
 
     iget-object v4, p0, Lcom/android/internal/telephony/cdma/EriManager;->mContext:Landroid/content/Context;
 
-    const v5, 0x10400b4
+    const v5, 0x1040091
 
     invoke-virtual {v4, v5}, Landroid/content/Context;->getText(I)Ljava/lang/CharSequence;
 
@@ -363,7 +359,7 @@
 
     iget-object v4, p0, Lcom/android/internal/telephony/cdma/EriManager;->mContext:Landroid/content/Context;
 
-    const v5, 0x10400b5
+    const v5, 0x1040092
 
     invoke-virtual {v4, v5}, Landroid/content/Context;->getText(I)Ljava/lang/CharSequence;
 
@@ -384,7 +380,7 @@
 
     iget-object v4, p0, Lcom/android/internal/telephony/cdma/EriManager;->mContext:Landroid/content/Context;
 
-    const v5, 0x10400b6
+    const v5, 0x1040093
 
     invoke-virtual {v4, v5}, Landroid/content/Context;->getText(I)Ljava/lang/CharSequence;
 
@@ -405,7 +401,7 @@
 
     iget-object v4, p0, Lcom/android/internal/telephony/cdma/EriManager;->mContext:Landroid/content/Context;
 
-    const v5, 0x10400b7
+    const v5, 0x1040094
 
     invoke-virtual {v4, v5}, Landroid/content/Context;->getText(I)Ljava/lang/CharSequence;
 
@@ -462,7 +458,7 @@
 
     iget-object v4, p0, Lcom/android/internal/telephony/cdma/EriManager;->mContext:Landroid/content/Context;
 
-    const v5, 0x10400ac
+    const v5, 0x1040089
 
     invoke-virtual {v4, v5}, Landroid/content/Context;->getText(I)Ljava/lang/CharSequence;
 
@@ -538,7 +534,7 @@
 
     move-result-object v5
 
-    invoke-static {v4, v5}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v4, v5}, Landroid/telephony/Rlog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     new-instance v2, Lcom/android/internal/telephony/cdma/EriManager$EriDisplayInformation;
 
@@ -561,11 +557,11 @@
     :cond_3
     new-instance v2, Lcom/android/internal/telephony/cdma/EriManager$EriDisplayInformation;
 
-    iget v4, v0, Lcom/android/internal/telephony/cdma/EriInfo;->mIconIndex:I
+    iget v4, v0, Lcom/android/internal/telephony/cdma/EriInfo;->iconIndex:I
 
-    iget v5, v0, Lcom/android/internal/telephony/cdma/EriInfo;->mIconMode:I
+    iget v5, v0, Lcom/android/internal/telephony/cdma/EriInfo;->iconMode:I
 
-    iget-object v6, v0, Lcom/android/internal/telephony/cdma/EriInfo;->mEriText:Ljava/lang/String;
+    iget-object v6, v0, Lcom/android/internal/telephony/cdma/EriInfo;->eriText:Ljava/lang/String;
 
     invoke-direct {v2, p0, v4, v5, v6}, Lcom/android/internal/telephony/cdma/EriManager$EriDisplayInformation;-><init>(Lcom/android/internal/telephony/cdma/EriManager;IILjava/lang/String;)V
 
@@ -576,11 +572,11 @@
     :cond_4
     new-instance v2, Lcom/android/internal/telephony/cdma/EriManager$EriDisplayInformation;
 
-    iget v4, v1, Lcom/android/internal/telephony/cdma/EriInfo;->mIconIndex:I
+    iget v4, v1, Lcom/android/internal/telephony/cdma/EriInfo;->iconIndex:I
 
-    iget v5, v1, Lcom/android/internal/telephony/cdma/EriInfo;->mIconMode:I
+    iget v5, v1, Lcom/android/internal/telephony/cdma/EriInfo;->iconMode:I
 
-    iget-object v6, v1, Lcom/android/internal/telephony/cdma/EriInfo;->mEriText:Ljava/lang/String;
+    iget-object v6, v1, Lcom/android/internal/telephony/cdma/EriInfo;->eriText:Ljava/lang/String;
 
     invoke-direct {v2, p0, v4, v5, v6}, Lcom/android/internal/telephony/cdma/EriManager$EriDisplayInformation;-><init>(Lcom/android/internal/telephony/cdma/EriManager;IILjava/lang/String;)V
 
@@ -696,11 +692,11 @@
 
     move-object/from16 v0, v18
 
-    invoke-static {v2, v0}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v2, v0}, Landroid/telephony/Rlog;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     new-instance v16, Ljava/io/FileInputStream;
 
-    const v2, 0x1040486
+    const v2, 0x10404b4
 
     invoke-virtual {v14, v2}, Landroid/content/res/Resources;->getString(I)Ljava/lang/String;
 
@@ -732,7 +728,7 @@
 
     move-object/from16 v0, v18
 
-    invoke-static {v2, v0}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v2, v0}, Landroid/telephony/Rlog;->d(Ljava/lang/String;Ljava/lang/String;)I
     :try_end_1
     .catch Ljava/io/FileNotFoundException; {:try_start_1 .. :try_end_1} :catch_7
     .catch Lorg/xmlpull/v1/XmlPullParserException; {:try_start_1 .. :try_end_1} :catch_6
@@ -750,9 +746,9 @@
 
     move-object/from16 v0, v18
 
-    invoke-static {v2, v0}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v2, v0}, Landroid/telephony/Rlog;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    const v2, 0x10f0002
+    const v2, 0x10f0003
 
     invoke-virtual {v14, v2}, Landroid/content/res/Resources;->getXml(I)Landroid/content/res/XmlResourceParser;
 
@@ -910,7 +906,7 @@
 
     move-object/from16 v0, v18
 
-    invoke-static {v2, v0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v2, v0}, Landroid/telephony/Rlog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     :cond_2
     const-string v2, "CDMA"
@@ -919,13 +915,13 @@
 
     move-object/from16 v0, v18
 
-    invoke-static {v2, v0}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v2, v0}, Landroid/telephony/Rlog;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     const/4 v2, 0x1
 
     move-object/from16 v0, p0
 
-    iput-boolean v2, v0, Lcom/android/internal/telephony/cdma/EriManager;->isEriFileLoaded:Z
+    iput-boolean v2, v0, Lcom/android/internal/telephony/cdma/EriManager;->mIsEriFileLoaded:Z
     :try_end_2
     .catchall {:try_start_2 .. :try_end_2} :catchall_0
     .catch Ljava/lang/Exception; {:try_start_2 .. :try_end_2} :catch_2
@@ -965,7 +961,7 @@
 
     move-object/from16 v0, v18
 
-    invoke-static {v2, v0}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v2, v0}, Landroid/telephony/Rlog;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     const/4 v13, 0x0
 
@@ -983,7 +979,7 @@
 
     move-object/from16 v0, v18
 
-    invoke-static {v2, v0}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v2, v0}, Landroid/telephony/Rlog;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     const/4 v13, 0x0
 
@@ -1062,7 +1058,7 @@
 
     move-object/from16 v0, v18
 
-    invoke-static {v2, v0, v9}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+    invoke-static {v2, v0, v9}, Landroid/telephony/Rlog;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
     :try_end_5
     .catchall {:try_start_5 .. :try_end_5} :catchall_0
 
@@ -1128,7 +1124,7 @@
 
     move-object/from16 v0, v18
 
-    invoke-static {v2, v0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v2, v0}, Landroid/telephony/Rlog;->e(Ljava/lang/String;Ljava/lang/String;)I
     :try_end_7
     .catchall {:try_start_7 .. :try_end_7} :catchall_0
     .catch Ljava/lang/Exception; {:try_start_7 .. :try_end_7} :catch_2
@@ -1350,7 +1346,7 @@
 
     const/4 v0, 0x0
 
-    iput-boolean v0, p0, Lcom/android/internal/telephony/cdma/EriManager;->isEriFileLoaded:Z
+    iput-boolean v0, p0, Lcom/android/internal/telephony/cdma/EriManager;->mIsEriFileLoaded:Z
 
     return-void
 .end method
@@ -1437,7 +1433,7 @@
     .locals 1
 
     .prologue
-    iget-boolean v0, p0, Lcom/android/internal/telephony/cdma/EriManager;->isEriFileLoaded:Z
+    iget-boolean v0, p0, Lcom/android/internal/telephony/cdma/EriManager;->mIsEriFileLoaded:Z
 
     return v0
 .end method

@@ -63,6 +63,14 @@
     .end annotation
 .end method
 
+.method public abstract getNfcCardEmulationInterface()Landroid/nfc/INfcCardEmulation;
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
 .method public abstract getNfcTagInterface()Landroid/nfc/INfcTag;
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -87,6 +95,14 @@
     .end annotation
 .end method
 
+.method public abstract setAppCallback(Landroid/nfc/IAppCallback;)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
 .method public abstract setForegroundDispatch(Landroid/app/PendingIntent;[Landroid/content/IntentFilter;Landroid/nfc/TechListParcel;)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -95,7 +111,7 @@
     .end annotation
 .end method
 
-.method public abstract setNdefPushCallback(Landroid/nfc/INdefPushCallback;)V
+.method public abstract setP2pModes(II)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -103,7 +119,7 @@
     .end annotation
 .end method
 
-.method public abstract setP2pModes(II)V
+.method public abstract setReaderMode(Landroid/os/IBinder;Landroid/nfc/IAppCallback;ILandroid/os/Bundle;)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;

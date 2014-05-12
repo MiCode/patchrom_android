@@ -100,7 +100,7 @@
     check-cast v2, Lcom/android/server/VibratorService$Vibration;
 
     #calls: Lcom/android/server/VibratorService;->unlinkVibration(Lcom/android/server/VibratorService$Vibration;)V
-    invoke-static {v4, v2}, Lcom/android/server/VibratorService;->access$1300(Lcom/android/server/VibratorService;Lcom/android/server/VibratorService$Vibration;)V
+    invoke-static {v4, v2}, Lcom/android/server/VibratorService;->access$1400(Lcom/android/server/VibratorService;Lcom/android/server/VibratorService$Vibration;)V
 
     add-int/lit8 v0, v0, 0x1
 

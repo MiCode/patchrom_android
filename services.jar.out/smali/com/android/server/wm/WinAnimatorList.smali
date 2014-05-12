@@ -15,21 +15,11 @@
 
 
 # direct methods
-.method public constructor <init>()V
+.method constructor <init>()V
     .locals 0
 
     .prologue
     invoke-direct {p0}, Ljava/util/ArrayList;-><init>()V
-
-    return-void
-.end method
-
-.method public constructor <init>(Lcom/android/server/wm/WinAnimatorList;)V
-    .locals 0
-    .parameter "other"
-
-    .prologue
-    invoke-direct {p0, p1}, Ljava/util/ArrayList;-><init>(Ljava/util/Collection;)V
 
     return-void
 .end method

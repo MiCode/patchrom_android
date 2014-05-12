@@ -33,6 +33,3 @@
 
 .method public abstract setRequest(Lcom/android/internal/location/ProviderRequest;Landroid/os/WorkSource;)V
 .end method
-
-.method public abstract switchUser(I)V
-.end method

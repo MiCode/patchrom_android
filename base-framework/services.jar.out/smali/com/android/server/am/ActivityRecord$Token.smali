@@ -48,11 +48,6 @@
 # virtual methods
 .method public getKeyDispatchingTimeout()J
     .locals 3
-    .annotation system Ldalvik/annotation/Throws;
-        value = {
-            Landroid/os/RemoteException;
-        }
-    .end annotation
 
     .prologue
     iget-object v1, p0, Lcom/android/server/am/ActivityRecord$Token;->weakActivity:Ljava/lang/ref/WeakReference;
@@ -79,13 +74,9 @@
     goto :goto_0
 .end method
 
-.method public keyDispatchingTimedOut()Z
+.method public keyDispatchingTimedOut(Ljava/lang/String;)Z
     .locals 2
-    .annotation system Ldalvik/annotation/Throws;
-        value = {
-            Landroid/os/RemoteException;
-        }
-    .end annotation
+    .parameter "reason"
 
     .prologue
     iget-object v1, p0, Lcom/android/server/am/ActivityRecord$Token;->weakActivity:Ljava/lang/ref/WeakReference;
@@ -99,9 +90,13 @@
     .local v0, activity:Lcom/android/server/am/ActivityRecord;
     if-eqz v0, :cond_0
 
-    invoke-virtual {v0}, Lcom/android/server/am/ActivityRecord;->keyDispatchingTimedOut()Z
+    invoke-virtual {v0, p1}, Lcom/android/server/am/ActivityRecord;->keyDispatchingTimedOut(Ljava/lang/String;)Z
 
     move-result v1
+
+    if-eqz v1, :cond_0
+
+    const/4 v1, 0x1
 
     :goto_0
     return v1
@@ -162,11 +157,6 @@
 
 .method public windowsDrawn()V
     .locals 2
-    .annotation system Ldalvik/annotation/Throws;
-        value = {
-            Landroid/os/RemoteException;
-        }
-    .end annotation
 
     .prologue
     iget-object v1, p0, Lcom/android/server/am/ActivityRecord$Token;->weakActivity:Ljava/lang/ref/WeakReference;
@@ -188,11 +178,6 @@
 
 .method public windowsGone()V
     .locals 2
-    .annotation system Ldalvik/annotation/Throws;
-        value = {
-            Landroid/os/RemoteException;
-        }
-    .end annotation
 
     .prologue
     iget-object v1, p0, Lcom/android/server/am/ActivityRecord$Token;->weakActivity:Ljava/lang/ref/WeakReference;
@@ -214,11 +199,6 @@
 
 .method public windowsVisible()V
     .locals 2
-    .annotation system Ldalvik/annotation/Throws;
-        value = {
-            Landroid/os/RemoteException;
-        }
-    .end annotation
 
     .prologue
     iget-object v1, p0, Lcom/android/server/am/ActivityRecord$Token;->weakActivity:Ljava/lang/ref/WeakReference;

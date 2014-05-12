@@ -50,7 +50,7 @@
 
     move-result-object v10
 
-    if-nez v10, :cond_3
+    if-nez v10, :cond_4
 
     invoke-super/range {p0 .. p6}, Landroid/text/method/NumberKeyListener;->filter(Ljava/lang/CharSequence;IILandroid/text/Spanned;II)Ljava/lang/CharSequence;
 
@@ -140,13 +140,35 @@
 
     move-result v10
 
-    if-le v8, v10, :cond_2
+    if-gt v8, v10, :cond_2
 
+    invoke-virtual {v6}, Ljava/lang/String;->length()I
+
+    move-result v10
+
+    iget-object v11, p0, Landroid/widget/NumberPicker$InputTextFilter;->this$0:Landroid/widget/NumberPicker;
+
+    #getter for: Landroid/widget/NumberPicker;->mMaxValue:I
+    invoke-static {v11}, Landroid/widget/NumberPicker;->access$1100(Landroid/widget/NumberPicker;)I
+
+    move-result v11
+
+    invoke-static {v11}, Ljava/lang/String;->valueOf(I)Ljava/lang/String;
+
+    move-result-object v11
+
+    invoke-virtual {v11}, Ljava/lang/String;->length()I
+
+    move-result v11
+
+    if-le v10, v11, :cond_3
+
+    :cond_2
     const-string v6, ""
 
     goto :goto_0
 
-    :cond_2
+    :cond_3
     move-object v6, v3
 
     goto :goto_0
@@ -154,7 +176,7 @@
     .end local v3           #filtered:Ljava/lang/CharSequence;
     .end local v6           #result:Ljava/lang/String;
     .end local v8           #val:I
-    :cond_3
+    :cond_4
     invoke-interface/range {p1 .. p3}, Ljava/lang/CharSequence;->subSequence(II)Ljava/lang/CharSequence;
 
     move-result-object v10
@@ -168,13 +190,13 @@
 
     move-result v10
 
-    if-eqz v10, :cond_4
+    if-eqz v10, :cond_5
 
     const-string v6, ""
 
     goto :goto_0
 
-    :cond_4
+    :cond_5
     new-instance v10, Ljava/lang/StringBuilder;
 
     invoke-direct {v10}, Ljava/lang/StringBuilder;-><init>()V
@@ -246,7 +268,7 @@
 
     .local v4, i$:I
     :goto_1
-    if-ge v4, v5, :cond_6
+    if-ge v4, v5, :cond_7
 
     aget-object v8, v2, v4
 
@@ -260,7 +282,7 @@
 
     move-result v10
 
-    if-eqz v10, :cond_5
+    if-eqz v10, :cond_6
 
     iget-object v10, p0, Landroid/widget/NumberPicker$InputTextFilter;->this$0:Landroid/widget/NumberPicker;
 
@@ -287,14 +309,14 @@
 
     goto/16 :goto_0
 
-    :cond_5
+    :cond_6
     add-int/lit8 v4, v4, 0x1
 
     goto :goto_1
 
     .end local v8           #val:Ljava/lang/String;
     .end local v9           #valLowerCase:Ljava/lang/String;
-    :cond_6
+    :cond_7
     const-string v6, ""
 
     goto/16 :goto_0

@@ -48,5 +48,5 @@
 .method public abstract setVerticalOffset(I)V
 .end method
 
-.method public abstract show()V
+.method public abstract show(II)V
 .end method

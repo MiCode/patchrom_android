@@ -36,9 +36,10 @@
 
 
 # virtual methods
-.method public addPrimaryClipChangedListener(Landroid/content/IOnPrimaryClipChangedListener;)V
+.method public addPrimaryClipChangedListener(Landroid/content/IOnPrimaryClipChangedListener;Ljava/lang/String;)V
     .locals 5
     .parameter "listener"
+    .parameter "callingPackage"
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -69,6 +70,8 @@
 
     :goto_0
     invoke-virtual {v0, v2}, Landroid/os/Parcel;->writeStrongBinder(Landroid/os/IBinder;)V
+
+    invoke-virtual {v0, p2}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
     iget-object v2, p0, Landroid/content/IClipboard$Stub$Proxy;->mRemote:Landroid/os/IBinder;
 
@@ -200,8 +203,9 @@
     throw v3
 .end method
 
-.method public getPrimaryClipDescription()Landroid/content/ClipDescription;
+.method public getPrimaryClipDescription(Ljava/lang/String;)Landroid/content/ClipDescription;
     .locals 6
+    .parameter "callingPackage"
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -223,6 +227,8 @@
     const-string v3, "android.content.IClipboard"
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->writeInterfaceToken(Ljava/lang/String;)V
+
+    invoke-virtual {v0, p1}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
     iget-object v3, p0, Landroid/content/IClipboard$Stub$Proxy;->mRemote:Landroid/os/IBinder;
 
@@ -276,8 +282,9 @@
     throw v3
 .end method
 
-.method public hasClipboardText()Z
+.method public hasClipboardText(Ljava/lang/String;)Z
     .locals 6
+    .parameter "callingPackage"
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -301,6 +308,8 @@
     const-string v3, "android.content.IClipboard"
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->writeInterfaceToken(Ljava/lang/String;)V
+
+    invoke-virtual {v0, p1}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
     iget-object v3, p0, Landroid/content/IClipboard$Stub$Proxy;->mRemote:Landroid/os/IBinder;
 
@@ -341,8 +350,9 @@
     throw v3
 .end method
 
-.method public hasPrimaryClip()Z
+.method public hasPrimaryClip(Ljava/lang/String;)Z
     .locals 6
+    .parameter "callingPackage"
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -366,6 +376,8 @@
     const-string v3, "android.content.IClipboard"
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->writeInterfaceToken(Ljava/lang/String;)V
+
+    invoke-virtual {v0, p1}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
     iget-object v3, p0, Landroid/content/IClipboard$Stub$Proxy;->mRemote:Landroid/os/IBinder;
 
@@ -473,9 +485,10 @@
     throw v2
 .end method
 
-.method public setPrimaryClip(Landroid/content/ClipData;)V
+.method public setPrimaryClip(Landroid/content/ClipData;Ljava/lang/String;)V
     .locals 5
     .parameter "clip"
+    .parameter "callingPackage"
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -509,6 +522,8 @@
     invoke-virtual {p1, v0, v2}, Landroid/content/ClipData;->writeToParcel(Landroid/os/Parcel;I)V
 
     :goto_0
+    invoke-virtual {v0, p2}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
+
     iget-object v2, p0, Landroid/content/IClipboard$Stub$Proxy;->mRemote:Landroid/os/IBinder;
 
     const/4 v3, 0x1

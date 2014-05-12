@@ -8,9 +8,9 @@
 
 
 # instance fields
-.field buffer:[B
+.field mBuffer:[B
 
-.field inStream:Ljava/io/InputStream;
+.field mInStream:Ljava/io/InputStream;
 
 
 # direct methods
@@ -25,9 +25,9 @@
 
     new-array v0, v0, [B
 
-    iput-object v0, p0, Lcom/android/internal/telephony/test/LineReader;->buffer:[B
+    iput-object v0, p0, Lcom/android/internal/telephony/test/LineReader;->mBuffer:[B
 
-    iput-object p1, p0, Lcom/android/internal/telephony/test/LineReader;->inStream:Ljava/io/InputStream;
+    iput-object p1, p0, Lcom/android/internal/telephony/test/LineReader;->mInStream:Ljava/io/InputStream;
 
     return-void
 .end method
@@ -63,7 +63,7 @@
     .local v2, i:I
     :goto_0
     :try_start_0
-    iget-object v5, p0, Lcom/android/internal/telephony/test/LineReader;->inStream:Ljava/io/InputStream;
+    iget-object v5, p0, Lcom/android/internal/telephony/test/LineReader;->mInStream:Ljava/io/InputStream;
 
     invoke-virtual {v5}, Ljava/io/InputStream;->read()I
     :try_end_0
@@ -103,7 +103,7 @@
     :try_start_1
     new-instance v5, Ljava/lang/String;
 
-    iget-object v6, p0, Lcom/android/internal/telephony/test/LineReader;->buffer:[B
+    iget-object v6, p0, Lcom/android/internal/telephony/test/LineReader;->mBuffer:[B
 
     const/4 v7, 0x0
 
@@ -136,7 +136,7 @@
 
     :cond_4
     :try_start_2
-    iget-object v5, p0, Lcom/android/internal/telephony/test/LineReader;->buffer:[B
+    iget-object v5, p0, Lcom/android/internal/telephony/test/LineReader;->mBuffer:[B
     :try_end_2
     .catch Ljava/io/IOException; {:try_start_2 .. :try_end_2} :catch_0
     .catch Ljava/lang/IndexOutOfBoundsException; {:try_start_2 .. :try_end_2} :catch_1

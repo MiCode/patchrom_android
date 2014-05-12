@@ -40,11 +40,11 @@
 
 # virtual methods
 .method public createFromParcel(Landroid/os/Parcel;)Landroid/net/LinkProperties;
-    .locals 8
+    .locals 10
     .parameter "in"
 
     .prologue
-    const/4 v6, 0x0
+    const/4 v9, 0x0
 
     new-instance v4, Landroid/net/LinkProperties;
 
@@ -58,10 +58,7 @@
     .local v3, iface:Ljava/lang/String;
     if-eqz v3, :cond_0
 
-    :try_start_0
     invoke-virtual {v4, v3}, Landroid/net/LinkProperties;->setInterfaceName(Ljava/lang/String;)V
-    :try_end_0
-    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
 
     :cond_0
     invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
@@ -69,114 +66,150 @@
     move-result v0
 
     .local v0, addressCount:I
-    const/4 v2, 0x0
+    const/4 v1, 0x0
 
-    .local v2, i:I
+    .local v1, i:I
     :goto_0
-    if-ge v2, v0, :cond_2
+    if-ge v1, v0, :cond_1
 
-    invoke-virtual {p1, v6}, Landroid/os/Parcel;->readParcelable(Ljava/lang/ClassLoader;)Landroid/os/Parcelable;
+    invoke-virtual {p1, v9}, Landroid/os/Parcel;->readParcelable(Ljava/lang/ClassLoader;)Landroid/os/Parcelable;
 
-    move-result-object v5
+    move-result-object v7
 
-    check-cast v5, Landroid/net/LinkAddress;
+    check-cast v7, Landroid/net/LinkAddress;
 
-    invoke-virtual {v4, v5}, Landroid/net/LinkProperties;->addLinkAddress(Landroid/net/LinkAddress;)V
+    invoke-virtual {v4, v7}, Landroid/net/LinkProperties;->addLinkAddress(Landroid/net/LinkAddress;)Z
 
-    add-int/lit8 v2, v2, 0x1
+    add-int/lit8 v1, v1, 0x1
 
     goto :goto_0
 
-    .end local v0           #addressCount:I
-    .end local v2           #i:I
-    :catch_0
-    move-exception v1
-
-    .local v1, e:Ljava/lang/Exception;
-    move-object v4, v6
-
-    .end local v1           #e:Ljava/lang/Exception;
-    .end local v4           #netProp:Landroid/net/LinkProperties;
     :cond_1
-    :goto_1
-    return-object v4
-
-    .restart local v0       #addressCount:I
-    .restart local v2       #i:I
-    .restart local v4       #netProp:Landroid/net/LinkProperties;
-    :cond_2
     invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
 
     move-result v0
 
-    const/4 v2, 0x0
+    const/4 v1, 0x0
 
-    :goto_2
-    if-ge v2, v0, :cond_3
+    :goto_1
+    if-ge v1, v0, :cond_2
 
-    :try_start_1
+    :try_start_0
     invoke-virtual {p1}, Landroid/os/Parcel;->createByteArray()[B
 
-    move-result-object v5
+    move-result-object v7
 
-    invoke-static {v5}, Ljava/net/InetAddress;->getByAddress([B)Ljava/net/InetAddress;
+    invoke-static {v7}, Ljava/net/InetAddress;->getByAddress([B)Ljava/net/InetAddress;
 
-    move-result-object v5
+    move-result-object v7
 
-    invoke-virtual {v4, v5}, Landroid/net/LinkProperties;->addDns(Ljava/net/InetAddress;)V
-    :try_end_1
-    .catch Ljava/net/UnknownHostException; {:try_start_1 .. :try_end_1} :catch_1
+    invoke-virtual {v4, v7}, Landroid/net/LinkProperties;->addDns(Ljava/net/InetAddress;)V
+    :try_end_0
+    .catch Ljava/net/UnknownHostException; {:try_start_0 .. :try_end_0} :catch_0
 
-    :goto_3
-    add-int/lit8 v2, v2, 0x1
-
-    goto :goto_2
-
-    :cond_3
-    invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
-
-    move-result v0
-
-    const/4 v2, 0x0
-
-    :goto_4
-    if-ge v2, v0, :cond_4
-
-    invoke-virtual {p1, v6}, Landroid/os/Parcel;->readParcelable(Ljava/lang/ClassLoader;)Landroid/os/Parcelable;
-
-    move-result-object v5
-
-    check-cast v5, Landroid/net/RouteInfo;
-
-    invoke-virtual {v4, v5}, Landroid/net/LinkProperties;->addRoute(Landroid/net/RouteInfo;)V
-
-    add-int/lit8 v2, v2, 0x1
-
-    goto :goto_4
-
-    :cond_4
-    invoke-virtual {p1}, Landroid/os/Parcel;->readByte()B
-
-    move-result v5
-
-    const/4 v7, 0x1
-
-    if-ne v5, v7, :cond_1
-
-    invoke-virtual {p1, v6}, Landroid/os/Parcel;->readParcelable(Ljava/lang/ClassLoader;)Landroid/os/Parcelable;
-
-    move-result-object v5
-
-    check-cast v5, Landroid/net/ProxyProperties;
-
-    invoke-virtual {v4, v5}, Landroid/net/LinkProperties;->setHttpProxy(Landroid/net/ProxyProperties;)V
+    :goto_2
+    add-int/lit8 v1, v1, 0x1
 
     goto :goto_1
 
-    :catch_1
-    move-exception v5
+    :cond_2
+    invoke-virtual {p1}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v7
+
+    invoke-virtual {v4, v7}, Landroid/net/LinkProperties;->setDomains(Ljava/lang/String;)V
+
+    invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
+
+    move-result v7
+
+    invoke-virtual {v4, v7}, Landroid/net/LinkProperties;->setMtu(I)V
+
+    invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
+
+    move-result v0
+
+    const/4 v1, 0x0
+
+    :goto_3
+    if-ge v1, v0, :cond_3
+
+    invoke-virtual {p1, v9}, Landroid/os/Parcel;->readParcelable(Ljava/lang/ClassLoader;)Landroid/os/Parcelable;
+
+    move-result-object v7
+
+    check-cast v7, Landroid/net/RouteInfo;
+
+    invoke-virtual {v4, v7}, Landroid/net/LinkProperties;->addRoute(Landroid/net/RouteInfo;)V
+
+    add-int/lit8 v1, v1, 0x1
 
     goto :goto_3
+
+    :cond_3
+    invoke-virtual {p1}, Landroid/os/Parcel;->readByte()B
+
+    move-result v7
+
+    const/4 v8, 0x1
+
+    if-ne v7, v8, :cond_4
+
+    invoke-virtual {p1, v9}, Landroid/os/Parcel;->readParcelable(Ljava/lang/ClassLoader;)Landroid/os/Parcelable;
+
+    move-result-object v7
+
+    check-cast v7, Landroid/net/ProxyProperties;
+
+    invoke-virtual {v4, v7}, Landroid/net/LinkProperties;->setHttpProxy(Landroid/net/ProxyProperties;)V
+
+    :cond_4
+    new-instance v6, Ljava/util/ArrayList;
+
+    invoke-direct {v6}, Ljava/util/ArrayList;-><init>()V
+
+    .local v6, stackedLinks:Ljava/util/ArrayList;,"Ljava/util/ArrayList<Landroid/net/LinkProperties;>;"
+    const-class v7, Landroid/net/LinkProperties;
+
+    invoke-virtual {v7}, Ljava/lang/Class;->getClassLoader()Ljava/lang/ClassLoader;
+
+    move-result-object v7
+
+    invoke-virtual {p1, v6, v7}, Landroid/os/Parcel;->readList(Ljava/util/List;Ljava/lang/ClassLoader;)V
+
+    invoke-virtual {v6}, Ljava/util/ArrayList;->iterator()Ljava/util/Iterator;
+
+    move-result-object v2
+
+    .local v2, i$:Ljava/util/Iterator;
+    :goto_4
+    invoke-interface {v2}, Ljava/util/Iterator;->hasNext()Z
+
+    move-result v7
+
+    if-eqz v7, :cond_5
+
+    invoke-interface {v2}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+
+    move-result-object v5
+
+    check-cast v5, Landroid/net/LinkProperties;
+
+    .local v5, stackedLink:Landroid/net/LinkProperties;
+    invoke-virtual {v4, v5}, Landroid/net/LinkProperties;->addStackedLink(Landroid/net/LinkProperties;)Z
+
+    goto :goto_4
+
+    .end local v5           #stackedLink:Landroid/net/LinkProperties;
+    :cond_5
+    return-object v4
+
+    .end local v2           #i$:Ljava/util/Iterator;
+    .end local v6           #stackedLinks:Ljava/util/ArrayList;,"Ljava/util/ArrayList<Landroid/net/LinkProperties;>;"
+    :catch_0
+    move-exception v7
+
+    goto :goto_2
 .end method
 
 .method public bridge synthetic createFromParcel(Landroid/os/Parcel;)Ljava/lang/Object;

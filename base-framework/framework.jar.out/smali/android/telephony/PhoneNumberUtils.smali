@@ -1314,7 +1314,7 @@
     :cond_4
     const-string v5, "checkAndProcessPlusCode: null newDialStr"
 
-    invoke-static {v5, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v5, v1}, Landroid/telephony/Rlog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     goto :goto_3
 
@@ -1327,7 +1327,7 @@
     :cond_6
     const-string v5, "wrong postDialStr="
 
-    invoke-static {v5, v2}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v5, v2}, Landroid/telephony/Rlog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     goto :goto_1
 
@@ -1338,9 +1338,69 @@
     :cond_7
     const-string v5, "checkAndProcessPlusCode:non-NANP not supported"
 
-    invoke-static {v5, p0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v5, p0}, Landroid/telephony/Rlog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     goto :goto_2
+.end method
+
+.method public static cdmaCheckAndProcessPlusCodeForSms(Ljava/lang/String;)Ljava/lang/String;
+    .locals 4
+    .parameter "dialStr"
+
+    .prologue
+    invoke-static {p0}, Landroid/text/TextUtils;->isEmpty(Ljava/lang/CharSequence;)Z
+
+    move-result v2
+
+    if-nez v2, :cond_0
+
+    const/4 v2, 0x0
+
+    invoke-virtual {p0, v2}, Ljava/lang/String;->charAt(I)C
+
+    move-result v2
+
+    invoke-static {v2}, Landroid/telephony/PhoneNumberUtils;->isReallyDialable(C)Z
+
+    move-result v2
+
+    if-eqz v2, :cond_0
+
+    invoke-static {p0}, Landroid/telephony/PhoneNumberUtils;->isNonSeparator(Ljava/lang/String;)Z
+
+    move-result v2
+
+    if-eqz v2, :cond_0
+
+    const-string v2, "gsm.sim.operator.iso-country"
+
+    const-string v3, ""
+
+    invoke-static {v2, v3}, Landroid/os/SystemProperties;->get(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v0
+
+    .local v0, defaultIso:Ljava/lang/String;
+    invoke-static {v0}, Landroid/text/TextUtils;->isEmpty(Ljava/lang/CharSequence;)Z
+
+    move-result v2
+
+    if-nez v2, :cond_0
+
+    invoke-static {v0}, Landroid/telephony/PhoneNumberUtils;->getFormatTypeFromCountryCode(Ljava/lang/String;)I
+
+    move-result v1
+
+    .local v1, format:I
+    invoke-static {p0, v1, v1}, Landroid/telephony/PhoneNumberUtils;->cdmaCheckAndProcessPlusCodeByNumberFormat(Ljava/lang/String;II)Ljava/lang/String;
+
+    move-result-object p0
+
+    .end local v0           #defaultIso:Ljava/lang/String;
+    .end local v1           #format:I
+    .end local p0
+    :cond_0
+    return-object p0
 .end method
 
 .method private static charToBCD(C)I
@@ -1491,7 +1551,7 @@
 
     move-result-object v1
 
-    const v2, 0x1110023
+    const v2, 0x1110026
 
     invoke-virtual {v1, v2}, Landroid/content/res/Resources;->getBoolean(I)Z
 
@@ -3488,6 +3548,13 @@
     move-result-object v1
 
     .local v1, uri:Landroid/net/Uri;
+    if-nez v1, :cond_1
+
+    :cond_0
+    :goto_0
+    return-object v3
+
+    :cond_1
     invoke-virtual {v1}, Landroid/net/Uri;->getScheme()Ljava/lang/String;
 
     move-result-object v10
@@ -3499,7 +3566,7 @@
 
     move-result v0
 
-    if-nez v0, :cond_0
+    if-nez v0, :cond_2
 
     const-string v0, "sip"
 
@@ -3507,25 +3574,23 @@
 
     move-result v0
 
-    if-eqz v0, :cond_2
+    if-eqz v0, :cond_3
 
-    :cond_0
+    :cond_2
     invoke-virtual {v1}, Landroid/net/Uri;->getSchemeSpecificPart()Ljava/lang/String;
 
     move-result-object v3
 
-    :cond_1
-    :goto_0
-    return-object v3
+    goto :goto_0
 
-    :cond_2
+    :cond_3
     const-string v0, "voicemail"
 
     invoke-virtual {v10, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
     move-result v0
 
-    if-eqz v0, :cond_3
+    if-eqz v0, :cond_4
 
     invoke-static {}, Landroid/telephony/TelephonyManager;->getDefault()Landroid/telephony/TelephonyManager;
 
@@ -3537,8 +3602,8 @@
 
     goto :goto_0
 
-    :cond_3
-    if-eqz p1, :cond_1
+    :cond_4
+    if-eqz p1, :cond_0
 
     invoke-virtual {p0, p1}, Landroid/content/Intent;->resolveType(Landroid/content/Context;)Ljava/lang/String;
 
@@ -3559,11 +3624,11 @@
 
     move-result v0
 
-    if-eqz v0, :cond_7
+    if-eqz v0, :cond_8
 
     const-string v9, "number"
 
-    :cond_4
+    :cond_5
     :goto_1
     invoke-virtual {p1}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
 
@@ -3586,14 +3651,14 @@
     move-result-object v7
 
     .local v7, c:Landroid/database/Cursor;
-    if-eqz v7, :cond_6
+    if-eqz v7, :cond_7
 
     :try_start_0
     invoke-interface {v7}, Landroid/database/Cursor;->moveToFirst()Z
 
     move-result v0
 
-    if-eqz v0, :cond_5
+    if-eqz v0, :cond_6
 
     invoke-interface {v7, v9}, Landroid/database/Cursor;->getColumnIndex(Ljava/lang/String;)I
 
@@ -3605,23 +3670,23 @@
 
     move-result-object v8
 
-    :cond_5
+    :cond_6
     invoke-interface {v7}, Landroid/database/Cursor;->close()V
 
-    :cond_6
+    :cond_7
     move-object v3, v8
 
     goto :goto_0
 
     .end local v7           #c:Landroid/database/Cursor;
-    :cond_7
+    :cond_8
     const-string v0, "com.android.contacts"
 
     invoke-virtual {v0, v6}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
     move-result v0
 
-    if-eqz v0, :cond_4
+    if-eqz v0, :cond_5
 
     const-string v9, "data1"
 
@@ -3714,7 +3779,7 @@
 
     move-result-object v2
 
-    invoke-static {v1, v2}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v1, v2}, Landroid/telephony/Rlog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
     invoke-virtual {p0}, Ljava/lang/String;->length()I
 
@@ -4193,7 +4258,7 @@
 
     const-string v9, "System property doesn\'t provide any emergency numbers. Use embedded logic for determining ones."
 
-    invoke-static {v8, v9}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v8, v9}, Landroid/telephony/Rlog;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     if-eqz p1, :cond_8
 
@@ -4372,6 +4437,12 @@
 
     move-result-object v3
 
+    if-eqz v3, :cond_0
+
+    invoke-virtual {v1}, Landroid/location/CountryDetector;->detectCountry()Landroid/location/Country;
+
+    move-result-object v3
+
     invoke-virtual {v3}, Landroid/location/Country;->getCountryIso()Ljava/lang/String;
 
     move-result-object v0
@@ -4422,7 +4493,7 @@
 
     move-result-object v4
 
-    invoke-static {v3, v4}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v3, v4}, Landroid/telephony/Rlog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
     goto :goto_0
 .end method
@@ -4508,7 +4579,7 @@
     :cond_2
     const-string v3, "isNanp: null dialStr passed in"
 
-    invoke-static {v3, p0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v3, p0}, Landroid/telephony/Rlog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     goto :goto_1
 .end method
@@ -4648,7 +4719,7 @@
     :cond_1
     const-string v2, "isOneNanp: null dialStr passed in"
 
-    invoke-static {v2, p0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v2, p0}, Landroid/telephony/Rlog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     goto :goto_0
 .end method
@@ -5006,7 +5077,7 @@
     .prologue
     const-string v0, "PhoneNumberUtils"
 
-    invoke-static {v0, p0}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v0, p0}, Landroid/telephony/Rlog;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     return-void
 .end method

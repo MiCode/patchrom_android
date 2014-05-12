@@ -31,6 +31,35 @@
 
 
 # direct methods
+.method protected constructor <init>()V
+    .locals 2
+
+    .prologue
+    const/4 v1, 0x0
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    new-instance v0, Ljava/util/concurrent/atomic/AtomicBoolean;
+
+    invoke-direct {v0, v1}, Ljava/util/concurrent/atomic/AtomicBoolean;-><init>(Z)V
+
+    iput-object v0, p0, Landroid/net/BaseNetworkStateTracker;->mTeardownRequested:Ljava/util/concurrent/atomic/AtomicBoolean;
+
+    new-instance v0, Ljava/util/concurrent/atomic/AtomicBoolean;
+
+    invoke-direct {v0, v1}, Ljava/util/concurrent/atomic/AtomicBoolean;-><init>(Z)V
+
+    iput-object v0, p0, Landroid/net/BaseNetworkStateTracker;->mPrivateDnsRouteSet:Ljava/util/concurrent/atomic/AtomicBoolean;
+
+    new-instance v0, Ljava/util/concurrent/atomic/AtomicBoolean;
+
+    invoke-direct {v0, v1}, Ljava/util/concurrent/atomic/AtomicBoolean;-><init>(Z)V
+
+    iput-object v0, p0, Landroid/net/BaseNetworkStateTracker;->mDefaultRouteSet:Ljava/util/concurrent/atomic/AtomicBoolean;
+
+    return-void
+.end method
+
 .method public constructor <init>(I)V
     .locals 4
     .parameter "networkType"
@@ -89,8 +118,28 @@
 
 
 # virtual methods
+.method public addStackedLink(Landroid/net/LinkProperties;)V
+    .locals 1
+    .parameter "link"
+
+    .prologue
+    iget-object v0, p0, Landroid/net/BaseNetworkStateTracker;->mLinkProperties:Landroid/net/LinkProperties;
+
+    invoke-virtual {v0, p1}, Landroid/net/LinkProperties;->addStackedLink(Landroid/net/LinkProperties;)Z
+
+    return-void
+.end method
+
 .method public captivePortalCheckComplete()V
     .locals 0
+
+    .prologue
+    return-void
+.end method
+
+.method public captivePortalCheckCompleted(Z)V
+    .locals 0
+    .parameter "isCaptivePortal"
 
     .prologue
     return-void
@@ -114,7 +163,7 @@
     .prologue
     iget-object v0, p0, Landroid/net/BaseNetworkStateTracker;->mTarget:Landroid/os/Handler;
 
-    const/4 v1, 0x3
+    const v1, 0x70001
 
     invoke-virtual {p0}, Landroid/net/BaseNetworkStateTracker;->getNetworkInfo()Landroid/net/NetworkInfo;
 
@@ -135,7 +184,7 @@
     .prologue
     iget-object v0, p0, Landroid/net/BaseNetworkStateTracker;->mTarget:Landroid/os/Handler;
 
-    const/4 v1, 0x1
+    const/high16 v1, 0x7
 
     invoke-virtual {p0}, Landroid/net/BaseNetworkStateTracker;->getNetworkInfo()Landroid/net/NetworkInfo;
 
@@ -150,7 +199,7 @@
     return-void
 .end method
 
-.method public final getLinkCapabilities()Landroid/net/LinkCapabilities;
+.method public getLinkCapabilities()Landroid/net/LinkCapabilities;
     .locals 2
 
     .prologue
@@ -163,7 +212,7 @@
     return-object v0
 .end method
 
-.method public final getLinkProperties()Landroid/net/LinkProperties;
+.method public getLinkProperties()Landroid/net/LinkProperties;
     .locals 2
 
     .prologue
@@ -176,7 +225,16 @@
     return-object v0
 .end method
 
-.method public final getNetworkInfo()Landroid/net/NetworkInfo;
+.method public getLinkQualityInfo()Landroid/net/LinkQualityInfo;
+    .locals 1
+
+    .prologue
+    const/4 v0, 0x0
+
+    return-object v0
+.end method
+
+.method public getNetworkInfo()Landroid/net/NetworkInfo;
     .locals 2
 
     .prologue
@@ -187,6 +245,29 @@
     invoke-direct {v0, v1}, Landroid/net/NetworkInfo;-><init>(Landroid/net/NetworkInfo;)V
 
     return-object v0
+.end method
+
+.method public getNetworkInterfaceName()Ljava/lang/String;
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Landroid/net/BaseNetworkStateTracker;->mLinkProperties:Landroid/net/LinkProperties;
+
+    if-eqz v0, :cond_0
+
+    iget-object v0, p0, Landroid/net/BaseNetworkStateTracker;->mLinkProperties:Landroid/net/LinkProperties;
+
+    invoke-virtual {v0}, Landroid/net/LinkProperties;->getInterfaceName()Ljava/lang/String;
+
+    move-result-object v0
+
+    :goto_0
+    return-object v0
+
+    :cond_0
+    const/4 v0, 0x0
+
+    goto :goto_0
 .end method
 
 .method protected getTargetHandler()Landroid/os/Handler;
@@ -264,6 +345,18 @@
     return-void
 .end method
 
+.method public removeStackedLink(Landroid/net/LinkProperties;)V
+    .locals 1
+    .parameter "link"
+
+    .prologue
+    iget-object v0, p0, Landroid/net/BaseNetworkStateTracker;->mLinkProperties:Landroid/net/LinkProperties;
+
+    invoke-virtual {v0, p1}, Landroid/net/LinkProperties;->removeStackedLink(Landroid/net/LinkProperties;)Z
+
+    return-void
+.end method
+
 .method public setDependencyMet(Z)V
     .locals 0
     .parameter "met"
@@ -310,7 +403,7 @@
     return-void
 .end method
 
-.method public final startMonitoring(Landroid/content/Context;Landroid/os/Handler;)V
+.method public startMonitoring(Landroid/content/Context;Landroid/os/Handler;)V
     .locals 1
     .parameter "context"
     .parameter "target"
@@ -337,5 +430,33 @@
     return-void
 .end method
 
-.method protected abstract startMonitoringInternal()V
+.method protected startMonitoringInternal()V
+    .locals 0
+
+    .prologue
+    return-void
+.end method
+
+.method public startSampling(Landroid/net/SamplingDataTracker$SamplingSnapshot;)V
+    .locals 0
+    .parameter "s"
+
+    .prologue
+    return-void
+.end method
+
+.method public stopSampling(Landroid/net/SamplingDataTracker$SamplingSnapshot;)V
+    .locals 0
+    .parameter "s"
+
+    .prologue
+    return-void
+.end method
+
+.method public supplyMessenger(Landroid/os/Messenger;)V
+    .locals 0
+    .parameter "messenger"
+
+    .prologue
+    return-void
 .end method

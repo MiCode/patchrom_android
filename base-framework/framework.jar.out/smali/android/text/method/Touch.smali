@@ -866,7 +866,7 @@
     sub-int v3, v10, v8
 
     .local v3, actualWidth:I
-    if-ge v3, v4, :cond_7
+    if-ge v3, v4, :cond_8
 
     sget-object v13, Landroid/text/Layout$Alignment;->ALIGN_CENTER:Landroid/text/Layout$Alignment;
 
@@ -892,26 +892,33 @@
 
     sget-object v13, Landroid/text/Layout$Alignment;->ALIGN_OPPOSITE:Landroid/text/Layout$Alignment;
 
-    if-eq v2, v13, :cond_5
+    if-eq v2, v13, :cond_6
 
     :cond_4
-    sget-object v13, Landroid/text/Layout$Alignment;->ALIGN_RIGHT:Landroid/text/Layout$Alignment;
+    if-nez v9, :cond_5
 
-    if-ne v2, v13, :cond_6
+    sget-object v13, Landroid/text/Layout$Alignment;->ALIGN_NORMAL:Landroid/text/Layout$Alignment;
+
+    if-eq v2, v13, :cond_6
 
     :cond_5
+    sget-object v13, Landroid/text/Layout$Alignment;->ALIGN_RIGHT:Landroid/text/Layout$Alignment;
+
+    if-ne v2, v13, :cond_7
+
+    :cond_6
     sub-int v13, v4, v3
 
     sub-int p2, v8, v13
 
     goto :goto_2
 
-    :cond_6
+    :cond_7
     move/from16 p2, v8
 
     goto :goto_2
 
-    :cond_7
+    :cond_8
     sub-int v13, v10, v4
 
     move/from16 v0, p2

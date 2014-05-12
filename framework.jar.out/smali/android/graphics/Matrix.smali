@@ -272,12 +272,18 @@
     .parameter "obj"
 
     .prologue
-    if-eqz p1, :cond_0
-
     instance-of v0, p1, Landroid/graphics/Matrix;
 
-    if-eqz v0, :cond_0
+    if-nez v0, :cond_0
 
+    const/4 v0, 0x0
+
+    .end local p1
+    :goto_0
+    return v0
+
+    .restart local p1
+    :cond_0
     iget v0, p0, Landroid/graphics/Matrix;->native_instance:I
 
     check-cast p1, Landroid/graphics/Matrix;
@@ -288,16 +294,6 @@
     invoke-static {v0, v1}, Landroid/graphics/Matrix;->native_equals(II)Z
 
     move-result v0
-
-    if-eqz v0, :cond_0
-
-    const/4 v0, 0x1
-
-    :goto_0
-    return v0
-
-    :cond_0
-    const/4 v0, 0x0
 
     goto :goto_0
 .end method
@@ -311,11 +307,23 @@
     .end annotation
 
     .prologue
+    :try_start_0
     iget v0, p0, Landroid/graphics/Matrix;->native_instance:I
 
     invoke-static {v0}, Landroid/graphics/Matrix;->finalizer(I)V
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    invoke-super {p0}, Ljava/lang/Object;->finalize()V
 
     return-void
+
+    :catchall_0
+    move-exception v0
+
+    invoke-super {p0}, Ljava/lang/Object;->finalize()V
+
+    throw v0
 .end method
 
 .method public getValues([F)V
@@ -341,6 +349,15 @@
     invoke-static {v0, p1}, Landroid/graphics/Matrix;->native_getValues(I[F)V
 
     return-void
+.end method
+
+.method public hashCode()I
+    .locals 1
+
+    .prologue
+    const/16 v0, 0x2c
+
+    return v0
 .end method
 
 .method public invert(Landroid/graphics/Matrix;)Z

@@ -1,4 +1,4 @@
-.class Lcom/android/server/am/StrictModeViolationDialog;
+.class final Lcom/android/server/am/StrictModeViolationDialog;
 .super Lcom/android/server/am/BaseErrorDialog;
 .source "StrictModeViolationDialog.java"
 
@@ -55,9 +55,9 @@
 
     iput-object p3, p0, Lcom/android/server/am/StrictModeViolationDialog;->mResult:Lcom/android/server/am/AppErrorResult;
 
-    iget-object v2, p4, Lcom/android/server/am/ProcessRecord;->pkgList:Ljava/util/HashSet;
+    iget-object v2, p4, Lcom/android/server/am/ProcessRecord;->pkgList:Landroid/util/ArrayMap;
 
-    invoke-virtual {v2}, Ljava/util/HashSet;->size()I
+    invoke-virtual {v2}, Landroid/util/ArrayMap;->size()I
 
     move-result v2
 
@@ -76,7 +76,7 @@
     .local v0, name:Ljava/lang/CharSequence;
     if-eqz v0, :cond_1
 
-    const v2, 0x10403e5
+    const v2, 0x104040e
 
     const/4 v3, 0x2
 
@@ -105,7 +105,7 @@
 
     const/4 v2, -0x1
 
-    const v3, 0x1040447
+    const v3, 0x1040470
 
     invoke-virtual {v1, v3}, Landroid/content/res/Resources;->getText(I)Ljava/lang/CharSequence;
 
@@ -125,7 +125,7 @@
 
     const/4 v2, -0x2
 
-    const v3, 0x10403dc
+    const v3, 0x1040405
 
     invoke-virtual {v1, v3}, Landroid/content/res/Resources;->getText(I)Ljava/lang/CharSequence;
 
@@ -140,7 +140,7 @@
     invoke-virtual {p0, v2, v3, v4}, Lcom/android/server/am/StrictModeViolationDialog;->setButton(ILjava/lang/CharSequence;Landroid/os/Message;)V
 
     :cond_0
-    const v2, 0x10403d3
+    const v2, 0x10403fc
 
     invoke-virtual {v1, v2}, Landroid/content/res/Resources;->getText(I)Ljava/lang/CharSequence;
 
@@ -152,9 +152,9 @@
 
     move-result-object v2
 
-    const/high16 v3, 0x4000
+    const/16 v3, 0x100
 
-    invoke-virtual {v2, v3}, Landroid/view/Window;->addFlags(I)V
+    invoke-virtual {v2, v3}, Landroid/view/Window;->addPrivateFlags(I)V
 
     invoke-virtual {p0}, Lcom/android/server/am/StrictModeViolationDialog;->getWindow()Landroid/view/Window;
 
@@ -203,7 +203,7 @@
     iget-object v0, p4, Lcom/android/server/am/ProcessRecord;->processName:Ljava/lang/String;
 
     .restart local v0       #name:Ljava/lang/CharSequence;
-    const v2, 0x10403e6
+    const v2, 0x104040f
 
     new-array v3, v6, [Ljava/lang/Object;
 

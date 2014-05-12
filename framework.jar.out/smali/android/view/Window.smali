@@ -222,6 +222,41 @@
     goto :goto_0
 .end method
 
+.method private setPrivateFlags(II)V
+    .locals 3
+    .parameter "flags"
+    .parameter "mask"
+
+    .prologue
+    invoke-virtual {p0}, Landroid/view/Window;->getAttributes()Landroid/view/WindowManager$LayoutParams;
+
+    move-result-object v0
+
+    .local v0, attrs:Landroid/view/WindowManager$LayoutParams;
+    iget v1, v0, Landroid/view/WindowManager$LayoutParams;->privateFlags:I
+
+    xor-int/lit8 v2, p2, -0x1
+
+    and-int/2addr v1, v2
+
+    and-int v2, p1, p2
+
+    or-int/2addr v1, v2
+
+    iput v1, v0, Landroid/view/WindowManager$LayoutParams;->privateFlags:I
+
+    iget-object v1, p0, Landroid/view/Window;->mCallback:Landroid/view/Window$Callback;
+
+    if-eqz v1, :cond_0
+
+    iget-object v1, p0, Landroid/view/Window;->mCallback:Landroid/view/Window$Callback;
+
+    invoke-interface {v1, v0}, Landroid/view/Window$Callback;->onWindowAttributesChanged(Landroid/view/WindowManager$LayoutParams;)V
+
+    :cond_0
+    return-void
+.end method
+
 
 # virtual methods
 .method public abstract addContentView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
@@ -243,6 +278,16 @@
 
     .prologue
     invoke-virtual {p0, p1, p1}, Landroid/view/Window;->setFlags(II)V
+
+    return-void
+.end method
+
+.method public addPrivateFlags(I)V
+    .locals 0
+    .parameter "flags"
+
+    .prologue
+    invoke-direct {p0, p1, p1}, Landroid/view/Window;->setPrivateFlags(II)V
 
     return-void
 .end method
@@ -483,7 +528,7 @@
     const/4 v0, 0x0
 
     invoke-virtual {p0, v0, p1}, Landroid/view/Window;->setExtraFlags(II)V
-    
+
     return-void
 .end method
 
@@ -705,6 +750,14 @@
     iget-boolean v0, p0, Landroid/view/Window;->mHaveDimAmount:Z
 
     return v0
+.end method
+
+.method public injectInputEvent(Landroid/view/InputEvent;)V
+    .locals 0
+    .parameter "event"
+
+    .prologue
+    return-void
 .end method
 
 .method public abstract invalidatePanelMenu(I)V
@@ -1040,6 +1093,22 @@
 .method public abstract setContentView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 .end method
 
+.method public setDefaultIcon(I)V
+    .locals 0
+    .parameter "resId"
+
+    .prologue
+    return-void
+.end method
+
+.method public setDefaultLogo(I)V
+    .locals 0
+    .parameter "resId"
+
+    .prologue
+    return-void
+.end method
+
 .method protected setDefaultWindowFormat(I)V
     .locals 2
     .parameter "format"
@@ -1114,41 +1183,6 @@
 .method public abstract setFeatureInt(II)V
 .end method
 
-.method public setExtraFlags(II)V
-    .locals 3
-    .parameter "flags"
-    .parameter "mask"
-
-    .prologue
-    invoke-virtual {p0}, Landroid/view/Window;->getAttributes()Landroid/view/WindowManager$LayoutParams;
-
-    move-result-object v0
-
-    .local v0, attrs:Landroid/view/WindowManager$LayoutParams;
-    iget v1, v0, Landroid/view/WindowManager$LayoutParams;->extraFlags:I
-
-    xor-int/lit8 v2, p2, -0x1
-
-    and-int/2addr v1, v2
-
-    and-int v2, p1, p2
-
-    or-int/2addr v1, v2
-
-    iput v1, v0, Landroid/view/WindowManager$LayoutParams;->extraFlags:I
-
-    iget-object v1, p0, Landroid/view/Window;->mCallback:Landroid/view/Window$Callback;
-
-    if-eqz v1, :cond_0
-
-    iget-object v1, p0, Landroid/view/Window;->mCallback:Landroid/view/Window$Callback;
-
-    invoke-interface {v1, v0}, Landroid/view/Window$Callback;->onWindowAttributesChanged(Landroid/view/WindowManager$LayoutParams;)V
-
-    :cond_0
-    return-void
-.end method
-
 .method public setFlags(II)V
     .locals 3
     .parameter "flags"
@@ -1172,7 +1206,7 @@
 
     iput v1, v0, Landroid/view/WindowManager$LayoutParams;->flags:I
 
-    const/high16 v1, 0x800
+    const/high16 v1, 0x4000
 
     and-int/2addr v1, p2
 
@@ -1269,6 +1303,14 @@
     return-void
 .end method
 
+.method public setIcon(I)V
+    .locals 0
+    .parameter "resId"
+
+    .prologue
+    return-void
+.end method
+
 .method public setLayout(II)V
     .locals 2
     .parameter "width"
@@ -1293,6 +1335,23 @@
     invoke-interface {v1, v0}, Landroid/view/Window$Callback;->onWindowAttributesChanged(Landroid/view/WindowManager$LayoutParams;)V
 
     :cond_0
+    return-void
+.end method
+
+.method public setLocalFocus(ZZ)V
+    .locals 0
+    .parameter "hasFocus"
+    .parameter "inTouchMode"
+
+    .prologue
+    return-void
+.end method
+
+.method public setLogo(I)V
+    .locals 0
+    .parameter "resId"
+
+    .prologue
     return-void
 .end method
 
@@ -1543,4 +1602,39 @@
 .end method
 
 .method public abstract togglePanel(ILandroid/view/KeyEvent;)V
+.end method
+
+.method public setExtraFlags(II)V
+    .locals 3
+    .parameter "flags"
+    .parameter "mask"
+
+    .prologue
+    invoke-virtual {p0}, Landroid/view/Window;->getAttributes()Landroid/view/WindowManager$LayoutParams;
+
+    move-result-object v0
+
+    .local v0, attrs:Landroid/view/WindowManager$LayoutParams;
+    iget v1, v0, Landroid/view/WindowManager$LayoutParams;->extraFlags:I
+
+    xor-int/lit8 v2, p2, -0x1
+
+    and-int/2addr v1, v2
+
+    and-int v2, p1, p2
+
+    or-int/2addr v1, v2
+
+    iput v1, v0, Landroid/view/WindowManager$LayoutParams;->extraFlags:I
+
+    iget-object v1, p0, Landroid/view/Window;->mCallback:Landroid/view/Window$Callback;
+
+    if-eqz v1, :cond_0
+
+    iget-object v1, p0, Landroid/view/Window;->mCallback:Landroid/view/Window$Callback;
+
+    invoke-interface {v1, v0}, Landroid/view/Window$Callback;->onWindowAttributesChanged(Landroid/view/WindowManager$LayoutParams;)V
+
+    :cond_0
+    return-void
 .end method

@@ -10,6 +10,10 @@
 
 .field public static final DEFAULT_DISPLAY:I = 0x0
 
+.field public static final FLAG_PRESENTATION:I = 0x8
+
+.field public static final FLAG_PRIVATE:I = 0x4
+
 .field public static final FLAG_SECURE:I = 0x2
 
 .field public static final FLAG_SUPPORTS_PROTECTED_BUFFERS:I = 0x1
@@ -24,6 +28,8 @@
 
 .field public static final TYPE_UNKNOWN:I = 0x0
 
+.field public static final TYPE_VIRTUAL:I = 0x5
+
 .field public static final TYPE_WIFI:I = 0x3
 
 
@@ -34,7 +40,7 @@
 
 .field private mCachedAppWidthCompat:I
 
-.field private final mCompatibilityInfo:Landroid/view/CompatibilityInfoHolder;
+.field private final mDisplayAdjustments:Landroid/view/DisplayAdjustments;
 
 .field private final mDisplayId:I
 
@@ -50,18 +56,22 @@
 
 .field private final mLayerStack:I
 
+.field private final mOwnerPackageName:Ljava/lang/String;
+
+.field private final mOwnerUid:I
+
 .field private final mTempMetrics:Landroid/util/DisplayMetrics;
 
 .field private final mType:I
 
 
 # direct methods
-.method public constructor <init>(Landroid/hardware/display/DisplayManagerGlobal;ILandroid/view/DisplayInfo;Landroid/view/CompatibilityInfoHolder;)V
+.method public constructor <init>(Landroid/hardware/display/DisplayManagerGlobal;ILandroid/view/DisplayInfo;Landroid/view/DisplayAdjustments;)V
     .locals 1
     .parameter "global"
     .parameter "displayId"
     .parameter "displayInfo"
-    .parameter "compatibilityInfo"
+    .parameter "daj"
 
     .prologue
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -78,7 +88,11 @@
 
     iput-object p3, p0, Landroid/view/Display;->mDisplayInfo:Landroid/view/DisplayInfo;
 
-    iput-object p4, p0, Landroid/view/Display;->mCompatibilityInfo:Landroid/view/CompatibilityInfoHolder;
+    new-instance v0, Landroid/view/DisplayAdjustments;
+
+    invoke-direct {v0, p4}, Landroid/view/DisplayAdjustments;-><init>(Landroid/view/DisplayAdjustments;)V
+
+    iput-object v0, p0, Landroid/view/Display;->mDisplayAdjustments:Landroid/view/DisplayAdjustments;
 
     const/4 v0, 0x1
 
@@ -100,7 +114,46 @@
 
     iput-object v0, p0, Landroid/view/Display;->mAddress:Ljava/lang/String;
 
+    iget v0, p3, Landroid/view/DisplayInfo;->ownerUid:I
+
+    iput v0, p0, Landroid/view/Display;->mOwnerUid:I
+
+    iget-object v0, p3, Landroid/view/DisplayInfo;->ownerPackageName:Ljava/lang/String;
+
+    iput-object v0, p0, Landroid/view/Display;->mOwnerPackageName:Ljava/lang/String;
+
     return-void
+.end method
+
+.method public static hasAccess(III)Z
+    .locals 1
+    .parameter "uid"
+    .parameter "flags"
+    .parameter "ownerUid"
+
+    .prologue
+    and-int/lit8 v0, p1, 0x4
+
+    if-eqz v0, :cond_0
+
+    if-eq p0, p2, :cond_0
+
+    const/16 v0, 0x3e8
+
+    if-eq p0, v0, :cond_0
+
+    if-nez p0, :cond_1
+
+    :cond_0
+    const/4 v0, 0x1
+
+    :goto_0
+    return v0
+
+    :cond_1
+    const/4 v0, 0x0
+
+    goto :goto_0
 .end method
 
 .method public static typeToString(I)Ljava/lang/String;
@@ -142,7 +195,10 @@
 
     goto :goto_0
 
-    nop
+    :pswitch_5
+    const-string v0, "VIRTUAL"
+
+    goto :goto_0
 
     :pswitch_data_0
     .packed-switch 0x0
@@ -151,6 +207,7 @@
         :pswitch_2
         :pswitch_3
         :pswitch_4
+        :pswitch_5
     .end packed-switch
 .end method
 
@@ -179,9 +236,9 @@
 
     iget-object v3, p0, Landroid/view/Display;->mTempMetrics:Landroid/util/DisplayMetrics;
 
-    iget-object v4, p0, Landroid/view/Display;->mCompatibilityInfo:Landroid/view/CompatibilityInfoHolder;
+    iget-object v4, p0, Landroid/view/Display;->mDisplayAdjustments:Landroid/view/DisplayAdjustments;
 
-    invoke-virtual {v2, v3, v4}, Landroid/view/DisplayInfo;->getAppMetrics(Landroid/util/DisplayMetrics;Landroid/view/CompatibilityInfoHolder;)V
+    invoke-virtual {v2, v3, v4}, Landroid/view/DisplayInfo;->getAppMetrics(Landroid/util/DisplayMetrics;Landroid/view/DisplayAdjustments;)V
 
     iget-object v2, p0, Landroid/view/Display;->mTempMetrics:Landroid/util/DisplayMetrics;
 
@@ -253,15 +310,6 @@
     return-object v0
 .end method
 
-.method public getCompatibilityInfo()Landroid/view/CompatibilityInfoHolder;
-    .locals 1
-
-    .prologue
-    iget-object v0, p0, Landroid/view/Display;->mCompatibilityInfo:Landroid/view/CompatibilityInfoHolder;
-
-    return-object v0
-.end method
-
 .method public getCurrentSizeRange(Landroid/graphics/Point;Landroid/graphics/Point;)V
     .locals 1
     .parameter "outSmallestSize"
@@ -309,6 +357,15 @@
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
     throw v0
+.end method
+
+.method public getDisplayAdjustments()Landroid/view/DisplayAdjustments;
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Landroid/view/Display;->mDisplayAdjustments:Landroid/view/DisplayAdjustments;
+
+    return-object v0
 .end method
 
 .method public getDisplayId()I
@@ -442,9 +499,9 @@
 
     iget-object v0, p0, Landroid/view/Display;->mDisplayInfo:Landroid/view/DisplayInfo;
 
-    iget-object v1, p0, Landroid/view/Display;->mCompatibilityInfo:Landroid/view/CompatibilityInfoHolder;
+    iget-object v1, p0, Landroid/view/Display;->mDisplayAdjustments:Landroid/view/DisplayAdjustments;
 
-    invoke-virtual {v0, p1, v1}, Landroid/view/DisplayInfo;->getAppMetrics(Landroid/util/DisplayMetrics;Landroid/view/CompatibilityInfoHolder;)V
+    invoke-virtual {v0, p1, v1}, Landroid/view/DisplayInfo;->getAppMetrics(Landroid/util/DisplayMetrics;Landroid/view/DisplayAdjustments;)V
 
     monitor-exit p0
 
@@ -500,6 +557,66 @@
     return v0
 .end method
 
+.method public getOverscanInsets(Landroid/graphics/Rect;)V
+    .locals 4
+    .parameter "outRect"
+
+    .prologue
+    monitor-enter p0
+
+    :try_start_0
+    invoke-direct {p0}, Landroid/view/Display;->updateDisplayInfoLocked()V
+
+    iget-object v0, p0, Landroid/view/Display;->mDisplayInfo:Landroid/view/DisplayInfo;
+
+    iget v0, v0, Landroid/view/DisplayInfo;->overscanLeft:I
+
+    iget-object v1, p0, Landroid/view/Display;->mDisplayInfo:Landroid/view/DisplayInfo;
+
+    iget v1, v1, Landroid/view/DisplayInfo;->overscanTop:I
+
+    iget-object v2, p0, Landroid/view/Display;->mDisplayInfo:Landroid/view/DisplayInfo;
+
+    iget v2, v2, Landroid/view/DisplayInfo;->overscanRight:I
+
+    iget-object v3, p0, Landroid/view/Display;->mDisplayInfo:Landroid/view/DisplayInfo;
+
+    iget v3, v3, Landroid/view/DisplayInfo;->overscanBottom:I
+
+    invoke-virtual {p1, v0, v1, v2, v3}, Landroid/graphics/Rect;->set(IIII)V
+
+    monitor-exit p0
+
+    return-void
+
+    :catchall_0
+    move-exception v0
+
+    monitor-exit p0
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    throw v0
+.end method
+
+.method public getOwnerPackageName()Ljava/lang/String;
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Landroid/view/Display;->mOwnerPackageName:Ljava/lang/String;
+
+    return-object v0
+.end method
+
+.method public getOwnerUid()I
+    .locals 1
+
+    .prologue
+    iget v0, p0, Landroid/view/Display;->mOwnerUid:I
+
+    return v0
+.end method
+
 .method public getPixelFormat()I
     .locals 1
     .annotation runtime Ljava/lang/Deprecated;
@@ -512,7 +629,7 @@
 .end method
 
 .method public getRealMetrics(Landroid/util/DisplayMetrics;)V
-    .locals 2
+    .locals 3
     .parameter "outMetrics"
 
     .prologue
@@ -523,9 +640,15 @@
 
     iget-object v0, p0, Landroid/view/Display;->mDisplayInfo:Landroid/view/DisplayInfo;
 
-    const/4 v1, 0x0
+    sget-object v1, Landroid/content/res/CompatibilityInfo;->DEFAULT_COMPATIBILITY_INFO:Landroid/content/res/CompatibilityInfo;
 
-    invoke-virtual {v0, p1, v1}, Landroid/view/DisplayInfo;->getLogicalMetrics(Landroid/util/DisplayMetrics;Landroid/view/CompatibilityInfoHolder;)V
+    iget-object v2, p0, Landroid/view/Display;->mDisplayAdjustments:Landroid/view/DisplayAdjustments;
+
+    invoke-virtual {v2}, Landroid/view/DisplayAdjustments;->getActivityToken()Landroid/os/IBinder;
+
+    move-result-object v2
+
+    invoke-virtual {v0, p1, v1, v2}, Landroid/view/DisplayInfo;->getLogicalMetrics(Landroid/util/DisplayMetrics;Landroid/content/res/CompatibilityInfo;Landroid/os/IBinder;)V
 
     monitor-exit p0
 
@@ -591,9 +714,9 @@
 
     iget-object v1, p0, Landroid/view/Display;->mTempMetrics:Landroid/util/DisplayMetrics;
 
-    iget-object v2, p0, Landroid/view/Display;->mCompatibilityInfo:Landroid/view/CompatibilityInfoHolder;
+    iget-object v2, p0, Landroid/view/Display;->mDisplayAdjustments:Landroid/view/DisplayAdjustments;
 
-    invoke-virtual {v0, v1, v2}, Landroid/view/DisplayInfo;->getAppMetrics(Landroid/util/DisplayMetrics;Landroid/view/CompatibilityInfoHolder;)V
+    invoke-virtual {v0, v1, v2}, Landroid/view/DisplayInfo;->getAppMetrics(Landroid/util/DisplayMetrics;Landroid/view/DisplayAdjustments;)V
 
     const/4 v0, 0x0
 
@@ -691,9 +814,9 @@
 
     iget-object v1, p0, Landroid/view/Display;->mTempMetrics:Landroid/util/DisplayMetrics;
 
-    iget-object v2, p0, Landroid/view/Display;->mCompatibilityInfo:Landroid/view/CompatibilityInfoHolder;
+    iget-object v2, p0, Landroid/view/Display;->mDisplayAdjustments:Landroid/view/DisplayAdjustments;
 
-    invoke-virtual {v0, v1, v2}, Landroid/view/DisplayInfo;->getAppMetrics(Landroid/util/DisplayMetrics;Landroid/view/CompatibilityInfoHolder;)V
+    invoke-virtual {v0, v1, v2}, Landroid/view/DisplayInfo;->getAppMetrics(Landroid/util/DisplayMetrics;Landroid/view/DisplayAdjustments;)V
 
     iget-object v0, p0, Landroid/view/Display;->mTempMetrics:Landroid/util/DisplayMetrics;
 
@@ -757,6 +880,45 @@
     throw v0
 .end method
 
+.method public hasAccess(I)Z
+    .locals 2
+    .parameter "uid"
+
+    .prologue
+    iget v0, p0, Landroid/view/Display;->mFlags:I
+
+    iget v1, p0, Landroid/view/Display;->mOwnerUid:I
+
+    invoke-static {p1, v0, v1}, Landroid/view/Display;->hasAccess(III)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public isPublicPresentation()Z
+    .locals 2
+
+    .prologue
+    iget v0, p0, Landroid/view/Display;->mFlags:I
+
+    and-int/lit8 v0, v0, 0xc
+
+    const/16 v1, 0x8
+
+    if-ne v0, v1, :cond_0
+
+    const/4 v0, 0x1
+
+    :goto_0
+    return v0
+
+    :cond_0
+    const/4 v0, 0x0
+
+    goto :goto_0
+.end method
+
 .method public isValid()Z
     .locals 1
 
@@ -795,9 +957,9 @@
 
     iget-object v1, p0, Landroid/view/Display;->mTempMetrics:Landroid/util/DisplayMetrics;
 
-    iget-object v2, p0, Landroid/view/Display;->mCompatibilityInfo:Landroid/view/CompatibilityInfoHolder;
+    iget-object v2, p0, Landroid/view/Display;->mDisplayAdjustments:Landroid/view/DisplayAdjustments;
 
-    invoke-virtual {v0, v1, v2}, Landroid/view/DisplayInfo;->getAppMetrics(Landroid/util/DisplayMetrics;Landroid/view/CompatibilityInfoHolder;)V
+    invoke-virtual {v0, v1, v2}, Landroid/view/DisplayInfo;->getAppMetrics(Landroid/util/DisplayMetrics;Landroid/view/DisplayAdjustments;)V
 
     new-instance v0, Ljava/lang/StringBuilder;
 

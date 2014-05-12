@@ -45,7 +45,7 @@
 
 .field final mService:Lcom/android/server/wm/WindowManagerService;
 
-.field mSurface:Landroid/view/Surface;
+.field mSurfaceControl:Landroid/view/SurfaceControl;
 
 .field mTargetWindow:Lcom/android/server/wm/WindowState;
 
@@ -59,7 +59,7 @@
 
 
 # direct methods
-.method constructor <init>(Lcom/android/server/wm/WindowManagerService;Landroid/os/IBinder;Landroid/view/Surface;ILandroid/os/IBinder;)V
+.method constructor <init>(Lcom/android/server/wm/WindowManagerService;Landroid/os/IBinder;Landroid/view/SurfaceControl;ILandroid/os/IBinder;)V
     .locals 1
     .parameter "service"
     .parameter "token"
@@ -80,7 +80,7 @@
 
     iput-object p2, p0, Lcom/android/server/wm/DragState;->mToken:Landroid/os/IBinder;
 
-    iput-object p3, p0, Lcom/android/server/wm/DragState;->mSurface:Landroid/view/Surface;
+    iput-object p3, p0, Lcom/android/server/wm/DragState;->mSurfaceControl:Landroid/view/SurfaceControl;
 
     iput p4, p0, Lcom/android/server/wm/DragState;->mFlags:I
 
@@ -815,10 +815,10 @@
     move-result v10
 
     .local v10, myPid:I
-    invoke-static {}, Landroid/view/Surface;->openTransaction()V
+    invoke-static {}, Landroid/view/SurfaceControl;->openTransaction()V
 
     :try_start_0
-    iget-object v0, p0, Lcom/android/server/wm/DragState;->mSurface:Landroid/view/Surface;
+    iget-object v0, p0, Lcom/android/server/wm/DragState;->mSurfaceControl:Landroid/view/SurfaceControl;
 
     iget v1, p0, Lcom/android/server/wm/DragState;->mThumbOffsetX:F
 
@@ -828,11 +828,11 @@
 
     sub-float v2, p2, v2
 
-    invoke-virtual {v0, v1, v2}, Landroid/view/Surface;->setPosition(FF)V
+    invoke-virtual {v0, v1, v2}, Landroid/view/SurfaceControl;->setPosition(FF)V
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    invoke-static {}, Landroid/view/Surface;->closeTransaction()V
+    invoke-static {}, Landroid/view/SurfaceControl;->closeTransaction()V
 
     invoke-direct {p0, p1, p2}, Lcom/android/server/wm/DragState;->getTouchedWinAtPointLw(FF)Lcom/android/server/wm/WindowState;
 
@@ -848,7 +848,7 @@
     :catchall_0
     move-exception v0
 
-    invoke-static {}, Landroid/view/Surface;->closeTransaction()V
+    invoke-static {}, Landroid/view/SurfaceControl;->closeTransaction()V
 
     throw v0
 
@@ -1108,6 +1108,10 @@
 
     iget-object v2, p0, Lcom/android/server/wm/DragState;->mDragWindowHandle:Lcom/android/server/input/InputWindowHandle;
 
+    iput v6, v2, Lcom/android/server/input/InputWindowHandle;->layoutParamsPrivateFlags:I
+
+    iget-object v2, p0, Lcom/android/server/wm/DragState;->mDragWindowHandle:Lcom/android/server/input/InputWindowHandle;
+
     const/16 v3, 0x7e0
 
     iput v3, v2, Lcom/android/server/input/InputWindowHandle;->layoutParamsType:I
@@ -1210,16 +1214,16 @@
     .prologue
     const/4 v1, 0x0
 
-    iget-object v0, p0, Lcom/android/server/wm/DragState;->mSurface:Landroid/view/Surface;
+    iget-object v0, p0, Lcom/android/server/wm/DragState;->mSurfaceControl:Landroid/view/SurfaceControl;
 
     if-eqz v0, :cond_0
 
-    iget-object v0, p0, Lcom/android/server/wm/DragState;->mSurface:Landroid/view/Surface;
+    iget-object v0, p0, Lcom/android/server/wm/DragState;->mSurfaceControl:Landroid/view/SurfaceControl;
 
-    invoke-virtual {v0}, Landroid/view/Surface;->destroy()V
+    invoke-virtual {v0}, Landroid/view/SurfaceControl;->destroy()V
 
     :cond_0
-    iput-object v1, p0, Lcom/android/server/wm/DragState;->mSurface:Landroid/view/Surface;
+    iput-object v1, p0, Lcom/android/server/wm/DragState;->mSurfaceControl:Landroid/view/SurfaceControl;
 
     const/4 v0, 0x0
 

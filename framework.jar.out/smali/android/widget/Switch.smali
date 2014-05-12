@@ -113,7 +113,7 @@
     .parameter "attrs"
 
     .prologue
-    const v0, 0x10103f6
+    const v0, 0x101041f
 
     invoke-direct {p0, p1, p2, v0}, Landroid/widget/Switch;-><init>(Landroid/content/Context;Landroid/util/AttributeSet;I)V
 
@@ -2015,7 +2015,7 @@
     .local v3, styleIndex:I
     invoke-direct {p0, v5, v3}, Landroid/widget/Switch;->setSwitchTypefaceByIndex(II)V
 
-    const/4 v6, 0x7
+    const/16 v6, 0xb
 
     invoke-virtual {v1, v6, v8}, Landroid/content/res/TypedArray;->getBoolean(IZ)Z
 

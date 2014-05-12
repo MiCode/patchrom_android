@@ -15,9 +15,9 @@
 
 
 # instance fields
-.field code:I
+.field final code:I
 
-.field raw:Ljava/lang/String;
+.field final raw:Ljava/lang/String;
 
 .field final synthetic this$0:Lcom/android/server/NsdService;
 

@@ -180,7 +180,7 @@
 
     move-result-object v6
 
-    iget-object v7, v3, Lcom/android/server/NativeDaemonConnector$ResponseQueue$PendingCmd;->request:Ljava/lang/String;
+    iget-object v7, v3, Lcom/android/server/NativeDaemonConnector$ResponseQueue$PendingCmd;->logCmd:Ljava/lang/String;
 
     invoke-virtual {v6, v7}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -369,7 +369,7 @@
 
     move-result-object v2
 
-    iget-object v4, v1, Lcom/android/server/NativeDaemonConnector$ResponseQueue$PendingCmd;->request:Ljava/lang/String;
+    iget-object v4, v1, Lcom/android/server/NativeDaemonConnector$ResponseQueue$PendingCmd;->logCmd:Ljava/lang/String;
 
     invoke-virtual {v2, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -408,7 +408,7 @@
     .locals 10
     .parameter "cmdNum"
     .parameter "timeoutMs"
-    .parameter "origCmd"
+    .parameter "logCmd"
 
     .prologue
     const/4 v1, 0x0

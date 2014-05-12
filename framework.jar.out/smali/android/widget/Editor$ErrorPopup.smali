@@ -46,7 +46,7 @@
 
     iget v0, p0, Landroid/widget/Editor$ErrorPopup;->mPopupInlineErrorBackgroundId:I
 
-    const/16 v1, 0xde
+    const/16 v1, 0xe1
 
     invoke-direct {p0, v0, v1}, Landroid/widget/Editor$ErrorPopup;->getResourceId(II)I
 
@@ -110,7 +110,7 @@
 
     iget v0, p0, Landroid/widget/Editor$ErrorPopup;->mPopupInlineErrorAboveBackgroundId:I
 
-    const/16 v1, 0xdf
+    const/16 v1, 0xe2
 
     invoke-direct {p0, v0, v1}, Landroid/widget/Editor$ErrorPopup;->getResourceId(II)I
 
@@ -133,7 +133,7 @@
     :cond_0
     iget v0, p0, Landroid/widget/Editor$ErrorPopup;->mPopupInlineErrorBackgroundId:I
 
-    const/16 v1, 0xde
+    const/16 v1, 0xe1
 
     invoke-direct {p0, v0, v1}, Landroid/widget/Editor$ErrorPopup;->getResourceId(II)I
 

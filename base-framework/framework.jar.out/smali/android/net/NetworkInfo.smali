@@ -47,6 +47,8 @@
 
 .field private mIsAvailable:Z
 
+.field private mIsConnectedToProvisioningNetwork:Z
+
 .field private mIsFailover:Z
 
 .field private mIsRoaming:Z
@@ -265,6 +267,8 @@
 
     iput-boolean v1, p0, Landroid/net/NetworkInfo;->mIsRoaming:Z
 
+    iput-boolean v1, p0, Landroid/net/NetworkInfo;->mIsConnectedToProvisioningNetwork:Z
+
     return-void
 .end method
 
@@ -320,6 +324,10 @@
     iget-boolean v0, p1, Landroid/net/NetworkInfo;->mIsAvailable:Z
 
     iput-boolean v0, p0, Landroid/net/NetworkInfo;->mIsAvailable:Z
+
+    iget-boolean v0, p1, Landroid/net/NetworkInfo;->mIsConnectedToProvisioningNetwork:Z
+
+    iput-boolean v0, p0, Landroid/net/NetworkInfo;->mIsConnectedToProvisioningNetwork:Z
 
     :cond_0
     return-void
@@ -380,7 +388,18 @@
     return p1
 .end method
 
-.method static synthetic access$502(Landroid/net/NetworkInfo;Ljava/lang/String;)Ljava/lang/String;
+.method static synthetic access$502(Landroid/net/NetworkInfo;Z)Z
+    .locals 0
+    .parameter "x0"
+    .parameter "x1"
+
+    .prologue
+    iput-boolean p1, p0, Landroid/net/NetworkInfo;->mIsConnectedToProvisioningNetwork:Z
+
+    return p1
+.end method
+
+.method static synthetic access$602(Landroid/net/NetworkInfo;Ljava/lang/String;)Ljava/lang/String;
     .locals 0
     .parameter "x0"
     .parameter "x1"
@@ -391,7 +410,7 @@
     return-object p1
 .end method
 
-.method static synthetic access$602(Landroid/net/NetworkInfo;Ljava/lang/String;)Ljava/lang/String;
+.method static synthetic access$702(Landroid/net/NetworkInfo;Ljava/lang/String;)Ljava/lang/String;
     .locals 0
     .parameter "x0"
     .parameter "x1"
@@ -697,6 +716,29 @@
     throw v0
 .end method
 
+.method public isConnectedToProvisioningNetwork()Z
+    .locals 1
+
+    .prologue
+    monitor-enter p0
+
+    :try_start_0
+    iget-boolean v0, p0, Landroid/net/NetworkInfo;->mIsConnectedToProvisioningNetwork:Z
+
+    monitor-exit p0
+
+    return v0
+
+    :catchall_0
+    move-exception v0
+
+    monitor-exit p0
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    throw v0
+.end method
+
 .method public isFailover()Z
     .locals 1
 
@@ -855,7 +897,31 @@
     throw v0
 .end method
 
-.method setRoaming(Z)V
+.method public setIsConnectedToProvisioningNetwork(Z)V
+    .locals 1
+    .parameter "val"
+
+    .prologue
+    monitor-enter p0
+
+    :try_start_0
+    iput-boolean p1, p0, Landroid/net/NetworkInfo;->mIsConnectedToProvisioningNetwork:Z
+
+    monitor-exit p0
+
+    return-void
+
+    :catchall_0
+    move-exception v0
+
+    monitor-exit p0
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    throw v0
+.end method
+
+.method public setRoaming(Z)V
     .locals 1
     .parameter "isRoaming"
 
@@ -1040,6 +1106,18 @@
 
     invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;
 
+    move-result-object v1
+
+    const-string v2, ", isConnectedToProvisioningNetwork: "
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    iget-boolean v2, p0, Landroid/net/NetworkInfo;->mIsConnectedToProvisioningNetwork:Z
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;
+
     invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
     move-result-object v1
@@ -1136,7 +1214,16 @@
 
     if-eqz v2, :cond_2
 
+    move v2, v0
+
     :goto_2
+    invoke-virtual {p1, v2}, Landroid/os/Parcel;->writeInt(I)V
+
+    iget-boolean v2, p0, Landroid/net/NetworkInfo;->mIsConnectedToProvisioningNetwork:Z
+
+    if-eqz v2, :cond_3
+
+    :goto_3
     invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeInt(I)V
 
     iget-object v0, p0, Landroid/net/NetworkInfo;->mReason:Ljava/lang/String;
@@ -1162,9 +1249,14 @@
     goto :goto_1
 
     :cond_2
-    move v0, v1
+    move v2, v1
 
     goto :goto_2
+
+    :cond_3
+    move v0, v1
+
+    goto :goto_3
 
     :catchall_0
     move-exception v0

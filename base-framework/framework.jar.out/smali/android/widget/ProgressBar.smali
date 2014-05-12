@@ -57,6 +57,8 @@
 
 .field mMinWidth:I
 
+.field mMirrorForRtl:Z
+
 .field private mNoInvalidate:Z
 
 .field private mOnlyIndeterminate:Z
@@ -144,6 +146,8 @@
     const/4 v3, 0x0
 
     invoke-direct {p0, p1, p2, p3}, Landroid/view/View;-><init>(Landroid/content/Context;Landroid/util/AttributeSet;I)V
+
+    iput-boolean v3, p0, Landroid/widget/ProgressBar;->mMirrorForRtl:Z
 
     new-instance v5, Ljava/util/ArrayList;
 
@@ -334,6 +338,16 @@
 
     :cond_4
     invoke-virtual {p0, v3}, Landroid/widget/ProgressBar;->setIndeterminate(Z)V
+
+    const/16 v3, 0xf
+
+    iget-boolean v4, p0, Landroid/widget/ProgressBar;->mMirrorForRtl:Z
+
+    invoke-virtual {v0, v3, v4}, Landroid/content/res/TypedArray;->getBoolean(IZ)Z
+
+    move-result v3
+
+    iput-boolean v3, p0, Landroid/widget/ProgressBar;->mMirrorForRtl:Z
 
     invoke-virtual {v0}, Landroid/content/res/TypedArray;->recycle()V
 
@@ -1095,6 +1109,10 @@
 
     if-eqz v12, :cond_1
 
+    iget-boolean v12, p0, Landroid/widget/ProgressBar;->mMirrorForRtl:Z
+
+    if-eqz v12, :cond_1
+
     move v9, v7
 
     .local v9, tempLeft:I
@@ -1715,6 +1733,10 @@
     invoke-virtual {p0}, Landroid/widget/ProgressBar;->isLayoutRtl()Z
 
     move-result v4
+
+    if-eqz v4, :cond_2
+
+    iget-boolean v4, p0, Landroid/widget/ProgressBar;->mMirrorForRtl:Z
 
     if-eqz v4, :cond_2
 

@@ -28,13 +28,13 @@
 
 
 # instance fields
-.field iso:Ljava/lang/String;
+.field mIso:Ljava/lang/String;
 
-.field language:Ljava/lang/String;
+.field mLanguage:Ljava/lang/String;
 
-.field mcc:I
+.field mMcc:I
 
-.field smallestDigitsMnc:I
+.field mSmallestDigitsMnc:I
 
 
 # direct methods
@@ -62,13 +62,13 @@
     .prologue
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    iput p1, p0, Lcom/android/internal/telephony/MccTable$MccEntry;->mcc:I
+    iput p1, p0, Lcom/android/internal/telephony/MccTable$MccEntry;->mMcc:I
 
-    iput-object p2, p0, Lcom/android/internal/telephony/MccTable$MccEntry;->iso:Ljava/lang/String;
+    iput-object p2, p0, Lcom/android/internal/telephony/MccTable$MccEntry;->mIso:Ljava/lang/String;
 
-    iput p3, p0, Lcom/android/internal/telephony/MccTable$MccEntry;->smallestDigitsMnc:I
+    iput p3, p0, Lcom/android/internal/telephony/MccTable$MccEntry;->mSmallestDigitsMnc:I
 
-    iput-object p4, p0, Lcom/android/internal/telephony/MccTable$MccEntry;->language:Ljava/lang/String;
+    iput-object p4, p0, Lcom/android/internal/telephony/MccTable$MccEntry;->mLanguage:Ljava/lang/String;
 
     return-void
 .end method
@@ -80,9 +80,9 @@
     .parameter "o"
 
     .prologue
-    iget v0, p0, Lcom/android/internal/telephony/MccTable$MccEntry;->mcc:I
+    iget v0, p0, Lcom/android/internal/telephony/MccTable$MccEntry;->mMcc:I
 
-    iget v1, p1, Lcom/android/internal/telephony/MccTable$MccEntry;->mcc:I
+    iget v1, p1, Lcom/android/internal/telephony/MccTable$MccEntry;->mMcc:I
 
     sub-int/2addr v0, v1
 

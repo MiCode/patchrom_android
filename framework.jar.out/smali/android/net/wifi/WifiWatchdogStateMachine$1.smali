@@ -165,11 +165,7 @@
 
     move-result v3
 
-    invoke-static {v3}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
-
-    move-result-object v3
-
-    invoke-virtual {v1, v2, v3}, Landroid/net/wifi/WifiWatchdogStateMachine;->sendMessage(ILjava/lang/Object;)V
+    invoke-virtual {v1, v2, v3}, Landroid/net/wifi/WifiWatchdogStateMachine;->sendMessage(II)V
 
     goto :goto_0
 .end method

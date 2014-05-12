@@ -54,22 +54,24 @@
 .end method
 
 .method protected constructor <init>(Landroid/content/Context;Ljava/lang/String;)V
-    .locals 2
+    .locals 0
     .parameter "context"
+    .parameter "name"
+
+    .prologue
+    invoke-direct {p0, p2}, Landroid/webkit/WebSyncManager;-><init>(Ljava/lang/String;)V
+
+    return-void
+.end method
+
+.method constructor <init>(Ljava/lang/String;)V
+    .locals 2
     .parameter "name"
 
     .prologue
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    iput-object p2, p0, Landroid/webkit/WebSyncManager;->mThreadName:Ljava/lang/String;
-
-    if-eqz p1, :cond_0
-
-    invoke-static {p1}, Landroid/webkit/WebViewDatabase;->getInstance(Landroid/content/Context;)Landroid/webkit/WebViewDatabase;
-
-    move-result-object v0
-
-    iput-object v0, p0, Landroid/webkit/WebSyncManager;->mDataBase:Landroid/webkit/WebViewDatabase;
+    iput-object p1, p0, Landroid/webkit/WebSyncManager;->mThreadName:Ljava/lang/String;
 
     new-instance v0, Ljava/lang/Thread;
 
@@ -88,15 +90,6 @@
     invoke-virtual {v0}, Ljava/lang/Thread;->start()V
 
     return-void
-
-    :cond_0
-    new-instance v0, Ljava/lang/IllegalStateException;
-
-    const-string v1, "WebSyncManager can\'t be created without context"
-
-    invoke-direct {v0, v1}, Ljava/lang/IllegalStateException;-><init>(Ljava/lang/String;)V
-
-    throw v0
 .end method
 
 .method static synthetic access$000()I

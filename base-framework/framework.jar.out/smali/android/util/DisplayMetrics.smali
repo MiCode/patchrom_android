@@ -4,6 +4,8 @@
 
 
 # static fields
+.field public static final DENSITY_400:I = 0x190
+
 .field public static final DENSITY_DEFAULT:I = 0xa0
 
 .field public static final DENSITY_DEFAULT_SCALE:F = 0.00625f
@@ -24,6 +26,8 @@
 .field public static final DENSITY_XHIGH:I = 0x140
 
 .field public static final DENSITY_XXHIGH:I = 0x1e0
+
+.field public static final DENSITY_XXXHIGH:I = 0x280
 
 
 # instance fields

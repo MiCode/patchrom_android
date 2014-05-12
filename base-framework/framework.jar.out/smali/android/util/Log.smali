@@ -182,7 +182,7 @@
 .end method
 
 .method public static getStackTraceString(Ljava/lang/Throwable;)Ljava/lang/String;
-    .locals 4
+    .locals 5
     .parameter "tr"
 
     .prologue
@@ -221,12 +221,18 @@
     invoke-direct {v1}, Ljava/io/StringWriter;-><init>()V
 
     .local v1, sw:Ljava/io/StringWriter;
-    new-instance v0, Ljava/io/PrintWriter;
+    new-instance v0, Lcom/android/internal/util/FastPrintWriter;
 
-    invoke-direct {v0, v1}, Ljava/io/PrintWriter;-><init>(Ljava/io/Writer;)V
+    const/4 v3, 0x0
+
+    const/16 v4, 0x100
+
+    invoke-direct {v0, v1, v3, v4}, Lcom/android/internal/util/FastPrintWriter;-><init>(Ljava/io/Writer;ZI)V
 
     .local v0, pw:Ljava/io/PrintWriter;
     invoke-virtual {p0, v0}, Ljava/lang/Throwable;->printStackTrace(Ljava/io/PrintWriter;)V
+
+    invoke-virtual {v0}, Ljava/io/PrintWriter;->flush()V
 
     invoke-virtual {v1}, Ljava/io/StringWriter;->toString()Ljava/lang/String;
 
@@ -485,15 +491,77 @@
     return v0
 .end method
 
+.method static wtf(ILjava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;Z)I
+    .locals 5
+    .parameter "logId"
+    .parameter "tag"
+    .parameter "msg"
+    .parameter "tr"
+    .parameter "localStack"
+
+    .prologue
+    new-instance v1, Landroid/util/Log$TerribleFailure;
+
+    invoke-direct {v1, p2, p3}, Landroid/util/Log$TerribleFailure;-><init>(Ljava/lang/String;Ljava/lang/Throwable;)V
+
+    .local v1, what:Landroid/util/Log$TerribleFailure;
+    const/4 v2, 0x7
+
+    new-instance v3, Ljava/lang/StringBuilder;
+
+    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
+
+    invoke-virtual {v3, p2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    const/16 v4, 0xa
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    if-eqz p4, :cond_0
+
+    move-object p3, v1
+
+    .end local p3
+    :cond_0
+    invoke-static {p3}, Landroid/util/Log;->getStackTraceString(Ljava/lang/Throwable;)Ljava/lang/String;
+
+    move-result-object v4
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-static {p0, v2, p1, v3}, Landroid/util/Log;->println_native(IILjava/lang/String;Ljava/lang/String;)I
+
+    move-result v0
+
+    .local v0, bytes:I
+    sget-object v2, Landroid/util/Log;->sWtfHandler:Landroid/util/Log$TerribleFailureHandler;
+
+    invoke-interface {v2, p1, v1}, Landroid/util/Log$TerribleFailureHandler;->onTerribleFailure(Ljava/lang/String;Landroid/util/Log$TerribleFailure;)V
+
+    return v0
+.end method
+
 .method public static wtf(Ljava/lang/String;Ljava/lang/String;)I
-    .locals 1
+    .locals 2
     .parameter "tag"
     .parameter "msg"
 
     .prologue
+    const/4 v1, 0x0
+
     const/4 v0, 0x0
 
-    invoke-static {p0, p1, v0}, Landroid/util/Log;->wtf(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+    invoke-static {v1, p0, p1, v0, v1}, Landroid/util/Log;->wtf(ILjava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;Z)I
 
     move-result v0
 
@@ -501,70 +569,53 @@
 .end method
 
 .method public static wtf(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
-    .locals 6
+    .locals 1
     .parameter "tag"
     .parameter "msg"
     .parameter "tr"
 
     .prologue
-    new-instance v1, Landroid/util/Log$TerribleFailure;
+    const/4 v0, 0x0
 
-    invoke-direct {v1, p1, p2}, Landroid/util/Log$TerribleFailure;-><init>(Ljava/lang/String;Ljava/lang/Throwable;)V
-
-    .local v1, what:Landroid/util/Log$TerribleFailure;
-    const/4 v2, 0x0
-
-    const/4 v3, 0x7
-
-    new-instance v4, Ljava/lang/StringBuilder;
-
-    invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
-
-    invoke-virtual {v4, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v4
-
-    const/16 v5, 0xa
-
-    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
-
-    move-result-object v4
-
-    invoke-static {p2}, Landroid/util/Log;->getStackTraceString(Ljava/lang/Throwable;)Ljava/lang/String;
-
-    move-result-object v5
-
-    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v4
-
-    invoke-virtual {v4}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v4
-
-    invoke-static {v2, v3, p0, v4}, Landroid/util/Log;->println_native(IILjava/lang/String;Ljava/lang/String;)I
+    invoke-static {v0, p0, p1, p2, v0}, Landroid/util/Log;->wtf(ILjava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;Z)I
 
     move-result v0
-
-    .local v0, bytes:I
-    sget-object v2, Landroid/util/Log;->sWtfHandler:Landroid/util/Log$TerribleFailureHandler;
-
-    invoke-interface {v2, p0, v1}, Landroid/util/Log$TerribleFailureHandler;->onTerribleFailure(Ljava/lang/String;Landroid/util/Log$TerribleFailure;)V
 
     return v0
 .end method
 
 .method public static wtf(Ljava/lang/String;Ljava/lang/Throwable;)I
-    .locals 1
+    .locals 2
     .parameter "tag"
     .parameter "tr"
 
     .prologue
+    const/4 v1, 0x0
+
     invoke-virtual {p1}, Ljava/lang/Throwable;->getMessage()Ljava/lang/String;
 
     move-result-object v0
 
-    invoke-static {p0, v0, p1}, Landroid/util/Log;->wtf(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+    invoke-static {v1, p0, v0, p1, v1}, Landroid/util/Log;->wtf(ILjava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;Z)I
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public static wtfStack(Ljava/lang/String;Ljava/lang/String;)I
+    .locals 3
+    .parameter "tag"
+    .parameter "msg"
+
+    .prologue
+    const/4 v0, 0x0
+
+    const/4 v1, 0x0
+
+    const/4 v2, 0x1
+
+    invoke-static {v0, p0, p1, v1, v2}, Landroid/util/Log;->wtf(ILjava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;Z)I
 
     move-result v0
 

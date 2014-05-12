@@ -144,7 +144,7 @@
     .prologue
     iget-object v1, p0, Landroid/accounts/GrantCredentialsPermissionActivity;->mInflater:Landroid/view/LayoutInflater;
 
-    const v2, 0x109009a
+    const v2, 0x109006f
 
     const/4 v3, 0x0
 
@@ -153,7 +153,7 @@
     move-result-object v0
 
     .local v0, view:Landroid/view/View;
-    const v1, 0x102033b
+    const v1, 0x10202ee
 
     invoke-virtual {v0, v1}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -285,7 +285,7 @@
     goto :goto_0
 
     :pswitch_data_0
-    .packed-switch 0x102028e
+    .packed-switch 0x10202a6
         :pswitch_1
         :pswitch_0
     .end packed-switch
@@ -298,7 +298,7 @@
     .prologue
     invoke-super/range {p0 .. p1}, Landroid/app/Activity;->onCreate(Landroid/os/Bundle;)V
 
-    const v17, 0x1090046
+    const v17, 0x1090047
 
     move-object/from16 v0, p0
 
@@ -306,7 +306,7 @@
 
     invoke-virtual {v0, v1}, Landroid/accounts/GrantCredentialsPermissionActivity;->setContentView(I)V
 
-    const v17, 0x104047c
+    const v17, 0x10404a9
 
     move-object/from16 v0, p0
 
@@ -467,7 +467,7 @@
     move-result-object v4
 
     .local v4, accountTypeLabel:Ljava/lang/String;
-    const v17, 0x102028b
+    const v17, 0x10202a3
 
     move-object/from16 v0, p0
 
@@ -527,7 +527,7 @@
 
     invoke-virtual {v0, v1, v2, v7, v3}, Landroid/accounts/AccountManager;->getAuthTokenLabel(Ljava/lang/String;Ljava/lang/String;Landroid/accounts/AccountManagerCallback;Landroid/os/Handler;)Landroid/accounts/AccountManagerFuture;
 
-    const v17, 0x102028f
+    const v17, 0x10202a7
 
     move-object/from16 v0, p0
 
@@ -543,7 +543,7 @@
 
     invoke-virtual {v0, v1}, Landroid/view/View;->setOnClickListener(Landroid/view/View$OnClickListener;)V
 
-    const v17, 0x102028e
+    const v17, 0x10202a6
 
     move-object/from16 v0, p0
 
@@ -559,7 +559,7 @@
 
     invoke-virtual {v0, v1}, Landroid/view/View;->setOnClickListener(Landroid/view/View$OnClickListener;)V
 
-    const v17, 0x1020287
+    const v17, 0x102029f
 
     move-object/from16 v0, p0
 
@@ -671,7 +671,7 @@
     .end local v12           #packageLabel:Ljava/lang/String;
     .end local v15           #pkg:Ljava/lang/String;
     :cond_3
-    const v17, 0x102028a
+    const v17, 0x10202a2
 
     move-object/from16 v0, p0
 
@@ -697,7 +697,7 @@
 
     invoke-virtual/range {v17 .. v18}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
 
-    const v17, 0x1020289
+    const v17, 0x10202a1
 
     move-object/from16 v0, p0
 

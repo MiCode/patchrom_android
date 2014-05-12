@@ -350,3 +350,80 @@
 
     return v0
 .end method
+
+.method public static wtf(Ljava/lang/String;Ljava/lang/String;)I
+    .locals 3
+    .parameter "tag"
+    .parameter "msg"
+
+    .prologue
+    const/4 v0, 0x3
+
+    const/4 v1, 0x0
+
+    const/4 v2, 0x0
+
+    invoke-static {v0, p0, p1, v1, v2}, Landroid/util/Log;->wtf(ILjava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;Z)I
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public static wtf(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+    .locals 2
+    .parameter "tag"
+    .parameter "msg"
+    .parameter "tr"
+
+    .prologue
+    const/4 v0, 0x3
+
+    const/4 v1, 0x0
+
+    invoke-static {v0, p0, p1, p2, v1}, Landroid/util/Log;->wtf(ILjava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;Z)I
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public static wtf(Ljava/lang/String;Ljava/lang/Throwable;)I
+    .locals 3
+    .parameter "tag"
+    .parameter "tr"
+
+    .prologue
+    const/4 v0, 0x3
+
+    invoke-virtual {p1}, Ljava/lang/Throwable;->getMessage()Ljava/lang/String;
+
+    move-result-object v1
+
+    const/4 v2, 0x0
+
+    invoke-static {v0, p0, v1, p1, v2}, Landroid/util/Log;->wtf(ILjava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;Z)I
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public static wtfStack(Ljava/lang/String;Ljava/lang/String;)I
+    .locals 3
+    .parameter "tag"
+    .parameter "msg"
+
+    .prologue
+    const/4 v0, 0x3
+
+    const/4 v1, 0x0
+
+    const/4 v2, 0x1
+
+    invoke-static {v0, p0, p1, v1, v2}, Landroid/util/Log;->wtf(ILjava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;Z)I
+
+    move-result v0
+
+    return v0
+.end method

@@ -15,7 +15,13 @@
 
 
 # static fields
+.field public static final ACTION_CHANGE_DEFAULT:Ljava/lang/String; = "android.provider.Telephony.ACTION_CHANGE_DEFAULT"
+
 .field public static final DATA_SMS_RECEIVED_ACTION:Ljava/lang/String; = "android.intent.action.DATA_SMS_RECEIVED"
+
+.field public static final EXTRA_PACKAGE_NAME:Ljava/lang/String; = "package"
+
+.field public static final RESULT_SMS_DUPLICATED:I = 0x5
 
 .field public static final RESULT_SMS_GENERIC_ERROR:I = 0x2
 
@@ -29,6 +35,8 @@
 
 .field public static final SMS_CB_RECEIVED_ACTION:Ljava/lang/String; = "android.provider.Telephony.SMS_CB_RECEIVED"
 
+.field public static final SMS_DELIVER_ACTION:Ljava/lang/String; = "android.provider.Telephony.SMS_DELIVER"
+
 .field public static final SMS_EMERGENCY_CB_RECEIVED_ACTION:Ljava/lang/String; = "android.provider.Telephony.SMS_EMERGENCY_CB_RECEIVED"
 
 .field public static final SMS_RECEIVED_ACTION:Ljava/lang/String; = "android.provider.Telephony.SMS_RECEIVED"
@@ -37,11 +45,13 @@
 
 .field public static final SMS_SERVICE_CATEGORY_PROGRAM_DATA_RECEIVED_ACTION:Ljava/lang/String; = "android.provider.Telephony.SMS_SERVICE_CATEGORY_PROGRAM_DATA_RECEIVED"
 
+.field public static final WAP_PUSH_DELIVER_ACTION:Ljava/lang/String; = "android.provider.Telephony.WAP_PUSH_DELIVER"
+
 .field public static final WAP_PUSH_RECEIVED_ACTION:Ljava/lang/String; = "android.provider.Telephony.WAP_PUSH_RECEIVED"
 
 
 # direct methods
-.method public constructor <init>()V
+.method private constructor <init>()V
     .locals 0
 
     .prologue
@@ -51,88 +61,62 @@
 .end method
 
 .method public static getMessagesFromIntent(Landroid/content/Intent;)[Landroid/telephony/SmsMessage;
-    .locals 8
+    .locals 7
     .parameter "intent"
 
     .prologue
-    const-string v7, "pdus"
+    const-string v6, "pdus"
 
-    invoke-virtual {p0, v7}, Landroid/content/Intent;->getSerializableExtra(Ljava/lang/String;)Ljava/io/Serializable;
+    invoke-virtual {p0, v6}, Landroid/content/Intent;->getSerializableExtra(Ljava/lang/String;)Ljava/io/Serializable;
 
-    move-result-object v7
+    move-result-object v6
 
-    check-cast v7, [Ljava/lang/Object;
+    check-cast v6, [Ljava/lang/Object;
 
-    move-object v2, v7
+    move-object v2, v6
 
     check-cast v2, [Ljava/lang/Object;
 
     .local v2, messages:[Ljava/lang/Object;
-    const-string v7, "format"
+    const-string v6, "format"
 
-    invoke-virtual {p0, v7}, Landroid/content/Intent;->getStringExtra(Ljava/lang/String;)Ljava/lang/String;
+    invoke-virtual {p0, v6}, Landroid/content/Intent;->getStringExtra(Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v0
 
     .local v0, format:Ljava/lang/String;
-    array-length v7, v2
+    array-length v5, v2
 
-    new-array v5, v7, [[B
+    .local v5, pduCount:I
+    new-array v3, v5, [Landroid/telephony/SmsMessage;
 
-    .local v5, pduObjs:[[B
+    .local v3, msgs:[Landroid/telephony/SmsMessage;
     const/4 v1, 0x0
 
     .local v1, i:I
     :goto_0
-    array-length v7, v2
+    if-ge v1, v5, :cond_0
 
-    if-ge v1, v7, :cond_0
+    aget-object v6, v2, v1
 
-    aget-object v7, v2, v1
+    check-cast v6, [B
 
-    check-cast v7, [B
+    move-object v4, v6
 
-    check-cast v7, [B
+    check-cast v4, [B
 
-    aput-object v7, v5, v1
+    .local v4, pdu:[B
+    invoke-static {v4, v0}, Landroid/telephony/SmsMessage;->createFromPdu([BLjava/lang/String;)Landroid/telephony/SmsMessage;
+
+    move-result-object v6
+
+    aput-object v6, v3, v1
 
     add-int/lit8 v1, v1, 0x1
 
     goto :goto_0
 
+    .end local v4           #pdu:[B
     :cond_0
-    array-length v7, v5
-
-    new-array v6, v7, [[B
-
-    .local v6, pdus:[[B
-    array-length v4, v6
-
-    .local v4, pduCount:I
-    new-array v3, v4, [Landroid/telephony/SmsMessage;
-
-    .local v3, msgs:[Landroid/telephony/SmsMessage;
-    const/4 v1, 0x0
-
-    :goto_1
-    if-ge v1, v4, :cond_1
-
-    aget-object v7, v5, v1
-
-    aput-object v7, v6, v1
-
-    aget-object v7, v6, v1
-
-    invoke-static {v7, v0}, Landroid/telephony/SmsMessage;->createFromPdu([BLjava/lang/String;)Landroid/telephony/SmsMessage;
-
-    move-result-object v7
-
-    aput-object v7, v3, v1
-
-    add-int/lit8 v1, v1, 0x1
-
-    goto :goto_1
-
-    :cond_1
     return-object v3
 .end method

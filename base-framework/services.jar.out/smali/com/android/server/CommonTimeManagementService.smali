@@ -1229,7 +1229,7 @@
     goto :goto_4
 .end method
 
-.method systemReady()V
+.method systemRunning()V
     .locals 4
 
     .prologue

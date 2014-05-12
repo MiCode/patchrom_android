@@ -24,6 +24,9 @@
 .method public abstract canSeekForward()Z
 .end method
 
+.method public abstract getAudioSessionId()I
+.end method
+
 .method public abstract getBufferPercentage()I
 .end method
 

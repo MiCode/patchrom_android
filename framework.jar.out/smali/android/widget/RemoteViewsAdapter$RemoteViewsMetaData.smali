@@ -58,7 +58,7 @@
     return-void
 .end method
 
-.method static synthetic access$1900(Landroid/widget/RemoteViewsAdapter$RemoteViewsMetaData;ILandroid/view/View;Landroid/view/ViewGroup;Ljava/lang/Object;Landroid/view/LayoutInflater;Landroid/widget/RemoteViews$OnClickHandler;)Landroid/widget/RemoteViewsAdapter$RemoteViewsFrameLayout;
+.method static synthetic access$2000(Landroid/widget/RemoteViewsAdapter$RemoteViewsMetaData;ILandroid/view/View;Landroid/view/ViewGroup;Ljava/lang/Object;Landroid/view/LayoutInflater;Landroid/widget/RemoteViews$OnClickHandler;)Landroid/widget/RemoteViewsAdapter$RemoteViewsFrameLayout;
     .locals 1
     .parameter "x0"
     .parameter "x1"
@@ -122,7 +122,7 @@
     move-result-object v8
 
     .local v8, loadingView:Landroid/view/View;
-    const v9, 0x1020245
+    const v9, 0x1020259
 
     new-instance v10, Ljava/lang/Integer;
 
@@ -199,7 +199,7 @@
     .end local v5           #firstView:Landroid/view/View;
     :cond_1
     :goto_1
-    const v9, 0x10900b1
+    const v9, 0x1090086
 
     const/4 v10, 0x0
 

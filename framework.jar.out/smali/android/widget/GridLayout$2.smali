@@ -33,7 +33,7 @@
     .parameter "mode"
 
     .prologue
-    const/4 v0, 0x0
+    const/high16 v0, -0x8000
 
     return v0
 .end method
@@ -44,7 +44,7 @@
     .parameter "cellDelta"
 
     .prologue
-    const/4 v0, 0x0
+    const/high16 v0, -0x8000
 
     return v0
 .end method

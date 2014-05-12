@@ -30,6 +30,8 @@
 
 .field public static final enum DISPLAY_TEXT:Lcom/android/internal/telephony/cat/AppInterface$CommandType;
 
+.field public static final enum GET_CHANNEL_STATUS:Lcom/android/internal/telephony/cat/AppInterface$CommandType;
+
 .field public static final enum GET_INKEY:Lcom/android/internal/telephony/cat/AppInterface$CommandType;
 
 .field public static final enum GET_INPUT:Lcom/android/internal/telephony/cat/AppInterface$CommandType;
@@ -306,7 +308,19 @@
 
     sput-object v0, Lcom/android/internal/telephony/cat/AppInterface$CommandType;->SEND_DATA:Lcom/android/internal/telephony/cat/AppInterface$CommandType;
 
-    const/16 v0, 0x14
+    new-instance v0, Lcom/android/internal/telephony/cat/AppInterface$CommandType;
+
+    const-string v1, "GET_CHANNEL_STATUS"
+
+    const/16 v2, 0x14
+
+    const/16 v3, 0x44
+
+    invoke-direct {v0, v1, v2, v3}, Lcom/android/internal/telephony/cat/AppInterface$CommandType;-><init>(Ljava/lang/String;II)V
+
+    sput-object v0, Lcom/android/internal/telephony/cat/AppInterface$CommandType;->GET_CHANNEL_STATUS:Lcom/android/internal/telephony/cat/AppInterface$CommandType;
+
+    const/16 v0, 0x15
 
     new-array v0, v0, [Lcom/android/internal/telephony/cat/AppInterface$CommandType;
 
@@ -417,6 +431,12 @@
     const/16 v1, 0x13
 
     sget-object v2, Lcom/android/internal/telephony/cat/AppInterface$CommandType;->SEND_DATA:Lcom/android/internal/telephony/cat/AppInterface$CommandType;
+
+    aput-object v2, v0, v1
+
+    const/16 v1, 0x14
+
+    sget-object v2, Lcom/android/internal/telephony/cat/AppInterface$CommandType;->GET_CHANNEL_STATUS:Lcom/android/internal/telephony/cat/AppInterface$CommandType;
 
     aput-object v2, v0, v1
 

@@ -24,7 +24,7 @@
 
 .field final synthetic val$latch:Ljava/util/concurrent/CountDownLatch;
 
-.field final synthetic val$skpiChildren:Z
+.field final synthetic val$skipChildren:Z
 
 
 # direct methods
@@ -40,7 +40,7 @@
 
     iput-object p2, p0, Landroid/view/ViewDebug$6;->val$captureView:Landroid/view/View;
 
-    iput-boolean p3, p0, Landroid/view/ViewDebug$6;->val$skpiChildren:Z
+    iput-boolean p3, p0, Landroid/view/ViewDebug$6;->val$skipChildren:Z
 
     iput-object p4, p0, Landroid/view/ViewDebug$6;->val$latch:Ljava/util/concurrent/CountDownLatch;
 
@@ -66,7 +66,7 @@
 
     const/4 v5, 0x0
 
-    iget-boolean v6, p0, Landroid/view/ViewDebug$6;->val$skpiChildren:Z
+    iget-boolean v6, p0, Landroid/view/ViewDebug$6;->val$skipChildren:Z
 
     invoke-virtual {v3, v4, v5, v6}, Landroid/view/View;->createSnapshot(Landroid/graphics/Bitmap$Config;IZ)Landroid/graphics/Bitmap;
 

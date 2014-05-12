@@ -1,4 +1,4 @@
-.class Lcom/android/server/am/ConnectionRecord;
+.class final Lcom/android/server/am/ConnectionRecord;
 .super Ljava/lang/Object;
 .source "ConnectionRecord.java"
 
@@ -304,37 +304,52 @@
     :cond_8
     iget v1, p0, Lcom/android/server/am/ConnectionRecord;->flags:I
 
-    const/high16 v2, 0x4000
+    const/high16 v2, 0x1000
 
     and-int/2addr v1, v2
 
     if-eqz v1, :cond_9
 
-    const-string v1, "!VIS "
+    const-string v1, "VIS "
 
     invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     :cond_9
     iget v1, p0, Lcom/android/server/am/ConnectionRecord;->flags:I
 
-    and-int/lit16 v1, v1, 0x100
+    const/high16 v2, 0x2000
+
+    and-int/2addr v1, v2
 
     if-eqz v1, :cond_a
 
-    const-string v1, "VIS "
+    const-string v1, "UI "
 
     invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     :cond_a
-    iget-boolean v1, p0, Lcom/android/server/am/ConnectionRecord;->serviceDead:Z
+    iget v1, p0, Lcom/android/server/am/ConnectionRecord;->flags:I
+
+    const/high16 v2, 0x4000
+
+    and-int/2addr v1, v2
 
     if-eqz v1, :cond_b
+
+    const-string v1, "!VIS "
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    :cond_b
+    iget-boolean v1, p0, Lcom/android/server/am/ConnectionRecord;->serviceDead:Z
+
+    if-eqz v1, :cond_c
 
     const-string v1, "DEAD "
 
     invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    :cond_b
+    :cond_c
     iget-object v1, p0, Lcom/android/server/am/ConnectionRecord;->binding:Lcom/android/server/am/AppBindRecord;
 
     iget-object v1, v1, Lcom/android/server/am/AppBindRecord;->service:Lcom/android/server/am/ServiceRecord;

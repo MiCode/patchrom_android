@@ -10,12 +10,14 @@
 
 .field public static final CHUNK_WAIT:I
 
+.field private static final FRAMEWORK_FEATURES:[Ljava/lang/String;
+
 .field private static mInstance:Landroid/ddm/DdmHandleHello;
 
 
 # direct methods
 .method static constructor <clinit>()V
-    .locals 1
+    .locals 3
 
     .prologue
     const-string v0, "HELO"
@@ -48,6 +50,24 @@
 
     sput-object v0, Landroid/ddm/DdmHandleHello;->mInstance:Landroid/ddm/DdmHandleHello;
 
+    const/4 v0, 0x2
+
+    new-array v0, v0, [Ljava/lang/String;
+
+    const/4 v1, 0x0
+
+    const-string v2, "opengl-tracing"
+
+    aput-object v2, v0, v1
+
+    const/4 v1, 0x1
+
+    const-string v2, "view-hierarchy"
+
+    aput-object v2, v0, v1
+
+    sput-object v0, Landroid/ddm/DdmHandleHello;->FRAMEWORK_FEATURES:[Ljava/lang/String;
+
     return-void
 .end method
 
@@ -67,25 +87,31 @@
     .prologue
     invoke-static {}, Landroid/os/Debug;->getVmFeatureList()[Ljava/lang/String;
 
-    move-result-object v0
+    move-result-object v3
 
-    .local v0, features:[Ljava/lang/String;
-    array-length v4, v0
+    .local v3, vmFeatures:[Ljava/lang/String;
+    array-length v4, v3
+
+    sget-object v5, Landroid/ddm/DdmHandleHello;->FRAMEWORK_FEATURES:[Ljava/lang/String;
+
+    array-length v5, v5
+
+    add-int/2addr v4, v5
 
     mul-int/lit8 v4, v4, 0x4
 
-    add-int/lit8 v3, v4, 0x4
+    add-int/lit8 v2, v4, 0x4
 
-    .local v3, size:I
-    array-length v4, v0
+    .local v2, size:I
+    array-length v4, v3
 
-    add-int/lit8 v1, v4, -0x1
+    add-int/lit8 v0, v4, -0x1
 
-    .local v1, i:I
+    .local v0, i:I
     :goto_0
-    if-ltz v1, :cond_0
+    if-ltz v0, :cond_0
 
-    aget-object v4, v0, v1
+    aget-object v4, v3, v0
 
     invoke-virtual {v4}, Ljava/lang/String;->length()I
 
@@ -93,55 +119,117 @@
 
     mul-int/lit8 v4, v4, 0x2
 
-    add-int/2addr v3, v4
+    add-int/2addr v2, v4
 
-    add-int/lit8 v1, v1, -0x1
+    add-int/lit8 v0, v0, -0x1
 
     goto :goto_0
 
     :cond_0
-    invoke-static {v3}, Ljava/nio/ByteBuffer;->allocate(I)Ljava/nio/ByteBuffer;
+    sget-object v4, Landroid/ddm/DdmHandleHello;->FRAMEWORK_FEATURES:[Ljava/lang/String;
 
-    move-result-object v2
+    array-length v4, v4
 
-    .local v2, out:Ljava/nio/ByteBuffer;
-    sget-object v4, Lorg/apache/harmony/dalvik/ddmc/ChunkHandler;->CHUNK_ORDER:Ljava/nio/ByteOrder;
-
-    invoke-virtual {v2, v4}, Ljava/nio/ByteBuffer;->order(Ljava/nio/ByteOrder;)Ljava/nio/ByteBuffer;
-
-    array-length v4, v0
-
-    invoke-virtual {v2, v4}, Ljava/nio/ByteBuffer;->putInt(I)Ljava/nio/ByteBuffer;
-
-    array-length v4, v0
-
-    add-int/lit8 v1, v4, -0x1
+    add-int/lit8 v0, v4, -0x1
 
     :goto_1
-    if-ltz v1, :cond_1
+    if-ltz v0, :cond_1
 
-    aget-object v4, v0, v1
+    sget-object v4, Landroid/ddm/DdmHandleHello;->FRAMEWORK_FEATURES:[Ljava/lang/String;
+
+    aget-object v4, v4, v0
 
     invoke-virtual {v4}, Ljava/lang/String;->length()I
 
     move-result v4
 
-    invoke-virtual {v2, v4}, Ljava/nio/ByteBuffer;->putInt(I)Ljava/nio/ByteBuffer;
+    mul-int/lit8 v4, v4, 0x2
 
-    aget-object v4, v0, v1
+    add-int/2addr v2, v4
 
-    invoke-static {v2, v4}, Landroid/ddm/DdmHandleHello;->putString(Ljava/nio/ByteBuffer;Ljava/lang/String;)V
-
-    add-int/lit8 v1, v1, -0x1
+    add-int/lit8 v0, v0, -0x1
 
     goto :goto_1
 
     :cond_1
+    invoke-static {v2}, Ljava/nio/ByteBuffer;->allocate(I)Ljava/nio/ByteBuffer;
+
+    move-result-object v1
+
+    .local v1, out:Ljava/nio/ByteBuffer;
+    sget-object v4, Lorg/apache/harmony/dalvik/ddmc/ChunkHandler;->CHUNK_ORDER:Ljava/nio/ByteOrder;
+
+    invoke-virtual {v1, v4}, Ljava/nio/ByteBuffer;->order(Ljava/nio/ByteOrder;)Ljava/nio/ByteBuffer;
+
+    array-length v4, v3
+
+    sget-object v5, Landroid/ddm/DdmHandleHello;->FRAMEWORK_FEATURES:[Ljava/lang/String;
+
+    array-length v5, v5
+
+    add-int/2addr v4, v5
+
+    invoke-virtual {v1, v4}, Ljava/nio/ByteBuffer;->putInt(I)Ljava/nio/ByteBuffer;
+
+    array-length v4, v3
+
+    add-int/lit8 v0, v4, -0x1
+
+    :goto_2
+    if-ltz v0, :cond_2
+
+    aget-object v4, v3, v0
+
+    invoke-virtual {v4}, Ljava/lang/String;->length()I
+
+    move-result v4
+
+    invoke-virtual {v1, v4}, Ljava/nio/ByteBuffer;->putInt(I)Ljava/nio/ByteBuffer;
+
+    aget-object v4, v3, v0
+
+    invoke-static {v1, v4}, Landroid/ddm/DdmHandleHello;->putString(Ljava/nio/ByteBuffer;Ljava/lang/String;)V
+
+    add-int/lit8 v0, v0, -0x1
+
+    goto :goto_2
+
+    :cond_2
+    sget-object v4, Landroid/ddm/DdmHandleHello;->FRAMEWORK_FEATURES:[Ljava/lang/String;
+
+    array-length v4, v4
+
+    add-int/lit8 v0, v4, -0x1
+
+    :goto_3
+    if-ltz v0, :cond_3
+
+    sget-object v4, Landroid/ddm/DdmHandleHello;->FRAMEWORK_FEATURES:[Ljava/lang/String;
+
+    aget-object v4, v4, v0
+
+    invoke-virtual {v4}, Ljava/lang/String;->length()I
+
+    move-result v4
+
+    invoke-virtual {v1, v4}, Ljava/nio/ByteBuffer;->putInt(I)Ljava/nio/ByteBuffer;
+
+    sget-object v4, Landroid/ddm/DdmHandleHello;->FRAMEWORK_FEATURES:[Ljava/lang/String;
+
+    aget-object v4, v4, v0
+
+    invoke-static {v1, v4}, Landroid/ddm/DdmHandleHello;->putString(Ljava/nio/ByteBuffer;Ljava/lang/String;)V
+
+    add-int/lit8 v0, v0, -0x1
+
+    goto :goto_3
+
+    :cond_3
     new-instance v4, Lorg/apache/harmony/dalvik/ddmc/Chunk;
 
     sget v5, Landroid/ddm/DdmHandleHello;->CHUNK_FEAT:I
 
-    invoke-direct {v4, v5, v2}, Lorg/apache/harmony/dalvik/ddmc/Chunk;-><init>(ILjava/nio/ByteBuffer;)V
+    invoke-direct {v4, v5, v1}, Lorg/apache/harmony/dalvik/ddmc/Chunk;-><init>(ILjava/nio/ByteBuffer;)V
 
     return-object v4
 .end method

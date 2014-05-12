@@ -87,6 +87,42 @@
     .end annotation
 .end method
 
+.method public abstract enableTdls(Ljava/lang/String;Z)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract enableTdlsWithMacAddress(Ljava/lang/String;Z)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract getBatchedScanResults(Ljava/lang/String;)Ljava/util/List;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(",
+            "Ljava/lang/String;",
+            ")",
+            "Ljava/util/List",
+            "<",
+            "Landroid/net/wifi/BatchedScanResult;",
+            ">;"
+        }
+    .end annotation
+
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
 .method public abstract getConfigFile()Ljava/lang/String;
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -137,10 +173,12 @@
     .end annotation
 .end method
 
-.method public abstract getScanResults()Ljava/util/List;
+.method public abstract getScanResults(Ljava/lang/String;)Ljava/util/List;
     .annotation system Ldalvik/annotation/Signature;
         value = {
-            "()",
+            "(",
+            "Ljava/lang/String;",
+            ")",
             "Ljava/util/List",
             "<",
             "Landroid/net/wifi/ScanResult;",
@@ -203,6 +241,14 @@
     .end annotation
 .end method
 
+.method public abstract isBatchedScanSupported()Z
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
 .method public abstract isDualBandSupported()Z
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -219,7 +265,23 @@
     .end annotation
 .end method
 
+.method public abstract isScanAlwaysAvailable()Z
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
 .method public abstract pingSupplicant()Z
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract pollBatchedScan()V
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -260,6 +322,14 @@
 .end method
 
 .method public abstract removeNetwork(I)Z
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract requestBatchedScan(Landroid/net/wifi/BatchedScanSettings;Landroid/os/IBinder;Landroid/os/WorkSource;)Z
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -315,7 +385,7 @@
     .end annotation
 .end method
 
-.method public abstract startScan(Z)V
+.method public abstract startScan(Landroid/os/WorkSource;)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -324,6 +394,14 @@
 .end method
 
 .method public abstract startWifi()V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract stopBatchedScan(Landroid/net/wifi/BatchedScanSettings;)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;

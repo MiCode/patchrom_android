@@ -8,7 +8,7 @@
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController;-><init>(Lcom/android/server/accessibility/ScreenMagnifier;I)V
+    value = Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController;-><init>(Lcom/android/server/accessibility/ScreenMagnifier;J)V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -21,14 +21,14 @@
         "Ljava/lang/Object;",
         "Landroid/animation/TypeEvaluator",
         "<",
-        "Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$MagnificationSpec;",
+        "Landroid/view/MagnificationSpec;",
         ">;"
     }
 .end annotation
 
 
 # instance fields
-.field private final mTempTransformationSpec:Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$MagnificationSpec;
+.field private final mTempTransformationSpec:Landroid/view/MagnificationSpec;
 
 .field final synthetic this$1:Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController;
 
@@ -37,7 +37,7 @@
 
 # direct methods
 .method constructor <init>(Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController;Lcom/android/server/accessibility/ScreenMagnifier;)V
-    .locals 3
+    .locals 1
     .parameter
     .parameter
 
@@ -48,50 +48,32 @@
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    new-instance v0, Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$MagnificationSpec;
+    invoke-static {}, Landroid/view/MagnificationSpec;->obtain()Landroid/view/MagnificationSpec;
 
-    iget-object v1, p0, Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$1;->this$1:Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController;
+    move-result-object v0
 
-    const/4 v2, 0x0
-
-    invoke-direct {v0, v1, v2}, Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$MagnificationSpec;-><init>(Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController;Lcom/android/server/accessibility/ScreenMagnifier$1;)V
-
-    iput-object v0, p0, Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$1;->mTempTransformationSpec:Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$MagnificationSpec;
+    iput-object v0, p0, Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$1;->mTempTransformationSpec:Landroid/view/MagnificationSpec;
 
     return-void
 .end method
 
 
 # virtual methods
-.method public evaluate(FLcom/android/server/accessibility/ScreenMagnifier$MagnificationController$MagnificationSpec;Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$MagnificationSpec;)Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$MagnificationSpec;
+.method public evaluate(FLandroid/view/MagnificationSpec;Landroid/view/MagnificationSpec;)Landroid/view/MagnificationSpec;
     .locals 4
     .parameter "fraction"
     .parameter "fromSpec"
     .parameter "toSpec"
 
     .prologue
-    iget-object v0, p0, Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$1;->mTempTransformationSpec:Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$MagnificationSpec;
+    iget-object v0, p0, Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$1;->mTempTransformationSpec:Landroid/view/MagnificationSpec;
 
-    .local v0, result:Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$MagnificationSpec;
-    iget v1, p2, Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$MagnificationSpec;->mScale:F
+    .local v0, result:Landroid/view/MagnificationSpec;
+    iget v1, p2, Landroid/view/MagnificationSpec;->scale:F
 
-    iget v2, p3, Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$MagnificationSpec;->mScale:F
+    iget v2, p3, Landroid/view/MagnificationSpec;->scale:F
 
-    iget v3, p2, Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$MagnificationSpec;->mScale:F
-
-    sub-float/2addr v2, v3
-
-    mul-float/2addr v2, p1
-
-    add-float/2addr v1, v2
-
-    iput v1, v0, Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$MagnificationSpec;->mScale:F
-
-    iget v1, p2, Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$MagnificationSpec;->mMagnifiedRegionCenterX:F
-
-    iget v2, p3, Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$MagnificationSpec;->mMagnifiedRegionCenterX:F
-
-    iget v3, p2, Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$MagnificationSpec;->mMagnifiedRegionCenterX:F
+    iget v3, p2, Landroid/view/MagnificationSpec;->scale:F
 
     sub-float/2addr v2, v3
 
@@ -99,27 +81,13 @@
 
     add-float/2addr v1, v2
 
-    iput v1, v0, Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$MagnificationSpec;->mMagnifiedRegionCenterX:F
+    iput v1, v0, Landroid/view/MagnificationSpec;->scale:F
 
-    iget v1, p2, Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$MagnificationSpec;->mMagnifiedRegionCenterY:F
+    iget v1, p2, Landroid/view/MagnificationSpec;->offsetX:F
 
-    iget v2, p3, Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$MagnificationSpec;->mMagnifiedRegionCenterY:F
+    iget v2, p3, Landroid/view/MagnificationSpec;->offsetX:F
 
-    iget v3, p2, Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$MagnificationSpec;->mMagnifiedRegionCenterY:F
-
-    sub-float/2addr v2, v3
-
-    mul-float/2addr v2, p1
-
-    add-float/2addr v1, v2
-
-    iput v1, v0, Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$MagnificationSpec;->mMagnifiedRegionCenterY:F
-
-    iget v1, p2, Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$MagnificationSpec;->mScaledOffsetX:F
-
-    iget v2, p3, Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$MagnificationSpec;->mScaledOffsetX:F
-
-    iget v3, p2, Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$MagnificationSpec;->mScaledOffsetX:F
+    iget v3, p2, Landroid/view/MagnificationSpec;->offsetX:F
 
     sub-float/2addr v2, v3
 
@@ -127,13 +95,13 @@
 
     add-float/2addr v1, v2
 
-    iput v1, v0, Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$MagnificationSpec;->mScaledOffsetX:F
+    iput v1, v0, Landroid/view/MagnificationSpec;->offsetX:F
 
-    iget v1, p2, Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$MagnificationSpec;->mScaledOffsetY:F
+    iget v1, p2, Landroid/view/MagnificationSpec;->offsetY:F
 
-    iget v2, p3, Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$MagnificationSpec;->mScaledOffsetY:F
+    iget v2, p3, Landroid/view/MagnificationSpec;->offsetY:F
 
-    iget v3, p2, Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$MagnificationSpec;->mScaledOffsetY:F
+    iget v3, p2, Landroid/view/MagnificationSpec;->offsetY:F
 
     sub-float/2addr v2, v3
 
@@ -141,7 +109,7 @@
 
     add-float/2addr v1, v2
 
-    iput v1, v0, Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$MagnificationSpec;->mScaledOffsetY:F
+    iput v1, v0, Landroid/view/MagnificationSpec;->offsetY:F
 
     return-object v0
 .end method
@@ -153,13 +121,13 @@
     .parameter "x2"
 
     .prologue
-    check-cast p2, Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$MagnificationSpec;
+    check-cast p2, Landroid/view/MagnificationSpec;
 
     .end local p2
-    check-cast p3, Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$MagnificationSpec;
+    check-cast p3, Landroid/view/MagnificationSpec;
 
     .end local p3
-    invoke-virtual {p0, p1, p2, p3}, Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$1;->evaluate(FLcom/android/server/accessibility/ScreenMagnifier$MagnificationController$MagnificationSpec;Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$MagnificationSpec;)Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$MagnificationSpec;
+    invoke-virtual {p0, p1, p2, p3}, Lcom/android/server/accessibility/ScreenMagnifier$MagnificationController$1;->evaluate(FLandroid/view/MagnificationSpec;Landroid/view/MagnificationSpec;)Landroid/view/MagnificationSpec;
 
     move-result-object v0
 

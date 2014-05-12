@@ -12,9 +12,17 @@
 
 .field public static final NV21:I = 0x11
 
+.field public static final RAW_SENSOR:I = 0x20
+
 .field public static final RGB_565:I = 0x4
 
 .field public static final UNKNOWN:I = 0x0
+
+.field public static final Y16:I = 0x20363159
+
+.field public static final Y8:I = 0x20203859
+
+.field public static final YUV_420_888:I = 0x23
 
 .field public static final YUY2:I = 0x14
 
@@ -54,19 +62,31 @@
     goto :goto_0
 
     :sswitch_2
+    const/16 v0, 0x8
+
+    goto :goto_0
+
+    :sswitch_3
     move v0, v1
 
     goto :goto_0
 
-    nop
+    :sswitch_4
+    move v0, v1
+
+    goto :goto_0
 
     :sswitch_data_0
     .sparse-switch
         0x4 -> :sswitch_0
         0x10 -> :sswitch_0
-        0x11 -> :sswitch_2
+        0x11 -> :sswitch_3
         0x14 -> :sswitch_0
+        0x20 -> :sswitch_0
+        0x23 -> :sswitch_4
         0x200 -> :sswitch_0
+        0x20203859 -> :sswitch_2
+        0x20363159 -> :sswitch_0
         0x32315659 -> :sswitch_1
     .end sparse-switch
 .end method

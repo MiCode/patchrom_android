@@ -24,10 +24,14 @@
 
 .field public static final ERROR_UNKNOWN:I = -0x7d0
 
+.field public static final INVALID_SESSION:I = -0x1
+
 .field private static final TAG:Ljava/lang/String; = "DrmManagerClient"
 
 
 # instance fields
+.field private final mCloseGuard:Ldalvik/system/CloseGuard;
+
 .field private mContext:Landroid/content/Context;
 
 .field private mEventHandler:Landroid/drm/DrmManagerClient$EventHandler;
@@ -46,7 +50,7 @@
 
 .field private mOnInfoListener:Landroid/drm/DrmManagerClient$OnInfoListener;
 
-.field private mReleased:Z
+.field private volatile mReleased:Z
 
 .field private mUniqueId:I
 
@@ -64,17 +68,19 @@
 .end method
 
 .method public constructor <init>(Landroid/content/Context;)V
-    .locals 1
+    .locals 2
     .parameter "context"
 
     .prologue
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
+    invoke-static {}, Ldalvik/system/CloseGuard;->get()Ldalvik/system/CloseGuard;
+
+    move-result-object v0
+
+    iput-object v0, p0, Landroid/drm/DrmManagerClient;->mCloseGuard:Ldalvik/system/CloseGuard;
+
     iput-object p1, p0, Landroid/drm/DrmManagerClient;->mContext:Landroid/content/Context;
-
-    const/4 v0, 0x0
-
-    iput-boolean v0, p0, Landroid/drm/DrmManagerClient;->mReleased:Z
 
     invoke-direct {p0}, Landroid/drm/DrmManagerClient;->createEventThreads()V
 
@@ -83,6 +89,12 @@
     move-result v0
 
     iput v0, p0, Landroid/drm/DrmManagerClient;->mUniqueId:I
+
+    iget-object v0, p0, Landroid/drm/DrmManagerClient;->mCloseGuard:Ldalvik/system/CloseGuard;
+
+    const-string v1, "release"
+
+    invoke-virtual {v0, v1}, Ldalvik/system/CloseGuard;->open(Ljava/lang/String;)V
 
     return-void
 .end method
@@ -913,23 +925,38 @@
 .end method
 
 .method protected finalize()V
-    .locals 2
+    .locals 1
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Ljava/lang/Throwable;
+        }
+    .end annotation
 
     .prologue
-    iget-boolean v0, p0, Landroid/drm/DrmManagerClient;->mReleased:Z
+    :try_start_0
+    iget-object v0, p0, Landroid/drm/DrmManagerClient;->mCloseGuard:Ldalvik/system/CloseGuard;
 
-    if-nez v0, :cond_0
+    if-eqz v0, :cond_0
 
-    const-string v0, "DrmManagerClient"
+    iget-object v0, p0, Landroid/drm/DrmManagerClient;->mCloseGuard:Ldalvik/system/CloseGuard;
 
-    const-string v1, "You should have called release()"
-
-    invoke-static {v0, v1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
-
-    invoke-virtual {p0}, Landroid/drm/DrmManagerClient;->release()V
+    invoke-virtual {v0}, Ldalvik/system/CloseGuard;->warnIfOpen()V
 
     :cond_0
+    invoke-virtual {p0}, Landroid/drm/DrmManagerClient;->release()V
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    invoke-super {p0}, Ljava/lang/Object;->finalize()V
+
     return-void
+
+    :catchall_0
+    move-exception v0
+
+    invoke-super {p0}, Ljava/lang/Object;->finalize()V
+
+    throw v0
 .end method
 
 .method public getAvailableDrmEngines()[Ljava/lang/String;
@@ -1325,7 +1352,7 @@
     invoke-virtual {v3}, Ljava/io/FileInputStream;->getFD()Ljava/io/FileDescriptor;
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_1
-    .catch Ljava/io/IOException; {:try_start_1 .. :try_end_1} :catch_3
+    .catch Ljava/io/IOException; {:try_start_1 .. :try_end_1} :catch_4
 
     move-result-object v0
 
@@ -1349,38 +1376,23 @@
     :try_start_3
     invoke-virtual {v2}, Ljava/io/FileInputStream;->close()V
     :try_end_3
-    .catch Ljava/io/IOException; {:try_start_3 .. :try_end_3} :catch_1
+    .catch Ljava/io/IOException; {:try_start_3 .. :try_end_3} :catch_2
 
     .end local v1           #file:Ljava/io/File;
     :cond_3
     :goto_0
     return-object v4
 
-    :catchall_0
+    :catch_0
     move-exception v5
 
     :goto_1
-    if-eqz v2, :cond_4
+    if-eqz v2, :cond_3
 
     :try_start_4
     invoke-virtual {v2}, Ljava/io/FileInputStream;->close()V
     :try_end_4
-    .catch Ljava/io/IOException; {:try_start_4 .. :try_end_4} :catch_2
-
-    :cond_4
-    :goto_2
-    throw v5
-
-    :catch_0
-    move-exception v5
-
-    :goto_3
-    if-eqz v2, :cond_3
-
-    :try_start_5
-    invoke-virtual {v2}, Ljava/io/FileInputStream;->close()V
-    :try_end_5
-    .catch Ljava/io/IOException; {:try_start_5 .. :try_end_5} :catch_1
+    .catch Ljava/io/IOException; {:try_start_4 .. :try_end_4} :catch_1
 
     goto :goto_0
 
@@ -1389,10 +1401,32 @@
 
     goto :goto_0
 
+    :catchall_0
+    move-exception v5
+
+    :goto_2
+    if-eqz v2, :cond_4
+
+    :try_start_5
+    invoke-virtual {v2}, Ljava/io/FileInputStream;->close()V
+    :try_end_5
+    .catch Ljava/io/IOException; {:try_start_5 .. :try_end_5} :catch_3
+
+    :cond_4
+    :goto_3
+    throw v5
+
+    .restart local v1       #file:Ljava/io/File;
     :catch_2
+    move-exception v5
+
+    goto :goto_0
+
+    .end local v1           #file:Ljava/io/File;
+    :catch_3
     move-exception v6
 
-    goto :goto_2
+    goto :goto_3
 
     .end local v2           #is:Ljava/io/FileInputStream;
     .restart local v1       #file:Ljava/io/File;
@@ -1404,18 +1438,18 @@
 
     .end local v3           #is:Ljava/io/FileInputStream;
     .restart local v2       #is:Ljava/io/FileInputStream;
-    goto :goto_1
+    goto :goto_2
 
     .end local v2           #is:Ljava/io/FileInputStream;
     .restart local v3       #is:Ljava/io/FileInputStream;
-    :catch_3
+    :catch_4
     move-exception v5
 
     move-object v2, v3
 
     .end local v3           #is:Ljava/io/FileInputStream;
     .restart local v2       #is:Ljava/io/FileInputStream;
-    goto :goto_3
+    goto :goto_1
 .end method
 
 .method public installDrmEngine(Ljava/lang/String;)V
@@ -1570,12 +1604,6 @@
 
     if-eqz v0, :cond_0
 
-    const-string v0, "DrmManagerClient"
-
-    const-string v1, "You have already called release()"
-
-    invoke-static {v0, v1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
-
     :goto_0
     return-void
 
@@ -1619,6 +1647,10 @@
     iget v0, p0, Landroid/drm/DrmManagerClient;->mUniqueId:I
 
     invoke-direct {p0, v0}, Landroid/drm/DrmManagerClient;->_release(I)V
+
+    iget-object v0, p0, Landroid/drm/DrmManagerClient;->mCloseGuard:Ldalvik/system/CloseGuard;
+
+    invoke-virtual {v0}, Ldalvik/system/CloseGuard;->close()V
 
     goto :goto_0
 .end method

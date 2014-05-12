@@ -9,19 +9,21 @@
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
-    accessFlags = 0x1a
+    accessFlags = 0x18
     name = "NinePatchState"
 .end annotation
 
 
 # instance fields
+.field mAutoMirrored:Z
+
 .field mChangingConfigurations:I
 
 .field final mDither:Z
 
-.field final mLayoutInsets:Landroid/graphics/Insets;
-
 .field final mNinePatch:Landroid/graphics/NinePatch;
+
+.field final mOpticalInsets:Landroid/graphics/Insets;
 
 .field final mPadding:Landroid/graphics/Rect;
 
@@ -30,42 +32,61 @@
 
 # direct methods
 .method constructor <init>(Landroid/graphics/NinePatch;Landroid/graphics/Rect;)V
-    .locals 2
+    .locals 6
     .parameter "ninePatch"
     .parameter "padding"
 
     .prologue
-    new-instance v0, Landroid/graphics/Rect;
+    const/4 v4, 0x0
 
-    invoke-direct {v0}, Landroid/graphics/Rect;-><init>()V
+    new-instance v3, Landroid/graphics/Rect;
 
-    const/4 v1, 0x1
+    invoke-direct {v3}, Landroid/graphics/Rect;-><init>()V
 
-    invoke-direct {p0, p1, p2, v0, v1}, Landroid/graphics/drawable/NinePatchDrawable$NinePatchState;-><init>(Landroid/graphics/NinePatch;Landroid/graphics/Rect;Landroid/graphics/Rect;Z)V
+    move-object v0, p0
+
+    move-object v1, p1
+
+    move-object v2, p2
+
+    move v5, v4
+
+    invoke-direct/range {v0 .. v5}, Landroid/graphics/drawable/NinePatchDrawable$NinePatchState;-><init>(Landroid/graphics/NinePatch;Landroid/graphics/Rect;Landroid/graphics/Rect;ZZ)V
 
     return-void
 .end method
 
 .method constructor <init>(Landroid/graphics/NinePatch;Landroid/graphics/Rect;Landroid/graphics/Rect;)V
-    .locals 1
+    .locals 6
     .parameter "ninePatch"
     .parameter "padding"
-    .parameter "layoutInsets"
+    .parameter "opticalInsets"
 
     .prologue
-    const/4 v0, 0x1
+    const/4 v4, 0x0
 
-    invoke-direct {p0, p1, p2, p3, v0}, Landroid/graphics/drawable/NinePatchDrawable$NinePatchState;-><init>(Landroid/graphics/NinePatch;Landroid/graphics/Rect;Landroid/graphics/Rect;Z)V
+    move-object v0, p0
+
+    move-object v1, p1
+
+    move-object v2, p2
+
+    move-object v3, p3
+
+    move v5, v4
+
+    invoke-direct/range {v0 .. v5}, Landroid/graphics/drawable/NinePatchDrawable$NinePatchState;-><init>(Landroid/graphics/NinePatch;Landroid/graphics/Rect;Landroid/graphics/Rect;ZZ)V
 
     return-void
 .end method
 
-.method constructor <init>(Landroid/graphics/NinePatch;Landroid/graphics/Rect;Landroid/graphics/Rect;Z)V
+.method constructor <init>(Landroid/graphics/NinePatch;Landroid/graphics/Rect;Landroid/graphics/Rect;ZZ)V
     .locals 1
     .parameter "ninePatch"
     .parameter "rect"
-    .parameter "layoutInsets"
+    .parameter "opticalInsets"
     .parameter "dither"
+    .parameter "autoMirror"
 
     .prologue
     invoke-direct {p0}, Landroid/graphics/drawable/Drawable$ConstantState;-><init>()V
@@ -82,15 +103,17 @@
 
     move-result-object v0
 
-    iput-object v0, p0, Landroid/graphics/drawable/NinePatchDrawable$NinePatchState;->mLayoutInsets:Landroid/graphics/Insets;
+    iput-object v0, p0, Landroid/graphics/drawable/NinePatchDrawable$NinePatchState;->mOpticalInsets:Landroid/graphics/Insets;
 
     iput-boolean p4, p0, Landroid/graphics/drawable/NinePatchDrawable$NinePatchState;->mDither:Z
+
+    iput-boolean p5, p0, Landroid/graphics/drawable/NinePatchDrawable$NinePatchState;->mAutoMirrored:Z
 
     return-void
 .end method
 
 .method constructor <init>(Landroid/graphics/drawable/NinePatchDrawable$NinePatchState;)V
-    .locals 2
+    .locals 1
     .parameter "state"
 
     .prologue
@@ -100,11 +123,7 @@
 
     iput v0, p0, Landroid/graphics/drawable/NinePatchDrawable$NinePatchState;->mTargetDensity:I
 
-    new-instance v0, Landroid/graphics/NinePatch;
-
-    iget-object v1, p1, Landroid/graphics/drawable/NinePatchDrawable$NinePatchState;->mNinePatch:Landroid/graphics/NinePatch;
-
-    invoke-direct {v0, v1}, Landroid/graphics/NinePatch;-><init>(Landroid/graphics/NinePatch;)V
+    iget-object v0, p1, Landroid/graphics/drawable/NinePatchDrawable$NinePatchState;->mNinePatch:Landroid/graphics/NinePatch;
 
     iput-object v0, p0, Landroid/graphics/drawable/NinePatchDrawable$NinePatchState;->mNinePatch:Landroid/graphics/NinePatch;
 
@@ -112,9 +131,9 @@
 
     iput-object v0, p0, Landroid/graphics/drawable/NinePatchDrawable$NinePatchState;->mPadding:Landroid/graphics/Rect;
 
-    iget-object v0, p1, Landroid/graphics/drawable/NinePatchDrawable$NinePatchState;->mLayoutInsets:Landroid/graphics/Insets;
+    iget-object v0, p1, Landroid/graphics/drawable/NinePatchDrawable$NinePatchState;->mOpticalInsets:Landroid/graphics/Insets;
 
-    iput-object v0, p0, Landroid/graphics/drawable/NinePatchDrawable$NinePatchState;->mLayoutInsets:Landroid/graphics/Insets;
+    iput-object v0, p0, Landroid/graphics/drawable/NinePatchDrawable$NinePatchState;->mOpticalInsets:Landroid/graphics/Insets;
 
     iget-boolean v0, p1, Landroid/graphics/drawable/NinePatchDrawable$NinePatchState;->mDither:Z
 
@@ -128,11 +147,28 @@
 
     iput v0, p0, Landroid/graphics/drawable/NinePatchDrawable$NinePatchState;->mTargetDensity:I
 
+    iget-boolean v0, p1, Landroid/graphics/drawable/NinePatchDrawable$NinePatchState;->mAutoMirrored:Z
+
+    iput-boolean v0, p0, Landroid/graphics/drawable/NinePatchDrawable$NinePatchState;->mAutoMirrored:Z
+
     return-void
 .end method
 
 
 # virtual methods
+.method public getBitmap()Landroid/graphics/Bitmap;
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Landroid/graphics/drawable/NinePatchDrawable$NinePatchState;->mNinePatch:Landroid/graphics/NinePatch;
+
+    invoke-virtual {v0}, Landroid/graphics/NinePatch;->getBitmap()Landroid/graphics/Bitmap;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
 .method public getChangingConfigurations()I
     .locals 1
 

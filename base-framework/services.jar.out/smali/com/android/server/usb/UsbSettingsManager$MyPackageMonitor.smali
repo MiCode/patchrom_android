@@ -58,7 +58,7 @@
     return-void
 .end method
 
-.method public onPackageChanged(Ljava/lang/String;I[Ljava/lang/String;)V
+.method public onPackageChanged(Ljava/lang/String;I[Ljava/lang/String;)Z
     .locals 1
     .parameter "packageName"
     .parameter "uid"
@@ -70,7 +70,9 @@
     #calls: Lcom/android/server/usb/UsbSettingsManager;->handlePackageUpdate(Ljava/lang/String;)V
     invoke-static {v0, p1}, Lcom/android/server/usb/UsbSettingsManager;->access$000(Lcom/android/server/usb/UsbSettingsManager;Ljava/lang/String;)V
 
-    return-void
+    const/4 v0, 0x0
+
+    return v0
 .end method
 
 .method public onPackageRemoved(Ljava/lang/String;I)V

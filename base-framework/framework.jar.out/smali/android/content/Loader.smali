@@ -49,6 +49,8 @@
     .end annotation
 .end field
 
+.field mProcessingChange:Z
+
 .field mReset:Z
 
 .field mStarted:Z
@@ -74,6 +76,8 @@
     iput-boolean v0, p0, Landroid/content/Loader;->mReset:Z
 
     iput-boolean v1, p0, Landroid/content/Loader;->mContentChanged:Z
+
+    iput-boolean v1, p0, Landroid/content/Loader;->mProcessingChange:Z
 
     invoke-virtual {p1}, Landroid/content/Context;->getApplicationContext()Landroid/content/Context;
 
@@ -110,6 +114,18 @@
     move-result v0
 
     return v0
+.end method
+
+.method public commitContentChanged()V
+    .locals 1
+
+    .prologue
+    .local p0, this:Landroid/content/Loader;,"Landroid/content/Loader<TD;>;"
+    const/4 v0, 0x0
+
+    iput-boolean v0, p0, Landroid/content/Loader;->mProcessingChange:Z
+
+    return-void
 .end method
 
 .method public dataToString(Ljava/lang/Object;)Ljava/lang/String;
@@ -213,6 +229,19 @@
 
     invoke-virtual {p3, v0}, Ljava/io/PrintWriter;->println(Ljava/lang/Object;)V
 
+    iget-boolean v0, p0, Landroid/content/Loader;->mStarted:Z
+
+    if-nez v0, :cond_0
+
+    iget-boolean v0, p0, Landroid/content/Loader;->mContentChanged:Z
+
+    if-nez v0, :cond_0
+
+    iget-boolean v0, p0, Landroid/content/Loader;->mProcessingChange:Z
+
+    if-eqz v0, :cond_1
+
+    :cond_0
     invoke-virtual {p3, p1}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
     const-string v0, "mStarted="
@@ -231,7 +260,27 @@
 
     invoke-virtual {p3, v0}, Ljava/io/PrintWriter;->print(Z)V
 
-    const-string v0, " mAbandoned="
+    const-string v0, " mProcessingChange="
+
+    invoke-virtual {p3, v0}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
+
+    iget-boolean v0, p0, Landroid/content/Loader;->mProcessingChange:Z
+
+    invoke-virtual {p3, v0}, Ljava/io/PrintWriter;->println(Z)V
+
+    :cond_1
+    iget-boolean v0, p0, Landroid/content/Loader;->mAbandoned:Z
+
+    if-nez v0, :cond_2
+
+    iget-boolean v0, p0, Landroid/content/Loader;->mReset:Z
+
+    if-eqz v0, :cond_3
+
+    :cond_2
+    invoke-virtual {p3, p1}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
+
+    const-string v0, "mAbandoned="
 
     invoke-virtual {p3, v0}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
@@ -247,6 +296,7 @@
 
     invoke-virtual {p3, v0}, Ljava/io/PrintWriter;->println(Z)V
 
+    :cond_3
     return-void
 .end method
 
@@ -468,6 +518,25 @@
 
     iput-boolean v1, p0, Landroid/content/Loader;->mContentChanged:Z
 
+    iput-boolean v1, p0, Landroid/content/Loader;->mProcessingChange:Z
+
+    return-void
+.end method
+
+.method public rollbackContentChanged()V
+    .locals 1
+
+    .prologue
+    .local p0, this:Landroid/content/Loader;,"Landroid/content/Loader<TD;>;"
+    iget-boolean v0, p0, Landroid/content/Loader;->mProcessingChange:Z
+
+    if-eqz v0, :cond_0
+
+    const/4 v0, 0x1
+
+    iput-boolean v0, p0, Landroid/content/Loader;->mContentChanged:Z
+
+    :cond_0
     return-void
 .end method
 
@@ -516,6 +585,12 @@
     const/4 v1, 0x0
 
     iput-boolean v1, p0, Landroid/content/Loader;->mContentChanged:Z
+
+    iget-boolean v1, p0, Landroid/content/Loader;->mProcessingChange:Z
+
+    or-int/2addr v1, v0
+
+    iput-boolean v1, p0, Landroid/content/Loader;->mProcessingChange:Z
 
     return v0
 .end method

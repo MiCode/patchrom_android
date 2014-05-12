@@ -111,10 +111,12 @@
 .end method
 
 .method public onAnimationEnd(Landroid/animation/Animator;)V
-    .locals 9
+    .locals 10
     .parameter "animation"
 
     .prologue
+    const/4 v9, 0x0
+
     invoke-virtual {p1, p0}, Landroid/animation/Animator;->removeListener(Landroid/animation/Animator$AnimatorListener;)V
 
     iget-object v7, p0, Landroid/animation/AnimatorSet$AnimatorSetListener;->this$0:Landroid/animation/AnimatorSet;
@@ -129,7 +131,7 @@
     iget-object v7, p0, Landroid/animation/AnimatorSet$AnimatorSetListener;->mAnimatorSet:Landroid/animation/AnimatorSet;
 
     #getter for: Landroid/animation/AnimatorSet;->mNodeMap:Ljava/util/HashMap;
-    invoke-static {v7}, Landroid/animation/AnimatorSet;->access$100(Landroid/animation/AnimatorSet;)Ljava/util/HashMap;
+    invoke-static {v7}, Landroid/animation/AnimatorSet;->access$200(Landroid/animation/AnimatorSet;)Ljava/util/HashMap;
 
     move-result-object v7
 
@@ -153,7 +155,7 @@
     iget-object v7, p0, Landroid/animation/AnimatorSet$AnimatorSetListener;->mAnimatorSet:Landroid/animation/AnimatorSet;
 
     #getter for: Landroid/animation/AnimatorSet;->mSortedNodes:Ljava/util/ArrayList;
-    invoke-static {v7}, Landroid/animation/AnimatorSet;->access$200(Landroid/animation/AnimatorSet;)Ljava/util/ArrayList;
+    invoke-static {v7}, Landroid/animation/AnimatorSet;->access$300(Landroid/animation/AnimatorSet;)Ljava/util/ArrayList;
 
     move-result-object v5
 
@@ -238,10 +240,12 @@
     :cond_2
     iget-object v7, p0, Landroid/animation/AnimatorSet$AnimatorSetListener;->mAnimatorSet:Landroid/animation/AnimatorSet;
 
-    const/4 v8, 0x0
-
     #setter for: Landroid/animation/AnimatorSet;->mStarted:Z
-    invoke-static {v7, v8}, Landroid/animation/AnimatorSet;->access$302(Landroid/animation/AnimatorSet;Z)Z
+    invoke-static {v7, v9}, Landroid/animation/AnimatorSet;->access$402(Landroid/animation/AnimatorSet;Z)Z
+
+    iget-object v7, p0, Landroid/animation/AnimatorSet$AnimatorSetListener;->mAnimatorSet:Landroid/animation/AnimatorSet;
+
+    iput-boolean v9, v7, Landroid/animation/AnimatorSet;->mPaused:Z
 
     .end local v0           #allDone:Z
     .end local v2           #i:I

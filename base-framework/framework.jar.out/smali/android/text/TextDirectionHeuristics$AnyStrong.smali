@@ -65,13 +65,17 @@
 
 
 # virtual methods
-.method public checkRtl([CII)Landroid/text/TextDirectionHeuristics$TriState;
-    .locals 5
-    .parameter "text"
+.method public checkRtl(Ljava/lang/CharSequence;II)I
+    .locals 6
+    .parameter "cs"
     .parameter "start"
     .parameter "count"
 
     .prologue
+    const/4 v3, 0x1
+
+    const/4 v4, 0x0
+
     const/4 v1, 0x0
 
     .local v1, haveUnlookedFor:Z
@@ -84,26 +88,20 @@
     :goto_0
     if-ge v2, v0, :cond_2
 
-    sget-object v3, Landroid/text/TextDirectionHeuristics$1;->$SwitchMap$android$text$TextDirectionHeuristics$TriState:[I
+    invoke-interface {p1, v2}, Ljava/lang/CharSequence;->charAt(I)C
 
-    aget-char v4, p1, v2
+    move-result v5
 
-    invoke-static {v4}, Ljava/lang/Character;->getDirectionality(C)B
+    invoke-static {v5}, Ljava/lang/Character;->getDirectionality(C)B
 
-    move-result v4
+    move-result v5
 
-    #calls: Landroid/text/TextDirectionHeuristics;->isRtlText(I)Landroid/text/TextDirectionHeuristics$TriState;
-    invoke-static {v4}, Landroid/text/TextDirectionHeuristics;->access$200(I)Landroid/text/TextDirectionHeuristics$TriState;
+    #calls: Landroid/text/TextDirectionHeuristics;->isRtlText(I)I
+    invoke-static {v5}, Landroid/text/TextDirectionHeuristics;->access$200(I)I
 
-    move-result-object v4
+    move-result v5
 
-    invoke-virtual {v4}, Landroid/text/TextDirectionHeuristics$TriState;->ordinal()I
-
-    move-result v4
-
-    aget v3, v3, v4
-
-    packed-switch v3, :pswitch_data_0
+    packed-switch v5, :pswitch_data_0
 
     :goto_1
     add-int/lit8 v2, v2, 0x1
@@ -111,59 +109,48 @@
     goto :goto_0
 
     :pswitch_0
-    iget-boolean v3, p0, Landroid/text/TextDirectionHeuristics$AnyStrong;->mLookForRtl:Z
+    iget-boolean v5, p0, Landroid/text/TextDirectionHeuristics$AnyStrong;->mLookForRtl:Z
 
-    if-eqz v3, :cond_0
+    if-eqz v5, :cond_1
 
-    sget-object v3, Landroid/text/TextDirectionHeuristics$TriState;->TRUE:Landroid/text/TextDirectionHeuristics$TriState;
-
-    :goto_2
-    return-object v3
+    move v3, v4
 
     :cond_0
-    const/4 v1, 0x1
-
-    goto :goto_1
-
-    :pswitch_1
-    iget-boolean v3, p0, Landroid/text/TextDirectionHeuristics$AnyStrong;->mLookForRtl:Z
-
-    if-nez v3, :cond_1
-
-    sget-object v3, Landroid/text/TextDirectionHeuristics$TriState;->FALSE:Landroid/text/TextDirectionHeuristics$TriState;
-
-    goto :goto_2
+    :goto_2
+    return v3
 
     :cond_1
     const/4 v1, 0x1
 
     goto :goto_1
 
+    :pswitch_1
+    iget-boolean v5, p0, Landroid/text/TextDirectionHeuristics$AnyStrong;->mLookForRtl:Z
+
+    if-eqz v5, :cond_0
+
+    const/4 v1, 0x1
+
+    goto :goto_1
+
     :cond_2
-    if-eqz v1, :cond_4
+    if-eqz v1, :cond_3
 
-    iget-boolean v3, p0, Landroid/text/TextDirectionHeuristics$AnyStrong;->mLookForRtl:Z
+    iget-boolean v5, p0, Landroid/text/TextDirectionHeuristics$AnyStrong;->mLookForRtl:Z
 
-    if-eqz v3, :cond_3
+    if-nez v5, :cond_0
 
-    sget-object v3, Landroid/text/TextDirectionHeuristics$TriState;->FALSE:Landroid/text/TextDirectionHeuristics$TriState;
+    move v3, v4
 
     goto :goto_2
 
     :cond_3
-    sget-object v3, Landroid/text/TextDirectionHeuristics$TriState;->TRUE:Landroid/text/TextDirectionHeuristics$TriState;
+    const/4 v3, 0x2
 
     goto :goto_2
-
-    :cond_4
-    sget-object v3, Landroid/text/TextDirectionHeuristics$TriState;->UNKNOWN:Landroid/text/TextDirectionHeuristics$TriState;
-
-    goto :goto_2
-
-    nop
 
     :pswitch_data_0
-    .packed-switch 0x1
+    .packed-switch 0x0
         :pswitch_0
         :pswitch_1
     .end packed-switch

@@ -46,7 +46,7 @@
     .prologue
     iget-object v0, p0, Landroid/view/ViewGroup$3;->this$0:Landroid/view/ViewGroup;
 
-    #getter for: Landroid/view/ViewGroup;->mLayoutSuppressed:Z
+    #getter for: Landroid/view/ViewGroup;->mLayoutCalledWhileSuppressed:Z
     invoke-static {v0}, Landroid/view/ViewGroup;->access$300(Landroid/view/ViewGroup;)Z
 
     move-result v0
@@ -67,7 +67,7 @@
 
     const/4 v1, 0x0
 
-    #setter for: Landroid/view/ViewGroup;->mLayoutSuppressed:Z
+    #setter for: Landroid/view/ViewGroup;->mLayoutCalledWhileSuppressed:Z
     invoke-static {v0, v1}, Landroid/view/ViewGroup;->access$302(Landroid/view/ViewGroup;Z)Z
 
     :cond_0

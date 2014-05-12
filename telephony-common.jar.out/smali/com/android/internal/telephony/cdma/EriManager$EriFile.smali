@@ -15,13 +15,13 @@
 
 
 # instance fields
-.field public mCallPromptId:[Ljava/lang/String;
+.field mCallPromptId:[Ljava/lang/String;
 
-.field public mEriFileType:I
+.field mEriFileType:I
 
-.field public mNumberOfEriEntries:I
+.field mNumberOfEriEntries:I
 
-.field public mRoamIndTable:Ljava/util/HashMap;
+.field mRoamIndTable:Ljava/util/HashMap;
     .annotation system Ldalvik/annotation/Signature;
         value = {
             "Ljava/util/HashMap",
@@ -33,13 +33,13 @@
     .end annotation
 .end field
 
-.field public mVersionNumber:I
+.field mVersionNumber:I
 
 .field final synthetic this$0:Lcom/android/internal/telephony/cdma/EriManager;
 
 
 # direct methods
-.method public constructor <init>(Lcom/android/internal/telephony/cdma/EriManager;)V
+.method constructor <init>(Lcom/android/internal/telephony/cdma/EriManager;)V
     .locals 3
     .parameter
 

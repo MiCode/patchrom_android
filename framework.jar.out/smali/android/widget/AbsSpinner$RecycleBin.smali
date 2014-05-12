@@ -82,7 +82,7 @@
     const/4 v5, 0x1
 
     #calls: Landroid/widget/AbsSpinner;->removeDetachedView(Landroid/view/View;Z)V
-    invoke-static {v4, v3, v5}, Landroid/widget/AbsSpinner;->access$100(Landroid/widget/AbsSpinner;Landroid/view/View;Z)V
+    invoke-static {v4, v3, v5}, Landroid/widget/AbsSpinner;->access$000(Landroid/widget/AbsSpinner;Landroid/view/View;Z)V
 
     :cond_0
     add-int/lit8 v1, v1, 0x1

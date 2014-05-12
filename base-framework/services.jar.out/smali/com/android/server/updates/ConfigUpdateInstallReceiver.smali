@@ -18,11 +18,11 @@
 
 
 # instance fields
-.field private final updateContent:Ljava/io/File;
+.field protected final updateContent:Ljava/io/File;
 
-.field private final updateDir:Ljava/io/File;
+.field protected final updateDir:Ljava/io/File;
 
-.field private final updateVersion:Ljava/io/File;
+.field protected final updateVersion:Ljava/io/File;
 
 
 # direct methods
@@ -75,7 +75,7 @@
     return-object v0
 .end method
 
-.method static synthetic access$100(Lcom/android/server/updates/ConfigUpdateInstallReceiver;Landroid/content/Intent;)Ljava/lang/String;
+.method static synthetic access$100(Lcom/android/server/updates/ConfigUpdateInstallReceiver;Landroid/content/Intent;)[B
     .locals 1
     .parameter "x0"
     .parameter "x1"
@@ -86,14 +86,14 @@
     .end annotation
 
     .prologue
-    invoke-direct {p0, p1}, Lcom/android/server/updates/ConfigUpdateInstallReceiver;->getAltContent(Landroid/content/Intent;)Ljava/lang/String;
+    invoke-direct {p0, p1}, Lcom/android/server/updates/ConfigUpdateInstallReceiver;->getAltContent(Landroid/content/Intent;)[B
 
     move-result-object v0
 
     return-object v0
 .end method
 
-.method static synthetic access$1000(Lcom/android/server/updates/ConfigUpdateInstallReceiver;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Ljava/security/cert/X509Certificate;)Z
+.method static synthetic access$1000(Lcom/android/server/updates/ConfigUpdateInstallReceiver;[BILjava/lang/String;Ljava/lang/String;Ljava/security/cert/X509Certificate;)Z
     .locals 1
     .parameter "x0"
     .parameter "x1"
@@ -108,28 +108,11 @@
     .end annotation
 
     .prologue
-    invoke-direct/range {p0 .. p5}, Lcom/android/server/updates/ConfigUpdateInstallReceiver;->verifySignature(Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Ljava/security/cert/X509Certificate;)Z
+    invoke-direct/range {p0 .. p5}, Lcom/android/server/updates/ConfigUpdateInstallReceiver;->verifySignature([BILjava/lang/String;Ljava/lang/String;Ljava/security/cert/X509Certificate;)Z
 
     move-result v0
 
     return v0
-.end method
-
-.method static synthetic access$1100(Lcom/android/server/updates/ConfigUpdateInstallReceiver;Ljava/lang/String;I)V
-    .locals 0
-    .parameter "x0"
-    .parameter "x1"
-    .parameter "x2"
-    .annotation system Ldalvik/annotation/Throws;
-        value = {
-            Ljava/io/IOException;
-        }
-    .end annotation
-
-    .prologue
-    invoke-direct {p0, p1, p2}, Lcom/android/server/updates/ConfigUpdateInstallReceiver;->install(Ljava/lang/String;I)V
-
-    return-void
 .end method
 
 .method static synthetic access$200(Lcom/android/server/updates/ConfigUpdateInstallReceiver;Landroid/content/Intent;)I
@@ -193,24 +176,24 @@
     return v0
 .end method
 
-.method static synthetic access$600(Lcom/android/server/updates/ConfigUpdateInstallReceiver;)Ljava/lang/String;
+.method static synthetic access$600(Lcom/android/server/updates/ConfigUpdateInstallReceiver;)[B
     .locals 1
     .parameter "x0"
 
     .prologue
-    invoke-direct {p0}, Lcom/android/server/updates/ConfigUpdateInstallReceiver;->getCurrentContent()Ljava/lang/String;
+    invoke-direct {p0}, Lcom/android/server/updates/ConfigUpdateInstallReceiver;->getCurrentContent()[B
 
     move-result-object v0
 
     return-object v0
 .end method
 
-.method static synthetic access$700(Ljava/lang/String;)Ljava/lang/String;
+.method static synthetic access$700([B)Ljava/lang/String;
     .locals 1
     .parameter "x0"
 
     .prologue
-    invoke-static {p0}, Lcom/android/server/updates/ConfigUpdateInstallReceiver;->getCurrentHash(Ljava/lang/String;)Ljava/lang/String;
+    invoke-static {p0}, Lcom/android/server/updates/ConfigUpdateInstallReceiver;->getCurrentHash([B)Ljava/lang/String;
 
     move-result-object v0
 
@@ -245,8 +228,8 @@
     return v0
 .end method
 
-.method private getAltContent(Landroid/content/Intent;)Ljava/lang/String;
-    .locals 2
+.method private getAltContent(Landroid/content/Intent;)[B
+    .locals 1
     .parameter "i"
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -257,18 +240,13 @@
     .prologue
     invoke-direct {p0, p1}, Lcom/android/server/updates/ConfigUpdateInstallReceiver;->getContentFromIntent(Landroid/content/Intent;)Ljava/lang/String;
 
-    move-result-object v1
+    move-result-object v0
 
-    invoke-static {v1}, Llibcore/io/IoUtils;->readFileAsString(Ljava/lang/String;)Ljava/lang/String;
+    invoke-static {v0}, Llibcore/io/IoUtils;->readFileAsByteArray(Ljava/lang/String;)[B
 
     move-result-object v0
 
-    .local v0, contents:Ljava/lang/String;
-    invoke-virtual {v0}, Ljava/lang/String;->trim()Ljava/lang/String;
-
-    move-result-object v1
-
-    return-object v1
+    return-object v0
 .end method
 
 .method private getCert(Landroid/content/ContentResolver;)Ljava/security/cert/X509Certificate;
@@ -359,7 +337,7 @@
     return-object v0
 .end method
 
-.method private getCurrentContent()Ljava/lang/String;
+.method private getCurrentContent()[B
     .locals 3
 
     .prologue
@@ -370,11 +348,7 @@
 
     move-result-object v1
 
-    invoke-static {v1}, Llibcore/io/IoUtils;->readFileAsString(Ljava/lang/String;)Ljava/lang/String;
-
-    move-result-object v1
-
-    invoke-virtual {v1}, Ljava/lang/String;->trim()Ljava/lang/String;
+    invoke-static {v1}, Llibcore/io/IoUtils;->readFileAsByteArray(Ljava/lang/String;)[B
     :try_end_0
     .catch Ljava/io/IOException; {:try_start_0 .. :try_end_0} :catch_0
 
@@ -398,59 +372,53 @@
     goto :goto_0
 .end method
 
-.method private static getCurrentHash(Ljava/lang/String;)Ljava/lang/String;
-    .locals 5
+.method private static getCurrentHash([B)Ljava/lang/String;
+    .locals 4
     .parameter "content"
 
     .prologue
     if-nez p0, :cond_0
 
-    const-string v4, "0"
+    const-string v3, "0"
 
     :goto_0
-    return-object v4
+    return-object v3
 
     :cond_0
     :try_start_0
-    const-string v4, "SHA512"
+    const-string v3, "SHA512"
 
-    invoke-static {v4}, Ljava/security/MessageDigest;->getInstance(Ljava/lang/String;)Ljava/security/MessageDigest;
+    invoke-static {v3}, Ljava/security/MessageDigest;->getInstance(Ljava/lang/String;)Ljava/security/MessageDigest;
 
     move-result-object v0
 
     .local v0, dgst:Ljava/security/MessageDigest;
-    invoke-virtual {p0}, Ljava/lang/String;->getBytes()[B
+    invoke-virtual {v0, p0}, Ljava/security/MessageDigest;->digest([B)[B
 
     move-result-object v2
 
-    .local v2, encoded:[B
-    invoke-virtual {v0, v2}, Ljava/security/MessageDigest;->digest([B)[B
+    .local v2, fingerprint:[B
+    const/4 v3, 0x0
 
-    move-result-object v3
-
-    .local v3, fingerprint:[B
-    const/4 v4, 0x0
-
-    invoke-static {v3, v4}, Ljava/lang/IntegralToString;->bytesToHexString([BZ)Ljava/lang/String;
+    invoke-static {v2, v3}, Ljava/lang/IntegralToString;->bytesToHexString([BZ)Ljava/lang/String;
     :try_end_0
     .catch Ljava/security/NoSuchAlgorithmException; {:try_start_0 .. :try_end_0} :catch_0
 
-    move-result-object v4
+    move-result-object v3
 
     goto :goto_0
 
     .end local v0           #dgst:Ljava/security/MessageDigest;
-    .end local v2           #encoded:[B
-    .end local v3           #fingerprint:[B
+    .end local v2           #fingerprint:[B
     :catch_0
     move-exception v1
 
     .local v1, e:Ljava/security/NoSuchAlgorithmException;
-    new-instance v4, Ljava/lang/AssertionError;
+    new-instance v3, Ljava/lang/AssertionError;
 
-    invoke-direct {v4, v1}, Ljava/lang/AssertionError;-><init>(Ljava/lang/Object;)V
+    invoke-direct {v3, v1}, Ljava/lang/AssertionError;-><init>(Ljava/lang/Object;)V
 
-    throw v4
+    throw v3
 .end method
 
 .method private getCurrentVersion()I
@@ -602,38 +570,6 @@
     return v1
 .end method
 
-.method private install(Ljava/lang/String;I)V
-    .locals 4
-    .parameter "content"
-    .parameter "version"
-    .annotation system Ldalvik/annotation/Throws;
-        value = {
-            Ljava/io/IOException;
-        }
-    .end annotation
-
-    .prologue
-    iget-object v0, p0, Lcom/android/server/updates/ConfigUpdateInstallReceiver;->updateDir:Ljava/io/File;
-
-    iget-object v1, p0, Lcom/android/server/updates/ConfigUpdateInstallReceiver;->updateContent:Ljava/io/File;
-
-    invoke-direct {p0, v0, v1, p1}, Lcom/android/server/updates/ConfigUpdateInstallReceiver;->writeUpdate(Ljava/io/File;Ljava/io/File;Ljava/lang/String;)V
-
-    iget-object v0, p0, Lcom/android/server/updates/ConfigUpdateInstallReceiver;->updateDir:Ljava/io/File;
-
-    iget-object v1, p0, Lcom/android/server/updates/ConfigUpdateInstallReceiver;->updateVersion:Ljava/io/File;
-
-    int-to-long v2, p2
-
-    invoke-static {v2, v3}, Ljava/lang/Long;->toString(J)Ljava/lang/String;
-
-    move-result-object v2
-
-    invoke-direct {p0, v0, v1, v2}, Lcom/android/server/updates/ConfigUpdateInstallReceiver;->writeUpdate(Ljava/io/File;Ljava/io/File;Ljava/lang/String;)V
-
-    return-void
-.end method
-
 .method private verifyPreviousHash(Ljava/lang/String;Ljava/lang/String;)Z
     .locals 1
     .parameter "current"
@@ -661,7 +597,7 @@
     goto :goto_0
 .end method
 
-.method private verifySignature(Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Ljava/security/cert/X509Certificate;)Z
+.method private verifySignature([BILjava/lang/String;Ljava/lang/String;Ljava/security/cert/X509Certificate;)Z
     .locals 3
     .parameter "content"
     .parameter "version"
@@ -684,11 +620,7 @@
     .local v0, signer:Ljava/security/Signature;
     invoke-virtual {v0, p5}, Ljava/security/Signature;->initVerify(Ljava/security/cert/Certificate;)V
 
-    invoke-virtual {p1}, Ljava/lang/String;->getBytes()[B
-
-    move-result-object v1
-
-    invoke-virtual {v0, v1}, Ljava/security/Signature;->update([B)V
+    invoke-virtual {v0, p1}, Ljava/security/Signature;->update([B)V
 
     int-to-long v1, p2
 
@@ -744,7 +676,69 @@
     goto :goto_0
 .end method
 
-.method private writeUpdate(Ljava/io/File;Ljava/io/File;Ljava/lang/String;)V
+
+# virtual methods
+.method protected install([BI)V
+    .locals 4
+    .parameter "content"
+    .parameter "version"
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Ljava/io/IOException;
+        }
+    .end annotation
+
+    .prologue
+    iget-object v0, p0, Lcom/android/server/updates/ConfigUpdateInstallReceiver;->updateDir:Ljava/io/File;
+
+    iget-object v1, p0, Lcom/android/server/updates/ConfigUpdateInstallReceiver;->updateContent:Ljava/io/File;
+
+    invoke-virtual {p0, v0, v1, p1}, Lcom/android/server/updates/ConfigUpdateInstallReceiver;->writeUpdate(Ljava/io/File;Ljava/io/File;[B)V
+
+    iget-object v0, p0, Lcom/android/server/updates/ConfigUpdateInstallReceiver;->updateDir:Ljava/io/File;
+
+    iget-object v1, p0, Lcom/android/server/updates/ConfigUpdateInstallReceiver;->updateVersion:Ljava/io/File;
+
+    int-to-long v2, p2
+
+    invoke-static {v2, v3}, Ljava/lang/Long;->toString(J)Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/String;->getBytes()[B
+
+    move-result-object v2
+
+    invoke-virtual {p0, v0, v1, v2}, Lcom/android/server/updates/ConfigUpdateInstallReceiver;->writeUpdate(Ljava/io/File;Ljava/io/File;[B)V
+
+    return-void
+.end method
+
+.method public onReceive(Landroid/content/Context;Landroid/content/Intent;)V
+    .locals 1
+    .parameter "context"
+    .parameter "intent"
+
+    .prologue
+    new-instance v0, Lcom/android/server/updates/ConfigUpdateInstallReceiver$1;
+
+    invoke-direct {v0, p0, p1, p2}, Lcom/android/server/updates/ConfigUpdateInstallReceiver$1;-><init>(Lcom/android/server/updates/ConfigUpdateInstallReceiver;Landroid/content/Context;Landroid/content/Intent;)V
+
+    invoke-virtual {v0}, Lcom/android/server/updates/ConfigUpdateInstallReceiver$1;->start()V
+
+    return-void
+.end method
+
+.method protected postInstall(Landroid/content/Context;Landroid/content/Intent;)V
+    .locals 0
+    .parameter "context"
+    .parameter "intent"
+
+    .prologue
+    return-void
+.end method
+
+.method protected writeUpdate(Ljava/io/File;Ljava/io/File;[B)V
     .locals 7
     .parameter "dir"
     .parameter "file"
@@ -763,14 +757,6 @@
 
     .local v3, tmp:Ljava/io/File;
     :try_start_0
-    const-string v4, "journal"
-
-    const-string v5, ""
-
-    invoke-static {v4, v5, p1}, Ljava/io/File;->createTempFile(Ljava/lang/String;Ljava/lang/String;Ljava/io/File;)Ljava/io/File;
-
-    move-result-object v3
-
     invoke-virtual {p2}, Ljava/io/File;->getParentFile()Ljava/io/File;
 
     move-result-object v2
@@ -830,11 +816,19 @@
 
     .restart local v2       #parent:Ljava/io/File;
     :cond_1
+    :try_start_1
+    const-string v4, "journal"
+
+    const-string v5, ""
+
+    invoke-static {v4, v5, p1}, Ljava/io/File;->createTempFile(Ljava/lang/String;Ljava/lang/String;Ljava/io/File;)Ljava/io/File;
+
+    move-result-object v3
+
     const/4 v4, 0x1
 
     const/4 v5, 0x0
 
-    :try_start_1
     invoke-virtual {v3, v4, v5}, Ljava/io/File;->setReadable(ZZ)Z
 
     new-instance v1, Ljava/io/FileOutputStream;
@@ -846,11 +840,7 @@
     .end local v0           #out:Ljava/io/FileOutputStream;
     .local v1, out:Ljava/io/FileOutputStream;
     :try_start_2
-    invoke-virtual {p3}, Ljava/lang/String;->getBytes()[B
-
-    move-result-object v4
-
-    invoke-virtual {v1, v4}, Ljava/io/FileOutputStream;->write([B)V
+    invoke-virtual {v1, p3}, Ljava/io/FileOutputStream;->write([B)V
 
     invoke-virtual {v1}, Ljava/io/FileOutputStream;->getFD()Ljava/io/FileDescriptor;
 
@@ -912,23 +902,6 @@
 
     :cond_3
     invoke-static {v1}, Llibcore/io/IoUtils;->closeQuietly(Ljava/lang/AutoCloseable;)V
-
-    return-void
-.end method
-
-
-# virtual methods
-.method public onReceive(Landroid/content/Context;Landroid/content/Intent;)V
-    .locals 1
-    .parameter "context"
-    .parameter "intent"
-
-    .prologue
-    new-instance v0, Lcom/android/server/updates/ConfigUpdateInstallReceiver$1;
-
-    invoke-direct {v0, p0, p1, p2}, Lcom/android/server/updates/ConfigUpdateInstallReceiver$1;-><init>(Lcom/android/server/updates/ConfigUpdateInstallReceiver;Landroid/content/Context;Landroid/content/Intent;)V
-
-    invoke-virtual {v0}, Lcom/android/server/updates/ConfigUpdateInstallReceiver$1;->start()V
 
     return-void
 .end method

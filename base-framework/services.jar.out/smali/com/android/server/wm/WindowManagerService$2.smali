@@ -8,7 +8,7 @@
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/android/server/wm/WindowManagerService;->main(Landroid/content/Context;Lcom/android/server/power/PowerManagerService;Lcom/android/server/display/DisplayManagerService;Lcom/android/server/input/InputManagerService;Landroid/os/Handler;Landroid/os/Handler;ZZZ)Lcom/android/server/wm/WindowManagerService;
+    value = Lcom/android/server/wm/WindowManagerService;->main(Landroid/content/Context;Lcom/android/server/power/PowerManagerService;Lcom/android/server/display/DisplayManagerService;Lcom/android/server/input/InputManagerService;Landroid/os/Handler;ZZZ)Lcom/android/server/wm/WindowManagerService;
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -34,13 +34,10 @@
 
 .field final synthetic val$showBootMsgs:Z
 
-.field final synthetic val$uiHandler:Landroid/os/Handler;
-
 
 # direct methods
-.method constructor <init>([Lcom/android/server/wm/WindowManagerService;Landroid/content/Context;Lcom/android/server/power/PowerManagerService;Lcom/android/server/display/DisplayManagerService;Lcom/android/server/input/InputManagerService;Landroid/os/Handler;ZZZ)V
+.method constructor <init>([Lcom/android/server/wm/WindowManagerService;Landroid/content/Context;Lcom/android/server/power/PowerManagerService;Lcom/android/server/display/DisplayManagerService;Lcom/android/server/input/InputManagerService;ZZZ)V
     .locals 0
-    .parameter
     .parameter
     .parameter
     .parameter
@@ -61,13 +58,11 @@
 
     iput-object p5, p0, Lcom/android/server/wm/WindowManagerService$2;->val$im:Lcom/android/server/input/InputManagerService;
 
-    iput-object p6, p0, Lcom/android/server/wm/WindowManagerService$2;->val$uiHandler:Landroid/os/Handler;
+    iput-boolean p6, p0, Lcom/android/server/wm/WindowManagerService$2;->val$haveInputMethods:Z
 
-    iput-boolean p7, p0, Lcom/android/server/wm/WindowManagerService$2;->val$haveInputMethods:Z
+    iput-boolean p7, p0, Lcom/android/server/wm/WindowManagerService$2;->val$showBootMsgs:Z
 
-    iput-boolean p8, p0, Lcom/android/server/wm/WindowManagerService$2;->val$showBootMsgs:Z
-
-    iput-boolean p9, p0, Lcom/android/server/wm/WindowManagerService$2;->val$onlyCore:Z
+    iput-boolean p8, p0, Lcom/android/server/wm/WindowManagerService$2;->val$onlyCore:Z
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
@@ -77,12 +72,12 @@
 
 # virtual methods
 .method public run()V
-    .locals 12
+    .locals 11
 
     .prologue
-    iget-object v10, p0, Lcom/android/server/wm/WindowManagerService$2;->val$holder:[Lcom/android/server/wm/WindowManagerService;
+    iget-object v9, p0, Lcom/android/server/wm/WindowManagerService$2;->val$holder:[Lcom/android/server/wm/WindowManagerService;
 
-    const/4 v11, 0x0
+    const/4 v10, 0x0
 
     new-instance v0, Lcom/android/server/wm/WindowManagerService;
 
@@ -94,19 +89,17 @@
 
     iget-object v4, p0, Lcom/android/server/wm/WindowManagerService$2;->val$im:Lcom/android/server/input/InputManagerService;
 
-    iget-object v5, p0, Lcom/android/server/wm/WindowManagerService$2;->val$uiHandler:Landroid/os/Handler;
+    iget-boolean v5, p0, Lcom/android/server/wm/WindowManagerService$2;->val$haveInputMethods:Z
 
-    iget-boolean v6, p0, Lcom/android/server/wm/WindowManagerService$2;->val$haveInputMethods:Z
+    iget-boolean v6, p0, Lcom/android/server/wm/WindowManagerService$2;->val$showBootMsgs:Z
 
-    iget-boolean v7, p0, Lcom/android/server/wm/WindowManagerService$2;->val$showBootMsgs:Z
+    iget-boolean v7, p0, Lcom/android/server/wm/WindowManagerService$2;->val$onlyCore:Z
 
-    iget-boolean v8, p0, Lcom/android/server/wm/WindowManagerService$2;->val$onlyCore:Z
+    const/4 v8, 0x0
 
-    const/4 v9, 0x0
+    invoke-direct/range {v0 .. v8}, Lcom/android/server/wm/WindowManagerService;-><init>(Landroid/content/Context;Lcom/android/server/power/PowerManagerService;Lcom/android/server/display/DisplayManagerService;Lcom/android/server/input/InputManagerService;ZZZLcom/android/server/wm/WindowManagerService$1;)V
 
-    invoke-direct/range {v0 .. v9}, Lcom/android/server/wm/WindowManagerService;-><init>(Landroid/content/Context;Lcom/android/server/power/PowerManagerService;Lcom/android/server/display/DisplayManagerService;Lcom/android/server/input/InputManagerService;Landroid/os/Handler;ZZZLcom/android/server/wm/WindowManagerService$1;)V
-
-    aput-object v0, v10, v11
+    aput-object v0, v9, v10
 
     return-void
 .end method

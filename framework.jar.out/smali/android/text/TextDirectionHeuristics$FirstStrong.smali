@@ -46,16 +46,16 @@
 
 
 # virtual methods
-.method public checkRtl([CII)Landroid/text/TextDirectionHeuristics$TriState;
+.method public checkRtl(Ljava/lang/CharSequence;II)I
     .locals 4
-    .parameter "text"
+    .parameter "cs"
     .parameter "start"
     .parameter "count"
 
     .prologue
-    sget-object v2, Landroid/text/TextDirectionHeuristics$TriState;->UNKNOWN:Landroid/text/TextDirectionHeuristics$TriState;
+    const/4 v2, 0x2
 
-    .local v2, result:Landroid/text/TextDirectionHeuristics$TriState;
+    .local v2, result:I
     move v1, p2
 
     .local v1, i:I
@@ -65,25 +65,27 @@
     :goto_0
     if-ge v1, v0, :cond_0
 
-    sget-object v3, Landroid/text/TextDirectionHeuristics$TriState;->UNKNOWN:Landroid/text/TextDirectionHeuristics$TriState;
+    const/4 v3, 0x2
 
     if-ne v2, v3, :cond_0
 
-    aget-char v3, p1, v1
+    invoke-interface {p1, v1}, Ljava/lang/CharSequence;->charAt(I)C
+
+    move-result v3
 
     invoke-static {v3}, Ljava/lang/Character;->getDirectionality(C)B
 
     move-result v3
 
-    #calls: Landroid/text/TextDirectionHeuristics;->isRtlTextOrFormat(I)Landroid/text/TextDirectionHeuristics$TriState;
-    invoke-static {v3}, Landroid/text/TextDirectionHeuristics;->access$100(I)Landroid/text/TextDirectionHeuristics$TriState;
+    #calls: Landroid/text/TextDirectionHeuristics;->isRtlTextOrFormat(I)I
+    invoke-static {v3}, Landroid/text/TextDirectionHeuristics;->access$100(I)I
 
-    move-result-object v2
+    move-result v2
 
     add-int/lit8 v1, v1, 0x1
 
     goto :goto_0
 
     :cond_0
-    return-object v2
+    return v2
 .end method

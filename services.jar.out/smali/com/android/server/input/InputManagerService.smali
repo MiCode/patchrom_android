@@ -248,7 +248,7 @@
 
     move-result-object v0
 
-    const v1, 0x1110046
+    const v1, 0x1110050
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getBoolean(I)Z
 
@@ -1484,7 +1484,7 @@
 
     move-result-object v0
 
-    const v1, 0x10e0029
+    const v1, 0x10e002f
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getInteger(I)I
 
@@ -1630,7 +1630,7 @@
 
     const/4 v1, 0x0
 
-    const v2, 0x1040457
+    const v2, 0x1040480
 
     sget-object v3, Landroid/os/UserHandle;->ALL:Landroid/os/UserHandle;
 
@@ -1758,15 +1758,16 @@
 .method private static native nativeVibrate(II[JII)V
 .end method
 
-.method private notifyANR(Lcom/android/server/input/InputApplicationHandle;Lcom/android/server/input/InputWindowHandle;)J
+.method private notifyANR(Lcom/android/server/input/InputApplicationHandle;Lcom/android/server/input/InputWindowHandle;Ljava/lang/String;)J
     .locals 2
     .parameter "inputApplicationHandle"
     .parameter "inputWindowHandle"
+    .parameter "reason"
 
     .prologue
     iget-object v0, p0, Lcom/android/server/input/InputManagerService;->mWindowManagerCallbacks:Lcom/android/server/input/InputManagerService$WindowManagerCallbacks;
 
-    invoke-interface {v0, p1, p2}, Lcom/android/server/input/InputManagerService$WindowManagerCallbacks;->notifyANR(Lcom/android/server/input/InputApplicationHandle;Lcom/android/server/input/InputWindowHandle;)J
+    invoke-interface {v0, p1, p2, p3}, Lcom/android/server/input/InputManagerService$WindowManagerCallbacks;->notifyANR(Lcom/android/server/input/InputApplicationHandle;Lcom/android/server/input/InputWindowHandle;Ljava/lang/String;)J
 
     move-result-wide v0
 
@@ -2111,7 +2112,7 @@
     .prologue
     const/4 v4, 0x0
 
-    const v8, 0x1040457
+    const v8, 0x1040480
 
     const/4 v1, 0x0
 
@@ -2169,7 +2170,7 @@
 
     move-result-object v0
 
-    const v1, 0x1040458
+    const v1, 0x1040481
 
     invoke-virtual {v7, v1}, Landroid/content/res/Resources;->getString(I)Ljava/lang/String;
 
@@ -2185,7 +2186,7 @@
 
     move-result-object v0
 
-    const v1, 0x108035d
+    const v1, 0x1080394
 
     invoke-virtual {v0, v1}, Landroid/app/Notification$Builder;->setSmallIcon(I)Landroid/app/Notification$Builder;
 
@@ -4496,7 +4497,7 @@
     return-void
 .end method
 
-.method public systemReady()V
+.method public systemRunning()V
     .locals 5
 
     .prologue
@@ -4530,6 +4531,10 @@
     invoke-virtual {v0, v1}, Landroid/content/IntentFilter;->addAction(Ljava/lang/String;)V
 
     const-string v1, "android.intent.action.PACKAGE_CHANGED"
+
+    invoke-virtual {v0, v1}, Landroid/content/IntentFilter;->addAction(Ljava/lang/String;)V
+
+    const-string v1, "android.intent.action.PACKAGE_REPLACED"
 
     invoke-virtual {v0, v1}, Landroid/content/IntentFilter;->addAction(Ljava/lang/String;)V
 

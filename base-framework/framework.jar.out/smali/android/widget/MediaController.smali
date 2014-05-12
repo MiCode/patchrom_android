@@ -479,7 +479,7 @@
 
     const/16 v3, 0x8
 
-    const v1, 0x1020314
+    const v1, 0x10202c5
 
     invoke-virtual {p1, v1}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -504,7 +504,7 @@
     invoke-virtual {v1, v4}, Landroid/widget/ImageButton;->setOnClickListener(Landroid/view/View$OnClickListener;)V
 
     :cond_0
-    const v1, 0x1020315
+    const v1, 0x10202c6
 
     invoke-virtual {p1, v1}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -540,7 +540,7 @@
     invoke-virtual {v4, v1}, Landroid/widget/ImageButton;->setVisibility(I)V
 
     :cond_1
-    const v1, 0x1020313
+    const v1, 0x10202c4
 
     invoke-virtual {p1, v1}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -574,7 +574,7 @@
     invoke-virtual {v1, v2}, Landroid/widget/ImageButton;->setVisibility(I)V
 
     :cond_2
-    const v1, 0x1020316
+    const v1, 0x10202c7
 
     invoke-virtual {p1, v1}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -601,7 +601,7 @@
     invoke-virtual {v1, v3}, Landroid/widget/ImageButton;->setVisibility(I)V
 
     :cond_3
-    const v1, 0x1020312
+    const v1, 0x10202c3
 
     invoke-virtual {p1, v1}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -628,7 +628,7 @@
     invoke-virtual {v1, v3}, Landroid/widget/ImageButton;->setVisibility(I)V
 
     :cond_4
-    const v1, 0x1020318
+    const v1, 0x10202c9
 
     invoke-virtual {p1, v1}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -676,7 +676,7 @@
 
     iput-object v1, p0, Landroid/widget/MediaController;->mEndTime:Landroid/widget/TextView;
 
-    const v1, 0x1020317
+    const v1, 0x10202c8
 
     invoke-virtual {p1, v1}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -815,7 +815,7 @@
     iget-object v0, p0, Landroid/widget/MediaController;->mDecorLayoutParams:Landroid/view/WindowManager$LayoutParams;
 
     .local v0, p:Landroid/view/WindowManager$LayoutParams;
-    const/16 v1, 0x30
+    const/16 v1, 0x33
 
     iput v1, v0, Landroid/view/WindowManager$LayoutParams;->gravity:I
 
@@ -1114,9 +1114,11 @@
 .end method
 
 .method private updateFloatingWindowLayout()V
-    .locals 4
+    .locals 6
 
     .prologue
+    const/high16 v5, -0x8000
+
     const/4 v2, 0x2
 
     new-array v0, v2, [I
@@ -1125,6 +1127,30 @@
     iget-object v2, p0, Landroid/widget/MediaController;->mAnchor:Landroid/view/View;
 
     invoke-virtual {v2, v0}, Landroid/view/View;->getLocationOnScreen([I)V
+
+    iget-object v2, p0, Landroid/widget/MediaController;->mDecor:Landroid/view/View;
+
+    iget-object v3, p0, Landroid/widget/MediaController;->mAnchor:Landroid/view/View;
+
+    invoke-virtual {v3}, Landroid/view/View;->getWidth()I
+
+    move-result v3
+
+    invoke-static {v3, v5}, Landroid/view/View$MeasureSpec;->makeMeasureSpec(II)I
+
+    move-result v3
+
+    iget-object v4, p0, Landroid/widget/MediaController;->mAnchor:Landroid/view/View;
+
+    invoke-virtual {v4}, Landroid/view/View;->getHeight()I
+
+    move-result v4
+
+    invoke-static {v4, v5}, Landroid/view/View$MeasureSpec;->makeMeasureSpec(II)I
+
+    move-result v4
+
+    invoke-virtual {v2, v3, v4}, Landroid/view/View;->measure(II)V
 
     iget-object v1, p0, Landroid/widget/MediaController;->mDecorLayoutParams:Landroid/view/WindowManager$LayoutParams;
 
@@ -1137,6 +1163,26 @@
 
     iput v2, v1, Landroid/view/WindowManager$LayoutParams;->width:I
 
+    const/4 v2, 0x0
+
+    aget v2, v0, v2
+
+    iget-object v3, p0, Landroid/widget/MediaController;->mAnchor:Landroid/view/View;
+
+    invoke-virtual {v3}, Landroid/view/View;->getWidth()I
+
+    move-result v3
+
+    iget v4, v1, Landroid/view/WindowManager$LayoutParams;->width:I
+
+    sub-int/2addr v3, v4
+
+    div-int/lit8 v3, v3, 0x2
+
+    add-int/2addr v2, v3
+
+    iput v2, v1, Landroid/view/WindowManager$LayoutParams;->x:I
+
     const/4 v2, 0x1
 
     aget v2, v0, v2
@@ -1148,6 +1194,14 @@
     move-result v3
 
     add-int/2addr v2, v3
+
+    iget-object v3, p0, Landroid/widget/MediaController;->mDecor:Landroid/view/View;
+
+    invoke-virtual {v3}, Landroid/view/View;->getMeasuredHeight()I
+
+    move-result v3
+
+    sub-int/2addr v2, v3
 
     iput v2, v1, Landroid/view/WindowManager$LayoutParams;->y:I
 
@@ -1448,7 +1502,7 @@
     check-cast v0, Landroid/view/LayoutInflater;
 
     .local v0, inflate:Landroid/view/LayoutInflater;
-    const v1, 0x1090083
+    const v1, 0x109005b
 
     const/4 v2, 0x0
 

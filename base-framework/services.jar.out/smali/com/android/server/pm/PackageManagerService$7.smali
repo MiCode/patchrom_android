@@ -8,7 +8,7 @@
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/android/server/pm/PackageManagerService;->deletePackage(Ljava/lang/String;Landroid/content/pm/IPackageDeleteObserver;I)V
+    value = Lcom/android/server/pm/PackageManagerService;->deletePackageAsUser(Ljava/lang/String;Landroid/content/pm/IPackageDeleteObserver;II)V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -26,7 +26,7 @@
 
 .field final synthetic val$packageName:Ljava/lang/String;
 
-.field final synthetic val$uid:I
+.field final synthetic val$userId:I
 
 
 # direct methods
@@ -43,7 +43,7 @@
 
     iput-object p2, p0, Lcom/android/server/pm/PackageManagerService$7;->val$packageName:Ljava/lang/String;
 
-    iput p3, p0, Lcom/android/server/pm/PackageManagerService$7;->val$uid:I
+    iput p3, p0, Lcom/android/server/pm/PackageManagerService$7;->val$userId:I
 
     iput p4, p0, Lcom/android/server/pm/PackageManagerService$7;->val$flags:I
 
@@ -70,12 +70,12 @@
 
     iget-object v3, p0, Lcom/android/server/pm/PackageManagerService$7;->val$packageName:Ljava/lang/String;
 
-    iget v4, p0, Lcom/android/server/pm/PackageManagerService$7;->val$uid:I
+    iget v4, p0, Lcom/android/server/pm/PackageManagerService$7;->val$userId:I
 
     iget v5, p0, Lcom/android/server/pm/PackageManagerService$7;->val$flags:I
 
     #calls: Lcom/android/server/pm/PackageManagerService;->deletePackageX(Ljava/lang/String;II)I
-    invoke-static {v2, v3, v4, v5}, Lcom/android/server/pm/PackageManagerService;->access$3700(Lcom/android/server/pm/PackageManagerService;Ljava/lang/String;II)I
+    invoke-static {v2, v3, v4, v5}, Lcom/android/server/pm/PackageManagerService;->access$4100(Lcom/android/server/pm/PackageManagerService;Ljava/lang/String;II)I
 
     move-result v1
 

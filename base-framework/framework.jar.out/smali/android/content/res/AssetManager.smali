@@ -267,6 +267,9 @@
     return v0
 .end method
 
+.method private final native addAssetPathNative(Ljava/lang/String;)I
+.end method
+
 .method static final native applyStyle(IIII[I[I[I)Z
 .end method
 
@@ -453,7 +456,17 @@
 
 
 # virtual methods
-.method public final native addAssetPath(Ljava/lang/String;)I
+.method public final addAssetPath(Ljava/lang/String;)I
+    .locals 1
+    .parameter "path"
+
+    .prologue
+    invoke-direct {p0, p1}, Landroid/content/res/AssetManager;->addAssetPathNative(Ljava/lang/String;)I
+
+    move-result v0
+
+    .local v0, res:I
+    return v0
 .end method
 
 .method public final addAssetPaths([Ljava/lang/String;)[I

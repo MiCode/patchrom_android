@@ -618,7 +618,7 @@
     move-result-object v2
 
     .local v2, r:Landroid/content/res/Resources;
-    const v4, 0x1040036
+    const v4, 0x104003d
 
     invoke-virtual {v2, v4}, Landroid/content/res/Resources;->getString(I)Ljava/lang/String;
 
@@ -626,7 +626,7 @@
 
     sput-object v4, Landroid/text/format/Time;->sTimeOnlyFormat:Ljava/lang/String;
 
-    const v4, 0x1040035
+    const v4, 0x104003c
 
     invoke-virtual {v2, v4}, Landroid/content/res/Resources;->getString(I)Ljava/lang/String;
 
@@ -634,7 +634,7 @@
 
     sput-object v4, Landroid/text/format/Time;->sDateOnlyFormat:Ljava/lang/String;
 
-    const v4, 0x1040037
+    const v4, 0x104003e
 
     invoke-virtual {v2, v4}, Landroid/content/res/Resources;->getString(I)Ljava/lang/String;
 

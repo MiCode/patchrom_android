@@ -26,15 +26,15 @@
     .prologue
     iput-object p1, p0, Lcom/android/internal/policy/impl/GlobalActions$SilentModeToggleAction;->this$0:Lcom/android/internal/policy/impl/GlobalActions;
 
-    const v1, 0x10802a3
+    const v1, 0x10802ae
 
-    const v2, 0x10802a2
+    const v2, 0x10802ac
 
-    const v3, 0x10400ea
+    const v3, 0x10400ca
 
-    const v4, 0x10400eb
+    const v4, 0x10400cb
 
-    const v5, 0x10400ec
+    const v5, 0x10400cc
 
     move-object v0, p0
 

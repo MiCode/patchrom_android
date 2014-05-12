@@ -9,11 +9,11 @@
 # annotations
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
-        Landroid/widget/Spinner$1;,
         Landroid/widget/Spinner$DropdownPopup;,
         Landroid/widget/Spinner$DialogPopup;,
         Landroid/widget/Spinner$SpinnerPopup;,
-        Landroid/widget/Spinner$DropDownAdapter;
+        Landroid/widget/Spinner$DropDownAdapter;,
+        Landroid/widget/Spinner$SavedState;
     }
 .end annotation
 
@@ -34,6 +34,8 @@
 .field private mDisableChildrenWhenDisabled:Z
 
 .field mDropDownWidth:I
+
+.field private mForwardingListener:Landroid/widget/ListPopupWindow$ForwardingListener;
 
 .field private mGravity:I
 
@@ -242,7 +244,15 @@
     :cond_3
     iput-object v2, p0, Landroid/widget/Spinner;->mPopup:Landroid/widget/Spinner$SpinnerPopup;
 
+    new-instance v4, Landroid/widget/Spinner$1;
+
+    invoke-direct {v4, p0, p0, v2}, Landroid/widget/Spinner$1;-><init>(Landroid/widget/Spinner;Landroid/view/View;Landroid/widget/Spinner$DropdownPopup;)V
+
+    iput-object v4, p0, Landroid/widget/Spinner;->mForwardingListener:Landroid/widget/ListPopupWindow$ForwardingListener;
+
     goto :goto_0
+
+    nop
 
     :pswitch_data_0
     .packed-switch 0x0
@@ -251,7 +261,17 @@
     .end packed-switch
 .end method
 
-.method static synthetic access$200(Landroid/widget/Spinner;)Landroid/graphics/Rect;
+.method static synthetic access$100(Landroid/widget/Spinner;)Landroid/widget/Spinner$SpinnerPopup;
+    .locals 1
+    .parameter "x0"
+
+    .prologue
+    iget-object v0, p0, Landroid/widget/Spinner;->mPopup:Landroid/widget/Spinner$SpinnerPopup;
+
+    return-object v0
+.end method
+
+.method static synthetic access$400(Landroid/widget/Spinner;)Landroid/graphics/Rect;
     .locals 1
     .parameter "x0"
 
@@ -261,7 +281,7 @@
     return-object v0
 .end method
 
-.method static synthetic access$300(Landroid/widget/Spinner;)Landroid/content/Context;
+.method static synthetic access$500(Landroid/widget/Spinner;)Landroid/content/Context;
     .locals 1
     .parameter "x0"
 
@@ -271,7 +291,7 @@
     return-object v0
 .end method
 
-.method static synthetic access$400(Landroid/widget/Spinner;)Z
+.method static synthetic access$600(Landroid/widget/Spinner;)Z
     .locals 1
     .parameter "x0"
 
@@ -283,9 +303,10 @@
     return v0
 .end method
 
-.method private makeAndAddView(I)Landroid/view/View;
+.method private makeView(IZ)Landroid/view/View;
     .locals 4
     .parameter "position"
+    .parameter "addChild"
 
     .prologue
     iget-boolean v2, p0, Landroid/widget/Spinner;->mDataChanged:Z
@@ -301,7 +322,7 @@
     .local v0, child:Landroid/view/View;
     if-eqz v0, :cond_0
 
-    invoke-direct {p0, v0}, Landroid/widget/Spinner;->setUpChild(Landroid/view/View;)V
+    invoke-direct {p0, v0, p2}, Landroid/widget/Spinner;->setUpChild(Landroid/view/View;Z)V
 
     move-object v1, v0
 
@@ -321,7 +342,7 @@
     move-result-object v0
 
     .restart local v0       #child:Landroid/view/View;
-    invoke-direct {p0, v0}, Landroid/widget/Spinner;->setUpChild(Landroid/view/View;)V
+    invoke-direct {p0, v0, p2}, Landroid/widget/Spinner;->setUpChild(Landroid/view/View;Z)V
 
     move-object v1, v0
 
@@ -330,9 +351,10 @@
     goto :goto_0
 .end method
 
-.method private setUpChild(Landroid/view/View;)V
+.method private setUpChild(Landroid/view/View;Z)V
     .locals 11
     .parameter "child"
+    .parameter "addChild"
 
     .prologue
     invoke-virtual {p1}, Landroid/view/View;->getLayoutParams()Landroid/view/ViewGroup$LayoutParams;
@@ -347,10 +369,13 @@
     move-result-object v6
 
     :cond_0
+    if-eqz p2, :cond_1
+
     const/4 v8, 0x0
 
     invoke-virtual {p0, p1, v8, v6}, Landroid/widget/Spinner;->addViewInLayout(Landroid/view/View;ILandroid/view/ViewGroup$LayoutParams;)Z
 
+    :cond_1
     invoke-virtual {p0}, Landroid/widget/Spinner;->hasFocus()Z
 
     move-result v8
@@ -359,7 +384,7 @@
 
     iget-boolean v8, p0, Landroid/widget/Spinner;->mDisableChildrenWhenDisabled:Z
 
-    if-eqz v8, :cond_1
+    if-eqz v8, :cond_2
 
     invoke-virtual {p0}, Landroid/widget/Spinner;->isEnabled()Z
 
@@ -367,7 +392,7 @@
 
     invoke-virtual {p1, v8}, Landroid/view/View;->setEnabled(Z)V
 
-    :cond_1
+    :cond_2
     iget v8, p0, Landroid/widget/Spinner;->mHeightMeasureSpec:I
 
     iget-object v9, p0, Landroid/widget/Spinner;->mSpinnerPadding:Landroid/graphics/Rect;
@@ -519,15 +544,13 @@
 
     if-lez v3, :cond_0
 
-    invoke-direct {p0, v4}, Landroid/widget/Spinner;->makeAndAddView(I)Landroid/view/View;
+    invoke-direct {p0, v4, v4}, Landroid/widget/Spinner;->makeView(IZ)Landroid/view/View;
 
     move-result-object v0
 
     iget-object v3, p0, Landroid/widget/Spinner;->mRecycler:Landroid/widget/AbsSpinner$RecycleBin;
 
     invoke-virtual {v3, v4, v0}, Landroid/widget/AbsSpinner$RecycleBin;->put(ILandroid/view/View;)V
-
-    invoke-virtual {p0}, Landroid/widget/Spinner;->removeAllViewsInLayout()V
 
     goto :goto_0
 .end method
@@ -668,9 +691,15 @@
 
     iput v7, p0, Landroid/widget/Spinner;->mFirstPosition:I
 
+    iget-object v7, p0, Landroid/widget/Spinner;->mAdapter:Landroid/widget/SpinnerAdapter;
+
+    if-eqz v7, :cond_3
+
     iget v7, p0, Landroid/widget/Spinner;->mSelectedPosition:I
 
-    invoke-direct {p0, v7}, Landroid/widget/Spinner;->makeAndAddView(I)Landroid/view/View;
+    const/4 v8, 0x1
+
+    invoke-direct {p0, v7, v8}, Landroid/widget/Spinner;->makeView(IZ)Landroid/view/View;
 
     move-result-object v4
 
@@ -702,6 +731,12 @@
     :goto_1
     invoke-virtual {v4, v5}, Landroid/view/View;->offsetLeftAndRight(I)V
 
+    .end local v0           #absoluteGravity:I
+    .end local v3           #layoutDirection:I
+    .end local v4           #sel:Landroid/view/View;
+    .end local v5           #selectedOffset:I
+    .end local v6           #width:I
+    :cond_3
     iget-object v7, p0, Landroid/widget/Spinner;->mRecycler:Landroid/widget/AbsSpinner$RecycleBin;
 
     invoke-virtual {v7}, Landroid/widget/AbsSpinner$RecycleBin;->clear()V
@@ -720,6 +755,11 @@
 
     goto :goto_0
 
+    .restart local v0       #absoluteGravity:I
+    .restart local v3       #layoutDirection:I
+    .restart local v4       #sel:Landroid/view/View;
+    .restart local v5       #selectedOffset:I
+    .restart local v6       #width:I
     :sswitch_0
     div-int/lit8 v7, v2, 0x2
 
@@ -737,6 +777,8 @@
     sub-int v5, v7, v6
 
     goto :goto_1
+
+    nop
 
     :sswitch_data_0
     .sparse-switch
@@ -970,6 +1012,15 @@
 
     invoke-virtual {p1, v0}, Landroid/view/accessibility/AccessibilityNodeInfo;->setClassName(Ljava/lang/CharSequence;)V
 
+    iget-object v0, p0, Landroid/widget/Spinner;->mAdapter:Landroid/widget/SpinnerAdapter;
+
+    if-eqz v0, :cond_0
+
+    const/4 v0, 0x1
+
+    invoke-virtual {p1, v0}, Landroid/view/accessibility/AccessibilityNodeInfo;->setCanOpenPopup(Z)V
+
+    :cond_0
     return-void
 .end method
 
@@ -1057,8 +1108,116 @@
     return-void
 .end method
 
-.method public performClick()Z
+.method public onRestoreInstanceState(Landroid/os/Parcelable;)V
+    .locals 4
+    .parameter "state"
+
+    .prologue
+    move-object v1, p1
+
+    check-cast v1, Landroid/widget/Spinner$SavedState;
+
+    .local v1, ss:Landroid/widget/Spinner$SavedState;
+    invoke-virtual {v1}, Landroid/widget/Spinner$SavedState;->getSuperState()Landroid/os/Parcelable;
+
+    move-result-object v3
+
+    invoke-super {p0, v3}, Landroid/widget/AbsSpinner;->onRestoreInstanceState(Landroid/os/Parcelable;)V
+
+    iget-boolean v3, v1, Landroid/widget/Spinner$SavedState;->showDropdown:Z
+
+    if-eqz v3, :cond_0
+
+    invoke-virtual {p0}, Landroid/widget/Spinner;->getViewTreeObserver()Landroid/view/ViewTreeObserver;
+
+    move-result-object v2
+
+    .local v2, vto:Landroid/view/ViewTreeObserver;
+    if-eqz v2, :cond_0
+
+    new-instance v0, Landroid/widget/Spinner$2;
+
+    invoke-direct {v0, p0}, Landroid/widget/Spinner$2;-><init>(Landroid/widget/Spinner;)V
+
+    .local v0, listener:Landroid/view/ViewTreeObserver$OnGlobalLayoutListener;
+    invoke-virtual {v2, v0}, Landroid/view/ViewTreeObserver;->addOnGlobalLayoutListener(Landroid/view/ViewTreeObserver$OnGlobalLayoutListener;)V
+
+    .end local v0           #listener:Landroid/view/ViewTreeObserver$OnGlobalLayoutListener;
+    .end local v2           #vto:Landroid/view/ViewTreeObserver;
+    :cond_0
+    return-void
+.end method
+
+.method public onSaveInstanceState()Landroid/os/Parcelable;
     .locals 2
+
+    .prologue
+    new-instance v0, Landroid/widget/Spinner$SavedState;
+
+    invoke-super {p0}, Landroid/widget/AbsSpinner;->onSaveInstanceState()Landroid/os/Parcelable;
+
+    move-result-object v1
+
+    invoke-direct {v0, v1}, Landroid/widget/Spinner$SavedState;-><init>(Landroid/os/Parcelable;)V
+
+    .local v0, ss:Landroid/widget/Spinner$SavedState;
+    iget-object v1, p0, Landroid/widget/Spinner;->mPopup:Landroid/widget/Spinner$SpinnerPopup;
+
+    if-eqz v1, :cond_0
+
+    iget-object v1, p0, Landroid/widget/Spinner;->mPopup:Landroid/widget/Spinner$SpinnerPopup;
+
+    invoke-interface {v1}, Landroid/widget/Spinner$SpinnerPopup;->isShowing()Z
+
+    move-result v1
+
+    if-eqz v1, :cond_0
+
+    const/4 v1, 0x1
+
+    :goto_0
+    iput-boolean v1, v0, Landroid/widget/Spinner$SavedState;->showDropdown:Z
+
+    return-object v0
+
+    :cond_0
+    const/4 v1, 0x0
+
+    goto :goto_0
+.end method
+
+.method public onTouchEvent(Landroid/view/MotionEvent;)Z
+    .locals 1
+    .parameter "event"
+
+    .prologue
+    iget-object v0, p0, Landroid/widget/Spinner;->mForwardingListener:Landroid/widget/ListPopupWindow$ForwardingListener;
+
+    if-eqz v0, :cond_0
+
+    iget-object v0, p0, Landroid/widget/Spinner;->mForwardingListener:Landroid/widget/ListPopupWindow$ForwardingListener;
+
+    invoke-virtual {v0, p0, p1}, Landroid/widget/ListPopupWindow$ForwardingListener;->onTouch(Landroid/view/View;Landroid/view/MotionEvent;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_0
+
+    const/4 v0, 0x1
+
+    :goto_0
+    return v0
+
+    :cond_0
+    invoke-super {p0, p1}, Landroid/widget/AbsSpinner;->onTouchEvent(Landroid/view/MotionEvent;)Z
+
+    move-result v0
+
+    goto :goto_0
+.end method
+
+.method public performClick()Z
+    .locals 4
 
     .prologue
     invoke-super {p0}, Landroid/widget/AbsSpinner;->performClick()Z
@@ -1080,7 +1239,15 @@
 
     iget-object v1, p0, Landroid/widget/Spinner;->mPopup:Landroid/widget/Spinner$SpinnerPopup;
 
-    invoke-interface {v1}, Landroid/widget/Spinner$SpinnerPopup;->show()V
+    invoke-virtual {p0}, Landroid/widget/Spinner;->getTextDirection()I
+
+    move-result v2
+
+    invoke-virtual {p0}, Landroid/widget/Spinner;->getTextAlignment()I
+
+    move-result v3
+
+    invoke-interface {v1, v2, v3}, Landroid/widget/Spinner$SpinnerPopup;->show(II)V
 
     :cond_0
     return v0
@@ -1105,6 +1272,10 @@
 
     .prologue
     invoke-super {p0, p1}, Landroid/widget/AbsSpinner;->setAdapter(Landroid/widget/SpinnerAdapter;)V
+
+    iget-object v0, p0, Landroid/widget/Spinner;->mRecycler:Landroid/widget/AbsSpinner$RecycleBin;
+
+    invoke-virtual {v0}, Landroid/widget/AbsSpinner$RecycleBin;->clear()V
 
     iget-object v0, p0, Landroid/widget/Spinner;->mPopup:Landroid/widget/Spinner$SpinnerPopup;
 

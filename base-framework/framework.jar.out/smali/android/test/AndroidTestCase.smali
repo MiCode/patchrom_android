@@ -349,7 +349,7 @@
 .end method
 
 .method protected scrubClass(Ljava/lang/Class;)V
-    .locals 9
+    .locals 8
     .parameter
     .annotation system Ldalvik/annotation/Signature;
         value = {
@@ -369,75 +369,74 @@
     .local p1, testCaseClass:Ljava/lang/Class;,"Ljava/lang/Class<*>;"
     invoke-virtual {p0}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
 
-    move-result-object v7
+    move-result-object v6
 
-    invoke-virtual {v7}, Ljava/lang/Class;->getDeclaredFields()[Ljava/lang/reflect/Field;
-
-    move-result-object v4
-
-    .local v4, fields:[Ljava/lang/reflect/Field;
-    move-object v0, v4
-
-    .local v0, arr$:[Ljava/lang/reflect/Field;
-    array-length v6, v0
-
-    .local v6, len$:I
-    const/4 v5, 0x0
-
-    .local v5, i$:I
-    :goto_0
-    if-ge v5, v6, :cond_1
-
-    aget-object v2, v0, v5
-
-    .local v2, field:Ljava/lang/reflect/Field;
-    invoke-virtual {v2}, Ljava/lang/reflect/Field;->getDeclaringClass()Ljava/lang/Class;
+    invoke-virtual {v6}, Ljava/lang/Class;->getDeclaredFields()[Ljava/lang/reflect/Field;
 
     move-result-object v3
 
-    .local v3, fieldClass:Ljava/lang/Class;,"Ljava/lang/Class<*>;"
-    invoke-virtual {p1, v3}, Ljava/lang/Class;->isAssignableFrom(Ljava/lang/Class;)Z
+    .local v3, fields:[Ljava/lang/reflect/Field;
+    move-object v0, v3
 
-    move-result v7
+    .local v0, arr$:[Ljava/lang/reflect/Field;
+    array-length v5, v0
 
-    if-eqz v7, :cond_0
+    .local v5, len$:I
+    const/4 v4, 0x0
 
+    .local v4, i$:I
+    :goto_0
+    if-ge v4, v5, :cond_1
+
+    aget-object v2, v0, v4
+
+    .local v2, field:Ljava/lang/reflect/Field;
     invoke-virtual {v2}, Ljava/lang/reflect/Field;->getType()Ljava/lang/Class;
 
-    move-result-object v7
+    move-result-object v6
 
-    invoke-virtual {v7}, Ljava/lang/Class;->isPrimitive()Z
+    invoke-virtual {v6}, Ljava/lang/Class;->isPrimitive()Z
 
-    move-result v7
+    move-result v6
 
-    if-nez v7, :cond_0
+    if-nez v6, :cond_0
 
-    const/4 v7, 0x1
+    invoke-virtual {v2}, Ljava/lang/reflect/Field;->getModifiers()I
+
+    move-result v6
+
+    invoke-static {v6}, Ljava/lang/reflect/Modifier;->isStatic(I)Z
+
+    move-result v6
+
+    if-nez v6, :cond_0
+
+    const/4 v6, 0x1
 
     :try_start_0
-    invoke-virtual {v2, v7}, Ljava/lang/reflect/Field;->setAccessible(Z)V
+    invoke-virtual {v2, v6}, Ljava/lang/reflect/Field;->setAccessible(Z)V
 
-    const/4 v7, 0x0
+    const/4 v6, 0x0
 
-    invoke-virtual {v2, p0, v7}, Ljava/lang/reflect/Field;->set(Ljava/lang/Object;Ljava/lang/Object;)V
+    invoke-virtual {v2, p0, v6}, Ljava/lang/reflect/Field;->set(Ljava/lang/Object;Ljava/lang/Object;)V
     :try_end_0
     .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
 
     :goto_1
     invoke-virtual {v2, p0}, Ljava/lang/reflect/Field;->get(Ljava/lang/Object;)Ljava/lang/Object;
 
-    move-result-object v7
+    move-result-object v6
 
-    if-eqz v7, :cond_0
+    if-eqz v6, :cond_0
 
-    const-string v7, "TestCase"
+    const-string v6, "TestCase"
 
-    const-string v8, "Error: Could not nullify field!"
+    const-string v7, "Error: Could not nullify field!"
 
-    invoke-static {v7, v8}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v6, v7}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     :cond_0
-    add-int/lit8 v5, v5, 0x1
+    add-int/lit8 v4, v4, 0x1
 
     goto :goto_0
 
@@ -445,17 +444,16 @@
     move-exception v1
 
     .local v1, e:Ljava/lang/Exception;
-    const-string v7, "TestCase"
+    const-string v6, "TestCase"
 
-    const-string v8, "Error: Could not nullify field!"
+    const-string v7, "Error: Could not nullify field!"
 
-    invoke-static {v7, v8}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v6, v7}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     goto :goto_1
 
     .end local v1           #e:Ljava/lang/Exception;
     .end local v2           #field:Ljava/lang/reflect/Field;
-    .end local v3           #fieldClass:Ljava/lang/Class;,"Ljava/lang/Class<*>;"
     :cond_1
     return-void
 .end method

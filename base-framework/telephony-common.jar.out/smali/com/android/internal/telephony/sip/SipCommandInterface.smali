@@ -239,6 +239,14 @@
     return-void
 .end method
 
+.method public getCellInfoList(Landroid/os/Message;)V
+    .locals 0
+    .parameter "result"
+
+    .prologue
+    return-void
+.end method
+
 .method public getCurrentCalls(Landroid/os/Message;)V
     .locals 0
     .parameter "result"
@@ -320,6 +328,14 @@
     return-void
 .end method
 
+.method public getImsRegistrationState(Landroid/os/Message;)V
+    .locals 0
+    .parameter "result"
+
+    .prologue
+    return-void
+.end method
+
 .method public getLastCallFailCause(Landroid/os/Message;)V
     .locals 0
     .parameter "result"
@@ -339,6 +355,8 @@
 .method public getLastPdpFailCause(Landroid/os/Message;)V
     .locals 0
     .parameter "result"
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
 
     .prologue
     return-void
@@ -692,6 +710,29 @@
     return-void
 .end method
 
+.method public sendImsCdmaSms([BIILandroid/os/Message;)V
+    .locals 0
+    .parameter "pdu"
+    .parameter "retry"
+    .parameter "messageRef"
+    .parameter "response"
+
+    .prologue
+    return-void
+.end method
+
+.method public sendImsGsmSms(Ljava/lang/String;Ljava/lang/String;IILandroid/os/Message;)V
+    .locals 0
+    .parameter "smscPDU"
+    .parameter "pdu"
+    .parameter "retry"
+    .parameter "messageRef"
+    .parameter "response"
+
+    .prologue
+    return-void
+.end method
+
 .method public sendSMS(Ljava/lang/String;Ljava/lang/String;Landroid/os/Message;)V
     .locals 0
     .parameter "smscPDU"
@@ -779,9 +820,9 @@
     return-void
 .end method
 
-.method public setCdmaBroadcastConfig([ILandroid/os/Message;)V
+.method public setCdmaBroadcastConfig([Lcom/android/internal/telephony/cdma/CdmaSmsBroadcastConfigInfo;Landroid/os/Message;)V
     .locals 0
-    .parameter "configValuesArray"
+    .parameter "configs"
     .parameter "response"
 
     .prologue
@@ -800,6 +841,15 @@
 .method public setCdmaSubscriptionSource(ILandroid/os/Message;)V
     .locals 0
     .parameter "cdmaSubscription"
+    .parameter "response"
+
+    .prologue
+    return-void
+.end method
+
+.method public setCellInfoListRate(ILandroid/os/Message;)V
+    .locals 0
+    .parameter "rateInMillis"
     .parameter "response"
 
     .prologue
@@ -844,6 +894,19 @@
     .locals 0
     .parameter "config"
     .parameter "response"
+
+    .prologue
+    return-void
+.end method
+
+.method public setInitialAttachApn(Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Landroid/os/Message;)V
+    .locals 0
+    .parameter "apn"
+    .parameter "protocol"
+    .parameter "authType"
+    .parameter "username"
+    .parameter "password"
+    .parameter "result"
 
     .prologue
     return-void

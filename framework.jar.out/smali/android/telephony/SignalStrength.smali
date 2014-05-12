@@ -390,9 +390,94 @@
     .prologue
     const-string v0, "SignalStrength"
 
-    invoke-static {v0, p0}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v0, p0}, Landroid/telephony/Rlog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
     return-void
+.end method
+
+.method public static makeSignalStrengthFromRilParcel(Landroid/os/Parcel;)Landroid/telephony/SignalStrength;
+    .locals 2
+    .parameter "in"
+
+    .prologue
+    new-instance v0, Landroid/telephony/SignalStrength;
+
+    invoke-direct {v0}, Landroid/telephony/SignalStrength;-><init>()V
+
+    .local v0, ss:Landroid/telephony/SignalStrength;
+    invoke-virtual {p0}, Landroid/os/Parcel;->readInt()I
+
+    move-result v1
+
+    iput v1, v0, Landroid/telephony/SignalStrength;->mGsmSignalStrength:I
+
+    invoke-virtual {p0}, Landroid/os/Parcel;->readInt()I
+
+    move-result v1
+
+    iput v1, v0, Landroid/telephony/SignalStrength;->mGsmBitErrorRate:I
+
+    invoke-virtual {p0}, Landroid/os/Parcel;->readInt()I
+
+    move-result v1
+
+    iput v1, v0, Landroid/telephony/SignalStrength;->mCdmaDbm:I
+
+    invoke-virtual {p0}, Landroid/os/Parcel;->readInt()I
+
+    move-result v1
+
+    iput v1, v0, Landroid/telephony/SignalStrength;->mCdmaEcio:I
+
+    invoke-virtual {p0}, Landroid/os/Parcel;->readInt()I
+
+    move-result v1
+
+    iput v1, v0, Landroid/telephony/SignalStrength;->mEvdoDbm:I
+
+    invoke-virtual {p0}, Landroid/os/Parcel;->readInt()I
+
+    move-result v1
+
+    iput v1, v0, Landroid/telephony/SignalStrength;->mEvdoEcio:I
+
+    invoke-virtual {p0}, Landroid/os/Parcel;->readInt()I
+
+    move-result v1
+
+    iput v1, v0, Landroid/telephony/SignalStrength;->mEvdoSnr:I
+
+    invoke-virtual {p0}, Landroid/os/Parcel;->readInt()I
+
+    move-result v1
+
+    iput v1, v0, Landroid/telephony/SignalStrength;->mLteSignalStrength:I
+
+    invoke-virtual {p0}, Landroid/os/Parcel;->readInt()I
+
+    move-result v1
+
+    iput v1, v0, Landroid/telephony/SignalStrength;->mLteRsrp:I
+
+    invoke-virtual {p0}, Landroid/os/Parcel;->readInt()I
+
+    move-result v1
+
+    iput v1, v0, Landroid/telephony/SignalStrength;->mLteRsrq:I
+
+    invoke-virtual {p0}, Landroid/os/Parcel;->readInt()I
+
+    move-result v1
+
+    iput v1, v0, Landroid/telephony/SignalStrength;->mLteRssnr:I
+
+    invoke-virtual {p0}, Landroid/os/Parcel;->readInt()I
+
+    move-result v1
+
+    iput v1, v0, Landroid/telephony/SignalStrength;->mLteCqi:I
+
+    return-object v0
 .end method
 
 .method public static newFromBundle(Landroid/os/Bundle;)Landroid/telephony/SignalStrength;
@@ -2042,7 +2127,7 @@
     return v0
 .end method
 
-.method public getLteSignalStrenght()I
+.method public getLteSignalStrength()I
     .locals 1
 
     .prologue
@@ -2492,7 +2577,7 @@
 
     iget v0, p0, Landroid/telephony/SignalStrength;->mEvdoEcio:I
 
-    if-lez v0, :cond_7
+    if-ltz v0, :cond_7
 
     iget v0, p0, Landroid/telephony/SignalStrength;->mEvdoEcio:I
 

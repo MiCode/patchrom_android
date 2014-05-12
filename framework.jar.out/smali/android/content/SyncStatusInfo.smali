@@ -54,7 +54,7 @@
 
 .field public pending:Z
 
-.field public periodicSyncTimes:Ljava/util/ArrayList;
+.field private periodicSyncTimes:Ljava/util/ArrayList;
     .annotation system Ldalvik/annotation/Signature;
         value = {
             "Ljava/util/ArrayList",
@@ -82,7 +82,7 @@
     return-void
 .end method
 
-.method constructor <init>(I)V
+.method public constructor <init>(I)V
     .locals 0
     .parameter "authorityId"
 
@@ -94,7 +94,94 @@
     return-void
 .end method
 
-.method constructor <init>(Landroid/os/Parcel;)V
+.method public constructor <init>(Landroid/content/SyncStatusInfo;)V
+    .locals 2
+    .parameter "other"
+
+    .prologue
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    iget v0, p1, Landroid/content/SyncStatusInfo;->authorityId:I
+
+    iput v0, p0, Landroid/content/SyncStatusInfo;->authorityId:I
+
+    iget-wide v0, p1, Landroid/content/SyncStatusInfo;->totalElapsedTime:J
+
+    iput-wide v0, p0, Landroid/content/SyncStatusInfo;->totalElapsedTime:J
+
+    iget v0, p1, Landroid/content/SyncStatusInfo;->numSyncs:I
+
+    iput v0, p0, Landroid/content/SyncStatusInfo;->numSyncs:I
+
+    iget v0, p1, Landroid/content/SyncStatusInfo;->numSourcePoll:I
+
+    iput v0, p0, Landroid/content/SyncStatusInfo;->numSourcePoll:I
+
+    iget v0, p1, Landroid/content/SyncStatusInfo;->numSourceServer:I
+
+    iput v0, p0, Landroid/content/SyncStatusInfo;->numSourceServer:I
+
+    iget v0, p1, Landroid/content/SyncStatusInfo;->numSourceLocal:I
+
+    iput v0, p0, Landroid/content/SyncStatusInfo;->numSourceLocal:I
+
+    iget v0, p1, Landroid/content/SyncStatusInfo;->numSourceUser:I
+
+    iput v0, p0, Landroid/content/SyncStatusInfo;->numSourceUser:I
+
+    iget v0, p1, Landroid/content/SyncStatusInfo;->numSourcePeriodic:I
+
+    iput v0, p0, Landroid/content/SyncStatusInfo;->numSourcePeriodic:I
+
+    iget-wide v0, p1, Landroid/content/SyncStatusInfo;->lastSuccessTime:J
+
+    iput-wide v0, p0, Landroid/content/SyncStatusInfo;->lastSuccessTime:J
+
+    iget v0, p1, Landroid/content/SyncStatusInfo;->lastSuccessSource:I
+
+    iput v0, p0, Landroid/content/SyncStatusInfo;->lastSuccessSource:I
+
+    iget-wide v0, p1, Landroid/content/SyncStatusInfo;->lastFailureTime:J
+
+    iput-wide v0, p0, Landroid/content/SyncStatusInfo;->lastFailureTime:J
+
+    iget v0, p1, Landroid/content/SyncStatusInfo;->lastFailureSource:I
+
+    iput v0, p0, Landroid/content/SyncStatusInfo;->lastFailureSource:I
+
+    iget-object v0, p1, Landroid/content/SyncStatusInfo;->lastFailureMesg:Ljava/lang/String;
+
+    iput-object v0, p0, Landroid/content/SyncStatusInfo;->lastFailureMesg:Ljava/lang/String;
+
+    iget-wide v0, p1, Landroid/content/SyncStatusInfo;->initialFailureTime:J
+
+    iput-wide v0, p0, Landroid/content/SyncStatusInfo;->initialFailureTime:J
+
+    iget-boolean v0, p1, Landroid/content/SyncStatusInfo;->pending:Z
+
+    iput-boolean v0, p0, Landroid/content/SyncStatusInfo;->pending:Z
+
+    iget-boolean v0, p1, Landroid/content/SyncStatusInfo;->initialize:Z
+
+    iput-boolean v0, p0, Landroid/content/SyncStatusInfo;->initialize:Z
+
+    iget-object v0, p1, Landroid/content/SyncStatusInfo;->periodicSyncTimes:Ljava/util/ArrayList;
+
+    if-eqz v0, :cond_0
+
+    new-instance v0, Ljava/util/ArrayList;
+
+    iget-object v1, p1, Landroid/content/SyncStatusInfo;->periodicSyncTimes:Ljava/util/ArrayList;
+
+    invoke-direct {v0, v1}, Ljava/util/ArrayList;-><init>(Ljava/util/Collection;)V
+
+    iput-object v0, p0, Landroid/content/SyncStatusInfo;->periodicSyncTimes:Ljava/util/ArrayList;
+
+    :cond_0
+    return-void
+.end method
+
+.method public constructor <init>(Landroid/os/Parcel;)V
     .locals 9
     .parameter "parcel"
 
@@ -370,36 +457,28 @@
     .parameter "def"
 
     .prologue
-    :try_start_0
     iget-object v1, p0, Landroid/content/SyncStatusInfo;->lastFailureMesg:Ljava/lang/String;
 
-    if-eqz v1, :cond_0
+    invoke-static {v1}, Landroid/content/ContentResolver;->syncErrorStringToInt(Ljava/lang/String;)I
 
-    iget-object v1, p0, Landroid/content/SyncStatusInfo;->lastFailureMesg:Ljava/lang/String;
+    move-result v0
 
-    invoke-static {v1}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
-    :try_end_0
-    .catch Ljava/lang/NumberFormatException; {:try_start_0 .. :try_end_0} :catch_0
+    .local v0, i:I
+    if-lez v0, :cond_0
 
-    move-result p1
-
-    .end local p1
-    :cond_0
+    .end local v0           #i:I
     :goto_0
-    return p1
+    return v0
 
-    .restart local p1
-    :catch_0
-    move-exception v0
-
-    .local v0, e:Ljava/lang/NumberFormatException;
+    .restart local v0       #i:I
+    :cond_0
     const-string v1, "Sync"
 
     new-instance v2, Ljava/lang/StringBuilder;
 
     invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v3, "error parsing lastFailureMesg of "
+    const-string v3, "Unknown lastFailureMesg:"
 
     invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -415,7 +494,9 @@
 
     move-result-object v2
 
-    invoke-static {v1, v2, v0}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+    invoke-static {v1, v2}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    move v0, p1
 
     goto :goto_0
 .end method
@@ -435,17 +516,8 @@
 
     move-result v0
 
-    add-int/lit8 v1, p1, 0x1
+    if-ge p1, v0, :cond_0
 
-    if-ge v0, v1, :cond_1
-
-    :cond_0
-    const-wide/16 v0, 0x0
-
-    :goto_0
-    return-wide v0
-
-    :cond_1
     iget-object v0, p0, Landroid/content/SyncStatusInfo;->periodicSyncTimes:Ljava/util/ArrayList;
 
     invoke-virtual {v0, p1}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
@@ -458,6 +530,12 @@
 
     move-result-wide v0
 
+    :goto_0
+    return-wide v0
+
+    :cond_0
+    const-wide/16 v0, 0x0
+
     goto :goto_0
 .end method
 
@@ -466,12 +544,23 @@
     .parameter "index"
 
     .prologue
-    invoke-direct {p0, p1}, Landroid/content/SyncStatusInfo;->ensurePeriodicSyncTimeSize(I)V
+    iget-object v0, p0, Landroid/content/SyncStatusInfo;->periodicSyncTimes:Ljava/util/ArrayList;
+
+    if-eqz v0, :cond_0
+
+    iget-object v0, p0, Landroid/content/SyncStatusInfo;->periodicSyncTimes:Ljava/util/ArrayList;
+
+    invoke-virtual {v0}, Ljava/util/ArrayList;->size()I
+
+    move-result v0
+
+    if-ge p1, v0, :cond_0
 
     iget-object v0, p0, Landroid/content/SyncStatusInfo;->periodicSyncTimes:Ljava/util/ArrayList;
 
     invoke-virtual {v0, p1}, Ljava/util/ArrayList;->remove(I)Ljava/lang/Object;
 
+    :cond_0
     return-void
 .end method
 

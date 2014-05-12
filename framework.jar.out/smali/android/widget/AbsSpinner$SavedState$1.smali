@@ -40,15 +40,13 @@
 
 # virtual methods
 .method public createFromParcel(Landroid/os/Parcel;)Landroid/widget/AbsSpinner$SavedState;
-    .locals 2
+    .locals 1
     .parameter "in"
 
     .prologue
     new-instance v0, Landroid/widget/AbsSpinner$SavedState;
 
-    const/4 v1, 0x0
-
-    invoke-direct {v0, p1, v1}, Landroid/widget/AbsSpinner$SavedState;-><init>(Landroid/os/Parcel;Landroid/widget/AbsSpinner$1;)V
+    invoke-direct {v0, p1}, Landroid/widget/AbsSpinner$SavedState;-><init>(Landroid/os/Parcel;)V
 
     return-object v0
 .end method

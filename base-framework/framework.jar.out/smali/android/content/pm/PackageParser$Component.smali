@@ -142,7 +142,9 @@
 
     iget v1, p1, Landroid/content/pm/PackageParser$ParseComponentArgs;->processRes:I
 
-    invoke-virtual {v0, v1, v6}, Landroid/content/res/TypedArray;->getNonConfigurationString(II)Ljava/lang/String;
+    const/16 v3, 0x400
+
+    invoke-virtual {v0, v1, v3}, Landroid/content/res/TypedArray;->getNonConfigurationString(II)Ljava/lang/String;
 
     move-result-object v2
 
@@ -398,6 +400,25 @@
 
 
 # virtual methods
+.method public appendComponentShortName(Ljava/lang/StringBuilder;)V
+    .locals 2
+    .parameter "sb"
+
+    .prologue
+    .local p0, this:Landroid/content/pm/PackageParser$Component;,"Landroid/content/pm/PackageParser$Component<TII;>;"
+    iget-object v0, p0, Landroid/content/pm/PackageParser$Component;->owner:Landroid/content/pm/PackageParser$Package;
+
+    iget-object v0, v0, Landroid/content/pm/PackageParser$Package;->applicationInfo:Landroid/content/pm/ApplicationInfo;
+
+    iget-object v0, v0, Landroid/content/pm/ApplicationInfo;->packageName:Ljava/lang/String;
+
+    iget-object v1, p0, Landroid/content/pm/PackageParser$Component;->className:Ljava/lang/String;
+
+    invoke-static {p1, v0, v1}, Landroid/content/ComponentName;->appendShortString(Ljava/lang/StringBuilder;Ljava/lang/String;Ljava/lang/String;)V
+
+    return-void
+.end method
+
 .method public getComponentName()Landroid/content/ComponentName;
     .locals 3
 
@@ -437,38 +458,23 @@
     goto :goto_0
 .end method
 
-.method public getComponentShortName()Ljava/lang/String;
+.method public printComponentShortName(Ljava/io/PrintWriter;)V
     .locals 2
+    .parameter "pw"
 
     .prologue
     .local p0, this:Landroid/content/pm/PackageParser$Component;,"Landroid/content/pm/PackageParser$Component<TII;>;"
-    iget-object v1, p0, Landroid/content/pm/PackageParser$Component;->componentShortName:Ljava/lang/String;
+    iget-object v0, p0, Landroid/content/pm/PackageParser$Component;->owner:Landroid/content/pm/PackageParser$Package;
 
-    if-eqz v1, :cond_0
+    iget-object v0, v0, Landroid/content/pm/PackageParser$Package;->applicationInfo:Landroid/content/pm/ApplicationInfo;
 
-    iget-object v1, p0, Landroid/content/pm/PackageParser$Component;->componentShortName:Ljava/lang/String;
+    iget-object v0, v0, Landroid/content/pm/ApplicationInfo;->packageName:Ljava/lang/String;
 
-    :goto_0
-    return-object v1
+    iget-object v1, p0, Landroid/content/pm/PackageParser$Component;->className:Ljava/lang/String;
 
-    :cond_0
-    invoke-virtual {p0}, Landroid/content/pm/PackageParser$Component;->getComponentName()Landroid/content/ComponentName;
+    invoke-static {p1, v0, v1}, Landroid/content/ComponentName;->printShortString(Ljava/io/PrintWriter;Ljava/lang/String;Ljava/lang/String;)V
 
-    move-result-object v0
-
-    .local v0, component:Landroid/content/ComponentName;
-    if-eqz v0, :cond_1
-
-    invoke-virtual {v0}, Landroid/content/ComponentName;->flattenToShortString()Ljava/lang/String;
-
-    move-result-object v1
-
-    iput-object v1, p0, Landroid/content/pm/PackageParser$Component;->componentShortName:Ljava/lang/String;
-
-    :cond_1
-    iget-object v1, p0, Landroid/content/pm/PackageParser$Component;->componentShortName:Ljava/lang/String;
-
-    goto :goto_0
+    return-void
 .end method
 
 .method public setPackageName(Ljava/lang/String;)V

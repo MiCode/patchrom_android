@@ -569,8 +569,6 @@
     .parameter "d"
 
     .prologue
-    const/4 v2, 0x0
-
     const/4 v1, 0x0
 
     if-eqz p1, :cond_1
@@ -581,6 +579,8 @@
 
     iget-object v0, p0, Landroid/widget/CompoundButton;->mButtonDrawable:Landroid/graphics/drawable/Drawable;
 
+    const/4 v2, 0x0
+
     invoke-virtual {v0, v2}, Landroid/graphics/drawable/Drawable;->setCallback(Landroid/graphics/drawable/Drawable$Callback;)V
 
     iget-object v0, p0, Landroid/widget/CompoundButton;->mButtonDrawable:Landroid/graphics/drawable/Drawable;
@@ -589,12 +589,6 @@
 
     :cond_0
     invoke-virtual {p1, p0}, Landroid/graphics/drawable/Drawable;->setCallback(Landroid/graphics/drawable/Drawable$Callback;)V
-
-    invoke-virtual {p0}, Landroid/widget/CompoundButton;->getDrawableState()[I
-
-    move-result-object v0
-
-    invoke-virtual {p1, v0}, Landroid/graphics/drawable/Drawable;->setState([I)Z
 
     invoke-virtual {p0}, Landroid/widget/CompoundButton;->getVisibility()I
 
@@ -608,10 +602,6 @@
     invoke-virtual {p1, v0, v1}, Landroid/graphics/drawable/Drawable;->setVisible(ZZ)Z
 
     iput-object p1, p0, Landroid/widget/CompoundButton;->mButtonDrawable:Landroid/graphics/drawable/Drawable;
-
-    iget-object v0, p0, Landroid/widget/CompoundButton;->mButtonDrawable:Landroid/graphics/drawable/Drawable;
-
-    invoke-virtual {v0, v2}, Landroid/graphics/drawable/Drawable;->setState([I)Z
 
     iget-object v0, p0, Landroid/widget/CompoundButton;->mButtonDrawable:Landroid/graphics/drawable/Drawable;
 
@@ -633,10 +623,12 @@
 .end method
 
 .method public setChecked(Z)V
-    .locals 2
+    .locals 3
     .parameter "checked"
 
     .prologue
+    const/4 v2, 0x0
+
     iget-boolean v0, p0, Landroid/widget/CompoundButton;->mChecked:Z
 
     if-eq v0, p1, :cond_0
@@ -645,7 +637,7 @@
 
     invoke-virtual {p0}, Landroid/widget/CompoundButton;->refreshDrawableState()V
 
-    invoke-virtual {p0}, Landroid/widget/CompoundButton;->notifyAccessibilityStateChanged()V
+    invoke-virtual {p0, v2}, Landroid/widget/CompoundButton;->notifyViewAccessibilityStateChangedIfNeeded(I)V
 
     iget-boolean v0, p0, Landroid/widget/CompoundButton;->mBroadcasting:Z
 
@@ -682,9 +674,7 @@
     invoke-interface {v0, p0, v1}, Landroid/widget/CompoundButton$OnCheckedChangeListener;->onCheckedChanged(Landroid/widget/CompoundButton;Z)V
 
     :cond_3
-    const/4 v0, 0x0
-
-    iput-boolean v0, p0, Landroid/widget/CompoundButton;->mBroadcasting:Z
+    iput-boolean v2, p0, Landroid/widget/CompoundButton;->mBroadcasting:Z
 
     goto :goto_0
 .end method

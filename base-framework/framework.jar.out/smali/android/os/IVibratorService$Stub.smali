@@ -98,7 +98,7 @@
 .end method
 
 .method public onTransact(ILandroid/os/Parcel;Landroid/os/Parcel;I)Z
-    .locals 7
+    .locals 14
     .parameter "code"
     .parameter "data"
     .parameter "reply"
@@ -110,116 +110,172 @@
     .end annotation
 
     .prologue
-    const/4 v6, 0x1
-
     sparse-switch p1, :sswitch_data_0
 
-    invoke-super {p0, p1, p2, p3, p4}, Landroid/os/Binder;->onTransact(ILandroid/os/Parcel;Landroid/os/Parcel;I)Z
+    invoke-super/range {p0 .. p4}, Landroid/os/Binder;->onTransact(ILandroid/os/Parcel;Landroid/os/Parcel;I)Z
 
-    move-result v6
+    move-result v1
 
     :goto_0
-    return v6
+    return v1
 
     :sswitch_0
-    const-string v5, "android.os.IVibratorService"
+    const-string v1, "android.os.IVibratorService"
 
-    invoke-virtual {p3, v5}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
+    move-object/from16 v0, p3
+
+    invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
+
+    const/4 v1, 0x1
 
     goto :goto_0
 
     :sswitch_1
-    const-string v5, "android.os.IVibratorService"
+    const-string v1, "android.os.IVibratorService"
 
-    invoke-virtual {p2, v5}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v1}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
     invoke-virtual {p0}, Landroid/os/IVibratorService$Stub;->hasVibrator()Z
 
-    move-result v4
+    move-result v13
 
-    .local v4, _result:Z
-    invoke-virtual {p3}, Landroid/os/Parcel;->writeNoException()V
+    .local v13, _result:Z
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    if-eqz v4, :cond_0
+    if-eqz v13, :cond_0
 
-    move v5, v6
+    const/4 v1, 0x1
 
     :goto_1
-    invoke-virtual {p3, v5}, Landroid/os/Parcel;->writeInt(I)V
+    move-object/from16 v0, p3
+
+    invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeInt(I)V
+
+    const/4 v1, 0x1
 
     goto :goto_0
 
     :cond_0
-    const/4 v5, 0x0
+    const/4 v1, 0x0
 
     goto :goto_1
 
-    .end local v4           #_result:Z
+    .end local v13           #_result:Z
     :sswitch_2
-    const-string v5, "android.os.IVibratorService"
+    const-string v1, "android.os.IVibratorService"
 
-    invoke-virtual {p2, v5}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+    move-object/from16 v0, p2
 
-    invoke-virtual {p2}, Landroid/os/Parcel;->readLong()J
+    invoke-virtual {v0, v1}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
-    move-result-wide v0
-
-    .local v0, _arg0:J
-    invoke-virtual {p2}, Landroid/os/Parcel;->readStrongBinder()Landroid/os/IBinder;
-
-    move-result-object v2
-
-    .local v2, _arg1:Landroid/os/IBinder;
-    invoke-virtual {p0, v0, v1, v2}, Landroid/os/IVibratorService$Stub;->vibrate(JLandroid/os/IBinder;)V
-
-    invoke-virtual {p3}, Landroid/os/Parcel;->writeNoException()V
-
-    goto :goto_0
-
-    .end local v0           #_arg0:J
-    .end local v2           #_arg1:Landroid/os/IBinder;
-    :sswitch_3
-    const-string v5, "android.os.IVibratorService"
-
-    invoke-virtual {p2, v5}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
-
-    invoke-virtual {p2}, Landroid/os/Parcel;->createLongArray()[J
-
-    move-result-object v0
-
-    .local v0, _arg0:[J
-    invoke-virtual {p2}, Landroid/os/Parcel;->readInt()I
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
 
     move-result v2
 
-    .local v2, _arg1:I
-    invoke-virtual {p2}, Landroid/os/Parcel;->readStrongBinder()Landroid/os/IBinder;
+    .local v2, _arg0:I
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
     move-result-object v3
 
-    .local v3, _arg2:Landroid/os/IBinder;
-    invoke-virtual {p0, v0, v2, v3}, Landroid/os/IVibratorService$Stub;->vibratePattern([JILandroid/os/IBinder;)V
+    .local v3, _arg1:Ljava/lang/String;
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readLong()J
 
-    invoke-virtual {p3}, Landroid/os/Parcel;->writeNoException()V
+    move-result-wide v4
+
+    .local v4, _arg2:J
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readStrongBinder()Landroid/os/IBinder;
+
+    move-result-object v6
+
+    .local v6, _arg3:Landroid/os/IBinder;
+    move-object v1, p0
+
+    invoke-virtual/range {v1 .. v6}, Landroid/os/IVibratorService$Stub;->vibrate(ILjava/lang/String;JLandroid/os/IBinder;)V
+
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    const/4 v1, 0x1
 
     goto :goto_0
 
-    .end local v0           #_arg0:[J
-    .end local v2           #_arg1:I
-    .end local v3           #_arg2:Landroid/os/IBinder;
+    .end local v2           #_arg0:I
+    .end local v3           #_arg1:Ljava/lang/String;
+    .end local v4           #_arg2:J
+    .end local v6           #_arg3:Landroid/os/IBinder;
+    :sswitch_3
+    const-string v1, "android.os.IVibratorService"
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v1}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v2
+
+    .restart local v2       #_arg0:I
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v3
+
+    .restart local v3       #_arg1:Ljava/lang/String;
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->createLongArray()[J
+
+    move-result-object v4
+
+    .local v4, _arg2:[J
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v6
+
+    .local v6, _arg3:I
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readStrongBinder()Landroid/os/IBinder;
+
+    move-result-object v12
+
+    .local v12, _arg4:Landroid/os/IBinder;
+    move-object v7, p0
+
+    move v8, v2
+
+    move-object v9, v3
+
+    move-object v10, v4
+
+    move v11, v6
+
+    invoke-virtual/range {v7 .. v12}, Landroid/os/IVibratorService$Stub;->vibratePattern(ILjava/lang/String;[JILandroid/os/IBinder;)V
+
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    const/4 v1, 0x1
+
+    goto :goto_0
+
+    .end local v2           #_arg0:I
+    .end local v3           #_arg1:Ljava/lang/String;
+    .end local v4           #_arg2:[J
+    .end local v6           #_arg3:I
+    .end local v12           #_arg4:Landroid/os/IBinder;
     :sswitch_4
-    const-string v5, "android.os.IVibratorService"
+    const-string v1, "android.os.IVibratorService"
 
-    invoke-virtual {p2, v5}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+    move-object/from16 v0, p2
 
-    invoke-virtual {p2}, Landroid/os/Parcel;->readStrongBinder()Landroid/os/IBinder;
+    invoke-virtual {v0, v1}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
-    move-result-object v0
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readStrongBinder()Landroid/os/IBinder;
 
-    .local v0, _arg0:Landroid/os/IBinder;
-    invoke-virtual {p0, v0}, Landroid/os/IVibratorService$Stub;->cancelVibrate(Landroid/os/IBinder;)V
+    move-result-object v2
 
-    invoke-virtual {p3}, Landroid/os/Parcel;->writeNoException()V
+    .local v2, _arg0:Landroid/os/IBinder;
+    invoke-virtual {p0, v2}, Landroid/os/IVibratorService$Stub;->cancelVibrate(Landroid/os/IBinder;)V
+
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    const/4 v1, 0x1
 
     goto :goto_0
 

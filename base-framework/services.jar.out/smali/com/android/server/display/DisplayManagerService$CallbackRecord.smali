@@ -20,7 +20,9 @@
 # instance fields
 .field private final mCallback:Landroid/hardware/display/IDisplayManagerCallback;
 
-.field private final mPid:I
+.field public final mPid:I
+
+.field public mWifiDisplayScanRequested:Z
 
 .field final synthetic this$0:Lcom/android/server/display/DisplayManagerService;
 
@@ -47,15 +49,13 @@
 
 # virtual methods
 .method public binderDied()V
-    .locals 2
+    .locals 1
 
     .prologue
     iget-object v0, p0, Lcom/android/server/display/DisplayManagerService$CallbackRecord;->this$0:Lcom/android/server/display/DisplayManagerService;
 
-    iget v1, p0, Lcom/android/server/display/DisplayManagerService$CallbackRecord;->mPid:I
-
-    #calls: Lcom/android/server/display/DisplayManagerService;->onCallbackDied(I)V
-    invoke-static {v0, v1}, Lcom/android/server/display/DisplayManagerService;->access$1500(Lcom/android/server/display/DisplayManagerService;I)V
+    #calls: Lcom/android/server/display/DisplayManagerService;->onCallbackDied(Lcom/android/server/display/DisplayManagerService$CallbackRecord;)V
+    invoke-static {v0, p0}, Lcom/android/server/display/DisplayManagerService;->access$1500(Lcom/android/server/display/DisplayManagerService;Lcom/android/server/display/DisplayManagerService$CallbackRecord;)V
 
     return-void
 .end method

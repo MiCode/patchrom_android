@@ -4,7 +4,7 @@
 
 
 # instance fields
-.field private id:I
+.field private mId:I
 
 
 # direct methods
@@ -15,7 +15,7 @@
     .prologue
     invoke-direct {p0}, Lcom/android/internal/telephony/cat/ResponseData;-><init>()V
 
-    iput p1, p0, Lcom/android/internal/telephony/cat/SelectItemResponseData;->id:I
+    iput p1, p0, Lcom/android/internal/telephony/cat/SelectItemResponseData;->mId:I
 
     return-void
 .end method
@@ -42,7 +42,7 @@
 
     invoke-virtual {p1, v1}, Ljava/io/ByteArrayOutputStream;->write(I)V
 
-    iget v1, p0, Lcom/android/internal/telephony/cat/SelectItemResponseData;->id:I
+    iget v1, p0, Lcom/android/internal/telephony/cat/SelectItemResponseData;->mId:I
 
     invoke-virtual {p1, v1}, Ljava/io/ByteArrayOutputStream;->write(I)V
 

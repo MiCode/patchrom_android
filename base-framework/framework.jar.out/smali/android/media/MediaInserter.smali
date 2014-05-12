@@ -4,7 +4,9 @@
 
 
 # instance fields
-.field private mBufferSizePerUri:I
+.field private final mBufferSizePerUri:I
+
+.field private final mPackageName:Ljava/lang/String;
 
 .field private final mPriorityRowMap:Ljava/util/HashMap;
     .annotation system Ldalvik/annotation/Signature;
@@ -20,7 +22,7 @@
     .end annotation
 .end field
 
-.field private mProvider:Landroid/content/IContentProvider;
+.field private final mProvider:Landroid/content/IContentProvider;
 
 .field private final mRowMap:Ljava/util/HashMap;
     .annotation system Ldalvik/annotation/Signature;
@@ -38,9 +40,10 @@
 
 
 # direct methods
-.method public constructor <init>(Landroid/content/IContentProvider;I)V
+.method public constructor <init>(Landroid/content/IContentProvider;Ljava/lang/String;I)V
     .locals 1
     .parameter "provider"
+    .parameter "packageName"
     .parameter "bufferSizePerUri"
 
     .prologue
@@ -60,13 +63,15 @@
 
     iput-object p1, p0, Landroid/media/MediaInserter;->mProvider:Landroid/content/IContentProvider;
 
-    iput p2, p0, Landroid/media/MediaInserter;->mBufferSizePerUri:I
+    iput-object p2, p0, Landroid/media/MediaInserter;->mPackageName:Ljava/lang/String;
+
+    iput p3, p0, Landroid/media/MediaInserter;->mBufferSizePerUri:I
 
     return-void
 .end method
 
 .method private flush(Landroid/net/Uri;Ljava/util/List;)V
-    .locals 2
+    .locals 3
     .parameter "tableUri"
     .parameter
     .annotation system Ldalvik/annotation/Signature;
@@ -111,7 +116,9 @@
     .restart local v0       #valuesArray:[Landroid/content/ContentValues;
     iget-object v1, p0, Landroid/media/MediaInserter;->mProvider:Landroid/content/IContentProvider;
 
-    invoke-interface {v1, p1, v0}, Landroid/content/IContentProvider;->bulkInsert(Landroid/net/Uri;[Landroid/content/ContentValues;)I
+    iget-object v2, p0, Landroid/media/MediaInserter;->mPackageName:Ljava/lang/String;
+
+    invoke-interface {v1, v2, p1, v0}, Landroid/content/IContentProvider;->bulkInsert(Ljava/lang/String;Landroid/net/Uri;[Landroid/content/ContentValues;)I
 
     invoke-interface {p2}, Ljava/util/List;->clear()V
 

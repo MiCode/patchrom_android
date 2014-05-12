@@ -43,13 +43,13 @@
 
 .field public static final EXTERNAL_STORAGE_UNAVAILABLE:I = 0x1
 
-.field public static final GET_MEMORY_INFO_TRANSACTION:I = 0x20
-
 .field public static final PACKAGE_REMOVED:I = 0x0
 
 .field public static final PROCESS_IN_BACKGROUND_TRANSACTION:I = 0x13
 
 .field public static final PROFILER_CONTROL_TRANSACTION:I = 0x1c
+
+.field public static final REQUEST_ASSIST_CONTEXT_EXTRAS_TRANSACTION:I = 0x30
 
 .field public static final REQUEST_THUMBNAIL_TRANSACTION:I = 0xf
 
@@ -70,6 +70,8 @@
 .field public static final SCHEDULE_EXIT_TRANSACTION:I = 0xe
 
 .field public static final SCHEDULE_FINISH_ACTIVITY_TRANSACTION:I = 0x9
+
+.field public static final SCHEDULE_INSTALL_PROVIDER_TRANSACTION:I = 0x33
 
 .field public static final SCHEDULE_LAUNCH_ACTIVITY_TRANSACTION:I = 0x7
 
@@ -99,6 +101,8 @@
 
 .field public static final SCHEDULE_SUICIDE_TRANSACTION:I = 0x21
 
+.field public static final SCHEDULE_TRANSLUCENT_CONVERSION_COMPLETE_TRANSACTION:I = 0x31
+
 .field public static final SCHEDULE_TRIM_MEMORY_TRANSACTION:I = 0x2a
 
 .field public static final SCHEDULE_UNBIND_SERVICE_TRANSACTION:I = 0x15
@@ -108,6 +112,8 @@
 .field public static final SET_CORE_SETTINGS_TRANSACTION:I = 0x28
 
 .field public static final SET_HTTP_PROXY_TRANSACTION:I = 0x27
+
+.field public static final SET_PROCESS_STATE_TRANSACTION:I = 0x32
 
 .field public static final SET_SCHEDULING_GROUP_TRANSACTION:I = 0x1d
 
@@ -121,7 +127,7 @@
 
 
 # virtual methods
-.method public abstract bindApplication(Ljava/lang/String;Landroid/content/pm/ApplicationInfo;Ljava/util/List;Landroid/content/ComponentName;Ljava/lang/String;Landroid/os/ParcelFileDescriptor;ZLandroid/os/Bundle;Landroid/app/IInstrumentationWatcher;IZZZLandroid/content/res/Configuration;Landroid/content/res/CompatibilityInfo;Ljava/util/Map;Landroid/os/Bundle;)V
+.method public abstract bindApplication(Ljava/lang/String;Landroid/content/pm/ApplicationInfo;Ljava/util/List;Landroid/content/ComponentName;Ljava/lang/String;Landroid/os/ParcelFileDescriptor;ZLandroid/os/Bundle;Landroid/app/IInstrumentationWatcher;Landroid/app/IUiAutomationConnection;IZZZLandroid/content/res/Configuration;Landroid/content/res/CompatibilityInfo;Ljava/util/Map;Landroid/os/Bundle;)V
     .annotation system Ldalvik/annotation/Signature;
         value = {
             "(",
@@ -137,6 +143,7 @@
             "Z",
             "Landroid/os/Bundle;",
             "Landroid/app/IInstrumentationWatcher;",
+            "Landroid/app/IUiAutomationConnection;",
             "IZZZ",
             "Landroid/content/res/Configuration;",
             "Landroid/content/res/CompatibilityInfo;",
@@ -205,7 +212,7 @@
     .end annotation
 .end method
 
-.method public abstract dumpMemInfo(Ljava/io/FileDescriptor;ZZ[Ljava/lang/String;)Landroid/os/Debug$MemoryInfo;
+.method public abstract dumpMemInfo(Ljava/io/FileDescriptor;Landroid/os/Debug$MemoryInfo;ZZZ[Ljava/lang/String;)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -229,14 +236,6 @@
     .end annotation
 .end method
 
-.method public abstract getMemoryInfo(Landroid/os/Debug$MemoryInfo;)V
-    .annotation system Ldalvik/annotation/Throws;
-        value = {
-            Landroid/os/RemoteException;
-        }
-    .end annotation
-.end method
-
 .method public abstract processInBackground()V
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -246,6 +245,14 @@
 .end method
 
 .method public abstract profilerControl(ZLjava/lang/String;Landroid/os/ParcelFileDescriptor;I)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract requestAssistContextExtras(Landroid/os/IBinder;Landroid/os/IBinder;I)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -269,7 +276,7 @@
     .end annotation
 .end method
 
-.method public abstract scheduleBindService(Landroid/os/IBinder;Landroid/content/Intent;Z)V
+.method public abstract scheduleBindService(Landroid/os/IBinder;Landroid/content/Intent;ZI)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -301,7 +308,7 @@
     .end annotation
 .end method
 
-.method public abstract scheduleCreateService(Landroid/os/IBinder;Landroid/content/pm/ServiceInfo;Landroid/content/res/CompatibilityInfo;)V
+.method public abstract scheduleCreateService(Landroid/os/IBinder;Landroid/content/pm/ServiceInfo;Landroid/content/res/CompatibilityInfo;I)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -333,7 +340,15 @@
     .end annotation
 .end method
 
-.method public abstract scheduleLaunchActivity(Landroid/content/Intent;Landroid/os/IBinder;ILandroid/content/pm/ActivityInfo;Landroid/content/res/Configuration;Landroid/content/res/CompatibilityInfo;Landroid/os/Bundle;Ljava/util/List;Ljava/util/List;ZZLjava/lang/String;Landroid/os/ParcelFileDescriptor;Z)V
+.method public abstract scheduleInstallProvider(Landroid/content/pm/ProviderInfo;)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract scheduleLaunchActivity(Landroid/content/Intent;Landroid/os/IBinder;ILandroid/content/pm/ActivityInfo;Landroid/content/res/Configuration;Landroid/content/res/CompatibilityInfo;ILandroid/os/Bundle;Ljava/util/List;Ljava/util/List;ZZLjava/lang/String;Landroid/os/ParcelFileDescriptor;Z)V
     .annotation system Ldalvik/annotation/Signature;
         value = {
             "(",
@@ -343,6 +358,7 @@
             "Landroid/content/pm/ActivityInfo;",
             "Landroid/content/res/Configuration;",
             "Landroid/content/res/CompatibilityInfo;",
+            "I",
             "Landroid/os/Bundle;",
             "Ljava/util/List",
             "<",
@@ -401,7 +417,7 @@
     .end annotation
 .end method
 
-.method public abstract scheduleReceiver(Landroid/content/Intent;Landroid/content/pm/ActivityInfo;Landroid/content/res/CompatibilityInfo;ILjava/lang/String;Landroid/os/Bundle;ZI)V
+.method public abstract scheduleReceiver(Landroid/content/Intent;Landroid/content/pm/ActivityInfo;Landroid/content/res/CompatibilityInfo;ILjava/lang/String;Landroid/os/Bundle;ZII)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -409,7 +425,7 @@
     .end annotation
 .end method
 
-.method public abstract scheduleRegisteredReceiver(Landroid/content/IIntentReceiver;Landroid/content/Intent;ILjava/lang/String;Landroid/os/Bundle;ZZI)V
+.method public abstract scheduleRegisteredReceiver(Landroid/content/IIntentReceiver;Landroid/content/Intent;ILjava/lang/String;Landroid/os/Bundle;ZZII)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -442,7 +458,7 @@
     .end annotation
 .end method
 
-.method public abstract scheduleResumeActivity(Landroid/os/IBinder;Z)V
+.method public abstract scheduleResumeActivity(Landroid/os/IBinder;IZ)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -509,6 +525,14 @@
     .end annotation
 .end method
 
+.method public abstract scheduleTranslucentConversionComplete(Landroid/os/IBinder;Z)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
 .method public abstract scheduleTrimMemory(I)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -541,7 +565,15 @@
     .end annotation
 .end method
 
-.method public abstract setHttpProxy(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+.method public abstract setHttpProxy(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract setProcessState(I)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;

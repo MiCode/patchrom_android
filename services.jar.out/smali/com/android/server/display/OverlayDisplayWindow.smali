@@ -67,11 +67,13 @@
 
 .field private mScaleGestureDetector:Landroid/view/ScaleGestureDetector;
 
+.field private final mSecure:Z
+
 .field private final mSurfaceTextureListener:Landroid/view/TextureView$SurfaceTextureListener;
 
 .field private mTextureView:Landroid/view/TextureView;
 
-.field private final mTitle:Ljava/lang/String;
+.field private mTitle:Ljava/lang/String;
 
 .field private mTitleTextView:Landroid/widget/TextView;
 
@@ -93,7 +95,7 @@
 
 
 # direct methods
-.method public constructor <init>(Landroid/content/Context;Ljava/lang/String;IIIILcom/android/server/display/OverlayDisplayWindow$Listener;)V
+.method public constructor <init>(Landroid/content/Context;Ljava/lang/String;IIIIZLcom/android/server/display/OverlayDisplayWindow$Listener;)V
     .locals 5
     .parameter "context"
     .parameter "name"
@@ -101,6 +103,7 @@
     .parameter "height"
     .parameter "densityDpi"
     .parameter "gravity"
+    .parameter "secure"
     .parameter "listener"
 
     .prologue
@@ -176,13 +179,15 @@
 
     iput p6, p0, Lcom/android/server/display/OverlayDisplayWindow;->mGravity:I
 
-    iput-object p7, p0, Lcom/android/server/display/OverlayDisplayWindow;->mListener:Lcom/android/server/display/OverlayDisplayWindow$Listener;
+    iput-boolean p7, p0, Lcom/android/server/display/OverlayDisplayWindow;->mSecure:Z
+
+    iput-object p8, p0, Lcom/android/server/display/OverlayDisplayWindow;->mListener:Lcom/android/server/display/OverlayDisplayWindow$Listener;
 
     invoke-virtual {p1}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
 
     move-result-object v0
 
-    const v1, 0x104051e
+    const v1, 0x1040554
 
     const/4 v2, 0x4
 
@@ -228,6 +233,39 @@
 
     iput-object v0, p0, Lcom/android/server/display/OverlayDisplayWindow;->mTitle:Ljava/lang/String;
 
+    if-eqz p7, :cond_0
+
+    new-instance v0, Ljava/lang/StringBuilder;
+
+    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+
+    iget-object v1, p0, Lcom/android/server/display/OverlayDisplayWindow;->mTitle:Ljava/lang/String;
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {p1}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
+
+    move-result-object v1
+
+    const v2, 0x1040555
+
+    invoke-virtual {v1, v2}, Landroid/content/res/Resources;->getString(I)Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    iput-object v0, p0, Lcom/android/server/display/OverlayDisplayWindow;->mTitle:Ljava/lang/String;
+
+    :cond_0
     const-string v0, "display"
 
     invoke-virtual {p1, v0}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
@@ -412,7 +450,7 @@
     move-result-object v0
 
     .local v0, inflater:Landroid/view/LayoutInflater;
-    const v1, 0x1090098
+    const v1, 0x109006d
 
     const/4 v3, 0x0
 
@@ -430,7 +468,7 @@
 
     iget-object v1, p0, Lcom/android/server/display/OverlayDisplayWindow;->mWindowContent:Landroid/view/View;
 
-    const v3, 0x1020338
+    const v3, 0x10202eb
 
     invoke-virtual {v1, v3}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -480,7 +518,7 @@
 
     iget-object v1, p0, Lcom/android/server/display/OverlayDisplayWindow;->mWindowContent:Landroid/view/View;
 
-    const v3, 0x1020339
+    const v3, 0x10202ec
 
     invoke-virtual {v1, v3}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -514,6 +552,19 @@
 
     iput v3, v1, Landroid/view/WindowManager$LayoutParams;->flags:I
 
+    iget-boolean v1, p0, Lcom/android/server/display/OverlayDisplayWindow;->mSecure:Z
+
+    if-eqz v1, :cond_0
+
+    iget-object v1, p0, Lcom/android/server/display/OverlayDisplayWindow;->mWindowParams:Landroid/view/WindowManager$LayoutParams;
+
+    iget v3, v1, Landroid/view/WindowManager$LayoutParams;->flags:I
+
+    or-int/lit16 v3, v3, 0x2000
+
+    iput v3, v1, Landroid/view/WindowManager$LayoutParams;->flags:I
+
+    :cond_0
     iget-object v1, p0, Lcom/android/server/display/OverlayDisplayWindow;->mWindowParams:Landroid/view/WindowManager$LayoutParams;
 
     iget v3, v1, Landroid/view/WindowManager$LayoutParams;->privateFlags:I
@@ -566,7 +617,7 @@
 
     const/4 v3, 0x3
 
-    if-ne v1, v3, :cond_0
+    if-ne v1, v3, :cond_1
 
     move v1, v2
 
@@ -579,7 +630,7 @@
 
     const/16 v3, 0x30
 
-    if-ne v1, v3, :cond_1
+    if-ne v1, v3, :cond_2
 
     :goto_1
     iput v2, p0, Lcom/android/server/display/OverlayDisplayWindow;->mWindowY:I
@@ -590,14 +641,14 @@
 
     return-void
 
-    :cond_0
+    :cond_1
     iget-object v1, p0, Lcom/android/server/display/OverlayDisplayWindow;->mDefaultDisplayInfo:Landroid/view/DisplayInfo;
 
     iget v1, v1, Landroid/view/DisplayInfo;->logicalWidth:I
 
     goto :goto_0
 
-    :cond_1
+    :cond_2
     iget-object v1, p0, Lcom/android/server/display/OverlayDisplayWindow;->mDefaultDisplayInfo:Landroid/view/DisplayInfo;
 
     iget v2, v1, Landroid/view/DisplayInfo;->logicalHeight:I

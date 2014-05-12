@@ -21,7 +21,7 @@
             "(I)",
             "Ljava/util/List",
             "<",
-            "Lcom/android/internal/telephony/AdnRecord;",
+            "Lcom/android/internal/telephony/uicc/AdnRecord;",
             ">;"
         }
     .end annotation

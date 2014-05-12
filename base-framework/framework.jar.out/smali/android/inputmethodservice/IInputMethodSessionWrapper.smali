@@ -9,21 +9,13 @@
 # annotations
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
-        Landroid/inputmethodservice/IInputMethodSessionWrapper$InputMethodEventCallbackWrapper;
+        Landroid/inputmethodservice/IInputMethodSessionWrapper$ImeInputEventReceiver;
     }
 .end annotation
 
 
 # static fields
-.field private static final DEBUG:Z = false
-
 .field private static final DO_APP_PRIVATE_COMMAND:I = 0x64
-
-.field private static final DO_DISPATCH_GENERIC_MOTION_EVENT:I = 0x55
-
-.field private static final DO_DISPATCH_KEY_EVENT:I = 0x46
-
-.field private static final DO_DISPATCH_TRACKBALL_EVENT:I = 0x50
 
 .field private static final DO_DISPLAY_COMPLETIONS:I = 0x41
 
@@ -47,26 +39,83 @@
 # instance fields
 .field mCaller:Lcom/android/internal/os/HandlerCaller;
 
+.field mChannel:Landroid/view/InputChannel;
+
 .field mInputMethodSession:Landroid/view/inputmethod/InputMethodSession;
+
+.field mReceiver:Landroid/inputmethodservice/IInputMethodSessionWrapper$ImeInputEventReceiver;
 
 
 # direct methods
-.method public constructor <init>(Landroid/content/Context;Landroid/view/inputmethod/InputMethodSession;)V
-    .locals 1
+.method public constructor <init>(Landroid/content/Context;Landroid/view/inputmethod/InputMethodSession;Landroid/view/InputChannel;)V
+    .locals 3
     .parameter "context"
     .parameter "inputMethodSession"
+    .parameter "channel"
 
     .prologue
     invoke-direct {p0}, Lcom/android/internal/view/IInputMethodSession$Stub;-><init>()V
 
     new-instance v0, Lcom/android/internal/os/HandlerCaller;
 
-    invoke-direct {v0, p1, p0}, Lcom/android/internal/os/HandlerCaller;-><init>(Landroid/content/Context;Lcom/android/internal/os/HandlerCaller$Callback;)V
+    const/4 v1, 0x0
+
+    const/4 v2, 0x1
+
+    invoke-direct {v0, p1, v1, p0, v2}, Lcom/android/internal/os/HandlerCaller;-><init>(Landroid/content/Context;Landroid/os/Looper;Lcom/android/internal/os/HandlerCaller$Callback;Z)V
 
     iput-object v0, p0, Landroid/inputmethodservice/IInputMethodSessionWrapper;->mCaller:Lcom/android/internal/os/HandlerCaller;
 
     iput-object p2, p0, Landroid/inputmethodservice/IInputMethodSessionWrapper;->mInputMethodSession:Landroid/view/inputmethod/InputMethodSession;
 
+    iput-object p3, p0, Landroid/inputmethodservice/IInputMethodSessionWrapper;->mChannel:Landroid/view/InputChannel;
+
+    if-eqz p3, :cond_0
+
+    new-instance v0, Landroid/inputmethodservice/IInputMethodSessionWrapper$ImeInputEventReceiver;
+
+    invoke-virtual {p1}, Landroid/content/Context;->getMainLooper()Landroid/os/Looper;
+
+    move-result-object v1
+
+    invoke-direct {v0, p0, p3, v1}, Landroid/inputmethodservice/IInputMethodSessionWrapper$ImeInputEventReceiver;-><init>(Landroid/inputmethodservice/IInputMethodSessionWrapper;Landroid/view/InputChannel;Landroid/os/Looper;)V
+
+    iput-object v0, p0, Landroid/inputmethodservice/IInputMethodSessionWrapper;->mReceiver:Landroid/inputmethodservice/IInputMethodSessionWrapper$ImeInputEventReceiver;
+
+    :cond_0
+    return-void
+.end method
+
+.method private doFinishSession()V
+    .locals 2
+
+    .prologue
+    const/4 v1, 0x0
+
+    iput-object v1, p0, Landroid/inputmethodservice/IInputMethodSessionWrapper;->mInputMethodSession:Landroid/view/inputmethod/InputMethodSession;
+
+    iget-object v0, p0, Landroid/inputmethodservice/IInputMethodSessionWrapper;->mReceiver:Landroid/inputmethodservice/IInputMethodSessionWrapper$ImeInputEventReceiver;
+
+    if-eqz v0, :cond_0
+
+    iget-object v0, p0, Landroid/inputmethodservice/IInputMethodSessionWrapper;->mReceiver:Landroid/inputmethodservice/IInputMethodSessionWrapper$ImeInputEventReceiver;
+
+    invoke-virtual {v0}, Landroid/inputmethodservice/IInputMethodSessionWrapper$ImeInputEventReceiver;->dispose()V
+
+    iput-object v1, p0, Landroid/inputmethodservice/IInputMethodSessionWrapper;->mReceiver:Landroid/inputmethodservice/IInputMethodSessionWrapper$ImeInputEventReceiver;
+
+    :cond_0
+    iget-object v0, p0, Landroid/inputmethodservice/IInputMethodSessionWrapper;->mChannel:Landroid/view/InputChannel;
+
+    if-eqz v0, :cond_1
+
+    iget-object v0, p0, Landroid/inputmethodservice/IInputMethodSessionWrapper;->mChannel:Landroid/view/InputChannel;
+
+    invoke-virtual {v0}, Landroid/view/InputChannel;->dispose()V
+
+    iput-object v1, p0, Landroid/inputmethodservice/IInputMethodSessionWrapper;->mChannel:Landroid/view/InputChannel;
+
+    :cond_1
     return-void
 .end method
 
@@ -85,72 +134,6 @@
     const/16 v2, 0x64
 
     invoke-virtual {v1, v2, p1, p2}, Lcom/android/internal/os/HandlerCaller;->obtainMessageOO(ILjava/lang/Object;Ljava/lang/Object;)Landroid/os/Message;
-
-    move-result-object v1
-
-    invoke-virtual {v0, v1}, Lcom/android/internal/os/HandlerCaller;->executeOrSendMessage(Landroid/os/Message;)V
-
-    return-void
-.end method
-
-.method public dispatchGenericMotionEvent(ILandroid/view/MotionEvent;Lcom/android/internal/view/IInputMethodCallback;)V
-    .locals 3
-    .parameter "seq"
-    .parameter "event"
-    .parameter "callback"
-
-    .prologue
-    iget-object v0, p0, Landroid/inputmethodservice/IInputMethodSessionWrapper;->mCaller:Lcom/android/internal/os/HandlerCaller;
-
-    iget-object v1, p0, Landroid/inputmethodservice/IInputMethodSessionWrapper;->mCaller:Lcom/android/internal/os/HandlerCaller;
-
-    const/16 v2, 0x55
-
-    invoke-virtual {v1, v2, p1, p2, p3}, Lcom/android/internal/os/HandlerCaller;->obtainMessageIOO(IILjava/lang/Object;Ljava/lang/Object;)Landroid/os/Message;
-
-    move-result-object v1
-
-    invoke-virtual {v0, v1}, Lcom/android/internal/os/HandlerCaller;->executeOrSendMessage(Landroid/os/Message;)V
-
-    return-void
-.end method
-
-.method public dispatchKeyEvent(ILandroid/view/KeyEvent;Lcom/android/internal/view/IInputMethodCallback;)V
-    .locals 3
-    .parameter "seq"
-    .parameter "event"
-    .parameter "callback"
-
-    .prologue
-    iget-object v0, p0, Landroid/inputmethodservice/IInputMethodSessionWrapper;->mCaller:Lcom/android/internal/os/HandlerCaller;
-
-    iget-object v1, p0, Landroid/inputmethodservice/IInputMethodSessionWrapper;->mCaller:Lcom/android/internal/os/HandlerCaller;
-
-    const/16 v2, 0x46
-
-    invoke-virtual {v1, v2, p1, p2, p3}, Lcom/android/internal/os/HandlerCaller;->obtainMessageIOO(IILjava/lang/Object;Ljava/lang/Object;)Landroid/os/Message;
-
-    move-result-object v1
-
-    invoke-virtual {v0, v1}, Lcom/android/internal/os/HandlerCaller;->executeOrSendMessage(Landroid/os/Message;)V
-
-    return-void
-.end method
-
-.method public dispatchTrackballEvent(ILandroid/view/MotionEvent;Lcom/android/internal/view/IInputMethodCallback;)V
-    .locals 3
-    .parameter "seq"
-    .parameter "event"
-    .parameter "callback"
-
-    .prologue
-    iget-object v0, p0, Landroid/inputmethodservice/IInputMethodSessionWrapper;->mCaller:Lcom/android/internal/os/HandlerCaller;
-
-    iget-object v1, p0, Landroid/inputmethodservice/IInputMethodSessionWrapper;->mCaller:Lcom/android/internal/os/HandlerCaller;
-
-    const/16 v2, 0x50
-
-    invoke-virtual {v1, v2, p1, p2, p3}, Lcom/android/internal/os/HandlerCaller;->obtainMessageIOO(IILjava/lang/Object;Ljava/lang/Object;)Landroid/os/Message;
 
     move-result-object v1
 
@@ -263,93 +246,6 @@
     check-cast v7, Lcom/android/internal/os/SomeArgs;
 
     .local v7, args:Lcom/android/internal/os/SomeArgs;
-    iget-object v2, p0, Landroid/inputmethodservice/IInputMethodSessionWrapper;->mInputMethodSession:Landroid/view/inputmethod/InputMethodSession;
-
-    iget v3, p1, Landroid/os/Message;->arg1:I
-
-    iget-object v0, v7, Lcom/android/internal/os/SomeArgs;->arg1:Ljava/lang/Object;
-
-    check-cast v0, Landroid/view/KeyEvent;
-
-    new-instance v4, Landroid/inputmethodservice/IInputMethodSessionWrapper$InputMethodEventCallbackWrapper;
-
-    iget-object v1, v7, Lcom/android/internal/os/SomeArgs;->arg2:Ljava/lang/Object;
-
-    check-cast v1, Lcom/android/internal/view/IInputMethodCallback;
-
-    invoke-direct {v4, v1}, Landroid/inputmethodservice/IInputMethodSessionWrapper$InputMethodEventCallbackWrapper;-><init>(Lcom/android/internal/view/IInputMethodCallback;)V
-
-    invoke-interface {v2, v3, v0, v4}, Landroid/view/inputmethod/InputMethodSession;->dispatchKeyEvent(ILandroid/view/KeyEvent;Landroid/view/inputmethod/InputMethodSession$EventCallback;)V
-
-    invoke-virtual {v7}, Lcom/android/internal/os/SomeArgs;->recycle()V
-
-    goto :goto_0
-
-    .end local v7           #args:Lcom/android/internal/os/SomeArgs;
-    :sswitch_4
-    iget-object v7, p1, Landroid/os/Message;->obj:Ljava/lang/Object;
-
-    check-cast v7, Lcom/android/internal/os/SomeArgs;
-
-    .restart local v7       #args:Lcom/android/internal/os/SomeArgs;
-    iget-object v2, p0, Landroid/inputmethodservice/IInputMethodSessionWrapper;->mInputMethodSession:Landroid/view/inputmethod/InputMethodSession;
-
-    iget v3, p1, Landroid/os/Message;->arg1:I
-
-    iget-object v0, v7, Lcom/android/internal/os/SomeArgs;->arg1:Ljava/lang/Object;
-
-    check-cast v0, Landroid/view/MotionEvent;
-
-    new-instance v4, Landroid/inputmethodservice/IInputMethodSessionWrapper$InputMethodEventCallbackWrapper;
-
-    iget-object v1, v7, Lcom/android/internal/os/SomeArgs;->arg2:Ljava/lang/Object;
-
-    check-cast v1, Lcom/android/internal/view/IInputMethodCallback;
-
-    invoke-direct {v4, v1}, Landroid/inputmethodservice/IInputMethodSessionWrapper$InputMethodEventCallbackWrapper;-><init>(Lcom/android/internal/view/IInputMethodCallback;)V
-
-    invoke-interface {v2, v3, v0, v4}, Landroid/view/inputmethod/InputMethodSession;->dispatchTrackballEvent(ILandroid/view/MotionEvent;Landroid/view/inputmethod/InputMethodSession$EventCallback;)V
-
-    invoke-virtual {v7}, Lcom/android/internal/os/SomeArgs;->recycle()V
-
-    goto :goto_0
-
-    .end local v7           #args:Lcom/android/internal/os/SomeArgs;
-    :sswitch_5
-    iget-object v7, p1, Landroid/os/Message;->obj:Ljava/lang/Object;
-
-    check-cast v7, Lcom/android/internal/os/SomeArgs;
-
-    .restart local v7       #args:Lcom/android/internal/os/SomeArgs;
-    iget-object v2, p0, Landroid/inputmethodservice/IInputMethodSessionWrapper;->mInputMethodSession:Landroid/view/inputmethod/InputMethodSession;
-
-    iget v3, p1, Landroid/os/Message;->arg1:I
-
-    iget-object v0, v7, Lcom/android/internal/os/SomeArgs;->arg1:Ljava/lang/Object;
-
-    check-cast v0, Landroid/view/MotionEvent;
-
-    new-instance v4, Landroid/inputmethodservice/IInputMethodSessionWrapper$InputMethodEventCallbackWrapper;
-
-    iget-object v1, v7, Lcom/android/internal/os/SomeArgs;->arg2:Ljava/lang/Object;
-
-    check-cast v1, Lcom/android/internal/view/IInputMethodCallback;
-
-    invoke-direct {v4, v1}, Landroid/inputmethodservice/IInputMethodSessionWrapper$InputMethodEventCallbackWrapper;-><init>(Lcom/android/internal/view/IInputMethodCallback;)V
-
-    invoke-interface {v2, v3, v0, v4}, Landroid/view/inputmethod/InputMethodSession;->dispatchGenericMotionEvent(ILandroid/view/MotionEvent;Landroid/view/inputmethod/InputMethodSession$EventCallback;)V
-
-    invoke-virtual {v7}, Lcom/android/internal/os/SomeArgs;->recycle()V
-
-    goto/16 :goto_0
-
-    .end local v7           #args:Lcom/android/internal/os/SomeArgs;
-    :sswitch_6
-    iget-object v7, p1, Landroid/os/Message;->obj:Ljava/lang/Object;
-
-    check-cast v7, Lcom/android/internal/os/SomeArgs;
-
-    .restart local v7       #args:Lcom/android/internal/os/SomeArgs;
     iget-object v0, p0, Landroid/inputmethodservice/IInputMethodSessionWrapper;->mInputMethodSession:Landroid/view/inputmethod/InputMethodSession;
 
     iget v1, v7, Lcom/android/internal/os/SomeArgs;->argi1:I
@@ -368,10 +264,10 @@
 
     invoke-virtual {v7}, Lcom/android/internal/os/SomeArgs;->recycle()V
 
-    goto/16 :goto_0
+    goto :goto_0
 
     .end local v7           #args:Lcom/android/internal/os/SomeArgs;
-    :sswitch_7
+    :sswitch_4
     iget-object v1, p0, Landroid/inputmethodservice/IInputMethodSessionWrapper;->mInputMethodSession:Landroid/view/inputmethod/InputMethodSession;
 
     iget-object v0, p1, Landroid/os/Message;->obj:Ljava/lang/Object;
@@ -380,9 +276,9 @@
 
     invoke-interface {v1, v0}, Landroid/view/inputmethod/InputMethodSession;->updateCursor(Landroid/graphics/Rect;)V
 
-    goto/16 :goto_0
+    goto :goto_0
 
-    :sswitch_8
+    :sswitch_5
     iget-object v7, p1, Landroid/os/Message;->obj:Ljava/lang/Object;
 
     check-cast v7, Lcom/android/internal/os/SomeArgs;
@@ -402,10 +298,10 @@
 
     invoke-virtual {v7}, Lcom/android/internal/os/SomeArgs;->recycle()V
 
-    goto/16 :goto_0
+    goto :goto_0
 
     .end local v7           #args:Lcom/android/internal/os/SomeArgs;
-    :sswitch_9
+    :sswitch_6
     iget-object v0, p0, Landroid/inputmethodservice/IInputMethodSessionWrapper;->mInputMethodSession:Landroid/view/inputmethod/InputMethodSession;
 
     iget v1, p1, Landroid/os/Message;->arg1:I
@@ -414,16 +310,14 @@
 
     invoke-interface {v0, v1, v2}, Landroid/view/inputmethod/InputMethodSession;->toggleSoftInput(II)V
 
-    goto/16 :goto_0
+    goto :goto_0
 
-    :sswitch_a
-    const/4 v0, 0x0
-
-    iput-object v0, p0, Landroid/inputmethodservice/IInputMethodSessionWrapper;->mInputMethodSession:Landroid/view/inputmethod/InputMethodSession;
+    :sswitch_7
+    invoke-direct {p0}, Landroid/inputmethodservice/IInputMethodSessionWrapper;->doFinishSession()V
 
     goto/16 :goto_0
 
-    :sswitch_b
+    :sswitch_8
     iget-object v1, p0, Landroid/inputmethodservice/IInputMethodSessionWrapper;->mInputMethodSession:Landroid/view/inputmethod/InputMethodSession;
 
     iget v2, p1, Landroid/os/Message;->arg1:I
@@ -440,22 +334,17 @@
 
     goto :goto_1
 
-    nop
-
     :sswitch_data_0
     .sparse-switch
         0x3c -> :sswitch_0
         0x41 -> :sswitch_1
         0x43 -> :sswitch_2
-        0x46 -> :sswitch_3
-        0x50 -> :sswitch_4
-        0x55 -> :sswitch_5
-        0x5a -> :sswitch_6
-        0x5f -> :sswitch_7
-        0x64 -> :sswitch_8
-        0x69 -> :sswitch_9
-        0x6e -> :sswitch_a
-        0x73 -> :sswitch_b
+        0x5a -> :sswitch_3
+        0x5f -> :sswitch_4
+        0x64 -> :sswitch_5
+        0x69 -> :sswitch_6
+        0x6e -> :sswitch_7
+        0x73 -> :sswitch_8
     .end sparse-switch
 .end method
 

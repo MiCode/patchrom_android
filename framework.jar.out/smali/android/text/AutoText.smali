@@ -374,7 +374,7 @@
     .parameter "r"
 
     .prologue
-    const v9, 0x10f0001
+    const v9, 0x10f0002
 
     invoke-virtual {p1, v9}, Landroid/content/res/Resources;->getXml(I)Landroid/content/res/XmlResourceParser;
 

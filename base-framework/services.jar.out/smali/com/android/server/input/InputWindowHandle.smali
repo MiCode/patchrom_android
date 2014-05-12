@@ -32,6 +32,8 @@
 
 .field public layoutParamsFlags:I
 
+.field public layoutParamsPrivateFlags:I
+
 .field public layoutParamsType:I
 
 .field public name:Ljava/lang/String;

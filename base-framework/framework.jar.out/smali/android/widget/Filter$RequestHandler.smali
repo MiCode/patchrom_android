@@ -81,9 +81,9 @@
     .local v3, message:Landroid/os/Message;
     iput-object v0, v3, Landroid/os/Message;->obj:Ljava/lang/Object;
 
-    :goto_1
     invoke-virtual {v3}, Landroid/os/Message;->sendToTarget()V
 
+    :goto_1
     iget-object v5, p0, Landroid/widget/Filter$RequestHandler;->this$0:Landroid/widget/Filter;
 
     #getter for: Landroid/widget/Filter;->mLock:Ljava/lang/Object;
@@ -177,6 +177,8 @@
     .restart local v3       #message:Landroid/os/Message;
     iput-object v0, v3, Landroid/os/Message;->obj:Ljava/lang/Object;
 
+    invoke-virtual {v3}, Landroid/os/Message;->sendToTarget()V
+
     goto :goto_1
 
     .end local v1           #e:Ljava/lang/Exception;
@@ -257,6 +259,8 @@
     .catchall {:try_start_3 .. :try_end_3} :catchall_2
 
     throw v5
+
+    nop
 
     :sswitch_data_0
     .sparse-switch

@@ -155,6 +155,30 @@
     goto :goto_0
 .end method
 
+.method public quitSafely()Z
+    .locals 2
+
+    .prologue
+    invoke-virtual {p0}, Landroid/os/HandlerThread;->getLooper()Landroid/os/Looper;
+
+    move-result-object v0
+
+    .local v0, looper:Landroid/os/Looper;
+    if-eqz v0, :cond_0
+
+    invoke-virtual {v0}, Landroid/os/Looper;->quitSafely()V
+
+    const/4 v1, 0x1
+
+    :goto_0
+    return v1
+
+    :cond_0
+    const/4 v1, 0x0
+
+    goto :goto_0
+.end method
+
 .method public run()V
     .locals 1
 

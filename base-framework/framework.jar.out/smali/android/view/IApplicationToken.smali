@@ -23,7 +23,7 @@
     .end annotation
 .end method
 
-.method public abstract keyDispatchingTimedOut()Z
+.method public abstract keyDispatchingTimedOut(Ljava/lang/String;)Z
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;

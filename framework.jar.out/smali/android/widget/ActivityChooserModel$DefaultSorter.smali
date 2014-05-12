@@ -27,7 +27,7 @@
         value = {
             "Ljava/util/Map",
             "<",
-            "Ljava/lang/String;",
+            "Landroid/content/ComponentName;",
             "Landroid/widget/ActivityChooserModel$ActivityResolveInfo;",
             ">;"
         }
@@ -92,23 +92,23 @@
     .prologue
     .local p2, activities:Ljava/util/List;,"Ljava/util/List<Landroid/widget/ActivityChooserModel$ActivityResolveInfo;>;"
     .local p3, historicalRecords:Ljava/util/List;,"Ljava/util/List<Landroid/widget/ActivityChooserModel$HistoricalRecord;>;"
-    iget-object v7, p0, Landroid/widget/ActivityChooserModel$DefaultSorter;->mPackageNameToActivityMap:Ljava/util/Map;
+    iget-object v3, p0, Landroid/widget/ActivityChooserModel$DefaultSorter;->mPackageNameToActivityMap:Ljava/util/Map;
 
-    .local v7, packageNameToActivityMap:Ljava/util/Map;,"Ljava/util/Map<Ljava/lang/String;Landroid/widget/ActivityChooserModel$ActivityResolveInfo;>;"
-    invoke-interface {v7}, Ljava/util/Map;->clear()V
+    .local v3, componentNameToActivityMap:Ljava/util/Map;,"Ljava/util/Map<Landroid/content/ComponentName;Landroid/widget/ActivityChooserModel$ActivityResolveInfo;>;"
+    invoke-interface {v3}, Ljava/util/Map;->clear()V
 
     invoke-interface {p2}, Ljava/util/List;->size()I
 
     move-result v1
 
     .local v1, activityCount:I
-    const/4 v3, 0x0
+    const/4 v5, 0x0
 
-    .local v3, i:I
+    .local v5, i:I
     :goto_0
-    if-ge v3, v1, :cond_0
+    if-ge v5, v1, :cond_0
 
-    invoke-interface {p2, v3}, Ljava/util/List;->get(I)Ljava/lang/Object;
+    invoke-interface {p2, v5}, Ljava/util/List;->get(I)Ljava/lang/Object;
 
     move-result-object v0
 
@@ -119,52 +119,58 @@
 
     iput v8, v0, Landroid/widget/ActivityChooserModel$ActivityResolveInfo;->weight:F
 
+    new-instance v2, Landroid/content/ComponentName;
+
     iget-object v8, v0, Landroid/widget/ActivityChooserModel$ActivityResolveInfo;->resolveInfo:Landroid/content/pm/ResolveInfo;
 
     iget-object v8, v8, Landroid/content/pm/ResolveInfo;->activityInfo:Landroid/content/pm/ActivityInfo;
 
-    iget-object v6, v8, Landroid/content/pm/ActivityInfo;->packageName:Ljava/lang/String;
+    iget-object v8, v8, Landroid/content/pm/ActivityInfo;->packageName:Ljava/lang/String;
 
-    .local v6, packageName:Ljava/lang/String;
-    invoke-interface {v7, v6, v0}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+    iget-object v9, v0, Landroid/widget/ActivityChooserModel$ActivityResolveInfo;->resolveInfo:Landroid/content/pm/ResolveInfo;
 
-    add-int/lit8 v3, v3, 0x1
+    iget-object v9, v9, Landroid/content/pm/ResolveInfo;->activityInfo:Landroid/content/pm/ActivityInfo;
+
+    iget-object v9, v9, Landroid/content/pm/ActivityInfo;->name:Ljava/lang/String;
+
+    invoke-direct {v2, v8, v9}, Landroid/content/ComponentName;-><init>(Ljava/lang/String;Ljava/lang/String;)V
+
+    .local v2, componentName:Landroid/content/ComponentName;
+    invoke-interface {v3, v2, v0}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+
+    add-int/lit8 v5, v5, 0x1
 
     goto :goto_0
 
     .end local v0           #activity:Landroid/widget/ActivityChooserModel$ActivityResolveInfo;
-    .end local v6           #packageName:Ljava/lang/String;
+    .end local v2           #componentName:Landroid/content/ComponentName;
     :cond_0
     invoke-interface {p3}, Ljava/util/List;->size()I
 
     move-result v8
 
-    add-int/lit8 v4, v8, -0x1
+    add-int/lit8 v6, v8, -0x1
 
-    .local v4, lastShareIndex:I
-    const/high16 v5, 0x3f80
+    .local v6, lastShareIndex:I
+    const/high16 v7, 0x3f80
 
-    .local v5, nextRecordWeight:F
-    move v3, v4
+    .local v7, nextRecordWeight:F
+    move v5, v6
 
     :goto_1
-    if-ltz v3, :cond_2
+    if-ltz v5, :cond_2
 
-    invoke-interface {p3, v3}, Ljava/util/List;->get(I)Ljava/lang/Object;
+    invoke-interface {p3, v5}, Ljava/util/List;->get(I)Ljava/lang/Object;
 
-    move-result-object v2
+    move-result-object v4
 
-    check-cast v2, Landroid/widget/ActivityChooserModel$HistoricalRecord;
+    check-cast v4, Landroid/widget/ActivityChooserModel$HistoricalRecord;
 
-    .local v2, historicalRecord:Landroid/widget/ActivityChooserModel$HistoricalRecord;
-    iget-object v8, v2, Landroid/widget/ActivityChooserModel$HistoricalRecord;->activity:Landroid/content/ComponentName;
+    .local v4, historicalRecord:Landroid/widget/ActivityChooserModel$HistoricalRecord;
+    iget-object v2, v4, Landroid/widget/ActivityChooserModel$HistoricalRecord;->activity:Landroid/content/ComponentName;
 
-    invoke-virtual {v8}, Landroid/content/ComponentName;->getPackageName()Ljava/lang/String;
-
-    move-result-object v6
-
-    .restart local v6       #packageName:Ljava/lang/String;
-    invoke-interface {v7, v6}, Ljava/util/Map;->get(Ljava/lang/Object;)Ljava/lang/Object;
+    .restart local v2       #componentName:Landroid/content/ComponentName;
+    invoke-interface {v3, v2}, Ljava/util/Map;->get(Ljava/lang/Object;)Ljava/lang/Object;
 
     move-result-object v0
 
@@ -175,9 +181,9 @@
 
     iget v8, v0, Landroid/widget/ActivityChooserModel$ActivityResolveInfo;->weight:F
 
-    iget v9, v2, Landroid/widget/ActivityChooserModel$HistoricalRecord;->weight:F
+    iget v9, v4, Landroid/widget/ActivityChooserModel$HistoricalRecord;->weight:F
 
-    mul-float/2addr v9, v5
+    mul-float/2addr v9, v7
 
     add-float/2addr v8, v9
 
@@ -185,16 +191,16 @@
 
     const v8, 0x3f733333
 
-    mul-float/2addr v5, v8
+    mul-float/2addr v7, v8
 
     :cond_1
-    add-int/lit8 v3, v3, -0x1
+    add-int/lit8 v5, v5, -0x1
 
     goto :goto_1
 
     .end local v0           #activity:Landroid/widget/ActivityChooserModel$ActivityResolveInfo;
-    .end local v2           #historicalRecord:Landroid/widget/ActivityChooserModel$HistoricalRecord;
-    .end local v6           #packageName:Ljava/lang/String;
+    .end local v2           #componentName:Landroid/content/ComponentName;
+    .end local v4           #historicalRecord:Landroid/widget/ActivityChooserModel$HistoricalRecord;
     :cond_2
     invoke-static {p2}, Ljava/util/Collections;->sort(Ljava/util/List;)V
 

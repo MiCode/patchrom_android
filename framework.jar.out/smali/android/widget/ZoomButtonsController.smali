@@ -328,7 +328,7 @@
 
     iput v3, v2, Landroid/view/WindowManager$LayoutParams;->format:I
 
-    const v3, 0x10301eb
+    const v3, 0x10301f3
 
     iput v3, v2, Landroid/view/WindowManager$LayoutParams;->windowAnimations:I
 
@@ -358,11 +358,11 @@
     check-cast v1, Landroid/view/LayoutInflater;
 
     .local v1, inflater:Landroid/view/LayoutInflater;
-    const v3, 0x10900ec
+    const v3, 0x10900c8
 
     invoke-virtual {v1, v3, v0}, Landroid/view/LayoutInflater;->inflate(ILandroid/view/ViewGroup;)Landroid/view/View;
 
-    const v3, 0x10203af
+    const v3, 0x102037f
 
     invoke-virtual {v0, v3}, Landroid/widget/FrameLayout;->findViewById(I)Landroid/view/View;
 
@@ -728,7 +728,7 @@
     .local v2, viewRoot:Landroid/view/ViewRootImpl;
     if-eqz v2, :cond_0
 
-    invoke-virtual {v2, p1}, Landroid/view/ViewRootImpl;->dispatchKey(Landroid/view/KeyEvent;)V
+    invoke-virtual {v2, p1}, Landroid/view/ViewRootImpl;->dispatchInputEvent(Landroid/view/InputEvent;)V
 
     goto :goto_0
 .end method

@@ -122,6 +122,39 @@
     goto :goto_0
 .end method
 
+.method public static hasAnyCaCertsInstalled()Z
+    .locals 3
+
+    .prologue
+    new-instance v1, Lcom/android/org/conscrypt/TrustedCertificateStore;
+
+    invoke-direct {v1}, Lcom/android/org/conscrypt/TrustedCertificateStore;-><init>()V
+
+    .local v1, certStore:Lcom/android/org/conscrypt/TrustedCertificateStore;
+    invoke-virtual {v1}, Lcom/android/org/conscrypt/TrustedCertificateStore;->userAliases()Ljava/util/Set;
+
+    move-result-object v0
+
+    .local v0, aliases:Ljava/util/Set;,"Ljava/util/Set<Ljava/lang/String;>;"
+    if-eqz v0, :cond_0
+
+    invoke-interface {v0}, Ljava/util/Set;->isEmpty()Z
+
+    move-result v2
+
+    if-nez v2, :cond_0
+
+    const/4 v2, 0x1
+
+    :goto_0
+    return v2
+
+    :cond_0
+    const/4 v2, 0x0
+
+    goto :goto_0
+.end method
+
 
 # virtual methods
 .method public getActiveAdmins()Ljava/util/List;
@@ -406,6 +439,80 @@
     .end local v0           #e:Landroid/os/RemoteException;
     :cond_0
     const/4 v1, -0x1
+
+    goto :goto_0
+.end method
+
+.method public getDeviceOwner()Ljava/lang/String;
+    .locals 3
+
+    .prologue
+    iget-object v1, p0, Landroid/app/admin/DevicePolicyManager;->mService:Landroid/app/admin/IDevicePolicyManager;
+
+    if-eqz v1, :cond_0
+
+    :try_start_0
+    iget-object v1, p0, Landroid/app/admin/DevicePolicyManager;->mService:Landroid/app/admin/IDevicePolicyManager;
+
+    invoke-interface {v1}, Landroid/app/admin/IDevicePolicyManager;->getDeviceOwner()Ljava/lang/String;
+    :try_end_0
+    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
+
+    move-result-object v1
+
+    :goto_0
+    return-object v1
+
+    :catch_0
+    move-exception v0
+
+    .local v0, re:Landroid/os/RemoteException;
+    sget-object v1, Landroid/app/admin/DevicePolicyManager;->TAG:Ljava/lang/String;
+
+    const-string v2, "Failed to get device owner"
+
+    invoke-static {v1, v2}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+
+    .end local v0           #re:Landroid/os/RemoteException;
+    :cond_0
+    const/4 v1, 0x0
+
+    goto :goto_0
+.end method
+
+.method public getDeviceOwnerName()Ljava/lang/String;
+    .locals 3
+
+    .prologue
+    iget-object v1, p0, Landroid/app/admin/DevicePolicyManager;->mService:Landroid/app/admin/IDevicePolicyManager;
+
+    if-eqz v1, :cond_0
+
+    :try_start_0
+    iget-object v1, p0, Landroid/app/admin/DevicePolicyManager;->mService:Landroid/app/admin/IDevicePolicyManager;
+
+    invoke-interface {v1}, Landroid/app/admin/IDevicePolicyManager;->getDeviceOwnerName()Ljava/lang/String;
+    :try_end_0
+    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
+
+    move-result-object v1
+
+    :goto_0
+    return-object v1
+
+    :catch_0
+    move-exception v0
+
+    .local v0, re:Landroid/os/RemoteException;
+    sget-object v1, Landroid/app/admin/DevicePolicyManager;->TAG:Ljava/lang/String;
+
+    const-string v2, "Failed to get device owner"
+
+    invoke-static {v1, v2}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+
+    .end local v0           #re:Landroid/os/RemoteException;
+    :cond_0
+    const/4 v1, 0x0
 
     goto :goto_0
 .end method
@@ -1338,6 +1445,66 @@
     goto :goto_0
 .end method
 
+.method public hasCaCertInstalled([B)Z
+    .locals 7
+    .parameter "certBuffer"
+
+    .prologue
+    const/4 v4, 0x0
+
+    new-instance v3, Lcom/android/org/conscrypt/TrustedCertificateStore;
+
+    invoke-direct {v3}, Lcom/android/org/conscrypt/TrustedCertificateStore;-><init>()V
+
+    .local v3, certStore:Lcom/android/org/conscrypt/TrustedCertificateStore;
+    :try_start_0
+    const-string v5, "X.509"
+
+    invoke-static {v5}, Ljava/security/cert/CertificateFactory;->getInstance(Ljava/lang/String;)Ljava/security/cert/CertificateFactory;
+
+    move-result-object v2
+
+    .local v2, certFactory:Ljava/security/cert/CertificateFactory;
+    new-instance v5, Ljava/io/ByteArrayInputStream;
+
+    invoke-direct {v5, p1}, Ljava/io/ByteArrayInputStream;-><init>([B)V
+
+    invoke-virtual {v2, v5}, Ljava/security/cert/CertificateFactory;->generateCertificate(Ljava/io/InputStream;)Ljava/security/cert/Certificate;
+
+    move-result-object v1
+
+    check-cast v1, Ljava/security/cert/X509Certificate;
+
+    .local v1, cert:Ljava/security/cert/X509Certificate;
+    invoke-virtual {v3, v1}, Lcom/android/org/conscrypt/TrustedCertificateStore;->getCertificateAlias(Ljava/security/cert/Certificate;)Ljava/lang/String;
+    :try_end_0
+    .catch Ljava/security/cert/CertificateException; {:try_start_0 .. :try_end_0} :catch_0
+
+    move-result-object v5
+
+    if-eqz v5, :cond_0
+
+    const/4 v4, 0x1
+
+    .end local v1           #cert:Ljava/security/cert/X509Certificate;
+    .end local v2           #certFactory:Ljava/security/cert/CertificateFactory;
+    :cond_0
+    :goto_0
+    return v4
+
+    :catch_0
+    move-exception v0
+
+    .local v0, ce:Ljava/security/cert/CertificateException;
+    sget-object v5, Landroid/app/admin/DevicePolicyManager;->TAG:Ljava/lang/String;
+
+    const-string v6, "Could not parse certificate"
+
+    invoke-static {v5, v6, v0}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+
+    goto :goto_0
+.end method
+
 .method public hasGrantedPolicy(Landroid/content/ComponentName;I)Z
     .locals 3
     .parameter "admin"
@@ -1356,6 +1523,44 @@
     move-result v2
 
     invoke-interface {v1, p1, p2, v2}, Landroid/app/admin/IDevicePolicyManager;->hasGrantedPolicy(Landroid/content/ComponentName;II)Z
+    :try_end_0
+    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
+
+    move-result v1
+
+    :goto_0
+    return v1
+
+    :catch_0
+    move-exception v0
+
+    .local v0, e:Landroid/os/RemoteException;
+    sget-object v1, Landroid/app/admin/DevicePolicyManager;->TAG:Ljava/lang/String;
+
+    const-string v2, "Failed talking with device policy service"
+
+    invoke-static {v1, v2, v0}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+
+    .end local v0           #e:Landroid/os/RemoteException;
+    :cond_0
+    const/4 v1, 0x0
+
+    goto :goto_0
+.end method
+
+.method public installCaCert([B)Z
+    .locals 3
+    .parameter "certBuffer"
+
+    .prologue
+    iget-object v1, p0, Landroid/app/admin/DevicePolicyManager;->mService:Landroid/app/admin/IDevicePolicyManager;
+
+    if-eqz v1, :cond_0
+
+    :try_start_0
+    iget-object v1, p0, Landroid/app/admin/DevicePolicyManager;->mService:Landroid/app/admin/IDevicePolicyManager;
+
+    invoke-interface {v1, p1}, Landroid/app/admin/IDevicePolicyManager;->installCaCert([B)Z
     :try_end_0
     .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
 
@@ -1458,6 +1663,56 @@
     invoke-static {v1, v2, v0}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
 
     .end local v0           #e:Landroid/os/RemoteException;
+    :cond_0
+    const/4 v1, 0x0
+
+    goto :goto_0
+.end method
+
+.method public isDeviceOwner(Ljava/lang/String;)Z
+    .locals 1
+    .parameter "packageName"
+
+    .prologue
+    invoke-virtual {p0, p1}, Landroid/app/admin/DevicePolicyManager;->isDeviceOwnerApp(Ljava/lang/String;)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public isDeviceOwnerApp(Ljava/lang/String;)Z
+    .locals 3
+    .parameter "packageName"
+
+    .prologue
+    iget-object v1, p0, Landroid/app/admin/DevicePolicyManager;->mService:Landroid/app/admin/IDevicePolicyManager;
+
+    if-eqz v1, :cond_0
+
+    :try_start_0
+    iget-object v1, p0, Landroid/app/admin/DevicePolicyManager;->mService:Landroid/app/admin/IDevicePolicyManager;
+
+    invoke-interface {v1, p1}, Landroid/app/admin/IDevicePolicyManager;->isDeviceOwner(Ljava/lang/String;)Z
+    :try_end_0
+    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
+
+    move-result v1
+
+    :goto_0
+    return v1
+
+    :catch_0
+    move-exception v0
+
+    .local v0, re:Landroid/os/RemoteException;
+    sget-object v1, Landroid/app/admin/DevicePolicyManager;->TAG:Ljava/lang/String;
+
+    const-string v2, "Failed to check device owner"
+
+    invoke-static {v1, v2}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+
+    .end local v0           #re:Landroid/os/RemoteException;
     :cond_0
     const/4 v1, 0x0
 
@@ -1815,6 +2070,71 @@
     const-string v2, "Failed talking with device policy service"
 
     invoke-static {v1, v2, v0}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+
+    goto :goto_0
+.end method
+
+.method public setDeviceOwner(Ljava/lang/String;)Z
+    .locals 1
+    .parameter "packageName"
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Ljava/lang/IllegalArgumentException;,
+            Ljava/lang/IllegalStateException;
+        }
+    .end annotation
+
+    .prologue
+    const/4 v0, 0x0
+
+    invoke-virtual {p0, p1, v0}, Landroid/app/admin/DevicePolicyManager;->setDeviceOwner(Ljava/lang/String;Ljava/lang/String;)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public setDeviceOwner(Ljava/lang/String;Ljava/lang/String;)Z
+    .locals 3
+    .parameter "packageName"
+    .parameter "ownerName"
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Ljava/lang/IllegalArgumentException;,
+            Ljava/lang/IllegalStateException;
+        }
+    .end annotation
+
+    .prologue
+    iget-object v1, p0, Landroid/app/admin/DevicePolicyManager;->mService:Landroid/app/admin/IDevicePolicyManager;
+
+    if-eqz v1, :cond_0
+
+    :try_start_0
+    iget-object v1, p0, Landroid/app/admin/DevicePolicyManager;->mService:Landroid/app/admin/IDevicePolicyManager;
+
+    invoke-interface {v1, p1, p2}, Landroid/app/admin/IDevicePolicyManager;->setDeviceOwner(Ljava/lang/String;Ljava/lang/String;)Z
+    :try_end_0
+    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
+
+    move-result v1
+
+    :goto_0
+    return v1
+
+    :catch_0
+    move-exception v0
+
+    .local v0, re:Landroid/os/RemoteException;
+    sget-object v1, Landroid/app/admin/DevicePolicyManager;->TAG:Ljava/lang/String;
+
+    const-string v2, "Failed to set device owner"
+
+    invoke-static {v1, v2}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+
+    .end local v0           #re:Landroid/os/RemoteException;
+    :cond_0
+    const/4 v1, 0x0
 
     goto :goto_0
 .end method
@@ -2579,6 +2899,39 @@
     .end local v0           #e:Landroid/os/RemoteException;
     :cond_0
     const/4 v1, 0x0
+
+    goto :goto_0
+.end method
+
+.method public uninstallCaCert([B)V
+    .locals 3
+    .parameter "certBuffer"
+
+    .prologue
+    iget-object v1, p0, Landroid/app/admin/DevicePolicyManager;->mService:Landroid/app/admin/IDevicePolicyManager;
+
+    if-eqz v1, :cond_0
+
+    :try_start_0
+    iget-object v1, p0, Landroid/app/admin/DevicePolicyManager;->mService:Landroid/app/admin/IDevicePolicyManager;
+
+    invoke-interface {v1, p1}, Landroid/app/admin/IDevicePolicyManager;->uninstallCaCert([B)V
+    :try_end_0
+    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
+
+    :cond_0
+    :goto_0
+    return-void
+
+    :catch_0
+    move-exception v0
+
+    .local v0, e:Landroid/os/RemoteException;
+    sget-object v1, Landroid/app/admin/DevicePolicyManager;->TAG:Ljava/lang/String;
+
+    const-string v2, "Failed talking with device policy service"
+
+    invoke-static {v1, v2, v0}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
 
     goto :goto_0
 .end method

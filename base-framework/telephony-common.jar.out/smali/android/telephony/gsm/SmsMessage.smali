@@ -36,10 +36,6 @@
     .end annotation
 .end field
 
-.field private static final LOCAL_DEBUG:Z = true
-
-.field private static final LOG_TAG:Ljava/lang/String; = "SMS"
-
 .field public static final MAX_USER_DATA_BYTES:I = 0x8c
     .annotation runtime Ljava/lang/Deprecated;
     .end annotation
@@ -200,6 +196,8 @@
 
 .method private static final getSmsFacility()Lcom/android/internal/telephony/SmsMessageBase;
     .locals 2
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
 
     .prologue
     invoke-static {}, Landroid/telephony/TelephonyManager;->getDefault()Landroid/telephony/TelephonyManager;

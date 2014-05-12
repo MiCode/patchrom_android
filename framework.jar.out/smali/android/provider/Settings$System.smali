@@ -138,6 +138,8 @@
 
 .field public static final DTMF_TONE_WHEN_DIALING:Ljava/lang/String; = "dtmf_tone"
 
+.field public static final EGG_MODE:Ljava/lang/String; = "egg_mode"
+
 .field public static final EMERGENCY_TONE:Ljava/lang/String; = "emergency_tone"
 
 .field public static final END_BUTTON_BEHAVIOR:Ljava/lang/String; = "end_button_behavior"
@@ -1022,6 +1024,54 @@
 
     invoke-virtual {v0, v1}, Ljava/util/HashSet;->add(Ljava/lang/Object;)Z
 
+    sget-object v0, Landroid/provider/Settings$System;->MOVED_TO_GLOBAL:Ljava/util/HashSet;
+
+    const-string v1, "tzinfo_content_url"
+
+    invoke-virtual {v0, v1}, Ljava/util/HashSet;->add(Ljava/lang/Object;)Z
+
+    sget-object v0, Landroid/provider/Settings$System;->MOVED_TO_GLOBAL:Ljava/util/HashSet;
+
+    const-string v1, "tzinfo_metadata_url"
+
+    invoke-virtual {v0, v1}, Ljava/util/HashSet;->add(Ljava/lang/Object;)Z
+
+    sget-object v0, Landroid/provider/Settings$System;->MOVED_TO_GLOBAL:Ljava/util/HashSet;
+
+    const-string v1, "selinux_content_url"
+
+    invoke-virtual {v0, v1}, Ljava/util/HashSet;->add(Ljava/lang/Object;)Z
+
+    sget-object v0, Landroid/provider/Settings$System;->MOVED_TO_GLOBAL:Ljava/util/HashSet;
+
+    const-string v1, "selinux_metadata_url"
+
+    invoke-virtual {v0, v1}, Ljava/util/HashSet;->add(Ljava/lang/Object;)Z
+
+    sget-object v0, Landroid/provider/Settings$System;->MOVED_TO_GLOBAL:Ljava/util/HashSet;
+
+    const-string v1, "sms_short_codes_content_url"
+
+    invoke-virtual {v0, v1}, Ljava/util/HashSet;->add(Ljava/lang/Object;)Z
+
+    sget-object v0, Landroid/provider/Settings$System;->MOVED_TO_GLOBAL:Ljava/util/HashSet;
+
+    const-string v1, "sms_short_codes_metadata_url"
+
+    invoke-virtual {v0, v1}, Ljava/util/HashSet;->add(Ljava/lang/Object;)Z
+
+    sget-object v0, Landroid/provider/Settings$System;->MOVED_TO_GLOBAL:Ljava/util/HashSet;
+
+    const-string v1, "cert_pin_content_url"
+
+    invoke-virtual {v0, v1}, Ljava/util/HashSet;->add(Ljava/lang/Object;)Z
+
+    sget-object v0, Landroid/provider/Settings$System;->MOVED_TO_GLOBAL:Ljava/util/HashSet;
+
+    const-string v1, "cert_pin_metadata_url"
+
+    invoke-virtual {v0, v1}, Ljava/util/HashSet;->add(Ljava/lang/Object;)Z
+
     const/4 v0, 0x7
 
     new-array v0, v0, [Ljava/lang/String;
@@ -1170,241 +1220,241 @@
 
     const/16 v1, 0xf
 
-    const-string v2, "mode_ringer"
+    const-string v2, "mode_ringer_streams_affected"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x10
 
-    const-string v2, "mode_ringer_streams_affected"
+    const-string v2, "volume_voice"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x11
 
-    const-string v2, "mute_streams_affected"
+    const-string v2, "volume_system"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x12
 
-    const-string v2, "volume_voice"
+    const-string v2, "volume_ring"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x13
 
-    const-string v2, "volume_system"
+    const-string v2, "volume_music"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x14
 
-    const-string v2, "volume_ring"
+    const-string v2, "volume_alarm"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x15
 
-    const-string v2, "volume_music"
+    const-string v2, "volume_notification"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x16
 
-    const-string v2, "volume_alarm"
+    const-string v2, "volume_bluetooth_sco"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x17
 
-    const-string v2, "volume_notification"
+    const-string v2, "volume_voice_last_audible"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x18
 
-    const-string v2, "volume_bluetooth_sco"
+    const-string v2, "volume_system_last_audible"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x19
 
-    const-string v2, "volume_voice_last_audible"
+    const-string v2, "volume_ring_last_audible"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x1a
 
-    const-string v2, "volume_system_last_audible"
+    const-string v2, "volume_music_last_audible"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x1b
 
-    const-string v2, "volume_ring_last_audible"
+    const-string v2, "volume_alarm_last_audible"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x1c
 
-    const-string v2, "volume_music_last_audible"
+    const-string v2, "volume_notification_last_audible"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x1d
 
-    const-string v2, "volume_alarm_last_audible"
+    const-string v2, "volume_bluetooth_sco_last_audible"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x1e
 
-    const-string v2, "volume_notification_last_audible"
+    const-string v2, "auto_replace"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x1f
 
-    const-string v2, "volume_bluetooth_sco_last_audible"
+    const-string v2, "auto_caps"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x20
 
-    const-string v2, "auto_replace"
+    const-string v2, "auto_punctuate"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x21
 
-    const-string v2, "auto_caps"
+    const-string v2, "show_password"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x22
 
-    const-string v2, "auto_punctuate"
+    const-string v2, "auto_time"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x23
 
-    const-string v2, "show_password"
+    const-string v2, "auto_time_zone"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x24
 
-    const-string v2, "auto_time"
+    const-string v2, "time_12_24"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x25
 
-    const-string v2, "auto_time_zone"
+    const-string v2, "date_format"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x26
 
-    const-string v2, "time_12_24"
+    const-string v2, "dtmf_tone"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x27
 
-    const-string v2, "date_format"
+    const-string v2, "dtmf_tone_type"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x28
 
-    const-string v2, "dtmf_tone"
+    const-string v2, "hearing_aid"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x29
 
-    const-string v2, "dtmf_tone_type"
+    const-string v2, "tty_mode"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x2a
 
-    const-string v2, "hearing_aid"
+    const-string v2, "sound_effects_enabled"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x2b
 
-    const-string v2, "tty_mode"
+    const-string v2, "haptic_feedback_enabled"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x2c
 
-    const-string v2, "sound_effects_enabled"
+    const-string v2, "power_sounds_enabled"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x2d
 
-    const-string v2, "haptic_feedback_enabled"
+    const-string v2, "dock_sounds_enabled"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x2e
 
-    const-string v2, "power_sounds_enabled"
+    const-string v2, "lockscreen_sounds_enabled"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x2f
 
-    const-string v2, "dock_sounds_enabled"
+    const-string v2, "show_web_suggestions"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x30
 
-    const-string v2, "lockscreen_sounds_enabled"
+    const-string v2, "notification_light_pulse"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x31
 
-    const-string v2, "show_web_suggestions"
+    const-string v2, "sip_call_options"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x32
 
-    const-string v2, "notification_light_pulse"
+    const-string v2, "sip_receive_calls"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x33
 
-    const-string v2, "sip_call_options"
+    const-string v2, "pointer_speed"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x34
 
-    const-string v2, "sip_receive_calls"
+    const-string v2, "vibrate_when_ringing"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x35
 
-    const-string v2, "pointer_speed"
+    const-string v2, "ringtone"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x36
 
-    const-string v2, "vibrate_when_ringing"
+    const-string v2, "notification_sound"
 
     aput-object v2, v0, v1
 
@@ -2427,10 +2477,6 @@
 
     invoke-static {v1, v2}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    invoke-static {p0, p1, p2, p3}, Landroid/provider/Settings$Injector;->putSecureStringForUser(Landroid/content/ContentResolver;Ljava/lang/String;Ljava/lang/String;I)Z
-
-    move-result v0
-
     :goto_0
     return v0
 
@@ -2485,9 +2531,6 @@
     move-result-object v2
 
     invoke-static {v1, v2}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
-    invoke-static {p0, p1, p2, p3}, Landroid/provider/Settings$Injector;->putGlobalStringForUser(Landroid/content/ContentResolver;Ljava/lang/String;Ljava/lang/String;I)Z
-
-    move-result v0
 
     goto :goto_0
 

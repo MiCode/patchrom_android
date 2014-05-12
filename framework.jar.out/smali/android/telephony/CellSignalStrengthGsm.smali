@@ -24,7 +24,7 @@
 
 .field private static final GSM_SIGNAL_STRENGTH_GREAT:I = 0xc
 
-.field private static final GSM_SIGNAL_STRENGTH_MODERATE:I = 0x8
+.field private static final GSM_SIGNAL_STRENGTH_MODERATE:I = 0x5
 
 .field private static final LOG_TAG:Ljava/lang/String; = "CellSignalStrengthGsm"
 
@@ -125,7 +125,7 @@
     .prologue
     const-string v0, "CellSignalStrengthGsm"
 
-    invoke-static {v0, p0}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v0, p0}, Landroid/telephony/Rlog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
     return-void
 .end method
@@ -282,11 +282,9 @@
 .end method
 
 .method public getLevel()I
-    .locals 4
+    .locals 3
 
     .prologue
-    const/16 v3, 0x8
-
     iget v0, p0, Landroid/telephony/CellSignalStrengthGsm;->mSignalStrength:I
 
     .local v0, asu:I
@@ -318,7 +316,9 @@
 
     .end local v1           #level:I
     :cond_2
-    if-lt v0, v3, :cond_3
+    const/16 v2, 0x8
+
+    if-lt v0, v2, :cond_3
 
     const/4 v1, 0x3
 
@@ -327,7 +327,9 @@
 
     .end local v1           #level:I
     :cond_3
-    if-lt v0, v3, :cond_4
+    const/4 v2, 0x5
+
+    if-lt v0, v2, :cond_4
 
     const/4 v1, 0x2
 

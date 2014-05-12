@@ -111,3 +111,21 @@
 
     return-void
 .end method
+
+.method public constructor <init>(Landroid/widget/FrameLayout$LayoutParams;)V
+    .locals 1
+    .parameter "source"
+
+    .prologue
+    invoke-direct {p0, p1}, Landroid/view/ViewGroup$MarginLayoutParams;-><init>(Landroid/view/ViewGroup$MarginLayoutParams;)V
+
+    const/4 v0, -0x1
+
+    iput v0, p0, Landroid/widget/FrameLayout$LayoutParams;->gravity:I
+
+    iget v0, p1, Landroid/widget/FrameLayout$LayoutParams;->gravity:I
+
+    iput v0, p0, Landroid/widget/FrameLayout$LayoutParams;->gravity:I
+
+    return-void
+.end method

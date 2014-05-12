@@ -1,4 +1,4 @@
-.class Lcom/android/server/InputMethodManagerService$ClientState;
+.class final Lcom/android/server/InputMethodManagerService$ClientState;
 .super Ljava/lang/Object;
 .source "InputMethodManagerService.java"
 
@@ -9,7 +9,7 @@
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
-    accessFlags = 0x0
+    accessFlags = 0x18
     name = "ClientState"
 .end annotation
 
@@ -27,32 +27,27 @@
 
 .field sessionRequested:Z
 
-.field final synthetic this$0:Lcom/android/server/InputMethodManagerService;
-
 .field final uid:I
 
 
 # direct methods
-.method constructor <init>(Lcom/android/server/InputMethodManagerService;Lcom/android/internal/view/IInputMethodClient;Lcom/android/internal/view/IInputContext;II)V
+.method constructor <init>(Lcom/android/internal/view/IInputMethodClient;Lcom/android/internal/view/IInputContext;II)V
     .locals 5
-    .parameter
     .parameter "_client"
     .parameter "_inputContext"
     .parameter "_uid"
     .parameter "_pid"
 
     .prologue
-    iput-object p1, p0, Lcom/android/server/InputMethodManagerService$ClientState;->this$0:Lcom/android/server/InputMethodManagerService;
-
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    iput-object p2, p0, Lcom/android/server/InputMethodManagerService$ClientState;->client:Lcom/android/internal/view/IInputMethodClient;
+    iput-object p1, p0, Lcom/android/server/InputMethodManagerService$ClientState;->client:Lcom/android/internal/view/IInputMethodClient;
 
-    iput-object p3, p0, Lcom/android/server/InputMethodManagerService$ClientState;->inputContext:Lcom/android/internal/view/IInputContext;
+    iput-object p2, p0, Lcom/android/server/InputMethodManagerService$ClientState;->inputContext:Lcom/android/internal/view/IInputContext;
 
-    iput p4, p0, Lcom/android/server/InputMethodManagerService$ClientState;->uid:I
+    iput p3, p0, Lcom/android/server/InputMethodManagerService$ClientState;->uid:I
 
-    iput p5, p0, Lcom/android/server/InputMethodManagerService$ClientState;->pid:I
+    iput p4, p0, Lcom/android/server/InputMethodManagerService$ClientState;->pid:I
 
     new-instance v0, Landroid/view/inputmethod/InputBinding;
 

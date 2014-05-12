@@ -154,7 +154,9 @@
     invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
 
     .local v0, msg:Ljava/lang/StringBuilder;
-    invoke-virtual {v1, v0}, Landroid/database/sqlite/SQLiteConnection$Operation;->describe(Ljava/lang/StringBuilder;)V
+    const/4 v2, 0x0
+
+    invoke-virtual {v1, v0, v2}, Landroid/database/sqlite/SQLiteConnection$Operation;->describe(Ljava/lang/StringBuilder;Z)V
 
     if-eqz p2, :cond_0
 
@@ -390,7 +392,9 @@
     invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
 
     .local v0, msg:Ljava/lang/StringBuilder;
-    invoke-virtual {v1, v0}, Landroid/database/sqlite/SQLiteConnection$Operation;->describe(Ljava/lang/StringBuilder;)V
+    const/4 v2, 0x0
+
+    invoke-virtual {v1, v0, v2}, Landroid/database/sqlite/SQLiteConnection$Operation;->describe(Ljava/lang/StringBuilder;Z)V
 
     invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
@@ -420,9 +424,10 @@
     throw v2
 .end method
 
-.method public dump(Landroid/util/Printer;)V
+.method public dump(Landroid/util/Printer;Z)V
     .locals 7
     .parameter "printer"
+    .parameter "verbose"
 
     .prologue
     iget-object v5, p0, Landroid/database/sqlite/SQLiteConnection$OperationLog;->mOperations:[Landroid/database/sqlite/SQLiteConnection$Operation;
@@ -478,7 +483,7 @@
 
     invoke-virtual {v1, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    invoke-virtual {v3, v1}, Landroid/database/sqlite/SQLiteConnection$Operation;->describe(Ljava/lang/StringBuilder;)V
+    invoke-virtual {v3, v1, p2}, Landroid/database/sqlite/SQLiteConnection$Operation;->describe(Ljava/lang/StringBuilder;Z)V
 
     invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 

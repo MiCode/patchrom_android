@@ -134,6 +134,227 @@
     return-void
 .end method
 
+.method private static addAuditErrorsToDropBox(Landroid/os/DropBoxManager;Landroid/content/SharedPreferences;Ljava/lang/String;ILjava/lang/String;)V
+    .locals 16
+    .parameter "db"
+    .parameter "prefs"
+    .parameter "headers"
+    .parameter "maxSize"
+    .parameter "tag"
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Ljava/io/IOException;
+        }
+    .end annotation
+
+    .prologue
+    if-eqz p0, :cond_0
+
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, p4
+
+    invoke-virtual {v0, v1}, Landroid/os/DropBoxManager;->isTagEnabled(Ljava/lang/String;)Z
+
+    move-result v13
+
+    if-nez v13, :cond_1
+
+    :cond_0
+    :goto_0
+    return-void
+
+    :cond_1
+    const-string v13, "BootReceiver"
+
+    const-string v14, "Copying audit failures to DropBox"
+
+    invoke-static {v13, v14}, Landroid/util/Slog;->i(Ljava/lang/String;Ljava/lang/String;)I
+
+    new-instance v3, Ljava/io/File;
+
+    const-string v13, "/proc/last_kmsg"
+
+    invoke-direct {v3, v13}, Ljava/io/File;-><init>(Ljava/lang/String;)V
+
+    .local v3, file:Ljava/io/File;
+    invoke-virtual {v3}, Ljava/io/File;->lastModified()J
+
+    move-result-wide v4
+
+    .local v4, fileTime:J
+    const-wide/16 v13, 0x0
+
+    cmp-long v13, v4, v13
+
+    if-lez v13, :cond_0
+
+    if-eqz p1, :cond_2
+
+    const-wide/16 v13, 0x0
+
+    move-object/from16 v0, p1
+
+    move-object/from16 v1, p4
+
+    invoke-interface {v0, v1, v13, v14}, Landroid/content/SharedPreferences;->getLong(Ljava/lang/String;J)J
+
+    move-result-wide v7
+
+    .local v7, lastTime:J
+    cmp-long v13, v7, v4
+
+    if-eqz v13, :cond_0
+
+    invoke-interface/range {p1 .. p1}, Landroid/content/SharedPreferences;->edit()Landroid/content/SharedPreferences$Editor;
+
+    move-result-object v13
+
+    move-object/from16 v0, p4
+
+    invoke-interface {v13, v0, v4, v5}, Landroid/content/SharedPreferences$Editor;->putLong(Ljava/lang/String;J)Landroid/content/SharedPreferences$Editor;
+
+    move-result-object v13
+
+    invoke-interface {v13}, Landroid/content/SharedPreferences$Editor;->apply()V
+
+    .end local v7           #lastTime:J
+    :cond_2
+    const-string v13, "[[TRUNCATED]]\n"
+
+    move/from16 v0, p3
+
+    invoke-static {v3, v0, v13}, Landroid/os/FileUtils;->readTextFile(Ljava/io/File;ILjava/lang/String;)Ljava/lang/String;
+
+    move-result-object v11
+
+    .local v11, log:Ljava/lang/String;
+    new-instance v12, Ljava/lang/StringBuilder;
+
+    invoke-direct {v12}, Ljava/lang/StringBuilder;-><init>()V
+
+    .local v12, sb:Ljava/lang/StringBuilder;
+    const-string v13, "\n"
+
+    invoke-virtual {v11, v13}, Ljava/lang/String;->split(Ljava/lang/String;)[Ljava/lang/String;
+
+    move-result-object v2
+
+    .local v2, arr$:[Ljava/lang/String;
+    array-length v9, v2
+
+    .local v9, len$:I
+    const/4 v6, 0x0
+
+    .local v6, i$:I
+    :goto_1
+    if-ge v6, v9, :cond_4
+
+    aget-object v10, v2, v6
+
+    .local v10, line:Ljava/lang/String;
+    const-string v13, "audit"
+
+    invoke-virtual {v10, v13}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
+
+    move-result v13
+
+    if-eqz v13, :cond_3
+
+    new-instance v13, Ljava/lang/StringBuilder;
+
+    invoke-direct {v13}, Ljava/lang/StringBuilder;-><init>()V
+
+    invoke-virtual {v13, v10}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v13
+
+    const-string v14, "\n"
+
+    invoke-virtual {v13, v14}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v13
+
+    invoke-virtual {v13}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v13
+
+    invoke-virtual {v12, v13}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    :cond_3
+    add-int/lit8 v6, v6, 0x1
+
+    goto :goto_1
+
+    .end local v10           #line:Ljava/lang/String;
+    :cond_4
+    const-string v13, "BootReceiver"
+
+    new-instance v14, Ljava/lang/StringBuilder;
+
+    invoke-direct {v14}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v15, "Copied "
+
+    invoke-virtual {v14, v15}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v14
+
+    invoke-virtual {v12}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v15
+
+    invoke-virtual {v15}, Ljava/lang/String;->length()I
+
+    move-result v15
+
+    invoke-virtual {v14, v15}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v14
+
+    const-string v15, " worth of audits to DropBox"
+
+    invoke-virtual {v14, v15}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v14
+
+    invoke-virtual {v14}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v14
+
+    invoke-static {v13, v14}, Landroid/util/Slog;->i(Ljava/lang/String;Ljava/lang/String;)I
+
+    new-instance v13, Ljava/lang/StringBuilder;
+
+    invoke-direct {v13}, Ljava/lang/StringBuilder;-><init>()V
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v13, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v13
+
+    invoke-virtual {v12}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v14
+
+    invoke-virtual {v13, v14}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v13
+
+    invoke-virtual {v13}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v13
+
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, p4
+
+    invoke-virtual {v0, v1, v13}, Landroid/os/DropBoxManager;->addText(Ljava/lang/String;Ljava/lang/String;)V
+
+    goto/16 :goto_0
+.end method
+
 .method private static addFileToDropBox(Landroid/os/DropBoxManager;Landroid/content/SharedPreferences;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;)V
     .locals 8
     .parameter "db"
@@ -264,6 +485,137 @@
     invoke-virtual {p0, p5, v5}, Landroid/os/DropBoxManager;->addText(Ljava/lang/String;Ljava/lang/String;)V
 
     goto :goto_0
+.end method
+
+.method private static addFsckErrorsToDropBox(Landroid/os/DropBoxManager;Landroid/content/SharedPreferences;Ljava/lang/String;ILjava/lang/String;)V
+    .locals 18
+    .parameter "db"
+    .parameter "prefs"
+    .parameter "headers"
+    .parameter "maxSize"
+    .parameter "tag"
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Ljava/io/IOException;
+        }
+    .end annotation
+
+    .prologue
+    const/16 v17, 0x0
+
+    .local v17, upload_needed:Z
+    if-eqz p0, :cond_0
+
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, p4
+
+    invoke-virtual {v0, v1}, Landroid/os/DropBoxManager;->isTagEnabled(Ljava/lang/String;)Z
+
+    move-result v2
+
+    if-nez v2, :cond_1
+
+    :cond_0
+    :goto_0
+    return-void
+
+    :cond_1
+    const-string v2, "BootReceiver"
+
+    const-string v3, "Checking for fsck errors"
+
+    invoke-static {v2, v3}, Landroid/util/Slog;->i(Ljava/lang/String;Ljava/lang/String;)I
+
+    new-instance v9, Ljava/io/File;
+
+    const-string v2, "/dev/fscklogs/log"
+
+    invoke-direct {v9, v2}, Ljava/io/File;-><init>(Ljava/lang/String;)V
+
+    .local v9, file:Ljava/io/File;
+    invoke-virtual {v9}, Ljava/io/File;->lastModified()J
+
+    move-result-wide v10
+
+    .local v10, fileTime:J
+    const-wide/16 v2, 0x0
+
+    cmp-long v2, v10, v2
+
+    if-lez v2, :cond_0
+
+    const-string v2, "[[TRUNCATED]]\n"
+
+    move/from16 v0, p3
+
+    invoke-static {v9, v0, v2}, Landroid/os/FileUtils;->readTextFile(Ljava/io/File;ILjava/lang/String;)Ljava/lang/String;
+
+    move-result-object v15
+
+    .local v15, log:Ljava/lang/String;
+    new-instance v16, Ljava/lang/StringBuilder;
+
+    invoke-direct/range {v16 .. v16}, Ljava/lang/StringBuilder;-><init>()V
+
+    .local v16, sb:Ljava/lang/StringBuilder;
+    const-string v2, "\n"
+
+    invoke-virtual {v15, v2}, Ljava/lang/String;->split(Ljava/lang/String;)[Ljava/lang/String;
+
+    move-result-object v8
+
+    .local v8, arr$:[Ljava/lang/String;
+    array-length v13, v8
+
+    .local v13, len$:I
+    const/4 v12, 0x0
+
+    .local v12, i$:I
+    :goto_1
+    if-ge v12, v13, :cond_2
+
+    aget-object v14, v8, v12
+
+    .local v14, line:Ljava/lang/String;
+    const-string v2, "FILE SYSTEM WAS MODIFIED"
+
+    invoke-virtual {v14, v2}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
+
+    move-result v2
+
+    if-eqz v2, :cond_4
+
+    const/16 v17, 0x1
+
+    .end local v14           #line:Ljava/lang/String;
+    :cond_2
+    if-eqz v17, :cond_3
+
+    const-string v5, "/dev/fscklogs/log"
+
+    move-object/from16 v2, p0
+
+    move-object/from16 v3, p1
+
+    move-object/from16 v4, p2
+
+    move/from16 v6, p3
+
+    move-object/from16 v7, p4
+
+    invoke-static/range {v2 .. v7}, Lcom/android/server/BootReceiver;->addFileToDropBox(Landroid/os/DropBoxManager;Landroid/content/SharedPreferences;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;)V
+
+    :cond_3
+    invoke-virtual {v9}, Ljava/io/File;->delete()Z
+
+    goto :goto_0
+
+    .restart local v14       #line:Ljava/lang/String;
+    :cond_4
+    add-int/lit8 v12, v12, 0x1
+
+    goto :goto_1
 .end method
 
 .method private logBootEvents(Landroid/content/Context;)V
@@ -532,6 +884,22 @@
     const-string v5, "APANIC_THREADS"
 
     invoke-static/range {v0 .. v5}, Lcom/android/server/BootReceiver;->addFileToDropBox(Landroid/os/DropBoxManager;Landroid/content/SharedPreferences;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;)V
+
+    sget v3, Lcom/android/server/BootReceiver;->LOG_SIZE:I
+
+    neg-int v3, v3
+
+    const-string v4, "SYSTEM_AUDIT"
+
+    invoke-static {v0, v1, v2, v3, v4}, Lcom/android/server/BootReceiver;->addAuditErrorsToDropBox(Landroid/os/DropBoxManager;Landroid/content/SharedPreferences;Ljava/lang/String;ILjava/lang/String;)V
+
+    sget v3, Lcom/android/server/BootReceiver;->LOG_SIZE:I
+
+    neg-int v3, v3
+
+    const-string v4, "SYSTEM_FSCK"
+
+    invoke-static {v0, v1, v2, v3, v4}, Lcom/android/server/BootReceiver;->addFsckErrorsToDropBox(Landroid/os/DropBoxManager;Landroid/content/SharedPreferences;Ljava/lang/String;ILjava/lang/String;)V
 
     .end local v11           #now:Ljava/lang/String;
     :cond_2

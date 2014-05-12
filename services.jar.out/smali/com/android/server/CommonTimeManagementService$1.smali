@@ -1,5 +1,5 @@
 .class Lcom/android/server/CommonTimeManagementService$1;
-.super Landroid/net/INetworkManagementEventObserver$Stub;
+.super Lcom/android/server/net/BaseNetworkObserver;
 .source "CommonTimeManagementService.java"
 
 
@@ -26,7 +26,7 @@
     .prologue
     iput-object p1, p0, Lcom/android/server/CommonTimeManagementService$1;->this$0:Lcom/android/server/CommonTimeManagementService;
 
-    invoke-direct {p0}, Landroid/net/INetworkManagementEventObserver$Stub;-><init>()V
+    invoke-direct {p0}, Lcom/android/server/net/BaseNetworkObserver;-><init>()V
 
     return-void
 .end method
@@ -43,15 +43,6 @@
     #calls: Lcom/android/server/CommonTimeManagementService;->reevaluateServiceState()V
     invoke-static {v0}, Lcom/android/server/CommonTimeManagementService;->access$000(Lcom/android/server/CommonTimeManagementService;)V
 
-    return-void
-.end method
-
-.method public interfaceClassDataActivityChanged(Ljava/lang/String;Z)V
-    .locals 0
-    .parameter "label"
-    .parameter "active"
-
-    .prologue
     return-void
 .end method
 
@@ -93,14 +84,5 @@
     #calls: Lcom/android/server/CommonTimeManagementService;->reevaluateServiceState()V
     invoke-static {v0}, Lcom/android/server/CommonTimeManagementService;->access$000(Lcom/android/server/CommonTimeManagementService;)V
 
-    return-void
-.end method
-
-.method public limitReached(Ljava/lang/String;Ljava/lang/String;)V
-    .locals 0
-    .parameter "limitName"
-    .parameter "iface"
-
-    .prologue
     return-void
 .end method

@@ -9,8 +9,7 @@
 # annotations
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
-        Landroid/widget/SuggestionsAdapter$ChildViewCache;,
-        Landroid/widget/SuggestionsAdapter$Injector;
+        Landroid/widget/SuggestionsAdapter$ChildViewCache;
     }
 .end annotation
 
@@ -100,7 +99,7 @@
 
     const/4 v3, -0x1
 
-    const v1, 0x10900c0
+    const v1, 0x1090096
 
     const/4 v2, 0x0
 
@@ -339,7 +338,7 @@
     move-result-object v4
 
     .local v4, pkg:Ljava/lang/String;
-    invoke-static {v5, v4, v3, v0}, Landroid/widget/SuggestionsAdapter$Injector;->getDrawable(Landroid/content/pm/PackageManager;Ljava/lang/String;ILandroid/content/pm/ActivityInfo;)Landroid/graphics/drawable/Drawable;
+    invoke-static {v5, v4, v3, v0}, Landroid/widget/Injector$SuggestionsAdapterHook;->getDrawable(Landroid/content/pm/PackageManager;Ljava/lang/String;ILandroid/content/pm/ActivityInfo;)Landroid/graphics/drawable/Drawable;
 
     move-result-object v1
 

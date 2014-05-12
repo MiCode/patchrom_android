@@ -521,56 +521,62 @@
     goto :goto_0
 .end method
 
-.method public setDisplayInfoOverrideFromWindowManagerLocked(Landroid/view/DisplayInfo;)V
-    .locals 2
+.method public setDisplayInfoOverrideFromWindowManagerLocked(Landroid/view/DisplayInfo;)Z
+    .locals 3
     .parameter "info"
 
     .prologue
-    const/4 v1, 0x0
+    const/4 v0, 0x1
 
-    if-eqz p1, :cond_2
+    const/4 v2, 0x0
 
-    iget-object v0, p0, Lcom/android/server/display/LogicalDisplay;->mOverrideDisplayInfo:Landroid/view/DisplayInfo;
+    if-eqz p1, :cond_1
 
-    if-nez v0, :cond_1
+    iget-object v1, p0, Lcom/android/server/display/LogicalDisplay;->mOverrideDisplayInfo:Landroid/view/DisplayInfo;
 
-    new-instance v0, Landroid/view/DisplayInfo;
+    if-nez v1, :cond_0
 
-    invoke-direct {v0, p1}, Landroid/view/DisplayInfo;-><init>(Landroid/view/DisplayInfo;)V
+    new-instance v1, Landroid/view/DisplayInfo;
 
-    iput-object v0, p0, Lcom/android/server/display/LogicalDisplay;->mOverrideDisplayInfo:Landroid/view/DisplayInfo;
+    invoke-direct {v1, p1}, Landroid/view/DisplayInfo;-><init>(Landroid/view/DisplayInfo;)V
 
-    iput-object v1, p0, Lcom/android/server/display/LogicalDisplay;->mInfo:Landroid/view/DisplayInfo;
+    iput-object v1, p0, Lcom/android/server/display/LogicalDisplay;->mOverrideDisplayInfo:Landroid/view/DisplayInfo;
+
+    iput-object v2, p0, Lcom/android/server/display/LogicalDisplay;->mInfo:Landroid/view/DisplayInfo;
+
+    :goto_0
+    return v0
 
     :cond_0
-    :goto_0
-    return-void
+    iget-object v1, p0, Lcom/android/server/display/LogicalDisplay;->mOverrideDisplayInfo:Landroid/view/DisplayInfo;
+
+    invoke-virtual {v1, p1}, Landroid/view/DisplayInfo;->equals(Landroid/view/DisplayInfo;)Z
+
+    move-result v1
+
+    if-nez v1, :cond_2
+
+    iget-object v1, p0, Lcom/android/server/display/LogicalDisplay;->mOverrideDisplayInfo:Landroid/view/DisplayInfo;
+
+    invoke-virtual {v1, p1}, Landroid/view/DisplayInfo;->copyFrom(Landroid/view/DisplayInfo;)V
+
+    iput-object v2, p0, Lcom/android/server/display/LogicalDisplay;->mInfo:Landroid/view/DisplayInfo;
+
+    goto :goto_0
 
     :cond_1
-    iget-object v0, p0, Lcom/android/server/display/LogicalDisplay;->mOverrideDisplayInfo:Landroid/view/DisplayInfo;
+    iget-object v1, p0, Lcom/android/server/display/LogicalDisplay;->mOverrideDisplayInfo:Landroid/view/DisplayInfo;
 
-    invoke-virtual {v0, p1}, Landroid/view/DisplayInfo;->equals(Landroid/view/DisplayInfo;)Z
+    if-eqz v1, :cond_2
 
-    move-result v0
+    iput-object v2, p0, Lcom/android/server/display/LogicalDisplay;->mOverrideDisplayInfo:Landroid/view/DisplayInfo;
 
-    if-nez v0, :cond_0
-
-    iget-object v0, p0, Lcom/android/server/display/LogicalDisplay;->mOverrideDisplayInfo:Landroid/view/DisplayInfo;
-
-    invoke-virtual {v0, p1}, Landroid/view/DisplayInfo;->copyFrom(Landroid/view/DisplayInfo;)V
-
-    iput-object v1, p0, Lcom/android/server/display/LogicalDisplay;->mInfo:Landroid/view/DisplayInfo;
+    iput-object v2, p0, Lcom/android/server/display/LogicalDisplay;->mInfo:Landroid/view/DisplayInfo;
 
     goto :goto_0
 
     :cond_2
-    iget-object v0, p0, Lcom/android/server/display/LogicalDisplay;->mOverrideDisplayInfo:Landroid/view/DisplayInfo;
-
-    if-eqz v0, :cond_0
-
-    iput-object v1, p0, Lcom/android/server/display/LogicalDisplay;->mOverrideDisplayInfo:Landroid/view/DisplayInfo;
-
-    iput-object v1, p0, Lcom/android/server/display/LogicalDisplay;->mInfo:Landroid/view/DisplayInfo;
+    const/4 v0, 0x0
 
     goto :goto_0
 .end method
@@ -681,6 +687,36 @@
     iput v2, v1, Landroid/view/DisplayInfo;->flags:I
 
     :cond_4
+    iget v1, v0, Lcom/android/server/display/DisplayDeviceInfo;->flags:I
+
+    and-int/lit8 v1, v1, 0x10
+
+    if-eqz v1, :cond_5
+
+    iget-object v1, p0, Lcom/android/server/display/LogicalDisplay;->mBaseDisplayInfo:Landroid/view/DisplayInfo;
+
+    iget v2, v1, Landroid/view/DisplayInfo;->flags:I
+
+    or-int/lit8 v2, v2, 0x4
+
+    iput v2, v1, Landroid/view/DisplayInfo;->flags:I
+
+    :cond_5
+    iget v1, v0, Lcom/android/server/display/DisplayDeviceInfo;->flags:I
+
+    and-int/lit8 v1, v1, 0x40
+
+    if-eqz v1, :cond_6
+
+    iget-object v1, p0, Lcom/android/server/display/LogicalDisplay;->mBaseDisplayInfo:Landroid/view/DisplayInfo;
+
+    iget v2, v1, Landroid/view/DisplayInfo;->flags:I
+
+    or-int/lit8 v2, v2, 0x8
+
+    iput v2, v1, Landroid/view/DisplayInfo;->flags:I
+
+    :cond_6
     iget-object v1, p0, Lcom/android/server/display/LogicalDisplay;->mBaseDisplayInfo:Landroid/view/DisplayInfo;
 
     iget v2, v0, Lcom/android/server/display/DisplayDeviceInfo;->type:I
@@ -774,6 +810,18 @@
     iget v2, v0, Lcom/android/server/display/DisplayDeviceInfo;->height:I
 
     iput v2, v1, Landroid/view/DisplayInfo;->largestNominalAppHeight:I
+
+    iget-object v1, p0, Lcom/android/server/display/LogicalDisplay;->mBaseDisplayInfo:Landroid/view/DisplayInfo;
+
+    iget v2, v0, Lcom/android/server/display/DisplayDeviceInfo;->ownerUid:I
+
+    iput v2, v1, Landroid/view/DisplayInfo;->ownerUid:I
+
+    iget-object v1, p0, Lcom/android/server/display/LogicalDisplay;->mBaseDisplayInfo:Landroid/view/DisplayInfo;
+
+    iget-object v2, v0, Lcom/android/server/display/DisplayDeviceInfo;->ownerPackageName:Ljava/lang/String;
+
+    iput-object v2, v1, Landroid/view/DisplayInfo;->ownerPackageName:Ljava/lang/String;
 
     iput-object v0, p0, Lcom/android/server/display/LogicalDisplay;->mPrimaryDisplayDeviceInfo:Lcom/android/server/display/DisplayDeviceInfo;
 

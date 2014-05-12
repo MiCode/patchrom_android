@@ -24,7 +24,7 @@
 
 .field private mTempViews:[Landroid/view/View;
 
-.field private mViewRects:Ljava/util/ArrayList;
+.field private final mViewRects:Ljava/util/ArrayList;
     .annotation system Ldalvik/annotation/Signature;
         value = {
             "Ljava/util/ArrayList",
@@ -35,7 +35,7 @@
     .end annotation
 .end field
 
-.field private mViews:Ljava/util/ArrayList;
+.field private final mViews:Ljava/util/ArrayList;
     .annotation system Ldalvik/annotation/Signature;
         value = {
             "Ljava/util/ArrayList",
@@ -203,7 +203,7 @@
 
     invoke-virtual {v3, v0}, Ljava/util/ArrayList;->remove(I)Ljava/lang/Object;
 
-    invoke-virtual {v2}, Landroid/view/View$AttachInfo$InvalidateInfo;->release()V
+    invoke-virtual {v2}, Landroid/view/View$AttachInfo$InvalidateInfo;->recycle()V
 
     :cond_0
     move v1, v0
@@ -416,7 +416,7 @@
 
     invoke-virtual {v4, v5, v6, v7, v8}, Landroid/view/View;->invalidate(IIII)V
 
-    invoke-virtual {v1}, Landroid/view/View$AttachInfo$InvalidateInfo;->release()V
+    invoke-virtual {v1}, Landroid/view/View$AttachInfo$InvalidateInfo;->recycle()V
 
     add-int/lit8 v0, v0, 0x1
 

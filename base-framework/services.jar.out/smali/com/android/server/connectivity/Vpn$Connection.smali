@@ -47,7 +47,7 @@
     return-void
 .end method
 
-.method static synthetic access$000(Lcom/android/server/connectivity/Vpn$Connection;)Landroid/os/IBinder;
+.method static synthetic access$200(Lcom/android/server/connectivity/Vpn$Connection;)Landroid/os/IBinder;
     .locals 1
     .parameter "x0"
 

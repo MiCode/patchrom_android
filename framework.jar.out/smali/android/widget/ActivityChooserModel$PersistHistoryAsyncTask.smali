@@ -202,7 +202,7 @@
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
     .catch Ljava/lang/IllegalArgumentException; {:try_start_1 .. :try_end_1} :catch_1
     .catch Ljava/lang/IllegalStateException; {:try_start_1 .. :try_end_1} :catch_3
-    .catch Ljava/io/IOException; {:try_start_1 .. :try_end_1} :catch_4
+    .catch Ljava/io/IOException; {:try_start_1 .. :try_end_1} :catch_5
 
     add-int/lit8 v4, v4, 0x1
 
@@ -262,7 +262,7 @@
     .catchall {:try_start_2 .. :try_end_2} :catchall_0
     .catch Ljava/lang/IllegalArgumentException; {:try_start_2 .. :try_end_2} :catch_1
     .catch Ljava/lang/IllegalStateException; {:try_start_2 .. :try_end_2} :catch_3
-    .catch Ljava/io/IOException; {:try_start_2 .. :try_end_2} :catch_4
+    .catch Ljava/io/IOException; {:try_start_2 .. :try_end_2} :catch_5
 
     iget-object v11, p0, Landroid/widget/ActivityChooserModel$PersistHistoryAsyncTask;->this$0:Landroid/widget/ActivityChooserModel;
 
@@ -276,7 +276,7 @@
     :try_start_3
     invoke-virtual {v1}, Ljava/io/FileOutputStream;->close()V
     :try_end_3
-    .catch Ljava/io/IOException; {:try_start_3 .. :try_end_3} :catch_2
+    .catch Ljava/io/IOException; {:try_start_3 .. :try_end_3} :catch_7
 
     .end local v4           #i:I
     .end local v9           #recordCount:I
@@ -340,12 +340,12 @@
 
     goto :goto_2
 
-    .end local v5           #iae:Ljava/lang/IllegalArgumentException;
     :catch_2
     move-exception v11
 
     goto :goto_2
 
+    .end local v5           #iae:Ljava/lang/IllegalArgumentException;
     :catch_3
     move-exception v7
 
@@ -396,12 +396,17 @@
     :try_start_7
     invoke-virtual {v1}, Ljava/io/FileOutputStream;->close()V
     :try_end_7
-    .catch Ljava/io/IOException; {:try_start_7 .. :try_end_7} :catch_2
+    .catch Ljava/io/IOException; {:try_start_7 .. :try_end_7} :catch_4
+
+    goto :goto_2
+
+    :catch_4
+    move-exception v11
 
     goto :goto_2
 
     .end local v7           #ise:Ljava/lang/IllegalStateException;
-    :catch_4
+    :catch_5
     move-exception v6
 
     .local v6, ioe:Ljava/io/IOException;
@@ -451,7 +456,12 @@
     :try_start_9
     invoke-virtual {v1}, Ljava/io/FileOutputStream;->close()V
     :try_end_9
-    .catch Ljava/io/IOException; {:try_start_9 .. :try_end_9} :catch_2
+    .catch Ljava/io/IOException; {:try_start_9 .. :try_end_9} :catch_6
+
+    goto/16 :goto_2
+
+    :catch_6
+    move-exception v11
 
     goto/16 :goto_2
 
@@ -471,13 +481,22 @@
     :try_start_a
     invoke-virtual {v1}, Ljava/io/FileOutputStream;->close()V
     :try_end_a
-    .catch Ljava/io/IOException; {:try_start_a .. :try_end_a} :catch_5
+    .catch Ljava/io/IOException; {:try_start_a .. :try_end_a} :catch_8
 
     :cond_2
     :goto_3
     throw v11
 
-    :catch_5
+    .restart local v4       #i:I
+    .restart local v9       #recordCount:I
+    :catch_7
+    move-exception v11
+
+    goto/16 :goto_2
+
+    .end local v4           #i:I
+    .end local v9           #recordCount:I
+    :catch_8
     move-exception v12
 
     goto :goto_3

@@ -499,11 +499,11 @@
 
     move-result-object v3
 
-    const/4 v4, 0x0
+    const/4 v4, 0x1
 
     move-object/from16 v0, v17
 
-    invoke-virtual {v3, v4, v13, v14, v0}, Landroid/app/AlarmManager;->set(IJLandroid/app/PendingIntent;)V
+    invoke-virtual {v3, v4, v13, v14, v0}, Landroid/app/AlarmManager;->setExact(IJLandroid/app/PendingIntent;)V
 
     goto/16 :goto_0
 

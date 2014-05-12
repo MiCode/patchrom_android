@@ -50,47 +50,6 @@
 
 
 # virtual methods
-.method public getHeight()I
-    .locals 3
-
-    .prologue
-    invoke-super {p0}, Landroid/graphics/Canvas;->getHeight()I
-
-    move-result v0
-
-    .local v0, h:I
-    iget-object v1, p0, Landroid/view/Surface$CompatibleCanvas;->this$0:Landroid/view/Surface;
-
-    #getter for: Landroid/view/Surface;->mCompatibilityTranslator:Landroid/content/res/CompatibilityInfo$Translator;
-    invoke-static {v1}, Landroid/view/Surface;->access$100(Landroid/view/Surface;)Landroid/content/res/CompatibilityInfo$Translator;
-
-    move-result-object v1
-
-    if-eqz v1, :cond_0
-
-    int-to-float v1, v0
-
-    iget-object v2, p0, Landroid/view/Surface$CompatibleCanvas;->this$0:Landroid/view/Surface;
-
-    #getter for: Landroid/view/Surface;->mCompatibilityTranslator:Landroid/content/res/CompatibilityInfo$Translator;
-    invoke-static {v2}, Landroid/view/Surface;->access$100(Landroid/view/Surface;)Landroid/content/res/CompatibilityInfo$Translator;
-
-    move-result-object v2
-
-    iget v2, v2, Landroid/content/res/CompatibilityInfo$Translator;->applicationInvertedScale:F
-
-    mul-float/2addr v1, v2
-
-    const/high16 v2, 0x3f00
-
-    add-float/2addr v1, v2
-
-    float-to-int v0, v1
-
-    :cond_0
-    return v0
-.end method
-
 .method public getMatrix(Landroid/graphics/Matrix;)V
     .locals 1
     .parameter "m"
@@ -116,47 +75,6 @@
     return-void
 .end method
 
-.method public getWidth()I
-    .locals 3
-
-    .prologue
-    invoke-super {p0}, Landroid/graphics/Canvas;->getWidth()I
-
-    move-result v0
-
-    .local v0, w:I
-    iget-object v1, p0, Landroid/view/Surface$CompatibleCanvas;->this$0:Landroid/view/Surface;
-
-    #getter for: Landroid/view/Surface;->mCompatibilityTranslator:Landroid/content/res/CompatibilityInfo$Translator;
-    invoke-static {v1}, Landroid/view/Surface;->access$100(Landroid/view/Surface;)Landroid/content/res/CompatibilityInfo$Translator;
-
-    move-result-object v1
-
-    if-eqz v1, :cond_0
-
-    int-to-float v1, v0
-
-    iget-object v2, p0, Landroid/view/Surface$CompatibleCanvas;->this$0:Landroid/view/Surface;
-
-    #getter for: Landroid/view/Surface;->mCompatibilityTranslator:Landroid/content/res/CompatibilityInfo$Translator;
-    invoke-static {v2}, Landroid/view/Surface;->access$100(Landroid/view/Surface;)Landroid/content/res/CompatibilityInfo$Translator;
-
-    move-result-object v2
-
-    iget v2, v2, Landroid/content/res/CompatibilityInfo$Translator;->applicationInvertedScale:F
-
-    mul-float/2addr v1, v2
-
-    const/high16 v2, 0x3f00
-
-    add-float/2addr v1, v2
-
-    float-to-int v0, v1
-
-    :cond_0
-    return v0
-.end method
-
 .method public setMatrix(Landroid/graphics/Matrix;)V
     .locals 2
     .parameter "matrix"
@@ -165,7 +83,7 @@
     iget-object v1, p0, Landroid/view/Surface$CompatibleCanvas;->this$0:Landroid/view/Surface;
 
     #getter for: Landroid/view/Surface;->mCompatibleMatrix:Landroid/graphics/Matrix;
-    invoke-static {v1}, Landroid/view/Surface;->access$200(Landroid/view/Surface;)Landroid/graphics/Matrix;
+    invoke-static {v1}, Landroid/view/Surface;->access$100(Landroid/view/Surface;)Landroid/graphics/Matrix;
 
     move-result-object v1
 
@@ -195,7 +113,7 @@
     iget-object v1, p0, Landroid/view/Surface$CompatibleCanvas;->this$0:Landroid/view/Surface;
 
     #getter for: Landroid/view/Surface;->mCompatibleMatrix:Landroid/graphics/Matrix;
-    invoke-static {v1}, Landroid/view/Surface;->access$200(Landroid/view/Surface;)Landroid/graphics/Matrix;
+    invoke-static {v1}, Landroid/view/Surface;->access$100(Landroid/view/Surface;)Landroid/graphics/Matrix;
 
     move-result-object v1
 

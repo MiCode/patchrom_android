@@ -66,23 +66,25 @@
 .end method
 
 .method constructor <init>(Ljava/lang/String;Landroid/app/Activity;Z)V
-    .locals 1
+    .locals 2
     .parameter "who"
     .parameter "activity"
     .parameter "started"
 
     .prologue
+    const/4 v1, 0x0
+
     invoke-direct {p0}, Landroid/app/LoaderManager;-><init>()V
 
     new-instance v0, Landroid/util/SparseArray;
 
-    invoke-direct {v0}, Landroid/util/SparseArray;-><init>()V
+    invoke-direct {v0, v1}, Landroid/util/SparseArray;-><init>(I)V
 
     iput-object v0, p0, Landroid/app/LoaderManagerImpl;->mLoaders:Landroid/util/SparseArray;
 
     new-instance v0, Landroid/util/SparseArray;
 
-    invoke-direct {v0}, Landroid/util/SparseArray;-><init>()V
+    invoke-direct {v0, v1}, Landroid/util/SparseArray;-><init>(I)V
 
     iput-object v0, p0, Landroid/app/LoaderManagerImpl;->mInactiveLoaders:Landroid/util/SparseArray;
 
@@ -311,7 +313,7 @@
     .prologue
     iget-boolean v1, p0, Landroid/app/LoaderManagerImpl;->mRetaining:Z
 
-    if-nez v1, :cond_1
+    if-nez v1, :cond_2
 
     sget-boolean v1, Landroid/app/LoaderManagerImpl;->DEBUG:Z
 
@@ -366,11 +368,16 @@
 
     goto :goto_0
 
-    .end local v0           #i:I
     :cond_1
+    iget-object v1, p0, Landroid/app/LoaderManagerImpl;->mLoaders:Landroid/util/SparseArray;
+
+    invoke-virtual {v1}, Landroid/util/SparseArray;->clear()V
+
+    .end local v0           #i:I
+    :cond_2
     sget-boolean v1, Landroid/app/LoaderManagerImpl;->DEBUG:Z
 
-    if-eqz v1, :cond_2
+    if-eqz v1, :cond_3
 
     const-string v1, "LoaderManager"
 
@@ -394,7 +401,7 @@
 
     invoke-static {v1, v2}, Landroid/util/Log;->v(Ljava/lang/String;Ljava/lang/String;)I
 
-    :cond_2
+    :cond_3
     iget-object v1, p0, Landroid/app/LoaderManagerImpl;->mInactiveLoaders:Landroid/util/SparseArray;
 
     invoke-virtual {v1}, Landroid/util/SparseArray;->size()I
@@ -405,7 +412,7 @@
 
     .restart local v0       #i:I
     :goto_1
-    if-ltz v0, :cond_3
+    if-ltz v0, :cond_4
 
     iget-object v1, p0, Landroid/app/LoaderManagerImpl;->mInactiveLoaders:Landroid/util/SparseArray;
 
@@ -421,7 +428,7 @@
 
     goto :goto_1
 
-    :cond_3
+    :cond_4
     iget-object v1, p0, Landroid/app/LoaderManagerImpl;->mInactiveLoaders:Landroid/util/SparseArray;
 
     invoke-virtual {v1}, Landroid/util/SparseArray;->clear()V

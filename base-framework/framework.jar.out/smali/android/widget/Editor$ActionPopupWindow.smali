@@ -18,7 +18,7 @@
 
 
 # static fields
-.field private static final POPUP_TEXT_LAYOUT:I = 0x10900d4
+.field private static final POPUP_TEXT_LAYOUT:I = 0x10900aa
 
 
 # instance fields
@@ -247,7 +247,7 @@
     .prologue
     const/4 v7, 0x0
 
-    const v6, 0x10900d4
+    const v6, 0x10900aa
 
     const/4 v5, -0x2
 
@@ -275,7 +275,7 @@
 
     iget-object v3, p0, Landroid/widget/Editor$ActionPopupWindow;->mContentView:Landroid/view/ViewGroup;
 
-    const v4, 0x10805c6
+    const v4, 0x1080630
 
     invoke-virtual {v3, v4}, Landroid/view/ViewGroup;->setBackgroundResource(I)V
 
@@ -352,7 +352,7 @@
 
     iget-object v3, p0, Landroid/widget/Editor$ActionPopupWindow;->mReplaceTextView:Landroid/widget/TextView;
 
-    const v4, 0x10403c1
+    const v4, 0x10403e7
 
     invoke-virtual {v3, v4}, Landroid/widget/TextView;->setText(I)V
 
@@ -496,7 +496,7 @@
     iget-object v3, p0, Landroid/widget/Editor$ActionPopupWindow;->this$0:Landroid/widget/Editor;
 
     #calls: Landroid/widget/Editor;->isCursorInsideSuggestionSpan()Z
-    invoke-static {v3}, Landroid/widget/Editor;->access$2200(Landroid/widget/Editor;)Z
+    invoke-static {v3}, Landroid/widget/Editor;->access$2400(Landroid/widget/Editor;)Z
 
     move-result v3
 

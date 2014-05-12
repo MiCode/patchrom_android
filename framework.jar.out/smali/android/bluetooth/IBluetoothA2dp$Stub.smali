@@ -26,6 +26,8 @@
 # static fields
 .field private static final DESCRIPTOR:Ljava/lang/String; = "android.bluetooth.IBluetoothA2dp"
 
+.field static final TRANSACTION_adjustAvrcpAbsoluteVolume:I = 0x9
+
 .field static final TRANSACTION_connect:I = 0x1
 
 .field static final TRANSACTION_disconnect:I = 0x2
@@ -38,7 +40,11 @@
 
 .field static final TRANSACTION_getPriority:I = 0x7
 
-.field static final TRANSACTION_isA2dpPlaying:I = 0x8
+.field static final TRANSACTION_isA2dpPlaying:I = 0xb
+
+.field static final TRANSACTION_isAvrcpAbsoluteVolumeSupported:I = 0x8
+
+.field static final TRANSACTION_setAvrcpAbsoluteVolume:I = 0xa
 
 .field static final TRANSACTION_setPriority:I = 0x6
 
@@ -409,23 +415,7 @@
 
     invoke-virtual {p2, v6}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
-    invoke-virtual {p2}, Landroid/os/Parcel;->readInt()I
-
-    move-result v6
-
-    if-eqz v6, :cond_9
-
-    sget-object v6, Landroid/bluetooth/BluetoothDevice;->CREATOR:Landroid/os/Parcelable$Creator;
-
-    invoke-interface {v6, p2}, Landroid/os/Parcelable$Creator;->createFromParcel(Landroid/os/Parcel;)Ljava/lang/Object;
-
-    move-result-object v0
-
-    check-cast v0, Landroid/bluetooth/BluetoothDevice;
-
-    .restart local v0       #_arg0:Landroid/bluetooth/BluetoothDevice;
-    :goto_6
-    invoke-virtual {p0, v0}, Landroid/bluetooth/IBluetoothA2dp$Stub;->isA2dpPlaying(Landroid/bluetooth/BluetoothDevice;)Z
+    invoke-virtual {p0}, Landroid/bluetooth/IBluetoothA2dp$Stub;->isAvrcpAbsoluteVolumeSupported()Z
 
     move-result v2
 
@@ -441,9 +431,77 @@
 
     goto/16 :goto_0
 
+    .end local v2           #_result:Z
+    :sswitch_9
+    const-string v4, "android.bluetooth.IBluetoothA2dp"
+
+    invoke-virtual {p2, v4}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    invoke-virtual {p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v0
+
+    .local v0, _arg0:I
+    invoke-virtual {p0, v0}, Landroid/bluetooth/IBluetoothA2dp$Stub;->adjustAvrcpAbsoluteVolume(I)V
+
+    goto/16 :goto_0
+
+    .end local v0           #_arg0:I
+    :sswitch_a
+    const-string v4, "android.bluetooth.IBluetoothA2dp"
+
+    invoke-virtual {p2, v4}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    invoke-virtual {p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v0
+
+    .restart local v0       #_arg0:I
+    invoke-virtual {p0, v0}, Landroid/bluetooth/IBluetoothA2dp$Stub;->setAvrcpAbsoluteVolume(I)V
+
+    goto/16 :goto_0
+
+    .end local v0           #_arg0:I
+    :sswitch_b
+    const-string v6, "android.bluetooth.IBluetoothA2dp"
+
+    invoke-virtual {p2, v6}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    invoke-virtual {p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v6
+
+    if-eqz v6, :cond_a
+
+    sget-object v6, Landroid/bluetooth/BluetoothDevice;->CREATOR:Landroid/os/Parcelable$Creator;
+
+    invoke-interface {v6, p2}, Landroid/os/Parcelable$Creator;->createFromParcel(Landroid/os/Parcel;)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Landroid/bluetooth/BluetoothDevice;
+
+    .local v0, _arg0:Landroid/bluetooth/BluetoothDevice;
+    :goto_6
+    invoke-virtual {p0, v0}, Landroid/bluetooth/IBluetoothA2dp$Stub;->isA2dpPlaying(Landroid/bluetooth/BluetoothDevice;)Z
+
+    move-result v2
+
+    .restart local v2       #_result:Z
+    invoke-virtual {p3}, Landroid/os/Parcel;->writeNoException()V
+
+    if-eqz v2, :cond_9
+
+    move v4, v5
+
+    :cond_9
+    invoke-virtual {p3, v4}, Landroid/os/Parcel;->writeInt(I)V
+
+    goto/16 :goto_0
+
     .end local v0           #_arg0:Landroid/bluetooth/BluetoothDevice;
     .end local v2           #_result:Z
-    :cond_9
+    :cond_a
     const/4 v0, 0x0
 
     .restart local v0       #_arg0:Landroid/bluetooth/BluetoothDevice;
@@ -459,6 +517,9 @@
         0x6 -> :sswitch_6
         0x7 -> :sswitch_7
         0x8 -> :sswitch_8
+        0x9 -> :sswitch_9
+        0xa -> :sswitch_a
+        0xb -> :sswitch_b
         0x5f4e5446 -> :sswitch_0
     .end sparse-switch
 .end method

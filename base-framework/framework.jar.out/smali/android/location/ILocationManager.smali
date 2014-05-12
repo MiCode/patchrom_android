@@ -15,7 +15,7 @@
 
 
 # virtual methods
-.method public abstract addGpsStatusListener(Landroid/location/IGpsStatusListener;)Z
+.method public abstract addGpsStatusListener(Landroid/location/IGpsStatusListener;Ljava/lang/String;)Z
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;

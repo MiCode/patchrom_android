@@ -6,14 +6,6 @@
 .implements Landroid/os/Parcelable;
 
 
-# annotations
-.annotation system Ldalvik/annotation/MemberClasses;
-    value = {
-        Landroid/database/CursorWindow$Injector;
-    }
-.end annotation
-
-
 # static fields
 .field public static final CREATOR:Landroid/os/Parcelable$Creator; = null
     .annotation system Ldalvik/annotation/Signature;
@@ -52,7 +44,7 @@
 
     move-result-object v0
 
-    const v1, 0x10e0034
+    const v1, 0x10e003b
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getInteger(I)I
 
@@ -480,6 +472,8 @@
     move-result v6
 
     .restart local v6       #pid:I
+    invoke-static {v0, v6}, Landroid/database/Injector$CursorWindowHook;->appendPackageName(Ljava/lang/StringBuilder;I)V
+
     if-ne v6, v3, :cond_2
 
     const-string v12, "this proc="
@@ -622,6 +616,8 @@
     .parameter "window"
 
     .prologue
+    invoke-static {p1}, Landroid/database/Injector$CursorWindowHook;->before_recordClosingOfWindow(I)V
+
     sget-object v1, Landroid/database/CursorWindow;->sWindowToPidMap:Landroid/util/SparseIntArray;
 
     monitor-enter v1
@@ -641,10 +637,6 @@
     return-void
 
     :cond_0
-    sget-object v0, Landroid/database/CursorWindow;->sWindowToPidMap:Landroid/util/SparseIntArray;
-
-    invoke-static {v0, p1}, Landroid/database/CursorWindow$Injector;->delQuota(Landroid/util/SparseIntArray;I)V
-
     sget-object v0, Landroid/database/CursorWindow;->sWindowToPidMap:Landroid/util/SparseIntArray;
 
     invoke-virtual {v0, p1}, Landroid/util/SparseIntArray;->delete(I)V
@@ -669,6 +661,8 @@
     .parameter "window"
 
     .prologue
+    invoke-static {p1, p2}, Landroid/database/Injector$CursorWindowHook;->before_recordNewWindow(II)V
+
     sget-object v1, Landroid/database/CursorWindow;->sWindowToPidMap:Landroid/util/SparseIntArray;
 
     monitor-enter v1
@@ -715,8 +709,6 @@
     invoke-static {v0, v2}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
 
     :cond_0
-    invoke-static {p1}, Landroid/database/CursorWindow$Injector;->addQuota(I)V
-
     monitor-exit v1
 
     return-void

@@ -149,9 +149,11 @@
 
     if-eqz v2, :cond_3
 
+    move v2, v3
+
     :goto_3
     #setter for: Landroid/location/Location;->mHasAccuracy:Z
-    invoke-static {v0, v3}, Landroid/location/Location;->access$1002(Landroid/location/Location;Z)Z
+    invoke-static {v0, v2}, Landroid/location/Location;->access$1002(Landroid/location/Location;Z)Z
 
     invoke-virtual {p1}, Landroid/os/Parcel;->readFloat()F
 
@@ -166,6 +168,16 @@
 
     #setter for: Landroid/location/Location;->mExtras:Landroid/os/Bundle;
     invoke-static {v0, v2}, Landroid/location/Location;->access$1202(Landroid/location/Location;Landroid/os/Bundle;)Landroid/os/Bundle;
+
+    invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
+
+    move-result v2
+
+    if-eqz v2, :cond_4
+
+    :goto_4
+    #setter for: Landroid/location/Location;->mIsFromMockProvider:Z
+    invoke-static {v0, v3}, Landroid/location/Location;->access$1302(Landroid/location/Location;Z)Z
 
     return-object v0
 
@@ -185,9 +197,14 @@
     goto :goto_2
 
     :cond_3
-    move v3, v4
+    move v2, v4
 
     goto :goto_3
+
+    :cond_4
+    move v3, v4
+
+    goto :goto_4
 .end method
 
 .method public bridge synthetic createFromParcel(Landroid/os/Parcel;)Ljava/lang/Object;

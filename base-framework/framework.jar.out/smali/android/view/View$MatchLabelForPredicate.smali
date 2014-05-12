@@ -76,7 +76,7 @@
 
     .prologue
     #getter for: Landroid/view/View;->mLabelForId:I
-    invoke-static {p1}, Landroid/view/View;->access$2500(Landroid/view/View;)I
+    invoke-static {p1}, Landroid/view/View;->access$2700(Landroid/view/View;)I
 
     move-result v0
 

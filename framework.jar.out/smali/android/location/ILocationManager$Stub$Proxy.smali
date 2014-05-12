@@ -36,9 +36,10 @@
 
 
 # virtual methods
-.method public addGpsStatusListener(Landroid/location/IGpsStatusListener;)Z
+.method public addGpsStatusListener(Landroid/location/IGpsStatusListener;Ljava/lang/String;)Z
     .locals 6
     .parameter "listener"
+    .parameter "packageName"
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -71,6 +72,8 @@
 
     :goto_0
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->writeStrongBinder(Landroid/os/IBinder;)V
+
+    invoke-virtual {v0, p2}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
     iget-object v3, p0, Landroid/location/ILocationManager$Stub$Proxy;->mRemote:Landroid/os/IBinder;
 

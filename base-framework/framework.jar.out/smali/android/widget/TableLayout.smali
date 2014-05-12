@@ -1253,7 +1253,7 @@
     .parameter "b"
 
     .prologue
-    invoke-virtual {p0}, Landroid/widget/TableLayout;->layoutVertical()V
+    invoke-virtual {p0, p2, p3, p4, p5}, Landroid/widget/TableLayout;->layoutVertical(IIII)V
 
     return-void
 .end method

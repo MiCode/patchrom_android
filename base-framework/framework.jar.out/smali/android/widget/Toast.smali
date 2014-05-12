@@ -63,6 +63,20 @@
 
     iput v1, v0, Landroid/widget/Toast$TN;->mY:I
 
+    iget-object v0, p0, Landroid/widget/Toast;->mTN:Landroid/widget/Toast$TN;
+
+    invoke-virtual {p1}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
+
+    move-result-object v1
+
+    const v2, 0x10e0046
+
+    invoke-virtual {v1, v2}, Landroid/content/res/Resources;->getInteger(I)I
+
+    move-result v1
+
+    iput v1, v0, Landroid/widget/Toast$TN;->mGravity:I
+
     return-void
 .end method
 
@@ -145,7 +159,7 @@
     check-cast v0, Landroid/view/LayoutInflater;
 
     .local v0, inflate:Landroid/view/LayoutInflater;
-    const v4, 0x10900df
+    const v4, 0x10900b5
 
     const/4 v5, 0x0
 

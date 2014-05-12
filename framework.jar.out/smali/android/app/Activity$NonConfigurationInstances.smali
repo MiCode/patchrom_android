@@ -40,10 +40,10 @@
     .end annotation
 .end field
 
-.field loaders:Ljava/util/HashMap;
+.field loaders:Landroid/util/ArrayMap;
     .annotation system Ldalvik/annotation/Signature;
         value = {
-            "Ljava/util/HashMap",
+            "Landroid/util/ArrayMap",
             "<",
             "Ljava/lang/String;",
             "Landroid/app/LoaderManagerImpl;",

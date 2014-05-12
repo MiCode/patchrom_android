@@ -83,8 +83,6 @@
 
 .field private mTetheredNotification:Landroid/app/Notification;
 
-.field private mThread:Landroid/os/HandlerThread;
-
 .field private mUpstreamIfaceTypes:Ljava/util/Collection;
     .annotation system Ldalvik/annotation/Signature;
         value = {
@@ -254,21 +252,11 @@
 
     iput-object v1, p0, Lcom/android/server/connectivity/Tethering;->mIfaces:Ljava/util/HashMap;
 
-    new-instance v1, Landroid/os/HandlerThread;
+    invoke-static {}, Lcom/android/server/IoThread;->get()Lcom/android/server/IoThread;
 
-    const-string v2, "Tethering"
+    move-result-object v1
 
-    invoke-direct {v1, v2}, Landroid/os/HandlerThread;-><init>(Ljava/lang/String;)V
-
-    iput-object v1, p0, Lcom/android/server/connectivity/Tethering;->mThread:Landroid/os/HandlerThread;
-
-    iget-object v1, p0, Lcom/android/server/connectivity/Tethering;->mThread:Landroid/os/HandlerThread;
-
-    invoke-virtual {v1}, Landroid/os/HandlerThread;->start()V
-
-    iget-object v1, p0, Lcom/android/server/connectivity/Tethering;->mThread:Landroid/os/HandlerThread;
-
-    invoke-virtual {v1}, Landroid/os/HandlerThread;->getLooper()Landroid/os/Looper;
+    invoke-virtual {v1}, Lcom/android/server/IoThread;->getLooper()Landroid/os/Looper;
 
     move-result-object v1
 
@@ -309,6 +297,10 @@
 
     invoke-virtual {v0, v1}, Landroid/content/IntentFilter;->addAction(Ljava/lang/String;)V
 
+    const-string v1, "android.intent.action.CONFIGURATION_CHANGED"
+
+    invoke-virtual {v0, v1}, Landroid/content/IntentFilter;->addAction(Ljava/lang/String;)V
+
     iget-object v1, p0, Lcom/android/server/connectivity/Tethering;->mContext:Landroid/content/Context;
 
     iget-object v2, p0, Lcom/android/server/connectivity/Tethering;->mStateReceiver:Landroid/content/BroadcastReceiver;
@@ -343,7 +335,7 @@
 
     move-result-object v1
 
-    const v2, 0x107001d
+    const v2, 0x1070013
 
     invoke-virtual {v1, v2}, Landroid/content/res/Resources;->getStringArray(I)[Ljava/lang/String;
 
@@ -1053,7 +1045,7 @@
     invoke-direct {v4, v13}, Landroid/content/Intent;-><init>(Ljava/lang/String;)V
 
     .local v4, broadcast:Landroid/content/Intent;
-    const/high16 v13, 0x2800
+    const/high16 v13, 0x2400
 
     invoke-virtual {v4, v13}, Landroid/content/Intent;->addFlags(I)Landroid/content/Intent;
 
@@ -1138,7 +1130,7 @@
     if-eqz v3, :cond_9
 
     :cond_8
-    const v13, 0x1080564
+    const v13, 0x10805cd
 
     move-object/from16 v0, p0
 
@@ -1147,7 +1139,7 @@
     goto/16 :goto_0
 
     :cond_9
-    const v13, 0x1080565
+    const v13, 0x10805ce
 
     move-object/from16 v0, p0
 
@@ -1160,7 +1152,7 @@
 
     if-eqz v3, :cond_b
 
-    const v13, 0x1080564
+    const v13, 0x10805cd
 
     move-object/from16 v0, p0
 
@@ -1169,7 +1161,7 @@
     goto/16 :goto_0
 
     :cond_b
-    const v13, 0x1080566
+    const v13, 0x10805cf
 
     move-object/from16 v0, p0
 
@@ -1180,7 +1172,7 @@
     :cond_c
     if-eqz v3, :cond_d
 
-    const v13, 0x1080563
+    const v13, 0x10805cc
 
     move-object/from16 v0, p0
 
@@ -1271,14 +1263,14 @@
     move-result-object v9
 
     .local v9, r:Landroid/content/res/Resources;
-    const v0, 0x1040495
+    const v0, 0x10404c3
 
     invoke-virtual {v9, v0}, Landroid/content/res/Resources;->getText(I)Ljava/lang/CharSequence;
 
     move-result-object v10
 
     .local v10, title:Ljava/lang/CharSequence;
-    const v0, 0x1040496
+    const v0, 0x10404c4
 
     invoke-virtual {v9, v0}, Landroid/content/res/Resources;->getText(I)Ljava/lang/CharSequence;
 
@@ -1443,6 +1435,28 @@
 
 
 # virtual methods
+.method public addressRemoved(Ljava/lang/String;Ljava/lang/String;II)V
+    .locals 0
+    .parameter "address"
+    .parameter "iface"
+    .parameter "flags"
+    .parameter "scope"
+
+    .prologue
+    return-void
+.end method
+
+.method public addressUpdated(Ljava/lang/String;Ljava/lang/String;II)V
+    .locals 0
+    .parameter "address"
+    .parameter "iface"
+    .parameter "flags"
+    .parameter "scope"
+
+    .prologue
+    return-void
+.end method
+
 .method public checkDunRequired()V
     .locals 6
 
@@ -2163,95 +2177,6 @@
     iget-object v0, p0, Lcom/android/server/connectivity/Tethering;->mTetherableWifiRegexs:[Ljava/lang/String;
 
     return-object v0
-.end method
-
-.method public getTetheredIfacePairs()[Ljava/lang/String;
-    .locals 5
-
-    .prologue
-    invoke-static {}, Lcom/google/android/collect/Lists;->newArrayList()Ljava/util/ArrayList;
-
-    move-result-object v1
-
-    .local v1, list:Ljava/util/ArrayList;,"Ljava/util/ArrayList<Ljava/lang/String;>;"
-    iget-object v4, p0, Lcom/android/server/connectivity/Tethering;->mPublicSync:Ljava/lang/Object;
-
-    monitor-enter v4
-
-    :try_start_0
-    iget-object v3, p0, Lcom/android/server/connectivity/Tethering;->mIfaces:Ljava/util/HashMap;
-
-    invoke-virtual {v3}, Ljava/util/HashMap;->values()Ljava/util/Collection;
-
-    move-result-object v3
-
-    invoke-interface {v3}, Ljava/util/Collection;->iterator()Ljava/util/Iterator;
-
-    move-result-object v0
-
-    .local v0, i$:Ljava/util/Iterator;
-    :cond_0
-    :goto_0
-    invoke-interface {v0}, Ljava/util/Iterator;->hasNext()Z
-
-    move-result v3
-
-    if-eqz v3, :cond_1
-
-    invoke-interface {v0}, Ljava/util/Iterator;->next()Ljava/lang/Object;
-
-    move-result-object v2
-
-    check-cast v2, Lcom/android/server/connectivity/Tethering$TetherInterfaceSM;
-
-    .local v2, sm:Lcom/android/server/connectivity/Tethering$TetherInterfaceSM;
-    invoke-virtual {v2}, Lcom/android/server/connectivity/Tethering$TetherInterfaceSM;->isTethered()Z
-
-    move-result v3
-
-    if-eqz v3, :cond_0
-
-    iget-object v3, v2, Lcom/android/server/connectivity/Tethering$TetherInterfaceSM;->mMyUpstreamIfaceName:Ljava/lang/String;
-
-    invoke-virtual {v1, v3}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
-
-    iget-object v3, v2, Lcom/android/server/connectivity/Tethering$TetherInterfaceSM;->mIfaceName:Ljava/lang/String;
-
-    invoke-virtual {v1, v3}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
-
-    goto :goto_0
-
-    .end local v0           #i$:Ljava/util/Iterator;
-    .end local v2           #sm:Lcom/android/server/connectivity/Tethering$TetherInterfaceSM;
-    :catchall_0
-    move-exception v3
-
-    monitor-exit v4
-    :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
-
-    throw v3
-
-    .restart local v0       #i$:Ljava/util/Iterator;
-    :cond_1
-    :try_start_1
-    monitor-exit v4
-    :try_end_1
-    .catchall {:try_start_1 .. :try_end_1} :catchall_0
-
-    invoke-virtual {v1}, Ljava/util/ArrayList;->size()I
-
-    move-result v3
-
-    new-array v3, v3, [Ljava/lang/String;
-
-    invoke-virtual {v1, v3}, Ljava/util/ArrayList;->toArray([Ljava/lang/Object;)[Ljava/lang/Object;
-
-    move-result-object v3
-
-    check-cast v3, [Ljava/lang/String;
-
-    return-object v3
 .end method
 
 .method public getTetheredIfaces()[Ljava/lang/String;
@@ -3285,7 +3210,7 @@
 
     move-result-object v9
 
-    const v10, 0x1070019
+    const v10, 0x107000f
 
     invoke-virtual {v9, v10}, Landroid/content/res/Resources;->getStringArray(I)[Ljava/lang/String;
 
@@ -3298,7 +3223,7 @@
 
     move-result-object v9
 
-    const v10, 0x107001a
+    const v10, 0x1070010
 
     invoke-virtual {v9, v10}, Landroid/content/res/Resources;->getStringArray(I)[Ljava/lang/String;
 
@@ -3311,7 +3236,7 @@
 
     move-result-object v9
 
-    const v10, 0x107001c
+    const v10, 0x1070012
 
     invoke-virtual {v9, v10}, Landroid/content/res/Resources;->getStringArray(I)[Ljava/lang/String;
 
@@ -3324,7 +3249,7 @@
 
     move-result-object v9
 
-    const v10, 0x107001f
+    const v10, 0x1070015
 
     invoke-virtual {v9, v10}, Landroid/content/res/Resources;->getIntArray(I)[I
 

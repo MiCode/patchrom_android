@@ -367,13 +367,18 @@
 
     invoke-virtual {p2}, Landroid/os/Parcel;->readStrongBinder()Landroid/os/IBinder;
 
+    move-result-object v0
+
+    .local v0, _arg0:Landroid/os/IBinder;
+    invoke-virtual {p2}, Landroid/os/Parcel;->readStrongBinder()Landroid/os/IBinder;
+
     move-result-object v5
 
     invoke-static {v5}, Landroid/accessibilityservice/IAccessibilityServiceClient$Stub;->asInterface(Landroid/os/IBinder;)Landroid/accessibilityservice/IAccessibilityServiceClient;
 
-    move-result-object v0
+    move-result-object v1
 
-    .local v0, _arg0:Landroid/accessibilityservice/IAccessibilityServiceClient;
+    .local v1, _arg1:Landroid/accessibilityservice/IAccessibilityServiceClient;
     invoke-virtual {p2}, Landroid/os/Parcel;->readInt()I
 
     move-result v5
@@ -384,27 +389,28 @@
 
     invoke-interface {v5, p2}, Landroid/os/Parcelable$Creator;->createFromParcel(Landroid/os/Parcel;)Ljava/lang/Object;
 
-    move-result-object v1
+    move-result-object v2
 
-    check-cast v1, Landroid/accessibilityservice/AccessibilityServiceInfo;
+    check-cast v2, Landroid/accessibilityservice/AccessibilityServiceInfo;
 
-    .local v1, _arg1:Landroid/accessibilityservice/AccessibilityServiceInfo;
+    .local v2, _arg2:Landroid/accessibilityservice/AccessibilityServiceInfo;
     :goto_2
-    invoke-virtual {p0, v0, v1}, Landroid/view/accessibility/IAccessibilityManager$Stub;->registerUiTestAutomationService(Landroid/accessibilityservice/IAccessibilityServiceClient;Landroid/accessibilityservice/AccessibilityServiceInfo;)V
+    invoke-virtual {p0, v0, v1, v2}, Landroid/view/accessibility/IAccessibilityManager$Stub;->registerUiTestAutomationService(Landroid/os/IBinder;Landroid/accessibilityservice/IAccessibilityServiceClient;Landroid/accessibilityservice/AccessibilityServiceInfo;)V
 
     invoke-virtual {p3}, Landroid/os/Parcel;->writeNoException()V
 
     goto/16 :goto_0
 
-    .end local v1           #_arg1:Landroid/accessibilityservice/AccessibilityServiceInfo;
+    .end local v2           #_arg2:Landroid/accessibilityservice/AccessibilityServiceInfo;
     :cond_2
-    const/4 v1, 0x0
+    const/4 v2, 0x0
 
-    .restart local v1       #_arg1:Landroid/accessibilityservice/AccessibilityServiceInfo;
+    .restart local v2       #_arg2:Landroid/accessibilityservice/AccessibilityServiceInfo;
     goto :goto_2
 
-    .end local v0           #_arg0:Landroid/accessibilityservice/IAccessibilityServiceClient;
-    .end local v1           #_arg1:Landroid/accessibilityservice/AccessibilityServiceInfo;
+    .end local v0           #_arg0:Landroid/os/IBinder;
+    .end local v1           #_arg1:Landroid/accessibilityservice/IAccessibilityServiceClient;
+    .end local v2           #_arg2:Landroid/accessibilityservice/AccessibilityServiceInfo;
     :sswitch_9
     const-string v5, "android.view.accessibility.IAccessibilityManager"
 
@@ -418,7 +424,7 @@
 
     move-result-object v0
 
-    .restart local v0       #_arg0:Landroid/accessibilityservice/IAccessibilityServiceClient;
+    .local v0, _arg0:Landroid/accessibilityservice/IAccessibilityServiceClient;
     invoke-virtual {p0, v0}, Landroid/view/accessibility/IAccessibilityManager$Stub;->unregisterUiTestAutomationService(Landroid/accessibilityservice/IAccessibilityServiceClient;)V
 
     invoke-virtual {p3}, Landroid/os/Parcel;->writeNoException()V

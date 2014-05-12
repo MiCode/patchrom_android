@@ -31,10 +31,10 @@
 
 .field static final STOPPED:I = 0x3
 
-.field private static final sClassMap:Ljava/util/HashMap;
+.field private static final sClassMap:Landroid/util/ArrayMap;
     .annotation system Ldalvik/annotation/Signature;
         value = {
-            "Ljava/util/HashMap",
+            "Landroid/util/ArrayMap",
             "<",
             "Ljava/lang/String;",
             "Ljava/lang/Class",
@@ -140,11 +140,11 @@
     .locals 1
 
     .prologue
-    new-instance v0, Ljava/util/HashMap;
+    new-instance v0, Landroid/util/ArrayMap;
 
-    invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
+    invoke-direct {v0}, Landroid/util/ArrayMap;-><init>()V
 
-    sput-object v0, Landroid/app/Fragment;->sClassMap:Ljava/util/HashMap;
+    sput-object v0, Landroid/app/Fragment;->sClassMap:Landroid/util/ArrayMap;
 
     return-void
 .end method
@@ -197,16 +197,16 @@
 
     .prologue
     :try_start_0
-    sget-object v3, Landroid/app/Fragment;->sClassMap:Ljava/util/HashMap;
+    sget-object v3, Landroid/app/Fragment;->sClassMap:Landroid/util/ArrayMap;
 
-    invoke-virtual {v3, p1}, Ljava/util/HashMap;->get(Ljava/lang/Object;)Ljava/lang/Object;
+    invoke-virtual {v3, p1}, Landroid/util/ArrayMap;->get(Ljava/lang/Object;)Ljava/lang/Object;
 
     move-result-object v0
 
     check-cast v0, Ljava/lang/Class;
 
     .local v0, clazz:Ljava/lang/Class;,"Ljava/lang/Class<*>;"
-    if-nez v0, :cond_0
+    if-nez v0, :cond_1
 
     invoke-virtual {p0}, Landroid/content/Context;->getClassLoader()Ljava/lang/ClassLoader;
 
@@ -216,41 +216,53 @@
 
     move-result-object v0
 
-    sget-object v3, Landroid/app/Fragment;->sClassMap:Ljava/util/HashMap;
+    const-class v3, Landroid/app/Fragment;
 
-    invoke-virtual {v3, p1, v0}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+    invoke-virtual {v3, v0}, Ljava/lang/Class;->isAssignableFrom(Ljava/lang/Class;)Z
 
-    :cond_0
-    invoke-virtual {v0}, Ljava/lang/Class;->newInstance()Ljava/lang/Object;
+    move-result v3
 
-    move-result-object v2
+    if-nez v3, :cond_0
 
-    check-cast v2, Landroid/app/Fragment;
+    new-instance v3, Landroid/app/Fragment$InstantiationException;
 
-    .local v2, f:Landroid/app/Fragment;
-    if-eqz p2, :cond_1
+    new-instance v4, Ljava/lang/StringBuilder;
 
-    invoke-virtual {v2}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
+    invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
 
-    move-result-object v3
+    const-string v5, "Trying to instantiate a class "
 
-    invoke-virtual {v3}, Ljava/lang/Class;->getClassLoader()Ljava/lang/ClassLoader;
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v3
+    move-result-object v4
 
-    invoke-virtual {p2, v3}, Landroid/os/Bundle;->setClassLoader(Ljava/lang/ClassLoader;)V
+    invoke-virtual {v4, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    iput-object p2, v2, Landroid/app/Fragment;->mArguments:Landroid/os/Bundle;
+    move-result-object v4
+
+    const-string v5, " that is not a Fragment"
+
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v4
+
+    invoke-virtual {v4}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v4
+
+    new-instance v5, Ljava/lang/ClassCastException;
+
+    invoke-direct {v5}, Ljava/lang/ClassCastException;-><init>()V
+
+    invoke-direct {v3, v4, v5}, Landroid/app/Fragment$InstantiationException;-><init>(Ljava/lang/String;Ljava/lang/Exception;)V
+
+    throw v3
     :try_end_0
     .catch Ljava/lang/ClassNotFoundException; {:try_start_0 .. :try_end_0} :catch_0
     .catch Ljava/lang/InstantiationException; {:try_start_0 .. :try_end_0} :catch_1
     .catch Ljava/lang/IllegalAccessException; {:try_start_0 .. :try_end_0} :catch_2
 
-    :cond_1
-    return-object v2
-
     .end local v0           #clazz:Ljava/lang/Class;,"Ljava/lang/Class<*>;"
-    .end local v2           #f:Landroid/app/Fragment;
     :catch_0
     move-exception v1
 
@@ -292,6 +304,44 @@
     throw v3
 
     .end local v1           #e:Ljava/lang/ClassNotFoundException;
+    .restart local v0       #clazz:Ljava/lang/Class;,"Ljava/lang/Class<*>;"
+    :cond_0
+    :try_start_1
+    sget-object v3, Landroid/app/Fragment;->sClassMap:Landroid/util/ArrayMap;
+
+    invoke-virtual {v3, p1, v0}, Landroid/util/ArrayMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+
+    :cond_1
+    invoke-virtual {v0}, Ljava/lang/Class;->newInstance()Ljava/lang/Object;
+
+    move-result-object v2
+
+    check-cast v2, Landroid/app/Fragment;
+
+    .local v2, f:Landroid/app/Fragment;
+    if-eqz p2, :cond_2
+
+    invoke-virtual {v2}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
+
+    move-result-object v3
+
+    invoke-virtual {v3}, Ljava/lang/Class;->getClassLoader()Ljava/lang/ClassLoader;
+
+    move-result-object v3
+
+    invoke-virtual {p2, v3}, Landroid/os/Bundle;->setClassLoader(Ljava/lang/ClassLoader;)V
+
+    iput-object p2, v2, Landroid/app/Fragment;->mArguments:Landroid/os/Bundle;
+    :try_end_1
+    .catch Ljava/lang/ClassNotFoundException; {:try_start_1 .. :try_end_1} :catch_0
+    .catch Ljava/lang/InstantiationException; {:try_start_1 .. :try_end_1} :catch_1
+    .catch Ljava/lang/IllegalAccessException; {:try_start_1 .. :try_end_1} :catch_2
+
+    :cond_2
+    return-object v2
+
+    .end local v0           #clazz:Ljava/lang/Class;,"Ljava/lang/Class<*>;"
+    .end local v2           #f:Landroid/app/Fragment;
     :catch_1
     move-exception v1
 
@@ -1854,7 +1904,7 @@
 
     if-nez v0, :cond_1
 
-    new-instance v0, Landroid/app/SuperNotCalledException;
+    new-instance v0, Landroid/util/SuperNotCalledException;
 
     new-instance v1, Ljava/lang/StringBuilder;
 
@@ -1880,7 +1930,7 @@
 
     move-result-object v1
 
-    invoke-direct {v0, v1}, Landroid/app/SuperNotCalledException;-><init>(Ljava/lang/String;)V
+    invoke-direct {v0, v1}, Landroid/util/SuperNotCalledException;-><init>(Ljava/lang/String;)V
 
     throw v0
 
@@ -1980,7 +2030,7 @@
 
     if-nez v1, :cond_1
 
-    new-instance v1, Landroid/app/SuperNotCalledException;
+    new-instance v1, Landroid/util/SuperNotCalledException;
 
     new-instance v2, Ljava/lang/StringBuilder;
 
@@ -2006,7 +2056,7 @@
 
     move-result-object v2
 
-    invoke-direct {v1, v2}, Landroid/app/SuperNotCalledException;-><init>(Ljava/lang/String;)V
+    invoke-direct {v1, v2}, Landroid/util/SuperNotCalledException;-><init>(Ljava/lang/String;)V
 
     throw v1
 
@@ -2132,7 +2182,7 @@
 
     if-nez v0, :cond_1
 
-    new-instance v0, Landroid/app/SuperNotCalledException;
+    new-instance v0, Landroid/util/SuperNotCalledException;
 
     new-instance v1, Ljava/lang/StringBuilder;
 
@@ -2158,7 +2208,7 @@
 
     move-result-object v1
 
-    invoke-direct {v0, v1}, Landroid/app/SuperNotCalledException;-><init>(Ljava/lang/String;)V
+    invoke-direct {v0, v1}, Landroid/util/SuperNotCalledException;-><init>(Ljava/lang/String;)V
 
     throw v0
 
@@ -2189,7 +2239,7 @@
 
     if-nez v0, :cond_1
 
-    new-instance v0, Landroid/app/SuperNotCalledException;
+    new-instance v0, Landroid/util/SuperNotCalledException;
 
     new-instance v1, Ljava/lang/StringBuilder;
 
@@ -2215,7 +2265,7 @@
 
     move-result-object v1
 
-    invoke-direct {v0, v1}, Landroid/app/SuperNotCalledException;-><init>(Ljava/lang/String;)V
+    invoke-direct {v0, v1}, Landroid/util/SuperNotCalledException;-><init>(Ljava/lang/String;)V
 
     throw v0
 
@@ -2353,7 +2403,7 @@
 
     if-nez v0, :cond_1
 
-    new-instance v0, Landroid/app/SuperNotCalledException;
+    new-instance v0, Landroid/util/SuperNotCalledException;
 
     new-instance v1, Ljava/lang/StringBuilder;
 
@@ -2379,7 +2429,7 @@
 
     move-result-object v1
 
-    invoke-direct {v0, v1}, Landroid/app/SuperNotCalledException;-><init>(Ljava/lang/String;)V
+    invoke-direct {v0, v1}, Landroid/util/SuperNotCalledException;-><init>(Ljava/lang/String;)V
 
     throw v0
 
@@ -2455,7 +2505,7 @@
 
     if-nez v0, :cond_1
 
-    new-instance v0, Landroid/app/SuperNotCalledException;
+    new-instance v0, Landroid/util/SuperNotCalledException;
 
     new-instance v1, Ljava/lang/StringBuilder;
 
@@ -2481,7 +2531,7 @@
 
     move-result-object v1
 
-    invoke-direct {v0, v1}, Landroid/app/SuperNotCalledException;-><init>(Ljava/lang/String;)V
+    invoke-direct {v0, v1}, Landroid/util/SuperNotCalledException;-><init>(Ljava/lang/String;)V
 
     throw v0
 
@@ -2558,7 +2608,7 @@
 
     if-nez v0, :cond_1
 
-    new-instance v0, Landroid/app/SuperNotCalledException;
+    new-instance v0, Landroid/util/SuperNotCalledException;
 
     new-instance v1, Ljava/lang/StringBuilder;
 
@@ -2584,7 +2634,7 @@
 
     move-result-object v1
 
-    invoke-direct {v0, v1}, Landroid/app/SuperNotCalledException;-><init>(Ljava/lang/String;)V
+    invoke-direct {v0, v1}, Landroid/util/SuperNotCalledException;-><init>(Ljava/lang/String;)V
 
     throw v0
 
@@ -2633,7 +2683,7 @@
 
     if-nez v0, :cond_1
 
-    new-instance v0, Landroid/app/SuperNotCalledException;
+    new-instance v0, Landroid/util/SuperNotCalledException;
 
     new-instance v1, Ljava/lang/StringBuilder;
 
@@ -2659,7 +2709,7 @@
 
     move-result-object v1
 
-    invoke-direct {v0, v1}, Landroid/app/SuperNotCalledException;-><init>(Ljava/lang/String;)V
+    invoke-direct {v0, v1}, Landroid/util/SuperNotCalledException;-><init>(Ljava/lang/String;)V
 
     throw v0
 
@@ -2781,7 +2831,7 @@
 
     if-nez v0, :cond_1
 
-    new-instance v0, Landroid/app/SuperNotCalledException;
+    new-instance v0, Landroid/util/SuperNotCalledException;
 
     new-instance v1, Ljava/lang/StringBuilder;
 
@@ -2807,7 +2857,7 @@
 
     move-result-object v1
 
-    invoke-direct {v0, v1}, Landroid/app/SuperNotCalledException;-><init>(Ljava/lang/String;)V
+    invoke-direct {v0, v1}, Landroid/util/SuperNotCalledException;-><init>(Ljava/lang/String;)V
 
     throw v0
 

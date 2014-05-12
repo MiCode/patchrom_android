@@ -85,14 +85,13 @@
 
     invoke-static {v3, v4}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .end local v0           #e:Ljava/lang/IllegalArgumentException;
-    :goto_1
     move-object v2, v1
 
     .end local v1           #ns:Landroid/media/audiofx/NoiseSuppressor;
     .restart local v2       #ns:Landroid/media/audiofx/NoiseSuppressor;
     goto :goto_0
 
+    .end local v0           #e:Ljava/lang/IllegalArgumentException;
     .end local v2           #ns:Landroid/media/audiofx/NoiseSuppressor;
     .restart local v1       #ns:Landroid/media/audiofx/NoiseSuppressor;
     :catch_1
@@ -105,14 +104,15 @@
 
     invoke-static {v3, v4}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    goto :goto_1
+    move-object v2, v1
+
+    .end local v1           #ns:Landroid/media/audiofx/NoiseSuppressor;
+    .restart local v2       #ns:Landroid/media/audiofx/NoiseSuppressor;
+    goto :goto_0
 
     .end local v0           #e:Ljava/lang/UnsupportedOperationException;
-    :catchall_0
-    move-exception v3
-
-    goto :goto_1
-
+    .end local v2           #ns:Landroid/media/audiofx/NoiseSuppressor;
+    .restart local v1       #ns:Landroid/media/audiofx/NoiseSuppressor;
     :catch_2
     move-exception v0
 
@@ -125,7 +125,23 @@
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
-    goto :goto_1
+    move-object v2, v1
+
+    .end local v1           #ns:Landroid/media/audiofx/NoiseSuppressor;
+    .restart local v2       #ns:Landroid/media/audiofx/NoiseSuppressor;
+    goto :goto_0
+
+    .end local v0           #e:Ljava/lang/RuntimeException;
+    .end local v2           #ns:Landroid/media/audiofx/NoiseSuppressor;
+    .restart local v1       #ns:Landroid/media/audiofx/NoiseSuppressor;
+    :catchall_0
+    move-exception v3
+
+    move-object v2, v1
+
+    .end local v1           #ns:Landroid/media/audiofx/NoiseSuppressor;
+    .restart local v2       #ns:Landroid/media/audiofx/NoiseSuppressor;
+    goto :goto_0
 .end method
 
 .method public static isAvailable()Z

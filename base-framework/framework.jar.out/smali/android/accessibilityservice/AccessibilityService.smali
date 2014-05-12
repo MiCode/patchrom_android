@@ -243,6 +243,16 @@
 .method public abstract onInterrupt()V
 .end method
 
+.method protected onKeyEvent(Landroid/view/KeyEvent;)Z
+    .locals 1
+    .parameter "event"
+
+    .prologue
+    const/4 v0, 0x0
+
+    return v0
+.end method
+
 .method protected onServiceConnected()V
     .locals 0
 

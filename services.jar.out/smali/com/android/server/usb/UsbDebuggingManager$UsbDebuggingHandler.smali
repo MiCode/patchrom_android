@@ -17,6 +17,8 @@
 # static fields
 .field private static final MESSAGE_ADB_ALLOW:I = 0x3
 
+.field private static final MESSAGE_ADB_CLEAR:I = 0x6
+
 .field private static final MESSAGE_ADB_CONFIRM:I = 0x5
 
 .field private static final MESSAGE_ADB_DENY:I = 0x4
@@ -47,7 +49,7 @@
 
 # virtual methods
 .method public handleMessage(Landroid/os/Message;)V
-    .locals 5
+    .locals 6
     .parameter "msg"
 
     .prologue
@@ -84,7 +86,9 @@
 
     iget-object v4, p0, Lcom/android/server/usb/UsbDebuggingManager$UsbDebuggingHandler;->this$0:Lcom/android/server/usb/UsbDebuggingManager;
 
-    invoke-direct {v3, v4}, Ljava/lang/Thread;-><init>(Ljava/lang/Runnable;)V
+    const-string v5, "UsbDebuggingManager"
+
+    invoke-direct {v3, v4, v5}, Ljava/lang/Thread;-><init>(Ljava/lang/Runnable;Ljava/lang/String;)V
 
     #setter for: Lcom/android/server/usb/UsbDebuggingManager;->mThread:Ljava/lang/Thread;
     invoke-static {v2, v3}, Lcom/android/server/usb/UsbDebuggingManager;->access$102(Lcom/android/server/usb/UsbDebuggingManager;Ljava/lang/Thread;)Ljava/lang/Thread;
@@ -285,12 +289,18 @@
     goto/16 :goto_0
 
     .end local v1           #key:Ljava/lang/String;
+    :pswitch_5
+    iget-object v2, p0, Lcom/android/server/usb/UsbDebuggingManager$UsbDebuggingHandler;->this$0:Lcom/android/server/usb/UsbDebuggingManager;
+
+    #calls: Lcom/android/server/usb/UsbDebuggingManager;->deleteKeyFile()V
+    invoke-static {v2}, Lcom/android/server/usb/UsbDebuggingManager;->access$1000(Lcom/android/server/usb/UsbDebuggingManager;)V
+
+    goto/16 :goto_0
+
     :catch_0
     move-exception v2
 
     goto/16 :goto_1
-
-    nop
 
     :pswitch_data_0
     .packed-switch 0x1
@@ -299,5 +309,6 @@
         :pswitch_2
         :pswitch_3
         :pswitch_4
+        :pswitch_5
     .end packed-switch
 .end method

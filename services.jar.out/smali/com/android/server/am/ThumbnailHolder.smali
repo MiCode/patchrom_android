@@ -18,3 +18,18 @@
 
     return-void
 .end method
+
+
+# virtual methods
+.method disposeThumbnail()V
+    .locals 1
+
+    .prologue
+    const/4 v0, 0x0
+
+    iput-object v0, p0, Lcom/android/server/am/ThumbnailHolder;->lastThumbnail:Landroid/graphics/Bitmap;
+
+    iput-object v0, p0, Lcom/android/server/am/ThumbnailHolder;->lastDescription:Ljava/lang/CharSequence;
+
+    return-void
+.end method

@@ -3,7 +3,7 @@
 .source "UsimPhoneBookManager.java"
 
 # interfaces
-.implements Lcom/android/internal/telephony/IccConstants;
+.implements Lcom/android/internal/telephony/uicc/IccConstants;
 
 
 # annotations
@@ -25,7 +25,7 @@
 
 .field private static final EVENT_USIM_ADN_LOAD_DONE:I = 0x2
 
-.field private static final LOG_TAG:Ljava/lang/String; = "GSM"
+.field private static final LOG_TAG:Ljava/lang/String; = "UsimPhoneBookManager"
 
 .field private static final USIM_EFAAS_TAG:I = 0xc7
 
@@ -59,7 +59,7 @@
 
 
 # instance fields
-.field private mAdnCache:Lcom/android/internal/telephony/AdnRecordCache;
+.field private mAdnCache:Lcom/android/internal/telephony/uicc/AdnRecordCache;
 
 .field private mEmailFileRecord:Ljava/util/ArrayList;
     .annotation system Ldalvik/annotation/Signature;
@@ -88,7 +88,7 @@
     .end annotation
 .end field
 
-.field private mFh:Lcom/android/internal/telephony/IccFileHandler;
+.field private mFh:Lcom/android/internal/telephony/uicc/IccFileHandler;
 
 .field private mIapFileRecord:Ljava/util/ArrayList;
     .annotation system Ldalvik/annotation/Signature;
@@ -110,7 +110,7 @@
         value = {
             "Ljava/util/ArrayList",
             "<",
-            "Lcom/android/internal/telephony/AdnRecord;",
+            "Lcom/android/internal/telephony/uicc/AdnRecord;",
             ">;"
         }
     .end annotation
@@ -120,7 +120,7 @@
 
 
 # direct methods
-.method public constructor <init>(Lcom/android/internal/telephony/IccFileHandler;Lcom/android/internal/telephony/AdnRecordCache;)V
+.method public constructor <init>(Lcom/android/internal/telephony/uicc/IccFileHandler;Lcom/android/internal/telephony/uicc/AdnRecordCache;)V
     .locals 2
     .parameter "fh"
     .parameter "cache"
@@ -142,7 +142,7 @@
 
     iput-boolean v1, p0, Lcom/android/internal/telephony/gsm/UsimPhoneBookManager;->mRefreshCache:Z
 
-    iput-object p1, p0, Lcom/android/internal/telephony/gsm/UsimPhoneBookManager;->mFh:Lcom/android/internal/telephony/IccFileHandler;
+    iput-object p1, p0, Lcom/android/internal/telephony/gsm/UsimPhoneBookManager;->mFh:Lcom/android/internal/telephony/uicc/IccFileHandler;
 
     new-instance v0, Ljava/util/ArrayList;
 
@@ -162,7 +162,7 @@
 
     iput-object v0, p0, Lcom/android/internal/telephony/gsm/UsimPhoneBookManager;->mIsPbrPresent:Ljava/lang/Boolean;
 
-    iput-object p2, p0, Lcom/android/internal/telephony/gsm/UsimPhoneBookManager;->mAdnCache:Lcom/android/internal/telephony/AdnRecordCache;
+    iput-object p2, p0, Lcom/android/internal/telephony/gsm/UsimPhoneBookManager;->mAdnCache:Lcom/android/internal/telephony/uicc/AdnRecordCache;
 
     return-void
 .end method
@@ -234,9 +234,9 @@
     .parameter "msg"
 
     .prologue
-    const-string v0, "GSM"
+    const-string v0, "UsimPhoneBookManager"
 
-    invoke-static {v0, p1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v0, p1}, Landroid/telephony/Rlog;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     return-void
 .end method
@@ -304,7 +304,7 @@
     move-result v1
 
     :cond_2
-    iget-object v4, p0, Lcom/android/internal/telephony/gsm/UsimPhoneBookManager;->mAdnCache:Lcom/android/internal/telephony/AdnRecordCache;
+    iget-object v4, p0, Lcom/android/internal/telephony/gsm/UsimPhoneBookManager;->mAdnCache:Lcom/android/internal/telephony/uicc/AdnRecordCache;
 
     const/16 v3, 0xc0
 
@@ -328,7 +328,7 @@
 
     move-result-object v5
 
-    invoke-virtual {v4, v3, v1, v5}, Lcom/android/internal/telephony/AdnRecordCache;->requestLoadAllAdnLike(IILandroid/os/Message;)V
+    invoke-virtual {v4, v3, v1, v5}, Lcom/android/internal/telephony/uicc/AdnRecordCache;->requestLoadAllAdnLike(IILandroid/os/Message;)V
 
     :try_start_0
     iget-object v3, p0, Lcom/android/internal/telephony/gsm/UsimPhoneBookManager;->mLock:Ljava/lang/Object;
@@ -343,11 +343,11 @@
     move-exception v0
 
     .local v0, e:Ljava/lang/InterruptedException;
-    const-string v3, "GSM"
+    const-string v3, "UsimPhoneBookManager"
 
     const-string v4, "Interrupted Exception in readAdnFileAndWait"
 
-    invoke-static {v3, v4}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v3, v4}, Landroid/telephony/Rlog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     goto :goto_0
 .end method
@@ -432,16 +432,16 @@
 
     if-nez v3, :cond_2
 
-    const-string v3, "GSM"
+    const-string v3, "UsimPhoneBookManager"
 
     const-string v4, "Error: IAP file is empty"
 
-    invoke-static {v3, v4}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v3, v4}, Landroid/telephony/Rlog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     goto :goto_0
 
     :cond_2
-    iget-object v4, p0, Lcom/android/internal/telephony/gsm/UsimPhoneBookManager;->mFh:Lcom/android/internal/telephony/IccFileHandler;
+    iget-object v4, p0, Lcom/android/internal/telephony/gsm/UsimPhoneBookManager;->mFh:Lcom/android/internal/telephony/uicc/IccFileHandler;
 
     invoke-static {v5}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
@@ -463,7 +463,7 @@
 
     move-result-object v5
 
-    invoke-virtual {v4, v3, v5}, Lcom/android/internal/telephony/IccFileHandler;->loadEFLinearFixedAll(ILandroid/os/Message;)V
+    invoke-virtual {v4, v3, v5}, Lcom/android/internal/telephony/uicc/IccFileHandler;->loadEFLinearFixedAll(ILandroid/os/Message;)V
 
     :try_start_0
     iget-object v3, p0, Lcom/android/internal/telephony/gsm/UsimPhoneBookManager;->mLock:Ljava/lang/Object;
@@ -477,11 +477,11 @@
 
     if-nez v3, :cond_3
 
-    const-string v3, "GSM"
+    const-string v3, "UsimPhoneBookManager"
 
     const-string v4, "Error: Email file is empty"
 
-    invoke-static {v3, v4}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v3, v4}, Landroid/telephony/Rlog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     goto :goto_0
 
@@ -489,11 +489,11 @@
     move-exception v0
 
     .local v0, e:Ljava/lang/InterruptedException;
-    const-string v3, "GSM"
+    const-string v3, "UsimPhoneBookManager"
 
     const-string v4, "Interrupted Exception in readEmailFileAndWait"
 
-    invoke-static {v3, v4}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v3, v4}, Landroid/telephony/Rlog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     goto :goto_1
 
@@ -533,7 +533,7 @@
 
     add-int/lit8 v5, v5, -0x2
 
-    invoke-static {v3, v4, v5}, Lcom/android/internal/telephony/IccUtils;->adnStringFieldToString([BII)Ljava/lang/String;
+    invoke-static {v3, v4, v5}, Lcom/android/internal/telephony/uicc/IccUtils;->adnStringFieldToString([BII)Ljava/lang/String;
 
     move-result-object v2
 
@@ -554,7 +554,7 @@
     .parameter "efid"
 
     .prologue
-    iget-object v1, p0, Lcom/android/internal/telephony/gsm/UsimPhoneBookManager;->mFh:Lcom/android/internal/telephony/IccFileHandler;
+    iget-object v1, p0, Lcom/android/internal/telephony/gsm/UsimPhoneBookManager;->mFh:Lcom/android/internal/telephony/uicc/IccFileHandler;
 
     const/4 v2, 0x3
 
@@ -562,7 +562,7 @@
 
     move-result-object v2
 
-    invoke-virtual {v1, p1, v2}, Lcom/android/internal/telephony/IccFileHandler;->loadEFLinearFixedAll(ILandroid/os/Message;)V
+    invoke-virtual {v1, p1, v2}, Lcom/android/internal/telephony/uicc/IccFileHandler;->loadEFLinearFixedAll(ILandroid/os/Message;)V
 
     :try_start_0
     iget-object v1, p0, Lcom/android/internal/telephony/gsm/UsimPhoneBookManager;->mLock:Ljava/lang/Object;
@@ -578,11 +578,11 @@
     move-exception v0
 
     .local v0, e:Ljava/lang/InterruptedException;
-    const-string v1, "GSM"
+    const-string v1, "UsimPhoneBookManager"
 
     const-string v2, "Interrupted Exception in readIapFileAndWait"
 
-    invoke-static {v1, v2}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v1, v2}, Landroid/telephony/Rlog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     goto :goto_0
 .end method
@@ -591,7 +591,7 @@
     .locals 4
 
     .prologue
-    iget-object v1, p0, Lcom/android/internal/telephony/gsm/UsimPhoneBookManager;->mFh:Lcom/android/internal/telephony/IccFileHandler;
+    iget-object v1, p0, Lcom/android/internal/telephony/gsm/UsimPhoneBookManager;->mFh:Lcom/android/internal/telephony/uicc/IccFileHandler;
 
     const/16 v2, 0x4f30
 
@@ -601,7 +601,7 @@
 
     move-result-object v3
 
-    invoke-virtual {v1, v2, v3}, Lcom/android/internal/telephony/IccFileHandler;->loadEFLinearFixedAll(ILandroid/os/Message;)V
+    invoke-virtual {v1, v2, v3}, Lcom/android/internal/telephony/uicc/IccFileHandler;->loadEFLinearFixedAll(ILandroid/os/Message;)V
 
     :try_start_0
     iget-object v1, p0, Lcom/android/internal/telephony/gsm/UsimPhoneBookManager;->mLock:Ljava/lang/Object;
@@ -617,11 +617,11 @@
     move-exception v0
 
     .local v0, e:Ljava/lang/InterruptedException;
-    const-string v1, "GSM"
+    const-string v1, "UsimPhoneBookManager"
 
     const-string v2, "Interrupted Exception in readAdnFileAndWait"
 
-    invoke-static {v1, v2}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v1, v2}, Landroid/telephony/Rlog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     goto :goto_0
 .end method
@@ -740,12 +740,12 @@
 
     move-result-object v6
 
-    check-cast v6, Lcom/android/internal/telephony/AdnRecord;
+    check-cast v6, Lcom/android/internal/telephony/uicc/AdnRecord;
 
-    .local v6, rec:Lcom/android/internal/telephony/AdnRecord;
+    .local v6, rec:Lcom/android/internal/telephony/uicc/AdnRecord;
     if-eqz v6, :cond_5
 
-    invoke-virtual {v6, v2}, Lcom/android/internal/telephony/AdnRecord;->setEmails([Ljava/lang/String;)V
+    invoke-virtual {v6, v2}, Lcom/android/internal/telephony/uicc/AdnRecord;->setEmails([Ljava/lang/String;)V
 
     :goto_2
     iget-object v9, p0, Lcom/android/internal/telephony/gsm/UsimPhoneBookManager;->mPhoneBookRecords:Ljava/util/ArrayList;
@@ -753,7 +753,7 @@
     invoke-virtual {v9, v3, v6}, Ljava/util/ArrayList;->set(ILjava/lang/Object;)Ljava/lang/Object;
 
     .end local v2           #emails:[Ljava/lang/String;
-    .end local v6           #rec:Lcom/android/internal/telephony/AdnRecord;
+    .end local v6           #rec:Lcom/android/internal/telephony/uicc/AdnRecord;
     :cond_2
     add-int/lit8 v3, v3, 0x1
 
@@ -765,11 +765,11 @@
     move-exception v0
 
     .local v0, e:Ljava/lang/IndexOutOfBoundsException;
-    const-string v9, "GSM"
+    const-string v9, "UsimPhoneBookManager"
 
     const-string v10, "Error: Improper ICC card: No IAP record for ADN, continuing"
 
-    invoke-static {v9, v10}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v9, v10}, Landroid/telephony/Rlog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     .end local v0           #e:Ljava/lang/IndexOutOfBoundsException;
     .end local v3           #i:I
@@ -824,24 +824,24 @@
     .end local v1           #emailList:Ljava/util/ArrayList;,"Ljava/util/ArrayList<Ljava/lang/String;>;"
     .end local v4           #len:I
     .restart local v2       #emails:[Ljava/lang/String;
-    .restart local v6       #rec:Lcom/android/internal/telephony/AdnRecord;
+    .restart local v6       #rec:Lcom/android/internal/telephony/uicc/AdnRecord;
     .restart local v7       #recNum:I
     .restart local v8       #record:[B
     :cond_5
-    new-instance v6, Lcom/android/internal/telephony/AdnRecord;
+    new-instance v6, Lcom/android/internal/telephony/uicc/AdnRecord;
 
-    .end local v6           #rec:Lcom/android/internal/telephony/AdnRecord;
+    .end local v6           #rec:Lcom/android/internal/telephony/uicc/AdnRecord;
     const-string v9, ""
 
     const-string v10, ""
 
-    invoke-direct {v6, v9, v10, v2}, Lcom/android/internal/telephony/AdnRecord;-><init>(Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;)V
+    invoke-direct {v6, v9, v10, v2}, Lcom/android/internal/telephony/uicc/AdnRecord;-><init>(Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;)V
 
-    .restart local v6       #rec:Lcom/android/internal/telephony/AdnRecord;
+    .restart local v6       #rec:Lcom/android/internal/telephony/uicc/AdnRecord;
     goto :goto_2
 
     .end local v2           #emails:[Ljava/lang/String;
-    .end local v6           #rec:Lcom/android/internal/telephony/AdnRecord;
+    .end local v6           #rec:Lcom/android/internal/telephony/uicc/AdnRecord;
     .end local v7           #recNum:I
     .end local v8           #record:[B
     .restart local v4       #len:I
@@ -860,9 +860,9 @@
 
     move-result-object v6
 
-    check-cast v6, Lcom/android/internal/telephony/AdnRecord;
+    check-cast v6, Lcom/android/internal/telephony/uicc/AdnRecord;
 
-    .restart local v6       #rec:Lcom/android/internal/telephony/AdnRecord;
+    .restart local v6       #rec:Lcom/android/internal/telephony/uicc/AdnRecord;
     invoke-virtual {v1}, Ljava/util/ArrayList;->size()I
 
     move-result v9
@@ -880,7 +880,7 @@
 
     invoke-static {v9, v11, v2, v11, v10}, Ljava/lang/System;->arraycopy(Ljava/lang/Object;ILjava/lang/Object;II)V
 
-    invoke-virtual {v6, v2}, Lcom/android/internal/telephony/AdnRecord;->setEmails([Ljava/lang/String;)V
+    invoke-virtual {v6, v2}, Lcom/android/internal/telephony/uicc/AdnRecord;->setEmails([Ljava/lang/String;)V
 
     iget-object v9, p0, Lcom/android/internal/telephony/gsm/UsimPhoneBookManager;->mPhoneBookRecords:Ljava/util/ArrayList;
 
@@ -1105,7 +1105,7 @@
             "()",
             "Ljava/util/ArrayList",
             "<",
-            "Lcom/android/internal/telephony/AdnRecord;",
+            "Lcom/android/internal/telephony/uicc/AdnRecord;",
             ">;"
         }
     .end annotation
@@ -1273,11 +1273,11 @@
     move-exception v1
 
     .local v1, e:Ljava/lang/IndexOutOfBoundsException;
-    const-string v6, "GSM"
+    const-string v6, "UsimPhoneBookManager"
 
     const-string v7, "Error: Improper ICC card: No email record for ADN, continuing"
 
-    invoke-static {v6, v7}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v6, v7}, Landroid/telephony/Rlog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     .end local v1           #e:Ljava/lang/IndexOutOfBoundsException;
     :cond_1

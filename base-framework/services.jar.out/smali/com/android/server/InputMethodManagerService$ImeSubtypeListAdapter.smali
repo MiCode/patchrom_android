@@ -24,7 +24,7 @@
 
 
 # instance fields
-.field private final mCheckedItem:I
+.field public mCheckedItem:I
 
 .field private final mInflater:Landroid/view/LayoutInflater;
 
@@ -177,7 +177,7 @@
     invoke-virtual {v4, v8}, Landroid/widget/TextView;->setVisibility(I)V
 
     :goto_2
-    const v8, 0x1020311
+    const v8, 0x10202c2
 
     invoke-virtual {v6, v8}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 

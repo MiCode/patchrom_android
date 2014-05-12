@@ -4,21 +4,35 @@
 
 
 # static fields
+.field static REPORTING_MODE_CONTINUOUS:I = 0x0
+
+.field static REPORTING_MODE_ONE_SHOT:I = 0x0
+
+.field static REPORTING_MODE_ON_CHANGE:I = 0x0
+
 .field public static final TYPE_ACCELEROMETER:I = 0x1
 
 .field public static final TYPE_ALL:I = -0x1
 
 .field public static final TYPE_AMBIENT_TEMPERATURE:I = 0xd
 
+.field public static final TYPE_GAME_ROTATION_VECTOR:I = 0xf
+
+.field public static final TYPE_GEOMAGNETIC_ROTATION_VECTOR:I = 0x14
+
 .field public static final TYPE_GRAVITY:I = 0x9
 
 .field public static final TYPE_GYROSCOPE:I = 0x4
+
+.field public static final TYPE_GYROSCOPE_UNCALIBRATED:I = 0x10
 
 .field public static final TYPE_LIGHT:I = 0x5
 
 .field public static final TYPE_LINEAR_ACCELERATION:I = 0xa
 
 .field public static final TYPE_MAGNETIC_FIELD:I = 0x2
+
+.field public static final TYPE_MAGNETIC_FIELD_UNCALIBRATED:I = 0xe
 
 .field public static final TYPE_ORIENTATION:I = 0x3
     .annotation runtime Ljava/lang/Deprecated;
@@ -33,13 +47,25 @@
 
 .field public static final TYPE_ROTATION_VECTOR:I = 0xb
 
+.field public static final TYPE_SIGNIFICANT_MOTION:I = 0x11
+
+.field public static final TYPE_STEP_COUNTER:I = 0x13
+
+.field public static final TYPE_STEP_DETECTOR:I = 0x12
+
 .field public static final TYPE_TEMPERATURE:I = 0x7
     .annotation runtime Ljava/lang/Deprecated;
     .end annotation
 .end field
 
+.field private static final sSensorReportingModes:[I
+
 
 # instance fields
+.field private mFifoMaxEventCount:I
+
+.field private mFifoReservedEventCount:I
+
 .field private mHandle:I
 
 .field private mMaxRange:F
@@ -60,6 +86,237 @@
 
 
 # direct methods
+.method static constructor <clinit>()V
+    .locals 7
+
+    .prologue
+    const/4 v6, 0x6
+
+    const/4 v5, 0x5
+
+    const/4 v1, 0x0
+
+    const/4 v4, 0x1
+
+    const/4 v3, 0x3
+
+    sput v4, Landroid/hardware/Sensor;->REPORTING_MODE_CONTINUOUS:I
+
+    const/4 v0, 0x2
+
+    sput v0, Landroid/hardware/Sensor;->REPORTING_MODE_ON_CHANGE:I
+
+    sput v3, Landroid/hardware/Sensor;->REPORTING_MODE_ONE_SHOT:I
+
+    const/16 v0, 0x2a
+
+    new-array v0, v0, [I
+
+    aput v1, v0, v1
+
+    aput v1, v0, v4
+
+    const/4 v1, 0x2
+
+    sget v2, Landroid/hardware/Sensor;->REPORTING_MODE_CONTINUOUS:I
+
+    aput v2, v0, v1
+
+    aput v3, v0, v3
+
+    const/4 v1, 0x4
+
+    sget v2, Landroid/hardware/Sensor;->REPORTING_MODE_CONTINUOUS:I
+
+    aput v2, v0, v1
+
+    aput v3, v0, v5
+
+    sget v1, Landroid/hardware/Sensor;->REPORTING_MODE_CONTINUOUS:I
+
+    aput v1, v0, v6
+
+    const/4 v1, 0x7
+
+    aput v3, v0, v1
+
+    const/16 v1, 0x8
+
+    sget v2, Landroid/hardware/Sensor;->REPORTING_MODE_CONTINUOUS:I
+
+    aput v2, v0, v1
+
+    const/16 v1, 0x9
+
+    aput v3, v0, v1
+
+    const/16 v1, 0xa
+
+    sget v2, Landroid/hardware/Sensor;->REPORTING_MODE_ON_CHANGE:I
+
+    aput v2, v0, v1
+
+    const/16 v1, 0xb
+
+    aput v3, v0, v1
+
+    const/16 v1, 0xc
+
+    sget v2, Landroid/hardware/Sensor;->REPORTING_MODE_CONTINUOUS:I
+
+    aput v2, v0, v1
+
+    const/16 v1, 0xd
+
+    aput v3, v0, v1
+
+    const/16 v1, 0xe
+
+    sget v2, Landroid/hardware/Sensor;->REPORTING_MODE_ON_CHANGE:I
+
+    aput v2, v0, v1
+
+    const/16 v1, 0xf
+
+    aput v3, v0, v1
+
+    const/16 v1, 0x10
+
+    sget v2, Landroid/hardware/Sensor;->REPORTING_MODE_ON_CHANGE:I
+
+    aput v2, v0, v1
+
+    const/16 v1, 0x11
+
+    aput v3, v0, v1
+
+    const/16 v1, 0x12
+
+    sget v2, Landroid/hardware/Sensor;->REPORTING_MODE_CONTINUOUS:I
+
+    aput v2, v0, v1
+
+    const/16 v1, 0x13
+
+    aput v3, v0, v1
+
+    const/16 v1, 0x14
+
+    sget v2, Landroid/hardware/Sensor;->REPORTING_MODE_CONTINUOUS:I
+
+    aput v2, v0, v1
+
+    const/16 v1, 0x15
+
+    aput v3, v0, v1
+
+    const/16 v1, 0x16
+
+    sget v2, Landroid/hardware/Sensor;->REPORTING_MODE_CONTINUOUS:I
+
+    aput v2, v0, v1
+
+    const/16 v1, 0x17
+
+    aput v5, v0, v1
+
+    const/16 v1, 0x18
+
+    sget v2, Landroid/hardware/Sensor;->REPORTING_MODE_ON_CHANGE:I
+
+    aput v2, v0, v1
+
+    const/16 v1, 0x19
+
+    aput v3, v0, v1
+
+    const/16 v1, 0x1a
+
+    sget v2, Landroid/hardware/Sensor;->REPORTING_MODE_ON_CHANGE:I
+
+    aput v2, v0, v1
+
+    const/16 v1, 0x1b
+
+    aput v3, v0, v1
+
+    const/16 v1, 0x1c
+
+    sget v2, Landroid/hardware/Sensor;->REPORTING_MODE_CONTINUOUS:I
+
+    aput v2, v0, v1
+
+    const/16 v1, 0x1d
+
+    aput v6, v0, v1
+
+    const/16 v1, 0x1e
+
+    sget v2, Landroid/hardware/Sensor;->REPORTING_MODE_CONTINUOUS:I
+
+    aput v2, v0, v1
+
+    const/16 v1, 0x1f
+
+    const/4 v2, 0x4
+
+    aput v2, v0, v1
+
+    const/16 v1, 0x20
+
+    sget v2, Landroid/hardware/Sensor;->REPORTING_MODE_CONTINUOUS:I
+
+    aput v2, v0, v1
+
+    const/16 v1, 0x21
+
+    aput v6, v0, v1
+
+    const/16 v1, 0x22
+
+    sget v2, Landroid/hardware/Sensor;->REPORTING_MODE_ONE_SHOT:I
+
+    aput v2, v0, v1
+
+    const/16 v1, 0x23
+
+    aput v4, v0, v1
+
+    const/16 v1, 0x24
+
+    sget v2, Landroid/hardware/Sensor;->REPORTING_MODE_ON_CHANGE:I
+
+    aput v2, v0, v1
+
+    const/16 v1, 0x25
+
+    aput v4, v0, v1
+
+    const/16 v1, 0x26
+
+    sget v2, Landroid/hardware/Sensor;->REPORTING_MODE_ON_CHANGE:I
+
+    aput v2, v0, v1
+
+    const/16 v1, 0x27
+
+    aput v4, v0, v1
+
+    const/16 v1, 0x28
+
+    sget v2, Landroid/hardware/Sensor;->REPORTING_MODE_CONTINUOUS:I
+
+    aput v2, v0, v1
+
+    const/16 v1, 0x29
+
+    aput v5, v0, v1
+
+    sput-object v0, Landroid/hardware/Sensor;->sSensorReportingModes:[I
+
+    return-void
+.end method
+
 .method constructor <init>()V
     .locals 0
 
@@ -69,9 +326,122 @@
     return-void
 .end method
 
+.method static getMaxLengthValuesArray(Landroid/hardware/Sensor;I)I
+    .locals 3
+    .parameter "sensor"
+    .parameter "sdkLevel"
+
+    .prologue
+    iget v1, p0, Landroid/hardware/Sensor;->mType:I
+
+    .local v1, type:I
+    const/16 v2, 0xb
+
+    if-ne v1, v2, :cond_0
+
+    const/16 v2, 0x11
+
+    if-gt p1, v2, :cond_0
+
+    const/4 v2, 0x3
+
+    :goto_0
+    return v2
+
+    :cond_0
+    mul-int/lit8 v2, v1, 0x2
+
+    add-int/lit8 v0, v2, 0x1
+
+    .local v0, offset:I
+    sget-object v2, Landroid/hardware/Sensor;->sSensorReportingModes:[I
+
+    array-length v2, v2
+
+    if-lt v0, v2, :cond_1
+
+    const/16 v2, 0x10
+
+    goto :goto_0
+
+    :cond_1
+    sget-object v2, Landroid/hardware/Sensor;->sSensorReportingModes:[I
+
+    aget v2, v2, v0
+
+    goto :goto_0
+.end method
+
+.method static getReportingMode(Landroid/hardware/Sensor;)I
+    .locals 3
+    .parameter "sensor"
+
+    .prologue
+    iget v2, p0, Landroid/hardware/Sensor;->mType:I
+
+    mul-int/lit8 v1, v2, 0x2
+
+    .local v1, offset:I
+    sget-object v2, Landroid/hardware/Sensor;->sSensorReportingModes:[I
+
+    array-length v2, v2
+
+    if-lt v1, v2, :cond_2
+
+    iget v0, p0, Landroid/hardware/Sensor;->mMinDelay:I
+
+    .local v0, minDelay:I
+    if-nez v0, :cond_0
+
+    sget v2, Landroid/hardware/Sensor;->REPORTING_MODE_ON_CHANGE:I
+
+    .end local v0           #minDelay:I
+    :goto_0
+    return v2
+
+    .restart local v0       #minDelay:I
+    :cond_0
+    if-gez v0, :cond_1
+
+    sget v2, Landroid/hardware/Sensor;->REPORTING_MODE_ONE_SHOT:I
+
+    goto :goto_0
+
+    :cond_1
+    sget v2, Landroid/hardware/Sensor;->REPORTING_MODE_CONTINUOUS:I
+
+    goto :goto_0
+
+    .end local v0           #minDelay:I
+    :cond_2
+    sget-object v2, Landroid/hardware/Sensor;->sSensorReportingModes:[I
+
+    aget v2, v2, v1
+
+    goto :goto_0
+.end method
+
 
 # virtual methods
-.method getHandle()I
+.method public getFifoMaxEventCount()I
+    .locals 1
+
+    .prologue
+    iget v0, p0, Landroid/hardware/Sensor;->mFifoMaxEventCount:I
+
+    return v0
+.end method
+
+.method public getFifoReservedEventCount()I
+    .locals 1
+
+    .prologue
+    iget v0, p0, Landroid/hardware/Sensor;->mFifoReservedEventCount:I
+
+    return v0
+.end method
+
+.method public getHandle()I
     .locals 1
 
     .prologue

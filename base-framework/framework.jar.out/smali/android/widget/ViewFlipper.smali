@@ -297,7 +297,7 @@
 .end method
 
 .method protected onAttachedToWindow()V
-    .locals 3
+    .locals 5
 
     .prologue
     invoke-super {p0}, Landroid/widget/ViewAnimator;->onAttachedToWindow()V
@@ -321,7 +321,11 @@
 
     iget-object v2, p0, Landroid/widget/ViewFlipper;->mReceiver:Landroid/content/BroadcastReceiver;
 
-    invoke-virtual {v1, v2, v0}, Landroid/content/Context;->registerReceiver(Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;)Landroid/content/Intent;
+    const/4 v3, 0x0
+
+    iget-object v4, p0, Landroid/widget/ViewFlipper;->mHandler:Landroid/os/Handler;
+
+    invoke-virtual {v1, v2, v0, v3, v4}, Landroid/content/Context;->registerReceiver(Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;Ljava/lang/String;Landroid/os/Handler;)Landroid/content/Intent;
 
     iget-boolean v1, p0, Landroid/widget/ViewFlipper;->mAutoStart:Z
 

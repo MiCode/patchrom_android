@@ -531,7 +531,7 @@
     move-result-object v1
 
     .local v1, pi:Landroid/app/PendingIntent;
-    invoke-virtual {p1, v3, p2, p3, v1}, Landroid/app/AlarmManager;->set(IJLandroid/app/PendingIntent;)V
+    invoke-virtual {p1, v3, p2, p3, v1}, Landroid/app/AlarmManager;->setExact(IJLandroid/app/PendingIntent;)V
 
     return-void
 .end method

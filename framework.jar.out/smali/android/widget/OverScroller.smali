@@ -31,10 +31,6 @@
 .field private final mScrollerY:Landroid/widget/OverScroller$SplineOverScroller;
 
 .field mSpringOverScrollEnable:Z
-    .annotation build Landroid/annotation/MiuiHook;
-        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_FIELD:Landroid/annotation/MiuiHook$MiuiHookType;
-    .end annotation
-.end field
 
 
 # direct methods
@@ -139,17 +135,13 @@
 
 .method public final checkSpringBackState()Z
     .locals 2
-    .annotation build Landroid/annotation/MiuiHook;
-        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
-    .end annotation
 
     .prologue
     const/4 v0, 0x1
 
     iget-object v1, p0, Landroid/widget/OverScroller;->mScrollerY:Landroid/widget/OverScroller$SplineOverScroller;
 
-    #getter for: Landroid/widget/OverScroller$SplineOverScroller;->mState:I
-    invoke-static {v1}, Landroid/widget/OverScroller$SplineOverScroller;->access$700(Landroid/widget/OverScroller$SplineOverScroller;)I
+    invoke-virtual {v1}, Landroid/widget/OverScroller$SplineOverScroller;->getState()I
 
     move-result v1
 
@@ -157,8 +149,7 @@
 
     iget-object v1, p0, Landroid/widget/OverScroller;->mScrollerX:Landroid/widget/OverScroller$SplineOverScroller;
 
-    #getter for: Landroid/widget/OverScroller$SplineOverScroller;->mState:I
-    invoke-static {v1}, Landroid/widget/OverScroller$SplineOverScroller;->access$700(Landroid/widget/OverScroller$SplineOverScroller;)I
+    invoke-virtual {v1}, Landroid/widget/OverScroller$SplineOverScroller;->getState()I
 
     move-result v1
 
@@ -175,9 +166,11 @@
 .end method
 
 .method public computeScrollOffset()Z
-    .locals 8
+    .locals 9
 
     .prologue
+    const/4 v8, 0x0
+
     invoke-virtual {p0}, Landroid/widget/OverScroller;->isFinished()Z
 
     move-result v6
@@ -286,9 +279,7 @@
 
     iget-object v6, p0, Landroid/widget/OverScroller;->mScrollerX:Landroid/widget/OverScroller$SplineOverScroller;
 
-    const/4 v7, 0x0
-
-    invoke-virtual {v6, v7}, Landroid/widget/OverScroller$SplineOverScroller;->update(Z)Z
+    invoke-virtual {v6, v8}, Landroid/widget/OverScroller$SplineOverScroller;->update(Z)Z
 
     move-result v6
 
@@ -296,9 +287,9 @@
 
     iget-object v6, p0, Landroid/widget/OverScroller;->mScrollerX:Landroid/widget/OverScroller$SplineOverScroller;
 
-    iget-boolean v7, p0, Landroid/widget/OverScroller;->mSpringOverScrollEnable:Z
+    iget-boolean v8, p0, Landroid/widget/OverScroller;->mSpringOverScrollEnable:Z
 
-    invoke-virtual {v6, v7}, Landroid/widget/OverScroller$SplineOverScroller;->continueWhenFinished(Z)Z
+    invoke-virtual {v6, v8}, Landroid/widget/OverScroller$SplineOverScroller;->continueWhenFinished(Z)Z
 
     move-result v6
 
@@ -320,9 +311,7 @@
 
     iget-object v6, p0, Landroid/widget/OverScroller;->mScrollerY:Landroid/widget/OverScroller$SplineOverScroller;
 
-    const/4 v7, 0x0
-
-    invoke-virtual {v6, v7}, Landroid/widget/OverScroller$SplineOverScroller;->update(Z)Z
+    invoke-virtual {v6}, Landroid/widget/OverScroller$SplineOverScroller;->update()Z
 
     move-result v6
 
@@ -330,9 +319,9 @@
 
     iget-object v6, p0, Landroid/widget/OverScroller;->mScrollerY:Landroid/widget/OverScroller$SplineOverScroller;
 
-    iget-boolean v7, p0, Landroid/widget/OverScroller;->mSpringOverScrollEnable:Z
+    iget-boolean v8, p0, Landroid/widget/OverScroller;->mSpringOverScrollEnable:Z
 
-    invoke-virtual {v6, v7}, Landroid/widget/OverScroller$SplineOverScroller;->continueWhenFinished(Z)Z
+    invoke-virtual {v6, v8}, Landroid/widget/OverScroller$SplineOverScroller;->continueWhenFinished(Z)Z
 
     move-result v6
 
@@ -624,9 +613,6 @@
 
 .method public getCurrYVelocity()F
     .locals 1
-    .annotation build Landroid/annotation/MiuiHook;
-        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
-    .end annotation
 
     .prologue
     iget-object v0, p0, Landroid/widget/OverScroller;->mScrollerY:Landroid/widget/OverScroller$SplineOverScroller;
@@ -924,9 +910,6 @@
 .method public final setDecelerationScale(F)V
     .locals 1
     .parameter "scale"
-    .annotation build Landroid/annotation/MiuiHook;
-        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
-    .end annotation
 
     .prologue
     iget-object v0, p0, Landroid/widget/OverScroller;->mScrollerX:Landroid/widget/OverScroller$SplineOverScroller;
@@ -997,9 +980,6 @@
 .method public setSpringOverScrollEnable(Z)V
     .locals 0
     .parameter "enable"
-    .annotation build Landroid/annotation/MiuiHook;
-        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
-    .end annotation
 
     .prologue
     iput-boolean p1, p0, Landroid/widget/OverScroller;->mSpringOverScrollEnable:Z
@@ -1010,9 +990,6 @@
 .method public final setTotalOverDistance(I)V
     .locals 1
     .parameter "distance"
-    .annotation build Landroid/annotation/MiuiHook;
-        value = .enum Landroid/annotation/MiuiHook$MiuiHookType;->NEW_METHOD:Landroid/annotation/MiuiHook$MiuiHookType;
-    .end annotation
 
     .prologue
     iget-object v0, p0, Landroid/widget/OverScroller;->mScrollerX:Landroid/widget/OverScroller$SplineOverScroller;

@@ -15,22 +15,25 @@
 
 
 # instance fields
+.field channel:Landroid/view/InputChannel;
+
 .field final client:Lcom/android/server/InputMethodManagerService$ClientState;
 
 .field final method:Lcom/android/internal/view/IInputMethod;
 
-.field final session:Lcom/android/internal/view/IInputMethodSession;
+.field session:Lcom/android/internal/view/IInputMethodSession;
 
 .field final synthetic this$0:Lcom/android/server/InputMethodManagerService;
 
 
 # direct methods
-.method constructor <init>(Lcom/android/server/InputMethodManagerService;Lcom/android/server/InputMethodManagerService$ClientState;Lcom/android/internal/view/IInputMethod;Lcom/android/internal/view/IInputMethodSession;)V
+.method constructor <init>(Lcom/android/server/InputMethodManagerService;Lcom/android/server/InputMethodManagerService$ClientState;Lcom/android/internal/view/IInputMethod;Lcom/android/internal/view/IInputMethodSession;Landroid/view/InputChannel;)V
     .locals 0
     .parameter
     .parameter "_client"
     .parameter "_method"
     .parameter "_session"
+    .parameter "_channel"
 
     .prologue
     iput-object p1, p0, Lcom/android/server/InputMethodManagerService$SessionState;->this$0:Lcom/android/server/InputMethodManagerService;
@@ -42,6 +45,8 @@
     iput-object p3, p0, Lcom/android/server/InputMethodManagerService$SessionState;->method:Lcom/android/internal/view/IInputMethod;
 
     iput-object p4, p0, Lcom/android/server/InputMethodManagerService$SessionState;->session:Lcom/android/internal/view/IInputMethodSession;
+
+    iput-object p5, p0, Lcom/android/server/InputMethodManagerService$SessionState;->channel:Landroid/view/InputChannel;
 
     return-void
 .end method
@@ -121,6 +126,18 @@
     move-result-object v1
 
     invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    const-string v1, " channel "
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    iget-object v1, p0, Lcom/android/server/InputMethodManagerService$SessionState;->channel:Landroid/view/InputChannel;
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
 
     move-result-object v0
 

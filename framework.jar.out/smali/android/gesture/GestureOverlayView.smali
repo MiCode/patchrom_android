@@ -284,7 +284,7 @@
     .parameter "attrs"
 
     .prologue
-    const v0, 0x10103db
+    const v0, 0x1010400
 
     invoke-direct {p0, p1, p2, v0}, Landroid/gesture/GestureOverlayView;-><init>(Landroid/content/Context;Landroid/util/AttributeSet;I)V
 
@@ -2466,6 +2466,8 @@
     .locals 0
 
     .prologue
+    invoke-super {p0}, Landroid/widget/FrameLayout;->onDetachedFromWindow()V
+
     invoke-virtual {p0}, Landroid/gesture/GestureOverlayView;->cancelClearAnimation()V
 
     return-void

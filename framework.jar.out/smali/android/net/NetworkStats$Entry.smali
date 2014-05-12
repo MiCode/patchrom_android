@@ -184,6 +184,97 @@
     return-void
 .end method
 
+.method public equals(Ljava/lang/Object;)Z
+    .locals 6
+    .parameter "o"
+
+    .prologue
+    const/4 v1, 0x0
+
+    instance-of v2, p1, Landroid/net/NetworkStats$Entry;
+
+    if-eqz v2, :cond_0
+
+    move-object v0, p1
+
+    check-cast v0, Landroid/net/NetworkStats$Entry;
+
+    .local v0, e:Landroid/net/NetworkStats$Entry;
+    iget v2, p0, Landroid/net/NetworkStats$Entry;->uid:I
+
+    iget v3, v0, Landroid/net/NetworkStats$Entry;->uid:I
+
+    if-ne v2, v3, :cond_0
+
+    iget v2, p0, Landroid/net/NetworkStats$Entry;->set:I
+
+    iget v3, v0, Landroid/net/NetworkStats$Entry;->set:I
+
+    if-ne v2, v3, :cond_0
+
+    iget v2, p0, Landroid/net/NetworkStats$Entry;->tag:I
+
+    iget v3, v0, Landroid/net/NetworkStats$Entry;->tag:I
+
+    if-ne v2, v3, :cond_0
+
+    iget-wide v2, p0, Landroid/net/NetworkStats$Entry;->rxBytes:J
+
+    iget-wide v4, v0, Landroid/net/NetworkStats$Entry;->rxBytes:J
+
+    cmp-long v2, v2, v4
+
+    if-nez v2, :cond_0
+
+    iget-wide v2, p0, Landroid/net/NetworkStats$Entry;->rxPackets:J
+
+    iget-wide v4, v0, Landroid/net/NetworkStats$Entry;->rxPackets:J
+
+    cmp-long v2, v2, v4
+
+    if-nez v2, :cond_0
+
+    iget-wide v2, p0, Landroid/net/NetworkStats$Entry;->txBytes:J
+
+    iget-wide v4, v0, Landroid/net/NetworkStats$Entry;->txBytes:J
+
+    cmp-long v2, v2, v4
+
+    if-nez v2, :cond_0
+
+    iget-wide v2, p0, Landroid/net/NetworkStats$Entry;->txPackets:J
+
+    iget-wide v4, v0, Landroid/net/NetworkStats$Entry;->txPackets:J
+
+    cmp-long v2, v2, v4
+
+    if-nez v2, :cond_0
+
+    iget-wide v2, p0, Landroid/net/NetworkStats$Entry;->operations:J
+
+    iget-wide v4, v0, Landroid/net/NetworkStats$Entry;->operations:J
+
+    cmp-long v2, v2, v4
+
+    if-nez v2, :cond_0
+
+    iget-object v2, p0, Landroid/net/NetworkStats$Entry;->iface:Ljava/lang/String;
+
+    iget-object v3, v0, Landroid/net/NetworkStats$Entry;->iface:Ljava/lang/String;
+
+    invoke-virtual {v2, v3}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v2
+
+    if-eqz v2, :cond_0
+
+    const/4 v1, 0x1
+
+    .end local v0           #e:Landroid/net/NetworkStats$Entry;
+    :cond_0
+    return v1
+.end method
+
 .method public isEmpty()Z
     .locals 4
 

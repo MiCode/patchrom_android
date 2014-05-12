@@ -190,14 +190,6 @@
     return-void
 .end method
 
-.method public switchUser(I)V
-    .locals 0
-    .parameter "userId"
-
-    .prologue
-    return-void
-.end method
-
 .method public updateLocation(Landroid/location/Location;)V
     .locals 3
     .parameter "location"

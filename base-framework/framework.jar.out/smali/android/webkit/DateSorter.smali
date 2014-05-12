@@ -138,7 +138,7 @@
 
     aput-object v7, v6, v11
 
-    const v4, 0x1130003
+    const v4, 0x1130004
 
     .local v4, resId:I
     invoke-virtual {v5, v4, v13}, Landroid/content/res/Resources;->getQuantityString(II)Ljava/lang/String;
@@ -166,7 +166,7 @@
 
     const/4 v7, 0x3
 
-    const v8, 0x10403a9
+    const v8, 0x10403cf
 
     invoke-virtual {p1, v8}, Landroid/content/Context;->getString(I)Ljava/lang/String;
 
@@ -178,7 +178,7 @@
 
     const/4 v7, 0x4
 
-    const v8, 0x10403aa
+    const v8, 0x10403d0
 
     invoke-virtual {p1, v8}, Landroid/content/Context;->getString(I)Ljava/lang/String;
 

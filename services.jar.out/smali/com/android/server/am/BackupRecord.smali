@@ -1,4 +1,4 @@
-.class Lcom/android/server/am/BackupRecord;
+.class final Lcom/android/server/am/BackupRecord;
 .super Ljava/lang/Object;
 .source "BackupRecord.java"
 

@@ -1,4 +1,4 @@
-.class Landroid/content/SyncAdaptersCache;
+.class public Landroid/content/SyncAdaptersCache;
 .super Landroid/content/pm/RegisteredServicesCache;
 .source "SyncAdaptersCache.java"
 
@@ -46,7 +46,7 @@
     return-void
 .end method
 
-.method constructor <init>(Landroid/content/Context;)V
+.method public constructor <init>(Landroid/content/Context;)V
     .locals 6
     .parameter "context"
 

@@ -26,26 +26,14 @@
 
 
 # virtual methods
-.method public createService(Landroid/app/ContextImpl;)Ljava/lang/Object;
-    .locals 3
+.method public getService(Landroid/app/ContextImpl;)Ljava/lang/Object;
+    .locals 1
     .parameter "ctx"
 
     .prologue
-    const-string v2, "account"
+    new-instance v0, Landroid/view/accessibility/CaptioningManager;
 
-    invoke-static {v2}, Landroid/os/ServiceManager;->getService(Ljava/lang/String;)Landroid/os/IBinder;
+    invoke-direct {v0, p1}, Landroid/view/accessibility/CaptioningManager;-><init>(Landroid/content/Context;)V
 
-    move-result-object v0
-
-    .local v0, b:Landroid/os/IBinder;
-    invoke-static {v0}, Landroid/accounts/IAccountManager$Stub;->asInterface(Landroid/os/IBinder;)Landroid/accounts/IAccountManager;
-
-    move-result-object v1
-
-    .local v1, service:Landroid/accounts/IAccountManager;
-    new-instance v2, Landroid/accounts/AccountManager;
-
-    invoke-direct {v2, p1, v1}, Landroid/accounts/AccountManager;-><init>(Landroid/content/Context;Landroid/accounts/IAccountManager;)V
-
-    return-object v2
+    return-object v0
 .end method

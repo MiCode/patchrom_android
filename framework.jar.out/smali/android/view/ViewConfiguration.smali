@@ -6,6 +6,8 @@
 # static fields
 .field private static final DEFAULT_LONG_PRESS_TIMEOUT:I = 0x1f4
 
+.field private static final DOUBLE_TAP_MIN_TIME:I = 0x28
+
 .field private static final DOUBLE_TAP_SLOP:I = 0x64
 
 .field private static final DOUBLE_TAP_TIMEOUT:I = 0x12c
@@ -338,7 +340,7 @@
 
     iput v10, p0, Landroid/view/ViewConfiguration;->mMaximumDrawingCacheSize:I
 
-    const/4 v10, 0x0
+    const/high16 v10, 0x40c0
 
     mul-float/2addr v10, v7
 
@@ -347,6 +349,10 @@
     add-float/2addr v10, v11
 
     float-to-int v10, v10
+
+    invoke-static {p1, v10}, Landroid/view/Injector$ViewConfigurationHook;->getOverscrollDistance(Landroid/content/Context;I)I
+
+    move-result v10
 
     iput v10, p0, Landroid/view/ViewConfiguration;->mOverscrollDistance:I
 
@@ -360,6 +366,10 @@
 
     float-to-int v10, v10
 
+    invoke-static {p1, v10}, Landroid/view/Injector$ViewConfigurationHook;->getOverflingDistance(Landroid/content/Context;I)I
+
+    move-result v10
+
     iput v10, p0, Landroid/view/ViewConfiguration;->mOverflingDistance:I
 
     iget-boolean v10, p0, Landroid/view/ViewConfiguration;->sHasPermanentMenuKeySet:Z
@@ -372,12 +382,6 @@
 
     .local v9, wm:Landroid/view/IWindowManager;
     :try_start_0
-    invoke-interface {v9}, Landroid/view/IWindowManager;->hasSystemNavBar()Z
-
-    move-result v10
-
-    if-nez v10, :cond_2
-
     invoke-interface {v9}, Landroid/view/IWindowManager;->hasNavigationBar()Z
 
     move-result v10
@@ -398,7 +402,7 @@
     .end local v9           #wm:Landroid/view/IWindowManager;
     :cond_0
     :goto_2
-    const v10, 0x1110013
+    const v10, 0x1110014
 
     invoke-virtual {v5, v10}, Landroid/content/res/Resources;->getBoolean(I)Z
 
@@ -456,11 +460,32 @@
     goto :goto_2
 .end method
 
+.method static callConstructor(Landroid/content/Context;)Landroid/view/ViewConfiguration;
+    .locals 1
+    .parameter "context"
+
+    .prologue
+    new-instance v0, Landroid/view/ViewConfiguration;
+
+    invoke-direct {v0, p0}, Landroid/view/ViewConfiguration;-><init>(Landroid/content/Context;)V
+
+    return-object v0
+.end method
+
 .method public static get(Landroid/content/Context;)Landroid/view/ViewConfiguration;
     .locals 5
     .parameter "context"
 
     .prologue
+    invoke-static {p0}, Landroid/view/Injector$ViewConfigurationHook;->get(Landroid/content/Context;)Landroid/view/ViewConfiguration;
+
+    move-result-object v0
+
+    if-eqz v0, :cond_miui
+
+    return-object v0
+
+    :cond_miui
     invoke-virtual {p0}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
 
     move-result-object v3
@@ -502,6 +527,15 @@
 
     :cond_0
     return-object v0
+.end method
+
+.method public static getDoubleTapMinTime()I
+    .locals 1
+
+    .prologue
+    const/16 v0, 0x28
+
+    return v0
 .end method
 
 .method public static getDoubleTapSlop()I

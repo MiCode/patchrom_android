@@ -14,6 +14,14 @@
 .end annotation
 
 
+# static fields
+.field public static final ERROR_KEY_EXPIRED:I = 0x2
+
+.field public static final ERROR_NO_KEY:I = 0x1
+
+.field public static final ERROR_RESOURCE_BUSY:I = 0x3
+
+
 # instance fields
 .field private mErrorCode:I
 

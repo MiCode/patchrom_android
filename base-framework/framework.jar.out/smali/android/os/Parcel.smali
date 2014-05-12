@@ -4,6 +4,8 @@
 
 
 # static fields
+.field private static final DEBUG_ARRAY_MAP:Z = false
+
 .field private static final DEBUG_RECYCLE:Z = false
 
 .field private static final EX_BAD_PARCELABLE:I = -0x2
@@ -13,6 +15,8 @@
 .field private static final EX_ILLEGAL_ARGUMENT:I = -0x3
 
 .field private static final EX_ILLEGAL_STATE:I = -0x5
+
+.field private static final EX_NETWORK_MAIN_THREAD:I = -0x6
 
 .field private static final EX_NULL_POINTER:I = -0x4
 
@@ -1399,6 +1403,70 @@
     goto :goto_0
 .end method
 
+.method readArrayMapInternal(Landroid/util/ArrayMap;ILjava/lang/ClassLoader;)V
+    .locals 2
+    .parameter "outVal"
+    .parameter "N"
+    .parameter "loader"
+
+    .prologue
+    :goto_0
+    if-lez p2, :cond_0
+
+    invoke-virtual {p0, p3}, Landroid/os/Parcel;->readValue(Ljava/lang/ClassLoader;)Ljava/lang/Object;
+
+    move-result-object v0
+
+    .local v0, key:Ljava/lang/Object;
+    invoke-virtual {p0, p3}, Landroid/os/Parcel;->readValue(Ljava/lang/ClassLoader;)Ljava/lang/Object;
+
+    move-result-object v1
+
+    .local v1, value:Ljava/lang/Object;
+    invoke-virtual {p1, v0, v1}, Landroid/util/ArrayMap;->append(Ljava/lang/Object;Ljava/lang/Object;)V
+
+    add-int/lit8 p2, p2, -0x1
+
+    goto :goto_0
+
+    .end local v0           #key:Ljava/lang/Object;
+    .end local v1           #value:Ljava/lang/Object;
+    :cond_0
+    return-void
+.end method
+
+.method readArrayMapSafelyInternal(Landroid/util/ArrayMap;ILjava/lang/ClassLoader;)V
+    .locals 2
+    .parameter "outVal"
+    .parameter "N"
+    .parameter "loader"
+
+    .prologue
+    :goto_0
+    if-lez p2, :cond_0
+
+    invoke-virtual {p0, p3}, Landroid/os/Parcel;->readValue(Ljava/lang/ClassLoader;)Ljava/lang/Object;
+
+    move-result-object v0
+
+    .local v0, key:Ljava/lang/Object;
+    invoke-virtual {p0, p3}, Landroid/os/Parcel;->readValue(Ljava/lang/ClassLoader;)Ljava/lang/Object;
+
+    move-result-object v1
+
+    .local v1, value:Ljava/lang/Object;
+    invoke-virtual {p1, v0, v1}, Landroid/util/ArrayMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+
+    add-int/lit8 p2, p2, -0x1
+
+    goto :goto_0
+
+    .end local v0           #key:Ljava/lang/Object;
+    .end local v1           #value:Ljava/lang/Object;
+    :cond_0
+    return-void
+.end method
+
 .method public final readBinderArray([Landroid/os/IBinder;)V
     .locals 4
     .parameter "val"
@@ -1762,6 +1830,51 @@
     return-object v0
 .end method
 
+.method public final readCreator(Landroid/os/Parcelable$Creator;Ljava/lang/ClassLoader;)Landroid/os/Parcelable;
+    .locals 1
+    .parameter
+    .parameter "loader"
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "<T::",
+            "Landroid/os/Parcelable;",
+            ">(",
+            "Landroid/os/Parcelable$Creator",
+            "<TT;>;",
+            "Ljava/lang/ClassLoader;",
+            ")TT;"
+        }
+    .end annotation
+
+    .prologue
+    .local p1, creator:Landroid/os/Parcelable$Creator;,"Landroid/os/Parcelable$Creator<TT;>;"
+    instance-of v0, p1, Landroid/os/Parcelable$ClassLoaderCreator;
+
+    if-eqz v0, :cond_0
+
+    check-cast p1, Landroid/os/Parcelable$ClassLoaderCreator;
+
+    .end local p1           #creator:Landroid/os/Parcelable$Creator;,"Landroid/os/Parcelable$Creator<TT;>;"
+    invoke-interface {p1, p0, p2}, Landroid/os/Parcelable$ClassLoaderCreator;->createFromParcel(Landroid/os/Parcel;Ljava/lang/ClassLoader;)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Landroid/os/Parcelable;
+
+    :goto_0
+    return-object v0
+
+    .restart local p1       #creator:Landroid/os/Parcelable$Creator;,"Landroid/os/Parcelable$Creator<TT;>;"
+    :cond_0
+    invoke-interface {p1, p0}, Landroid/os/Parcelable$Creator;->createFromParcel(Landroid/os/Parcel;)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Landroid/os/Parcelable;
+
+    goto :goto_0
+.end method
+
 .method public final readDouble()D
     .locals 2
 
@@ -1920,8 +2033,16 @@
 
     throw v0
 
+    :pswitch_5
+    new-instance v0, Landroid/os/NetworkOnMainThreadException;
+
+    invoke-direct {v0}, Landroid/os/NetworkOnMainThreadException;-><init>()V
+
+    throw v0
+
     :pswitch_data_0
-    .packed-switch -0x5
+    .packed-switch -0x6
+        :pswitch_5
         :pswitch_4
         :pswitch_3
         :pswitch_2
@@ -2265,7 +2386,7 @@
 .end method
 
 .method public final readParcelable(Ljava/lang/ClassLoader;)Landroid/os/Parcelable;
-    .locals 10
+    .locals 2
     .parameter "loader"
     .annotation system Ldalvik/annotation/Signature;
         value = {
@@ -2278,7 +2399,102 @@
     .end annotation
 
     .prologue
-    const/4 v6, 0x0
+    invoke-virtual {p0, p1}, Landroid/os/Parcel;->readParcelableCreator(Ljava/lang/ClassLoader;)Landroid/os/Parcelable$Creator;
+
+    move-result-object v0
+
+    .local v0, creator:Landroid/os/Parcelable$Creator;,"Landroid/os/Parcelable$Creator<TT;>;"
+    if-nez v0, :cond_0
+
+    const/4 v1, 0x0
+
+    .end local v0           #creator:Landroid/os/Parcelable$Creator;,"Landroid/os/Parcelable$Creator<TT;>;"
+    :goto_0
+    return-object v1
+
+    .restart local v0       #creator:Landroid/os/Parcelable$Creator;,"Landroid/os/Parcelable$Creator<TT;>;"
+    :cond_0
+    instance-of v1, v0, Landroid/os/Parcelable$ClassLoaderCreator;
+
+    if-eqz v1, :cond_1
+
+    check-cast v0, Landroid/os/Parcelable$ClassLoaderCreator;
+
+    .end local v0           #creator:Landroid/os/Parcelable$Creator;,"Landroid/os/Parcelable$Creator<TT;>;"
+    invoke-interface {v0, p0, p1}, Landroid/os/Parcelable$ClassLoaderCreator;->createFromParcel(Landroid/os/Parcel;Ljava/lang/ClassLoader;)Ljava/lang/Object;
+
+    move-result-object v1
+
+    check-cast v1, Landroid/os/Parcelable;
+
+    goto :goto_0
+
+    .restart local v0       #creator:Landroid/os/Parcelable$Creator;,"Landroid/os/Parcelable$Creator<TT;>;"
+    :cond_1
+    invoke-interface {v0, p0}, Landroid/os/Parcelable$Creator;->createFromParcel(Landroid/os/Parcel;)Ljava/lang/Object;
+
+    move-result-object v1
+
+    check-cast v1, Landroid/os/Parcelable;
+
+    goto :goto_0
+.end method
+
+.method public final readParcelableArray(Ljava/lang/ClassLoader;)[Landroid/os/Parcelable;
+    .locals 4
+    .parameter "loader"
+
+    .prologue
+    invoke-virtual {p0}, Landroid/os/Parcel;->readInt()I
+
+    move-result v0
+
+    .local v0, N:I
+    if-gez v0, :cond_1
+
+    const/4 v2, 0x0
+
+    :cond_0
+    return-object v2
+
+    :cond_1
+    new-array v2, v0, [Landroid/os/Parcelable;
+
+    .local v2, p:[Landroid/os/Parcelable;
+    const/4 v1, 0x0
+
+    .local v1, i:I
+    :goto_0
+    if-ge v1, v0, :cond_0
+
+    invoke-virtual {p0, p1}, Landroid/os/Parcel;->readParcelable(Ljava/lang/ClassLoader;)Landroid/os/Parcelable;
+
+    move-result-object v3
+
+    aput-object v3, v2, v1
+
+    add-int/lit8 v1, v1, 0x1
+
+    goto :goto_0
+.end method
+
+.method public final readParcelableCreator(Ljava/lang/ClassLoader;)Landroid/os/Parcelable$Creator;
+    .locals 10
+    .parameter "loader"
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "<T::",
+            "Landroid/os/Parcelable;",
+            ">(",
+            "Ljava/lang/ClassLoader;",
+            ")",
+            "Landroid/os/Parcelable$Creator",
+            "<TT;>;"
+        }
+    .end annotation
+
+    .prologue
+    const/4 v1, 0x0
 
     invoke-virtual {p0}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
@@ -2288,7 +2504,7 @@
     if-nez v5, :cond_0
 
     :goto_0
-    return-object v6
+    return-object v1
 
     :cond_0
     sget-object v7, Landroid/os/Parcel;->mCreators:Ljava/util/HashMap;
@@ -2359,6 +2575,7 @@
     .catch Ljava/lang/ClassNotFoundException; {:try_start_1 .. :try_end_1} :catch_1
     .catch Ljava/lang/ClassCastException; {:try_start_1 .. :try_end_1} :catch_2
     .catch Ljava/lang/NoSuchFieldException; {:try_start_1 .. :try_end_1} :catch_3
+    .catch Ljava/lang/NullPointerException; {:try_start_1 .. :try_end_1} :catch_4
 
     .restart local v1       #creator:Landroid/os/Parcelable$Creator;,"Landroid/os/Parcelable$Creator<TT;>;"
     if-nez v1, :cond_3
@@ -2414,6 +2631,7 @@
     .catch Ljava/lang/ClassNotFoundException; {:try_start_3 .. :try_end_3} :catch_1
     .catch Ljava/lang/ClassCastException; {:try_start_3 .. :try_end_3} :catch_2
     .catch Ljava/lang/NoSuchFieldException; {:try_start_3 .. :try_end_3} :catch_3
+    .catch Ljava/lang/NullPointerException; {:try_start_3 .. :try_end_3} :catch_4
 
     move-result-object v0
 
@@ -2431,7 +2649,7 @@
 
     invoke-direct {v8}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v9, "Class not found when unmarshalling: "
+    const-string v9, "Illegal access when unmarshalling: "
 
     invoke-virtual {v8, v9}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -2441,21 +2659,11 @@
 
     move-result-object v8
 
-    const-string v9, ", e: "
-
-    invoke-virtual {v8, v9}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v8
-
-    invoke-virtual {v8, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
-
-    move-result-object v8
-
     invoke-virtual {v8}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
     move-result-object v8
 
-    invoke-static {v6, v8}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v6, v8, v2}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
 
     new-instance v6, Landroid/os/BadParcelableException;
 
@@ -2502,21 +2710,11 @@
 
     move-result-object v8
 
-    const-string v9, ", e: "
-
-    invoke-virtual {v8, v9}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v8
-
-    invoke-virtual {v8, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
-
-    move-result-object v8
-
     invoke-virtual {v8}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
     move-result-object v8
 
-    invoke-static {v6, v8}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v6, v8, v2}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
 
     new-instance v6, Landroid/os/BadParcelableException;
 
@@ -2601,6 +2799,35 @@
     throw v6
 
     .end local v2           #e:Ljava/lang/NoSuchFieldException;
+    :catch_4
+    move-exception v2
+
+    .local v2, e:Ljava/lang/NullPointerException;
+    new-instance v6, Landroid/os/BadParcelableException;
+
+    new-instance v8, Ljava/lang/StringBuilder;
+
+    invoke-direct {v8}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v9, "Parcelable protocol requires the CREATOR object to be static on class "
+
+    invoke-virtual {v8, v9}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v8
+
+    invoke-virtual {v8, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v8
+
+    invoke-virtual {v8}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v8
+
+    invoke-direct {v6, v8}, Landroid/os/BadParcelableException;-><init>(Ljava/lang/String;)V
+
+    throw v6
+
+    .end local v2           #e:Ljava/lang/NullPointerException;
     .restart local v0       #c:Ljava/lang/Class;
     .restart local v1       #creator:Landroid/os/Parcelable$Creator;,"Landroid/os/Parcelable$Creator<TT;>;"
     .restart local v3       #f:Ljava/lang/reflect/Field;
@@ -2614,68 +2841,20 @@
     :try_end_4
     .catchall {:try_start_4 .. :try_end_4} :catchall_0
 
-    instance-of v6, v1, Landroid/os/Parcelable$ClassLoaderCreator;
-
-    if-eqz v6, :cond_5
-
-    check-cast v1, Landroid/os/Parcelable$ClassLoaderCreator;
-
-    .end local v1           #creator:Landroid/os/Parcelable$Creator;,"Landroid/os/Parcelable$Creator<TT;>;"
-    invoke-interface {v1, p0, p1}, Landroid/os/Parcelable$ClassLoaderCreator;->createFromParcel(Landroid/os/Parcel;Ljava/lang/ClassLoader;)Ljava/lang/Object;
-
-    move-result-object v6
-
-    check-cast v6, Landroid/os/Parcelable;
-
-    goto/16 :goto_0
-
-    .restart local v1       #creator:Landroid/os/Parcelable$Creator;,"Landroid/os/Parcelable$Creator<TT;>;"
-    :cond_5
-    invoke-interface {v1, p0}, Landroid/os/Parcelable$Creator;->createFromParcel(Landroid/os/Parcel;)Ljava/lang/Object;
-
-    move-result-object v6
-
-    check-cast v6, Landroid/os/Parcelable;
-
     goto/16 :goto_0
 .end method
 
-.method public final readParcelableArray(Ljava/lang/ClassLoader;)[Landroid/os/Parcelable;
-    .locals 4
-    .parameter "loader"
+.method public final readRawFileDescriptor()Ljava/io/FileDescriptor;
+    .locals 1
 
     .prologue
-    invoke-virtual {p0}, Landroid/os/Parcel;->readInt()I
+    iget v0, p0, Landroid/os/Parcel;->mNativePtr:I
 
-    move-result v0
+    invoke-static {v0}, Landroid/os/Parcel;->nativeReadFileDescriptor(I)Ljava/io/FileDescriptor;
 
-    .local v0, N:I
-    if-gez v0, :cond_1
+    move-result-object v0
 
-    const/4 v2, 0x0
-
-    :cond_0
-    return-object v2
-
-    :cond_1
-    new-array v2, v0, [Landroid/os/Parcelable;
-
-    .local v2, p:[Landroid/os/Parcelable;
-    const/4 v1, 0x0
-
-    .local v1, i:I
-    :goto_0
-    if-ge v1, v0, :cond_0
-
-    invoke-virtual {p0, p1}, Landroid/os/Parcel;->readParcelable(Ljava/lang/ClassLoader;)Landroid/os/Parcelable;
-
-    move-result-object v3
-
-    aput-object v3, v2, v1
-
-    add-int/lit8 v1, v1, 0x1
-
-    goto :goto_0
+    return-object v0
 .end method
 
 .method public final readSerializable()Ljava/io/Serializable;
@@ -3711,6 +3890,62 @@
     goto :goto_0
 .end method
 
+.method writeArrayMapInternal(Landroid/util/ArrayMap;)V
+    .locals 3
+    .parameter
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(",
+            "Landroid/util/ArrayMap",
+            "<",
+            "Ljava/lang/String;",
+            "Ljava/lang/Object;",
+            ">;)V"
+        }
+    .end annotation
+
+    .prologue
+    .local p1, val:Landroid/util/ArrayMap;,"Landroid/util/ArrayMap<Ljava/lang/String;Ljava/lang/Object;>;"
+    if-nez p1, :cond_1
+
+    const/4 v2, -0x1
+
+    invoke-virtual {p0, v2}, Landroid/os/Parcel;->writeInt(I)V
+
+    :cond_0
+    return-void
+
+    :cond_1
+    invoke-virtual {p1}, Landroid/util/ArrayMap;->size()I
+
+    move-result v0
+
+    .local v0, N:I
+    invoke-virtual {p0, v0}, Landroid/os/Parcel;->writeInt(I)V
+
+    const/4 v1, 0x0
+
+    .local v1, i:I
+    :goto_0
+    if-ge v1, v0, :cond_0
+
+    invoke-virtual {p1, v1}, Landroid/util/ArrayMap;->keyAt(I)Ljava/lang/Object;
+
+    move-result-object v2
+
+    invoke-virtual {p0, v2}, Landroid/os/Parcel;->writeValue(Ljava/lang/Object;)V
+
+    invoke-virtual {p1, v1}, Landroid/util/ArrayMap;->valueAt(I)Ljava/lang/Object;
+
+    move-result-object v2
+
+    invoke-virtual {p0, v2}, Landroid/os/Parcel;->writeValue(Ljava/lang/Object;)V
+
+    add-int/lit8 v1, v1, 0x1
+
+    goto :goto_0
+.end method
+
 .method public final writeBinderArray([Landroid/os/IBinder;)V
     .locals 3
     .parameter "val"
@@ -4083,11 +4318,11 @@
 
     invoke-static {}, Landroid/os/StrictMode;->clearGatheredViolations()V
 
-    if-nez v0, :cond_6
+    if-nez v0, :cond_7
 
     instance-of v1, p1, Ljava/lang/RuntimeException;
 
-    if-eqz v1, :cond_5
+    if-eqz v1, :cond_6
 
     check-cast p1, Ljava/lang/RuntimeException;
 
@@ -4125,20 +4360,29 @@
     :cond_4
     instance-of v1, p1, Ljava/lang/IllegalStateException;
 
-    if-eqz v1, :cond_0
+    if-eqz v1, :cond_5
 
     const/4 v0, -0x5
 
     goto :goto_0
 
     :cond_5
+    instance-of v1, p1, Landroid/os/NetworkOnMainThreadException;
+
+    if-eqz v1, :cond_0
+
+    const/4 v0, -0x6
+
+    goto :goto_0
+
+    :cond_6
     new-instance v1, Ljava/lang/RuntimeException;
 
     invoke-direct {v1, p1}, Ljava/lang/RuntimeException;-><init>(Ljava/lang/Throwable;)V
 
     throw v1
 
-    :cond_6
+    :cond_7
     invoke-virtual {p1}, Ljava/lang/Exception;->getMessage()Ljava/lang/String;
 
     move-result-object v1
@@ -4563,6 +4807,25 @@
     invoke-virtual {p0, v2}, Landroid/os/Parcel;->writeInt(I)V
 
     :cond_1
+    return-void
+.end method
+
+.method public final writeParcelableCreator(Landroid/os/Parcelable;)V
+    .locals 2
+    .parameter "p"
+
+    .prologue
+    invoke-virtual {p1}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
+
+    move-result-object v1
+
+    invoke-virtual {v1}, Ljava/lang/Class;->getName()Ljava/lang/String;
+
+    move-result-object v0
+
+    .local v0, name:Ljava/lang/String;
+    invoke-virtual {p0, v0}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
+
     return-void
 .end method
 

@@ -29,6 +29,8 @@
 
 .field public static final ACTIVITY_STOPPED_TRANSACTION:I = 0x14
 
+.field public static final APP_NOT_RESPONDING_VIA_PROVIDER_TRANSACTION:I = 0xb7
+
 .field public static final ATTACH_APPLICATION_TRANSACTION:I = 0x11
 
 .field public static final BACKUP_AGENT_CREATED_TRANSACTION:I = 0x5b
@@ -51,7 +53,13 @@
 
 .field public static final CLOSE_SYSTEM_DIALOGS_TRANSACTION:I = 0x61
 
+.field public static final CONVERT_FROM_TRANSLUCENT_TRANSACTION:I = 0xae
+
+.field public static final CONVERT_TO_TRANSLUCENT_TRANSACTION:I = 0xaf
+
 .field public static final CRASH_APPLICATION_TRANSACTION:I = 0x72
+
+.field public static final CREATE_STACK_TRANSACTION:I = 0xa8
 
 .field public static final DISMISS_KEYGUARD_ON_NEXT_ACTIVITY_TRANSACTION:I = 0x8b
 
@@ -75,6 +83,8 @@
 
 .field public static final GET_ACTIVITY_CLASS_FOR_TOKEN_TRANSACTION:I = 0x31
 
+.field public static final GET_ASSIST_CONTEXT_EXTRAS_TRANSACTION:I = 0xa2
+
 .field public static final GET_CALLING_ACTIVITY_TRANSACTION:I = 0x16
 
 .field public static final GET_CALLING_PACKAGE_TRANSACTION:I = 0x15
@@ -95,6 +105,8 @@
 
 .field public static final GET_INTENT_SENDER_TRANSACTION:I = 0x3f
 
+.field public static final GET_LAUNCHED_FROM_PACKAGE_TRANSACTION:I = 0xa4
+
 .field public static final GET_LAUNCHED_FROM_UID_TRANSACTION:I = 0x96
 
 .field public static final GET_MEMORY_INFO_TRANSACTION:I = 0x4c
@@ -108,6 +120,8 @@
 .field public static final GET_PACKAGE_FOR_TOKEN_TRANSACTION:I = 0x32
 
 .field public static final GET_PACKAGE_SCREEN_COMPAT_MODE_TRANSACTION:I = 0x7e
+
+.field public static final GET_PERSISTED_URI_PERMISSIONS_TRANSACTION:I = 0xb6
 
 .field public static final GET_PROCESSES_IN_ERROR_STATE_TRANSACTION:I = 0x4d
 
@@ -133,6 +147,10 @@
 
 .field public static final GET_SERVICES_TRANSACTION:I = 0x51
 
+.field public static final GET_STACK_BOXES_TRANSACTION:I = 0xab
+
+.field public static final GET_STACK_BOX_INFO_TRANSACTION:I = 0xad
+
 .field public static final GET_TASKS_TRANSACTION:I = 0x17
 
 .field public static final GET_TASK_FOR_ACTIVITY_TRANSACTION:I = 0x1b
@@ -156,6 +174,8 @@
 .field public static final HANDLE_APPLICATION_WTF_TRANSACTION:I = 0x66
 
 .field public static final HANDLE_INCOMING_USER_TRANSACTION:I = 0x5e
+
+.field public static final HANG_TRANSACTION:I = 0xa7
 
 .field public static final INPUT_DISPATCHING_TIMED_OUT_TRANSACTION:I = 0x9f
 
@@ -183,6 +203,8 @@
 
 .field public static final KILL_PROCESSES_BELOW_FOREGROUND_TRANSACTION:I = 0x90
 
+.field public static final KILL_UID_TRANSACTION:I = 0xa5
+
 .field public static final MOVE_ACTIVITY_TASK_TO_BACK_TRANSACTION:I = 0x4b
 
 .field public static final MOVE_TASK_BACKWARDS_TRANSACTION:I = 0x1a
@@ -191,17 +213,23 @@
 
 .field public static final MOVE_TASK_TO_FRONT_TRANSACTION:I = 0x18
 
+.field public static final MOVE_TASK_TO_STACK_TRANSACTION:I = 0xa9
+
 .field public static final NAVIGATE_UP_TO_TRANSACTION:I = 0x93
 
 .field public static final NEW_URI_PERMISSION_OWNER_TRANSACTION:I = 0x74
 
 .field public static final NOTE_WAKEUP_ALARM_TRANSACTION:I = 0x44
 
+.field public static final NOTIFY_ACTIVITY_DRAWN_TRANSACTION:I = 0xb0
+
 .field public static final OPEN_CONTENT_URI_TRANSACTION:I = 0x5
 
 .field public static final OVERRIDE_PENDING_TRANSITION_TRANSACTION:I = 0x65
 
 .field public static final PEEK_SERVICE_TRANSACTION:I = 0x55
+
+.field public static final PERFORM_IDLE_MAINTENANCE_TRANSACTION:I = 0xb3
 
 .field public static final PROFILE_CONTROL_TRANSACTION:I = 0x56
 
@@ -217,6 +245,8 @@
 
 .field public static final REGISTER_USER_SWITCH_OBSERVER_TRANSACTION:I = 0x9b
 
+.field public static final RELEASE_PERSISTABLE_URI_PERMISSION_TRANSACTION:I = 0xb5
+
 .field public static final REMOVE_CONTENT_PROVIDER_EXTERNAL_TRANSACTION:I = 0x8e
 
 .field public static final REMOVE_CONTENT_PROVIDER_TRANSACTION:I = 0x45
@@ -225,9 +255,17 @@
 
 .field public static final REMOVE_TASK_TRANSACTION:I = 0x84
 
+.field public static final REPORT_ACTIVITY_FULLY_DRAWN_TRANSACTION:I = 0xb1
+
+.field public static final REPORT_ASSIST_CONTEXT_EXTRAS_TRANSACTION:I = 0xa3
+
 .field public static final REPORT_THUMBNAIL_TRANSACTION:I = 0x1c
 
 .field public static final REQUEST_BUG_REPORT_TRANSACTION:I = 0x9e
+
+.field public static final RESIZE_STACK_TRANSACTION:I = 0xaa
+
+.field public static final RESTART_TRANSACTION:I = 0xb2
 
 .field public static final RESUME_APP_SWITCHES_TRANSACTION:I = 0x59
 
@@ -242,6 +280,8 @@
 .field public static final SET_ALWAYS_FINISH_TRANSACTION:I = 0x2b
 
 .field public static final SET_DEBUG_APP_TRANSACTION:I = 0x2a
+
+.field public static final SET_FOCUSED_STACK_TRANSACTION:I = 0xac
 
 .field public static final SET_FRONT_ACTIVITY_SCREEN_COMPAT_MODE_TRANSACTION:I = 0x7d
 
@@ -260,6 +300,8 @@
 .field public static final SET_REQUESTED_ORIENTATION_TRANSACTION:I = 0x46
 
 .field public static final SET_SERVICE_FOREGROUND_TRANSACTION:I = 0x4a
+
+.field public static final SET_USER_IS_MONKEY_TRANSACTION:I = 0xa6
 
 .field public static final SHOW_BOOT_MESSAGE_TRANSACTION:I = 0x8a
 
@@ -300,6 +342,8 @@
 .field public static final STOP_USER_TRANSACTION:I = 0x9a
 
 .field public static final SWITCH_USER_TRANSACTION:I = 0x82
+
+.field public static final TAKE_PERSISTABLE_URI_PERMISSION_TRANSACTION:I = 0xb4
 
 .field public static final TARGET_TASK_AFFINITY_MATCHES_ACTIVITY_TRANSACTION:I = 0x92
 
@@ -381,6 +425,14 @@
     .end annotation
 .end method
 
+.method public abstract appNotRespondingViaProvider(Landroid/os/IBinder;)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
 .method public abstract attachApplication(Landroid/app/IApplicationThread;)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -413,7 +465,7 @@
     .end annotation
 .end method
 
-.method public abstract broadcastIntent(Landroid/app/IApplicationThread;Landroid/content/Intent;Ljava/lang/String;Landroid/content/IIntentReceiver;ILjava/lang/String;Landroid/os/Bundle;Ljava/lang/String;ZZI)I
+.method public abstract broadcastIntent(Landroid/app/IApplicationThread;Landroid/content/Intent;Ljava/lang/String;Landroid/content/IIntentReceiver;ILjava/lang/String;Landroid/os/Bundle;Ljava/lang/String;IZZI)I
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -477,7 +529,31 @@
     .end annotation
 .end method
 
+.method public abstract convertFromTranslucent(Landroid/os/IBinder;)Z
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract convertToTranslucent(Landroid/os/IBinder;)Z
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
 .method public abstract crashApplication(IILjava/lang/String;Ljava/lang/String;)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract createStack(IIIF)I
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -573,6 +649,14 @@
     .end annotation
 .end method
 
+.method public abstract getAssistContextExtras(I)Landroid/os/Bundle;
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
 .method public abstract getCallingActivity(Landroid/os/IBinder;)Landroid/content/ComponentName;
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -653,6 +737,14 @@
     .end annotation
 .end method
 
+.method public abstract getLaunchedFromPackage(Landroid/os/IBinder;)Ljava/lang/String;
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
 .method public abstract getLaunchedFromUid(Landroid/os/IBinder;)I
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -702,6 +794,26 @@
 .end method
 
 .method public abstract getPackageScreenCompatMode(Ljava/lang/String;)I
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract getPersistedUriPermissions(Ljava/lang/String;Z)Landroid/content/pm/ParceledListSlice;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(",
+            "Ljava/lang/String;",
+            "Z)",
+            "Landroid/content/pm/ParceledListSlice",
+            "<",
+            "Landroid/content/UriPermission;",
+            ">;"
+        }
+    .end annotation
+
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -838,6 +950,42 @@
 .end method
 
 .method public abstract getServices(II)Ljava/util/List;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(II)",
+            "Ljava/util/List",
+            "<",
+            "Landroid/app/ActivityManager$RunningServiceInfo;",
+            ">;"
+        }
+    .end annotation
+
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract getStackBoxInfo(I)Landroid/app/ActivityManager$StackBoxInfo;
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract getStackBoxes()Ljava/util/List;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "()",
+            "Ljava/util/List",
+            "<",
+            "Landroid/app/ActivityManager$StackBoxInfo;",
+            ">;"
+        }
+    .end annotation
+
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -870,6 +1018,18 @@
 .end method
 
 .method public abstract getTasks(IILandroid/app/IThumbnailReceiver;)Ljava/util/List;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(II",
+            "Landroid/app/IThumbnailReceiver;",
+            ")",
+            "Ljava/util/List",
+            "<",
+            "Landroid/app/ActivityManager$RunningTaskInfo;",
+            ">;"
+        }
+    .end annotation
+
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -941,7 +1101,15 @@
     .end annotation
 .end method
 
-.method public abstract inputDispatchingTimedOut(IZ)J
+.method public abstract hang(Landroid/os/IBinder;Z)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract inputDispatchingTimedOut(IZLjava/lang/String;)J
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -1013,7 +1181,7 @@
     .end annotation
 .end method
 
-.method public abstract killApplicationWithAppId(Ljava/lang/String;I)V
+.method public abstract killApplicationWithAppId(Ljava/lang/String;ILjava/lang/String;)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -1038,6 +1206,14 @@
 .end method
 
 .method public abstract killProcessesBelowForeground(Ljava/lang/String;)Z
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract killUid(ILjava/lang/String;)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -1077,6 +1253,14 @@
     .end annotation
 .end method
 
+.method public abstract moveTaskToStack(IIZ)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
 .method public abstract navigateUpTo(Landroid/os/IBinder;Landroid/content/Intent;ILandroid/content/Intent;)Z
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -1101,6 +1285,14 @@
     .end annotation
 .end method
 
+.method public abstract notifyActivityDrawn(Landroid/os/IBinder;)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
 .method public abstract openContentUri(Landroid/net/Uri;)Landroid/os/ParcelFileDescriptor;
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -1118,6 +1310,14 @@
 .end method
 
 .method public abstract peekService(Landroid/content/Intent;Ljava/lang/String;)Landroid/os/IBinder;
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract performIdleMaintenance()V
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -1192,6 +1392,14 @@
     .end annotation
 .end method
 
+.method public abstract releasePersistableUriPermission(Landroid/net/Uri;I)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
 .method public abstract removeContentProvider(Landroid/os/IBinder;Z)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -1224,6 +1432,22 @@
     .end annotation
 .end method
 
+.method public abstract reportActivityFullyDrawn(Landroid/os/IBinder;)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract reportAssistContextExtras(Landroid/os/IBinder;Landroid/os/Bundle;)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
 .method public abstract reportThumbnail(Landroid/os/IBinder;Landroid/graphics/Bitmap;Ljava/lang/CharSequence;)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -1233,6 +1457,22 @@
 .end method
 
 .method public abstract requestBugReport()V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract resizeStackBox(IF)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract restart()V
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -1289,6 +1529,14 @@
 .end method
 
 .method public abstract setDebugApp(Ljava/lang/String;ZZ)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract setFocusedStack(I)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -1368,6 +1616,14 @@
     .end annotation
 .end method
 
+.method public abstract setUserIsMonkey(Z)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
 .method public abstract showBootMessage(Ljava/lang/CharSequence;Z)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -1400,7 +1656,7 @@
     .end annotation
 .end method
 
-.method public abstract startActivities(Landroid/app/IApplicationThread;[Landroid/content/Intent;[Ljava/lang/String;Landroid/os/IBinder;Landroid/os/Bundle;I)I
+.method public abstract startActivities(Landroid/app/IApplicationThread;Ljava/lang/String;[Landroid/content/Intent;[Ljava/lang/String;Landroid/os/IBinder;Landroid/os/Bundle;I)I
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -1408,7 +1664,7 @@
     .end annotation
 .end method
 
-.method public abstract startActivity(Landroid/app/IApplicationThread;Landroid/content/Intent;Ljava/lang/String;Landroid/os/IBinder;Ljava/lang/String;IILjava/lang/String;Landroid/os/ParcelFileDescriptor;Landroid/os/Bundle;)I
+.method public abstract startActivity(Landroid/app/IApplicationThread;Ljava/lang/String;Landroid/content/Intent;Ljava/lang/String;Landroid/os/IBinder;Ljava/lang/String;IILjava/lang/String;Landroid/os/ParcelFileDescriptor;Landroid/os/Bundle;)I
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -1416,7 +1672,7 @@
     .end annotation
 .end method
 
-.method public abstract startActivityAndWait(Landroid/app/IApplicationThread;Landroid/content/Intent;Ljava/lang/String;Landroid/os/IBinder;Ljava/lang/String;IILjava/lang/String;Landroid/os/ParcelFileDescriptor;Landroid/os/Bundle;I)Landroid/app/IActivityManager$WaitResult;
+.method public abstract startActivityAndWait(Landroid/app/IApplicationThread;Ljava/lang/String;Landroid/content/Intent;Ljava/lang/String;Landroid/os/IBinder;Ljava/lang/String;IILjava/lang/String;Landroid/os/ParcelFileDescriptor;Landroid/os/Bundle;I)Landroid/app/IActivityManager$WaitResult;
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -1424,7 +1680,7 @@
     .end annotation
 .end method
 
-.method public abstract startActivityAsUser(Landroid/app/IApplicationThread;Landroid/content/Intent;Ljava/lang/String;Landroid/os/IBinder;Ljava/lang/String;IILjava/lang/String;Landroid/os/ParcelFileDescriptor;Landroid/os/Bundle;I)I
+.method public abstract startActivityAsUser(Landroid/app/IApplicationThread;Ljava/lang/String;Landroid/content/Intent;Ljava/lang/String;Landroid/os/IBinder;Ljava/lang/String;IILjava/lang/String;Landroid/os/ParcelFileDescriptor;Landroid/os/Bundle;I)I
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -1440,7 +1696,7 @@
     .end annotation
 .end method
 
-.method public abstract startActivityWithConfig(Landroid/app/IApplicationThread;Landroid/content/Intent;Ljava/lang/String;Landroid/os/IBinder;Ljava/lang/String;IILandroid/content/res/Configuration;Landroid/os/Bundle;I)I
+.method public abstract startActivityWithConfig(Landroid/app/IApplicationThread;Ljava/lang/String;Landroid/content/Intent;Ljava/lang/String;Landroid/os/IBinder;Ljava/lang/String;IILandroid/content/res/Configuration;Landroid/os/Bundle;I)I
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -1448,7 +1704,7 @@
     .end annotation
 .end method
 
-.method public abstract startInstrumentation(Landroid/content/ComponentName;Ljava/lang/String;ILandroid/os/Bundle;Landroid/app/IInstrumentationWatcher;I)Z
+.method public abstract startInstrumentation(Landroid/content/ComponentName;Ljava/lang/String;ILandroid/os/Bundle;Landroid/app/IInstrumentationWatcher;Landroid/app/IUiAutomationConnection;I)Z
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -1513,6 +1769,14 @@
 .end method
 
 .method public abstract switchUser(I)Z
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract takePersistableUriPermission(Landroid/net/Uri;I)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;

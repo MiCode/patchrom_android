@@ -121,9 +121,10 @@
     packed-switch v0, :pswitch_data_0
 
     :goto_0
+    :pswitch_0
     return-void
 
-    :pswitch_0
+    :pswitch_1
     new-instance v0, Lcom/android/internal/telephony/cat/CatCmdMessage$BrowserSettings;
 
     invoke-direct {v0, p0}, Lcom/android/internal/telephony/cat/CatCmdMessage$BrowserSettings;-><init>(Lcom/android/internal/telephony/cat/CatCmdMessage;)V
@@ -154,7 +155,7 @@
 
     goto :goto_0
 
-    :pswitch_1
+    :pswitch_2
     invoke-virtual {p1, v2}, Landroid/os/Parcel;->readParcelable(Ljava/lang/ClassLoader;)Landroid/os/Parcelable;
 
     move-result-object v0
@@ -165,7 +166,7 @@
 
     goto :goto_0
 
-    :pswitch_2
+    :pswitch_3
     new-instance v0, Lcom/android/internal/telephony/cat/CatCmdMessage$CallSettings;
 
     invoke-direct {v0, p0}, Lcom/android/internal/telephony/cat/CatCmdMessage$CallSettings;-><init>(Lcom/android/internal/telephony/cat/CatCmdMessage;)V
@@ -198,9 +199,10 @@
 
     :pswitch_data_0
     .packed-switch 0xb
-        :pswitch_0
         :pswitch_1
         :pswitch_2
+        :pswitch_0
+        :pswitch_3
     .end packed-switch
 .end method
 
@@ -219,7 +221,7 @@
 
     iput-object v2, p0, Lcom/android/internal/telephony/cat/CatCmdMessage;->mCallSettings:Lcom/android/internal/telephony/cat/CatCmdMessage$CallSettings;
 
-    iget-object v2, p1, Lcom/android/internal/telephony/cat/CommandParams;->cmdDet:Lcom/android/internal/telephony/cat/CommandDetails;
+    iget-object v2, p1, Lcom/android/internal/telephony/cat/CommandParams;->mCmdDet:Lcom/android/internal/telephony/cat/CommandDetails;
 
     iput-object v2, p0, Lcom/android/internal/telephony/cat/CatCmdMessage;->mCmdDet:Lcom/android/internal/telephony/cat/CommandDetails;
 
@@ -246,7 +248,7 @@
     check-cast p1, Lcom/android/internal/telephony/cat/SelectItemParams;
 
     .end local p1
-    iget-object v2, p1, Lcom/android/internal/telephony/cat/SelectItemParams;->menu:Lcom/android/internal/telephony/cat/Menu;
+    iget-object v2, p1, Lcom/android/internal/telephony/cat/SelectItemParams;->mMenu:Lcom/android/internal/telephony/cat/Menu;
 
     iput-object v2, p0, Lcom/android/internal/telephony/cat/CatCmdMessage;->mMenu:Lcom/android/internal/telephony/cat/Menu;
 
@@ -257,7 +259,7 @@
     check-cast p1, Lcom/android/internal/telephony/cat/DisplayTextParams;
 
     .end local p1
-    iget-object v2, p1, Lcom/android/internal/telephony/cat/DisplayTextParams;->textMsg:Lcom/android/internal/telephony/cat/TextMessage;
+    iget-object v2, p1, Lcom/android/internal/telephony/cat/DisplayTextParams;->mTextMsg:Lcom/android/internal/telephony/cat/TextMessage;
 
     iput-object v2, p0, Lcom/android/internal/telephony/cat/CatCmdMessage;->mTextMsg:Lcom/android/internal/telephony/cat/TextMessage;
 
@@ -268,7 +270,7 @@
     check-cast p1, Lcom/android/internal/telephony/cat/GetInputParams;
 
     .end local p1
-    iget-object v2, p1, Lcom/android/internal/telephony/cat/GetInputParams;->input:Lcom/android/internal/telephony/cat/Input;
+    iget-object v2, p1, Lcom/android/internal/telephony/cat/GetInputParams;->mInput:Lcom/android/internal/telephony/cat/Input;
 
     iput-object v2, p0, Lcom/android/internal/telephony/cat/CatCmdMessage;->mInput:Lcom/android/internal/telephony/cat/Input;
 
@@ -280,7 +282,7 @@
 
     check-cast v2, Lcom/android/internal/telephony/cat/LaunchBrowserParams;
 
-    iget-object v2, v2, Lcom/android/internal/telephony/cat/LaunchBrowserParams;->confirmMsg:Lcom/android/internal/telephony/cat/TextMessage;
+    iget-object v2, v2, Lcom/android/internal/telephony/cat/LaunchBrowserParams;->mConfirmMsg:Lcom/android/internal/telephony/cat/TextMessage;
 
     iput-object v2, p0, Lcom/android/internal/telephony/cat/CatCmdMessage;->mTextMsg:Lcom/android/internal/telephony/cat/TextMessage;
 
@@ -296,7 +298,7 @@
 
     check-cast v2, Lcom/android/internal/telephony/cat/LaunchBrowserParams;
 
-    iget-object v2, v2, Lcom/android/internal/telephony/cat/LaunchBrowserParams;->url:Ljava/lang/String;
+    iget-object v2, v2, Lcom/android/internal/telephony/cat/LaunchBrowserParams;->mUrl:Ljava/lang/String;
 
     iput-object v2, v3, Lcom/android/internal/telephony/cat/CatCmdMessage$BrowserSettings;->url:Ljava/lang/String;
 
@@ -305,7 +307,7 @@
     check-cast p1, Lcom/android/internal/telephony/cat/LaunchBrowserParams;
 
     .end local p1
-    iget-object v3, p1, Lcom/android/internal/telephony/cat/LaunchBrowserParams;->mode:Lcom/android/internal/telephony/cat/LaunchBrowserMode;
+    iget-object v3, p1, Lcom/android/internal/telephony/cat/LaunchBrowserParams;->mMode:Lcom/android/internal/telephony/cat/LaunchBrowserMode;
 
     iput-object v3, v2, Lcom/android/internal/telephony/cat/CatCmdMessage$BrowserSettings;->mode:Lcom/android/internal/telephony/cat/LaunchBrowserMode;
 
@@ -318,11 +320,11 @@
     check-cast v1, Lcom/android/internal/telephony/cat/PlayToneParams;
 
     .local v1, params:Lcom/android/internal/telephony/cat/PlayToneParams;
-    iget-object v2, v1, Lcom/android/internal/telephony/cat/PlayToneParams;->settings:Lcom/android/internal/telephony/cat/ToneSettings;
+    iget-object v2, v1, Lcom/android/internal/telephony/cat/PlayToneParams;->mSettings:Lcom/android/internal/telephony/cat/ToneSettings;
 
     iput-object v2, p0, Lcom/android/internal/telephony/cat/CatCmdMessage;->mToneSettings:Lcom/android/internal/telephony/cat/ToneSettings;
 
-    iget-object v2, v1, Lcom/android/internal/telephony/cat/PlayToneParams;->textMsg:Lcom/android/internal/telephony/cat/TextMessage;
+    iget-object v2, v1, Lcom/android/internal/telephony/cat/PlayToneParams;->mTextMsg:Lcom/android/internal/telephony/cat/TextMessage;
 
     iput-object v2, p0, Lcom/android/internal/telephony/cat/CatCmdMessage;->mTextMsg:Lcom/android/internal/telephony/cat/TextMessage;
 
@@ -330,6 +332,17 @@
 
     .end local v1           #params:Lcom/android/internal/telephony/cat/PlayToneParams;
     :pswitch_5
+    check-cast p1, Lcom/android/internal/telephony/cat/CallSetupParams;
+
+    .end local p1
+    iget-object v2, p1, Lcom/android/internal/telephony/cat/CallSetupParams;->mConfirmMsg:Lcom/android/internal/telephony/cat/TextMessage;
+
+    iput-object v2, p0, Lcom/android/internal/telephony/cat/CatCmdMessage;->mTextMsg:Lcom/android/internal/telephony/cat/TextMessage;
+
+    goto :goto_0
+
+    .restart local p1
+    :pswitch_6
     new-instance v2, Lcom/android/internal/telephony/cat/CatCmdMessage$CallSettings;
 
     invoke-direct {v2, p0}, Lcom/android/internal/telephony/cat/CatCmdMessage$CallSettings;-><init>(Lcom/android/internal/telephony/cat/CatCmdMessage;)V
@@ -342,7 +355,7 @@
 
     check-cast v2, Lcom/android/internal/telephony/cat/CallSetupParams;
 
-    iget-object v2, v2, Lcom/android/internal/telephony/cat/CallSetupParams;->confirmMsg:Lcom/android/internal/telephony/cat/TextMessage;
+    iget-object v2, v2, Lcom/android/internal/telephony/cat/CallSetupParams;->mConfirmMsg:Lcom/android/internal/telephony/cat/TextMessage;
 
     iput-object v2, v3, Lcom/android/internal/telephony/cat/CatCmdMessage$CallSettings;->confirmMsg:Lcom/android/internal/telephony/cat/TextMessage;
 
@@ -351,24 +364,26 @@
     check-cast p1, Lcom/android/internal/telephony/cat/CallSetupParams;
 
     .end local p1
-    iget-object v3, p1, Lcom/android/internal/telephony/cat/CallSetupParams;->callMsg:Lcom/android/internal/telephony/cat/TextMessage;
+    iget-object v3, p1, Lcom/android/internal/telephony/cat/CallSetupParams;->mCallMsg:Lcom/android/internal/telephony/cat/TextMessage;
 
     iput-object v3, v2, Lcom/android/internal/telephony/cat/CatCmdMessage$CallSettings;->callMsg:Lcom/android/internal/telephony/cat/TextMessage;
 
     goto :goto_0
 
     .restart local p1
-    :pswitch_6
+    :pswitch_7
     move-object v0, p1
 
     check-cast v0, Lcom/android/internal/telephony/cat/BIPClientParams;
 
     .local v0, param:Lcom/android/internal/telephony/cat/BIPClientParams;
-    iget-object v2, v0, Lcom/android/internal/telephony/cat/BIPClientParams;->textMsg:Lcom/android/internal/telephony/cat/TextMessage;
+    iget-object v2, v0, Lcom/android/internal/telephony/cat/BIPClientParams;->mTextMsg:Lcom/android/internal/telephony/cat/TextMessage;
 
     iput-object v2, p0, Lcom/android/internal/telephony/cat/CatCmdMessage;->mTextMsg:Lcom/android/internal/telephony/cat/TextMessage;
 
     goto :goto_0
+
+    nop
 
     :pswitch_data_0
     .packed-switch 0x1
@@ -386,9 +401,10 @@
         :pswitch_4
         :pswitch_5
         :pswitch_6
-        :pswitch_6
-        :pswitch_6
-        :pswitch_6
+        :pswitch_7
+        :pswitch_7
+        :pswitch_7
+        :pswitch_7
     .end packed-switch
 .end method
 
@@ -511,9 +527,10 @@
     packed-switch v0, :pswitch_data_0
 
     :goto_0
+    :pswitch_0
     return-void
 
-    :pswitch_0
+    :pswitch_1
     iget-object v0, p0, Lcom/android/internal/telephony/cat/CatCmdMessage;->mBrowserSettings:Lcom/android/internal/telephony/cat/CatCmdMessage$BrowserSettings;
 
     iget-object v0, v0, Lcom/android/internal/telephony/cat/CatCmdMessage$BrowserSettings;->url:Ljava/lang/String;
@@ -532,14 +549,14 @@
 
     goto :goto_0
 
-    :pswitch_1
+    :pswitch_2
     iget-object v0, p0, Lcom/android/internal/telephony/cat/CatCmdMessage;->mToneSettings:Lcom/android/internal/telephony/cat/ToneSettings;
 
     invoke-virtual {p1, v0, v2}, Landroid/os/Parcel;->writeParcelable(Landroid/os/Parcelable;I)V
 
     goto :goto_0
 
-    :pswitch_2
+    :pswitch_3
     iget-object v0, p0, Lcom/android/internal/telephony/cat/CatCmdMessage;->mCallSettings:Lcom/android/internal/telephony/cat/CatCmdMessage$CallSettings;
 
     iget-object v0, v0, Lcom/android/internal/telephony/cat/CatCmdMessage$CallSettings;->confirmMsg:Lcom/android/internal/telephony/cat/TextMessage;
@@ -558,8 +575,9 @@
 
     :pswitch_data_0
     .packed-switch 0xb
-        :pswitch_0
         :pswitch_1
         :pswitch_2
+        :pswitch_0
+        :pswitch_3
     .end packed-switch
 .end method

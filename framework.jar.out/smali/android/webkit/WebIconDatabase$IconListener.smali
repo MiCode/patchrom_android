@@ -13,6 +13,9 @@
     name = "IconListener"
 .end annotation
 
+.annotation runtime Ljava/lang/Deprecated;
+.end annotation
+
 
 # virtual methods
 .method public abstract onReceivedIcon(Ljava/lang/String;Landroid/graphics/Bitmap;)V

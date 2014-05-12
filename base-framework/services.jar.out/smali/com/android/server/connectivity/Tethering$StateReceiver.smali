@@ -153,7 +153,7 @@
 
     move-result v3
 
-    if-eqz v3, :cond_1
+    if-eqz v3, :cond_3
 
     const-string v3, "networkInfo"
 
@@ -184,6 +184,22 @@
     const/4 v4, 0x3
 
     invoke-virtual {v3, v4}, Lcom/android/internal/util/StateMachine;->sendMessage(I)V
+
+    goto :goto_0
+
+    .end local v1           #networkInfo:Landroid/net/NetworkInfo;
+    :cond_3
+    const-string v3, "android.intent.action.CONFIGURATION_CHANGED"
+
+    invoke-virtual {v0, v3}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v3
+
+    if-eqz v3, :cond_1
+
+    iget-object v3, p0, Lcom/android/server/connectivity/Tethering$StateReceiver;->this$0:Lcom/android/server/connectivity/Tethering;
+
+    invoke-virtual {v3}, Lcom/android/server/connectivity/Tethering;->updateConfiguration()V
 
     goto :goto_0
 .end method

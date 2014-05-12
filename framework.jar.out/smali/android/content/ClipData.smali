@@ -633,6 +633,67 @@
     return v0
 .end method
 
+.method public prepareToLeaveProcess()V
+    .locals 5
+
+    .prologue
+    iget-object v3, p0, Landroid/content/ClipData;->mItems:Ljava/util/ArrayList;
+
+    invoke-virtual {v3}, Ljava/util/ArrayList;->size()I
+
+    move-result v2
+
+    .local v2, size:I
+    const/4 v0, 0x0
+
+    .local v0, i:I
+    :goto_0
+    if-ge v0, v2, :cond_2
+
+    iget-object v3, p0, Landroid/content/ClipData;->mItems:Ljava/util/ArrayList;
+
+    invoke-virtual {v3, v0}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
+
+    move-result-object v1
+
+    check-cast v1, Landroid/content/ClipData$Item;
+
+    .local v1, item:Landroid/content/ClipData$Item;
+    iget-object v3, v1, Landroid/content/ClipData$Item;->mIntent:Landroid/content/Intent;
+
+    if-eqz v3, :cond_0
+
+    iget-object v3, v1, Landroid/content/ClipData$Item;->mIntent:Landroid/content/Intent;
+
+    invoke-virtual {v3}, Landroid/content/Intent;->prepareToLeaveProcess()V
+
+    :cond_0
+    iget-object v3, v1, Landroid/content/ClipData$Item;->mUri:Landroid/net/Uri;
+
+    if-eqz v3, :cond_1
+
+    invoke-static {}, Landroid/os/StrictMode;->vmFileUriExposureEnabled()Z
+
+    move-result v3
+
+    if-eqz v3, :cond_1
+
+    iget-object v3, v1, Landroid/content/ClipData$Item;->mUri:Landroid/net/Uri;
+
+    const-string v4, "ClipData.Item.getUri()"
+
+    invoke-virtual {v3, v4}, Landroid/net/Uri;->checkFileUriExposed(Ljava/lang/String;)V
+
+    :cond_1
+    add-int/lit8 v0, v0, 0x1
+
+    goto :goto_0
+
+    .end local v1           #item:Landroid/content/ClipData$Item;
+    :cond_2
+    return-void
+.end method
+
 .method public toShortString(Ljava/lang/StringBuilder;)V
     .locals 4
     .parameter "b"

@@ -21,6 +21,8 @@
 
 .field private mHeld:Z
 
+.field private final mPackageName:Ljava/lang/String;
+
 .field private mRefCounted:Z
 
 .field private final mReleaser:Ljava/lang/Runnable;
@@ -35,11 +37,12 @@
 
 
 # direct methods
-.method constructor <init>(Landroid/os/PowerManager;ILjava/lang/String;)V
+.method constructor <init>(Landroid/os/PowerManager;ILjava/lang/String;Ljava/lang/String;)V
     .locals 1
     .parameter
     .parameter "flags"
     .parameter "tag"
+    .parameter "packageName"
 
     .prologue
     iput-object p1, p0, Landroid/os/PowerManager$WakeLock;->this$0:Landroid/os/PowerManager;
@@ -60,6 +63,8 @@
 
     iput-object p3, p0, Landroid/os/PowerManager$WakeLock;->mTag:Ljava/lang/String;
 
+    iput-object p4, p0, Landroid/os/PowerManager$WakeLock;->mPackageName:Ljava/lang/String;
+
     new-instance v0, Landroid/os/Binder;
 
     invoke-direct {v0}, Landroid/os/Binder;-><init>()V
@@ -70,7 +75,7 @@
 .end method
 
 .method private acquireLocked()V
-    .locals 5
+    .locals 6
 
     .prologue
     iget-boolean v0, p0, Landroid/os/PowerManager$WakeLock;->mRefCounted:Z
@@ -105,9 +110,11 @@
 
     iget-object v3, p0, Landroid/os/PowerManager$WakeLock;->mTag:Ljava/lang/String;
 
-    iget-object v4, p0, Landroid/os/PowerManager$WakeLock;->mWorkSource:Landroid/os/WorkSource;
+    iget-object v4, p0, Landroid/os/PowerManager$WakeLock;->mPackageName:Ljava/lang/String;
 
-    invoke-interface {v0, v1, v2, v3, v4}, Landroid/os/IPowerManager;->acquireWakeLock(Landroid/os/IBinder;ILjava/lang/String;Landroid/os/WorkSource;)V
+    iget-object v5, p0, Landroid/os/PowerManager$WakeLock;->mWorkSource:Landroid/os/WorkSource;
+
+    invoke-interface/range {v0 .. v5}, Landroid/os/IPowerManager;->acquireWakeLock(Landroid/os/IBinder;ILjava/lang/String;Ljava/lang/String;Landroid/os/WorkSource;)V
     :try_end_0
     .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
 

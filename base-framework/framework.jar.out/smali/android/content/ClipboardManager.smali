@@ -148,7 +148,7 @@
 
 # virtual methods
 .method public addPrimaryClipChangedListener(Landroid/content/ClipboardManager$OnPrimaryClipChangedListener;)V
-    .locals 3
+    .locals 4
     .parameter "what"
 
     .prologue
@@ -174,7 +174,13 @@
 
     iget-object v2, p0, Landroid/content/ClipboardManager;->mPrimaryClipChangedServiceListener:Landroid/content/IOnPrimaryClipChangedListener$Stub;
 
-    invoke-interface {v0, v2}, Landroid/content/IClipboard;->addPrimaryClipChangedListener(Landroid/content/IOnPrimaryClipChangedListener;)V
+    iget-object v3, p0, Landroid/content/ClipboardManager;->mContext:Landroid/content/Context;
+
+    invoke-virtual {v3}, Landroid/content/Context;->getOpPackageName()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-interface {v0, v2, v3}, Landroid/content/IClipboard;->addPrimaryClipChangedListener(Landroid/content/IOnPrimaryClipChangedListener;Ljava/lang/String;)V
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
     .catch Landroid/os/RemoteException; {:try_start_1 .. :try_end_1} :catch_0
@@ -216,7 +222,7 @@
 
     iget-object v2, p0, Landroid/content/ClipboardManager;->mContext:Landroid/content/Context;
 
-    invoke-virtual {v2}, Landroid/content/Context;->getPackageName()Ljava/lang/String;
+    invoke-virtual {v2}, Landroid/content/Context;->getOpPackageName()Ljava/lang/String;
 
     move-result-object v2
 
@@ -239,7 +245,7 @@
 .end method
 
 .method public getPrimaryClipDescription()Landroid/content/ClipDescription;
-    .locals 2
+    .locals 3
 
     .prologue
     :try_start_0
@@ -247,7 +253,13 @@
 
     move-result-object v1
 
-    invoke-interface {v1}, Landroid/content/IClipboard;->getPrimaryClipDescription()Landroid/content/ClipDescription;
+    iget-object v2, p0, Landroid/content/ClipboardManager;->mContext:Landroid/content/Context;
+
+    invoke-virtual {v2}, Landroid/content/Context;->getOpPackageName()Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-interface {v1, v2}, Landroid/content/IClipboard;->getPrimaryClipDescription(Ljava/lang/String;)Landroid/content/ClipDescription;
     :try_end_0
     .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
 
@@ -304,7 +316,7 @@
 .end method
 
 .method public hasPrimaryClip()Z
-    .locals 2
+    .locals 3
 
     .prologue
     :try_start_0
@@ -312,7 +324,13 @@
 
     move-result-object v1
 
-    invoke-interface {v1}, Landroid/content/IClipboard;->hasPrimaryClip()Z
+    iget-object v2, p0, Landroid/content/ClipboardManager;->mContext:Landroid/content/Context;
+
+    invoke-virtual {v2}, Landroid/content/Context;->getOpPackageName()Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-interface {v1, v2}, Landroid/content/IClipboard;->hasPrimaryClip(Ljava/lang/String;)Z
     :try_end_0
     .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
 
@@ -331,7 +349,7 @@
 .end method
 
 .method public hasText()Z
-    .locals 2
+    .locals 3
 
     .prologue
     :try_start_0
@@ -339,7 +357,13 @@
 
     move-result-object v1
 
-    invoke-interface {v1}, Landroid/content/IClipboard;->hasClipboardText()Z
+    iget-object v2, p0, Landroid/content/ClipboardManager;->mContext:Landroid/content/Context;
+
+    invoke-virtual {v2}, Landroid/content/Context;->getOpPackageName()Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-interface {v1, v2}, Landroid/content/IClipboard;->hasClipboardText(Ljava/lang/String;)Z
     :try_end_0
     .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
 
@@ -483,16 +507,27 @@
 .end method
 
 .method public setPrimaryClip(Landroid/content/ClipData;)V
-    .locals 1
+    .locals 2
     .parameter "clip"
 
     .prologue
+    if-eqz p1, :cond_0
+
     :try_start_0
+    invoke-virtual {p1}, Landroid/content/ClipData;->prepareToLeaveProcess()V
+
+    :cond_0
     invoke-static {}, Landroid/content/ClipboardManager;->getService()Landroid/content/IClipboard;
 
     move-result-object v0
 
-    invoke-interface {v0, p1}, Landroid/content/IClipboard;->setPrimaryClip(Landroid/content/ClipData;)V
+    iget-object v1, p0, Landroid/content/ClipboardManager;->mContext:Landroid/content/Context;
+
+    invoke-virtual {v1}, Landroid/content/Context;->getOpPackageName()Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-interface {v0, p1, v1}, Landroid/content/IClipboard;->setPrimaryClip(Landroid/content/ClipData;Ljava/lang/String;)V
     :try_end_0
     .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
 

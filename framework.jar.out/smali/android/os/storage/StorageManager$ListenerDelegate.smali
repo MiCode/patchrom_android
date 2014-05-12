@@ -37,7 +37,10 @@
 
     new-instance v0, Landroid/os/storage/StorageManager$ListenerDelegate$1;
 
-    iget-object v1, p1, Landroid/os/storage/StorageManager;->mTgtLooper:Landroid/os/Looper;
+    #getter for: Landroid/os/storage/StorageManager;->mTgtLooper:Landroid/os/Looper;
+    invoke-static {p1}, Landroid/os/storage/StorageManager;->access$400(Landroid/os/storage/StorageManager;)Landroid/os/Looper;
+
+    move-result-object v1
 
     invoke-direct {v0, p0, v1, p1}, Landroid/os/storage/StorageManager$ListenerDelegate$1;-><init>(Landroid/os/storage/StorageManager$ListenerDelegate;Landroid/os/Looper;Landroid/os/storage/StorageManager;)V
 

@@ -23,6 +23,22 @@
     .end annotation
 .end method
 
+.method public abstract captivePortalCheckCompleted(Landroid/net/NetworkInfo;Z)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract checkMobileProvisioning(I)I
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
 .method public abstract establishVpn(Lcom/android/internal/net/VpnConfig;)Landroid/os/ParcelFileDescriptor;
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -31,7 +47,23 @@
     .end annotation
 .end method
 
+.method public abstract findConnectionTypeForIface(Ljava/lang/String;)I
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
 .method public abstract getActiveLinkProperties()Landroid/net/LinkProperties;
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract getActiveLinkQualityInfo()Landroid/net/LinkQualityInfo;
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -56,6 +88,14 @@
 .end method
 
 .method public abstract getActiveNetworkQuotaInfo()Landroid/net/NetworkQuotaInfo;
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract getAllLinkQualityInfo()[Landroid/net/LinkQualityInfo;
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -111,7 +151,31 @@
     .end annotation
 .end method
 
+.method public abstract getLinkQualityInfo(I)Landroid/net/LinkQualityInfo;
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
 .method public abstract getMobileDataEnabled()Z
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract getMobileProvisioningUrl()Ljava/lang/String;
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract getMobileRedirectedProvisioningUrl()Ljava/lang/String;
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -128,6 +192,14 @@
 .end method
 
 .method public abstract getNetworkPreference()I
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract getProvisioningOrActiveNetworkInfo()Landroid/net/NetworkInfo;
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -175,14 +247,6 @@
     .end annotation
 .end method
 
-.method public abstract getTetheredIfacePairs()[Ljava/lang/String;
-    .annotation system Ldalvik/annotation/Throws;
-        value = {
-            Landroid/os/RemoteException;
-        }
-    .end annotation
-.end method
-
 .method public abstract getTetheredIfaces()[Ljava/lang/String;
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -192,6 +256,14 @@
 .end method
 
 .method public abstract getTetheringErroredIfaces()[Ljava/lang/String;
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract getVpnConfig()Lcom/android/internal/net/VpnConfig;
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -216,6 +288,14 @@
 .end method
 
 .method public abstract isTetheringSupported()Z
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract markSocketAsUser(Landroid/os/ParcelFileDescriptor;I)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -271,6 +351,14 @@
     .end annotation
 .end method
 
+.method public abstract setAirplaneMode(Z)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
 .method public abstract setDataDependency(IZ)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -304,6 +392,14 @@
 .end method
 
 .method public abstract setPolicyDataEnable(IZ)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract setProvisioningNotificationVisible(ZILjava/lang/String;Ljava/lang/String;)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -352,6 +448,14 @@
 .end method
 
 .method public abstract stopUsingNetworkFeature(ILjava/lang/String;)I
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract supplyMessenger(ILandroid/os/Messenger;)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;

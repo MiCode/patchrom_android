@@ -15,11 +15,29 @@
 
 
 # instance fields
-.field private final mAddresses:Ljava/lang/StringBuilder;
+.field private final mAddresses:Ljava/util/List;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "Ljava/util/List",
+            "<",
+            "Landroid/net/LinkAddress;",
+            ">;"
+        }
+    .end annotation
+.end field
 
 .field private final mConfig:Lcom/android/internal/net/VpnConfig;
 
-.field private final mRoutes:Ljava/lang/StringBuilder;
+.field private final mRoutes:Ljava/util/List;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "Ljava/util/List",
+            "<",
+            "Landroid/net/RouteInfo;",
+            ">;"
+        }
+    .end annotation
+.end field
 
 .field final synthetic this$0:Landroid/net/VpnService;
 
@@ -40,17 +58,17 @@
 
     iput-object v0, p0, Landroid/net/VpnService$Builder;->mConfig:Lcom/android/internal/net/VpnConfig;
 
-    new-instance v0, Ljava/lang/StringBuilder;
+    new-instance v0, Ljava/util/ArrayList;
 
-    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+    invoke-direct {v0}, Ljava/util/ArrayList;-><init>()V
 
-    iput-object v0, p0, Landroid/net/VpnService$Builder;->mAddresses:Ljava/lang/StringBuilder;
+    iput-object v0, p0, Landroid/net/VpnService$Builder;->mAddresses:Ljava/util/List;
 
-    new-instance v0, Ljava/lang/StringBuilder;
+    new-instance v0, Ljava/util/ArrayList;
 
-    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+    invoke-direct {v0}, Ljava/util/ArrayList;-><init>()V
 
-    iput-object v0, p0, Landroid/net/VpnService$Builder;->mRoutes:Ljava/lang/StringBuilder;
+    iput-object v0, p0, Landroid/net/VpnService$Builder;->mRoutes:Ljava/util/List;
 
     iget-object v0, p0, Landroid/net/VpnService$Builder;->mConfig:Lcom/android/internal/net/VpnConfig;
 
@@ -160,7 +178,7 @@
 .end method
 
 .method public addAddress(Ljava/net/InetAddress;I)Landroid/net/VpnService$Builder;
-    .locals 3
+    .locals 2
     .parameter "address"
     .parameter "prefixLength"
 
@@ -182,41 +200,13 @@
     throw v0
 
     :cond_0
-    iget-object v0, p0, Landroid/net/VpnService$Builder;->mAddresses:Ljava/lang/StringBuilder;
+    iget-object v0, p0, Landroid/net/VpnService$Builder;->mAddresses:Ljava/util/List;
 
-    new-instance v1, Ljava/lang/StringBuilder;
+    new-instance v1, Landroid/net/LinkAddress;
 
-    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+    invoke-direct {v1, p1, p2}, Landroid/net/LinkAddress;-><init>(Ljava/net/InetAddress;I)V
 
-    const/16 v2, 0x20
-
-    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
-
-    move-result-object v1
-
-    invoke-virtual {p1}, Ljava/net/InetAddress;->getHostAddress()Ljava/lang/String;
-
-    move-result-object v2
-
-    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v1
-
-    const/16 v2, 0x2f
-
-    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
-
-    move-result-object v1
-
-    invoke-virtual {v1, p2}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
-
-    move-result-object v1
-
-    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v1
-
-    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-interface {v0, v1}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
     return-object p0
 .end method
@@ -310,7 +300,7 @@
 .end method
 
 .method public addRoute(Ljava/net/InetAddress;I)Landroid/net/VpnService$Builder;
-    .locals 7
+    .locals 6
     .parameter "address"
     .parameter "prefixLength"
 
@@ -362,35 +352,19 @@
     goto :goto_0
 
     :cond_1
-    iget-object v2, p0, Landroid/net/VpnService$Builder;->mRoutes:Ljava/lang/StringBuilder;
+    iget-object v2, p0, Landroid/net/VpnService$Builder;->mRoutes:Ljava/util/List;
 
-    const-string v3, " %s/%d"
+    new-instance v3, Landroid/net/RouteInfo;
 
-    const/4 v4, 0x2
+    new-instance v4, Landroid/net/LinkAddress;
 
-    new-array v4, v4, [Ljava/lang/Object;
+    invoke-direct {v4, p1, p2}, Landroid/net/LinkAddress;-><init>(Ljava/net/InetAddress;I)V
 
     const/4 v5, 0x0
 
-    invoke-virtual {p1}, Ljava/net/InetAddress;->getHostAddress()Ljava/lang/String;
+    invoke-direct {v3, v4, v5}, Landroid/net/RouteInfo;-><init>(Landroid/net/LinkAddress;Ljava/net/InetAddress;)V
 
-    move-result-object v6
-
-    aput-object v6, v4, v5
-
-    const/4 v5, 0x1
-
-    invoke-static {p2}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
-
-    move-result-object v6
-
-    aput-object v6, v4, v5
-
-    invoke-static {v3, v4}, Ljava/lang/String;->format(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
-
-    move-result-object v3
-
-    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-interface {v2, v3}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
     return-object p0
 .end method
@@ -430,23 +404,15 @@
     .prologue
     iget-object v1, p0, Landroid/net/VpnService$Builder;->mConfig:Lcom/android/internal/net/VpnConfig;
 
-    iget-object v2, p0, Landroid/net/VpnService$Builder;->mAddresses:Ljava/lang/StringBuilder;
+    iget-object v2, p0, Landroid/net/VpnService$Builder;->mAddresses:Ljava/util/List;
 
-    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v2
-
-    iput-object v2, v1, Lcom/android/internal/net/VpnConfig;->addresses:Ljava/lang/String;
+    iput-object v2, v1, Lcom/android/internal/net/VpnConfig;->addresses:Ljava/util/List;
 
     iget-object v1, p0, Landroid/net/VpnService$Builder;->mConfig:Lcom/android/internal/net/VpnConfig;
 
-    iget-object v2, p0, Landroid/net/VpnService$Builder;->mRoutes:Ljava/lang/StringBuilder;
+    iget-object v2, p0, Landroid/net/VpnService$Builder;->mRoutes:Ljava/util/List;
 
-    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v2
-
-    iput-object v2, v1, Lcom/android/internal/net/VpnConfig;->routes:Ljava/lang/String;
+    iput-object v2, v1, Lcom/android/internal/net/VpnConfig;->routes:Ljava/util/List;
 
     :try_start_0
     #calls: Landroid/net/VpnService;->getService()Landroid/net/IConnectivityManager;

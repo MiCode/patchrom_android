@@ -20,6 +20,8 @@
 
 .field public static final ACTION_VIEW_DOWNLOADS:Ljava/lang/String; = "android.intent.action.VIEW_DOWNLOADS"
 
+.field public static final COLUMN_ALLOW_WRITE:Ljava/lang/String; = "allow_write"
+
 .field public static final COLUMN_BYTES_DOWNLOADED_SO_FAR:Ljava/lang/String; = "bytes_so_far"
 
 .field public static final COLUMN_DESCRIPTION:Ljava/lang/String; = "description"
@@ -108,7 +110,7 @@
     .locals 3
 
     .prologue
-    const/16 v0, 0xf
+    const/16 v0, 0x10
 
     new-array v0, v0, [Ljava/lang/String;
 
@@ -192,11 +194,17 @@
 
     const/16 v1, 0xd
 
-    const-string v2, "\'placeholder\' AS local_uri"
+    const-string v2, "allow_write"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0xe
+
+    const-string v2, "\'placeholder\' AS local_uri"
+
+    aput-object v2, v0, v1
+
+    const/16 v1, 0xf
 
     const-string v2, "\'placeholder\' AS reason"
 
@@ -444,7 +452,7 @@
 
 # virtual methods
 .method public addCompletedDownload(Ljava/lang/String;Ljava/lang/String;ZLjava/lang/String;Ljava/lang/String;JZ)J
-    .locals 7
+    .locals 10
     .parameter "title"
     .parameter "description"
     .parameter "isMediaScannerScannable"
@@ -454,8 +462,43 @@
     .parameter "showNotification"
 
     .prologue
-    const/4 v4, 0x2
+    const/4 v9, 0x0
 
+    move-object v0, p0
+
+    move-object v1, p1
+
+    move-object v2, p2
+
+    move v3, p3
+
+    move-object v4, p4
+
+    move-object v5, p5
+
+    move-wide/from16 v6, p6
+
+    move/from16 v8, p8
+
+    invoke-virtual/range {v0 .. v9}, Landroid/app/DownloadManager;->addCompletedDownload(Ljava/lang/String;Ljava/lang/String;ZLjava/lang/String;Ljava/lang/String;JZZ)J
+
+    move-result-wide v0
+
+    return-wide v0
+.end method
+
+.method public addCompletedDownload(Ljava/lang/String;Ljava/lang/String;ZLjava/lang/String;Ljava/lang/String;JZZ)J
+    .locals 5
+    .parameter "title"
+    .parameter "description"
+    .parameter "isMediaScannerScannable"
+    .parameter "mimeType"
+    .parameter "path"
+    .parameter "length"
+    .parameter "showNotification"
+    .parameter "allowWrite"
+
+    .prologue
     const-string v3, "title"
 
     invoke-static {v3, p1}, Landroid/app/DownloadManager;->validateArgumentIsNonEmpty(Ljava/lang/String;Ljava/lang/String;)V
@@ -472,9 +515,9 @@
 
     invoke-static {v3, p4}, Landroid/app/DownloadManager;->validateArgumentIsNonEmpty(Ljava/lang/String;Ljava/lang/String;)V
 
-    const-wide/16 v5, 0x0
+    const-wide/16 v3, 0x0
 
-    cmp-long v3, p6, v5
+    cmp-long v3, p6, v3
 
     if-gez v3, :cond_0
 
@@ -489,9 +532,9 @@
     :cond_0
     new-instance v3, Landroid/app/DownloadManager$Request;
 
-    const-string v5, "non-dwnldmngr-download-dont-retry2download"
+    const-string v4, "non-dwnldmngr-download-dont-retry2download"
 
-    invoke-direct {v3, v5}, Landroid/app/DownloadManager$Request;-><init>(Ljava/lang/String;)V
+    invoke-direct {v3, v4}, Landroid/app/DownloadManager$Request;-><init>(Ljava/lang/String;)V
 
     invoke-virtual {v3, p1}, Landroid/app/DownloadManager$Request;->setTitle(Ljava/lang/CharSequence;)Landroid/app/DownloadManager$Request;
 
@@ -515,13 +558,13 @@
     .local v2, values:Landroid/content/ContentValues;
     const-string v3, "destination"
 
-    const/4 v5, 0x6
+    const/4 v4, 0x6
 
-    invoke-static {v5}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+    invoke-static {v4}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
-    move-result-object v5
+    move-result-object v4
 
-    invoke-virtual {v2, v3, v5}, Landroid/content/ContentValues;->put(Ljava/lang/String;Ljava/lang/Integer;)V
+    invoke-virtual {v2, v3, v4}, Landroid/content/ContentValues;->put(Ljava/lang/String;Ljava/lang/Integer;)V
 
     const-string v3, "_data"
 
@@ -529,25 +572,25 @@
 
     const-string v3, "status"
 
-    const/16 v5, 0xc8
+    const/16 v4, 0xc8
 
-    invoke-static {v5}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+    invoke-static {v4}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
-    move-result-object v5
+    move-result-object v4
 
-    invoke-virtual {v2, v3, v5}, Landroid/content/ContentValues;->put(Ljava/lang/String;Ljava/lang/Integer;)V
+    invoke-virtual {v2, v3, v4}, Landroid/content/ContentValues;->put(Ljava/lang/String;Ljava/lang/Integer;)V
 
     const-string v3, "total_bytes"
 
     invoke-static {p6, p7}, Ljava/lang/Long;->valueOf(J)Ljava/lang/Long;
 
-    move-result-object v5
+    move-result-object v4
 
-    invoke-virtual {v2, v3, v5}, Landroid/content/ContentValues;->put(Ljava/lang/String;Ljava/lang/Long;)V
+    invoke-virtual {v2, v3, v4}, Landroid/content/ContentValues;->put(Ljava/lang/String;Ljava/lang/Long;)V
 
-    const-string v5, "scanned"
+    const-string v4, "scanned"
 
-    if-eqz p3, :cond_2
+    if-eqz p3, :cond_1
 
     const/4 v3, 0x0
 
@@ -556,20 +599,33 @@
 
     move-result-object v3
 
-    invoke-virtual {v2, v5, v3}, Landroid/content/ContentValues;->put(Ljava/lang/String;Ljava/lang/Integer;)V
+    invoke-virtual {v2, v4, v3}, Landroid/content/ContentValues;->put(Ljava/lang/String;Ljava/lang/Integer;)V
 
-    const-string v3, "visibility"
+    const-string v4, "visibility"
 
-    if-eqz p8, :cond_1
+    if-eqz p8, :cond_2
 
-    const/4 v4, 0x3
+    const/4 v3, 0x3
 
-    :cond_1
-    invoke-static {v4}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+    :goto_1
+    invoke-static {v3}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
-    move-result-object v4
+    move-result-object v3
 
-    invoke-virtual {v2, v3, v4}, Landroid/content/ContentValues;->put(Ljava/lang/String;Ljava/lang/Integer;)V
+    invoke-virtual {v2, v4, v3}, Landroid/content/ContentValues;->put(Ljava/lang/String;Ljava/lang/Integer;)V
+
+    const-string v4, "allow_write"
+
+    if-eqz p9, :cond_3
+
+    const/4 v3, 0x1
+
+    :goto_2
+    invoke-static {v3}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v3
+
+    invoke-virtual {v2, v4, v3}, Landroid/content/ContentValues;->put(Ljava/lang/String;Ljava/lang/Integer;)V
 
     iget-object v3, p0, Landroid/app/DownloadManager;->mResolver:Landroid/content/ContentResolver;
 
@@ -580,21 +636,31 @@
     move-result-object v0
 
     .local v0, downloadUri:Landroid/net/Uri;
-    if-nez v0, :cond_3
+    if-nez v0, :cond_4
 
     const-wide/16 v3, -0x1
 
-    :goto_1
+    :goto_3
     return-wide v3
 
     .end local v0           #downloadUri:Landroid/net/Uri;
-    :cond_2
-    move v3, v4
+    :cond_1
+    const/4 v3, 0x2
 
     goto :goto_0
 
-    .restart local v0       #downloadUri:Landroid/net/Uri;
+    :cond_2
+    const/4 v3, 0x2
+
+    goto :goto_1
+
     :cond_3
+    const/4 v3, 0x0
+
+    goto :goto_2
+
+    .restart local v0       #downloadUri:Landroid/net/Uri;
+    :cond_4
     invoke-virtual {v0}, Landroid/net/Uri;->getLastPathSegment()Ljava/lang/String;
 
     move-result-object v3
@@ -603,7 +669,7 @@
 
     move-result-wide v3
 
-    goto :goto_1
+    goto :goto_3
 .end method
 
 .method public enqueue(Landroid/app/DownloadManager$Request;)J
@@ -639,7 +705,7 @@
     return-wide v1
 .end method
 
-.method getDownloadUri(J)Landroid/net/Uri;
+.method public getDownloadUri(J)Landroid/net/Uri;
     .locals 1
     .parameter "id"
 
@@ -691,10 +757,10 @@
 
     if-eqz v0, :cond_0
 
-    :goto_0
     invoke-interface {v0}, Landroid/database/Cursor;->close()V
 
     :cond_0
+    :goto_0
     return-object v2
 
     :cond_1
@@ -703,7 +769,7 @@
 
     move-result v3
 
-    if-eqz v3, :cond_3
+    if-eqz v3, :cond_2
 
     const-string v2, "media_type"
 
@@ -719,22 +785,26 @@
 
     if-eqz v0, :cond_0
 
+    invoke-interface {v0}, Landroid/database/Cursor;->close()V
+
+    goto :goto_0
+
+    :cond_2
+    if-eqz v0, :cond_0
+
+    invoke-interface {v0}, Landroid/database/Cursor;->close()V
+
     goto :goto_0
 
     :catchall_0
     move-exception v2
 
-    if-eqz v0, :cond_2
+    if-eqz v0, :cond_3
 
     invoke-interface {v0}, Landroid/database/Cursor;->close()V
 
-    :cond_2
-    throw v2
-
     :cond_3
-    if-eqz v0, :cond_0
-
-    goto :goto_0
+    throw v2
 .end method
 
 .method public getUriForDownloadedFile(J)Landroid/net/Uri;
@@ -775,10 +845,10 @@
 
     if-eqz v0, :cond_0
 
-    :goto_0
     invoke-interface {v0}, Landroid/database/Cursor;->close()V
 
     :cond_0
+    :goto_0
     return-object v6
 
     :cond_1
@@ -787,7 +857,7 @@
 
     move-result v7
 
-    if-eqz v7, :cond_5
+    if-eqz v7, :cond_4
 
     const-string v7, "status"
 
@@ -802,7 +872,7 @@
     .local v5, status:I
     const/16 v7, 0x8
 
-    if-ne v7, v5, :cond_5
+    if-ne v7, v5, :cond_4
 
     const-string v6, "destination"
 
@@ -834,14 +904,19 @@
     sget-object v6, Landroid/provider/Downloads$Impl;->CONTENT_URI:Landroid/net/Uri;
 
     invoke-static {v6, p1, p2}, Landroid/content/ContentUris;->withAppendedId(Landroid/net/Uri;J)Landroid/net/Uri;
+    :try_end_1
+    .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
     move-result-object v6
 
     if-eqz v0, :cond_0
 
+    invoke-interface {v0}, Landroid/database/Cursor;->close()V
+
     goto :goto_0
 
     :cond_3
+    :try_start_2
     const-string v6, "local_filename"
 
     invoke-interface {v0, v6}, Landroid/database/Cursor;->getColumnIndexOrThrow(Ljava/lang/String;)I
@@ -858,12 +933,14 @@
     invoke-direct {v6, v3}, Ljava/io/File;-><init>(Ljava/lang/String;)V
 
     invoke-static {v6}, Landroid/net/Uri;->fromFile(Ljava/io/File;)Landroid/net/Uri;
-    :try_end_1
-    .catchall {:try_start_1 .. :try_end_1} :catchall_0
+    :try_end_2
+    .catchall {:try_start_2 .. :try_end_2} :catchall_0
 
     move-result-object v6
 
     if-eqz v0, :cond_0
+
+    invoke-interface {v0}, Landroid/database/Cursor;->close()V
 
     goto :goto_0
 
@@ -871,20 +948,22 @@
     .end local v2           #indx:I
     .end local v3           #path:Ljava/lang/String;
     .end local v5           #status:I
-    :catchall_0
-    move-exception v6
-
-    if-eqz v0, :cond_4
+    :cond_4
+    if-eqz v0, :cond_0
 
     invoke-interface {v0}, Landroid/database/Cursor;->close()V
 
-    :cond_4
-    throw v6
+    goto :goto_0
+
+    :catchall_0
+    move-exception v6
+
+    if-eqz v0, :cond_5
+
+    invoke-interface {v0}, Landroid/database/Cursor;->close()V
 
     :cond_5
-    if-eqz v0, :cond_0
-
-    goto :goto_0
+    throw v6
 .end method
 
 .method public varargs markRowDeleted([J)I
@@ -1043,6 +1122,8 @@
     .parameter "ids"
 
     .prologue
+    const/4 v5, 0x0
+
     new-instance v3, Landroid/app/DownloadManager$Query;
 
     invoke-direct {v3}, Landroid/app/DownloadManager$Query;-><init>()V
@@ -1149,9 +1230,7 @@
     .local v2, values:Landroid/content/ContentValues;
     const-string v3, "current_bytes"
 
-    const/4 v4, 0x0
-
-    invoke-static {v4}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+    invoke-static {v5}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
     move-result-object v4
 
@@ -1176,6 +1255,14 @@
     const/16 v4, 0xbe
 
     invoke-static {v4}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v4
+
+    invoke-virtual {v2, v3, v4}, Landroid/content/ContentValues;->put(Ljava/lang/String;Ljava/lang/Integer;)V
+
+    const-string v3, "numfailed"
+
+    invoke-static {v5}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
     move-result-object v4
 

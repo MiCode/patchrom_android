@@ -171,42 +171,18 @@
 .end method
 
 .method private getTimeFormat()Ljava/text/DateFormat;
-    .locals 4
+    .locals 1
 
     .prologue
     invoke-virtual {p0}, Landroid/widget/DateTimeView;->getContext()Landroid/content/Context;
 
     move-result-object v0
 
-    .local v0, context:Landroid/content/Context;
-    invoke-static {v0}, Landroid/text/format/DateFormat;->is24HourFormat(Landroid/content/Context;)Z
+    invoke-static {v0}, Landroid/text/format/DateFormat;->getTimeFormat(Landroid/content/Context;)Ljava/text/DateFormat;
 
-    move-result v3
+    move-result-object v0
 
-    if-eqz v3, :cond_0
-
-    const v2, 0x1040031
-
-    .local v2, res:I
-    :goto_0
-    invoke-virtual {v0, v2}, Landroid/content/Context;->getString(I)Ljava/lang/String;
-
-    move-result-object v1
-
-    .local v1, format:Ljava/lang/String;
-    new-instance v3, Ljava/text/SimpleDateFormat;
-
-    invoke-direct {v3, v1}, Ljava/text/SimpleDateFormat;-><init>(Ljava/lang/String;)V
-
-    return-object v3
-
-    .end local v1           #format:Ljava/lang/String;
-    .end local v2           #res:I
-    :cond_0
-    const v2, 0x1040030
-
-    .restart local v2       #res:I
-    goto :goto_0
+    return-object v0
 .end method
 
 .method private registerReceivers()V

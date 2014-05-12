@@ -95,7 +95,7 @@
     goto :goto_0
 .end method
 
-.method static synthetic access$1700(Lcom/android/server/InputMethodManagerService$InputMethodAndSubtypeListManager;)Landroid/content/pm/PackageManager;
+.method static synthetic access$1600(Lcom/android/server/InputMethodManagerService$InputMethodAndSubtypeListManager;)Landroid/content/pm/PackageManager;
     .locals 1
     .parameter "x0"
 
@@ -147,8 +147,7 @@
 
     move-result v8
 
-    #calls: Lcom/android/server/InputMethodManagerService;->getSubtypeIdFromHashCode(Landroid/view/inputmethod/InputMethodInfo;I)I
-    invoke-static {p2, v8}, Lcom/android/server/InputMethodManagerService;->access$1800(Landroid/view/inputmethod/InputMethodInfo;I)I
+    invoke-static {p2, v8}, Lcom/android/internal/inputmethod/InputMethodUtils;->getSubtypeIdFromHashCode(Landroid/view/inputmethod/InputMethodInfo;I)I
 
     move-result v2
 
@@ -276,7 +275,7 @@
 .end method
 
 .method public getSortedInputMethodAndSubtypeList(ZZZ)Ljava/util/List;
-    .locals 23
+    .locals 22
     .parameter "showSubtypes"
     .parameter "inputShown"
     .parameter "isScreenLocked"
@@ -301,7 +300,7 @@
     iget-object v1, v0, Lcom/android/server/InputMethodManagerService$InputMethodAndSubtypeListManager;->mImms:Lcom/android/server/InputMethodManagerService;
 
     #calls: Lcom/android/server/InputMethodManagerService;->getExplicitlyOrImplicitlyEnabledInputMethodsAndSubtypeListLocked()Ljava/util/HashMap;
-    invoke-static {v1}, Lcom/android/server/InputMethodManagerService;->access$1900(Lcom/android/server/InputMethodManagerService;)Ljava/util/HashMap;
+    invoke-static {v1}, Lcom/android/server/InputMethodManagerService;->access$1700(Lcom/android/server/InputMethodManagerService;)Ljava/util/HashMap;
 
     move-result-object v18
 
@@ -415,12 +414,6 @@
 
     .end local v19           #subtype:Landroid/view/inputmethod/InputMethodSubtype;
     :cond_3
-    #calls: Lcom/android/server/InputMethodManagerService;->getSubtypes(Landroid/view/inputmethod/InputMethodInfo;)Ljava/util/ArrayList;
-    invoke-static {v4}, Lcom/android/server/InputMethodManagerService;->access$2000(Landroid/view/inputmethod/InputMethodInfo;)Ljava/util/ArrayList;
-
-    move-result-object v22
-
-    .local v22, subtypes:Ljava/util/ArrayList;,"Ljava/util/ArrayList<Landroid/view/inputmethod/InputMethodSubtype;>;"
     move-object/from16 v0, p0
 
     iget-object v1, v0, Lcom/android/server/InputMethodManagerService$InputMethodAndSubtypeListManager;->mPm:Landroid/content/pm/PackageManager;
@@ -578,7 +571,6 @@
     .end local v13           #enabledSubtypeSet:Ljava/util/HashSet;,"Ljava/util/HashSet<Ljava/lang/String;>;"
     .end local v14           #explicitlyOrImplicitlyEnabledSubtypeList:Ljava/util/List;,"Ljava/util/List<Landroid/view/inputmethod/InputMethodSubtype;>;"
     .end local v16           #i$:Ljava/util/Iterator;
-    .end local v22           #subtypes:Ljava/util/ArrayList;,"Ljava/util/ArrayList<Landroid/view/inputmethod/InputMethodSubtype;>;"
     :cond_9
     invoke-static/range {v17 .. v17}, Ljava/util/Collections;->sort(Ljava/util/List;)V
 

@@ -70,12 +70,32 @@
     return-void
 .end method
 
-.method static synthetic access$000(Landroid/database/MatrixCursor;)[Ljava/lang/Object;
+.method static synthetic access$000(Landroid/database/MatrixCursor;)I
+    .locals 1
+    .parameter "x0"
+
+    .prologue
+    iget v0, p0, Landroid/database/MatrixCursor;->columnCount:I
+
+    return v0
+.end method
+
+.method static synthetic access$100(Landroid/database/MatrixCursor;)[Ljava/lang/Object;
     .locals 1
     .parameter "x0"
 
     .prologue
     iget-object v0, p0, Landroid/database/MatrixCursor;->data:[Ljava/lang/Object;
+
+    return-object v0
+.end method
+
+.method static synthetic access$200(Landroid/database/MatrixCursor;)[Ljava/lang/String;
+    .locals 1
+    .parameter "x0"
+
+    .prologue
+    iget-object v0, p0, Landroid/database/MatrixCursor;->columnNames:[Ljava/lang/String;
 
     return-object v0
 .end method
@@ -829,12 +849,13 @@
     .locals 4
 
     .prologue
-    iget v2, p0, Landroid/database/MatrixCursor;->rowCount:I
+    iget v1, p0, Landroid/database/MatrixCursor;->rowCount:I
 
-    add-int/lit8 v2, v2, 0x1
+    add-int/lit8 v2, v1, 0x1
 
     iput v2, p0, Landroid/database/MatrixCursor;->rowCount:I
 
+    .local v1, row:I
     iget v2, p0, Landroid/database/MatrixCursor;->rowCount:I
 
     iget v3, p0, Landroid/database/MatrixCursor;->columnCount:I
@@ -844,14 +865,9 @@
     .local v0, endIndex:I
     invoke-direct {p0, v0}, Landroid/database/MatrixCursor;->ensureCapacity(I)V
 
-    iget v2, p0, Landroid/database/MatrixCursor;->columnCount:I
-
-    sub-int v1, v0, v2
-
-    .local v1, start:I
     new-instance v2, Landroid/database/MatrixCursor$RowBuilder;
 
-    invoke-direct {v2, p0, v1, v0}, Landroid/database/MatrixCursor$RowBuilder;-><init>(Landroid/database/MatrixCursor;II)V
+    invoke-direct {v2, p0, v1}, Landroid/database/MatrixCursor$RowBuilder;-><init>(Landroid/database/MatrixCursor;I)V
 
     return-object v2
 .end method

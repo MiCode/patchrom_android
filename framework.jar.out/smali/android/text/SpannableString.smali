@@ -65,6 +65,18 @@
 
 
 # virtual methods
+.method public bridge synthetic equals(Ljava/lang/Object;)Z
+    .locals 1
+    .parameter "x0"
+
+    .prologue
+    invoke-super {p0, p1}, Landroid/text/SpannableStringInternal;->equals(Ljava/lang/Object;)Z
+
+    move-result v0
+
+    return v0
+.end method
+
 .method public bridge synthetic getSpanEnd(Ljava/lang/Object;)I
     .locals 1
     .parameter "x0"
@@ -113,6 +125,17 @@
     move-result-object v0
 
     return-object v0
+.end method
+
+.method public bridge synthetic hashCode()I
+    .locals 1
+
+    .prologue
+    invoke-super {p0}, Landroid/text/SpannableStringInternal;->hashCode()I
+
+    move-result v0
+
+    return v0
 .end method
 
 .method public bridge synthetic nextSpanTransition(IILjava/lang/Class;)I

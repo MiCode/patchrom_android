@@ -142,7 +142,7 @@
     .prologue
     invoke-super {p0, p1}, Landroid/preference/TwoStatePreference;->onBindView(Landroid/view/View;)V
 
-    const v2, 0x1020348
+    const v2, 0x10202fb
 
     invoke-virtual {p1, v2}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 

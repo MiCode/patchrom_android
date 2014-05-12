@@ -25,11 +25,11 @@
 
 
 # instance fields
-.field protected cnapName:Ljava/lang/String;
+.field protected mCnapName:Ljava/lang/String;
 
-.field protected cnapNamePresentation:I
+.field protected mCnapNamePresentation:I
 
-.field userData:Ljava/lang/Object;
+.field mUserData:Ljava/lang/Object;
 
 
 # direct methods
@@ -53,7 +53,7 @@
 
     sput v0, Lcom/android/internal/telephony/Connection;->PRESENTATION_PAYPHONE:I
 
-    const-string v0, "TelephonyConnection"
+    const-string v0, "Connection"
 
     sput-object v0, Lcom/android/internal/telephony/Connection;->LOG_TAG:Ljava/lang/String;
 
@@ -68,7 +68,7 @@
 
     sget v0, Lcom/android/internal/telephony/PhoneConstants;->PRESENTATION_ALLOWED:I
 
-    iput v0, p0, Lcom/android/internal/telephony/Connection;->cnapNamePresentation:I
+    iput v0, p0, Lcom/android/internal/telephony/Connection;->mCnapNamePresentation:I
 
     return-void
 .end method
@@ -84,7 +84,7 @@
     .prologue
     const/4 v0, 0x0
 
-    iput-object v0, p0, Lcom/android/internal/telephony/Connection;->userData:Ljava/lang/Object;
+    iput-object v0, p0, Lcom/android/internal/telephony/Connection;->mUserData:Ljava/lang/Object;
 
     return-void
 .end method
@@ -99,7 +99,7 @@
     .locals 1
 
     .prologue
-    iget-object v0, p0, Lcom/android/internal/telephony/Connection;->cnapName:Ljava/lang/String;
+    iget-object v0, p0, Lcom/android/internal/telephony/Connection;->mCnapName:Ljava/lang/String;
 
     return-object v0
 .end method
@@ -108,7 +108,7 @@
     .locals 1
 
     .prologue
-    iget v0, p0, Lcom/android/internal/telephony/Connection;->cnapNamePresentation:I
+    iget v0, p0, Lcom/android/internal/telephony/Connection;->mCnapNamePresentation:I
 
     return v0
 .end method
@@ -180,7 +180,7 @@
     .locals 1
 
     .prologue
-    iget-object v0, p0, Lcom/android/internal/telephony/Connection;->userData:Ljava/lang/Object;
+    iget-object v0, p0, Lcom/android/internal/telephony/Connection;->mUserData:Ljava/lang/Object;
 
     return-object v0
 .end method
@@ -245,7 +245,7 @@
     .parameter "userdata"
 
     .prologue
-    iput-object p1, p0, Lcom/android/internal/telephony/Connection;->userData:Ljava/lang/Object;
+    iput-object p1, p0, Lcom/android/internal/telephony/Connection;->mUserData:Ljava/lang/Object;
 
     return-void
 .end method
@@ -265,7 +265,7 @@
 
     const/4 v2, 0x3
 
-    invoke-static {v1, v2}, Landroid/util/Log;->isLoggable(Ljava/lang/String;I)Z
+    invoke-static {v1, v2}, Landroid/telephony/Rlog;->isLoggable(Ljava/lang/String;I)Z
 
     move-result v1
 

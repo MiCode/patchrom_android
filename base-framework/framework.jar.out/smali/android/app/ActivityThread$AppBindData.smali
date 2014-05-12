@@ -37,6 +37,8 @@
 
 .field instrumentationName:Landroid/content/ComponentName;
 
+.field instrumentationUiAutomationConnection:Landroid/app/IUiAutomationConnection;
+
 .field instrumentationWatcher:Landroid/app/IInstrumentationWatcher;
 
 .field persistent:Z

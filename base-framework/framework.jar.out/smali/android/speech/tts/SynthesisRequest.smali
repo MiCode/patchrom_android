@@ -4,6 +4,8 @@
 
 
 # instance fields
+.field private mCallerUid:I
+
 .field private mCountry:Ljava/lang/String;
 
 .field private mLanguage:Ljava/lang/String;
@@ -41,6 +43,15 @@
 
 
 # virtual methods
+.method public getCallerUid()I
+    .locals 1
+
+    .prologue
+    iget v0, p0, Landroid/speech/tts/SynthesisRequest;->mCallerUid:I
+
+    return v0
+.end method
+
 .method public getCountry()Ljava/lang/String;
     .locals 1
 
@@ -102,6 +113,16 @@
     iget-object v0, p0, Landroid/speech/tts/SynthesisRequest;->mVariant:Ljava/lang/String;
 
     return-object v0
+.end method
+
+.method setCallerUid(I)V
+    .locals 0
+    .parameter "uid"
+
+    .prologue
+    iput p1, p0, Landroid/speech/tts/SynthesisRequest;->mCallerUid:I
+
+    return-void
 .end method
 
 .method setLanguage(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V

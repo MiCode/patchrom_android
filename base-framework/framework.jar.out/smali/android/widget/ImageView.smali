@@ -23,6 +23,8 @@
 # instance fields
 .field private mAdjustViewBounds:Z
 
+.field private mAdjustViewBoundsCompat:Z
+
 .field private mAlpha:I
 
 .field private mBaseline:I
@@ -68,6 +70,8 @@
 .field private mUri:Landroid/net/Uri;
 
 .field private mViewAlphaScale:I
+
+.field private mXfermode:Landroid/graphics/Xfermode;
 
 
 # direct methods
@@ -213,6 +217,8 @@
 
     iput-boolean v1, p0, Landroid/widget/ImageView;->mBaselineAlignBottom:Z
 
+    iput-boolean v1, p0, Landroid/widget/ImageView;->mAdjustViewBoundsCompat:Z
+
     invoke-direct {p0}, Landroid/widget/ImageView;->initImageView()V
 
     return-void
@@ -293,6 +299,8 @@
     iput v8, p0, Landroid/widget/ImageView;->mBaseline:I
 
     iput-boolean v6, p0, Landroid/widget/ImageView;->mBaselineAlignBottom:Z
+
+    iput-boolean v6, p0, Landroid/widget/ImageView;->mAdjustViewBoundsCompat:Z
 
     invoke-direct {p0}, Landroid/widget/ImageView;->initImageView()V
 
@@ -431,6 +439,12 @@
     iget-object v1, p0, Landroid/widget/ImageView;->mColorFilter:Landroid/graphics/ColorFilter;
 
     invoke-virtual {v0, v1}, Landroid/graphics/drawable/Drawable;->setColorFilter(Landroid/graphics/ColorFilter;)V
+
+    iget-object v0, p0, Landroid/widget/ImageView;->mDrawable:Landroid/graphics/drawable/Drawable;
+
+    iget-object v1, p0, Landroid/widget/ImageView;->mXfermode:Landroid/graphics/Xfermode;
+
+    invoke-virtual {v0, v1}, Landroid/graphics/drawable/Drawable;->setXfermode(Landroid/graphics/Xfermode;)V
 
     iget-object v0, p0, Landroid/widget/ImageView;->mDrawable:Landroid/graphics/drawable/Drawable;
 
@@ -836,7 +850,7 @@
 .end method
 
 .method private initImageView()V
-    .locals 1
+    .locals 2
 
     .prologue
     new-instance v0, Landroid/graphics/Matrix;
@@ -849,7 +863,29 @@
 
     iput-object v0, p0, Landroid/widget/ImageView;->mScaleType:Landroid/widget/ImageView$ScaleType;
 
+    iget-object v0, p0, Landroid/widget/ImageView;->mContext:Landroid/content/Context;
+
+    invoke-virtual {v0}, Landroid/content/Context;->getApplicationInfo()Landroid/content/pm/ApplicationInfo;
+
+    move-result-object v0
+
+    iget v0, v0, Landroid/content/pm/ApplicationInfo;->targetSdkVersion:I
+
+    const/16 v1, 0x11
+
+    if-gt v0, v1, :cond_0
+
+    const/4 v0, 0x1
+
+    :goto_0
+    iput-boolean v0, p0, Landroid/widget/ImageView;->mAdjustViewBoundsCompat:Z
+
     return-void
+
+    :cond_0
+    const/4 v0, 0x0
+
+    goto :goto_0
 .end method
 
 .method private resizeFromDrawable()V
@@ -961,14 +997,14 @@
 .end method
 
 .method private resolveUri()V
-    .locals 9
+    .locals 10
 
     .prologue
-    const/4 v8, 0x0
+    const/4 v9, 0x0
 
-    iget-object v5, p0, Landroid/widget/ImageView;->mDrawable:Landroid/graphics/drawable/Drawable;
+    iget-object v6, p0, Landroid/widget/ImageView;->mDrawable:Landroid/graphics/drawable/Drawable;
 
-    if-eqz v5, :cond_1
+    if-eqz v6, :cond_1
 
     :cond_0
     :goto_0
@@ -985,14 +1021,14 @@
     const/4 v0, 0x0
 
     .local v0, d:Landroid/graphics/drawable/Drawable;
-    iget v5, p0, Landroid/widget/ImageView;->mResource:I
+    iget v6, p0, Landroid/widget/ImageView;->mResource:I
 
-    if-eqz v5, :cond_3
+    if-eqz v6, :cond_3
 
     :try_start_0
-    iget v5, p0, Landroid/widget/ImageView;->mResource:I
+    iget v6, p0, Landroid/widget/ImageView;->mResource:I
 
-    invoke-virtual {v3, v5}, Landroid/content/res/Resources;->getDrawable(I)Landroid/graphics/drawable/Drawable;
+    invoke-virtual {v3, v6}, Landroid/content/res/Resources;->getDrawable(I)Landroid/graphics/drawable/Drawable;
     :try_end_0
     .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
 
@@ -1008,108 +1044,109 @@
     move-exception v1
 
     .local v1, e:Ljava/lang/Exception;
-    const-string v5, "ImageView"
+    const-string v6, "ImageView"
 
-    new-instance v6, Ljava/lang/StringBuilder;
+    new-instance v7, Ljava/lang/StringBuilder;
 
-    invoke-direct {v6}, Ljava/lang/StringBuilder;-><init>()V
+    invoke-direct {v7}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v7, "Unable to find resource: "
+    const-string v8, "Unable to find resource: "
 
-    invoke-virtual {v6, v7}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v6
+    move-result-object v7
 
-    iget v7, p0, Landroid/widget/ImageView;->mResource:I
+    iget v8, p0, Landroid/widget/ImageView;->mResource:I
 
-    invoke-virtual {v6, v7}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
-    move-result-object v6
+    move-result-object v7
 
-    invoke-virtual {v6}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    invoke-virtual {v7}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    move-result-object v6
+    move-result-object v7
 
-    invoke-static {v5, v6, v1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+    invoke-static {v6, v7, v1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
 
-    iput-object v8, p0, Landroid/widget/ImageView;->mUri:Landroid/net/Uri;
+    iput-object v9, p0, Landroid/widget/ImageView;->mUri:Landroid/net/Uri;
 
     goto :goto_1
 
     .end local v1           #e:Ljava/lang/Exception;
     :cond_3
-    iget-object v5, p0, Landroid/widget/ImageView;->mUri:Landroid/net/Uri;
+    iget-object v6, p0, Landroid/widget/ImageView;->mUri:Landroid/net/Uri;
 
-    if-eqz v5, :cond_0
+    if-eqz v6, :cond_0
 
-    iget-object v5, p0, Landroid/widget/ImageView;->mUri:Landroid/net/Uri;
+    iget-object v6, p0, Landroid/widget/ImageView;->mUri:Landroid/net/Uri;
 
-    invoke-virtual {v5}, Landroid/net/Uri;->getScheme()Ljava/lang/String;
+    invoke-virtual {v6}, Landroid/net/Uri;->getScheme()Ljava/lang/String;
 
     move-result-object v4
 
     .local v4, scheme:Ljava/lang/String;
-    const-string v5, "android.resource"
+    const-string v6, "android.resource"
 
-    invoke-virtual {v5, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+    invoke-virtual {v6, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
-    move-result v5
+    move-result v6
 
-    if-eqz v5, :cond_4
+    if-eqz v6, :cond_5
 
     :try_start_1
-    iget-object v5, p0, Landroid/widget/ImageView;->mContext:Landroid/content/Context;
+    iget-object v6, p0, Landroid/widget/ImageView;->mContext:Landroid/content/Context;
 
-    invoke-virtual {v5}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
+    invoke-virtual {v6}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
 
-    move-result-object v5
+    move-result-object v6
 
-    iget-object v6, p0, Landroid/widget/ImageView;->mUri:Landroid/net/Uri;
+    iget-object v7, p0, Landroid/widget/ImageView;->mUri:Landroid/net/Uri;
 
-    invoke-virtual {v5, v6}, Landroid/content/ContentResolver;->getResourceId(Landroid/net/Uri;)Landroid/content/ContentResolver$OpenResourceIdResult;
+    invoke-virtual {v6, v7}, Landroid/content/ContentResolver;->getResourceId(Landroid/net/Uri;)Landroid/content/ContentResolver$OpenResourceIdResult;
 
     move-result-object v2
 
     .local v2, r:Landroid/content/ContentResolver$OpenResourceIdResult;
-    iget-object v5, v2, Landroid/content/ContentResolver$OpenResourceIdResult;->r:Landroid/content/res/Resources;
+    iget-object v6, v2, Landroid/content/ContentResolver$OpenResourceIdResult;->r:Landroid/content/res/Resources;
 
-    iget v6, v2, Landroid/content/ContentResolver$OpenResourceIdResult;->id:I
+    iget v7, v2, Landroid/content/ContentResolver$OpenResourceIdResult;->id:I
 
-    invoke-virtual {v5, v6}, Landroid/content/res/Resources;->getDrawable(I)Landroid/graphics/drawable/Drawable;
+    invoke-virtual {v6, v7}, Landroid/content/res/Resources;->getDrawable(I)Landroid/graphics/drawable/Drawable;
     :try_end_1
     .catch Ljava/lang/Exception; {:try_start_1 .. :try_end_1} :catch_1
 
     move-result-object v0
 
     .end local v2           #r:Landroid/content/ContentResolver$OpenResourceIdResult;
+    :cond_4
     :goto_2
     if-nez v0, :cond_2
 
-    sget-object v5, Ljava/lang/System;->out:Ljava/io/PrintStream;
+    sget-object v6, Ljava/lang/System;->out:Ljava/io/PrintStream;
 
-    new-instance v6, Ljava/lang/StringBuilder;
+    new-instance v7, Ljava/lang/StringBuilder;
 
-    invoke-direct {v6}, Ljava/lang/StringBuilder;-><init>()V
+    invoke-direct {v7}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v7, "resolveUri failed on bad bitmap uri: "
+    const-string v8, "resolveUri failed on bad bitmap uri: "
 
-    invoke-virtual {v6, v7}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v6
+    move-result-object v7
 
-    iget-object v7, p0, Landroid/widget/ImageView;->mUri:Landroid/net/Uri;
+    iget-object v8, p0, Landroid/widget/ImageView;->mUri:Landroid/net/Uri;
 
-    invoke-virtual {v6, v7}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
 
-    move-result-object v6
+    move-result-object v7
 
-    invoke-virtual {v6}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    invoke-virtual {v7}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    move-result-object v6
+    move-result-object v7
 
-    invoke-virtual {v5, v6}, Ljava/io/PrintStream;->println(Ljava/lang/String;)V
+    invoke-virtual {v6, v7}, Ljava/io/PrintStream;->println(Ljava/lang/String;)V
 
-    iput-object v8, p0, Landroid/widget/ImageView;->mUri:Landroid/net/Uri;
+    iput-object v9, p0, Landroid/widget/ImageView;->mUri:Landroid/net/Uri;
 
     goto :goto_1
 
@@ -1117,61 +1154,64 @@
     move-exception v1
 
     .restart local v1       #e:Ljava/lang/Exception;
-    const-string v5, "ImageView"
+    const-string v6, "ImageView"
 
-    new-instance v6, Ljava/lang/StringBuilder;
+    new-instance v7, Ljava/lang/StringBuilder;
 
-    invoke-direct {v6}, Ljava/lang/StringBuilder;-><init>()V
+    invoke-direct {v7}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v7, "Unable to open content: "
+    const-string v8, "Unable to open content: "
 
-    invoke-virtual {v6, v7}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v7
+
+    iget-object v8, p0, Landroid/widget/ImageView;->mUri:Landroid/net/Uri;
+
+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    move-result-object v7
+
+    invoke-virtual {v7}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v7
+
+    invoke-static {v6, v7, v1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+
+    goto :goto_2
+
+    .end local v1           #e:Ljava/lang/Exception;
+    :cond_5
+    const-string v6, "content"
+
+    invoke-virtual {v6, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v6
+
+    if-nez v6, :cond_6
+
+    const-string v6, "file"
+
+    invoke-virtual {v6, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v6
+
+    if-eqz v6, :cond_8
+
+    :cond_6
+    const/4 v5, 0x0
+
+    .local v5, stream:Ljava/io/InputStream;
+    :try_start_2
+    iget-object v6, p0, Landroid/widget/ImageView;->mContext:Landroid/content/Context;
+
+    invoke-virtual {v6}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
 
     move-result-object v6
 
     iget-object v7, p0, Landroid/widget/ImageView;->mUri:Landroid/net/Uri;
 
-    invoke-virtual {v6, v7}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
-
-    move-result-object v6
-
-    invoke-virtual {v6}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v6
-
-    invoke-static {v5, v6, v1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
-
-    goto :goto_2
-
-    .end local v1           #e:Ljava/lang/Exception;
-    :cond_4
-    const-string v5, "content"
-
-    invoke-virtual {v5, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v5
-
-    if-nez v5, :cond_5
-
-    const-string v5, "file"
-
-    invoke-virtual {v5, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v5
-
-    if-eqz v5, :cond_6
-
-    :cond_5
-    :try_start_2
-    iget-object v5, p0, Landroid/widget/ImageView;->mContext:Landroid/content/Context;
-
-    invoke-virtual {v5}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
-
-    move-result-object v5
-
-    iget-object v6, p0, Landroid/widget/ImageView;->mUri:Landroid/net/Uri;
-
-    invoke-virtual {v5, v6}, Landroid/content/ContentResolver;->openInputStream(Landroid/net/Uri;)Ljava/io/InputStream;
+    invoke-virtual {v6, v7}, Landroid/content/ContentResolver;->openInputStream(Landroid/net/Uri;)Ljava/io/InputStream;
 
     move-result-object v5
 
@@ -1179,51 +1219,176 @@
 
     invoke-static {v5, v6}, Landroid/graphics/drawable/Drawable;->createFromStream(Ljava/io/InputStream;Ljava/lang/String;)Landroid/graphics/drawable/Drawable;
     :try_end_2
-    .catch Ljava/lang/Exception; {:try_start_2 .. :try_end_2} :catch_2
+    .catchall {:try_start_2 .. :try_end_2} :catchall_0
+    .catch Ljava/lang/Exception; {:try_start_2 .. :try_end_2} :catch_3
 
     move-result-object v0
+
+    if-eqz v5, :cond_4
+
+    :try_start_3
+    invoke-virtual {v5}, Ljava/io/InputStream;->close()V
+    :try_end_3
+    .catch Ljava/io/IOException; {:try_start_3 .. :try_end_3} :catch_2
 
     goto :goto_2
 
     :catch_2
     move-exception v1
 
-    .restart local v1       #e:Ljava/lang/Exception;
-    const-string v5, "ImageView"
+    .local v1, e:Ljava/io/IOException;
+    const-string v6, "ImageView"
 
-    new-instance v6, Ljava/lang/StringBuilder;
+    new-instance v7, Ljava/lang/StringBuilder;
 
-    invoke-direct {v6}, Ljava/lang/StringBuilder;-><init>()V
+    invoke-direct {v7}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v7, "Unable to open content: "
+    const-string v8, "Unable to close content: "
 
-    invoke-virtual {v6, v7}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v6
+    move-result-object v7
 
-    iget-object v7, p0, Landroid/widget/ImageView;->mUri:Landroid/net/Uri;
+    iget-object v8, p0, Landroid/widget/ImageView;->mUri:Landroid/net/Uri;
 
-    invoke-virtual {v6, v7}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
 
-    move-result-object v6
+    move-result-object v7
 
-    invoke-virtual {v6}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    invoke-virtual {v7}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    move-result-object v6
+    move-result-object v7
 
-    invoke-static {v5, v6, v1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+    invoke-static {v6, v7, v1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
 
     goto :goto_2
 
-    .end local v1           #e:Ljava/lang/Exception;
-    :cond_6
-    iget-object v5, p0, Landroid/widget/ImageView;->mUri:Landroid/net/Uri;
+    .end local v1           #e:Ljava/io/IOException;
+    :catch_3
+    move-exception v1
 
-    invoke-virtual {v5}, Landroid/net/Uri;->toString()Ljava/lang/String;
+    .local v1, e:Ljava/lang/Exception;
+    :try_start_4
+    const-string v6, "ImageView"
 
-    move-result-object v5
+    new-instance v7, Ljava/lang/StringBuilder;
 
-    invoke-static {v5}, Landroid/graphics/drawable/Drawable;->createFromPath(Ljava/lang/String;)Landroid/graphics/drawable/Drawable;
+    invoke-direct {v7}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v8, "Unable to open content: "
+
+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v7
+
+    iget-object v8, p0, Landroid/widget/ImageView;->mUri:Landroid/net/Uri;
+
+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    move-result-object v7
+
+    invoke-virtual {v7}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v7
+
+    invoke-static {v6, v7, v1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+    :try_end_4
+    .catchall {:try_start_4 .. :try_end_4} :catchall_0
+
+    if-eqz v5, :cond_4
+
+    :try_start_5
+    invoke-virtual {v5}, Ljava/io/InputStream;->close()V
+    :try_end_5
+    .catch Ljava/io/IOException; {:try_start_5 .. :try_end_5} :catch_4
+
+    goto/16 :goto_2
+
+    :catch_4
+    move-exception v1
+
+    .local v1, e:Ljava/io/IOException;
+    const-string v6, "ImageView"
+
+    new-instance v7, Ljava/lang/StringBuilder;
+
+    invoke-direct {v7}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v8, "Unable to close content: "
+
+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v7
+
+    iget-object v8, p0, Landroid/widget/ImageView;->mUri:Landroid/net/Uri;
+
+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    move-result-object v7
+
+    invoke-virtual {v7}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v7
+
+    invoke-static {v6, v7, v1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+
+    goto/16 :goto_2
+
+    .end local v1           #e:Ljava/io/IOException;
+    :catchall_0
+    move-exception v6
+
+    if-eqz v5, :cond_7
+
+    :try_start_6
+    invoke-virtual {v5}, Ljava/io/InputStream;->close()V
+    :try_end_6
+    .catch Ljava/io/IOException; {:try_start_6 .. :try_end_6} :catch_5
+
+    :cond_7
+    :goto_3
+    throw v6
+
+    :catch_5
+    move-exception v1
+
+    .restart local v1       #e:Ljava/io/IOException;
+    const-string v7, "ImageView"
+
+    new-instance v8, Ljava/lang/StringBuilder;
+
+    invoke-direct {v8}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v9, "Unable to close content: "
+
+    invoke-virtual {v8, v9}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v8
+
+    iget-object v9, p0, Landroid/widget/ImageView;->mUri:Landroid/net/Uri;
+
+    invoke-virtual {v8, v9}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    move-result-object v8
+
+    invoke-virtual {v8}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v8
+
+    invoke-static {v7, v8, v1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+
+    goto :goto_3
+
+    .end local v1           #e:Ljava/io/IOException;
+    .end local v5           #stream:Ljava/io/InputStream;
+    :cond_8
+    iget-object v6, p0, Landroid/widget/ImageView;->mUri:Landroid/net/Uri;
+
+    invoke-virtual {v6}, Landroid/net/Uri;->toString()Ljava/lang/String;
+
+    move-result-object v6
+
+    invoke-static {v6}, Landroid/graphics/drawable/Drawable;->createFromPath(Ljava/lang/String;)Landroid/graphics/drawable/Drawable;
 
     move-result-object v0
 
@@ -1247,19 +1412,21 @@
 .end method
 
 .method private updateDrawable(Landroid/graphics/drawable/Drawable;)V
-    .locals 2
+    .locals 3
     .parameter "d"
 
     .prologue
+    const/4 v1, 0x1
+
     iget-object v0, p0, Landroid/widget/ImageView;->mDrawable:Landroid/graphics/drawable/Drawable;
 
     if-eqz v0, :cond_0
 
     iget-object v0, p0, Landroid/widget/ImageView;->mDrawable:Landroid/graphics/drawable/Drawable;
 
-    const/4 v1, 0x0
+    const/4 v2, 0x0
 
-    invoke-virtual {v0, v1}, Landroid/graphics/drawable/Drawable;->setCallback(Landroid/graphics/drawable/Drawable$Callback;)V
+    invoke-virtual {v0, v2}, Landroid/graphics/drawable/Drawable;->setCallback(Landroid/graphics/drawable/Drawable$Callback;)V
 
     iget-object v0, p0, Landroid/widget/ImageView;->mDrawable:Landroid/graphics/drawable/Drawable;
 
@@ -1268,7 +1435,7 @@
     :cond_0
     iput-object p1, p0, Landroid/widget/ImageView;->mDrawable:Landroid/graphics/drawable/Drawable;
 
-    if-eqz p1, :cond_2
+    if-eqz p1, :cond_3
 
     invoke-virtual {p1, p0}, Landroid/graphics/drawable/Drawable;->setCallback(Landroid/graphics/drawable/Drawable$Callback;)V
 
@@ -1295,6 +1462,17 @@
 
     invoke-virtual {p1, v0}, Landroid/graphics/drawable/Drawable;->setLayoutDirection(I)V
 
+    invoke-virtual {p0}, Landroid/widget/ImageView;->getVisibility()I
+
+    move-result v0
+
+    if-nez v0, :cond_2
+
+    move v0, v1
+
+    :goto_0
+    invoke-virtual {p1, v0, v1}, Landroid/graphics/drawable/Drawable;->setVisible(ZZ)Z
+
     invoke-virtual {p1}, Landroid/graphics/drawable/Drawable;->getIntrinsicWidth()I
 
     move-result v0
@@ -1311,17 +1489,22 @@
 
     invoke-direct {p0}, Landroid/widget/ImageView;->configureBounds()V
 
-    :goto_0
+    :goto_1
     return-void
 
     :cond_2
+    const/4 v0, 0x0
+
+    goto :goto_0
+
+    :cond_3
     const/4 v0, -0x1
 
     iput v0, p0, Landroid/widget/ImageView;->mDrawableHeight:I
 
     iput v0, p0, Landroid/widget/ImageView;->mDrawableWidth:I
 
-    goto :goto_0
+    goto :goto_1
 .end method
 
 
@@ -1443,12 +1626,26 @@
 .end method
 
 .method public getImageMatrix()Landroid/graphics/Matrix;
-    .locals 1
+    .locals 2
 
     .prologue
-    iget-object v0, p0, Landroid/widget/ImageView;->mMatrix:Landroid/graphics/Matrix;
+    iget-object v0, p0, Landroid/widget/ImageView;->mDrawMatrix:Landroid/graphics/Matrix;
 
+    if-nez v0, :cond_0
+
+    new-instance v0, Landroid/graphics/Matrix;
+
+    sget-object v1, Landroid/graphics/Matrix;->IDENTITY_MATRIX:Landroid/graphics/Matrix;
+
+    invoke-direct {v0, v1}, Landroid/graphics/Matrix;-><init>(Landroid/graphics/Matrix;)V
+
+    :goto_0
     return-object v0
+
+    :cond_0
+    iget-object v0, p0, Landroid/widget/ImageView;->mDrawMatrix:Landroid/graphics/Matrix;
+
+    goto :goto_0
 .end method
 
 .method public getMaxHeight()I
@@ -1483,6 +1680,16 @@
 
     .prologue
     invoke-virtual {p0}, Landroid/widget/ImageView;->getBackground()Landroid/graphics/drawable/Drawable;
+
+    move-result-object v0
+
+    if-eqz v0, :cond_0
+
+    invoke-virtual {p0}, Landroid/widget/ImageView;->getBackground()Landroid/graphics/drawable/Drawable;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Landroid/graphics/drawable/Drawable;->getCurrent()Landroid/graphics/drawable/Drawable;
 
     move-result-object v0
 
@@ -1830,7 +2037,7 @@
 
     move-object/from16 v21, v0
 
-    if-nez v21, :cond_4
+    if-nez v21, :cond_6
 
     const/16 v21, -0x1
 
@@ -1878,7 +2085,7 @@
     .local v12, pbottom:I
     if-nez v17, :cond_1
 
-    if-eqz v16, :cond_9
+    if-eqz v16, :cond_b
 
     :cond_1
     add-int v21, v18, v13
@@ -1931,7 +2138,7 @@
 
     cmpl-float v21, v5, v21
 
-    if-eqz v21, :cond_3
+    if-eqz v21, :cond_5
 
     sub-int v21, v19, v13
 
@@ -1972,12 +2179,12 @@
 
     cmpl-double v21, v21, v23
 
-    if-lez v21, :cond_3
+    if-lez v21, :cond_5
 
     const/4 v6, 0x0
 
     .local v6, done:Z
-    if-eqz v17, :cond_2
+    if-eqz v17, :cond_3
 
     sub-int v21, v8, v15
 
@@ -2002,19 +2209,46 @@
     add-int v11, v21, v14
 
     .local v11, newWidth:I
+    if-nez v16, :cond_2
+
+    move-object/from16 v0, p0
+
+    iget-boolean v0, v0, Landroid/widget/ImageView;->mAdjustViewBoundsCompat:Z
+
+    move/from16 v21, v0
+
+    if-nez v21, :cond_2
+
+    move-object/from16 v0, p0
+
+    iget v0, v0, Landroid/widget/ImageView;->mMaxWidth:I
+
+    move/from16 v21, v0
+
+    move-object/from16 v0, p0
+
+    move/from16 v1, v21
+
+    move/from16 v2, p1
+
+    invoke-direct {v0, v11, v1, v2}, Landroid/widget/ImageView;->resolveAdjustedSize(III)I
+
+    move-result v19
+
+    :cond_2
     move/from16 v0, v19
 
-    if-gt v11, v0, :cond_2
+    if-gt v11, v0, :cond_3
 
     move/from16 v19, v11
 
     const/4 v6, 0x1
 
     .end local v11           #newWidth:I
-    :cond_2
-    if-nez v6, :cond_3
+    :cond_3
+    if-nez v6, :cond_5
 
-    if-eqz v16, :cond_3
+    if-eqz v16, :cond_5
 
     sub-int v21, v19, v13
 
@@ -2039,14 +2273,41 @@
     add-int v10, v21, v12
 
     .local v10, newHeight:I
-    if-gt v10, v8, :cond_3
+    if-nez v17, :cond_4
+
+    move-object/from16 v0, p0
+
+    iget-boolean v0, v0, Landroid/widget/ImageView;->mAdjustViewBoundsCompat:Z
+
+    move/from16 v21, v0
+
+    if-nez v21, :cond_4
+
+    move-object/from16 v0, p0
+
+    iget v0, v0, Landroid/widget/ImageView;->mMaxHeight:I
+
+    move/from16 v21, v0
+
+    move-object/from16 v0, p0
+
+    move/from16 v1, v21
+
+    move/from16 v2, p2
+
+    invoke-direct {v0, v10, v1, v2}, Landroid/widget/ImageView;->resolveAdjustedSize(III)I
+
+    move-result v8
+
+    :cond_4
+    if-gt v10, v8, :cond_5
 
     move v8, v10
 
     .end local v4           #actualAspect:F
     .end local v6           #done:Z
     .end local v10           #newHeight:I
-    :cond_3
+    :cond_5
     :goto_1
     move-object/from16 v0, p0
 
@@ -2064,7 +2325,7 @@
     .end local v15           #ptop:I
     .end local v18           #w:I
     .end local v19           #widthSize:I
-    :cond_4
+    :cond_6
     move-object/from16 v0, p0
 
     iget v0, v0, Landroid/widget/ImageView;->mDrawableWidth:I
@@ -2077,16 +2338,16 @@
     iget v7, v0, Landroid/widget/ImageView;->mDrawableHeight:I
 
     .restart local v7       #h:I
-    if-gtz v18, :cond_5
+    if-gtz v18, :cond_7
 
     const/16 v18, 0x1
 
-    :cond_5
-    if-gtz v7, :cond_6
+    :cond_7
+    if-gtz v7, :cond_8
 
     const/4 v7, 0x1
 
-    :cond_6
+    :cond_8
     move-object/from16 v0, p0
 
     iget-boolean v0, v0, Landroid/widget/ImageView;->mAdjustViewBounds:Z
@@ -2101,7 +2362,7 @@
 
     move/from16 v1, v21
 
-    if-eq v0, v1, :cond_7
+    if-eq v0, v1, :cond_9
 
     const/16 v17, 0x1
 
@@ -2110,7 +2371,7 @@
 
     move/from16 v0, v21
 
-    if-eq v9, v0, :cond_8
+    if-eq v9, v0, :cond_a
 
     const/16 v16, 0x1
 
@@ -2129,12 +2390,12 @@
 
     goto/16 :goto_0
 
-    :cond_7
+    :cond_9
     const/16 v17, 0x0
 
     goto :goto_2
 
-    :cond_8
+    :cond_a
     const/16 v16, 0x0
 
     goto :goto_3
@@ -2143,7 +2404,7 @@
     .restart local v13       #pleft:I
     .restart local v14       #pright:I
     .restart local v15       #ptop:I
-    :cond_9
+    :cond_b
     add-int v21, v13, v14
 
     add-int v18, v18, v21
@@ -2224,6 +2485,25 @@
     move-result-object v1
 
     invoke-interface {v1, v0}, Ljava/util/List;->add(Ljava/lang/Object;)Z
+
+    :cond_0
+    return-void
+.end method
+
+.method public onRtlPropertiesChanged(I)V
+    .locals 1
+    .parameter "layoutDirection"
+
+    .prologue
+    invoke-super {p0, p1}, Landroid/view/View;->onRtlPropertiesChanged(I)V
+
+    iget-object v0, p0, Landroid/widget/ImageView;->mDrawable:Landroid/graphics/drawable/Drawable;
+
+    if-eqz v0, :cond_0
+
+    iget-object v0, p0, Landroid/widget/ImageView;->mDrawable:Landroid/graphics/drawable/Drawable;
+
+    invoke-virtual {v0, p1}, Landroid/graphics/drawable/Drawable;->setLayoutDirection(I)V
 
     :cond_0
     return-void
@@ -2810,6 +3090,29 @@
     move v0, v1
 
     goto :goto_0
+.end method
+
+.method public final setXfermode(Landroid/graphics/Xfermode;)V
+    .locals 1
+    .parameter "mode"
+
+    .prologue
+    iget-object v0, p0, Landroid/widget/ImageView;->mXfermode:Landroid/graphics/Xfermode;
+
+    if-eq v0, p1, :cond_0
+
+    iput-object p1, p0, Landroid/widget/ImageView;->mXfermode:Landroid/graphics/Xfermode;
+
+    const/4 v0, 0x1
+
+    iput-boolean v0, p0, Landroid/widget/ImageView;->mColorMod:Z
+
+    invoke-direct {p0}, Landroid/widget/ImageView;->applyColorMod()V
+
+    invoke-virtual {p0}, Landroid/widget/ImageView;->invalidate()V
+
+    :cond_0
+    return-void
 .end method
 
 .method protected verifyDrawable(Landroid/graphics/drawable/Drawable;)Z

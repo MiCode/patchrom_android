@@ -219,11 +219,11 @@
     check-cast v3, Landroid/view/LayoutInflater;
 
     .local v3, inflater:Landroid/view/LayoutInflater;
-    const v7, 0x10900c1
+    const v7, 0x1090097
 
     invoke-virtual {v3, v7, p0, v11}, Landroid/view/LayoutInflater;->inflate(ILandroid/view/ViewGroup;Z)Landroid/view/View;
 
-    const v7, 0x1020364
+    const v7, 0x102031d
 
     invoke-virtual {p0, v7}, Landroid/widget/SearchView;->findViewById(I)Landroid/view/View;
 
@@ -231,7 +231,7 @@
 
     iput-object v7, p0, Landroid/widget/SearchView;->mSearchButton:Landroid/view/View;
 
-    const v7, 0x1020368
+    const v7, 0x1020321
 
     invoke-virtual {p0, v7}, Landroid/widget/SearchView;->findViewById(I)Landroid/view/View;
 
@@ -245,7 +245,7 @@
 
     invoke-virtual {v7, p0}, Landroid/widget/SearchView$SearchAutoComplete;->setSearchView(Landroid/widget/SearchView;)V
 
-    const v7, 0x1020365
+    const v7, 0x102031e
 
     invoke-virtual {p0, v7}, Landroid/widget/SearchView;->findViewById(I)Landroid/view/View;
 
@@ -253,7 +253,7 @@
 
     iput-object v7, p0, Landroid/widget/SearchView;->mSearchEditFrame:Landroid/view/View;
 
-    const v7, 0x1020367
+    const v7, 0x1020320
 
     invoke-virtual {p0, v7}, Landroid/widget/SearchView;->findViewById(I)Landroid/view/View;
 
@@ -261,7 +261,7 @@
 
     iput-object v7, p0, Landroid/widget/SearchView;->mSearchPlate:Landroid/view/View;
 
-    const v7, 0x102036a
+    const v7, 0x1020323
 
     invoke-virtual {p0, v7}, Landroid/widget/SearchView;->findViewById(I)Landroid/view/View;
 
@@ -269,7 +269,7 @@
 
     iput-object v7, p0, Landroid/widget/SearchView;->mSubmitArea:Landroid/view/View;
 
-    const v7, 0x102036b
+    const v7, 0x1020324
 
     invoke-virtual {p0, v7}, Landroid/widget/SearchView;->findViewById(I)Landroid/view/View;
 
@@ -277,7 +277,7 @@
 
     iput-object v7, p0, Landroid/widget/SearchView;->mSubmitButton:Landroid/view/View;
 
-    const v7, 0x1020369
+    const v7, 0x1020322
 
     invoke-virtual {p0, v7}, Landroid/widget/SearchView;->findViewById(I)Landroid/view/View;
 
@@ -287,7 +287,7 @@
 
     iput-object v7, p0, Landroid/widget/SearchView;->mCloseButton:Landroid/widget/ImageView;
 
-    const v7, 0x102036c
+    const v7, 0x1020325
 
     invoke-virtual {p0, v7}, Landroid/widget/SearchView;->findViewById(I)Landroid/view/View;
 
@@ -295,7 +295,7 @@
 
     iput-object v7, p0, Landroid/widget/SearchView;->mVoiceButton:Landroid/view/View;
 
-    const v7, 0x1020366
+    const v7, 0x102031f
 
     invoke-virtual {p0, v7}, Landroid/widget/SearchView;->findViewById(I)Landroid/view/View;
 
@@ -795,13 +795,13 @@
 
     if-eqz v7, :cond_1
 
-    const v7, 0x105004b
+    const v7, 0x105004d
 
     invoke-virtual {v5, v7}, Landroid/content/res/Resources;->getDimensionPixelSize(I)I
 
     move-result v7
 
-    const v8, 0x1050049
+    const v8, 0x105004b
 
     invoke-virtual {v5, v8}, Landroid/content/res/Resources;->getDimensionPixelSize(I)I
 
@@ -1504,7 +1504,7 @@
 
     move-result-object v0
 
-    const v1, 0x1050037
+    const v1, 0x1050039
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getDimensionPixelSize(I)I
 
@@ -1530,7 +1530,7 @@
 
     move-result-object v1
 
-    const v2, 0x10103ee
+    const v2, 0x1010417
 
     const/4 v3, 0x1
 
@@ -3237,9 +3237,15 @@
 .end method
 
 .method public onActionViewCollapsed()V
-    .locals 2
+    .locals 3
 
     .prologue
+    const/4 v2, 0x0
+
+    const-string v0, ""
+
+    invoke-virtual {p0, v0, v2}, Landroid/widget/SearchView;->setQuery(Ljava/lang/CharSequence;Z)V
+
     invoke-virtual {p0}, Landroid/widget/SearchView;->clearFocus()V
 
     const/4 v0, 0x1
@@ -3252,9 +3258,7 @@
 
     invoke-virtual {v0, v1}, Landroid/widget/SearchView$SearchAutoComplete;->setImeOptions(I)V
 
-    const/4 v0, 0x0
-
-    iput-boolean v0, p0, Landroid/widget/SearchView;->mExpandedInActionView:Z
+    iput-boolean v2, p0, Landroid/widget/SearchView;->mExpandedInActionView:Z
 
     return-void
 .end method

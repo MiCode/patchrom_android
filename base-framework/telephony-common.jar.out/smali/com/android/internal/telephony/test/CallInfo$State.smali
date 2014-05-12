@@ -40,7 +40,7 @@
 
 
 # instance fields
-.field private final value:I
+.field private final mValue:I
 
 
 # direct methods
@@ -159,7 +159,7 @@
     .prologue
     invoke-direct {p0, p1, p2}, Ljava/lang/Enum;-><init>(Ljava/lang/String;I)V
 
-    iput p3, p0, Lcom/android/internal/telephony/test/CallInfo$State;->value:I
+    iput p3, p0, Lcom/android/internal/telephony/test/CallInfo$State;->mValue:I
 
     return-void
 .end method
@@ -201,7 +201,7 @@
     .locals 1
 
     .prologue
-    iget v0, p0, Lcom/android/internal/telephony/test/CallInfo$State;->value:I
+    iget v0, p0, Lcom/android/internal/telephony/test/CallInfo$State;->mValue:I
 
     return v0
 .end method

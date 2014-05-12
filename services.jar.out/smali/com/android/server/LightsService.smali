@@ -208,9 +208,9 @@
     return-object v0
 .end method
 
-.method setLight(ILcom/android/server/LightsService$Light;)V
+.method public setLight(ILcom/android/server/LightsService$Light;)V
     .locals 1
-    .parameter "id"
+    .parameter "index"
     .parameter "light"
 
     .prologue

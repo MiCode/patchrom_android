@@ -144,7 +144,7 @@
 
     move-result-object v8
 
-    .local v8, _result:Ljava/util/List;,"Ljava/util/List<Lcom/android/internal/telephony/AdnRecord;>;"
+    .local v8, _result:Ljava/util/List;,"Ljava/util/List<Lcom/android/internal/telephony/uicc/AdnRecord;>;"
     invoke-virtual {p3}, Landroid/os/Parcel;->writeNoException()V
 
     invoke-virtual {p3, v8}, Landroid/os/Parcel;->writeTypedList(Ljava/util/List;)V
@@ -152,7 +152,7 @@
     goto :goto_0
 
     .end local v1           #_arg0:I
-    .end local v8           #_result:Ljava/util/List;,"Ljava/util/List<Lcom/android/internal/telephony/AdnRecord;>;"
+    .end local v8           #_result:Ljava/util/List;,"Ljava/util/List<Lcom/android/internal/telephony/uicc/AdnRecord;>;"
     :sswitch_2
     const-string v0, "com.android.internal.telephony.IIccPhoneBook"
 

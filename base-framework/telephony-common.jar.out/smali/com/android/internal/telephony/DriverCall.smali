@@ -13,9 +13,19 @@
     }
 .end annotation
 
+.annotation system Ldalvik/annotation/Signature;
+    value = {
+        "Ljava/lang/Object;",
+        "Ljava/lang/Comparable",
+        "<",
+        "Lcom/android/internal/telephony/DriverCall;",
+        ">;"
+    }
+.end annotation
+
 
 # static fields
-.field static final LOG_TAG:Ljava/lang/String; = "RILB"
+.field static final LOG_TAG:Ljava/lang/String; = "DriverCall"
 
 
 # instance fields
@@ -179,7 +189,7 @@
     move-exception v0
 
     .local v0, ex:Lcom/android/internal/telephony/ATParseEx;
-    const-string v4, "RILB"
+    const-string v4, "DriverCall"
 
     new-instance v5, Ljava/lang/StringBuilder;
 
@@ -205,7 +215,7 @@
 
     move-result-object v5
 
-    invoke-static {v4, v5}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v4, v5}, Landroid/telephony/Rlog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     move-object v2, v3
 
@@ -358,42 +368,52 @@
 
 
 # virtual methods
-.method public compareTo(Ljava/lang/Object;)I
-    .locals 3
-    .parameter "o"
+.method public compareTo(Lcom/android/internal/telephony/DriverCall;)I
+    .locals 2
+    .parameter "dc"
 
     .prologue
-    move-object v0, p1
+    iget v0, p0, Lcom/android/internal/telephony/DriverCall;->index:I
 
-    check-cast v0, Lcom/android/internal/telephony/DriverCall;
+    iget v1, p1, Lcom/android/internal/telephony/DriverCall;->index:I
 
-    .local v0, dc:Lcom/android/internal/telephony/DriverCall;
-    iget v1, p0, Lcom/android/internal/telephony/DriverCall;->index:I
+    if-ge v0, v1, :cond_0
 
-    iget v2, v0, Lcom/android/internal/telephony/DriverCall;->index:I
-
-    if-ge v1, v2, :cond_0
-
-    const/4 v1, -0x1
+    const/4 v0, -0x1
 
     :goto_0
-    return v1
+    return v0
 
     :cond_0
-    iget v1, p0, Lcom/android/internal/telephony/DriverCall;->index:I
+    iget v0, p0, Lcom/android/internal/telephony/DriverCall;->index:I
 
-    iget v2, v0, Lcom/android/internal/telephony/DriverCall;->index:I
+    iget v1, p1, Lcom/android/internal/telephony/DriverCall;->index:I
 
-    if-ne v1, v2, :cond_1
+    if-ne v0, v1, :cond_1
 
-    const/4 v1, 0x0
+    const/4 v0, 0x0
 
     goto :goto_0
 
     :cond_1
-    const/4 v1, 0x1
+    const/4 v0, 0x1
 
     goto :goto_0
+.end method
+
+.method public bridge synthetic compareTo(Ljava/lang/Object;)I
+    .locals 1
+    .parameter "x0"
+
+    .prologue
+    check-cast p1, Lcom/android/internal/telephony/DriverCall;
+
+    .end local p1
+    invoke-virtual {p0, p1}, Lcom/android/internal/telephony/DriverCall;->compareTo(Lcom/android/internal/telephony/DriverCall;)I
+
+    move-result v0
+
+    return v0
 .end method
 
 .method public toString()Ljava/lang/String;

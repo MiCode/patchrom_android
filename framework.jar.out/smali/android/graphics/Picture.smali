@@ -92,6 +92,8 @@
 .method public static createFromStream(Ljava/io/InputStream;)Landroid/graphics/Picture;
     .locals 3
     .parameter "stream"
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
 
     .prologue
     new-instance v0, Landroid/graphics/Picture;
@@ -245,6 +247,8 @@
 .method public writeToStream(Ljava/io/OutputStream;)V
     .locals 2
     .parameter "stream"
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
 
     .prologue
     if-nez p1, :cond_0

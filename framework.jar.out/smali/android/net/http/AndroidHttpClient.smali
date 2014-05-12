@@ -10,8 +10,7 @@
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
         Landroid/net/http/AndroidHttpClient$CurlLogger;,
-        Landroid/net/http/AndroidHttpClient$LoggingConfiguration;,
-        Landroid/net/http/AndroidHttpClient$Injector;
+        Landroid/net/http/AndroidHttpClient$LoggingConfiguration;
     }
 .end annotation
 
@@ -476,6 +475,10 @@
 
     const v8, 0xea60
 
+    invoke-static {p0, p1}, Landroid/net/http/Injector$AndroidHttpClientHook;->before_newInstance(Ljava/lang/String;Landroid/content/Context;)Ljava/lang/String;
+
+    move-result-object p0
+
     new-instance v1, Lorg/apache/http/params/BasicHttpParams;
 
     invoke-direct {v1}, Lorg/apache/http/params/BasicHttpParams;-><init>()V
@@ -499,11 +502,7 @@
 
     .local v3, sessionCache:Landroid/net/SSLSessionCache;
     :goto_0
-    invoke-static {p0}, Landroid/net/http/AndroidHttpClient$Injector;->getUserAgent(Ljava/lang/String;)Ljava/lang/String;
-
-    move-result-object v4
-
-    invoke-static {v1, v4}, Lorg/apache/http/params/HttpProtocolParams;->setUserAgent(Lorg/apache/http/params/HttpParams;Ljava/lang/String;)V
+    invoke-static {v1, p0}, Lorg/apache/http/params/HttpProtocolParams;->setUserAgent(Lorg/apache/http/params/HttpParams;Ljava/lang/String;)V
 
     new-instance v2, Lorg/apache/http/conn/scheme/SchemeRegistry;
 
@@ -589,6 +588,20 @@
 
     .local v3, builder:Ljava/lang/StringBuilder;
     const-string v13, "curl "
+
+    invoke-virtual {v3, v13}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    const-string v13, "-X "
+
+    invoke-virtual {v3, v13}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    invoke-interface/range {p0 .. p0}, Lorg/apache/http/client/methods/HttpUriRequest;->getMethod()Ljava/lang/String;
+
+    move-result-object v13
+
+    invoke-virtual {v3, v13}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    const-string v13, " "
 
     invoke-virtual {v3, v13}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 

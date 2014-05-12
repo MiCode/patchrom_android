@@ -3,14 +3,6 @@
 .source "ProgressDialog.java"
 
 
-# annotations
-.annotation system Ldalvik/annotation/MemberClasses;
-    value = {
-        Landroid/app/ProgressDialog$Injector;
-    }
-.end annotation
-
-
 # static fields
 .field public static final STYLE_HORIZONTAL:I = 0x1
 
@@ -507,7 +499,7 @@
 
     iput-object v3, p0, Landroid/app/ProgressDialog;->mProgress:Landroid/widget/ProgressBar;
 
-    const v3, 0x1020262
+    const v3, 0x102027a
 
     invoke-virtual {v2, v3}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -517,7 +509,7 @@
 
     iput-object v3, p0, Landroid/app/ProgressDialog;->mProgressNumber:Landroid/widget/TextView;
 
-    const v3, 0x1020261
+    const v3, 0x1020279
 
     invoke-virtual {v2, v3}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -618,7 +610,7 @@
     :cond_8
     const/16 v3, 0xf
 
-    const v4, 0x10900ad
+    const v4, 0x1090082
 
     invoke-virtual {v0, v3, v4}, Landroid/content/res/TypedArray;->getResourceId(II)I
 
@@ -649,13 +641,11 @@
 
     invoke-virtual {p0, v2}, Landroid/app/ProgressDialog;->setView(Landroid/view/View;)V
 
-    iget-object v3, p0, Landroid/app/ProgressDialog;->mContext:Landroid/content/Context;
+    iget-object v3, p0, Landroid/app/ProgressDialog;->mMessageView:Landroid/widget/TextView;
 
-    iget-object v4, p0, Landroid/app/ProgressDialog;->mMessageView:Landroid/widget/TextView;
+    invoke-static {p0, v3}, Landroid/app/Injector$ProgressDialogHook;->updateSpinnerStyleProgressDialog(Landroid/app/ProgressDialog;Landroid/widget/TextView;)V
 
-    invoke-static {p0, v3, v4}, Landroid/app/ProgressDialog$Injector;->usingV5Style(Landroid/app/ProgressDialog;Landroid/content/Context;Landroid/widget/TextView;)V
-
-    goto/16 :goto_0
+    goto :goto_0
 .end method
 
 .method public onStart()V

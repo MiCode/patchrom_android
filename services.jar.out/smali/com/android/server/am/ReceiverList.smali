@@ -1,4 +1,4 @@
-.class Lcom/android/server/am/ReceiverList;
+.class final Lcom/android/server/am/ReceiverList;
 .super Ljava/util/ArrayList;
 .source "ReceiverList.java"
 
@@ -194,10 +194,15 @@
 
     iget-object v0, p0, Lcom/android/server/am/ReceiverList;->app:Lcom/android/server/am/ProcessRecord;
 
+    if-eqz v0, :cond_2
+
+    iget-object v0, p0, Lcom/android/server/am/ReceiverList;->app:Lcom/android/server/am/ProcessRecord;
+
     invoke-virtual {v0}, Lcom/android/server/am/ProcessRecord;->toShortString()Ljava/lang/String;
 
     move-result-object v0
 
+    :goto_0
     invoke-virtual {p1, v0}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
     const-string v0, " pid="
@@ -253,6 +258,11 @@
 
     :cond_1
     return-void
+
+    :cond_2
+    const/4 v0, 0x0
+
+    goto :goto_0
 .end method
 
 .method public equals(Ljava/lang/Object;)Z

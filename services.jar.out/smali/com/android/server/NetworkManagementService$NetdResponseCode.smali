@@ -17,7 +17,13 @@
 # static fields
 .field public static final BandwidthControl:I = 0x259
 
+.field public static final ClatdStatusResult:I = 0xdf
+
 .field public static final DnsProxyQueryResult:I = 0xde
+
+.field public static final GetMarkResult:I = 0xe1
+
+.field public static final InterfaceAddressChange:I = 0x266
 
 .field public static final InterfaceChange:I = 0x258
 
@@ -29,11 +35,7 @@
 
 .field public static final InterfaceRxCounterResult:I = 0xd8
 
-.field public static final InterfaceRxThrottleResult:I = 0xda
-
 .field public static final InterfaceTxCounterResult:I = 0xd9
-
-.field public static final InterfaceTxThrottleResult:I = 0xdb
 
 .field public static final IpFwdStatusResult:I = 0xd3
 
@@ -46,6 +48,8 @@
 .field public static final TetherInterfaceListResult:I = 0x6f
 
 .field public static final TetherStatusResult:I = 0xd2
+
+.field public static final TetheringStatsListResult:I = 0x72
 
 .field public static final TetheringStatsResult:I = 0xdd
 

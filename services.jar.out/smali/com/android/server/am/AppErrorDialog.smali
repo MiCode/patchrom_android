@@ -1,14 +1,6 @@
-.class Lcom/android/server/am/AppErrorDialog;
+.class final Lcom/android/server/am/AppErrorDialog;
 .super Lcom/android/server/am/BaseErrorDialog;
 .source "AppErrorDialog.java"
-
-
-# annotations
-.annotation system Ldalvik/annotation/MemberClasses;
-    value = {
-        Lcom/android/server/am/AppErrorDialog$Injector;
-    }
-.end annotation
 
 
 # static fields
@@ -22,7 +14,7 @@
 # instance fields
 .field mCrashInfo:Landroid/app/ApplicationErrorReport$CrashInfo;
 
-.field private final mHandler:Landroid/os/Handler;
+.field final mHandler:Landroid/os/Handler;
 
 .field private final mProc:Lcom/android/server/am/ProcessRecord;
 
@@ -63,9 +55,9 @@
 
     iput-object p3, p0, Lcom/android/server/am/AppErrorDialog;->mResult:Lcom/android/server/am/AppErrorResult;
 
-    iget-object v3, p4, Lcom/android/server/am/ProcessRecord;->pkgList:Ljava/util/HashSet;
+    iget-object v3, p4, Lcom/android/server/am/ProcessRecord;->pkgList:Landroid/util/ArrayMap;
 
-    invoke-virtual {v3}, Ljava/util/HashSet;->size()I
+    invoke-virtual {v3}, Landroid/util/ArrayMap;->size()I
 
     move-result v3
 
@@ -84,7 +76,7 @@
     .local v1, name:Ljava/lang/CharSequence;
     if-eqz v1, :cond_2
 
-    const v3, 0x10403d4
+    const v3, 0x10403fd
 
     const/4 v4, 0x2
 
@@ -113,7 +105,7 @@
 
     const/4 v3, -0x1
 
-    const v4, 0x10403db
+    const v4, 0x1040404
 
     invoke-virtual {v2, v4}, Landroid/content/res/Resources;->getText(I)Ljava/lang/CharSequence;
 
@@ -133,7 +125,7 @@
 
     const/4 v3, -0x2
 
-    const v4, 0x10403dc
+    const v4, 0x1040405
 
     invoke-virtual {v2, v4}, Landroid/content/res/Resources;->getText(I)Ljava/lang/CharSequence;
 
@@ -148,21 +140,13 @@
     invoke-virtual {p0, v3, v4, v5}, Lcom/android/server/am/AppErrorDialog;->setButton(ILjava/lang/CharSequence;Landroid/os/Message;)V
 
     :cond_0
-    const v3, 0x10403d3
+    const v3, 0x10403fc
 
     invoke-virtual {v2, v3}, Landroid/content/res/Resources;->getText(I)Ljava/lang/CharSequence;
 
     move-result-object v3
 
     invoke-virtual {p0, v3}, Lcom/android/server/am/AppErrorDialog;->setTitle(Ljava/lang/CharSequence;)V
-
-    invoke-virtual {p0}, Lcom/android/server/am/AppErrorDialog;->getWindow()Landroid/view/Window;
-
-    move-result-object v3
-
-    const/high16 v4, 0x4000
-
-    invoke-virtual {v3, v4}, Landroid/view/Window;->addFlags(I)V
 
     invoke-virtual {p0}, Lcom/android/server/am/AppErrorDialog;->getWindow()Landroid/view/Window;
 
@@ -199,7 +183,7 @@
 
     iget v3, v0, Landroid/view/WindowManager$LayoutParams;->privateFlags:I
 
-    or-int/lit8 v3, v3, 0x10
+    or-int/lit16 v3, v3, 0x110
 
     iput v3, v0, Landroid/view/WindowManager$LayoutParams;->privateFlags:I
 
@@ -242,7 +226,7 @@
     iget-object v1, p4, Lcom/android/server/am/ProcessRecord;->processName:Ljava/lang/String;
 
     .restart local v1       #name:Ljava/lang/CharSequence;
-    const v3, 0x10403d5
+    const v3, 0x10403fe
 
     new-array v4, v7, [Ljava/lang/Object;
 
@@ -284,7 +268,7 @@
 
     move-result-object v2
 
-    const v3, 0x10403dc
+    const v3, 0x1040405
 
     invoke-virtual {v2, v3}, Landroid/content/res/Resources;->getText(I)Ljava/lang/CharSequence;
 
@@ -349,11 +333,37 @@
 
 
 # virtual methods
-.method getProc()Lcom/android/server/am/ProcessRecord;
-    .locals 1
+.method sendFcReport(Landroid/os/Message;)V
+    .locals 5
+    .parameter "msg"
 
     .prologue
-    iget-object v0, p0, Lcom/android/server/am/AppErrorDialog;->mProc:Lcom/android/server/am/ProcessRecord;
+    const/4 v0, 0x1
 
-    return-object v0
+    iget-object v1, p0, Lcom/android/server/am/AppErrorDialog;->mCrashInfo:Landroid/app/ApplicationErrorReport$CrashInfo;
+
+    if-eqz v1, :cond_0
+
+    invoke-virtual {p0}, Lcom/android/server/am/AppErrorDialog;->getContext()Landroid/content/Context;
+
+    move-result-object v1
+
+    iget-object v2, p0, Lcom/android/server/am/AppErrorDialog;->mProc:Lcom/android/server/am/ProcessRecord;
+
+    iget-object v3, p0, Lcom/android/server/am/AppErrorDialog;->mCrashInfo:Landroid/app/ApplicationErrorReport$CrashInfo;
+
+    iget v4, p1, Landroid/os/Message;->what:I
+
+    if-ne v4, v0, :cond_1
+
+    :goto_0
+    invoke-static {v1, v2, v3, v0}, Lcom/android/server/am/MiuiErrorReport;->sendFcErrorReport(Landroid/content/Context;Lcom/android/server/am/ProcessRecord;Landroid/app/ApplicationErrorReport$CrashInfo;Z)V
+
+    :cond_0
+    return-void
+
+    :cond_1
+    const/4 v0, 0x0
+
+    goto :goto_0
 .end method

@@ -49,15 +49,26 @@
 
     monitor-enter v1
 
+    if-eqz p4, :cond_0
+
     :try_start_0
     iget-object v0, p0, Lcom/android/server/display/LocalDisplayAdapter$HotplugDisplayEventReceiver;->this$0:Lcom/android/server/display/LocalDisplayAdapter;
 
-    #calls: Lcom/android/server/display/LocalDisplayAdapter;->scanDisplaysLocked()V
-    invoke-static {v0}, Lcom/android/server/display/LocalDisplayAdapter;->access$000(Lcom/android/server/display/LocalDisplayAdapter;)V
+    #calls: Lcom/android/server/display/LocalDisplayAdapter;->tryConnectDisplayLocked(I)V
+    invoke-static {v0, p3}, Lcom/android/server/display/LocalDisplayAdapter;->access$000(Lcom/android/server/display/LocalDisplayAdapter;I)V
 
+    :goto_0
     monitor-exit v1
 
     return-void
+
+    :cond_0
+    iget-object v0, p0, Lcom/android/server/display/LocalDisplayAdapter$HotplugDisplayEventReceiver;->this$0:Lcom/android/server/display/LocalDisplayAdapter;
+
+    #calls: Lcom/android/server/display/LocalDisplayAdapter;->tryDisconnectDisplayLocked(I)V
+    invoke-static {v0, p3}, Lcom/android/server/display/LocalDisplayAdapter;->access$100(Lcom/android/server/display/LocalDisplayAdapter;I)V
+
+    goto :goto_0
 
     :catchall_0
     move-exception v0

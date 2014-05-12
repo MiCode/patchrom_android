@@ -52,6 +52,8 @@
 
 .field private mInitialBearing:F
 
+.field private mIsFromMockProvider:Z
+
 .field private mLat1:D
 
 .field private mLat2:D
@@ -88,13 +90,13 @@
 .end method
 
 .method public constructor <init>(Landroid/location/Location;)V
-    .locals 6
+    .locals 7
     .parameter "l"
 
     .prologue
-    const-wide/16 v4, 0x0
+    const-wide/16 v5, 0x0
 
-    const/4 v0, 0x0
+    const/4 v4, 0x0
 
     const/4 v3, 0x0
 
@@ -102,33 +104,35 @@
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    iput-wide v4, p0, Landroid/location/Location;->mTime:J
+    iput-wide v5, p0, Landroid/location/Location;->mTime:J
 
-    iput-wide v4, p0, Landroid/location/Location;->mElapsedRealtimeNanos:J
+    iput-wide v5, p0, Landroid/location/Location;->mElapsedRealtimeNanos:J
 
     iput-wide v1, p0, Landroid/location/Location;->mLatitude:D
 
     iput-wide v1, p0, Landroid/location/Location;->mLongitude:D
 
-    iput-boolean v0, p0, Landroid/location/Location;->mHasAltitude:Z
+    iput-boolean v4, p0, Landroid/location/Location;->mHasAltitude:Z
 
     iput-wide v1, p0, Landroid/location/Location;->mAltitude:D
 
-    iput-boolean v0, p0, Landroid/location/Location;->mHasSpeed:Z
+    iput-boolean v4, p0, Landroid/location/Location;->mHasSpeed:Z
 
     iput v3, p0, Landroid/location/Location;->mSpeed:F
 
-    iput-boolean v0, p0, Landroid/location/Location;->mHasBearing:Z
+    iput-boolean v4, p0, Landroid/location/Location;->mHasBearing:Z
 
     iput v3, p0, Landroid/location/Location;->mBearing:F
 
-    iput-boolean v0, p0, Landroid/location/Location;->mHasAccuracy:Z
+    iput-boolean v4, p0, Landroid/location/Location;->mHasAccuracy:Z
 
     iput v3, p0, Landroid/location/Location;->mAccuracy:F
 
     const/4 v0, 0x0
 
     iput-object v0, p0, Landroid/location/Location;->mExtras:Landroid/os/Bundle;
+
+    iput-boolean v4, p0, Landroid/location/Location;->mIsFromMockProvider:Z
 
     iput-wide v1, p0, Landroid/location/Location;->mLat1:D
 
@@ -154,13 +158,13 @@
 .end method
 
 .method public constructor <init>(Ljava/lang/String;)V
-    .locals 6
+    .locals 7
     .parameter "provider"
 
     .prologue
-    const-wide/16 v4, 0x0
+    const-wide/16 v5, 0x0
 
-    const/4 v0, 0x0
+    const/4 v4, 0x0
 
     const/4 v3, 0x0
 
@@ -168,33 +172,35 @@
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    iput-wide v4, p0, Landroid/location/Location;->mTime:J
+    iput-wide v5, p0, Landroid/location/Location;->mTime:J
 
-    iput-wide v4, p0, Landroid/location/Location;->mElapsedRealtimeNanos:J
+    iput-wide v5, p0, Landroid/location/Location;->mElapsedRealtimeNanos:J
 
     iput-wide v1, p0, Landroid/location/Location;->mLatitude:D
 
     iput-wide v1, p0, Landroid/location/Location;->mLongitude:D
 
-    iput-boolean v0, p0, Landroid/location/Location;->mHasAltitude:Z
+    iput-boolean v4, p0, Landroid/location/Location;->mHasAltitude:Z
 
     iput-wide v1, p0, Landroid/location/Location;->mAltitude:D
 
-    iput-boolean v0, p0, Landroid/location/Location;->mHasSpeed:Z
+    iput-boolean v4, p0, Landroid/location/Location;->mHasSpeed:Z
 
     iput v3, p0, Landroid/location/Location;->mSpeed:F
 
-    iput-boolean v0, p0, Landroid/location/Location;->mHasBearing:Z
+    iput-boolean v4, p0, Landroid/location/Location;->mHasBearing:Z
 
     iput v3, p0, Landroid/location/Location;->mBearing:F
 
-    iput-boolean v0, p0, Landroid/location/Location;->mHasAccuracy:Z
+    iput-boolean v4, p0, Landroid/location/Location;->mHasAccuracy:Z
 
     iput v3, p0, Landroid/location/Location;->mAccuracy:F
 
     const/4 v0, 0x0
 
     iput-object v0, p0, Landroid/location/Location;->mExtras:Landroid/os/Bundle;
+
+    iput-boolean v4, p0, Landroid/location/Location;->mIsFromMockProvider:Z
 
     iput-wide v1, p0, Landroid/location/Location;->mLat1:D
 
@@ -272,6 +278,17 @@
     iput-object p1, p0, Landroid/location/Location;->mExtras:Landroid/os/Bundle;
 
     return-object p1
+.end method
+
+.method static synthetic access$1302(Landroid/location/Location;Z)Z
+    .locals 0
+    .parameter "x0"
+    .parameter "x1"
+
+    .prologue
+    iput-boolean p1, p0, Landroid/location/Location;->mIsFromMockProvider:Z
+
+    return p1
 .end method
 
 .method static synthetic access$202(Landroid/location/Location;D)D
@@ -2026,6 +2043,15 @@
     goto :goto_0
 .end method
 
+.method public isFromMockProvider()Z
+    .locals 1
+
+    .prologue
+    iget-boolean v0, p0, Landroid/location/Location;->mIsFromMockProvider:Z
+
+    return v0
+.end method
+
 .method public makeComplete()V
     .locals 4
 
@@ -2185,6 +2211,8 @@
 
     iput-object v4, p0, Landroid/location/Location;->mExtras:Landroid/os/Bundle;
 
+    iput-boolean v0, p0, Landroid/location/Location;->mIsFromMockProvider:Z
+
     return-void
 .end method
 
@@ -2253,6 +2281,10 @@
 
     :goto_0
     iput-object v0, p0, Landroid/location/Location;->mExtras:Landroid/os/Bundle;
+
+    iget-boolean v0, p1, Landroid/location/Location;->mIsFromMockProvider:Z
+
+    iput-boolean v0, p0, Landroid/location/Location;->mIsFromMockProvider:Z
 
     return-void
 
@@ -2388,6 +2420,16 @@
     goto :goto_0
 .end method
 
+.method public setIsFromMockProvider(Z)V
+    .locals 0
+    .parameter "isFromMockProvider"
+
+    .prologue
+    iput-boolean p1, p0, Landroid/location/Location;->mIsFromMockProvider:Z
+
+    return-void
+.end method
+
 .method public setLatitude(D)V
     .locals 0
     .parameter "latitude"
@@ -2495,7 +2537,7 @@
 
     iget-boolean v1, p0, Landroid/location/Location;->mHasAccuracy:Z
 
-    if-eqz v1, :cond_5
+    if-eqz v1, :cond_6
 
     const-string v1, " acc=%.0f"
 
@@ -2531,7 +2573,7 @@
 
     cmp-long v1, v1, v7
 
-    if-nez v1, :cond_6
+    if-nez v1, :cond_7
 
     const-string v1, " et=?!?"
 
@@ -2583,9 +2625,18 @@
     invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(F)Ljava/lang/StringBuilder;
 
     :cond_3
-    iget-object v1, p0, Landroid/location/Location;->mExtras:Landroid/os/Bundle;
+    iget-boolean v1, p0, Landroid/location/Location;->mIsFromMockProvider:Z
 
     if-eqz v1, :cond_4
+
+    const-string v1, " mock"
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    :cond_4
+    iget-object v1, p0, Landroid/location/Location;->mExtras:Landroid/os/Bundle;
+
+    if-eqz v1, :cond_5
 
     const-string v1, " {"
 
@@ -2603,7 +2654,7 @@
 
     invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
 
-    :cond_4
+    :cond_5
     const/16 v1, 0x5d
 
     invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
@@ -2614,14 +2665,14 @@
 
     return-object v1
 
-    :cond_5
+    :cond_6
     const-string v1, " acc=???"
 
     invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     goto :goto_0
 
-    :cond_6
+    :cond_7
     const-string v1, " et="
 
     invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
@@ -2710,8 +2761,10 @@
 
     if-eqz v0, :cond_3
 
+    move v0, v1
+
     :goto_3
-    invoke-virtual {p1, v1}, Landroid/os/Parcel;->writeInt(I)V
+    invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeInt(I)V
 
     iget v0, p0, Landroid/location/Location;->mAccuracy:F
 
@@ -2720,6 +2773,13 @@
     iget-object v0, p0, Landroid/location/Location;->mExtras:Landroid/os/Bundle;
 
     invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeBundle(Landroid/os/Bundle;)V
+
+    iget-boolean v0, p0, Landroid/location/Location;->mIsFromMockProvider:Z
+
+    if-eqz v0, :cond_4
+
+    :goto_4
+    invoke-virtual {p1, v1}, Landroid/os/Parcel;->writeInt(I)V
 
     return-void
 
@@ -2739,7 +2799,12 @@
     goto :goto_2
 
     :cond_3
-    move v1, v2
+    move v0, v2
 
     goto :goto_3
+
+    :cond_4
+    move v1, v2
+
+    goto :goto_4
 .end method

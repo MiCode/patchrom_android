@@ -6,11 +6,15 @@
 # static fields
 .field private static final CALL_PRIVILEGED:Ljava/lang/String; = "android.permission.CALL_PRIVILEGED"
 
-.field static final LOG_TAG:Ljava/lang/String; = "PHONE"
+.field private static final DBG:Z = true
+
+.field static final LOG_TAG:Ljava/lang/String; = "PhoneSubInfo"
 
 .field private static final READ_PHONE_STATE:Ljava/lang/String; = "android.permission.READ_PHONE_STATE"
 
 .field private static final READ_PRIVILEGED_PHONE_STATE:Ljava/lang/String; = "android.permission.READ_PRIVILEGED_PHONE_STATE"
+
+.field private static final VDBG:Z
 
 
 # instance fields
@@ -34,6 +38,31 @@
     move-result-object v0
 
     iput-object v0, p0, Lcom/android/internal/telephony/PhoneSubInfo;->mContext:Landroid/content/Context;
+
+    return-void
+.end method
+
+.method private log(Ljava/lang/String;)V
+    .locals 1
+    .parameter "s"
+
+    .prologue
+    const-string v0, "PhoneSubInfo"
+
+    invoke-static {v0, p1}, Landroid/telephony/Rlog;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    return-void
+.end method
+
+.method private loge(Ljava/lang/String;Ljava/lang/Throwable;)V
+    .locals 1
+    .parameter "s"
+    .parameter "e"
+
+    .prologue
+    const-string v0, "PhoneSubInfo"
+
+    invoke-static {v0, p1, p2}, Landroid/telephony/Rlog;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
 
     return-void
 .end method
@@ -166,7 +195,7 @@
 .end method
 
 .method protected finalize()V
-    .locals 3
+    .locals 2
 
     .prologue
     :try_start_0
@@ -175,11 +204,9 @@
     .catch Ljava/lang/Throwable; {:try_start_0 .. :try_end_0} :catch_0
 
     :goto_0
-    const-string v1, "PHONE"
+    const-string v1, "PhoneSubInfo finalized"
 
-    const-string v2, "PhoneSubInfo finalized"
-
-    invoke-static {v1, v2}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-direct {p0, v1}, Lcom/android/internal/telephony/PhoneSubInfo;->log(Ljava/lang/String;)V
 
     return-void
 
@@ -187,11 +214,9 @@
     move-exception v0
 
     .local v0, throwable:Ljava/lang/Throwable;
-    const-string v1, "PHONE"
+    const-string v1, "Error while finalizing:"
 
-    const-string v2, "Error while finalizing:"
-
-    invoke-static {v1, v2, v0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+    invoke-direct {p0, v1, v0}, Lcom/android/internal/telephony/PhoneSubInfo;->loge(Ljava/lang/String;Ljava/lang/Throwable;)V
 
     goto :goto_0
 .end method
@@ -215,12 +240,6 @@
     move-result-object v0
 
     .local v0, number:Ljava/lang/String;
-    const-string v1, "PHONE"
-
-    const-string v2, "VM: PhoneSubInfo.getCompleteVoiceMailNUmber: "
-
-    invoke-static {v1, v2}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
-
     return-object v0
 .end method
 
@@ -266,6 +285,27 @@
     return-object v0
 .end method
 
+.method public getGroupIdLevel1()Ljava/lang/String;
+    .locals 3
+
+    .prologue
+    iget-object v0, p0, Lcom/android/internal/telephony/PhoneSubInfo;->mContext:Landroid/content/Context;
+
+    const-string v1, "android.permission.READ_PHONE_STATE"
+
+    const-string v2, "Requires READ_PHONE_STATE"
+
+    invoke-virtual {v0, v1, v2}, Landroid/content/Context;->enforceCallingOrSelfPermission(Ljava/lang/String;Ljava/lang/String;)V
+
+    iget-object v0, p0, Lcom/android/internal/telephony/PhoneSubInfo;->mPhone:Lcom/android/internal/telephony/Phone;
+
+    invoke-interface {v0}, Lcom/android/internal/telephony/Phone;->getGroupIdLevel1()Ljava/lang/String;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
 .method public getIccSerialNumber()Ljava/lang/String;
     .locals 3
 
@@ -301,14 +341,14 @@
 
     iget-object v1, p0, Lcom/android/internal/telephony/PhoneSubInfo;->mPhone:Lcom/android/internal/telephony/Phone;
 
-    invoke-interface {v1}, Lcom/android/internal/telephony/Phone;->getIsimRecords()Lcom/android/internal/telephony/ims/IsimRecords;
+    invoke-interface {v1}, Lcom/android/internal/telephony/Phone;->getIsimRecords()Lcom/android/internal/telephony/uicc/IsimRecords;
 
     move-result-object v0
 
-    .local v0, isim:Lcom/android/internal/telephony/ims/IsimRecords;
+    .local v0, isim:Lcom/android/internal/telephony/uicc/IsimRecords;
     if-eqz v0, :cond_0
 
-    invoke-interface {v0}, Lcom/android/internal/telephony/ims/IsimRecords;->getIsimDomain()Ljava/lang/String;
+    invoke-interface {v0}, Lcom/android/internal/telephony/uicc/IsimRecords;->getIsimDomain()Ljava/lang/String;
 
     move-result-object v1
 
@@ -335,14 +375,14 @@
 
     iget-object v1, p0, Lcom/android/internal/telephony/PhoneSubInfo;->mPhone:Lcom/android/internal/telephony/Phone;
 
-    invoke-interface {v1}, Lcom/android/internal/telephony/Phone;->getIsimRecords()Lcom/android/internal/telephony/ims/IsimRecords;
+    invoke-interface {v1}, Lcom/android/internal/telephony/Phone;->getIsimRecords()Lcom/android/internal/telephony/uicc/IsimRecords;
 
     move-result-object v0
 
-    .local v0, isim:Lcom/android/internal/telephony/ims/IsimRecords;
+    .local v0, isim:Lcom/android/internal/telephony/uicc/IsimRecords;
     if-eqz v0, :cond_0
 
-    invoke-interface {v0}, Lcom/android/internal/telephony/ims/IsimRecords;->getIsimImpi()Ljava/lang/String;
+    invoke-interface {v0}, Lcom/android/internal/telephony/uicc/IsimRecords;->getIsimImpi()Ljava/lang/String;
 
     move-result-object v1
 
@@ -369,14 +409,14 @@
 
     iget-object v1, p0, Lcom/android/internal/telephony/PhoneSubInfo;->mPhone:Lcom/android/internal/telephony/Phone;
 
-    invoke-interface {v1}, Lcom/android/internal/telephony/Phone;->getIsimRecords()Lcom/android/internal/telephony/ims/IsimRecords;
+    invoke-interface {v1}, Lcom/android/internal/telephony/Phone;->getIsimRecords()Lcom/android/internal/telephony/uicc/IsimRecords;
 
     move-result-object v0
 
-    .local v0, isim:Lcom/android/internal/telephony/ims/IsimRecords;
+    .local v0, isim:Lcom/android/internal/telephony/uicc/IsimRecords;
     if-eqz v0, :cond_0
 
-    invoke-interface {v0}, Lcom/android/internal/telephony/ims/IsimRecords;->getIsimImpu()[Ljava/lang/String;
+    invoke-interface {v0}, Lcom/android/internal/telephony/uicc/IsimRecords;->getIsimImpu()[Ljava/lang/String;
 
     move-result-object v1
 
@@ -517,11 +557,5 @@
     move-result-object v0
 
     .local v0, number:Ljava/lang/String;
-    const-string v1, "PHONE"
-
-    const-string v2, "VM: PhoneSubInfo.getVoiceMailNUmber: "
-
-    invoke-static {v1, v2}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
-
     return-object v0
 .end method

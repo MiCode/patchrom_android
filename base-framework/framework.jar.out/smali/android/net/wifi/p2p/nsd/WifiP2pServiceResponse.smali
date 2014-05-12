@@ -270,17 +270,13 @@
 
     if-lez v13, :cond_0
 
-    invoke-virtual {v8}, Ljava/io/DataInputStream;->readByte()B
+    invoke-virtual {v8}, Ljava/io/DataInputStream;->readUnsignedByte()I
 
     move-result v13
 
-    and-int/lit16 v13, v13, 0xff
-
-    invoke-virtual {v8}, Ljava/io/DataInputStream;->readByte()B
+    invoke-virtual {v8}, Ljava/io/DataInputStream;->readUnsignedByte()I
 
     move-result v14
-
-    and-int/lit16 v14, v14, 0xff
 
     shl-int/lit8 v14, v14, 0x8
 
@@ -294,11 +290,11 @@
     move-result v1
 
     .local v1, type:I
-    invoke-virtual {v8}, Ljava/io/DataInputStream;->readByte()B
+    invoke-virtual {v8}, Ljava/io/DataInputStream;->readUnsignedByte()I
 
     move-result v3
 
-    .local v3, transId:B
+    .local v3, transId:I
     invoke-virtual {v8}, Ljava/io/DataInputStream;->readUnsignedByte()I
 
     move-result v2
@@ -329,7 +325,7 @@
 
     .end local v1           #type:I
     .end local v2           #status:I
-    .end local v3           #transId:B
+    .end local v3           #transId:I
     .end local v10           #length:I
     :catch_0
     move-exception v9
@@ -350,7 +346,7 @@
     .end local v9           #e:Ljava/io/IOException;
     .restart local v1       #type:I
     .restart local v2       #status:I
-    .restart local v3       #transId:B
+    .restart local v3       #transId:I
     .restart local v10       #length:I
     :cond_5
     :try_start_1

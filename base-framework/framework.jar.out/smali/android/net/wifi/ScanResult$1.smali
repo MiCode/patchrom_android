@@ -40,7 +40,7 @@
 
 # virtual methods
 .method public createFromParcel(Landroid/os/Parcel;)Landroid/net/wifi/ScanResult;
-    .locals 8
+    .locals 10
     .parameter "in"
 
     .prologue
@@ -88,7 +88,15 @@
 
     move-result-wide v6
 
-    invoke-direct/range {v0 .. v7}, Landroid/net/wifi/ScanResult;-><init>(Landroid/net/wifi/WifiSsid;Ljava/lang/String;Ljava/lang/String;IIJ)V
+    invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
+
+    move-result v8
+
+    invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
+
+    move-result v9
+
+    invoke-direct/range {v0 .. v9}, Landroid/net/wifi/ScanResult;-><init>(Landroid/net/wifi/WifiSsid;Ljava/lang/String;Ljava/lang/String;IIJII)V
 
     return-object v0
 .end method

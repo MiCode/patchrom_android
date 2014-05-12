@@ -14,12 +14,6 @@
 .end annotation
 
 
-# static fields
-.field private static final m12:Ljava/lang/String; = "h:mm:ss aa"
-
-.field private static final m24:Ljava/lang/String; = "k:mm:ss"
-
-
 # instance fields
 .field mCalendar:Ljava/util/Calendar;
 
@@ -108,21 +102,6 @@
     return-void
 .end method
 
-.method private get24HourMode()Z
-    .locals 1
-
-    .prologue
-    invoke-virtual {p0}, Landroid/widget/DigitalClock;->getContext()Landroid/content/Context;
-
-    move-result-object v0
-
-    invoke-static {v0}, Landroid/text/format/DateFormat;->is24HourFormat(Landroid/content/Context;)Z
-
-    move-result v0
-
-    return v0
-.end method
-
 .method private initClock()V
     .locals 4
 
@@ -169,25 +148,17 @@
     .locals 1
 
     .prologue
-    invoke-direct {p0}, Landroid/widget/DigitalClock;->get24HourMode()Z
+    invoke-virtual {p0}, Landroid/widget/DigitalClock;->getContext()Landroid/content/Context;
 
-    move-result v0
+    move-result-object v0
 
-    if-eqz v0, :cond_0
+    invoke-static {v0}, Landroid/text/format/DateFormat;->getTimeFormatString(Landroid/content/Context;)Ljava/lang/String;
 
-    const-string v0, "k:mm:ss"
+    move-result-object v0
 
     iput-object v0, p0, Landroid/widget/DigitalClock;->mFormat:Ljava/lang/String;
 
-    :goto_0
     return-void
-
-    :cond_0
-    const-string v0, "h:mm:ss aa"
-
-    iput-object v0, p0, Landroid/widget/DigitalClock;->mFormat:Ljava/lang/String;
-
-    goto :goto_0
 .end method
 
 

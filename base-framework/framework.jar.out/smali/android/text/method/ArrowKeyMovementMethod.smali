@@ -265,7 +265,7 @@
 
     const/16 v0, 0x800
 
-    invoke-static {p2, v0}, Landroid/text/method/MetaKeyKeyListener;->getMetaState(Ljava/lang/CharSequence;I)I
+    invoke-static {p2, v0, p5}, Landroid/text/method/MetaKeyKeyListener;->getMetaState(Ljava/lang/CharSequence;ILandroid/view/KeyEvent;)I
 
     move-result v0
 

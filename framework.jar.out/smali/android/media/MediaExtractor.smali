@@ -44,6 +44,19 @@
     return-void
 .end method
 
+.method private native getFileFormatNative()Ljava/util/Map;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "()",
+            "Ljava/util/Map",
+            "<",
+            "Ljava/lang/String;",
+            "Ljava/lang/Object;",
+            ">;"
+        }
+    .end annotation
+.end method
+
 .method private native getTrackFormatNative(I)Ljava/util/Map;
     .annotation system Ldalvik/annotation/Signature;
         value = {
@@ -67,6 +80,11 @@
 .end method
 
 .method private final native setDataSource(Ljava/lang/String;[Ljava/lang/String;[Ljava/lang/String;)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Ljava/io/IOException;
+        }
+    .end annotation
 .end method
 
 
@@ -84,6 +102,120 @@
 .end method
 
 .method public native getCachedDuration()J
+.end method
+
+.method public getPsshInfo()Ljava/util/Map;
+    .locals 11
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "()",
+            "Ljava/util/Map",
+            "<",
+            "Ljava/util/UUID;",
+            "[B>;"
+        }
+    .end annotation
+
+    .prologue
+    const/4 v6, 0x0
+
+    .local v6, psshMap:Ljava/util/Map;,"Ljava/util/Map<Ljava/util/UUID;[B>;"
+    invoke-direct {p0}, Landroid/media/MediaExtractor;->getFileFormatNative()Ljava/util/Map;
+
+    move-result-object v1
+
+    .local v1, formatMap:Ljava/util/Map;,"Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;"
+    if-eqz v1, :cond_0
+
+    const-string v10, "pssh"
+
+    invoke-interface {v1, v10}, Ljava/util/Map;->containsKey(Ljava/lang/Object;)Z
+
+    move-result v10
+
+    if-eqz v10, :cond_0
+
+    const-string v10, "pssh"
+
+    invoke-interface {v1, v10}, Ljava/util/Map;->get(Ljava/lang/Object;)Ljava/lang/Object;
+
+    move-result-object v8
+
+    check-cast v8, Ljava/nio/ByteBuffer;
+
+    .local v8, rawpssh:Ljava/nio/ByteBuffer;
+    invoke-static {}, Ljava/nio/ByteOrder;->nativeOrder()Ljava/nio/ByteOrder;
+
+    move-result-object v10
+
+    invoke-virtual {v8, v10}, Ljava/nio/ByteBuffer;->order(Ljava/nio/ByteOrder;)Ljava/nio/ByteBuffer;
+
+    invoke-virtual {v8}, Ljava/nio/ByteBuffer;->rewind()Ljava/nio/Buffer;
+
+    const-string v10, "pssh"
+
+    invoke-interface {v1, v10}, Ljava/util/Map;->remove(Ljava/lang/Object;)Ljava/lang/Object;
+
+    new-instance v6, Ljava/util/HashMap;
+
+    .end local v6           #psshMap:Ljava/util/Map;,"Ljava/util/Map<Ljava/util/UUID;[B>;"
+    invoke-direct {v6}, Ljava/util/HashMap;-><init>()V
+
+    .restart local v6       #psshMap:Ljava/util/Map;,"Ljava/util/Map<Ljava/util/UUID;[B>;"
+    :goto_0
+    invoke-virtual {v8}, Ljava/nio/ByteBuffer;->remaining()I
+
+    move-result v10
+
+    if-lez v10, :cond_0
+
+    sget-object v10, Ljava/nio/ByteOrder;->BIG_ENDIAN:Ljava/nio/ByteOrder;
+
+    invoke-virtual {v8, v10}, Ljava/nio/ByteBuffer;->order(Ljava/nio/ByteOrder;)Ljava/nio/ByteBuffer;
+
+    invoke-virtual {v8}, Ljava/nio/ByteBuffer;->getLong()J
+
+    move-result-wide v4
+
+    .local v4, msb:J
+    invoke-virtual {v8}, Ljava/nio/ByteBuffer;->getLong()J
+
+    move-result-wide v2
+
+    .local v2, lsb:J
+    new-instance v9, Ljava/util/UUID;
+
+    invoke-direct {v9, v4, v5, v2, v3}, Ljava/util/UUID;-><init>(JJ)V
+
+    .local v9, uuid:Ljava/util/UUID;
+    invoke-static {}, Ljava/nio/ByteOrder;->nativeOrder()Ljava/nio/ByteOrder;
+
+    move-result-object v10
+
+    invoke-virtual {v8, v10}, Ljava/nio/ByteBuffer;->order(Ljava/nio/ByteOrder;)Ljava/nio/ByteBuffer;
+
+    invoke-virtual {v8}, Ljava/nio/ByteBuffer;->getInt()I
+
+    move-result v0
+
+    .local v0, datalen:I
+    new-array v7, v0, [B
+
+    .local v7, psshdata:[B
+    invoke-virtual {v8, v7}, Ljava/nio/ByteBuffer;->get([B)Ljava/nio/ByteBuffer;
+
+    invoke-interface {v6, v9, v7}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+
+    goto :goto_0
+
+    .end local v0           #datalen:I
+    .end local v2           #lsb:J
+    .end local v4           #msb:J
+    .end local v7           #psshdata:[B
+    .end local v8           #rawpssh:Ljava/nio/ByteBuffer;
+    .end local v9           #uuid:Ljava/util/UUID;
+    :cond_0
+    return-object v6
 .end method
 
 .method public native getSampleCryptoInfo(Landroid/media/MediaCodec$CryptoInfo;)Z
@@ -304,11 +436,21 @@
 .end method
 
 .method public final native setDataSource(Landroid/media/DataSource;)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Ljava/io/IOException;
+        }
+    .end annotation
 .end method
 
 .method public final setDataSource(Ljava/io/FileDescriptor;)V
     .locals 6
     .parameter "fd"
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Ljava/io/IOException;
+        }
+    .end annotation
 
     .prologue
     const-wide/16 v2, 0x0
@@ -325,11 +467,21 @@
 .end method
 
 .method public final native setDataSource(Ljava/io/FileDescriptor;JJ)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Ljava/io/IOException;
+        }
+    .end annotation
 .end method
 
 .method public final setDataSource(Ljava/lang/String;)V
     .locals 1
     .parameter "path"
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Ljava/io/IOException;
+        }
+    .end annotation
 
     .prologue
     const/4 v0, 0x0
@@ -352,6 +504,12 @@
             "Ljava/lang/String;",
             "Ljava/lang/String;",
             ">;)V"
+        }
+    .end annotation
+
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Ljava/io/IOException;
         }
     .end annotation
 

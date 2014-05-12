@@ -31,7 +31,7 @@
     .end annotation
 .end method
 
-.method public abstract vibrate(JLandroid/os/IBinder;)V
+.method public abstract vibrate(ILjava/lang/String;JLandroid/os/IBinder;)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -39,7 +39,7 @@
     .end annotation
 .end method
 
-.method public abstract vibratePattern([JILandroid/os/IBinder;)V
+.method public abstract vibratePattern(ILjava/lang/String;[JILandroid/os/IBinder;)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;

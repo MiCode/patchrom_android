@@ -18,11 +18,17 @@
 
 .field public static final EXTRA_STATE:Ljava/lang/String; = "android.bluetooth.profile.extra.STATE"
 
+.field public static final GATT:I = 0x7
+
+.field public static final GATT_SERVER:I = 0x8
+
 .field public static final HEADSET:I = 0x1
 
 .field public static final HEALTH:I = 0x3
 
 .field public static final INPUT_DEVICE:I = 0x4
+
+.field public static final MAP:I = 0x9
 
 .field public static final PAN:I = 0x5
 

@@ -1,4 +1,5 @@
-BRANCH=jellybean42
-PLATFORM=v17
-JAR_OUTS=android.policy.jar.out framework.jar.out services.jar.out telephony-common.jar.out
+BRANCH=kitkat
+PLATFORM=v19
+OVERLAY=v19 v18 v17 v16
+JAR_OUTS=android.policy.jar.out framework.jar.out services.jar.out telephony-common.jar.out framework2.jar.out
 

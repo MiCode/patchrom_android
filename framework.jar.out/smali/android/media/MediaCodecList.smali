@@ -26,6 +26,9 @@
     return-void
 .end method
 
+.method static final native findCodecByName(Ljava/lang/String;)I
+.end method
+
 .method static final native getCodecCapabilities(ILjava/lang/String;)Landroid/media/MediaCodecInfo$CodecCapabilities;
 .end method
 

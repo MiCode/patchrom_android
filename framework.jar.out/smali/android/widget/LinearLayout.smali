@@ -1405,8 +1405,12 @@
     return v0
 .end method
 
-.method layoutHorizontal()V
+.method layoutHorizontal(IIII)V
     .locals 30
+    .parameter "left"
+    .parameter "top"
+    .parameter "right"
+    .parameter "bottom"
 
     .prologue
     invoke-virtual/range {p0 .. p0}, Landroid/widget/LinearLayout;->isLayoutRtl()Z
@@ -1421,15 +1425,7 @@
     move/from16 v27, v0
 
     .local v27, paddingTop:I
-    move-object/from16 v0, p0
-
-    iget v2, v0, Landroid/widget/LinearLayout;->mBottom:I
-
-    move-object/from16 v0, p0
-
-    iget v4, v0, Landroid/widget/LinearLayout;->mTop:I
-
-    sub-int v18, v2, v4
+    sub-int v18, p4, p2
 
     .local v18, height:I
     move-object/from16 v0, p0
@@ -1569,17 +1565,9 @@
 
     iget v2, v0, Landroid/widget/LinearLayout;->mPaddingLeft:I
 
-    move-object/from16 v0, p0
+    add-int v2, v2, p3
 
-    iget v4, v0, Landroid/widget/LinearLayout;->mRight:I
-
-    add-int/2addr v2, v4
-
-    move-object/from16 v0, p0
-
-    iget v4, v0, Landroid/widget/LinearLayout;->mLeft:I
-
-    sub-int/2addr v2, v4
+    sub-int v2, v2, p1
 
     move-object/from16 v0, p0
 
@@ -1596,17 +1584,7 @@
 
     iget v2, v0, Landroid/widget/LinearLayout;->mPaddingLeft:I
 
-    move-object/from16 v0, p0
-
-    iget v4, v0, Landroid/widget/LinearLayout;->mRight:I
-
-    move-object/from16 v0, p0
-
-    iget v0, v0, Landroid/widget/LinearLayout;->mLeft:I
-
-    move/from16 v29, v0
-
-    sub-int v4, v4, v29
+    sub-int v4, p3, p1
 
     move-object/from16 v0, p0
 
@@ -1856,8 +1834,12 @@
     .end sparse-switch
 .end method
 
-.method layoutVertical()V
+.method layoutVertical(IIII)V
     .locals 21
+    .parameter "left"
+    .parameter "top"
+    .parameter "right"
+    .parameter "bottom"
 
     .prologue
     move-object/from16 v0, p0
@@ -1867,15 +1849,7 @@
     move/from16 v18, v0
 
     .local v18, paddingLeft:I
-    move-object/from16 v0, p0
-
-    iget v1, v0, Landroid/widget/LinearLayout;->mRight:I
-
-    move-object/from16 v0, p0
-
-    iget v4, v0, Landroid/widget/LinearLayout;->mLeft:I
-
-    sub-int v19, v1, v4
+    sub-int v19, p3, p1
 
     .local v19, width:I
     move-object/from16 v0, p0
@@ -1960,17 +1934,9 @@
 
     iget v1, v0, Landroid/widget/LinearLayout;->mPaddingTop:I
 
-    move-object/from16 v0, p0
+    add-int v1, v1, p4
 
-    iget v4, v0, Landroid/widget/LinearLayout;->mBottom:I
-
-    add-int/2addr v1, v4
-
-    move-object/from16 v0, p0
-
-    iget v4, v0, Landroid/widget/LinearLayout;->mTop:I
-
-    sub-int/2addr v1, v4
+    sub-int v1, v1, p2
 
     move-object/from16 v0, p0
 
@@ -1987,17 +1953,7 @@
 
     iget v1, v0, Landroid/widget/LinearLayout;->mPaddingTop:I
 
-    move-object/from16 v0, p0
-
-    iget v4, v0, Landroid/widget/LinearLayout;->mBottom:I
-
-    move-object/from16 v0, p0
-
-    iget v0, v0, Landroid/widget/LinearLayout;->mTop:I
-
-    move/from16 v20, v0
-
-    sub-int v4, v4, v20
+    sub-int v4, p4, p2
 
     move-object/from16 v0, p0
 
@@ -5407,13 +5363,13 @@
 
     if-ne v0, v1, :cond_0
 
-    invoke-virtual {p0}, Landroid/widget/LinearLayout;->layoutVertical()V
+    invoke-virtual {p0, p2, p3, p4, p5}, Landroid/widget/LinearLayout;->layoutVertical(IIII)V
 
     :goto_0
     return-void
 
     :cond_0
-    invoke-virtual {p0}, Landroid/widget/LinearLayout;->layoutHorizontal()V
+    invoke-virtual {p0, p2, p3, p4, p5}, Landroid/widget/LinearLayout;->layoutHorizontal(IIII)V
 
     goto :goto_0
 .end method

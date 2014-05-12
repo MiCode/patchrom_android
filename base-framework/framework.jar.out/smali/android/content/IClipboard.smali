@@ -15,7 +15,7 @@
 
 
 # virtual methods
-.method public abstract addPrimaryClipChangedListener(Landroid/content/IOnPrimaryClipChangedListener;)V
+.method public abstract addPrimaryClipChangedListener(Landroid/content/IOnPrimaryClipChangedListener;Ljava/lang/String;)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -31,7 +31,7 @@
     .end annotation
 .end method
 
-.method public abstract getPrimaryClipDescription()Landroid/content/ClipDescription;
+.method public abstract getPrimaryClipDescription(Ljava/lang/String;)Landroid/content/ClipDescription;
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -39,7 +39,7 @@
     .end annotation
 .end method
 
-.method public abstract hasClipboardText()Z
+.method public abstract hasClipboardText(Ljava/lang/String;)Z
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -47,7 +47,7 @@
     .end annotation
 .end method
 
-.method public abstract hasPrimaryClip()Z
+.method public abstract hasPrimaryClip(Ljava/lang/String;)Z
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
@@ -63,7 +63,7 @@
     .end annotation
 .end method
 
-.method public abstract setPrimaryClip(Landroid/content/ClipData;)V
+.method public abstract setPrimaryClip(Landroid/content/ClipData;Ljava/lang/String;)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;

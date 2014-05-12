@@ -129,7 +129,7 @@
 
     move-result v0
 
-    if-nez v0, :cond_0
+    if-nez v0, :cond_1
 
     iget-object v0, p0, Landroid/view/GestureDetector$GestureHandler;->this$0:Landroid/view/GestureDetector;
 
@@ -148,6 +148,18 @@
     invoke-interface {v0, v1}, Landroid/view/GestureDetector$OnDoubleTapListener;->onSingleTapConfirmed(Landroid/view/MotionEvent;)Z
 
     goto :goto_0
+
+    :cond_1
+    iget-object v0, p0, Landroid/view/GestureDetector$GestureHandler;->this$0:Landroid/view/GestureDetector;
+
+    const/4 v1, 0x1
+
+    #setter for: Landroid/view/GestureDetector;->mDeferConfirmSingleTap:Z
+    invoke-static {v0, v1}, Landroid/view/GestureDetector;->access$502(Landroid/view/GestureDetector;Z)Z
+
+    goto :goto_0
+
+    nop
 
     :pswitch_data_0
     .packed-switch 0x1

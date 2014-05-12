@@ -639,7 +639,7 @@
     .locals 15
 
     .prologue
-    const v14, 0x1040450
+    const v14, 0x1040479
 
     const/4 v1, 0x0
 
@@ -659,7 +659,7 @@
     return-void
 
     :cond_1
-    const v6, 0x1040450
+    const v6, 0x1040479
 
     .local v6, id:I
     iget-object v0, p0, Lcom/android/server/usb/UsbDeviceManager$UsbHandler;->this$0:Lcom/android/server/usb/UsbDeviceManager;
@@ -710,7 +710,7 @@
     move-result-object v11
 
     .local v11, title:Ljava/lang/CharSequence;
-    const v0, 0x1040451
+    const v0, 0x104047a
 
     invoke-virtual {v10, v0}, Landroid/content/res/Resources;->getText(I)Ljava/lang/CharSequence;
 
@@ -722,7 +722,7 @@
     invoke-direct {v8}, Landroid/app/Notification;-><init>()V
 
     .local v8, notification:Landroid/app/Notification;
-    const v0, 0x1080525
+    const v0, 0x108058d
 
     iput v0, v8, Landroid/app/Notification;->icon:I
 
@@ -1175,7 +1175,7 @@
 
     if-eqz v0, :cond_4
 
-    const v6, 0x1040448
+    const v6, 0x1040471
 
     :cond_2
     :goto_1
@@ -1205,7 +1205,7 @@
     :cond_3
     if-eqz v6, :cond_0
 
-    const v0, 0x104044c
+    const v0, 0x1040475
 
     invoke-virtual {v10, v0}, Landroid/content/res/Resources;->getText(I)Ljava/lang/CharSequence;
 
@@ -1222,7 +1222,7 @@
     invoke-direct {v8}, Landroid/app/Notification;-><init>()V
 
     .local v8, notification:Landroid/app/Notification;
-    const v0, 0x1080543
+    const v0, 0x10805ad
 
     iput v0, v8, Landroid/app/Notification;->icon:I
 
@@ -1316,7 +1316,7 @@
 
     if-eqz v0, :cond_5
 
-    const v6, 0x1040449
+    const v6, 0x1040472
 
     goto :goto_1
 
@@ -1332,7 +1332,7 @@
 
     if-eqz v0, :cond_6
 
-    const v6, 0x104044a
+    const v6, 0x1040473
 
     goto/16 :goto_1
 
@@ -1348,7 +1348,7 @@
 
     if-eqz v0, :cond_2
 
-    const v6, 0x104044b
+    const v6, 0x1040474
 
     goto/16 :goto_1
 .end method

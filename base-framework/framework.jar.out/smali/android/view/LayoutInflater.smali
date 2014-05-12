@@ -741,8 +741,6 @@
 
     throw v19
 
-    nop
-
     :pswitch_data_0
     .packed-switch 0x0
         :pswitch_0
@@ -801,7 +799,7 @@
 .end method
 
 .method public final createView(Ljava/lang/String;Ljava/lang/String;Landroid/util/AttributeSet;)Landroid/view/View;
-    .locals 12
+    .locals 13
     .parameter "name"
     .parameter "prefix"
     .parameter "attrs"
@@ -813,8 +811,6 @@
     .end annotation
 
     .prologue
-    const/4 v1, 0x1
-
     sget-object v10, Landroid/view/LayoutInflater;->sConstructorMap:Ljava/util/HashMap;
 
     invoke-virtual {v10, p1}, Ljava/util/HashMap;->get(Ljava/lang/Object;)Ljava/lang/Object;
@@ -827,9 +823,13 @@
     const/4 v4, 0x0
 
     .local v4, clazz:Ljava/lang/Class;,"Ljava/lang/Class<+Landroid/view/View;>;"
-    if-nez v5, :cond_4
+    const-wide/16 v10, 0x8
 
     :try_start_0
+    invoke-static {v10, v11, p1}, Landroid/os/Trace;->traceBegin(JLjava/lang/String;)V
+
+    if-nez v5, :cond_4
+
     iget-object v10, p0, Landroid/view/LayoutInflater;->mContext:Landroid/content/Context;
 
     invoke-virtual {v10}, Landroid/content/Context;->getClassLoader()Ljava/lang/ClassLoader;
@@ -880,7 +880,7 @@
     .local v1, allowed:Z
     if-nez v1, :cond_0
 
-    invoke-direct {p0, p1, p2, p3}, Landroid/view/LayoutInflater;->failNotAllowed(Ljava/lang/String;Ljava/lang/String;Landroid/util/AttributeSet;)V
+    invoke-direct/range {p0 .. p3}, Landroid/view/LayoutInflater;->failNotAllowed(Ljava/lang/String;Ljava/lang/String;Landroid/util/AttributeSet;)V
 
     .end local v1           #allowed:Z
     :cond_0
@@ -922,9 +922,19 @@
 
     .local v9, viewStub:Landroid/view/ViewStub;
     invoke-virtual {v9, p0}, Landroid/view/ViewStub;->setLayoutInflater(Landroid/view/LayoutInflater;)V
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+    .catch Ljava/lang/NoSuchMethodException; {:try_start_0 .. :try_end_0} :catch_0
+    .catch Ljava/lang/ClassCastException; {:try_start_0 .. :try_end_0} :catch_1
+    .catch Ljava/lang/ClassNotFoundException; {:try_start_0 .. :try_end_0} :catch_2
+    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_3
 
     .end local v9           #viewStub:Landroid/view/ViewStub;
     :cond_2
+    const-wide/16 v10, 0x8
+
+    invoke-static {v10, v11}, Landroid/os/Trace;->traceEnd(J)V
+
     return-object v8
 
     .end local v3           #args:[Ljava/lang/Object;
@@ -935,6 +945,7 @@
     goto :goto_0
 
     :cond_4
+    :try_start_1
     iget-object v10, p0, Landroid/view/LayoutInflater;->mFilter:Landroid/view/LayoutInflater$Filter;
 
     if-eqz v10, :cond_1
@@ -995,6 +1006,8 @@
 
     if-eqz v10, :cond_7
 
+    const/4 v1, 0x1
+
     .restart local v1       #allowed:Z
     :goto_3
     iget-object v10, p0, Landroid/view/LayoutInflater;->mFilterMap:Ljava/util/HashMap;
@@ -1007,12 +1020,13 @@
 
     if-nez v1, :cond_1
 
-    invoke-direct {p0, p1, p2, p3}, Landroid/view/LayoutInflater;->failNotAllowed(Ljava/lang/String;Ljava/lang/String;Landroid/util/AttributeSet;)V
-    :try_end_0
-    .catch Ljava/lang/NoSuchMethodException; {:try_start_0 .. :try_end_0} :catch_0
-    .catch Ljava/lang/ClassCastException; {:try_start_0 .. :try_end_0} :catch_1
-    .catch Ljava/lang/ClassNotFoundException; {:try_start_0 .. :try_end_0} :catch_2
-    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_3
+    invoke-direct/range {p0 .. p3}, Landroid/view/LayoutInflater;->failNotAllowed(Ljava/lang/String;Ljava/lang/String;Landroid/util/AttributeSet;)V
+    :try_end_1
+    .catchall {:try_start_1 .. :try_end_1} :catchall_0
+    .catch Ljava/lang/NoSuchMethodException; {:try_start_1 .. :try_end_1} :catch_0
+    .catch Ljava/lang/ClassCastException; {:try_start_1 .. :try_end_1} :catch_1
+    .catch Ljava/lang/ClassNotFoundException; {:try_start_1 .. :try_end_1} :catch_2
+    .catch Ljava/lang/Exception; {:try_start_1 .. :try_end_1} :catch_3
 
     goto :goto_1
 
@@ -1022,13 +1036,14 @@
     move-exception v6
 
     .local v6, e:Ljava/lang/NoSuchMethodException;
+    :try_start_2
     new-instance v7, Landroid/view/InflateException;
 
     new-instance v10, Ljava/lang/StringBuilder;
 
     invoke-direct {v10}, Ljava/lang/StringBuilder;-><init>()V
 
-    invoke-interface {p3}, Landroid/util/AttributeSet;->getPositionDescription()Ljava/lang/String;
+    invoke-interface/range {p3 .. p3}, Landroid/util/AttributeSet;->getPositionDescription()Ljava/lang/String;
 
     move-result-object v11
 
@@ -1076,9 +1091,20 @@
     invoke-virtual {v7, v6}, Landroid/view/InflateException;->initCause(Ljava/lang/Throwable;)Ljava/lang/Throwable;
 
     throw v7
+    :try_end_2
+    .catchall {:try_start_2 .. :try_end_2} :catchall_0
 
     .end local v6           #e:Ljava/lang/NoSuchMethodException;
     .end local v7           #ie:Landroid/view/InflateException;
+    :catchall_0
+    move-exception v10
+
+    const-wide/16 v11, 0x8
+
+    invoke-static {v11, v12}, Landroid/os/Trace;->traceEnd(J)V
+
+    throw v10
+
     .restart local v2       #allowedState:Ljava/lang/Boolean;
     .restart local p1
     :cond_6
@@ -1092,7 +1118,7 @@
     goto :goto_3
 
     :cond_8
-    :try_start_1
+    :try_start_3
     sget-object v10, Ljava/lang/Boolean;->FALSE:Ljava/lang/Boolean;
 
     invoke-virtual {v2, v10}, Ljava/lang/Boolean;->equals(Ljava/lang/Object;)Z
@@ -1101,12 +1127,13 @@
 
     if-eqz v10, :cond_1
 
-    invoke-direct {p0, p1, p2, p3}, Landroid/view/LayoutInflater;->failNotAllowed(Ljava/lang/String;Ljava/lang/String;Landroid/util/AttributeSet;)V
-    :try_end_1
-    .catch Ljava/lang/NoSuchMethodException; {:try_start_1 .. :try_end_1} :catch_0
-    .catch Ljava/lang/ClassCastException; {:try_start_1 .. :try_end_1} :catch_1
-    .catch Ljava/lang/ClassNotFoundException; {:try_start_1 .. :try_end_1} :catch_2
-    .catch Ljava/lang/Exception; {:try_start_1 .. :try_end_1} :catch_3
+    invoke-direct/range {p0 .. p3}, Landroid/view/LayoutInflater;->failNotAllowed(Ljava/lang/String;Ljava/lang/String;Landroid/util/AttributeSet;)V
+    :try_end_3
+    .catchall {:try_start_3 .. :try_end_3} :catchall_0
+    .catch Ljava/lang/NoSuchMethodException; {:try_start_3 .. :try_end_3} :catch_0
+    .catch Ljava/lang/ClassCastException; {:try_start_3 .. :try_end_3} :catch_1
+    .catch Ljava/lang/ClassNotFoundException; {:try_start_3 .. :try_end_3} :catch_2
+    .catch Ljava/lang/Exception; {:try_start_3 .. :try_end_3} :catch_3
 
     goto/16 :goto_1
 
@@ -1115,13 +1142,14 @@
     move-exception v6
 
     .local v6, e:Ljava/lang/ClassCastException;
+    :try_start_4
     new-instance v7, Landroid/view/InflateException;
 
     new-instance v10, Ljava/lang/StringBuilder;
 
     invoke-direct {v10}, Ljava/lang/StringBuilder;-><init>()V
 
-    invoke-interface {p3}, Landroid/util/AttributeSet;->getPositionDescription()Ljava/lang/String;
+    invoke-interface/range {p3 .. p3}, Landroid/util/AttributeSet;->getPositionDescription()Ljava/lang/String;
 
     move-result-object v11
 
@@ -1190,7 +1218,7 @@
 
     invoke-direct {v10}, Ljava/lang/StringBuilder;-><init>()V
 
-    invoke-interface {p3}, Landroid/util/AttributeSet;->getPositionDescription()Ljava/lang/String;
+    invoke-interface/range {p3 .. p3}, Landroid/util/AttributeSet;->getPositionDescription()Ljava/lang/String;
 
     move-result-object v11
 
@@ -1227,6 +1255,8 @@
     .end local v7           #ie:Landroid/view/InflateException;
     :cond_a
     invoke-virtual {v4}, Ljava/lang/Class;->getName()Ljava/lang/String;
+    :try_end_4
+    .catchall {:try_start_4 .. :try_end_4} :catchall_0
 
     move-result-object v10
 
@@ -1567,7 +1597,13 @@
 
     monitor-enter v13
 
+    const-wide/16 v14, 0x8
+
     :try_start_0
+    const-string v12, "inflate"
+
+    invoke-static {v14, v15, v12}, Landroid/os/Trace;->traceBegin(JLjava/lang/String;)V
+
     invoke-static/range {p1 .. p1}, Landroid/util/Xml;->asAttributeSet(Lorg/xmlpull/v1/XmlPullParser;)Landroid/util/AttributeSet;
 
     move-result-object v3
@@ -1836,6 +1872,10 @@
     const/4 v15, 0x0
 
     aput-object v15, v12, v14
+
+    const-wide/16 v14, 0x8
+
+    invoke-static {v14, v15}, Landroid/os/Trace;->traceEnd(J)V
 
     monitor-exit v13
     :try_end_7

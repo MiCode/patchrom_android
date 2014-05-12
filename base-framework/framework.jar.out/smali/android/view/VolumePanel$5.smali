@@ -8,7 +8,7 @@
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Landroid/view/VolumePanel;->onDisplaySafeVolumeWarning()V
+    value = Landroid/view/VolumePanel;->onDisplaySafeVolumeWarning(I)V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;

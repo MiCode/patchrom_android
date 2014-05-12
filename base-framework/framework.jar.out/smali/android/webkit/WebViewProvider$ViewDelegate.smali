@@ -18,6 +18,9 @@
 .method public abstract dispatchKeyEvent(Landroid/view/KeyEvent;)Z
 .end method
 
+.method public abstract getAccessibilityNodeProvider()Landroid/view/accessibility/AccessibilityNodeProvider;
+.end method
+
 .method public abstract onAttachedToWindow()V
 .end method
 
@@ -91,6 +94,9 @@
 .end method
 
 .method public abstract performLongClick()Z
+.end method
+
+.method public abstract preDispatchDraw(Landroid/graphics/Canvas;)V
 .end method
 
 .method public abstract requestChildRectangleOnScreen(Landroid/view/View;Landroid/graphics/Rect;Z)Z

@@ -73,6 +73,20 @@
     return-void
 .end method
 
+.method public onKeyEvent(Landroid/view/KeyEvent;)Z
+    .locals 1
+    .parameter "event"
+
+    .prologue
+    iget-object v0, p0, Landroid/accessibilityservice/AccessibilityService$1;->this$0:Landroid/accessibilityservice/AccessibilityService;
+
+    invoke-virtual {v0, p1}, Landroid/accessibilityservice/AccessibilityService;->onKeyEvent(Landroid/view/KeyEvent;)Z
+
+    move-result v0
+
+    return v0
+.end method
+
 .method public onServiceConnected()V
     .locals 1
 

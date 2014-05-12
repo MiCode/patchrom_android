@@ -6,7 +6,6 @@
 # annotations
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
-        Landroid/accounts/AbstractAccountAuthenticator$1;,
         Landroid/accounts/AbstractAccountAuthenticator$Transport;
     }
 .end annotation
@@ -413,6 +412,33 @@
     .end annotation
 .end method
 
+.method public addAccountFromCredentials(Landroid/accounts/AccountAuthenticatorResponse;Landroid/accounts/Account;Landroid/os/Bundle;)Landroid/os/Bundle;
+    .locals 2
+    .parameter "response"
+    .parameter "account"
+    .parameter "accountCredentials"
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/accounts/NetworkErrorException;
+        }
+    .end annotation
+
+    .prologue
+    new-instance v0, Ljava/lang/Thread;
+
+    new-instance v1, Landroid/accounts/AbstractAccountAuthenticator$2;
+
+    invoke-direct {v1, p0, p1}, Landroid/accounts/AbstractAccountAuthenticator$2;-><init>(Landroid/accounts/AbstractAccountAuthenticator;Landroid/accounts/AccountAuthenticatorResponse;)V
+
+    invoke-direct {v0, v1}, Ljava/lang/Thread;-><init>(Ljava/lang/Runnable;)V
+
+    invoke-virtual {v0}, Ljava/lang/Thread;->start()V
+
+    const/4 v0, 0x0
+
+    return-object v0
+.end method
+
 .method public abstract confirmCredentials(Landroid/accounts/AccountAuthenticatorResponse;Landroid/accounts/Account;Landroid/os/Bundle;)Landroid/os/Bundle;
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -422,6 +448,32 @@
 .end method
 
 .method public abstract editProperties(Landroid/accounts/AccountAuthenticatorResponse;Ljava/lang/String;)Landroid/os/Bundle;
+.end method
+
+.method public getAccountCredentialsForCloning(Landroid/accounts/AccountAuthenticatorResponse;Landroid/accounts/Account;)Landroid/os/Bundle;
+    .locals 2
+    .parameter "response"
+    .parameter "account"
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/accounts/NetworkErrorException;
+        }
+    .end annotation
+
+    .prologue
+    new-instance v0, Ljava/lang/Thread;
+
+    new-instance v1, Landroid/accounts/AbstractAccountAuthenticator$1;
+
+    invoke-direct {v1, p0, p1}, Landroid/accounts/AbstractAccountAuthenticator$1;-><init>(Landroid/accounts/AbstractAccountAuthenticator;Landroid/accounts/AccountAuthenticatorResponse;)V
+
+    invoke-direct {v0, v1}, Ljava/lang/Thread;-><init>(Ljava/lang/Runnable;)V
+
+    invoke-virtual {v0}, Ljava/lang/Thread;->start()V
+
+    const/4 v0, 0x0
+
+    return-object v0
 .end method
 
 .method public getAccountRemovalAllowed(Landroid/accounts/AccountAuthenticatorResponse;Landroid/accounts/Account;)Landroid/os/Bundle;

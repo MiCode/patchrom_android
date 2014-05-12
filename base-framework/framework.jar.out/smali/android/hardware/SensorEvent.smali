@@ -16,7 +16,7 @@
 # direct methods
 .method constructor <init>(I)V
     .locals 1
-    .parameter "size"
+    .parameter "valueSize"
 
     .prologue
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V

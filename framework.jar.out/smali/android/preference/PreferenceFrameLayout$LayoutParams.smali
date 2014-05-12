@@ -61,7 +61,7 @@
 
     iget-boolean v1, p0, Landroid/preference/PreferenceFrameLayout$LayoutParams;->removeBorders:Z
 
-    invoke-static {p1, v1}, Landroid/preference/PreferenceFrameLayout$Injector;->isRemoveBorders(Landroid/content/Context;Z)Z
+    invoke-static {p1, v1}, Landroid/preference/Injector$PreferenceFrameLayoutHook;->isRemoveBorders(Landroid/content/Context;Z)Z
 
     move-result v1
 

@@ -90,7 +90,11 @@
 
 .field public static final SCREEN_ORIENTATION_FULL_SENSOR:I = 0xa
 
+.field public static final SCREEN_ORIENTATION_FULL_USER:I = 0xd
+
 .field public static final SCREEN_ORIENTATION_LANDSCAPE:I = 0x0
+
+.field public static final SCREEN_ORIENTATION_LOCKED:I = 0xe
 
 .field public static final SCREEN_ORIENTATION_NOSENSOR:I = 0x5
 
@@ -109,6 +113,10 @@
 .field public static final SCREEN_ORIENTATION_UNSPECIFIED:I = -0x1
 
 .field public static final SCREEN_ORIENTATION_USER:I = 0x2
+
+.field public static final SCREEN_ORIENTATION_USER_LANDSCAPE:I = 0xb
+
+.field public static final SCREEN_ORIENTATION_USER_PORTRAIT:I = 0xc
 
 .field public static final UIOPTION_SPLIT_ACTION_BAR_WHEN_NARROW:I = 0x1
 
@@ -162,8 +170,8 @@
 
     :array_0
     .array-data 0x4
-        0x1t 0x0t 0x0t 0x0t
         0x2t 0x0t 0x0t 0x0t
+        0x1t 0x0t 0x0t 0x0t
         0x4t 0x0t 0x0t 0x0t
         0x8t 0x0t 0x0t 0x0t
         0x10t 0x0t 0x0t 0x0t

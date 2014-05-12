@@ -8,7 +8,7 @@
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/android/server/display/WifiDisplayAdapter;->requestScanLocked()V
+    value = Lcom/android/server/display/WifiDisplayAdapter;->requestStartScanLocked()V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -56,7 +56,7 @@
 
     move-result-object v0
 
-    invoke-virtual {v0}, Lcom/android/server/display/WifiDisplayController;->requestScan()V
+    invoke-virtual {v0}, Lcom/android/server/display/WifiDisplayController;->requestStartScan()V
 
     :cond_0
     return-void

@@ -1682,6 +1682,31 @@
     return-object v0
 .end method
 
+.method public static YUV(Landroid/renderscript/RenderScript;)Landroid/renderscript/Element;
+    .locals 2
+    .parameter "rs"
+
+    .prologue
+    iget-object v0, p0, Landroid/renderscript/RenderScript;->mElement_YUV:Landroid/renderscript/Element;
+
+    if-nez v0, :cond_0
+
+    sget-object v0, Landroid/renderscript/Element$DataType;->UNSIGNED_8:Landroid/renderscript/Element$DataType;
+
+    sget-object v1, Landroid/renderscript/Element$DataKind;->PIXEL_YUV:Landroid/renderscript/Element$DataKind;
+
+    invoke-static {p0, v0, v1}, Landroid/renderscript/Element;->createPixel(Landroid/renderscript/RenderScript;Landroid/renderscript/Element$DataType;Landroid/renderscript/Element$DataKind;)Landroid/renderscript/Element;
+
+    move-result-object v0
+
+    iput-object v0, p0, Landroid/renderscript/RenderScript;->mElement_YUV:Landroid/renderscript/Element;
+
+    :cond_0
+    iget-object v0, p0, Landroid/renderscript/RenderScript;->mElement_YUV:Landroid/renderscript/Element;
+
+    return-object v0
+.end method
+
 .method public static createPixel(Landroid/renderscript/RenderScript;Landroid/renderscript/Element$DataType;Landroid/renderscript/Element$DataKind;)Landroid/renderscript/Element;
     .locals 7
     .parameter "rs"
@@ -1710,6 +1735,10 @@
     if-eq p2, v0, :cond_0
 
     sget-object v0, Landroid/renderscript/Element$DataKind;->PIXEL_DEPTH:Landroid/renderscript/Element$DataKind;
+
+    if-eq p2, v0, :cond_0
+
+    sget-object v0, Landroid/renderscript/Element$DataKind;->PIXEL_YUV:Landroid/renderscript/Element$DataKind;
 
     if-eq p2, v0, :cond_0
 

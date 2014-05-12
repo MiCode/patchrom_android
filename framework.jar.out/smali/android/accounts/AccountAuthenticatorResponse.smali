@@ -39,7 +39,7 @@
     return-void
 .end method
 
-.method constructor <init>(Landroid/accounts/IAccountAuthenticatorResponse;)V
+.method public constructor <init>(Landroid/accounts/IAccountAuthenticatorResponse;)V
     .locals 0
     .parameter "response"
 

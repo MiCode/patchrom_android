@@ -44,10 +44,10 @@
 
 # virtual methods
 .method public run()V
-    .locals 12
+    .locals 13
 
     .prologue
-    const v11, 0xc864
+    const v12, 0xc864
 
     :try_start_0
     iget-object v0, p0, Lcom/android/server/updates/ConfigUpdateInstallReceiver$1;->this$0:Lcom/android/server/updates/ConfigUpdateInstallReceiver;
@@ -68,12 +68,12 @@
 
     iget-object v10, p0, Lcom/android/server/updates/ConfigUpdateInstallReceiver$1;->val$intent:Landroid/content/Intent;
 
-    #calls: Lcom/android/server/updates/ConfigUpdateInstallReceiver;->getAltContent(Landroid/content/Intent;)Ljava/lang/String;
-    invoke-static {v0, v10}, Lcom/android/server/updates/ConfigUpdateInstallReceiver;->access$100(Lcom/android/server/updates/ConfigUpdateInstallReceiver;Landroid/content/Intent;)Ljava/lang/String;
+    #calls: Lcom/android/server/updates/ConfigUpdateInstallReceiver;->getAltContent(Landroid/content/Intent;)[B
+    invoke-static {v0, v10}, Lcom/android/server/updates/ConfigUpdateInstallReceiver;->access$100(Lcom/android/server/updates/ConfigUpdateInstallReceiver;Landroid/content/Intent;)[B
 
     move-result-object v1
 
-    .local v1, altContent:Ljava/lang/String;
+    .local v1, altContent:[B
     iget-object v0, p0, Lcom/android/server/updates/ConfigUpdateInstallReceiver$1;->this$0:Lcom/android/server/updates/ConfigUpdateInstallReceiver;
 
     iget-object v10, p0, Lcom/android/server/updates/ConfigUpdateInstallReceiver$1;->val$intent:Landroid/content/Intent;
@@ -114,13 +114,13 @@
     .local v7, currentVersion:I
     iget-object v0, p0, Lcom/android/server/updates/ConfigUpdateInstallReceiver$1;->this$0:Lcom/android/server/updates/ConfigUpdateInstallReceiver;
 
-    #calls: Lcom/android/server/updates/ConfigUpdateInstallReceiver;->getCurrentContent()Ljava/lang/String;
-    invoke-static {v0}, Lcom/android/server/updates/ConfigUpdateInstallReceiver;->access$600(Lcom/android/server/updates/ConfigUpdateInstallReceiver;)Ljava/lang/String;
+    #calls: Lcom/android/server/updates/ConfigUpdateInstallReceiver;->getCurrentContent()[B
+    invoke-static {v0}, Lcom/android/server/updates/ConfigUpdateInstallReceiver;->access$600(Lcom/android/server/updates/ConfigUpdateInstallReceiver;)[B
 
     move-result-object v0
 
-    #calls: Lcom/android/server/updates/ConfigUpdateInstallReceiver;->getCurrentHash(Ljava/lang/String;)Ljava/lang/String;
-    invoke-static {v0}, Lcom/android/server/updates/ConfigUpdateInstallReceiver;->access$700(Ljava/lang/String;)Ljava/lang/String;
+    #calls: Lcom/android/server/updates/ConfigUpdateInstallReceiver;->getCurrentHash([B)Ljava/lang/String;
+    invoke-static {v0}, Lcom/android/server/updates/ConfigUpdateInstallReceiver;->access$700([B)Ljava/lang/String;
 
     move-result-object v6
 
@@ -140,7 +140,7 @@
 
     invoke-static {v0, v10}, Landroid/util/Slog;->i(Ljava/lang/String;Ljava/lang/String;)I
 
-    .end local v1           #altContent:Ljava/lang/String;
+    .end local v1           #altContent:[B
     .end local v2           #altVersion:I
     .end local v3           #altRequiredHash:Ljava/lang/String;
     .end local v4           #altSig:Ljava/lang/String;
@@ -150,7 +150,7 @@
     :goto_0
     return-void
 
-    .restart local v1       #altContent:Ljava/lang/String;
+    .restart local v1       #altContent:[B
     .restart local v2       #altVersion:I
     .restart local v3       #altRequiredHash:Ljava/lang/String;
     .restart local v4       #altSig:Ljava/lang/String;
@@ -177,7 +177,7 @@
 
     goto :goto_0
 
-    .end local v1           #altContent:Ljava/lang/String;
+    .end local v1           #altContent:[B
     .end local v2           #altVersion:I
     .end local v3           #altRequiredHash:Ljava/lang/String;
     .end local v4           #altSig:Ljava/lang/String;
@@ -216,13 +216,13 @@
     move-result-object v9
 
     :cond_1
-    invoke-static {v11, v9}, Landroid/util/EventLog;->writeEvent(ILjava/lang/String;)I
+    invoke-static {v12, v9}, Landroid/util/EventLog;->writeEvent(ILjava/lang/String;)I
 
     goto :goto_0
 
     .end local v8           #e:Ljava/lang/Exception;
     .end local v9           #errMsg:Ljava/lang/String;
-    .restart local v1       #altContent:Ljava/lang/String;
+    .restart local v1       #altContent:[B
     .restart local v2       #altVersion:I
     .restart local v3       #altRequiredHash:Ljava/lang/String;
     .restart local v4       #altSig:Ljava/lang/String;
@@ -233,8 +233,8 @@
     :try_start_1
     iget-object v0, p0, Lcom/android/server/updates/ConfigUpdateInstallReceiver$1;->this$0:Lcom/android/server/updates/ConfigUpdateInstallReceiver;
 
-    #calls: Lcom/android/server/updates/ConfigUpdateInstallReceiver;->verifySignature(Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Ljava/security/cert/X509Certificate;)Z
-    invoke-static/range {v0 .. v5}, Lcom/android/server/updates/ConfigUpdateInstallReceiver;->access$1000(Lcom/android/server/updates/ConfigUpdateInstallReceiver;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Ljava/security/cert/X509Certificate;)Z
+    #calls: Lcom/android/server/updates/ConfigUpdateInstallReceiver;->verifySignature([BILjava/lang/String;Ljava/lang/String;Ljava/security/cert/X509Certificate;)Z
+    invoke-static/range {v0 .. v5}, Lcom/android/server/updates/ConfigUpdateInstallReceiver;->access$1000(Lcom/android/server/updates/ConfigUpdateInstallReceiver;[BILjava/lang/String;Ljava/lang/String;Ljava/security/cert/X509Certificate;)Z
 
     move-result v0
 
@@ -257,14 +257,21 @@
 
     iget-object v0, p0, Lcom/android/server/updates/ConfigUpdateInstallReceiver$1;->this$0:Lcom/android/server/updates/ConfigUpdateInstallReceiver;
 
-    #calls: Lcom/android/server/updates/ConfigUpdateInstallReceiver;->install(Ljava/lang/String;I)V
-    invoke-static {v0, v1, v2}, Lcom/android/server/updates/ConfigUpdateInstallReceiver;->access$1100(Lcom/android/server/updates/ConfigUpdateInstallReceiver;Ljava/lang/String;I)V
+    invoke-virtual {v0, v1, v2}, Lcom/android/server/updates/ConfigUpdateInstallReceiver;->install([BI)V
 
     const-string v0, "ConfigUpdateInstallReceiver"
 
     const-string v10, "Installation successful"
 
     invoke-static {v0, v10}, Landroid/util/Slog;->i(Ljava/lang/String;Ljava/lang/String;)I
+
+    iget-object v0, p0, Lcom/android/server/updates/ConfigUpdateInstallReceiver$1;->this$0:Lcom/android/server/updates/ConfigUpdateInstallReceiver;
+
+    iget-object v10, p0, Lcom/android/server/updates/ConfigUpdateInstallReceiver$1;->val$context:Landroid/content/Context;
+
+    iget-object v11, p0, Lcom/android/server/updates/ConfigUpdateInstallReceiver$1;->val$intent:Landroid/content/Intent;
+
+    invoke-virtual {v0, v10, v11}, Lcom/android/server/updates/ConfigUpdateInstallReceiver;->postInstall(Landroid/content/Context;Landroid/content/Intent;)V
     :try_end_1
     .catch Ljava/lang/Exception; {:try_start_1 .. :try_end_1} :catch_0
 

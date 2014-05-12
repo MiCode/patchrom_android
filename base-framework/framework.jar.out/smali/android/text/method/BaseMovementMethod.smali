@@ -299,20 +299,14 @@
 .end method
 
 .method protected getMovementMetaState(Landroid/text/Spannable;Landroid/view/KeyEvent;)I
-    .locals 3
+    .locals 2
     .parameter "buffer"
     .parameter "event"
 
     .prologue
-    invoke-virtual {p2}, Landroid/view/KeyEvent;->getMetaState()I
+    invoke-static {p1, p2}, Landroid/text/method/MetaKeyKeyListener;->getMetaState(Ljava/lang/CharSequence;Landroid/view/KeyEvent;)I
 
     move-result v1
-
-    invoke-static {p1}, Landroid/text/method/MetaKeyKeyListener;->getMetaState(Ljava/lang/CharSequence;)I
-
-    move-result v2
-
-    or-int/2addr v1, v2
 
     and-int/lit16 v0, v1, -0x601
 

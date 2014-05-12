@@ -1,4 +1,4 @@
-.class Lcom/android/server/am/AppErrorResult;
+.class final Lcom/android/server/am/AppErrorResult;
 .super Ljava/lang/Object;
 .source "AppErrorResult.java"
 

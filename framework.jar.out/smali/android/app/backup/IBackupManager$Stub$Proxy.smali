@@ -364,8 +364,9 @@
     throw v3
 .end method
 
-.method public clearBackupData(Ljava/lang/String;)V
+.method public clearBackupData(Ljava/lang/String;Ljava/lang/String;)V
     .locals 5
+    .parameter "transportName"
     .parameter "packageName"
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -390,6 +391,8 @@
     invoke-virtual {v0, v2}, Landroid/os/Parcel;->writeInterfaceToken(Ljava/lang/String;)V
 
     invoke-virtual {v0, p1}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
+
+    invoke-virtual {v0, p2}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
     iget-object v2, p0, Landroid/app/backup/IBackupManager$Stub$Proxy;->mRemote:Landroid/os/IBinder;
 
@@ -474,10 +477,11 @@
     throw v2
 .end method
 
-.method public fullBackup(Landroid/os/ParcelFileDescriptor;ZZZZ[Ljava/lang/String;)V
+.method public fullBackup(Landroid/os/ParcelFileDescriptor;ZZZZZ[Ljava/lang/String;)V
     .locals 5
     .parameter "fd"
     .parameter "includeApks"
+    .parameter "includeObbs"
     .parameter "includeShared"
     .parameter "allApps"
     .parameter "allIncludesSystem"
@@ -542,10 +546,17 @@
 
     if-eqz p5, :cond_4
 
+    move v4, v2
+
     :goto_4
+    invoke-virtual {v0, v4}, Landroid/os/Parcel;->writeInt(I)V
+
+    if-eqz p6, :cond_5
+
+    :goto_5
     invoke-virtual {v0, v2}, Landroid/os/Parcel;->writeInt(I)V
 
-    invoke-virtual {v0, p6}, Landroid/os/Parcel;->writeStringArray([Ljava/lang/String;)V
+    invoke-virtual {v0, p7}, Landroid/os/Parcel;->writeStringArray([Ljava/lang/String;)V
 
     iget-object v2, p0, Landroid/app/backup/IBackupManager$Stub$Proxy;->mRemote:Landroid/os/IBinder;
 
@@ -600,9 +611,14 @@
     goto :goto_3
 
     :cond_4
-    move v2, v3
+    move v4, v3
 
     goto :goto_4
+
+    :cond_5
+    move v2, v3
+
+    goto :goto_5
 .end method
 
 .method public fullRestore(Landroid/os/ParcelFileDescriptor;)V

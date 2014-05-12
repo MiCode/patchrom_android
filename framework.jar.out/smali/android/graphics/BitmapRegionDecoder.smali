@@ -96,7 +96,7 @@
 .end method
 
 .method public static newInstance(Ljava/io/InputStream;Z)Landroid/graphics/BitmapRegionDecoder;
-    .locals 4
+    .locals 2
     .parameter "is"
     .parameter "isShareable"
     .annotation system Ldalvik/annotation/Throws;
@@ -106,51 +106,34 @@
     .end annotation
 
     .prologue
-    const/16 v3, 0x4000
+    instance-of v1, p0, Landroid/content/res/AssetManager$AssetInputStream;
 
-    invoke-virtual {p0}, Ljava/io/InputStream;->markSupported()Z
-
-    move-result v2
-
-    if-nez v2, :cond_0
-
-    new-instance v0, Ljava/io/BufferedInputStream;
-
-    invoke-direct {v0, p0, v3}, Ljava/io/BufferedInputStream;-><init>(Ljava/io/InputStream;I)V
-
-    .end local p0
-    .local v0, is:Ljava/io/InputStream;
-    move-object p0, v0
-
-    .end local v0           #is:Ljava/io/InputStream;
-    .restart local p0
-    :cond_0
-    instance-of v2, p0, Landroid/content/res/AssetManager$AssetInputStream;
-
-    if-eqz v2, :cond_1
+    if-eqz v1, :cond_0
 
     check-cast p0, Landroid/content/res/AssetManager$AssetInputStream;
 
     .end local p0
     invoke-virtual {p0}, Landroid/content/res/AssetManager$AssetInputStream;->getAssetInt()I
 
-    move-result v2
+    move-result v1
 
-    invoke-static {v2, p1}, Landroid/graphics/BitmapRegionDecoder;->nativeNewInstance(IZ)Landroid/graphics/BitmapRegionDecoder;
+    invoke-static {v1, p1}, Landroid/graphics/BitmapRegionDecoder;->nativeNewInstance(IZ)Landroid/graphics/BitmapRegionDecoder;
 
-    move-result-object v2
+    move-result-object v1
 
     :goto_0
-    return-object v2
+    return-object v1
 
     .restart local p0
-    :cond_1
-    new-array v1, v3, [B
+    :cond_0
+    const/16 v1, 0x4000
 
-    .local v1, tempStorage:[B
-    invoke-static {p0, v1, p1}, Landroid/graphics/BitmapRegionDecoder;->nativeNewInstance(Ljava/io/InputStream;[BZ)Landroid/graphics/BitmapRegionDecoder;
+    new-array v0, v1, [B
 
-    move-result-object v2
+    .local v0, tempStorage:[B
+    invoke-static {p0, v0, p1}, Landroid/graphics/BitmapRegionDecoder;->nativeNewInstance(Ljava/io/InputStream;[BZ)Landroid/graphics/BitmapRegionDecoder;
+
+    move-result-object v1
 
     goto :goto_0
 .end method

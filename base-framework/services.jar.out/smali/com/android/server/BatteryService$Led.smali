@@ -54,7 +54,7 @@
 
     move-result-object v0
 
-    const v1, 0x10e001e
+    const v1, 0x10e0023
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getInteger(I)I
 
@@ -66,7 +66,7 @@
 
     move-result-object v0
 
-    const v1, 0x10e001f
+    const v1, 0x10e0024
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getInteger(I)I
 
@@ -78,7 +78,7 @@
 
     move-result-object v0
 
-    const v1, 0x10e0020
+    const v1, 0x10e0025
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getInteger(I)I
 
@@ -90,7 +90,7 @@
 
     move-result-object v0
 
-    const v1, 0x10e0021
+    const v1, 0x10e0026
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getInteger(I)I
 
@@ -102,7 +102,7 @@
 
     move-result-object v0
 
-    const v1, 0x10e0022
+    const v1, 0x10e0027
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getInteger(I)I
 
@@ -125,24 +125,28 @@
 
     iget-object v2, p0, Lcom/android/server/BatteryService$Led;->this$0:Lcom/android/server/BatteryService;
 
-    #getter for: Lcom/android/server/BatteryService;->mBatteryLevel:I
-    invoke-static {v2}, Lcom/android/server/BatteryService;->access$400(Lcom/android/server/BatteryService;)I
+    #getter for: Lcom/android/server/BatteryService;->mBatteryProps:Landroid/os/BatteryProperties;
+    invoke-static {v2}, Lcom/android/server/BatteryService;->access$400(Lcom/android/server/BatteryService;)Landroid/os/BatteryProperties;
 
-    move-result v0
+    move-result-object v2
+
+    iget v0, v2, Landroid/os/BatteryProperties;->batteryLevel:I
 
     .local v0, level:I
     iget-object v2, p0, Lcom/android/server/BatteryService$Led;->this$0:Lcom/android/server/BatteryService;
 
-    #getter for: Lcom/android/server/BatteryService;->mBatteryStatus:I
-    invoke-static {v2}, Lcom/android/server/BatteryService;->access$500(Lcom/android/server/BatteryService;)I
+    #getter for: Lcom/android/server/BatteryService;->mBatteryProps:Landroid/os/BatteryProperties;
+    invoke-static {v2}, Lcom/android/server/BatteryService;->access$400(Lcom/android/server/BatteryService;)Landroid/os/BatteryProperties;
 
-    move-result v1
+    move-result-object v2
+
+    iget v1, v2, Landroid/os/BatteryProperties;->batteryStatus:I
 
     .local v1, status:I
     iget-object v2, p0, Lcom/android/server/BatteryService$Led;->this$0:Lcom/android/server/BatteryService;
 
     #getter for: Lcom/android/server/BatteryService;->mLowBatteryWarningLevel:I
-    invoke-static {v2}, Lcom/android/server/BatteryService;->access$600(Lcom/android/server/BatteryService;)I
+    invoke-static {v2}, Lcom/android/server/BatteryService;->access$500(Lcom/android/server/BatteryService;)I
 
     move-result v2
 

@@ -19,6 +19,8 @@
 
 .field final signatures:Lcom/android/server/pm/PackageSignatures;
 
+.field uidFlags:I
+
 .field userId:I
 
 
@@ -43,6 +45,8 @@
 
     iput-object v0, p0, Lcom/android/server/pm/SharedUserSetting;->signatures:Lcom/android/server/pm/PackageSignatures;
 
+    iput p2, p0, Lcom/android/server/pm/SharedUserSetting;->uidFlags:I
+
     iput-object p1, p0, Lcom/android/server/pm/SharedUserSetting;->name:Ljava/lang/String;
 
     return-void
@@ -50,6 +54,92 @@
 
 
 # virtual methods
+.method addPackage(Lcom/android/server/pm/PackageSetting;)V
+    .locals 2
+    .parameter "packageSetting"
+
+    .prologue
+    iget-object v0, p0, Lcom/android/server/pm/SharedUserSetting;->packages:Ljava/util/HashSet;
+
+    invoke-virtual {v0, p1}, Ljava/util/HashSet;->add(Ljava/lang/Object;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_0
+
+    iget v0, p0, Lcom/android/server/pm/SharedUserSetting;->pkgFlags:I
+
+    iget v1, p1, Lcom/android/server/pm/PackageSetting;->pkgFlags:I
+
+    or-int/2addr v0, v1
+
+    invoke-virtual {p0, v0}, Lcom/android/server/pm/SharedUserSetting;->setFlags(I)V
+
+    :cond_0
+    return-void
+.end method
+
+.method removePackage(Lcom/android/server/pm/PackageSetting;)V
+    .locals 5
+    .parameter "packageSetting"
+
+    .prologue
+    iget-object v3, p0, Lcom/android/server/pm/SharedUserSetting;->packages:Ljava/util/HashSet;
+
+    invoke-virtual {v3, p1}, Ljava/util/HashSet;->remove(Ljava/lang/Object;)Z
+
+    move-result v3
+
+    if-eqz v3, :cond_1
+
+    iget v3, p0, Lcom/android/server/pm/SharedUserSetting;->pkgFlags:I
+
+    iget v4, p1, Lcom/android/server/pm/PackageSetting;->pkgFlags:I
+
+    and-int/2addr v3, v4
+
+    if-eqz v3, :cond_1
+
+    iget v0, p0, Lcom/android/server/pm/SharedUserSetting;->uidFlags:I
+
+    .local v0, aggregatedFlags:I
+    iget-object v3, p0, Lcom/android/server/pm/SharedUserSetting;->packages:Ljava/util/HashSet;
+
+    invoke-virtual {v3}, Ljava/util/HashSet;->iterator()Ljava/util/Iterator;
+
+    move-result-object v1
+
+    .local v1, i$:Ljava/util/Iterator;
+    :goto_0
+    invoke-interface {v1}, Ljava/util/Iterator;->hasNext()Z
+
+    move-result v3
+
+    if-eqz v3, :cond_0
+
+    invoke-interface {v1}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+
+    move-result-object v2
+
+    check-cast v2, Lcom/android/server/pm/PackageSetting;
+
+    .local v2, ps:Lcom/android/server/pm/PackageSetting;
+    iget v3, v2, Lcom/android/server/pm/PackageSetting;->pkgFlags:I
+
+    or-int/2addr v0, v3
+
+    goto :goto_0
+
+    .end local v2           #ps:Lcom/android/server/pm/PackageSetting;
+    :cond_0
+    invoke-virtual {p0, v0}, Lcom/android/server/pm/SharedUserSetting;->setFlags(I)V
+
+    .end local v0           #aggregatedFlags:I
+    .end local v1           #i$:Ljava/util/Iterator;
+    :cond_1
+    return-void
+.end method
+
 .method public toString()Ljava/lang/String;
     .locals 2
 

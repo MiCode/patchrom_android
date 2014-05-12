@@ -34,35 +34,70 @@
 
 # virtual methods
 .method public onUEvent(Landroid/os/UEventObserver$UEvent;)V
-    .locals 2
+    .locals 3
     .parameter "event"
 
     .prologue
-    iget-object v0, p0, Lcom/android/server/BatteryService$8;->this$0:Lcom/android/server/BatteryService;
+    const-string v1, "1"
+
+    const-string v2, "SWITCH_STATE"
+
+    invoke-virtual {p1, v2}, Landroid/os/UEventObserver$UEvent;->get(Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-virtual {v1, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_1
+
+    const/4 v0, 0x1
+
+    .local v0, invalidCharger:I
+    :goto_0
+    iget-object v1, p0, Lcom/android/server/BatteryService$8;->this$0:Lcom/android/server/BatteryService;
 
     #getter for: Lcom/android/server/BatteryService;->mLock:Ljava/lang/Object;
-    invoke-static {v0}, Lcom/android/server/BatteryService;->access$100(Lcom/android/server/BatteryService;)Ljava/lang/Object;
+    invoke-static {v1}, Lcom/android/server/BatteryService;->access$200(Lcom/android/server/BatteryService;)Ljava/lang/Object;
 
-    move-result-object v1
+    move-result-object v2
 
-    monitor-enter v1
+    monitor-enter v2
 
     :try_start_0
-    iget-object v0, p0, Lcom/android/server/BatteryService$8;->this$0:Lcom/android/server/BatteryService;
+    iget-object v1, p0, Lcom/android/server/BatteryService$8;->this$0:Lcom/android/server/BatteryService;
 
-    #calls: Lcom/android/server/BatteryService;->updateLocked()V
-    invoke-static {v0}, Lcom/android/server/BatteryService;->access$200(Lcom/android/server/BatteryService;)V
+    #getter for: Lcom/android/server/BatteryService;->mInvalidCharger:I
+    invoke-static {v1}, Lcom/android/server/BatteryService;->access$300(Lcom/android/server/BatteryService;)I
 
-    monitor-exit v1
+    move-result v1
+
+    if-eq v1, v0, :cond_0
+
+    iget-object v1, p0, Lcom/android/server/BatteryService$8;->this$0:Lcom/android/server/BatteryService;
+
+    #setter for: Lcom/android/server/BatteryService;->mInvalidCharger:I
+    invoke-static {v1, v0}, Lcom/android/server/BatteryService;->access$302(Lcom/android/server/BatteryService;I)I
+
+    :cond_0
+    monitor-exit v2
 
     return-void
 
-    :catchall_0
-    move-exception v0
+    .end local v0           #invalidCharger:I
+    :cond_1
+    const/4 v0, 0x0
 
-    monitor-exit v1
+    goto :goto_0
+
+    .restart local v0       #invalidCharger:I
+    :catchall_0
+    move-exception v1
+
+    monitor-exit v2
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    throw v0
+    throw v1
 .end method

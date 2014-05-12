@@ -38,6 +38,22 @@
     return-void
 .end method
 
+.method public flush()V
+    .locals 1
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Ljava/io/IOException;
+        }
+    .end annotation
+
+    .prologue
+    iget-object v0, p0, Landroid/bluetooth/BluetoothOutputStream;->mSocket:Landroid/bluetooth/BluetoothSocket;
+
+    invoke-virtual {v0}, Landroid/bluetooth/BluetoothSocket;->flush()V
+
+    return-void
+.end method
+
 .method public write(I)V
     .locals 4
     .parameter "oneByte"

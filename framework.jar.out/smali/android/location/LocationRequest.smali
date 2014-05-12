@@ -40,6 +40,8 @@
 
 .field private mFastestInterval:J
 
+.field private mHideFromAppOps:Z
+
 .field private mInterval:J
 
 .field private mNumUpdates:I
@@ -49,6 +51,8 @@
 .field private mQuality:I
 
 .field private mSmallestDisplacement:F
+
+.field private mWorkSource:Landroid/os/WorkSource;
 
 
 # direct methods
@@ -66,9 +70,11 @@
 .end method
 
 .method public constructor <init>()V
-    .locals 4
+    .locals 5
 
     .prologue
+    const/4 v4, 0x0
+
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     const/16 v0, 0xc9
@@ -91,9 +97,7 @@
 
     iput-wide v0, p0, Landroid/location/LocationRequest;->mFastestInterval:J
 
-    const/4 v0, 0x0
-
-    iput-boolean v0, p0, Landroid/location/LocationRequest;->mExplicitFastestInterval:Z
+    iput-boolean v4, p0, Landroid/location/LocationRequest;->mExplicitFastestInterval:Z
 
     const-wide v0, 0x7fffffffffffffffL
 
@@ -106,6 +110,12 @@
     const/4 v0, 0x0
 
     iput v0, p0, Landroid/location/LocationRequest;->mSmallestDisplacement:F
+
+    const/4 v0, 0x0
+
+    iput-object v0, p0, Landroid/location/LocationRequest;->mWorkSource:Landroid/os/WorkSource;
+
+    iput-boolean v4, p0, Landroid/location/LocationRequest;->mHideFromAppOps:Z
 
     const-string v0, "fused"
 
@@ -115,10 +125,12 @@
 .end method
 
 .method public constructor <init>(Landroid/location/LocationRequest;)V
-    .locals 4
+    .locals 5
     .parameter "src"
 
     .prologue
+    const/4 v4, 0x0
+
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     const/16 v0, 0xc9
@@ -141,9 +153,7 @@
 
     iput-wide v0, p0, Landroid/location/LocationRequest;->mFastestInterval:J
 
-    const/4 v0, 0x0
-
-    iput-boolean v0, p0, Landroid/location/LocationRequest;->mExplicitFastestInterval:Z
+    iput-boolean v4, p0, Landroid/location/LocationRequest;->mExplicitFastestInterval:Z
 
     const-wide v0, 0x7fffffffffffffffL
 
@@ -156,6 +166,12 @@
     const/4 v0, 0x0
 
     iput v0, p0, Landroid/location/LocationRequest;->mSmallestDisplacement:F
+
+    const/4 v0, 0x0
+
+    iput-object v0, p0, Landroid/location/LocationRequest;->mWorkSource:Landroid/os/WorkSource;
+
+    iput-boolean v4, p0, Landroid/location/LocationRequest;->mHideFromAppOps:Z
 
     const-string v0, "fused"
 
@@ -192,6 +208,14 @@
     iget-object v0, p1, Landroid/location/LocationRequest;->mProvider:Ljava/lang/String;
 
     iput-object v0, p0, Landroid/location/LocationRequest;->mProvider:Ljava/lang/String;
+
+    iget-object v0, p1, Landroid/location/LocationRequest;->mWorkSource:Landroid/os/WorkSource;
+
+    iput-object v0, p0, Landroid/location/LocationRequest;->mWorkSource:Landroid/os/WorkSource;
+
+    iget-boolean v0, p1, Landroid/location/LocationRequest;->mHideFromAppOps:Z
+
+    iput-boolean v0, p0, Landroid/location/LocationRequest;->mHideFromAppOps:Z
 
     return-void
 .end method
@@ -684,6 +708,15 @@
     return-wide v0
 .end method
 
+.method public getHideFromAppOps()Z
+    .locals 1
+
+    .prologue
+    iget-boolean v0, p0, Landroid/location/LocationRequest;->mHideFromAppOps:Z
+
+    return v0
+.end method
+
 .method public getInterval()J
     .locals 2
 
@@ -727,6 +760,15 @@
     iget v0, p0, Landroid/location/LocationRequest;->mSmallestDisplacement:F
 
     return v0
+.end method
+
+.method public getWorkSource()Landroid/os/WorkSource;
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Landroid/location/LocationRequest;->mWorkSource:Landroid/os/WorkSource;
+
+    return-object v0
 .end method
 
 .method public setExpireAt(J)Landroid/location/LocationRequest;
@@ -806,6 +848,16 @@
     iput-wide p1, p0, Landroid/location/LocationRequest;->mFastestInterval:J
 
     return-object p0
+.end method
+
+.method public setHideFromAppOps(Z)V
+    .locals 0
+    .parameter "hideFromAppOps"
+
+    .prologue
+    iput-boolean p1, p0, Landroid/location/LocationRequest;->mHideFromAppOps:Z
+
+    return-void
 .end method
 
 .method public setInterval(J)Landroid/location/LocationRequest;
@@ -908,6 +960,16 @@
     iput p1, p0, Landroid/location/LocationRequest;->mSmallestDisplacement:F
 
     return-object p0
+.end method
+
+.method public setWorkSource(Landroid/os/WorkSource;)V
+    .locals 0
+    .parameter "workSource"
+
+    .prologue
+    iput-object p1, p0, Landroid/location/LocationRequest;->mWorkSource:Landroid/os/WorkSource;
+
+    return-void
 .end method
 
 .method public toString()Ljava/lang/String;
@@ -1025,26 +1087,28 @@
 .end method
 
 .method public writeToParcel(Landroid/os/Parcel;I)V
-    .locals 2
+    .locals 4
     .parameter "parcel"
     .parameter "flags"
 
     .prologue
+    const/4 v1, 0x0
+
     iget v0, p0, Landroid/location/LocationRequest;->mQuality:I
 
     invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeInt(I)V
 
-    iget-wide v0, p0, Landroid/location/LocationRequest;->mFastestInterval:J
+    iget-wide v2, p0, Landroid/location/LocationRequest;->mFastestInterval:J
 
-    invoke-virtual {p1, v0, v1}, Landroid/os/Parcel;->writeLong(J)V
+    invoke-virtual {p1, v2, v3}, Landroid/os/Parcel;->writeLong(J)V
 
-    iget-wide v0, p0, Landroid/location/LocationRequest;->mInterval:J
+    iget-wide v2, p0, Landroid/location/LocationRequest;->mInterval:J
 
-    invoke-virtual {p1, v0, v1}, Landroid/os/Parcel;->writeLong(J)V
+    invoke-virtual {p1, v2, v3}, Landroid/os/Parcel;->writeLong(J)V
 
-    iget-wide v0, p0, Landroid/location/LocationRequest;->mExpireAt:J
+    iget-wide v2, p0, Landroid/location/LocationRequest;->mExpireAt:J
 
-    invoke-virtual {p1, v0, v1}, Landroid/os/Parcel;->writeLong(J)V
+    invoke-virtual {p1, v2, v3}, Landroid/os/Parcel;->writeLong(J)V
 
     iget v0, p0, Landroid/location/LocationRequest;->mNumUpdates:I
 
@@ -1054,9 +1118,27 @@
 
     invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeFloat(F)V
 
+    iget-boolean v0, p0, Landroid/location/LocationRequest;->mHideFromAppOps:Z
+
+    if-eqz v0, :cond_0
+
+    const/4 v0, 0x1
+
+    :goto_0
+    invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeInt(I)V
+
     iget-object v0, p0, Landroid/location/LocationRequest;->mProvider:Ljava/lang/String;
 
     invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
+    iget-object v0, p0, Landroid/location/LocationRequest;->mWorkSource:Landroid/os/WorkSource;
+
+    invoke-virtual {p1, v0, v1}, Landroid/os/Parcel;->writeParcelable(Landroid/os/Parcelable;I)V
+
     return-void
+
+    :cond_0
+    move v0, v1
+
+    goto :goto_0
 .end method

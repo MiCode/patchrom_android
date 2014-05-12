@@ -80,7 +80,6 @@
 
     .end local v0           #listener:Ljava/lang/Object;
     :goto_0
-    :sswitch_0
     if-eqz v1, :cond_0
 
     iget-object v3, p0, Landroid/net/nsd/NsdManager$ServiceHandler;->this$0:Landroid/net/nsd/NsdManager;
@@ -94,7 +93,7 @@
     return-void
 
     .restart local v0       #listener:Ljava/lang/Object;
-    :sswitch_1
+    :sswitch_0
     iget-object v3, p0, Landroid/net/nsd/NsdManager$ServiceHandler;->this$0:Landroid/net/nsd/NsdManager;
 
     #getter for: Landroid/net/nsd/NsdManager;->mAsyncChannel:Lcom/android/internal/util/AsyncChannel;
@@ -106,6 +105,9 @@
 
     invoke-virtual {v3, v4}, Lcom/android/internal/util/AsyncChannel;->sendMessage(I)V
 
+    goto :goto_0
+
+    :sswitch_1
     iget-object v3, p0, Landroid/net/nsd/NsdManager$ServiceHandler;->this$0:Landroid/net/nsd/NsdManager;
 
     #getter for: Landroid/net/nsd/NsdManager;->mConnected:Ljava/util/concurrent/CountDownLatch;
@@ -352,12 +354,10 @@
 
     goto/16 :goto_0
 
-    nop
-
     :sswitch_data_0
     .sparse-switch
-        0x11000 -> :sswitch_1
-        0x11002 -> :sswitch_0
+        0x11000 -> :sswitch_0
+        0x11002 -> :sswitch_1
         0x11004 -> :sswitch_2
         0x60002 -> :sswitch_3
         0x60003 -> :sswitch_4

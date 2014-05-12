@@ -16,6 +16,8 @@
 # static fields
 .field public static final ACTION_CHANGE_LIVE_WALLPAPER:Ljava/lang/String; = "android.service.wallpaper.CHANGE_LIVE_WALLPAPER"
 
+.field public static final ACTION_CROP_AND_SET_WALLPAPER:Ljava/lang/String; = "android.service.wallpaper.CROP_AND_SET_WALLPAPER"
+
 .field public static final ACTION_LIVE_WALLPAPER_CHOOSER:Ljava/lang/String; = "android.service.wallpaper.LIVE_WALLPAPER_CHOOSER"
 
 .field public static final COMMAND_DROP:Ljava/lang/String; = "android.home.drop"
@@ -339,6 +341,109 @@
     return-object v0
 .end method
 
+.method private static getMaxCropRect(IIIIFF)Landroid/graphics/RectF;
+    .locals 7
+    .parameter "inWidth"
+    .parameter "inHeight"
+    .parameter "outWidth"
+    .parameter "outHeight"
+    .parameter "horizontalAlignment"
+    .parameter "verticalAlignment"
+
+    .prologue
+    const/4 v6, 0x0
+
+    new-instance v1, Landroid/graphics/RectF;
+
+    invoke-direct {v1}, Landroid/graphics/RectF;-><init>()V
+
+    .local v1, cropRect:Landroid/graphics/RectF;
+    int-to-float v3, p0
+
+    int-to-float v4, p1
+
+    div-float/2addr v3, v4
+
+    int-to-float v4, p2
+
+    int-to-float v5, p3
+
+    div-float/2addr v4, v5
+
+    cmpl-float v3, v3, v4
+
+    if-lez v3, :cond_0
+
+    iput v6, v1, Landroid/graphics/RectF;->top:F
+
+    int-to-float v3, p1
+
+    iput v3, v1, Landroid/graphics/RectF;->bottom:F
+
+    int-to-float v3, p2
+
+    int-to-float v4, p1
+
+    int-to-float v5, p3
+
+    div-float/2addr v4, v5
+
+    mul-float v2, v3, v4
+
+    .local v2, cropWidth:F
+    int-to-float v3, p0
+
+    sub-float/2addr v3, v2
+
+    mul-float/2addr v3, p4
+
+    iput v3, v1, Landroid/graphics/RectF;->left:F
+
+    iget v3, v1, Landroid/graphics/RectF;->left:F
+
+    add-float/2addr v3, v2
+
+    iput v3, v1, Landroid/graphics/RectF;->right:F
+
+    .end local v2           #cropWidth:F
+    :goto_0
+    return-object v1
+
+    :cond_0
+    iput v6, v1, Landroid/graphics/RectF;->left:F
+
+    int-to-float v3, p0
+
+    iput v3, v1, Landroid/graphics/RectF;->right:F
+
+    int-to-float v3, p3
+
+    int-to-float v4, p0
+
+    int-to-float v5, p2
+
+    div-float/2addr v4, v5
+
+    mul-float v0, v3, v4
+
+    .local v0, cropHeight:F
+    int-to-float v3, p1
+
+    sub-float/2addr v3, v0
+
+    mul-float/2addr v3, p5
+
+    iput v3, v1, Landroid/graphics/RectF;->top:F
+
+    iget v3, v1, Landroid/graphics/RectF;->top:F
+
+    add-float/2addr v3, v0
+
+    iput v3, v1, Landroid/graphics/RectF;->bottom:F
+
+    goto :goto_0
+.end method
+
 .method static initGlobals(Landroid/os/Looper;)V
     .locals 2
     .parameter "looper"
@@ -419,7 +524,7 @@
     .end annotation
 
     .prologue
-    const v0, 0x108021e
+    const v0, 0x1080220
 
     invoke-virtual {p0, v0}, Landroid/app/WallpaperManager;->setResource(I)V
 
@@ -432,13 +537,7 @@
 
     .prologue
     :try_start_0
-    iget-object v0, p0, Landroid/app/WallpaperManager;->mContext:Landroid/content/Context;
-
-    invoke-virtual {v0}, Landroid/content/Context;->getMainLooper()Landroid/os/Looper;
-
-    move-result-object v0
-
-    invoke-static {v0}, Landroid/view/WindowManagerGlobal;->getWindowSession(Landroid/os/Looper;)Landroid/view/IWindowSession;
+    invoke-static {}, Landroid/view/WindowManagerGlobal;->getWindowSession()Landroid/view/IWindowSession;
 
     move-result-object v0
 
@@ -491,6 +590,759 @@
     move-result-object v0
 
     return-object v0
+.end method
+
+.method public getBuiltInDrawable()Landroid/graphics/drawable/Drawable;
+    .locals 6
+
+    .prologue
+    const/4 v4, 0x0
+
+    const/4 v1, 0x0
+
+    move-object v0, p0
+
+    move v2, v1
+
+    move v3, v1
+
+    move v5, v4
+
+    invoke-virtual/range {v0 .. v5}, Landroid/app/WallpaperManager;->getBuiltInDrawable(IIZFF)Landroid/graphics/drawable/Drawable;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public getBuiltInDrawable(IIZFF)Landroid/graphics/drawable/Drawable;
+    .locals 29
+    .parameter "outWidth"
+    .parameter "outHeight"
+    .parameter "scaleToFit"
+    .parameter "horizontalAlignment"
+    .parameter "verticalAlignment"
+
+    .prologue
+    sget-object v5, Landroid/app/WallpaperManager;->sGlobals:Landroid/app/WallpaperManager$Globals;
+
+    #getter for: Landroid/app/WallpaperManager$Globals;->mService:Landroid/app/IWallpaperManager;
+    invoke-static {v5}, Landroid/app/WallpaperManager$Globals;->access$300(Landroid/app/WallpaperManager$Globals;)Landroid/app/IWallpaperManager;
+
+    move-result-object v5
+
+    if-nez v5, :cond_0
+
+    sget-object v5, Landroid/app/WallpaperManager;->TAG:Ljava/lang/String;
+
+    const-string v6, "WallpaperService not running"
+
+    invoke-static {v5, v6}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+
+    const/4 v5, 0x0
+
+    :goto_0
+    return-object v5
+
+    :cond_0
+    move-object/from16 v0, p0
+
+    iget-object v5, v0, Landroid/app/WallpaperManager;->mContext:Landroid/content/Context;
+
+    invoke-virtual {v5}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
+
+    move-result-object v22
+
+    .local v22, resources:Landroid/content/res/Resources;
+    const/4 v5, 0x0
+
+    const/high16 v6, 0x3f80
+
+    move/from16 v0, p4
+
+    invoke-static {v6, v0}, Ljava/lang/Math;->min(FF)F
+
+    move-result v6
+
+    invoke-static {v5, v6}, Ljava/lang/Math;->max(FF)F
+
+    move-result p4
+
+    const/4 v5, 0x0
+
+    const/high16 v6, 0x3f80
+
+    move/from16 v0, p5
+
+    invoke-static {v6, v0}, Ljava/lang/Math;->min(FF)F
+
+    move-result v6
+
+    invoke-static {v5, v6}, Ljava/lang/Math;->max(FF)F
+
+    move-result p5
+
+    new-instance v17, Ljava/io/BufferedInputStream;
+
+    const v5, 0x1080220
+
+    move-object/from16 v0, v22
+
+    invoke-virtual {v0, v5}, Landroid/content/res/Resources;->openRawResource(I)Ljava/io/InputStream;
+
+    move-result-object v5
+
+    move-object/from16 v0, v17
+
+    invoke-direct {v0, v5}, Ljava/io/BufferedInputStream;-><init>(Ljava/io/InputStream;)V
+
+    .local v17, is:Ljava/io/InputStream;
+    if-nez v17, :cond_1
+
+    sget-object v5, Landroid/app/WallpaperManager;->TAG:Ljava/lang/String;
+
+    const-string v6, "default wallpaper input stream is null"
+
+    invoke-static {v5, v6}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+
+    const/4 v5, 0x0
+
+    goto :goto_0
+
+    :cond_1
+    if-lez p1, :cond_2
+
+    if-gtz p2, :cond_3
+
+    :cond_2
+    const/4 v5, 0x0
+
+    const/4 v6, 0x0
+
+    move-object/from16 v0, v17
+
+    invoke-static {v0, v5, v6}, Landroid/graphics/BitmapFactory;->decodeStream(Ljava/io/InputStream;Landroid/graphics/Rect;Landroid/graphics/BitmapFactory$Options;)Landroid/graphics/Bitmap;
+
+    move-result-object v16
+
+    .local v16, fullSize:Landroid/graphics/Bitmap;
+    new-instance v5, Landroid/graphics/drawable/BitmapDrawable;
+
+    move-object/from16 v0, v22
+
+    move-object/from16 v1, v16
+
+    invoke-direct {v5, v0, v1}, Landroid/graphics/drawable/BitmapDrawable;-><init>(Landroid/content/res/Resources;Landroid/graphics/Bitmap;)V
+
+    goto :goto_0
+
+    .end local v16           #fullSize:Landroid/graphics/Bitmap;
+    :cond_3
+    new-instance v20, Landroid/graphics/BitmapFactory$Options;
+
+    invoke-direct/range {v20 .. v20}, Landroid/graphics/BitmapFactory$Options;-><init>()V
+
+    .local v20, options:Landroid/graphics/BitmapFactory$Options;
+    const/4 v5, 0x1
+
+    move-object/from16 v0, v20
+
+    iput-boolean v5, v0, Landroid/graphics/BitmapFactory$Options;->inJustDecodeBounds:Z
+
+    const/4 v5, 0x0
+
+    move-object/from16 v0, v17
+
+    move-object/from16 v1, v20
+
+    invoke-static {v0, v5, v1}, Landroid/graphics/BitmapFactory;->decodeStream(Ljava/io/InputStream;Landroid/graphics/Rect;Landroid/graphics/BitmapFactory$Options;)Landroid/graphics/Bitmap;
+
+    move-object/from16 v0, v20
+
+    iget v5, v0, Landroid/graphics/BitmapFactory$Options;->outWidth:I
+
+    if-eqz v5, :cond_5
+
+    move-object/from16 v0, v20
+
+    iget v5, v0, Landroid/graphics/BitmapFactory$Options;->outHeight:I
+
+    if-eqz v5, :cond_5
+
+    move-object/from16 v0, v20
+
+    iget v3, v0, Landroid/graphics/BitmapFactory$Options;->outWidth:I
+
+    .local v3, inWidth:I
+    move-object/from16 v0, v20
+
+    iget v4, v0, Landroid/graphics/BitmapFactory$Options;->outHeight:I
+
+    .local v4, inHeight:I
+    new-instance v17, Ljava/io/BufferedInputStream;
+
+    .end local v17           #is:Ljava/io/InputStream;
+    const v5, 0x1080220
+
+    move-object/from16 v0, v22
+
+    invoke-virtual {v0, v5}, Landroid/content/res/Resources;->openRawResource(I)Ljava/io/InputStream;
+
+    move-result-object v5
+
+    move-object/from16 v0, v17
+
+    invoke-direct {v0, v5}, Ljava/io/BufferedInputStream;-><init>(Ljava/io/InputStream;)V
+
+    .restart local v17       #is:Ljava/io/InputStream;
+    move/from16 v0, p1
+
+    invoke-static {v3, v0}, Ljava/lang/Math;->min(II)I
+
+    move-result p1
+
+    move/from16 v0, p2
+
+    invoke-static {v4, v0}, Ljava/lang/Math;->min(II)I
+
+    move-result p2
+
+    if-eqz p3, :cond_6
+
+    move/from16 v5, p1
+
+    move/from16 v6, p2
+
+    move/from16 v7, p4
+
+    move/from16 v8, p5
+
+    invoke-static/range {v3 .. v8}, Landroid/app/WallpaperManager;->getMaxCropRect(IIIIFF)Landroid/graphics/RectF;
+
+    move-result-object v13
+
+    .local v13, cropRectF:Landroid/graphics/RectF;
+    :goto_1
+    new-instance v25, Landroid/graphics/Rect;
+
+    invoke-direct/range {v25 .. v25}, Landroid/graphics/Rect;-><init>()V
+
+    .local v25, roundedTrueCrop:Landroid/graphics/Rect;
+    move-object/from16 v0, v25
+
+    invoke-virtual {v13, v0}, Landroid/graphics/RectF;->roundOut(Landroid/graphics/Rect;)V
+
+    invoke-virtual/range {v25 .. v25}, Landroid/graphics/Rect;->width()I
+
+    move-result v5
+
+    if-lez v5, :cond_4
+
+    invoke-virtual/range {v25 .. v25}, Landroid/graphics/Rect;->height()I
+
+    move-result v5
+
+    if-gtz v5, :cond_7
+
+    :cond_4
+    sget-object v5, Landroid/app/WallpaperManager;->TAG:Ljava/lang/String;
+
+    const-string v6, "crop has bad values for full size image"
+
+    invoke-static {v5, v6}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+
+    const/4 v5, 0x0
+
+    goto/16 :goto_0
+
+    .end local v3           #inWidth:I
+    .end local v4           #inHeight:I
+    .end local v13           #cropRectF:Landroid/graphics/RectF;
+    .end local v25           #roundedTrueCrop:Landroid/graphics/Rect;
+    :cond_5
+    sget-object v5, Landroid/app/WallpaperManager;->TAG:Ljava/lang/String;
+
+    const-string v6, "default wallpaper dimensions are 0"
+
+    invoke-static {v5, v6}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+
+    const/4 v5, 0x0
+
+    goto/16 :goto_0
+
+    .restart local v3       #inWidth:I
+    .restart local v4       #inHeight:I
+    :cond_6
+    sub-int v5, v3, p1
+
+    int-to-float v5, v5
+
+    mul-float v18, v5, p4
+
+    .local v18, left:F
+    move/from16 v0, p1
+
+    int-to-float v5, v0
+
+    add-float v24, v18, v5
+
+    .local v24, right:F
+    sub-int v5, v4, p2
+
+    int-to-float v5, v5
+
+    mul-float v28, v5, p5
+
+    .local v28, top:F
+    move/from16 v0, p2
+
+    int-to-float v5, v0
+
+    add-float v9, v28, v5
+
+    .local v9, bottom:F
+    new-instance v13, Landroid/graphics/RectF;
+
+    move/from16 v0, v18
+
+    move/from16 v1, v28
+
+    move/from16 v2, v24
+
+    invoke-direct {v13, v0, v1, v2, v9}, Landroid/graphics/RectF;-><init>(FFFF)V
+
+    .restart local v13       #cropRectF:Landroid/graphics/RectF;
+    goto :goto_1
+
+    .end local v9           #bottom:F
+    .end local v18           #left:F
+    .end local v24           #right:F
+    .end local v28           #top:F
+    .restart local v25       #roundedTrueCrop:Landroid/graphics/Rect;
+    :cond_7
+    invoke-virtual/range {v25 .. v25}, Landroid/graphics/Rect;->width()I
+
+    move-result v5
+
+    div-int v5, v5, p1
+
+    invoke-virtual/range {v25 .. v25}, Landroid/graphics/Rect;->height()I
+
+    move-result v6
+
+    div-int v6, v6, p2
+
+    invoke-static {v5, v6}, Ljava/lang/Math;->min(II)I
+
+    move-result v26
+
+    .local v26, scaleDownSampleSize:I
+    const/4 v14, 0x0
+
+    .local v14, decoder:Landroid/graphics/BitmapRegionDecoder;
+    const/4 v5, 0x1
+
+    :try_start_0
+    move-object/from16 v0, v17
+
+    invoke-static {v0, v5}, Landroid/graphics/BitmapRegionDecoder;->newInstance(Ljava/io/InputStream;Z)Landroid/graphics/BitmapRegionDecoder;
+    :try_end_0
+    .catch Ljava/io/IOException; {:try_start_0 .. :try_end_0} :catch_0
+
+    move-result-object v14
+
+    :goto_2
+    const/4 v11, 0x0
+
+    .local v11, crop:Landroid/graphics/Bitmap;
+    if-eqz v14, :cond_9
+
+    new-instance v20, Landroid/graphics/BitmapFactory$Options;
+
+    .end local v20           #options:Landroid/graphics/BitmapFactory$Options;
+    invoke-direct/range {v20 .. v20}, Landroid/graphics/BitmapFactory$Options;-><init>()V
+
+    .restart local v20       #options:Landroid/graphics/BitmapFactory$Options;
+    const/4 v5, 0x1
+
+    move/from16 v0, v26
+
+    if-le v0, v5, :cond_8
+
+    move/from16 v0, v26
+
+    move-object/from16 v1, v20
+
+    iput v0, v1, Landroid/graphics/BitmapFactory$Options;->inSampleSize:I
+
+    :cond_8
+    move-object/from16 v0, v25
+
+    move-object/from16 v1, v20
+
+    invoke-virtual {v14, v0, v1}, Landroid/graphics/BitmapRegionDecoder;->decodeRegion(Landroid/graphics/Rect;Landroid/graphics/BitmapFactory$Options;)Landroid/graphics/Bitmap;
+
+    move-result-object v11
+
+    invoke-virtual {v14}, Landroid/graphics/BitmapRegionDecoder;->recycle()V
+
+    :cond_9
+    if-nez v11, :cond_c
+
+    new-instance v17, Ljava/io/BufferedInputStream;
+
+    .end local v17           #is:Ljava/io/InputStream;
+    const v5, 0x1080220
+
+    move-object/from16 v0, v22
+
+    invoke-virtual {v0, v5}, Landroid/content/res/Resources;->openRawResource(I)Ljava/io/InputStream;
+
+    move-result-object v5
+
+    move-object/from16 v0, v17
+
+    invoke-direct {v0, v5}, Ljava/io/BufferedInputStream;-><init>(Ljava/io/InputStream;)V
+
+    .restart local v17       #is:Ljava/io/InputStream;
+    const/16 v16, 0x0
+
+    .restart local v16       #fullSize:Landroid/graphics/Bitmap;
+    if-eqz v17, :cond_b
+
+    new-instance v20, Landroid/graphics/BitmapFactory$Options;
+
+    .end local v20           #options:Landroid/graphics/BitmapFactory$Options;
+    invoke-direct/range {v20 .. v20}, Landroid/graphics/BitmapFactory$Options;-><init>()V
+
+    .restart local v20       #options:Landroid/graphics/BitmapFactory$Options;
+    const/4 v5, 0x1
+
+    move/from16 v0, v26
+
+    if-le v0, v5, :cond_a
+
+    move/from16 v0, v26
+
+    move-object/from16 v1, v20
+
+    iput v0, v1, Landroid/graphics/BitmapFactory$Options;->inSampleSize:I
+
+    :cond_a
+    const/4 v5, 0x0
+
+    move-object/from16 v0, v17
+
+    move-object/from16 v1, v20
+
+    invoke-static {v0, v5, v1}, Landroid/graphics/BitmapFactory;->decodeStream(Ljava/io/InputStream;Landroid/graphics/Rect;Landroid/graphics/BitmapFactory$Options;)Landroid/graphics/Bitmap;
+
+    move-result-object v16
+
+    :cond_b
+    if-eqz v16, :cond_c
+
+    move-object/from16 v0, v25
+
+    iget v5, v0, Landroid/graphics/Rect;->left:I
+
+    move-object/from16 v0, v25
+
+    iget v6, v0, Landroid/graphics/Rect;->top:I
+
+    invoke-virtual/range {v25 .. v25}, Landroid/graphics/Rect;->width()I
+
+    move-result v7
+
+    invoke-virtual/range {v25 .. v25}, Landroid/graphics/Rect;->height()I
+
+    move-result v8
+
+    move-object/from16 v0, v16
+
+    invoke-static {v0, v5, v6, v7, v8}, Landroid/graphics/Bitmap;->createBitmap(Landroid/graphics/Bitmap;IIII)Landroid/graphics/Bitmap;
+
+    move-result-object v11
+
+    .end local v16           #fullSize:Landroid/graphics/Bitmap;
+    :cond_c
+    if-nez v11, :cond_d
+
+    sget-object v5, Landroid/app/WallpaperManager;->TAG:Ljava/lang/String;
+
+    const-string v6, "cannot decode default wallpaper"
+
+    invoke-static {v5, v6}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+
+    const/4 v5, 0x0
+
+    goto/16 :goto_0
+
+    .end local v11           #crop:Landroid/graphics/Bitmap;
+    :catch_0
+    move-exception v15
+
+    .local v15, e:Ljava/io/IOException;
+    sget-object v5, Landroid/app/WallpaperManager;->TAG:Ljava/lang/String;
+
+    const-string v6, "cannot open region decoder for default wallpaper"
+
+    invoke-static {v5, v6}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+
+    goto :goto_2
+
+    .end local v15           #e:Ljava/io/IOException;
+    .restart local v11       #crop:Landroid/graphics/Bitmap;
+    :cond_d
+    if-lez p1, :cond_f
+
+    if-lez p2, :cond_f
+
+    invoke-virtual {v11}, Landroid/graphics/Bitmap;->getWidth()I
+
+    move-result v5
+
+    move/from16 v0, p1
+
+    if-ne v5, v0, :cond_e
+
+    invoke-virtual {v11}, Landroid/graphics/Bitmap;->getHeight()I
+
+    move-result v5
+
+    move/from16 v0, p2
+
+    if-eq v5, v0, :cond_f
+
+    :cond_e
+    new-instance v19, Landroid/graphics/Matrix;
+
+    invoke-direct/range {v19 .. v19}, Landroid/graphics/Matrix;-><init>()V
+
+    .local v19, m:Landroid/graphics/Matrix;
+    new-instance v12, Landroid/graphics/RectF;
+
+    const/4 v5, 0x0
+
+    const/4 v6, 0x0
+
+    invoke-virtual {v11}, Landroid/graphics/Bitmap;->getWidth()I
+
+    move-result v7
+
+    int-to-float v7, v7
+
+    invoke-virtual {v11}, Landroid/graphics/Bitmap;->getHeight()I
+
+    move-result v8
+
+    int-to-float v8, v8
+
+    invoke-direct {v12, v5, v6, v7, v8}, Landroid/graphics/RectF;-><init>(FFFF)V
+
+    .local v12, cropRect:Landroid/graphics/RectF;
+    new-instance v23, Landroid/graphics/RectF;
+
+    const/4 v5, 0x0
+
+    const/4 v6, 0x0
+
+    move/from16 v0, p1
+
+    int-to-float v7, v0
+
+    move/from16 v0, p2
+
+    int-to-float v8, v0
+
+    move-object/from16 v0, v23
+
+    invoke-direct {v0, v5, v6, v7, v8}, Landroid/graphics/RectF;-><init>(FFFF)V
+
+    .local v23, returnRect:Landroid/graphics/RectF;
+    sget-object v5, Landroid/graphics/Matrix$ScaleToFit;->FILL:Landroid/graphics/Matrix$ScaleToFit;
+
+    move-object/from16 v0, v19
+
+    move-object/from16 v1, v23
+
+    invoke-virtual {v0, v12, v1, v5}, Landroid/graphics/Matrix;->setRectToRect(Landroid/graphics/RectF;Landroid/graphics/RectF;Landroid/graphics/Matrix$ScaleToFit;)Z
+
+    invoke-virtual/range {v23 .. v23}, Landroid/graphics/RectF;->width()F
+
+    move-result v5
+
+    float-to-int v5, v5
+
+    invoke-virtual/range {v23 .. v23}, Landroid/graphics/RectF;->height()F
+
+    move-result v6
+
+    float-to-int v6, v6
+
+    sget-object v7, Landroid/graphics/Bitmap$Config;->ARGB_8888:Landroid/graphics/Bitmap$Config;
+
+    invoke-static {v5, v6, v7}, Landroid/graphics/Bitmap;->createBitmap(IILandroid/graphics/Bitmap$Config;)Landroid/graphics/Bitmap;
+
+    move-result-object v27
+
+    .local v27, tmp:Landroid/graphics/Bitmap;
+    if-eqz v27, :cond_f
+
+    new-instance v10, Landroid/graphics/Canvas;
+
+    move-object/from16 v0, v27
+
+    invoke-direct {v10, v0}, Landroid/graphics/Canvas;-><init>(Landroid/graphics/Bitmap;)V
+
+    .local v10, c:Landroid/graphics/Canvas;
+    new-instance v21, Landroid/graphics/Paint;
+
+    invoke-direct/range {v21 .. v21}, Landroid/graphics/Paint;-><init>()V
+
+    .local v21, p:Landroid/graphics/Paint;
+    const/4 v5, 0x1
+
+    move-object/from16 v0, v21
+
+    invoke-virtual {v0, v5}, Landroid/graphics/Paint;->setFilterBitmap(Z)V
+
+    move-object/from16 v0, v19
+
+    move-object/from16 v1, v21
+
+    invoke-virtual {v10, v11, v0, v1}, Landroid/graphics/Canvas;->drawBitmap(Landroid/graphics/Bitmap;Landroid/graphics/Matrix;Landroid/graphics/Paint;)V
+
+    move-object/from16 v11, v27
+
+    .end local v10           #c:Landroid/graphics/Canvas;
+    .end local v12           #cropRect:Landroid/graphics/RectF;
+    .end local v19           #m:Landroid/graphics/Matrix;
+    .end local v21           #p:Landroid/graphics/Paint;
+    .end local v23           #returnRect:Landroid/graphics/RectF;
+    .end local v27           #tmp:Landroid/graphics/Bitmap;
+    :cond_f
+    new-instance v5, Landroid/graphics/drawable/BitmapDrawable;
+
+    move-object/from16 v0, v22
+
+    invoke-direct {v5, v0, v11}, Landroid/graphics/drawable/BitmapDrawable;-><init>(Landroid/content/res/Resources;Landroid/graphics/Bitmap;)V
+
+    goto/16 :goto_0
+.end method
+
+.method public getCropAndSetWallpaperIntent(Landroid/net/Uri;)Landroid/content/Intent;
+    .locals 8
+    .parameter "imageUri"
+
+    .prologue
+    const/4 v7, 0x0
+
+    const-string v5, "content"
+
+    invoke-virtual {p1}, Landroid/net/Uri;->getScheme()Ljava/lang/String;
+
+    move-result-object v6
+
+    invoke-virtual {v5, v6}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v5
+
+    if-nez v5, :cond_0
+
+    new-instance v5, Ljava/lang/IllegalArgumentException;
+
+    const-string v6, "Image URI must be of the content scheme type"
+
+    invoke-direct {v5, v6}, Ljava/lang/IllegalArgumentException;-><init>(Ljava/lang/String;)V
+
+    throw v5
+
+    :cond_0
+    iget-object v5, p0, Landroid/app/WallpaperManager;->mContext:Landroid/content/Context;
+
+    invoke-virtual {v5}, Landroid/content/Context;->getPackageManager()Landroid/content/pm/PackageManager;
+
+    move-result-object v3
+
+    .local v3, packageManager:Landroid/content/pm/PackageManager;
+    new-instance v0, Landroid/content/Intent;
+
+    const-string v5, "android.service.wallpaper.CROP_AND_SET_WALLPAPER"
+
+    invoke-direct {v0, v5, p1}, Landroid/content/Intent;-><init>(Ljava/lang/String;Landroid/net/Uri;)V
+
+    .local v0, cropAndSetWallpaperIntent:Landroid/content/Intent;
+    const/4 v5, 0x1
+
+    invoke-virtual {v0, v5}, Landroid/content/Intent;->addFlags(I)Landroid/content/Intent;
+
+    new-instance v5, Landroid/content/Intent;
+
+    const-string v6, "android.intent.action.MAIN"
+
+    invoke-direct {v5, v6}, Landroid/content/Intent;-><init>(Ljava/lang/String;)V
+
+    const-string v6, "android.intent.category.HOME"
+
+    invoke-virtual {v5, v6}, Landroid/content/Intent;->addCategory(Ljava/lang/String;)Landroid/content/Intent;
+
+    move-result-object v2
+
+    .local v2, homeIntent:Landroid/content/Intent;
+    const/high16 v5, 0x1
+
+    invoke-virtual {v3, v2, v5}, Landroid/content/pm/PackageManager;->resolveActivity(Landroid/content/Intent;I)Landroid/content/pm/ResolveInfo;
+
+    move-result-object v4
+
+    .local v4, resolvedHome:Landroid/content/pm/ResolveInfo;
+    if-eqz v4, :cond_2
+
+    iget-object v5, v4, Landroid/content/pm/ResolveInfo;->activityInfo:Landroid/content/pm/ActivityInfo;
+
+    iget-object v5, v5, Landroid/content/pm/ActivityInfo;->packageName:Ljava/lang/String;
+
+    invoke-virtual {v0, v5}, Landroid/content/Intent;->setPackage(Ljava/lang/String;)Landroid/content/Intent;
+
+    invoke-virtual {v3, v0, v7}, Landroid/content/pm/PackageManager;->queryIntentActivities(Landroid/content/Intent;I)Ljava/util/List;
+
+    move-result-object v1
+
+    .local v1, cropAppList:Ljava/util/List;,"Ljava/util/List<Landroid/content/pm/ResolveInfo;>;"
+    invoke-interface {v1}, Ljava/util/List;->size()I
+
+    move-result v5
+
+    if-lez v5, :cond_2
+
+    :cond_1
+    return-object v0
+
+    .end local v1           #cropAppList:Ljava/util/List;,"Ljava/util/List<Landroid/content/pm/ResolveInfo;>;"
+    :cond_2
+    const-string v5, "com.android.wallpapercropper"
+
+    invoke-virtual {v0, v5}, Landroid/content/Intent;->setPackage(Ljava/lang/String;)Landroid/content/Intent;
+
+    invoke-virtual {v3, v0, v7}, Landroid/content/pm/PackageManager;->queryIntentActivities(Landroid/content/Intent;I)Ljava/util/List;
+
+    move-result-object v1
+
+    .restart local v1       #cropAppList:Ljava/util/List;,"Ljava/util/List<Landroid/content/pm/ResolveInfo;>;"
+    invoke-interface {v1}, Ljava/util/List;->size()I
+
+    move-result v5
+
+    if-gtz v5, :cond_1
+
+    new-instance v5, Ljava/lang/IllegalArgumentException;
+
+    const-string v6, "Cannot use passed URI to set wallpaper; check that the type returned by ContentProvider matches image/*"
+
+    invoke-direct {v5, v6}, Ljava/lang/IllegalArgumentException;-><init>(Ljava/lang/String;)V
+
+    throw v5
 .end method
 
 .method public getDesiredMinimumHeight()I
@@ -889,13 +1741,7 @@
 
     .prologue
     :try_start_0
-    iget-object v0, p0, Landroid/app/WallpaperManager;->mContext:Landroid/content/Context;
-
-    invoke-virtual {v0}, Landroid/content/Context;->getMainLooper()Landroid/os/Looper;
-
-    move-result-object v0
-
-    invoke-static {v0}, Landroid/view/WindowManagerGlobal;->getWindowSession(Landroid/os/Looper;)Landroid/view/IWindowSession;
+    invoke-static {}, Landroid/view/WindowManagerGlobal;->getWindowSession()Landroid/view/IWindowSession;
 
     move-result-object v0
 
@@ -1305,13 +2151,7 @@
 
     .prologue
     :try_start_0
-    iget-object v0, p0, Landroid/app/WallpaperManager;->mContext:Landroid/content/Context;
-
-    invoke-virtual {v0}, Landroid/content/Context;->getMainLooper()Landroid/os/Looper;
-
-    move-result-object v0
-
-    invoke-static {v0}, Landroid/view/WindowManagerGlobal;->getWindowSession(Landroid/os/Looper;)Landroid/view/IWindowSession;
+    invoke-static {}, Landroid/view/WindowManagerGlobal;->getWindowSession()Landroid/view/IWindowSession;
 
     move-result-object v0
 

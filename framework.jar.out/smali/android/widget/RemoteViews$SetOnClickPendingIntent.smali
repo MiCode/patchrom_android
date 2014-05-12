@@ -160,8 +160,6 @@
 
     .end local v0           #appInfo:Landroid/content/pm/ApplicationInfo;
     :cond_2
-    if-eqz v2, :cond_0
-
     const/4 v1, 0x0
 
     .local v1, listener:Landroid/view/View$OnClickListener;

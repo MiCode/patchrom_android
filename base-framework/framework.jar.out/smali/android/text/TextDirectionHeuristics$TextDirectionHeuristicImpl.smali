@@ -34,26 +34,18 @@
     return-void
 .end method
 
-.method private doCheck([CII)Z
-    .locals 2
-    .parameter "chars"
+.method private doCheck(Ljava/lang/CharSequence;II)Z
+    .locals 1
+    .parameter "cs"
     .parameter "start"
     .parameter "count"
 
     .prologue
-    sget-object v0, Landroid/text/TextDirectionHeuristics$1;->$SwitchMap$android$text$TextDirectionHeuristics$TriState:[I
+    iget-object v0, p0, Landroid/text/TextDirectionHeuristics$TextDirectionHeuristicImpl;->mAlgorithm:Landroid/text/TextDirectionHeuristics$TextDirectionAlgorithm;
 
-    iget-object v1, p0, Landroid/text/TextDirectionHeuristics$TextDirectionHeuristicImpl;->mAlgorithm:Landroid/text/TextDirectionHeuristics$TextDirectionAlgorithm;
+    invoke-interface {v0, p1, p2, p3}, Landroid/text/TextDirectionHeuristics$TextDirectionAlgorithm;->checkRtl(Ljava/lang/CharSequence;II)I
 
-    invoke-interface {v1, p1, p2, p3}, Landroid/text/TextDirectionHeuristics$TextDirectionAlgorithm;->checkRtl([CII)Landroid/text/TextDirectionHeuristics$TriState;
-
-    move-result-object v1
-
-    invoke-virtual {v1}, Landroid/text/TextDirectionHeuristics$TriState;->ordinal()I
-
-    move-result v1
-
-    aget v0, v0, v1
+    move-result v0
 
     packed-switch v0, :pswitch_data_0
 
@@ -75,7 +67,7 @@
     goto :goto_0
 
     :pswitch_data_0
-    .packed-switch 0x1
+    .packed-switch 0x0
         :pswitch_0
         :pswitch_1
     .end packed-switch
@@ -86,9 +78,9 @@
 .method protected abstract defaultIsRtl()Z
 .end method
 
-.method public isRtl([CII)Z
+.method public isRtl(Ljava/lang/CharSequence;II)Z
     .locals 1
-    .parameter "chars"
+    .parameter "cs"
     .parameter "start"
     .parameter "count"
 
@@ -99,7 +91,9 @@
 
     if-ltz p3, :cond_0
 
-    array-length v0, p1
+    invoke-interface {p1}, Ljava/lang/CharSequence;->length()I
+
+    move-result v0
 
     sub-int/2addr v0, p3
 
@@ -125,9 +119,27 @@
     return v0
 
     :cond_2
-    invoke-direct {p0, p1, p2, p3}, Landroid/text/TextDirectionHeuristics$TextDirectionHeuristicImpl;->doCheck([CII)Z
+    invoke-direct {p0, p1, p2, p3}, Landroid/text/TextDirectionHeuristics$TextDirectionHeuristicImpl;->doCheck(Ljava/lang/CharSequence;II)Z
 
     move-result v0
 
     goto :goto_0
+.end method
+
+.method public isRtl([CII)Z
+    .locals 1
+    .parameter "array"
+    .parameter "start"
+    .parameter "count"
+
+    .prologue
+    invoke-static {p1}, Ljava/nio/CharBuffer;->wrap([C)Ljava/nio/CharBuffer;
+
+    move-result-object v0
+
+    invoke-virtual {p0, v0, p2, p3}, Landroid/text/TextDirectionHeuristics$TextDirectionHeuristicImpl;->isRtl(Ljava/lang/CharSequence;II)Z
+
+    move-result v0
+
+    return v0
 .end method

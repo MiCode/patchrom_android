@@ -7,7 +7,7 @@
 
 
 # static fields
-.field public static final CREATOR:Landroid/os/Parcelable$Creator;
+.field public static final CREATOR:Landroid/os/Parcelable$Creator; = null
     .annotation system Ldalvik/annotation/Signature;
         value = {
             "Landroid/os/Parcelable$Creator",
@@ -18,6 +18,8 @@
     .end annotation
 .end field
 
+.field public static final UNSPECIFIED:I = -0x1
+
 
 # instance fields
 .field public BSSID:Ljava/lang/String;
@@ -25,6 +27,10 @@
 .field public SSID:Ljava/lang/String;
 
 .field public capabilities:Ljava/lang/String;
+
+.field public distanceCm:I
+
+.field public distanceSdCm:I
 
 .field public frequency:I
 
@@ -86,11 +92,66 @@
 
     iput-wide v0, p0, Landroid/net/wifi/ScanResult;->timestamp:J
 
+    iget v0, p1, Landroid/net/wifi/ScanResult;->distanceCm:I
+
+    iput v0, p0, Landroid/net/wifi/ScanResult;->distanceCm:I
+
+    iget v0, p1, Landroid/net/wifi/ScanResult;->distanceSdCm:I
+
+    iput v0, p0, Landroid/net/wifi/ScanResult;->distanceSdCm:I
+
     :cond_0
     return-void
 .end method
 
 .method public constructor <init>(Landroid/net/wifi/WifiSsid;Ljava/lang/String;Ljava/lang/String;IIJ)V
+    .locals 2
+    .parameter "wifiSsid"
+    .parameter "BSSID"
+    .parameter "caps"
+    .parameter "level"
+    .parameter "frequency"
+    .parameter "tsf"
+
+    .prologue
+    const/4 v1, -0x1
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    iput-object p1, p0, Landroid/net/wifi/ScanResult;->wifiSsid:Landroid/net/wifi/WifiSsid;
+
+    if-eqz p1, :cond_0
+
+    invoke-virtual {p1}, Landroid/net/wifi/WifiSsid;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    :goto_0
+    iput-object v0, p0, Landroid/net/wifi/ScanResult;->SSID:Ljava/lang/String;
+
+    iput-object p2, p0, Landroid/net/wifi/ScanResult;->BSSID:Ljava/lang/String;
+
+    iput-object p3, p0, Landroid/net/wifi/ScanResult;->capabilities:Ljava/lang/String;
+
+    iput p4, p0, Landroid/net/wifi/ScanResult;->level:I
+
+    iput p5, p0, Landroid/net/wifi/ScanResult;->frequency:I
+
+    iput-wide p6, p0, Landroid/net/wifi/ScanResult;->timestamp:J
+
+    iput v1, p0, Landroid/net/wifi/ScanResult;->distanceCm:I
+
+    iput v1, p0, Landroid/net/wifi/ScanResult;->distanceSdCm:I
+
+    return-void
+
+    :cond_0
+    const-string v0, "<unknown ssid>"
+
+    goto :goto_0
+.end method
+
+.method public constructor <init>(Landroid/net/wifi/WifiSsid;Ljava/lang/String;Ljava/lang/String;IIJII)V
     .locals 1
     .parameter "wifiSsid"
     .parameter "BSSID"
@@ -98,6 +159,8 @@
     .parameter "level"
     .parameter "frequency"
     .parameter "tsf"
+    .parameter "distCm"
+    .parameter "distSdCm"
 
     .prologue
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -123,6 +186,10 @@
 
     iput-wide p6, p0, Landroid/net/wifi/ScanResult;->timestamp:J
 
+    iput p8, p0, Landroid/net/wifi/ScanResult;->distanceCm:I
+
+    iput p9, p0, Landroid/net/wifi/ScanResult;->distanceSdCm:I
+
     return-void
 
     :cond_0
@@ -143,9 +210,11 @@
 .end method
 
 .method public toString()Ljava/lang/String;
-    .locals 5
+    .locals 6
 
     .prologue
+    const/4 v5, -0x1
+
     new-instance v1, Ljava/lang/StringBuffer;
 
     invoke-direct {v1}, Ljava/lang/StringBuffer;-><init>()V
@@ -238,6 +307,56 @@
 
     invoke-virtual {v2, v3, v4}, Ljava/lang/StringBuffer;->append(J)Ljava/lang/StringBuffer;
 
+    const-string v2, ", distance: "
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuffer;->append(Ljava/lang/String;)Ljava/lang/StringBuffer;
+
+    move-result-object v3
+
+    iget v2, p0, Landroid/net/wifi/ScanResult;->distanceCm:I
+
+    if-eq v2, v5, :cond_3
+
+    iget v2, p0, Landroid/net/wifi/ScanResult;->distanceCm:I
+
+    invoke-static {v2}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v2
+
+    :goto_3
+    invoke-virtual {v3, v2}, Ljava/lang/StringBuffer;->append(Ljava/lang/Object;)Ljava/lang/StringBuffer;
+
+    move-result-object v2
+
+    const-string v3, "(cm)"
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuffer;->append(Ljava/lang/String;)Ljava/lang/StringBuffer;
+
+    const-string v2, ", distanceSd: "
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuffer;->append(Ljava/lang/String;)Ljava/lang/StringBuffer;
+
+    move-result-object v3
+
+    iget v2, p0, Landroid/net/wifi/ScanResult;->distanceSdCm:I
+
+    if-eq v2, v5, :cond_4
+
+    iget v2, p0, Landroid/net/wifi/ScanResult;->distanceSdCm:I
+
+    invoke-static {v2}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v2
+
+    :goto_4
+    invoke-virtual {v3, v2}, Ljava/lang/StringBuffer;->append(Ljava/lang/Object;)Ljava/lang/StringBuffer;
+
+    move-result-object v2
+
+    const-string v3, "(cm)"
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuffer;->append(Ljava/lang/String;)Ljava/lang/StringBuffer;
+
     invoke-virtual {v1}, Ljava/lang/StringBuffer;->toString()Ljava/lang/String;
 
     move-result-object v2
@@ -259,6 +378,17 @@
     iget-object v0, p0, Landroid/net/wifi/ScanResult;->capabilities:Ljava/lang/String;
 
     goto :goto_2
+
+    .end local v0           #none:Ljava/lang/String;
+    :cond_3
+    const-string v2, "?"
+
+    goto :goto_3
+
+    :cond_4
+    const-string v2, "?"
+
+    goto :goto_4
 .end method
 
 .method public writeToParcel(Landroid/os/Parcel;I)V
@@ -299,6 +429,14 @@
     iget-wide v0, p0, Landroid/net/wifi/ScanResult;->timestamp:J
 
     invoke-virtual {p1, v0, v1}, Landroid/os/Parcel;->writeLong(J)V
+
+    iget v0, p0, Landroid/net/wifi/ScanResult;->distanceCm:I
+
+    invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeInt(I)V
+
+    iget v0, p0, Landroid/net/wifi/ScanResult;->distanceSdCm:I
+
+    invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeInt(I)V
 
     return-void
 

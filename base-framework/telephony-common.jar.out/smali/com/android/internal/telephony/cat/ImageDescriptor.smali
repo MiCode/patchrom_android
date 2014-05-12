@@ -10,19 +10,19 @@
 
 
 # instance fields
-.field codingScheme:I
+.field mCodingScheme:I
 
-.field height:I
+.field mHeight:I
 
-.field highOffset:I
+.field mHighOffset:I
 
-.field imageId:I
+.field mImageId:I
 
-.field length:I
+.field mLength:I
 
-.field lowOffset:I
+.field mLowOffset:I
 
-.field width:I
+.field mWidth:I
 
 
 # direct methods
@@ -34,19 +34,19 @@
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    iput v0, p0, Lcom/android/internal/telephony/cat/ImageDescriptor;->width:I
+    iput v0, p0, Lcom/android/internal/telephony/cat/ImageDescriptor;->mWidth:I
 
-    iput v0, p0, Lcom/android/internal/telephony/cat/ImageDescriptor;->height:I
+    iput v0, p0, Lcom/android/internal/telephony/cat/ImageDescriptor;->mHeight:I
 
-    iput v0, p0, Lcom/android/internal/telephony/cat/ImageDescriptor;->codingScheme:I
+    iput v0, p0, Lcom/android/internal/telephony/cat/ImageDescriptor;->mCodingScheme:I
 
-    iput v0, p0, Lcom/android/internal/telephony/cat/ImageDescriptor;->imageId:I
+    iput v0, p0, Lcom/android/internal/telephony/cat/ImageDescriptor;->mImageId:I
 
-    iput v0, p0, Lcom/android/internal/telephony/cat/ImageDescriptor;->highOffset:I
+    iput v0, p0, Lcom/android/internal/telephony/cat/ImageDescriptor;->mHighOffset:I
 
-    iput v0, p0, Lcom/android/internal/telephony/cat/ImageDescriptor;->lowOffset:I
+    iput v0, p0, Lcom/android/internal/telephony/cat/ImageDescriptor;->mLowOffset:I
 
-    iput v0, p0, Lcom/android/internal/telephony/cat/ImageDescriptor;->length:I
+    iput v0, p0, Lcom/android/internal/telephony/cat/ImageDescriptor;->mLength:I
 
     return-void
 .end method
@@ -71,7 +71,7 @@
 
     and-int/lit16 v3, v3, 0xff
 
-    iput v3, v0, Lcom/android/internal/telephony/cat/ImageDescriptor;->width:I
+    iput v3, v0, Lcom/android/internal/telephony/cat/ImageDescriptor;->mWidth:I
     :try_end_0
     .catch Ljava/lang/IndexOutOfBoundsException; {:try_start_0 .. :try_end_0} :catch_0
 
@@ -84,7 +84,7 @@
 
     and-int/lit16 v3, v3, 0xff
 
-    iput v3, v0, Lcom/android/internal/telephony/cat/ImageDescriptor;->height:I
+    iput v3, v0, Lcom/android/internal/telephony/cat/ImageDescriptor;->mHeight:I
     :try_end_1
     .catch Ljava/lang/IndexOutOfBoundsException; {:try_start_1 .. :try_end_1} :catch_1
 
@@ -97,7 +97,7 @@
 
     and-int/lit16 v3, v3, 0xff
 
-    iput v3, v0, Lcom/android/internal/telephony/cat/ImageDescriptor;->codingScheme:I
+    iput v3, v0, Lcom/android/internal/telephony/cat/ImageDescriptor;->mCodingScheme:I
     :try_end_2
     .catch Ljava/lang/IndexOutOfBoundsException; {:try_start_2 .. :try_end_2} :catch_0
 
@@ -112,9 +112,9 @@
 
     shl-int/lit8 v3, v3, 0x8
 
-    iput v3, v0, Lcom/android/internal/telephony/cat/ImageDescriptor;->imageId:I
+    iput v3, v0, Lcom/android/internal/telephony/cat/ImageDescriptor;->mImageId:I
 
-    iget v3, v0, Lcom/android/internal/telephony/cat/ImageDescriptor;->imageId:I
+    iget v3, v0, Lcom/android/internal/telephony/cat/ImageDescriptor;->mImageId:I
     :try_end_3
     .catch Ljava/lang/IndexOutOfBoundsException; {:try_start_3 .. :try_end_3} :catch_1
 
@@ -129,7 +129,7 @@
 
     or-int/2addr v3, v4
 
-    iput v3, v0, Lcom/android/internal/telephony/cat/ImageDescriptor;->imageId:I
+    iput v3, v0, Lcom/android/internal/telephony/cat/ImageDescriptor;->mImageId:I
     :try_end_4
     .catch Ljava/lang/IndexOutOfBoundsException; {:try_start_4 .. :try_end_4} :catch_0
 
@@ -142,7 +142,7 @@
 
     and-int/lit16 v3, v3, 0xff
 
-    iput v3, v0, Lcom/android/internal/telephony/cat/ImageDescriptor;->highOffset:I
+    iput v3, v0, Lcom/android/internal/telephony/cat/ImageDescriptor;->mHighOffset:I
     :try_end_5
     .catch Ljava/lang/IndexOutOfBoundsException; {:try_start_5 .. :try_end_5} :catch_1
 
@@ -155,7 +155,7 @@
 
     and-int/lit16 v3, v3, 0xff
 
-    iput v3, v0, Lcom/android/internal/telephony/cat/ImageDescriptor;->lowOffset:I
+    iput v3, v0, Lcom/android/internal/telephony/cat/ImageDescriptor;->mLowOffset:I
     :try_end_6
     .catch Ljava/lang/IndexOutOfBoundsException; {:try_start_6 .. :try_end_6} :catch_0
 
@@ -183,7 +183,7 @@
 
     or-int/2addr v3, v4
 
-    iput v3, v0, Lcom/android/internal/telephony/cat/ImageDescriptor;->length:I
+    iput v3, v0, Lcom/android/internal/telephony/cat/ImageDescriptor;->mLength:I
     :try_end_8
     .catch Ljava/lang/IndexOutOfBoundsException; {:try_start_8 .. :try_end_8} :catch_0
 

@@ -104,7 +104,7 @@
 
     invoke-static {v1, v3}, Landroid/util/Slog;->i(Ljava/lang/String;Ljava/lang/String;)I
 
-    if-eqz v0, :cond_0
+    if-eqz v0, :cond_1
 
     iget-object v1, p0, Lcom/android/server/wm/WindowState$DeathRecipient;->this$0:Lcom/android/server/wm/WindowState;
 
@@ -117,12 +117,42 @@
     invoke-virtual {v1, v3, v0}, Lcom/android/server/wm/WindowManagerService;->removeWindowLocked(Lcom/android/server/wm/Session;Lcom/android/server/wm/WindowState;)V
 
     :cond_0
+    :goto_0
     monitor-exit v2
 
     .end local v0           #win:Lcom/android/server/wm/WindowState;
-    :goto_0
+    :goto_1
     return-void
 
+    .restart local v0       #win:Lcom/android/server/wm/WindowState;
+    :cond_1
+    iget-object v1, p0, Lcom/android/server/wm/WindowState$DeathRecipient;->this$0:Lcom/android/server/wm/WindowState;
+
+    iget-boolean v1, v1, Lcom/android/server/wm/WindowState;->mHasSurface:Z
+
+    if-eqz v1, :cond_0
+
+    const-string v1, "WindowState"
+
+    const-string v3, "!!! LEAK !!! Window removed but surface still valid."
+
+    invoke-static {v1, v3}, Landroid/util/Slog;->e(Ljava/lang/String;Ljava/lang/String;)I
+
+    iget-object v1, p0, Lcom/android/server/wm/WindowState$DeathRecipient;->this$0:Lcom/android/server/wm/WindowState;
+
+    iget-object v1, v1, Lcom/android/server/wm/WindowState;->mService:Lcom/android/server/wm/WindowManagerService;
+
+    iget-object v3, p0, Lcom/android/server/wm/WindowState$DeathRecipient;->this$0:Lcom/android/server/wm/WindowState;
+
+    iget-object v3, v3, Lcom/android/server/wm/WindowState;->mSession:Lcom/android/server/wm/Session;
+
+    iget-object v4, p0, Lcom/android/server/wm/WindowState$DeathRecipient;->this$0:Lcom/android/server/wm/WindowState;
+
+    invoke-virtual {v1, v3, v4}, Lcom/android/server/wm/WindowManagerService;->removeWindowLocked(Lcom/android/server/wm/Session;Lcom/android/server/wm/WindowState;)V
+
+    goto :goto_0
+
+    .end local v0           #win:Lcom/android/server/wm/WindowState;
     :catchall_0
     move-exception v1
 
@@ -138,5 +168,5 @@
     :catch_0
     move-exception v1
 
-    goto :goto_0
+    goto :goto_1
 .end method

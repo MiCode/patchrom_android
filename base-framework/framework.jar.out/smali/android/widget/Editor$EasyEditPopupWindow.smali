@@ -18,13 +18,15 @@
 
 
 # static fields
-.field private static final POPUP_TEXT_LAYOUT:I = 0x10900d4
+.field private static final POPUP_TEXT_LAYOUT:I = 0x10900aa
 
 
 # instance fields
 .field private mDeleteTextView:Landroid/widget/TextView;
 
 .field private mEasyEditSpan:Landroid/text/style/EasyEditSpan;
+
+.field private mOnDeleteListener:Landroid/widget/Editor$EasyEditDeleteListener;
 
 .field final synthetic this$0:Landroid/widget/Editor;
 
@@ -53,7 +55,18 @@
     return-void
 .end method
 
-.method static synthetic access$800(Landroid/widget/Editor$EasyEditPopupWindow;)Landroid/text/style/EasyEditSpan;
+.method static synthetic access$1100(Landroid/widget/Editor$EasyEditPopupWindow;Landroid/widget/Editor$EasyEditDeleteListener;)V
+    .locals 0
+    .parameter "x0"
+    .parameter "x1"
+
+    .prologue
+    invoke-direct {p0, p1}, Landroid/widget/Editor$EasyEditPopupWindow;->setOnDeleteListener(Landroid/widget/Editor$EasyEditDeleteListener;)V
+
+    return-void
+.end method
+
+.method static synthetic access$900(Landroid/widget/Editor$EasyEditPopupWindow;)Landroid/text/style/EasyEditSpan;
     .locals 1
     .parameter "x0"
 
@@ -61,6 +74,16 @@
     iget-object v0, p0, Landroid/widget/Editor$EasyEditPopupWindow;->mEasyEditSpan:Landroid/text/style/EasyEditSpan;
 
     return-object v0
+.end method
+
+.method private setOnDeleteListener(Landroid/widget/Editor$EasyEditDeleteListener;)V
+    .locals 0
+    .parameter "listener"
+
+    .prologue
+    iput-object p1, p0, Landroid/widget/Editor$EasyEditPopupWindow;->mOnDeleteListener:Landroid/widget/Editor$EasyEditDeleteListener;
+
+    return-void
 .end method
 
 
@@ -163,6 +186,30 @@
     return v0
 .end method
 
+.method public hide()V
+    .locals 2
+
+    .prologue
+    iget-object v0, p0, Landroid/widget/Editor$EasyEditPopupWindow;->mEasyEditSpan:Landroid/text/style/EasyEditSpan;
+
+    if-eqz v0, :cond_0
+
+    iget-object v0, p0, Landroid/widget/Editor$EasyEditPopupWindow;->mEasyEditSpan:Landroid/text/style/EasyEditSpan;
+
+    const/4 v1, 0x0
+
+    invoke-virtual {v0, v1}, Landroid/text/style/EasyEditSpan;->setDeleteEnabled(Z)V
+
+    :cond_0
+    const/4 v0, 0x0
+
+    iput-object v0, p0, Landroid/widget/Editor$EasyEditPopupWindow;->mOnDeleteListener:Landroid/widget/Editor$EasyEditDeleteListener;
+
+    invoke-super {p0}, Landroid/widget/Editor$PinnedPopupWindow;->hide()V
+
+    return-void
+.end method
+
 .method protected initContentView()V
     .locals 6
 
@@ -193,7 +240,7 @@
 
     iget-object v3, p0, Landroid/widget/Editor$EasyEditPopupWindow;->mContentView:Landroid/view/ViewGroup;
 
-    const v4, 0x10805c7
+    const v4, 0x1080631
 
     invoke-virtual {v3, v4}, Landroid/view/ViewGroup;->setBackgroundResource(I)V
 
@@ -222,7 +269,7 @@
     invoke-direct {v2, v5, v5}, Landroid/view/ViewGroup$LayoutParams;-><init>(II)V
 
     .local v2, wrapContent:Landroid/view/ViewGroup$LayoutParams;
-    const v3, 0x10900d4
+    const v3, 0x10900aa
 
     const/4 v4, 0x0
 
@@ -240,7 +287,7 @@
 
     iget-object v3, p0, Landroid/widget/Editor$EasyEditPopupWindow;->mDeleteTextView:Landroid/widget/TextView;
 
-    const v4, 0x10403c2
+    const v4, 0x10403e8
 
     invoke-virtual {v3, v4}, Landroid/widget/TextView;->setText(I)V
 
@@ -258,58 +305,36 @@
 .end method
 
 .method public onClick(Landroid/view/View;)V
-    .locals 4
+    .locals 2
     .parameter "view"
 
     .prologue
-    iget-object v3, p0, Landroid/widget/Editor$EasyEditPopupWindow;->mDeleteTextView:Landroid/widget/TextView;
+    iget-object v0, p0, Landroid/widget/Editor$EasyEditPopupWindow;->mDeleteTextView:Landroid/widget/TextView;
 
-    if-ne p1, v3, :cond_0
+    if-ne p1, v0, :cond_0
 
-    iget-object v3, p0, Landroid/widget/Editor$EasyEditPopupWindow;->this$0:Landroid/widget/Editor;
+    iget-object v0, p0, Landroid/widget/Editor$EasyEditPopupWindow;->mEasyEditSpan:Landroid/text/style/EasyEditSpan;
 
-    #getter for: Landroid/widget/Editor;->mTextView:Landroid/widget/TextView;
-    invoke-static {v3}, Landroid/widget/Editor;->access$600(Landroid/widget/Editor;)Landroid/widget/TextView;
+    if-eqz v0, :cond_0
 
-    move-result-object v3
+    iget-object v0, p0, Landroid/widget/Editor$EasyEditPopupWindow;->mEasyEditSpan:Landroid/text/style/EasyEditSpan;
 
-    invoke-virtual {v3}, Landroid/widget/TextView;->getText()Ljava/lang/CharSequence;
+    invoke-virtual {v0}, Landroid/text/style/EasyEditSpan;->isDeleteEnabled()Z
 
-    move-result-object v0
+    move-result v0
 
-    check-cast v0, Landroid/text/Editable;
+    if-eqz v0, :cond_0
 
-    .local v0, editable:Landroid/text/Editable;
-    iget-object v3, p0, Landroid/widget/Editor$EasyEditPopupWindow;->mEasyEditSpan:Landroid/text/style/EasyEditSpan;
+    iget-object v0, p0, Landroid/widget/Editor$EasyEditPopupWindow;->mOnDeleteListener:Landroid/widget/Editor$EasyEditDeleteListener;
 
-    invoke-interface {v0, v3}, Landroid/text/Editable;->getSpanStart(Ljava/lang/Object;)I
+    if-eqz v0, :cond_0
 
-    move-result v2
+    iget-object v0, p0, Landroid/widget/Editor$EasyEditPopupWindow;->mOnDeleteListener:Landroid/widget/Editor$EasyEditDeleteListener;
 
-    .local v2, start:I
-    iget-object v3, p0, Landroid/widget/Editor$EasyEditPopupWindow;->mEasyEditSpan:Landroid/text/style/EasyEditSpan;
+    iget-object v1, p0, Landroid/widget/Editor$EasyEditPopupWindow;->mEasyEditSpan:Landroid/text/style/EasyEditSpan;
 
-    invoke-interface {v0, v3}, Landroid/text/Editable;->getSpanEnd(Ljava/lang/Object;)I
+    invoke-interface {v0, v1}, Landroid/widget/Editor$EasyEditDeleteListener;->onDeleteClick(Landroid/text/style/EasyEditSpan;)V
 
-    move-result v1
-
-    .local v1, end:I
-    if-ltz v2, :cond_0
-
-    if-ltz v1, :cond_0
-
-    iget-object v3, p0, Landroid/widget/Editor$EasyEditPopupWindow;->this$0:Landroid/widget/Editor;
-
-    #getter for: Landroid/widget/Editor;->mTextView:Landroid/widget/TextView;
-    invoke-static {v3}, Landroid/widget/Editor;->access$600(Landroid/widget/Editor;)Landroid/widget/TextView;
-
-    move-result-object v3
-
-    invoke-virtual {v3, v2, v1}, Landroid/widget/TextView;->deleteText_internal(II)V
-
-    .end local v0           #editable:Landroid/text/Editable;
-    .end local v1           #end:I
-    .end local v2           #start:I
     :cond_0
     return-void
 .end method

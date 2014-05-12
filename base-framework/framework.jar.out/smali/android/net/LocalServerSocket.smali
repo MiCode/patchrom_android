@@ -69,9 +69,9 @@
 
     iget-object v0, p0, Landroid/net/LocalServerSocket;->impl:Landroid/net/LocalSocketImpl;
 
-    const/4 v1, 0x1
+    const/4 v1, 0x2
 
-    invoke-virtual {v0, v1}, Landroid/net/LocalSocketImpl;->create(Z)V
+    invoke-virtual {v0, v1}, Landroid/net/LocalSocketImpl;->create(I)V
 
     new-instance v0, Landroid/net/LocalSocketAddress;
 
@@ -97,7 +97,7 @@
 
 # virtual methods
 .method public accept()Landroid/net/LocalSocket;
-    .locals 2
+    .locals 3
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Ljava/io/IOException;
@@ -116,7 +116,9 @@
 
     new-instance v1, Landroid/net/LocalSocket;
 
-    invoke-direct {v1, v0}, Landroid/net/LocalSocket;-><init>(Landroid/net/LocalSocketImpl;)V
+    const/4 v2, 0x0
+
+    invoke-direct {v1, v0, v2}, Landroid/net/LocalSocket;-><init>(Landroid/net/LocalSocketImpl;I)V
 
     return-object v1
 .end method

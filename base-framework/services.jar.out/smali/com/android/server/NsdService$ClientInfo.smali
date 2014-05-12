@@ -19,7 +19,7 @@
 
 
 # instance fields
-.field private mChannel:Lcom/android/internal/util/AsyncChannel;
+.field private final mChannel:Lcom/android/internal/util/AsyncChannel;
 
 .field private mClientIds:Landroid/util/SparseArray;
     .annotation system Ldalvik/annotation/Signature;
@@ -32,7 +32,7 @@
     .end annotation
 .end field
 
-.field private mMessenger:Landroid/os/Messenger;
+.field private final mMessenger:Landroid/os/Messenger;
 
 .field private mResolvedService:Landroid/net/nsd/NsdServiceInfo;
 
@@ -140,7 +140,7 @@
     return-object p1
 .end method
 
-.method static synthetic access$2700(Lcom/android/server/NsdService$ClientInfo;)Lcom/android/internal/util/AsyncChannel;
+.method static synthetic access$2500(Lcom/android/server/NsdService$ClientInfo;)Lcom/android/internal/util/AsyncChannel;
     .locals 1
     .parameter "x0"
 

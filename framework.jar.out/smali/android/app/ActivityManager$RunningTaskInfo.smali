@@ -37,6 +37,8 @@
 
 .field public id:I
 
+.field public lastActiveTime:J
+
 .field public numActivities:I
 
 .field public numRunning:I

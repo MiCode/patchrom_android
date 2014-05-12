@@ -25,7 +25,7 @@
 
 
 # direct methods
-.method public constructor <init>(Lcom/android/server/wm/WindowManagerService;Landroid/os/Looper;Landroid/view/InputEventReceiver$Factory;Ljava/lang/String;IIZZZ)V
+.method public constructor <init>(Lcom/android/server/wm/WindowManagerService;Landroid/os/Looper;Landroid/view/InputEventReceiver$Factory;Ljava/lang/String;IIIZZZ)V
     .locals 5
     .parameter "service"
     .parameter "looper"
@@ -33,6 +33,7 @@
     .parameter "name"
     .parameter "windowType"
     .parameter "layoutParamsFlags"
+    .parameter "layoutParamsPrivateFlags"
     .parameter "canReceiveKeys"
     .parameter "hasFocus"
     .parameter "touchFullscreen"
@@ -135,6 +136,10 @@
 
     iget-object v1, p0, Lcom/android/server/wm/FakeWindowImpl;->mWindowHandle:Lcom/android/server/input/InputWindowHandle;
 
+    iput p7, v1, Lcom/android/server/input/InputWindowHandle;->layoutParamsPrivateFlags:I
+
+    iget-object v1, p0, Lcom/android/server/wm/FakeWindowImpl;->mWindowHandle:Lcom/android/server/input/InputWindowHandle;
+
     iput p5, v1, Lcom/android/server/input/InputWindowHandle;->layoutParamsType:I
 
     iget-object v1, p0, Lcom/android/server/wm/FakeWindowImpl;->mWindowHandle:Lcom/android/server/input/InputWindowHandle;
@@ -151,11 +156,11 @@
 
     iget-object v1, p0, Lcom/android/server/wm/FakeWindowImpl;->mWindowHandle:Lcom/android/server/input/InputWindowHandle;
 
-    iput-boolean p7, v1, Lcom/android/server/input/InputWindowHandle;->canReceiveKeys:Z
+    iput-boolean p8, v1, Lcom/android/server/input/InputWindowHandle;->canReceiveKeys:Z
 
     iget-object v1, p0, Lcom/android/server/wm/FakeWindowImpl;->mWindowHandle:Lcom/android/server/input/InputWindowHandle;
 
-    iput-boolean p8, v1, Lcom/android/server/input/InputWindowHandle;->hasFocus:Z
+    iput-boolean p9, v1, Lcom/android/server/input/InputWindowHandle;->hasFocus:Z
 
     iget-object v1, p0, Lcom/android/server/wm/FakeWindowImpl;->mWindowHandle:Lcom/android/server/input/InputWindowHandle;
 
@@ -197,7 +202,7 @@
 
     iput v2, v1, Lcom/android/server/input/InputWindowHandle;->scaleFactor:F
 
-    iput-boolean p9, p0, Lcom/android/server/wm/FakeWindowImpl;->mTouchFullscreen:Z
+    iput-boolean p10, p0, Lcom/android/server/wm/FakeWindowImpl;->mTouchFullscreen:Z
 
     return-void
 .end method

@@ -17,6 +17,8 @@
 # static fields
 .field public static final DUMP_FEATURES:I = 0x2
 
+.field public static final DUMP_KEYSETS:I = 0x800
+
 .field public static final DUMP_LIBS:I = 0x1
 
 .field public static final DUMP_MESSAGES:I = 0x40

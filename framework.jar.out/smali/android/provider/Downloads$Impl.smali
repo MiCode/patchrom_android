@@ -36,6 +36,8 @@
 
 .field public static final COLUMN_ALLOW_ROAMING:Ljava/lang/String; = "allow_roaming"
 
+.field public static final COLUMN_ALLOW_WRITE:Ljava/lang/String; = "allow_write"
+
 .field public static final COLUMN_APP_DATA:Ljava/lang/String; = "entity"
 
 .field public static final COLUMN_BYPASS_RECOMMENDED_SIZE_LIMIT:Ljava/lang/String; = "bypass_recommended_size_limit"
@@ -53,6 +55,8 @@
 .field public static final COLUMN_DESTINATION:Ljava/lang/String; = "destination"
 
 .field public static final COLUMN_ERROR_MSG:Ljava/lang/String; = "errorMsg"
+
+.field public static final COLUMN_FAILED_CONNECTIONS:Ljava/lang/String; = "numfailed"
 
 .field public static final COLUMN_FILE_NAME_HINT:Ljava/lang/String; = "hint"
 

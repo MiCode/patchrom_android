@@ -668,14 +668,20 @@
     invoke-direct {v0, v2, v3}, Landroid/util/LogWriter;-><init>(ILjava/lang/String;)V
 
     .local v0, logw:Landroid/util/LogWriter;
-    new-instance v1, Ljava/io/PrintWriter;
+    new-instance v1, Lcom/android/internal/util/FastPrintWriter;
 
-    invoke-direct {v1, v0}, Ljava/io/PrintWriter;-><init>(Ljava/io/Writer;)V
+    const/4 v2, 0x0
+
+    const/16 v3, 0x400
+
+    invoke-direct {v1, v0, v2, v3}, Lcom/android/internal/util/FastPrintWriter;-><init>(Ljava/io/Writer;ZI)V
 
     .local v1, pw:Ljava/io/PrintWriter;
     const-string v2, "  "
 
     invoke-virtual {p0, v2, v5, v1, v5}, Landroid/app/BackStackRecord;->dump(Ljava/lang/String;Ljava/io/FileDescriptor;Ljava/io/PrintWriter;[Ljava/lang/String;)V
+
+    invoke-virtual {v1}, Ljava/io/PrintWriter;->flush()V
 
     .end local v0           #logw:Landroid/util/LogWriter;
     .end local v1           #pw:Ljava/io/PrintWriter;
@@ -1462,9 +1468,9 @@
     .prologue
     const/4 v10, 0x0
 
-    const/4 v9, 0x0
-
     const/4 v11, -0x1
+
+    const/4 v9, 0x0
 
     sget-boolean v6, Landroid/app/FragmentManagerImpl;->DEBUG:Z
 
@@ -1501,14 +1507,18 @@
     invoke-direct {v2, v6, v7}, Landroid/util/LogWriter;-><init>(ILjava/lang/String;)V
 
     .local v2, logw:Landroid/util/LogWriter;
-    new-instance v5, Ljava/io/PrintWriter;
+    new-instance v5, Lcom/android/internal/util/FastPrintWriter;
 
-    invoke-direct {v5, v2}, Ljava/io/PrintWriter;-><init>(Ljava/io/Writer;)V
+    const/16 v6, 0x400
+
+    invoke-direct {v5, v2, v9, v6}, Lcom/android/internal/util/FastPrintWriter;-><init>(Ljava/io/Writer;ZI)V
 
     .local v5, pw:Ljava/io/PrintWriter;
     const-string v6, "  "
 
     invoke-virtual {p0, v6, v10, v5, v10}, Landroid/app/BackStackRecord;->dump(Ljava/lang/String;Ljava/io/FileDescriptor;Ljava/io/PrintWriter;[Ljava/lang/String;)V
+
+    invoke-virtual {v5}, Ljava/io/PrintWriter;->flush()V
 
     .end local v2           #logw:Landroid/util/LogWriter;
     .end local v5           #pw:Ljava/io/PrintWriter;
@@ -1784,6 +1794,8 @@
 
     :cond_5
     return-void
+
+    nop
 
     :pswitch_data_0
     .packed-switch 0x1

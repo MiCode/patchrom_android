@@ -194,6 +194,28 @@
     return-void
 .end method
 
+.method public constructor <init>(Landroid/widget/LinearLayout$LayoutParams;)V
+    .locals 1
+    .parameter "source"
+
+    .prologue
+    invoke-direct {p0, p1}, Landroid/view/ViewGroup$MarginLayoutParams;-><init>(Landroid/view/ViewGroup$MarginLayoutParams;)V
+
+    const/4 v0, -0x1
+
+    iput v0, p0, Landroid/widget/LinearLayout$LayoutParams;->gravity:I
+
+    iget v0, p1, Landroid/widget/LinearLayout$LayoutParams;->weight:F
+
+    iput v0, p0, Landroid/widget/LinearLayout$LayoutParams;->weight:F
+
+    iget v0, p1, Landroid/widget/LinearLayout$LayoutParams;->gravity:I
+
+    iput v0, p0, Landroid/widget/LinearLayout$LayoutParams;->gravity:I
+
+    return-void
+.end method
+
 
 # virtual methods
 .method public debug(Ljava/lang/String;)Ljava/lang/String;

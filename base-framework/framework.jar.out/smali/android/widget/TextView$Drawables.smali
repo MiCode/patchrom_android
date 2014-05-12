@@ -45,9 +45,13 @@
 
 .field mDrawableLeft:Landroid/graphics/drawable/Drawable;
 
+.field mDrawableLeftInitial:Landroid/graphics/drawable/Drawable;
+
 .field mDrawablePadding:I
 
 .field mDrawableRight:Landroid/graphics/drawable/Drawable;
+
+.field mDrawableRightInitial:Landroid/graphics/drawable/Drawable;
 
 .field mDrawableSaved:I
 
@@ -77,25 +81,66 @@
 
 .field mDrawableWidthTop:I
 
+.field mIsRtlCompatibilityMode:Z
+
+.field mOverride:Z
+
 
 # direct methods
-.method constructor <init>()V
-    .locals 1
+.method public constructor <init>(Landroid/content/Context;)V
+    .locals 3
+    .parameter "context"
 
     .prologue
+    const/4 v2, 0x0
+
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    new-instance v0, Landroid/graphics/Rect;
+    new-instance v1, Landroid/graphics/Rect;
 
-    invoke-direct {v0}, Landroid/graphics/Rect;-><init>()V
+    invoke-direct {v1}, Landroid/graphics/Rect;-><init>()V
 
-    iput-object v0, p0, Landroid/widget/TextView$Drawables;->mCompoundRect:Landroid/graphics/Rect;
+    iput-object v1, p0, Landroid/widget/TextView$Drawables;->mCompoundRect:Landroid/graphics/Rect;
 
-    const/4 v0, -0x1
+    const/4 v1, -0x1
 
-    iput v0, p0, Landroid/widget/TextView$Drawables;->mDrawableSaved:I
+    iput v1, p0, Landroid/widget/TextView$Drawables;->mDrawableSaved:I
+
+    invoke-virtual {p1}, Landroid/content/Context;->getApplicationInfo()Landroid/content/pm/ApplicationInfo;
+
+    move-result-object v1
+
+    iget v0, v1, Landroid/content/pm/ApplicationInfo;->targetSdkVersion:I
+
+    .local v0, targetSdkVersion:I
+    const/16 v1, 0x11
+
+    if-lt v0, v1, :cond_0
+
+    invoke-virtual {p1}, Landroid/content/Context;->getApplicationInfo()Landroid/content/pm/ApplicationInfo;
+
+    move-result-object v1
+
+    invoke-virtual {v1}, Landroid/content/pm/ApplicationInfo;->hasRtlSupport()Z
+
+    move-result v1
+
+    if-nez v1, :cond_1
+
+    :cond_0
+    const/4 v1, 0x1
+
+    :goto_0
+    iput-boolean v1, p0, Landroid/widget/TextView$Drawables;->mIsRtlCompatibilityMode:Z
+
+    iput-boolean v2, p0, Landroid/widget/TextView$Drawables;->mOverride:Z
 
     return-void
+
+    :cond_1
+    move v1, v2
+
+    goto :goto_0
 .end method
 
 .method private applyErrorDrawableIfNeeded(I)V
@@ -270,11 +315,25 @@
     .parameter "layoutDirection"
 
     .prologue
-    packed-switch p1, :pswitch_data_0
+    iget-object v0, p0, Landroid/widget/TextView$Drawables;->mDrawableLeftInitial:Landroid/graphics/drawable/Drawable;
+
+    iput-object v0, p0, Landroid/widget/TextView$Drawables;->mDrawableLeft:Landroid/graphics/drawable/Drawable;
+
+    iget-object v0, p0, Landroid/widget/TextView$Drawables;->mDrawableRightInitial:Landroid/graphics/drawable/Drawable;
+
+    iput-object v0, p0, Landroid/widget/TextView$Drawables;->mDrawableRight:Landroid/graphics/drawable/Drawable;
+
+    iget-boolean v0, p0, Landroid/widget/TextView$Drawables;->mIsRtlCompatibilityMode:Z
+
+    if-eqz v0, :cond_2
 
     iget-object v0, p0, Landroid/widget/TextView$Drawables;->mDrawableStart:Landroid/graphics/drawable/Drawable;
 
     if-eqz v0, :cond_0
+
+    iget-object v0, p0, Landroid/widget/TextView$Drawables;->mDrawableLeft:Landroid/graphics/drawable/Drawable;
+
+    if-nez v0, :cond_0
 
     iget-object v0, p0, Landroid/widget/TextView$Drawables;->mDrawableStart:Landroid/graphics/drawable/Drawable;
 
@@ -292,6 +351,10 @@
     iget-object v0, p0, Landroid/widget/TextView$Drawables;->mDrawableEnd:Landroid/graphics/drawable/Drawable;
 
     if-eqz v0, :cond_1
+
+    iget-object v0, p0, Landroid/widget/TextView$Drawables;->mDrawableRight:Landroid/graphics/drawable/Drawable;
+
+    if-nez v0, :cond_1
 
     iget-object v0, p0, Landroid/widget/TextView$Drawables;->mDrawableEnd:Landroid/graphics/drawable/Drawable;
 
@@ -313,10 +376,43 @@
 
     return-void
 
-    :pswitch_0
+    :cond_2
+    packed-switch p1, :pswitch_data_0
+
+    iget-boolean v0, p0, Landroid/widget/TextView$Drawables;->mOverride:Z
+
+    if-eqz v0, :cond_1
+
     iget-object v0, p0, Landroid/widget/TextView$Drawables;->mDrawableStart:Landroid/graphics/drawable/Drawable;
 
-    if-eqz v0, :cond_2
+    iput-object v0, p0, Landroid/widget/TextView$Drawables;->mDrawableLeft:Landroid/graphics/drawable/Drawable;
+
+    iget v0, p0, Landroid/widget/TextView$Drawables;->mDrawableSizeStart:I
+
+    iput v0, p0, Landroid/widget/TextView$Drawables;->mDrawableSizeLeft:I
+
+    iget v0, p0, Landroid/widget/TextView$Drawables;->mDrawableHeightStart:I
+
+    iput v0, p0, Landroid/widget/TextView$Drawables;->mDrawableHeightLeft:I
+
+    iget-object v0, p0, Landroid/widget/TextView$Drawables;->mDrawableEnd:Landroid/graphics/drawable/Drawable;
+
+    iput-object v0, p0, Landroid/widget/TextView$Drawables;->mDrawableRight:Landroid/graphics/drawable/Drawable;
+
+    iget v0, p0, Landroid/widget/TextView$Drawables;->mDrawableSizeEnd:I
+
+    iput v0, p0, Landroid/widget/TextView$Drawables;->mDrawableSizeRight:I
+
+    iget v0, p0, Landroid/widget/TextView$Drawables;->mDrawableHeightEnd:I
+
+    iput v0, p0, Landroid/widget/TextView$Drawables;->mDrawableHeightRight:I
+
+    goto :goto_0
+
+    :pswitch_0
+    iget-boolean v0, p0, Landroid/widget/TextView$Drawables;->mOverride:Z
+
+    if-eqz v0, :cond_1
 
     iget-object v0, p0, Landroid/widget/TextView$Drawables;->mDrawableStart:Landroid/graphics/drawable/Drawable;
 
@@ -329,11 +425,6 @@
     iget v0, p0, Landroid/widget/TextView$Drawables;->mDrawableHeightStart:I
 
     iput v0, p0, Landroid/widget/TextView$Drawables;->mDrawableHeightRight:I
-
-    :cond_2
-    iget-object v0, p0, Landroid/widget/TextView$Drawables;->mDrawableEnd:Landroid/graphics/drawable/Drawable;
-
-    if-eqz v0, :cond_1
 
     iget-object v0, p0, Landroid/widget/TextView$Drawables;->mDrawableEnd:Landroid/graphics/drawable/Drawable;
 
@@ -348,8 +439,6 @@
     iput v0, p0, Landroid/widget/TextView$Drawables;->mDrawableHeightLeft:I
 
     goto :goto_0
-
-    nop
 
     :pswitch_data_0
     .packed-switch 0x1

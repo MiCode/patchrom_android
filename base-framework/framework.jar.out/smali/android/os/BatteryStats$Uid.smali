@@ -27,6 +27,8 @@
 # static fields
 .field public static final NUM_USER_ACTIVITY_TYPES:I = 0x3
 
+.field public static final NUM_WIFI_BATCHED_SCAN_BINS:I = 0x5
+
 .field static final USER_ACTIVITY_TYPES:[Ljava/lang/String;
 
 
@@ -76,7 +78,13 @@
 .method public abstract getAudioTurnedOnTime(JI)J
 .end method
 
+.method public abstract getForegroundActivityTimer()Landroid/os/BatteryStats$Timer;
+.end method
+
 .method public abstract getFullWifiLockTime(JI)J
+.end method
+
+.method public abstract getNetworkActivityCount(II)J
 .end method
 
 .method public abstract getPackageStats()Ljava/util/Map;
@@ -133,16 +141,13 @@
     .end annotation
 .end method
 
-.method public abstract getTcpBytesReceived(I)J
-.end method
-
-.method public abstract getTcpBytesSent(I)J
-.end method
-
 .method public abstract getUid()I
 .end method
 
 .method public abstract getUserActivityCount(II)I
+.end method
+
+.method public abstract getVibratorOnTimer()Landroid/os/BatteryStats$Timer;
 .end method
 
 .method public abstract getVideoTurnedOnTime(JI)J
@@ -162,6 +167,9 @@
     .end annotation
 .end method
 
+.method public abstract getWifiBatchedScanTime(IJI)J
+.end method
+
 .method public abstract getWifiMulticastTime(JI)J
 .end method
 
@@ -171,7 +179,16 @@
 .method public abstract getWifiScanTime(JI)J
 .end method
 
+.method public abstract hasNetworkActivity()Z
+.end method
+
 .method public abstract hasUserActivity()Z
+.end method
+
+.method public abstract noteActivityPausedLocked()V
+.end method
+
+.method public abstract noteActivityResumedLocked()V
 .end method
 
 .method public abstract noteAudioTurnedOffLocked()V
@@ -193,6 +210,12 @@
 .end method
 
 .method public abstract noteVideoTurnedOnLocked()V
+.end method
+
+.method public abstract noteWifiBatchedScanStartedLocked(I)V
+.end method
+
+.method public abstract noteWifiBatchedScanStoppedLocked()V
 .end method
 
 .method public abstract noteWifiMulticastDisabledLocked()V

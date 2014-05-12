@@ -132,7 +132,7 @@
 
     iget-object v1, p0, Landroid/widget/SpellChecker;->mTextView:Landroid/widget/TextView;
 
-    invoke-virtual {v1}, Landroid/widget/TextView;->getTextServicesLocale()Ljava/util/Locale;
+    invoke-virtual {v1}, Landroid/widget/TextView;->getSpellCheckerLocale()Ljava/util/Locale;
 
     move-result-object v1
 
@@ -447,6 +447,75 @@
 
     invoke-virtual {v11, v6, v1, v12}, Landroid/widget/TextView;->invalidateRegion(IIZ)V
 
+    goto :goto_0
+.end method
+
+.method public static haveWordBoundariesChanged(Landroid/text/Editable;IIII)Z
+    .locals 3
+    .parameter "editable"
+    .parameter "start"
+    .parameter "end"
+    .parameter "spanStart"
+    .parameter "spanEnd"
+
+    .prologue
+    if-eq p4, p1, :cond_0
+
+    if-eq p3, p2, :cond_0
+
+    const/4 v1, 0x1
+
+    .local v1, haveWordBoundariesChanged:Z
+    :goto_0
+    return v1
+
+    .end local v1           #haveWordBoundariesChanged:Z
+    :cond_0
+    if-ne p4, p1, :cond_1
+
+    invoke-interface {p0}, Landroid/text/Editable;->length()I
+
+    move-result v2
+
+    if-ge p1, v2, :cond_1
+
+    invoke-static {p0, p1}, Ljava/lang/Character;->codePointAt(Ljava/lang/CharSequence;I)I
+
+    move-result v0
+
+    .local v0, codePoint:I
+    invoke-static {v0}, Ljava/lang/Character;->isLetterOrDigit(I)Z
+
+    move-result v1
+
+    .restart local v1       #haveWordBoundariesChanged:Z
+    goto :goto_0
+
+    .end local v0           #codePoint:I
+    .end local v1           #haveWordBoundariesChanged:Z
+    :cond_1
+    if-ne p3, p2, :cond_2
+
+    if-lez p2, :cond_2
+
+    invoke-static {p0, p2}, Ljava/lang/Character;->codePointBefore(Ljava/lang/CharSequence;I)I
+
+    move-result v0
+
+    .restart local v0       #codePoint:I
+    invoke-static {v0}, Ljava/lang/Character;->isLetterOrDigit(I)Z
+
+    move-result v1
+
+    .restart local v1       #haveWordBoundariesChanged:Z
+    goto :goto_0
+
+    .end local v0           #codePoint:I
+    .end local v1           #haveWordBoundariesChanged:Z
+    :cond_2
+    const/4 v1, 0x0
+
+    .restart local v1       #haveWordBoundariesChanged:Z
     goto :goto_0
 .end method
 
@@ -831,6 +900,10 @@
 
     if-eqz v1, :cond_0
 
+    iget-object v1, p0, Landroid/widget/SpellChecker;->mCurrentLocale:Ljava/util/Locale;
+
+    if-eqz v1, :cond_0
+
     iget-object v1, p0, Landroid/widget/SpellChecker;->mTextServicesManager:Landroid/view/textservice/TextServicesManager;
 
     invoke-virtual {v1, v4}, Landroid/view/textservice/TextServicesManager;->getCurrentSpellCheckerSubtype(Z)Landroid/view/textservice/SpellCheckerSubtype;
@@ -944,12 +1017,15 @@
 
     invoke-direct {p0}, Landroid/widget/SpellChecker;->resetSession()V
 
+    if-eqz p1, :cond_0
+
     new-instance v0, Landroid/text/method/WordIterator;
 
     invoke-direct {v0, p1}, Landroid/text/method/WordIterator;-><init>(Ljava/util/Locale;)V
 
     iput-object v0, p0, Landroid/widget/SpellChecker;->mWordIterator:Landroid/text/method/WordIterator;
 
+    :cond_0
     iget-object v0, p0, Landroid/widget/SpellChecker;->mTextView:Landroid/widget/TextView;
 
     invoke-virtual {v0}, Landroid/widget/TextView;->onLocaleChanged()V
@@ -1468,7 +1544,7 @@
 
     iget-object v7, p0, Landroid/widget/SpellChecker;->mTextView:Landroid/widget/TextView;
 
-    invoke-virtual {v7}, Landroid/widget/TextView;->getTextServicesLocale()Ljava/util/Locale;
+    invoke-virtual {v7}, Landroid/widget/TextView;->getSpellCheckerLocale()Ljava/util/Locale;
 
     move-result-object v3
 
@@ -1478,6 +1554,8 @@
     move-result v1
 
     .local v1, isSessionActive:Z
+    if-eqz v3, :cond_0
+
     iget-object v7, p0, Landroid/widget/SpellChecker;->mCurrentLocale:Ljava/util/Locale;
 
     if-eqz v7, :cond_0

@@ -21,6 +21,8 @@
 
 .field mDimY:I
 
+.field mDimYuv:I
+
 .field mDimZ:I
 
 .field mElement:Landroid/renderscript/Element;
@@ -175,6 +177,15 @@
 
     .prologue
     iget v0, p0, Landroid/renderscript/Type;->mDimY:I
+
+    return v0
+.end method
+
+.method public getYuv()I
+    .locals 1
+
+    .prologue
+    iget v0, p0, Landroid/renderscript/Type;->mDimYuv:I
 
     return v0
 .end method

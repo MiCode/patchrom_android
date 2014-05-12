@@ -22,6 +22,8 @@
 
 .field private mValue:Ljava/lang/String;
 
+.field private mValueSet:Z
+
 
 # direct methods
 .method public constructor <init>(Landroid/content/Context;)V
@@ -574,15 +576,49 @@
 .end method
 
 .method public setValue(Ljava/lang/String;)V
-    .locals 0
+    .locals 3
     .parameter "value"
 
     .prologue
+    const/4 v1, 0x1
+
+    iget-object v2, p0, Landroid/preference/ListPreference;->mValue:Ljava/lang/String;
+
+    invoke-static {v2, p1}, Landroid/text/TextUtils;->equals(Ljava/lang/CharSequence;Ljava/lang/CharSequence;)Z
+
+    move-result v2
+
+    if-nez v2, :cond_2
+
+    move v0, v1
+
+    .local v0, changed:Z
+    :goto_0
+    if-nez v0, :cond_0
+
+    iget-boolean v2, p0, Landroid/preference/ListPreference;->mValueSet:Z
+
+    if-nez v2, :cond_1
+
+    :cond_0
     iput-object p1, p0, Landroid/preference/ListPreference;->mValue:Ljava/lang/String;
+
+    iput-boolean v1, p0, Landroid/preference/ListPreference;->mValueSet:Z
 
     invoke-virtual {p0, p1}, Landroid/preference/ListPreference;->persistString(Ljava/lang/String;)Z
 
+    if-eqz v0, :cond_1
+
+    invoke-virtual {p0}, Landroid/preference/ListPreference;->notifyChanged()V
+
+    :cond_1
     return-void
+
+    .end local v0           #changed:Z
+    :cond_2
+    const/4 v0, 0x0
+
+    goto :goto_0
 .end method
 
 .method public setValueIndex(I)V

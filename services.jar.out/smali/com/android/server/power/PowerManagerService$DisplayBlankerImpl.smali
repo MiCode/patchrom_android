@@ -20,6 +20,8 @@
 # instance fields
 .field private mBlanked:Z
 
+.field private mIsInteractived:Z
+
 .field final synthetic this$0:Lcom/android/server/power/PowerManagerService;
 
 
@@ -47,6 +49,43 @@
     return-void
 .end method
 
+.method private setInteractiveLocked(Z)V
+    .locals 3
+    .parameter "isActive"
+
+    .prologue
+    const/4 v2, 0x1
+
+    const/4 v1, 0x0
+
+    iget-boolean v0, p0, Lcom/android/server/power/PowerManagerService$DisplayBlankerImpl;->mIsInteractived:Z
+
+    if-eq v0, p1, :cond_0
+
+    if-eqz p1, :cond_1
+
+    #calls: Lcom/android/server/power/PowerManagerService;->nativeSetAutoSuspend(Z)V
+    invoke-static {v1}, Lcom/android/server/power/PowerManagerService;->invokeNativeSetAutoSuspend(Z)V
+
+    #calls: Lcom/android/server/power/PowerManagerService;->nativeSetInteractive(Z)V
+    invoke-static {v2}, Lcom/android/server/power/PowerManagerService;->invokeNtiveSetInteractive(Z)V
+
+    :goto_0
+    iput-boolean p1, p0, Lcom/android/server/power/PowerManagerService$DisplayBlankerImpl;->mIsInteractived:Z
+
+    :cond_0
+    return-void
+
+    :cond_1
+    #calls: Lcom/android/server/power/PowerManagerService;->nativeSetInteractive(Z)V
+    invoke-static {v1}, Lcom/android/server/power/PowerManagerService;->invokeNtiveSetInteractive(Z)V
+
+    #calls: Lcom/android/server/power/PowerManagerService;->nativeSetAutoSuspend(Z)V
+    invoke-static {v2}, Lcom/android/server/power/PowerManagerService;->invokeNativeSetAutoSuspend(Z)V
+
+    goto :goto_0
+.end method
+
 
 # virtual methods
 .method public blankAllDisplays()V
@@ -71,13 +110,31 @@
 
     const/4 v0, 0x0
 
-    #calls: Lcom/android/server/power/PowerManagerService;->nativeSetInteractive(Z)V
-    invoke-static {v0}, Lcom/android/server/power/PowerManagerService;->access$2800(Z)V
+    invoke-direct {p0, v0}, Lcom/android/server/power/PowerManagerService$DisplayBlankerImpl;->setInteractiveLocked(Z)V
 
-    const/4 v0, 0x1
+    monitor-exit p0
 
-    #calls: Lcom/android/server/power/PowerManagerService;->nativeSetAutoSuspend(Z)V
-    invoke-static {v0}, Lcom/android/server/power/PowerManagerService;->access$2900(Z)V
+    return-void
+
+    :catchall_0
+    move-exception v0
+
+    monitor-exit p0
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    throw v0
+.end method
+
+.method public setInteractive(Z)V
+    .locals 1
+    .parameter "isActive"
+
+    .prologue
+    monitor-enter p0
+
+    :try_start_0
+    invoke-direct {p0, p1}, Lcom/android/server/power/PowerManagerService$DisplayBlankerImpl;->setInteractiveLocked(Z)V
 
     monitor-exit p0
 
@@ -140,16 +197,10 @@
     .prologue
     monitor-enter p0
 
-    const/4 v0, 0x0
-
-    :try_start_0
-    #calls: Lcom/android/server/power/PowerManagerService;->nativeSetAutoSuspend(Z)V
-    invoke-static {v0}, Lcom/android/server/power/PowerManagerService;->access$2900(Z)V
-
     const/4 v0, 0x1
 
-    #calls: Lcom/android/server/power/PowerManagerService;->nativeSetInteractive(Z)V
-    invoke-static {v0}, Lcom/android/server/power/PowerManagerService;->access$2800(Z)V
+    :try_start_0
+    invoke-direct {p0, v0}, Lcom/android/server/power/PowerManagerService$DisplayBlankerImpl;->setInteractiveLocked(Z)V
 
     iget-object v0, p0, Lcom/android/server/power/PowerManagerService$DisplayBlankerImpl;->this$0:Lcom/android/server/power/PowerManagerService;
 

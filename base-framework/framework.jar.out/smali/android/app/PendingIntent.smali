@@ -129,9 +129,11 @@
 
     aget-object v0, p2, v11
 
-    const/4 v1, 0x0
+    invoke-virtual {v0}, Landroid/content/Intent;->migrateExtraStreamToClipData()Z
 
-    invoke-virtual {v0, v1}, Landroid/content/Intent;->setAllowFds(Z)V
+    aget-object v0, p2, v11
+
+    invoke-virtual {v0}, Landroid/content/Intent;->prepareToLeaveProcess()V
 
     aget-object v0, p2, v11
 
@@ -235,9 +237,11 @@
 
     aget-object v0, p2, v11
 
-    const/4 v1, 0x0
+    invoke-virtual {v0}, Landroid/content/Intent;->migrateExtraStreamToClipData()Z
 
-    invoke-virtual {v0, v1}, Landroid/content/Intent;->setAllowFds(Z)V
+    aget-object v0, p2, v11
+
+    invoke-virtual {v0}, Landroid/content/Intent;->prepareToLeaveProcess()V
 
     aget-object v0, p2, v11
 
@@ -354,10 +358,10 @@
 
     .local v11, resolvedType:Ljava/lang/String;
     :goto_0
-    const/4 v0, 0x0
-
     :try_start_0
-    invoke-virtual {p2, v0}, Landroid/content/Intent;->setAllowFds(Z)V
+    invoke-virtual {p2}, Landroid/content/Intent;->migrateExtraStreamToClipData()Z
+
+    invoke-virtual {p2}, Landroid/content/Intent;->prepareToLeaveProcess()V
 
     invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
 
@@ -469,10 +473,10 @@
 
     .local v11, resolvedType:Ljava/lang/String;
     :goto_0
-    const/4 v0, 0x0
-
     :try_start_0
-    invoke-virtual {p2, v0}, Landroid/content/Intent;->setAllowFds(Z)V
+    invoke-virtual {p2}, Landroid/content/Intent;->migrateExtraStreamToClipData()Z
+
+    invoke-virtual {p2}, Landroid/content/Intent;->prepareToLeaveProcess()V
 
     invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
 
@@ -606,10 +610,8 @@
 
     .local v11, resolvedType:Ljava/lang/String;
     :goto_0
-    const/4 v0, 0x0
-
     :try_start_0
-    invoke-virtual {p2, v0}, Landroid/content/Intent;->setAllowFds(Z)V
+    invoke-virtual {p2}, Landroid/content/Intent;->prepareToLeaveProcess()V
 
     invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
 
@@ -719,10 +721,8 @@
 
     .local v11, resolvedType:Ljava/lang/String;
     :goto_0
-    const/4 v0, 0x0
-
     :try_start_0
-    invoke-virtual {p2, v0}, Landroid/content/Intent;->setAllowFds(Z)V
+    invoke-virtual {p2}, Landroid/content/Intent;->prepareToLeaveProcess()V
 
     invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
 

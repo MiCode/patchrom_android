@@ -12,15 +12,15 @@
 
 
 # instance fields
-.field TOA:I
+.field mIsMT:Z
 
-.field isMT:Z
+.field mIsMpty:Z
 
-.field isMpty:Z
+.field mNumber:Ljava/lang/String;
 
-.field number:Ljava/lang/String;
+.field mState:Lcom/android/internal/telephony/test/CallInfo$State;
 
-.field state:Lcom/android/internal/telephony/test/CallInfo$State;
+.field mTOA:I
 
 
 # direct methods
@@ -34,13 +34,13 @@
     .prologue
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    iput-boolean p1, p0, Lcom/android/internal/telephony/test/CallInfo;->isMT:Z
+    iput-boolean p1, p0, Lcom/android/internal/telephony/test/CallInfo;->mIsMT:Z
 
-    iput-object p2, p0, Lcom/android/internal/telephony/test/CallInfo;->state:Lcom/android/internal/telephony/test/CallInfo$State;
+    iput-object p2, p0, Lcom/android/internal/telephony/test/CallInfo;->mState:Lcom/android/internal/telephony/test/CallInfo$State;
 
-    iput-boolean p3, p0, Lcom/android/internal/telephony/test/CallInfo;->isMpty:Z
+    iput-boolean p3, p0, Lcom/android/internal/telephony/test/CallInfo;->mIsMpty:Z
 
-    iput-object p4, p0, Lcom/android/internal/telephony/test/CallInfo;->number:Ljava/lang/String;
+    iput-object p4, p0, Lcom/android/internal/telephony/test/CallInfo;->mNumber:Ljava/lang/String;
 
     invoke-virtual {p4}, Ljava/lang/String;->length()I
 
@@ -60,7 +60,7 @@
 
     const/16 v0, 0x91
 
-    iput v0, p0, Lcom/android/internal/telephony/test/CallInfo;->TOA:I
+    iput v0, p0, Lcom/android/internal/telephony/test/CallInfo;->mTOA:I
 
     :goto_0
     return-void
@@ -68,7 +68,7 @@
     :cond_0
     const/16 v0, 0x81
 
-    iput v0, p0, Lcom/android/internal/telephony/test/CallInfo;->TOA:I
+    iput v0, p0, Lcom/android/internal/telephony/test/CallInfo;->mTOA:I
 
     goto :goto_0
 .end method
@@ -113,13 +113,13 @@
     .locals 2
 
     .prologue
-    iget-object v0, p0, Lcom/android/internal/telephony/test/CallInfo;->state:Lcom/android/internal/telephony/test/CallInfo$State;
+    iget-object v0, p0, Lcom/android/internal/telephony/test/CallInfo;->mState:Lcom/android/internal/telephony/test/CallInfo$State;
 
     sget-object v1, Lcom/android/internal/telephony/test/CallInfo$State;->ACTIVE:Lcom/android/internal/telephony/test/CallInfo$State;
 
     if-eq v0, v1, :cond_0
 
-    iget-object v0, p0, Lcom/android/internal/telephony/test/CallInfo;->state:Lcom/android/internal/telephony/test/CallInfo$State;
+    iget-object v0, p0, Lcom/android/internal/telephony/test/CallInfo;->mState:Lcom/android/internal/telephony/test/CallInfo$State;
 
     sget-object v1, Lcom/android/internal/telephony/test/CallInfo$State;->HOLDING:Lcom/android/internal/telephony/test/CallInfo$State;
 
@@ -141,13 +141,13 @@
     .locals 2
 
     .prologue
-    iget-object v0, p0, Lcom/android/internal/telephony/test/CallInfo;->state:Lcom/android/internal/telephony/test/CallInfo$State;
+    iget-object v0, p0, Lcom/android/internal/telephony/test/CallInfo;->mState:Lcom/android/internal/telephony/test/CallInfo$State;
 
     sget-object v1, Lcom/android/internal/telephony/test/CallInfo$State;->DIALING:Lcom/android/internal/telephony/test/CallInfo$State;
 
     if-eq v0, v1, :cond_0
 
-    iget-object v0, p0, Lcom/android/internal/telephony/test/CallInfo;->state:Lcom/android/internal/telephony/test/CallInfo$State;
+    iget-object v0, p0, Lcom/android/internal/telephony/test/CallInfo;->mState:Lcom/android/internal/telephony/test/CallInfo$State;
 
     sget-object v1, Lcom/android/internal/telephony/test/CallInfo$State;->ALERTING:Lcom/android/internal/telephony/test/CallInfo$State;
 
@@ -169,13 +169,13 @@
     .locals 2
 
     .prologue
-    iget-object v0, p0, Lcom/android/internal/telephony/test/CallInfo;->state:Lcom/android/internal/telephony/test/CallInfo$State;
+    iget-object v0, p0, Lcom/android/internal/telephony/test/CallInfo;->mState:Lcom/android/internal/telephony/test/CallInfo$State;
 
     sget-object v1, Lcom/android/internal/telephony/test/CallInfo$State;->INCOMING:Lcom/android/internal/telephony/test/CallInfo$State;
 
     if-eq v0, v1, :cond_0
 
-    iget-object v0, p0, Lcom/android/internal/telephony/test/CallInfo;->state:Lcom/android/internal/telephony/test/CallInfo$State;
+    iget-object v0, p0, Lcom/android/internal/telephony/test/CallInfo;->mState:Lcom/android/internal/telephony/test/CallInfo$State;
 
     sget-object v1, Lcom/android/internal/telephony/test/CallInfo$State;->WAITING:Lcom/android/internal/telephony/test/CallInfo$State;
 
@@ -218,7 +218,7 @@
 
     move-result-object v1
 
-    iget-boolean v0, p0, Lcom/android/internal/telephony/test/CallInfo;->isMT:Z
+    iget-boolean v0, p0, Lcom/android/internal/telephony/test/CallInfo;->mIsMT:Z
 
     if-eqz v0, :cond_0
 
@@ -235,7 +235,7 @@
 
     move-result-object v0
 
-    iget-object v1, p0, Lcom/android/internal/telephony/test/CallInfo;->state:Lcom/android/internal/telephony/test/CallInfo$State;
+    iget-object v1, p0, Lcom/android/internal/telephony/test/CallInfo;->mState:Lcom/android/internal/telephony/test/CallInfo$State;
 
     invoke-virtual {v1}, Lcom/android/internal/telephony/test/CallInfo$State;->value()I
 
@@ -251,7 +251,7 @@
 
     move-result-object v1
 
-    iget-boolean v0, p0, Lcom/android/internal/telephony/test/CallInfo;->isMpty:Z
+    iget-boolean v0, p0, Lcom/android/internal/telephony/test/CallInfo;->mIsMpty:Z
 
     if-eqz v0, :cond_1
 
@@ -268,7 +268,7 @@
 
     move-result-object v0
 
-    iget-object v1, p0, Lcom/android/internal/telephony/test/CallInfo;->number:Ljava/lang/String;
+    iget-object v1, p0, Lcom/android/internal/telephony/test/CallInfo;->mNumber:Ljava/lang/String;
 
     invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -280,7 +280,7 @@
 
     move-result-object v0
 
-    iget v1, p0, Lcom/android/internal/telephony/test/CallInfo;->TOA:I
+    iget v1, p0, Lcom/android/internal/telephony/test/CallInfo;->mTOA:I
 
     invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
@@ -315,12 +315,12 @@
     .local v1, ret:Lcom/android/internal/telephony/DriverCall;
     iput p1, v1, Lcom/android/internal/telephony/DriverCall;->index:I
 
-    iget-boolean v2, p0, Lcom/android/internal/telephony/test/CallInfo;->isMT:Z
+    iget-boolean v2, p0, Lcom/android/internal/telephony/test/CallInfo;->mIsMT:Z
 
     iput-boolean v2, v1, Lcom/android/internal/telephony/DriverCall;->isMT:Z
 
     :try_start_0
-    iget-object v2, p0, Lcom/android/internal/telephony/test/CallInfo;->state:Lcom/android/internal/telephony/test/CallInfo$State;
+    iget-object v2, p0, Lcom/android/internal/telephony/test/CallInfo;->mState:Lcom/android/internal/telephony/test/CallInfo$State;
 
     invoke-virtual {v2}, Lcom/android/internal/telephony/test/CallInfo$State;->value()I
 
@@ -334,15 +334,15 @@
     :try_end_0
     .catch Lcom/android/internal/telephony/ATParseEx; {:try_start_0 .. :try_end_0} :catch_0
 
-    iget-boolean v2, p0, Lcom/android/internal/telephony/test/CallInfo;->isMpty:Z
+    iget-boolean v2, p0, Lcom/android/internal/telephony/test/CallInfo;->mIsMpty:Z
 
     iput-boolean v2, v1, Lcom/android/internal/telephony/DriverCall;->isMpty:Z
 
-    iget-object v2, p0, Lcom/android/internal/telephony/test/CallInfo;->number:Ljava/lang/String;
+    iget-object v2, p0, Lcom/android/internal/telephony/test/CallInfo;->mNumber:Ljava/lang/String;
 
     iput-object v2, v1, Lcom/android/internal/telephony/DriverCall;->number:Ljava/lang/String;
 
-    iget v2, p0, Lcom/android/internal/telephony/test/CallInfo;->TOA:I
+    iget v2, p0, Lcom/android/internal/telephony/test/CallInfo;->mTOA:I
 
     iput v2, v1, Lcom/android/internal/telephony/DriverCall;->TOA:I
 

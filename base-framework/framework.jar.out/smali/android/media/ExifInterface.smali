@@ -128,7 +128,7 @@
 .end method
 
 .method public constructor <init>(Ljava/lang/String;)V
-    .locals 0
+    .locals 2
     .parameter "filename"
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -139,6 +139,17 @@
     .prologue
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
+    if-nez p1, :cond_0
+
+    new-instance v0, Ljava/lang/IllegalArgumentException;
+
+    const-string v1, "filename cannot be null"
+
+    invoke-direct {v0, v1}, Ljava/lang/IllegalArgumentException;-><init>(Ljava/lang/String;)V
+
+    throw v0
+
+    :cond_0
     iput-object p1, p0, Landroid/media/ExifInterface;->mFilename:Ljava/lang/String;
 
     invoke-direct {p0}, Landroid/media/ExifInterface;->loadAttributes()V
@@ -361,6 +372,9 @@
 .end method
 
 .method private native getThumbnailNative(Ljava/lang/String;)[B
+.end method
+
+.method private native getThumbnailRangeNative(Ljava/lang/String;)[J
 .end method
 
 .method private loadAttributes()V
@@ -975,6 +989,35 @@
     iget-object v0, p0, Landroid/media/ExifInterface;->mFilename:Ljava/lang/String;
 
     invoke-direct {p0, v0}, Landroid/media/ExifInterface;->getThumbnailNative(Ljava/lang/String;)[B
+
+    move-result-object v0
+
+    monitor-exit v1
+
+    return-object v0
+
+    :catchall_0
+    move-exception v0
+
+    monitor-exit v1
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    throw v0
+.end method
+
+.method public getThumbnailRange()[J
+    .locals 2
+
+    .prologue
+    sget-object v1, Landroid/media/ExifInterface;->sLock:Ljava/lang/Object;
+
+    monitor-enter v1
+
+    :try_start_0
+    iget-object v0, p0, Landroid/media/ExifInterface;->mFilename:Ljava/lang/String;
+
+    invoke-direct {p0, v0}, Landroid/media/ExifInterface;->getThumbnailRangeNative(Ljava/lang/String;)[J
 
     move-result-object v0
 

@@ -49,6 +49,8 @@
 
 .field public static final FLAG_LONG_PRESS:I = 0x80
 
+.field public static final FLAG_PREDISPATCH:I = 0x20000000
+
 .field public static final FLAG_SOFT_KEYBOARD:I = 0x2
 
 .field public static final FLAG_START_TRACKING:I = 0x40000000
@@ -110,6 +112,10 @@
 .field public static final KEYCODE_BOOKMARK:I = 0xae
 
 .field public static final KEYCODE_BREAK:I = 0x79
+
+.field public static final KEYCODE_BRIGHTNESS_DOWN:I = 0xdc
+
+.field public static final KEYCODE_BRIGHTNESS_UP:I = 0xdd
 
 .field public static final KEYCODE_BUTTON_1:I = 0xbc
 
@@ -304,6 +310,8 @@
 .field public static final KEYCODE_M:I = 0x29
 
 .field public static final KEYCODE_MANNER_MODE:I = 0xcd
+
+.field public static final KEYCODE_MEDIA_AUDIO_TRACK:I = 0xde
 
 .field public static final KEYCODE_MEDIA_CLOSE:I = 0x80
 
@@ -512,7 +520,7 @@
 
 .field public static final KEYCODE_ZOOM_OUT:I = 0xa9
 
-.field private static final LAST_KEYCODE:I = 0xdb
+.field private static final LAST_KEYCODE:I = 0xde
 
 .field public static final MAX_KEYCODE:I = 0x54
     .annotation runtime Ljava/lang/Deprecated;
@@ -1456,7 +1464,7 @@
     .locals 1
 
     .prologue
-    const/16 v0, 0xdb
+    const/16 v0, 0xde
 
     return v0
 .end method
@@ -1468,6 +1476,32 @@
     const v0, 0x770ff
 
     return v0
+.end method
+
+.method public static final isConfirmKey(I)Z
+    .locals 1
+    .parameter "keyCode"
+
+    .prologue
+    sparse-switch p0, :sswitch_data_0
+
+    const/4 v0, 0x0
+
+    :goto_0
+    return v0
+
+    :sswitch_0
+    const/4 v0, 0x1
+
+    goto :goto_0
+
+    nop
+
+    :sswitch_data_0
+    .sparse-switch
+        0x17 -> :sswitch_0
+        0x42 -> :sswitch_0
+    .end sparse-switch
 .end method
 
 .method public static final isGamepadButton(I)Z
@@ -3536,6 +3570,24 @@
     const/16 v1, 0xdb
 
     const-string v2, "KEYCODE_ASSIST"
+
+    invoke-virtual {v0, v1, v2}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
+
+    const/16 v1, 0xdc
+
+    const-string v2, "KEYCODE_BRIGHTNESS_DOWN"
+
+    invoke-virtual {v0, v1, v2}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
+
+    const/16 v1, 0xdd
+
+    const-string v2, "KEYCODE_BRIGHTNESS_UP"
+
+    invoke-virtual {v0, v1, v2}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
+
+    const/16 v1, 0xde
+
+    const-string v2, "KEYCODE_MEDIA_AUDIO_TRACK"
 
     invoke-virtual {v0, v1, v2}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 

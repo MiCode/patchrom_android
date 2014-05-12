@@ -34,14 +34,12 @@
 
 # virtual methods
 .method protected dump(Ljava/io/FileDescriptor;Ljava/io/PrintWriter;[Ljava/lang/String;)V
-    .locals 9
+    .locals 7
     .parameter "fd"
     .parameter "pw"
     .parameter "args"
 
     .prologue
-    const/4 v6, 0x0
-
     iget-object v0, p0, Lcom/android/server/am/ActivityManagerService$MemBinder;->mActivityManagerService:Lcom/android/server/am/ActivityManagerService;
 
     const-string v1, "android.permission.DUMP"
@@ -112,17 +110,15 @@
 
     const/4 v5, 0x0
 
+    const/4 v6, 0x0
+
     move-object v1, p1
 
     move-object v2, p2
 
     move-object v4, p3
 
-    move-object v7, v6
-
-    move-object v8, v6
-
-    invoke-virtual/range {v0 .. v8}, Lcom/android/server/am/ActivityManagerService;->dumpApplicationMemoryUsage(Ljava/io/FileDescriptor;Ljava/io/PrintWriter;Ljava/lang/String;[Ljava/lang/String;ZLjava/io/PrintWriter;Ljava/lang/StringBuilder;Ljava/lang/StringBuilder;)V
+    invoke-virtual/range {v0 .. v6}, Lcom/android/server/am/ActivityManagerService;->dumpApplicationMemoryUsage(Ljava/io/FileDescriptor;Ljava/io/PrintWriter;Ljava/lang/String;[Ljava/lang/String;ZLjava/io/PrintWriter;)V
 
     goto :goto_0
 .end method

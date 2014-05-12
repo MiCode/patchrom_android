@@ -16,9 +16,6 @@
 .method public abstract getTextRunAdvances(IIIII[FILandroid/graphics/Paint;)F
 .end method
 
-.method public abstract getTextRunAdvances(IIIII[FILandroid/graphics/Paint;I)F
-.end method
-
 .method public abstract getTextRunCursor(IIIIILandroid/graphics/Paint;)I
 .end method
 

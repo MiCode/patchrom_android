@@ -78,9 +78,13 @@
 
     iput-object v0, p0, Landroid/view/InputEventReceiver;->mMessageQueue:Landroid/os/MessageQueue;
 
-    iget-object v0, p0, Landroid/view/InputEventReceiver;->mMessageQueue:Landroid/os/MessageQueue;
+    new-instance v0, Ljava/lang/ref/WeakReference;
 
-    invoke-static {p0, p1, v0}, Landroid/view/InputEventReceiver;->nativeInit(Landroid/view/InputEventReceiver;Landroid/view/InputChannel;Landroid/os/MessageQueue;)I
+    invoke-direct {v0, p0}, Ljava/lang/ref/WeakReference;-><init>(Ljava/lang/Object;)V
+
+    iget-object v1, p0, Landroid/view/InputEventReceiver;->mMessageQueue:Landroid/os/MessageQueue;
+
+    invoke-static {v0, p1, v1}, Landroid/view/InputEventReceiver;->nativeInit(Ljava/lang/ref/WeakReference;Landroid/view/InputChannel;Landroid/os/MessageQueue;)I
 
     move-result v0
 
@@ -166,7 +170,7 @@
     return-void
 .end method
 
-.method private static native nativeConsumeBatchedInputEvents(IJ)V
+.method private static native nativeConsumeBatchedInputEvents(IJ)Z
 .end method
 
 .method private static native nativeDispose(I)V
@@ -175,12 +179,24 @@
 .method private static native nativeFinishInputEvent(IIZ)V
 .end method
 
-.method private static native nativeInit(Landroid/view/InputEventReceiver;Landroid/view/InputChannel;Landroid/os/MessageQueue;)I
+.method private static native nativeInit(Ljava/lang/ref/WeakReference;Landroid/view/InputChannel;Landroid/os/MessageQueue;)I
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(",
+            "Ljava/lang/ref/WeakReference",
+            "<",
+            "Landroid/view/InputEventReceiver;",
+            ">;",
+            "Landroid/view/InputChannel;",
+            "Landroid/os/MessageQueue;",
+            ")I"
+        }
+    .end annotation
 .end method
 
 
 # virtual methods
-.method public final consumeBatchedInputEvents(J)V
+.method public final consumeBatchedInputEvents(J)Z
     .locals 2
     .parameter "frameTimeNanos"
 
@@ -195,13 +211,17 @@
 
     invoke-static {v0, v1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
 
+    const/4 v0, 0x0
+
     :goto_0
-    return-void
+    return v0
 
     :cond_0
     iget v0, p0, Landroid/view/InputEventReceiver;->mReceiverPtr:I
 
-    invoke-static {v0, p1, p2}, Landroid/view/InputEventReceiver;->nativeConsumeBatchedInputEvents(IJ)V
+    invoke-static {v0, p1, p2}, Landroid/view/InputEventReceiver;->nativeConsumeBatchedInputEvents(IJ)Z
+
+    move-result v0
 
     goto :goto_0
 .end method
@@ -324,7 +344,7 @@
     .prologue
     const-wide/16 v0, -0x1
 
-    invoke-virtual {p0, v0, v1}, Landroid/view/InputEventReceiver;->consumeBatchedInputEvents(J)V
+    invoke-virtual {p0, v0, v1}, Landroid/view/InputEventReceiver;->consumeBatchedInputEvents(J)Z
 
     return-void
 .end method
