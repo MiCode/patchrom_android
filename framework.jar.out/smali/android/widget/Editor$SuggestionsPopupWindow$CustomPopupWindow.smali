@@ -111,11 +111,11 @@
 
     iget-object v0, v0, Landroid/widget/Editor$SuggestionsPopupWindow;->this$0:Landroid/widget/Editor;
 
-    invoke-virtual {v0}, Landroid/widget/Editor;->getInsertionController()Landroid/widget/MiuiCursorController;
+    invoke-virtual {v0}, Landroid/widget/Editor;->getInsertionController()Landroid/widget/Editor$InsertionPointCursorController;
 
     move-result-object v0
 
-    invoke-virtual {v0}, Landroid/widget/MiuiCursorController;->show()V
+    invoke-virtual {v0}, Landroid/widget/Editor$InsertionPointCursorController;->show()V
 
     :cond_0
     return-void

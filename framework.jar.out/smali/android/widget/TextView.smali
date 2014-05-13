@@ -19807,15 +19807,15 @@
 
     iget-object v1, p0, Landroid/widget/TextView;->mEditor:Landroid/widget/Editor;
 
-    iget-object v1, v1, Landroid/widget/Editor;->mSelectionModifierCursorController:Landroid/widget/MiuiCursorController;
+    iget-object v1, v1, Landroid/widget/Editor;->mSelectionModifierCursorController:Landroid/widget/Editor$SelectionModifierCursorController;
 
     if-eqz v1, :cond_1
 
     iget-object v1, p0, Landroid/widget/TextView;->mEditor:Landroid/widget/Editor;
 
-    iget-object v1, v1, Landroid/widget/Editor;->mSelectionModifierCursorController:Landroid/widget/MiuiCursorController;
+    iget-object v1, v1, Landroid/widget/Editor;->mSelectionModifierCursorController:Landroid/widget/Editor$SelectionModifierCursorController;
 
-    invoke-virtual {v1}, Landroid/widget/MiuiCursorController;->isSelectionStartDragged()Z
+    invoke-virtual {v1}, Landroid/widget/Editor$SelectionModifierCursorController;->isSelectionStartDragged()Z
 
     move-result v1
 
@@ -20490,13 +20490,7 @@
 
     iget-object v7, p0, Landroid/widget/TextView;->mEditor:Landroid/widget/Editor;
 
-    invoke-virtual {v7, p1}, Landroid/widget/Editor;->onTouchEvent(Landroid/view/MotionEvent;)Z
-
-    move-result v7
-
-    if-eqz v7, :cond_0
-
-    return v8
+    invoke-virtual {v7, p1}, Landroid/widget/Editor;->onTouchEvent(Landroid/view/MotionEvent;)V
 
     :cond_0
     invoke-super {p0, p1}, Landroid/view/View;->onTouchEvent(Landroid/view/MotionEvent;)Z
@@ -21050,31 +21044,14 @@
 
     move-result v1
 
-    if-eqz v1, :cond_1
-
-    iget-object v1, p0, Landroid/widget/TextView;->mEditor:Landroid/widget/Editor;
-
     if-eqz v1, :cond_0
-
-    iget-object v1, p0, Landroid/widget/TextView;->mEditor:Landroid/widget/Editor;
-
-    const/4 v2, 0x1
-
-    iput-boolean v2, v1, Landroid/widget/Editor;->mDiscardNextActionUp:Z
-
-    :cond_0
-    const/4 v1, 0x0
-
-    invoke-virtual {p0, v1}, Landroid/widget/TextView;->performHapticFeedback(I)Z
 
     const/4 v0, 0x1
 
-    :cond_1
-    if-nez v0, :cond_2
-
+    :cond_0
     iget-object v1, p0, Landroid/widget/TextView;->mEditor:Landroid/widget/Editor;
 
-    if-eqz v1, :cond_2
+    if-eqz v1, :cond_1
 
     iget-object v1, p0, Landroid/widget/TextView;->mEditor:Landroid/widget/Editor;
 
@@ -21083,6 +21060,23 @@
     move-result v1
 
     or-int/2addr v0, v1
+
+    :cond_1
+    if-eqz v0, :cond_2
+
+    const/4 v1, 0x0
+
+    invoke-virtual {p0, v1}, Landroid/widget/TextView;->performHapticFeedback(I)Z
+
+    iget-object v1, p0, Landroid/widget/TextView;->mEditor:Landroid/widget/Editor;
+
+    if-eqz v1, :cond_2
+
+    iget-object v1, p0, Landroid/widget/TextView;->mEditor:Landroid/widget/Editor;
+
+    const/4 v2, 0x1
+
+    iput-boolean v2, v1, Landroid/widget/Editor;->mDiscardNextActionUp:Z
 
     :cond_2
     return v0
