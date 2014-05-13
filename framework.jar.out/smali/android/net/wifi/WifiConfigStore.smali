@@ -4059,14 +4059,14 @@
 
     if-nez v11, :cond_miui_3
 
-    :try_start_3
+    :try_start_miui
     invoke-static {v10}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
 
     move-result v11
 
     iput v11, p1, Landroid/net/wifi/WifiConfiguration;->wapiPskType:I
-    :try_end_3
-    .catch Ljava/lang/NumberFormatException; {:try_start_3 .. :try_end_3} :catch_miui
+    :try_end_miui
+    .catch Ljava/lang/NumberFormatException; {:try_start_miui .. :try_end_miui} :catch_miui
 
     :cond_miui_3
     :goto_miui_3

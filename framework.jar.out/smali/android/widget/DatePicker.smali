@@ -1243,7 +1243,6 @@
     add-int/lit8 v0, v0, 0x1
 
     goto :goto_0
-
 .end method
 
 .method private setDate(III)V

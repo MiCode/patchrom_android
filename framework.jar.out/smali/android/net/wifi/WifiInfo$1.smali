@@ -138,8 +138,7 @@
 
     move-result-object v1
 
-    #setter for: Landroid/net/wifi/WifiInfo;->mVendorInfo:Ljava/lang/String;
-    invoke-static {v0, v1}, Landroid/net/wifi/WifiInfo;->access$502(Landroid/net/wifi/WifiInfo;Ljava/lang/String;)Ljava/lang/String;
+    invoke-virtual {v0, v1}, Landroid/net/wifi/WifiInfo;->setVendorInfo(Ljava/lang/String;)V
 
     sget-object v1, Landroid/net/wifi/SupplicantState;->CREATOR:Landroid/os/Parcelable$Creator;
 

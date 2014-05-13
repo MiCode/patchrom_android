@@ -330,17 +330,6 @@
     return-object p1
 .end method
 
-.method static synthetic access$502(Landroid/net/wifi/WifiInfo;Ljava/lang/String;)Ljava/lang/String;
-    .locals 0
-    .parameter "x0"
-    .parameter "x1"
-
-    .prologue
-    iput-object p1, p0, Landroid/net/wifi/WifiInfo;->mVendorInfo:Ljava/lang/String;
-
-    return-object p1
-.end method
-
 .method public static getDetailedStateOf(Landroid/net/wifi/SupplicantState;)Landroid/net/NetworkInfo$DetailedState;
     .locals 1
     .parameter "suppState"
