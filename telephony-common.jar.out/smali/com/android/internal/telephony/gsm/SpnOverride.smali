@@ -283,6 +283,20 @@
     return-object v0
 .end method
 
+.method public getSpn(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+    .locals 1
+    .parameter "carrier"
+    .parameter "spn"
+
+    .prologue
+    .line 73
+    invoke-virtual {p0, p1}, Lcom/android/internal/telephony/gsm/SpnOverride;->getSpn(Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
 .method public getSpnFromConfig(Ljava/lang/String;)Ljava/lang/String;
     .locals 1
     .parameter "carrier"
