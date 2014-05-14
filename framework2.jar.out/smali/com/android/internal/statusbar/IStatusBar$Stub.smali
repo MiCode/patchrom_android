@@ -50,7 +50,7 @@
 
 .field static final TRANSACTION_setImeWindowStatus:I = 0xc
 
-.field static final TRANSACTION_setStatus:I = 0x12
+.field static final TRANSACTION_setStatus:I = 0x1a
 
 .field static final TRANSACTION_setSystemUiVisibility:I = 0xa
 
@@ -511,7 +511,7 @@
 
     .end local v0           #_arg0:I
     .end local v1           #_arg1:I
-    :sswitch_12
+    :sswitch_1a
     const-string v4, "com.android.internal.statusbar.IStatusBar"
 
     invoke-virtual {p2, v4}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
@@ -530,7 +530,7 @@
 
     move-result v4
 
-    if-eqz v4, :cond_6
+    if-eqz v4, :cond_miui
 
     sget-object v4, Landroid/os/Bundle;->CREATOR:Landroid/os/Parcelable$Creator;
 
@@ -541,17 +541,17 @@
     check-cast v2, Landroid/os/Bundle;
 
     .local v2, _arg2:Landroid/os/Bundle;
-    :goto_7
+    :goto_miui
     invoke-virtual {p0, v0, v1, v2}, Lcom/android/internal/statusbar/IStatusBar$Stub;->setStatus(ILjava/lang/String;Landroid/os/Bundle;)V
 
     goto/16 :goto_0
 
     .end local v2           #_arg2:Landroid/os/Bundle;
-    :cond_6
+    :cond_miui
     const/4 v2, 0x0
 
     .restart local v2       #_arg2:Landroid/os/Bundle;
-    goto :goto_7
+    goto :goto_miui
 
     :sswitch_data_0
     .sparse-switch
@@ -572,7 +572,7 @@
         0xf -> :sswitch_f
         0x10 -> :sswitch_10
         0x11 -> :sswitch_11
-        0x12 -> :sswitch_12
+        0x1a -> :sswitch_1a
         0x5f4e5446 -> :sswitch_0
     .end sparse-switch
 .end method
