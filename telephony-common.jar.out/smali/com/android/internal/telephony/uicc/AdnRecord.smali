@@ -581,11 +581,11 @@
 
     if-nez v5, :cond_1
 
-    const-string v5, "AdnRecord"
+    const-string v2, "AdnRecord"
 
     iget-object v5, p0, Lcom/android/internal/telephony/uicc/AdnRecord;->mAlphaTag:Ljava/lang/String;
 
-    invoke-static {v5, v0, v6, v3}, Lcom/android/internal/telephony/uicc/Injector$AdnRecordHook;->encodeAlphaTag(Ljava/lang/String;[BLjava/lang/String;I)Z
+    invoke-static {v2, v0, v5, v3}, Lcom/android/internal/telephony/uicc/Injector$AdnRecordHook;->encodeAlphaTag(Ljava/lang/String;[BLjava/lang/String;I)Z
 
     goto :goto_1
 .end method

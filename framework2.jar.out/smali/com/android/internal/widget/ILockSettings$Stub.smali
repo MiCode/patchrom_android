@@ -50,7 +50,7 @@
 
 .field static final TRANSACTION_setLong:I = 0x2
 
-.field static final TRANSACTION_setRawLockPassword:I = 0xf
+.field static final TRANSACTION_setRawLockPassword:I = 0x2a
 
 .field static final TRANSACTION_setString:I = 0x3
 
@@ -445,7 +445,7 @@
 
     goto/16 :goto_0
 
-    .end local v0           #_arg0:[B
+    .end local v0           #_arg0:Ljava/lang/String;
     .end local v1           #_arg1:I
     :sswitch_a
     const-string v8, "com.android.internal.widget.ILockSettings"
@@ -555,7 +555,7 @@
 
     .end local v0           #_arg0:Ljava/lang/String;
     .end local v1           #_arg1:I
-    :sswitch_f
+    :sswitch_2a
     const-string v7, "com.android.internal.widget.ILockSettings"
 
     invoke-virtual {p2, v7}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
@@ -591,7 +591,7 @@
         0xb -> :sswitch_b
         0xc -> :sswitch_c
         0xd -> :sswitch_d
-        0xf -> :sswitch_f
+        0x2a -> :sswitch_2a
         0x5f4e5446 -> :sswitch_0
     .end sparse-switch
 .end method

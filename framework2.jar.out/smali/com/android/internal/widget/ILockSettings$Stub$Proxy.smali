@@ -892,7 +892,7 @@
 
     iget-object v2, p0, Lcom/android/internal/widget/ILockSettings$Stub$Proxy;->mRemote:Landroid/os/IBinder;
 
-    const/16 v3, 0xf
+    const/16 v3, 0x2a
 
     const/4 v4, 0x0
 
