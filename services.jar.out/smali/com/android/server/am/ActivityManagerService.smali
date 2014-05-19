@@ -42032,7 +42032,7 @@
 
     monitor-enter p0
 
-    :try_start_0
+    :try_start_miui
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/am/ActivityManagerService;->mProcessesOnHold:Ljava/util/ArrayList;
@@ -42248,8 +42248,8 @@
     .end local v24           #uss:Lcom/android/server/am/UserStartedState;
     :cond_2
     monitor-exit p0
-    :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+    :try_end_miui
+    .catchall {:try_start_miui .. :try_end_miui} :catchall_0
 
     invoke-static/range {p0 .. p0}, Lcom/android/server/am/Injector$ActivityManagerServiceHook;->after_finishBooting(Lcom/android/server/am/ActivityManagerService;)V
 
@@ -42259,10 +42259,10 @@
     :catchall_0
     move-exception v2
 
-    :try_start_1
+    :try_start_0
     monitor-exit p0
-    :try_end_1
-    .catchall {:try_start_1 .. :try_end_1} :catchall_0
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
     throw v2
 .end method
