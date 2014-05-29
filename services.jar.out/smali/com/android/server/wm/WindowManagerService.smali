@@ -17506,7 +17506,7 @@
 
     if-gtz v3, :cond_1
 
-    if-lez v4, :cond_miui_1
+    if-lez v4, :cond_2
 
     :cond_1
     move v5, v6
@@ -17514,12 +17514,16 @@
     :cond_2
     iput-boolean v5, p0, Lcom/android/server/wm/WindowManagerService;->mSafeMode:Z
 
-    if-lez v1, :cond_miui
+    const/4 v6, 0x0
 
-    if-lez v4, :cond_miui
+    if-lez v1, :cond_miui_0
 
-    :goto_miui
-    iput-boolean v5, p0, Lcom/android/server/wm/WindowManagerService;->mSafeMode:Z
+    if-lez v4, :cond_miui_0
+
+    const/4 v6, 0x1
+
+    :cond_miui_0
+    iput-boolean v6, p0, Lcom/android/server/wm/WindowManagerService;->mSafeMode:Z
 
     :try_start_0
     const-string v5, "persist.sys.safemode"
@@ -17618,16 +17622,6 @@
     iget-boolean v5, p0, Lcom/android/server/wm/WindowManagerService;->mSafeMode:Z
 
     return v5
-
-    :cond_miui_1
-    const/4 v5, 0x0
-
-    goto :cond_2
-
-    :cond_miui
-    const/4 v5, 0x0
-
-    goto :goto_miui
 
     :cond_4
     const-string v5, "WindowManager"

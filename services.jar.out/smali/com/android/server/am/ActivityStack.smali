@@ -3632,8 +3632,13 @@
 
     move-result v5
 
-    if-nez v5, :cond_0
+    if-nez v5, :cond_miui_0
 
+    const/4 v5, 0x1
+
+    return v5
+
+    :cond_miui_0
     iget v5, p1, Lcom/android/server/am/ActivityRecord;->configChangeFlags:I
 
     or-int/2addr v5, v0
