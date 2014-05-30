@@ -928,6 +928,15 @@
     .parameter "resultReceiver"
 
     .prologue
+    invoke-static {p0, p1, p2, p3, p4}, Lcom/android/internal/telephony/Injector$InboundSmsHandlerHook;->before_dispatchIntent(Lcom/android/internal/telephony/InboundSmsHandler;Landroid/content/Intent;Ljava/lang/String;ILandroid/content/BroadcastReceiver;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_miui_0
+
+    return-void
+
+    :cond_miui_0
     const/4 v7, 0x0
 
     const/high16 v0, 0x800
