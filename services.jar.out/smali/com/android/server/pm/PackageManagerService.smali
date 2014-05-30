@@ -15425,7 +15425,11 @@
 
     if-eqz v0, :cond_3
 
-    invoke-static {v1}, Lcom/android/server/pm/PackageManagerService$Injector;->ignoreApk(Ljava/io/File;)Z
+    invoke-virtual {v1}, Ljava/io/File;->getPath()Ljava/lang/String;
+
+    move-result-object v0
+
+    invoke-static {v0}, Lcom/android/server/pm/ExtraPackageManagerServices;->ignoreApk(Ljava/lang/String;)Z
 
     move-result v0
 
