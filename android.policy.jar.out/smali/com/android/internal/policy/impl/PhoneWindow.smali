@@ -4634,7 +4634,7 @@
 
     if-eqz v19, :cond_29
 
-    sget v19, Lcom/android/internal/R$lauout;->screen_action_bar:I
+    sget v19, Lcom/android/internal/R$layout;->screen_action_bar:I
 
     move/from16 v0, v19
 
