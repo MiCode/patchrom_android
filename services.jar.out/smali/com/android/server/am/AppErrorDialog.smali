@@ -268,7 +268,7 @@
 
     move-result-object v2
 
-    const v3, 0x1040405
+    sget v3, Lcom/android/internal/R$string;->report:I
 
     invoke-virtual {v2, v3}, Landroid/content/res/Resources;->getText(I)Ljava/lang/CharSequence;
 
