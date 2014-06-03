@@ -14624,7 +14624,7 @@
     .end local v20           #ip:I
     .end local v23           #pmap:Landroid/util/ArrayMap;,"Landroid/util/ArrayMap<Ljava/lang/String;Landroid/util/SparseArray<Ljava/lang/Long;>;>;"
     :cond_9
-    :try_start_1
+    :try_start_miui
     invoke-static {}, Landroid/app/AppGlobals;->getPackageManager()Landroid/content/pm/IPackageManager;
 
     move-result-object v4
@@ -14642,8 +14642,8 @@
     move-object/from16 v1, p1
 
     invoke-direct {v0, v4, v1}, Lcom/android/server/am/ActivityManagerService;->killNativePackageProcesses(ILjava/lang/String;)V
-    :try_end_1
-    .catch Landroid/os/RemoteException; {:try_start_1 .. :try_end_1} :catch_miui
+    :try_end_miui
+    .catch Landroid/os/RemoteException; {:try_start_miui .. :try_end_miui} :catch_miui
 
     :goto_miui
     const/16 v8, -0x64
