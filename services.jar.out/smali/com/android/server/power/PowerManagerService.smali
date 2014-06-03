@@ -7889,12 +7889,21 @@
     return-void
 .end method
 
-.method private getContext()Landroid/content/Context;
+.method getContext()Landroid/content/Context;
     .locals 1
 
     .prologue
     .line 534
     iget-object v0, p0, Lcom/android/server/power/PowerManagerService;->mContext:Landroid/content/Context;
+
+    return-object v0
+.end method
+
+.method getSettingsObserver()Lcom/android/server/power/PowerManagerService$SettingsObserver;
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Lcom/android/server/power/PowerManagerService;->mSettingsObserver:Lcom/android/server/power/PowerManagerService$SettingsObserver;
 
     return-object v0
 .end method
