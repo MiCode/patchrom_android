@@ -1049,7 +1049,7 @@
     move-result-object v2
 
     .local v2, view:Landroid/view/View;
-    sget v3, Landroid/R$id;->icon:I
+    const v3, 0x1020006
 
     invoke-virtual {v2, v3}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -1225,7 +1225,7 @@
     .parameter "info"
 
     .prologue
-    sget v4, Landroid/R$id;->text1:I
+    const v4, 0x1020014
 
     invoke-virtual {p1, v4}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -1234,7 +1234,7 @@
     check-cast v2, Landroid/widget/TextView;
 
     .local v2, text:Landroid/widget/TextView;
-    sget v4, Landroid/R$id;->text2:I
+    const v4, 0x1020015
 
     invoke-virtual {p1, v4}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -1243,7 +1243,7 @@
     check-cast v3, Landroid/widget/TextView;
 
     .local v3, text2:Landroid/widget/TextView;
-    sget v4, Landroid/R$id;->title:I
+    const v4, 0x1020006
 
     invoke-virtual {p1, v4}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 

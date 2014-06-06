@@ -424,6 +424,10 @@
     .local p5, rList:Ljava/util/List;,"Ljava/util/List<Landroid/content/pm/ResolveInfo;>;"
     const v1, 0x103031b
 
+    invoke-static {v1}, Lcom/android/internal/app/Injector$ResolverActivityHook;->getTheme(I)I
+
+    move-result v1
+
     invoke-virtual {p0, v1}, Lcom/android/internal/app/ResolverActivity;->setTheme(I)V
 
     invoke-super {p0, p1}, Lcom/android/internal/app/AlertActivity;->onCreate(Landroid/os/Bundle;)V
