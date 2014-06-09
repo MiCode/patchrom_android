@@ -3632,7 +3632,7 @@
 
     move-result v5
 
-    if-nez v5, :cond_miui_0
+    if-eqz v5, :cond_miui_0
 
     const/4 v5, 0x1
 
