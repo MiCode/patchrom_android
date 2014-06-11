@@ -118,7 +118,7 @@
 
     move-result-object v2
 
-    invoke-virtual {v2}, Landroid/content/res/AssetManager;->getLocales()[Ljava/lang/String;
+    invoke-static/range {v22 .. v22}, Lcom/android/internal/app/LocalePicker;->getMiuiSupportLocale(Landroid/content/res/Resources;)[Ljava/lang/String;
 
     move-result-object v2
 
@@ -763,4 +763,18 @@
     iput-object p1, p0, Lcom/android/internal/app/LocalePicker;->mListener:Lcom/android/internal/app/LocalePicker$LocaleSelectionListener;
 
     return-void
+.end method
+
+.method private static getMiuiSupportLocale(Landroid/content/res/Resources;)[Ljava/lang/String;
+    .locals 1
+    .parameter "resources"
+
+    .prologue
+    sget v0, Lcom/miui/internal/R$array;->supported_locale:I
+
+    invoke-virtual {p0, v0}, Landroid/content/res/Resources;->getStringArray(I)[Ljava/lang/String;
+
+    move-result-object v0
+
+    return-object v0
 .end method
