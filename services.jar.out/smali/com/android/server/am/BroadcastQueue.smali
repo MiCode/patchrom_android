@@ -817,8 +817,6 @@
     .end annotation
 
     .prologue
-    invoke-static {p0, p1, p2}, Lcom/android/server/am/BroadcastQueue$Injector;->isTimeoutApp(Lcom/android/server/am/ProcessRecord;Landroid/content/IIntentReceiver;Landroid/content/Intent;)Z
-
     if-eqz p0, :cond_0
 
     iget-object v0, p0, Lcom/android/server/am/ProcessRecord;->thread:Landroid/app/IApplicationThread;
