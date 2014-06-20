@@ -35,6 +35,8 @@
 
 .field private static final STEP:I = 0x40
 
+.field private static sInstance:Lcom/android/server/AssetAtlasService;
+
 
 # instance fields
 .field private mAtlasMap:[I
@@ -160,6 +162,8 @@
     invoke-direct {v7, v8}, Ljava/lang/Thread;-><init>(Ljava/lang/Runnable;)V
 
     invoke-virtual {v7}, Ljava/lang/Thread;->start()V
+
+    sput-object p0, Lcom/android/server/AssetAtlasService;->sInstance:Lcom/android/server/AssetAtlasService;
 
     return-void
 .end method
@@ -1606,5 +1610,51 @@
     .locals 0
 
     .prologue
+    return-void
+.end method
+
+.method public static disable()V
+    .locals 3
+
+    .prologue
+    const/4 v2, 0x0
+
+    sget-object v0, Lcom/android/server/AssetAtlasService;->sInstance:Lcom/android/server/AssetAtlasService;
+
+    if-eqz v0, :cond_0
+
+    sget-object v0, Lcom/android/server/AssetAtlasService;->sInstance:Lcom/android/server/AssetAtlasService;
+
+    iget-object v0, v0, Lcom/android/server/AssetAtlasService;->mAtlasReady:Ljava/util/concurrent/atomic/AtomicBoolean;
+
+    invoke-virtual {v0}, Ljava/util/concurrent/atomic/AtomicBoolean;->get()Z
+
+    move-result v0
+
+    if-eqz v0, :cond_0
+
+    sget-object v0, Lcom/android/server/AssetAtlasService;->sInstance:Lcom/android/server/AssetAtlasService;
+
+    iget-object v0, v0, Lcom/android/server/AssetAtlasService;->mAtlasReady:Ljava/util/concurrent/atomic/AtomicBoolean;
+
+    const/4 v1, 0x0
+
+    invoke-virtual {v0, v1}, Ljava/util/concurrent/atomic/AtomicBoolean;->set(Z)V
+
+    sget-object v0, Lcom/android/server/AssetAtlasService;->sInstance:Lcom/android/server/AssetAtlasService;
+
+    iget-object v0, v0, Lcom/android/server/AssetAtlasService;->mBuffer:Landroid/view/GraphicBuffer;
+
+    invoke-virtual {v0}, Landroid/view/GraphicBuffer;->destroy()V
+
+    sget-object v0, Lcom/android/server/AssetAtlasService;->sInstance:Lcom/android/server/AssetAtlasService;
+
+    iput-object v2, v0, Lcom/android/server/AssetAtlasService;->mBuffer:Landroid/view/GraphicBuffer;
+
+    sget-object v0, Lcom/android/server/AssetAtlasService;->sInstance:Lcom/android/server/AssetAtlasService;
+
+    iput-object v2, v0, Lcom/android/server/AssetAtlasService;->mAtlasMap:[I
+
+    :cond_0
     return-void
 .end method
