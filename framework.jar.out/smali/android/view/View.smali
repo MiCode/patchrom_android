@@ -11071,8 +11071,6 @@
 
     invoke-virtual {p0, v5}, Landroid/view/View;->needGlobalAttributesUpdate(Z)V
 
-    invoke-static {p0}, Landroid/view/Injector$ViewHook;->after_dispatchAttachedToWindow(Landroid/view/View;)V
-
     return-void
 .end method
 
