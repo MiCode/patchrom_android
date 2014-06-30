@@ -1307,6 +1307,28 @@
 
 
 # virtual methods
+.method callOnTimeChanged()V
+    .locals 0
+
+    .prologue
+    .line 79
+    invoke-direct {p0}, Landroid/widget/TimePicker;->onTimeChanged()V
+
+    .line 80
+    return-void
+.end method
+
+.method callUpdateInputState()V
+    .locals 0
+
+    .prologue
+    .line 73
+    invoke-direct {p0}, Landroid/widget/TimePicker;->updateInputState()V
+
+    .line 74
+    return-void
+.end method
+
 .method public dispatchPopulateAccessibilityEvent(Landroid/view/accessibility/AccessibilityEvent;)Z
     .locals 1
     .parameter "event"
