@@ -497,6 +497,17 @@
 
     invoke-static {v7, v8}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
+    invoke-interface {v9}, Ljava/util/List;->isEmpty()Z
+
+    move-result v7
+
+    if-eqz v7, :cond_miui
+
+    const/4 v7, 0x0
+
+    return-object v7
+
+    :cond_miui
     const/4 v7, 0x0
 
     invoke-interface {v9, v7}, Ljava/util/List;->get(I)Ljava/lang/Object;
