@@ -1,0 +1,34 @@
+From 45381cb94d7f4545fdd7f93a1faf773c933ed704 Mon Sep 17 00:00:00 2001
+From: wangshujie <wangshujie@xiaomi.com>
+Date: Thu, 10 Jul 2014 10:49:04 +0800
+Subject: [PATCH] enable miui Clipboard
+
+Change-Id: Icedd37f4b43e579b23c2700e323c20da2fbe45c6
+---
+ framework.jar.out/smali/android/widget/TextView.smali | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+--- a/framework.jar.out/smali/android/widget/TextView.smali
++++ b/framework.jar.out/smali/android/widget/TextView.smali
+@@ -19807,15 +19807,15 @@
+ 
+     iget-object v1, p0, Landroid/widget/TextView;->mEditor:Landroid/widget/Editor;
+ 
+-    iget-object v1, v1, Landroid/widget/Editor;->mSelectionModifierCursorController:Landroid/widget/Editor$SelectionModifierCursorController;
++    iget-object v1, v1, Landroid/widget/Editor;->mSelectionModifierCursorController:Landroid/widget/MiuiCursorController;
+ 
+     if-eqz v1, :cond_1
+ 
+     iget-object v1, p0, Landroid/widget/TextView;->mEditor:Landroid/widget/Editor;
+ 
+-    iget-object v1, v1, Landroid/widget/Editor;->mSelectionModifierCursorController:Landroid/widget/Editor$SelectionModifierCursorController;
++    iget-object v1, v1, Landroid/widget/Editor;->mSelectionModifierCursorController:Landroid/widget/MiuiCursorController;
+ 
+-    invoke-virtual {v1}, Landroid/widget/Editor$SelectionModifierCursorController;->isSelectionStartDragged()Z
++    invoke-virtual {v1}, Landroid/widget/MiuiCursorController;->isSelectionStartDragged()Z
+ 
+     move-result v1
+ 
+-- 
+1.8.1.2
+
