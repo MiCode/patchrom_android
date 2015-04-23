@@ -1,0 +1,14 @@
+.class synthetic Lcom/android/server/wifi/anqp/GEOLocationElement$1;
+.super Ljava/lang/Object;
+.source "GEOLocationElement.java"
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingClass;
+    value = Lcom/android/server/wifi/anqp/GEOLocationElement;
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x1008
+    name = null
+.end annotation

@@ -1,0 +1,4 @@
+BRANCH=marshmallow
+PLATFORM=23
+OVERLAY=v23 v21
+JAR_OUTS=framework.jar.out services.jar.out telephony-common.jar.out wifi-service.jar.out
