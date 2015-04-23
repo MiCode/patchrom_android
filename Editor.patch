@@ -1,0 +1,52 @@
+From 1122f466811bb676d51ad6650842a3722b08ebd3 Mon Sep 17 00:00:00 2001
+From: mochangming <mochangming@xiaomi.com>
+Date: Thu, 23 Apr 2015 13:25:04 +0800
+Subject: [PATCH] Miui Editor Patch
+
+This reverts commit 137be70ea853f70b27d1211c6ce9986a5bcfffd5.
+---
+ .../smali/android/widget/TextView.smali            |   23 ++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
+
+--- a/framework.jar.out/smali/android/widget/TextView.smali
++++ b/framework.jar.out/smali/android/widget/TextView.smali
+@@ -17858,6 +17858,14 @@
+ 
+     invoke-super {p0, p1, p2, p3}, Landroid/view/View;->onFocusChanged(ZILandroid/graphics/Rect;)V
+ 
++    iget-object v0, p0, Landroid/widget/TextView;->mEditor:Landroid/widget/Editor;
++
++    if-eqz v0, :goto_0
++
++    iget-object v0, p0, Landroid/widget/TextView;->mEditor:Landroid/widget/Editor;
++
++    invoke-virtual {v0}, Landroid/widget/Editor;->stopSelectionActionMode()V
++
+     :goto_0
+     return-void
+ 
+@@ -20471,6 +20479,21 @@
+     invoke-virtual {v7, p1}, Landroid/widget/Editor;->onTouchEvent(Landroid/view/MotionEvent;)V
+ 
+     :cond_0
++    iget-object v7, p0, Landroid/widget/TextView;->mEditor:Landroid/widget/Editor;
++
++    if-eqz v7, :cond_miui_0
++
++    iget-object v7, p0, Landroid/widget/TextView;->mEditor:Landroid/widget/Editor;
++
++    invoke-virtual {v7}, Landroid/widget/Editor;->isInSwipeSelectionMode()Z
++
++    move-result v7
++
++    if-eqz v7, :cond_miui_0
++
++    return v8
++
++    :cond_miui_0
+     invoke-super {p0, p1}, Landroid/view/View;->onTouchEvent(Landroid/view/MotionEvent;)Z
+ 
+     move-result v4
+-- 
+1.7.9.5
+
