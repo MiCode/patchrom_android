@@ -2425,7 +2425,7 @@
 
     iget v7, p0, Landroid/widget/AbsListView;->mDownMotionY:I
 
-    sub-int v1, v3, v7
+    sub-int v7, v3, v7
 
     .local v7, "offset":I
     iget v4, p0, Landroid/widget/AbsListView;->mTouchMode:I
@@ -2515,7 +2515,7 @@
     return-void
 
     :cond_miui_1
-    invoke-direct {p0, v4}, Landroid/widget/AbsListView;->scrollIfNeeded(I)V
+    invoke-direct {p0, v3}, Landroid/widget/AbsListView;->scrollIfNeeded(I)V
 
     goto :goto_0
 
