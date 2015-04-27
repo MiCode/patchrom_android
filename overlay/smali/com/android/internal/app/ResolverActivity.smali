@@ -1,5 +1,5 @@
 .class public Lcom/android/internal/app/ResolverActivity;
-.super Lcom/android/internal/app/AlertActivity;
+.super Lcom/miui/internal/app/AlertActivity;
 .source "ResolverActivity.java"
 
 # interfaces
@@ -21,29 +21,23 @@
 # static fields
 .field private static final DEBUG:Z = false
 
+.field private static final MAXCOLUMNS:I = 0x3
+
 .field private static final TAG:Ljava/lang/String; = "ResolverActivity"
 
 
 # instance fields
 .field private mAdapter:Lcom/android/internal/app/ResolverActivity$ResolveListAdapter;
 
-.field private mAlwaysButton:Landroid/widget/Button;
-
 .field private mAlwaysUseOption:Z
+
+.field private mGridView:Landroid/widget/GridView;
 
 .field private mIconDpi:I
 
 .field private mIconSize:I
 
-.field private mLastSelected:I
-
 .field private mLaunchedFromUid:I
-
-.field private mListView:Landroid/widget/ListView;
-
-.field private mMaxColumns:I
-
-.field private mOnceButton:Landroid/widget/Button;
 
 .field private final mPackageMonitor:Lcom/android/internal/content/PackageMonitor;
 
@@ -59,11 +53,7 @@
     .locals 1
 
     .prologue
-    invoke-direct {p0}, Lcom/android/internal/app/AlertActivity;-><init>()V
-
-    const/4 v0, -0x1
-
-    iput v0, p0, Lcom/android/internal/app/ResolverActivity;->mLastSelected:I
+    invoke-direct {p0}, Lcom/miui/internal/app/AlertActivity;-><init>()V
 
     new-instance v0, Lcom/android/internal/app/ResolverActivity$1;
 
@@ -285,41 +275,6 @@
     goto :goto_1
 .end method
 
-.method public onButtonClick(Landroid/view/View;)V
-    .locals 3
-    .param p1, "v"    # Landroid/view/View;
-
-    .prologue
-    invoke-virtual {p1}, Landroid/view/View;->getId()I
-
-    move-result v0
-
-    .local v0, "id":I
-    iget-object v1, p0, Lcom/android/internal/app/ResolverActivity;->mListView:Landroid/widget/ListView;
-
-    invoke-virtual {v1}, Landroid/widget/ListView;->getCheckedItemPosition()I
-
-    move-result v2
-
-    const v1, 0x1020305
-
-    if-ne v0, v1, :cond_0
-
-    const/4 v1, 0x1
-
-    :goto_0
-    invoke-virtual {p0, v2, v1}, Lcom/android/internal/app/ResolverActivity;->startSelected(IZ)V
-
-    invoke-virtual {p0}, Lcom/android/internal/app/ResolverActivity;->dismiss()V
-
-    return-void
-
-    :cond_0
-    const/4 v1, 0x0
-
-    goto :goto_0
-.end method
-
 .method protected onCreate(Landroid/os/Bundle;)V
     .locals 9
     .param p1, "savedInstanceState"    # Landroid/os/Bundle;
@@ -367,7 +322,7 @@
 
     if-eqz v0, :cond_0
 
-    const v8, 0x10403f7
+    sget v8, Landroid/miui/R$string;->android_whichHomeApplication:I
 
     .local v8, "titleResource":I
     :goto_0
@@ -391,7 +346,7 @@
 
     .end local v8    # "titleResource":I
     :cond_0
-    const v8, 0x10403f6
+    sget v8, Landroid/miui/R$string;->android_whichApplication:I
 
     .restart local v8    # "titleResource":I
     goto :goto_0
@@ -421,11 +376,11 @@
 
     .prologue
     .local p5, "rList":Ljava/util/List;, "Ljava/util/List<Landroid/content/pm/ResolveInfo;>;"
-    const v1, 0x103031b
+    sget v1, Lmiui/R$style;->Theme_Light_Dialog_Alert:I
 
     invoke-virtual {p0, v1}, Lcom/android/internal/app/ResolverActivity;->setTheme(I)V
 
-    invoke-super {p0, p1}, Lcom/android/internal/app/AlertActivity;->onCreate(Landroid/os/Bundle;)V
+    invoke-super {p0, p1}, Lcom/miui/internal/app/AlertActivity;->onCreate(Landroid/os/Bundle;)V
 
     :try_start_0
     invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
@@ -455,24 +410,12 @@
 
     iput-boolean v0, p0, Lcom/android/internal/app/ResolverActivity;->mAlwaysUseOption:Z
 
-    invoke-virtual {p0}, Lcom/android/internal/app/ResolverActivity;->getResources()Landroid/content/res/Resources;
+    iget-object v10, p0, Lcom/android/internal/app/ResolverActivity;->mAlertParams:Lcom/android/internal/app/AlertController$AlertParams;
 
-    move-result-object v1
-
-    const v2, 0x10e0042
-
-    invoke-virtual {v1, v2}, Landroid/content/res/Resources;->getInteger(I)I
-
-    move-result v1
-
-    iput v1, p0, Lcom/android/internal/app/ResolverActivity;->mMaxColumns:I
-
-    iget-object v9, p0, Lcom/android/internal/app/ResolverActivity;->mAlertParams:Lcom/android/internal/app/AlertController$AlertParams;
-
-    .local v9, "ap":Lcom/android/internal/app/AlertController$AlertParams;
+    .local v10, "ap":Lcom/android/internal/app/AlertController$AlertParams;
     move-object/from16 v0, p3
 
-    iput-object v0, v9, Lcom/android/internal/app/AlertController$AlertParams;->mTitle:Ljava/lang/CharSequence;
+    iput-object v0, v10, Lcom/android/internal/app/AlertController$AlertParams;->mTitle:Ljava/lang/CharSequence;
 
     iget-object v1, p0, Lcom/android/internal/app/ResolverActivity;->mPackageMonitor:Lcom/android/internal/content/PackageMonitor;
 
@@ -492,18 +435,18 @@
 
     invoke-virtual {p0, v1}, Lcom/android/internal/app/ResolverActivity;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
 
-    move-result-object v8
+    move-result-object v9
 
-    check-cast v8, Landroid/app/ActivityManager;
+    check-cast v9, Landroid/app/ActivityManager;
 
-    .local v8, "am":Landroid/app/ActivityManager;
-    invoke-virtual {v8}, Landroid/app/ActivityManager;->getLauncherLargeIconDensity()I
+    .local v9, "am":Landroid/app/ActivityManager;
+    invoke-virtual {v9}, Landroid/app/ActivityManager;->getLauncherLargeIconDensity()I
 
     move-result v1
 
     iput v1, p0, Lcom/android/internal/app/ResolverActivity;->mIconDpi:I
 
-    invoke-virtual {v8}, Landroid/app/ActivityManager;->getLauncherLargeIconSize()I
+    invoke-virtual {v9}, Landroid/app/ActivityManager;->getLauncherLargeIconSize()I
 
     move-result v1
 
@@ -553,8 +496,8 @@
     :goto_1
     return-void
 
-    .end local v8    # "am":Landroid/app/ActivityManager;
-    .end local v9    # "ap":Lcom/android/internal/app/AlertController$AlertParams;
+    .end local v9    # "am":Landroid/app/ActivityManager;
+    .end local v10    # "ap":Lcom/android/internal/app/AlertController$AlertParams;
     .end local v11    # "count":I
     :catch_0
     move-exception v12
@@ -567,8 +510,8 @@
     goto :goto_0
 
     .end local v12    # "e":Landroid/os/RemoteException;
-    .restart local v8    # "am":Landroid/app/ActivityManager;
-    .restart local v9    # "ap":Lcom/android/internal/app/AlertController$AlertParams;
+    .restart local v9    # "am":Landroid/app/ActivityManager;
+    .restart local v10    # "ap":Lcom/android/internal/app/AlertController$AlertParams;
     .restart local v11    # "count":I
     :cond_2
     const/4 v1, 0x1
@@ -579,7 +522,7 @@
 
     move-result-object v1
 
-    const v2, 0x1090088
+    sget v2, Landroid/miui/R$layout;->resolver_grid:I
 
     const/4 v3, 0x0
 
@@ -587,117 +530,76 @@
 
     move-result-object v1
 
-    iput-object v1, v9, Lcom/android/internal/app/AlertController$AlertParams;->mView:Landroid/view/View;
+    iput-object v1, v10, Lcom/android/internal/app/AlertController$AlertParams;->mView:Landroid/view/View;
 
-    iget-object v1, v9, Lcom/android/internal/app/AlertController$AlertParams;->mView:Landroid/view/View;
+    iget-object v1, v10, Lcom/android/internal/app/AlertController$AlertParams;->mView:Landroid/view/View;
 
-    const v2, 0x1020304
+    sget v2, Landroid/miui/R$id;->resolver_grid:I
 
     invoke-virtual {v1, v2}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
     move-result-object v1
 
-    check-cast v1, Landroid/widget/ListView;
+    check-cast v1, Landroid/widget/GridView;
 
-    iput-object v1, p0, Lcom/android/internal/app/ResolverActivity;->mListView:Landroid/widget/ListView;
+    iput-object v1, p0, Lcom/android/internal/app/ResolverActivity;->mGridView:Landroid/widget/GridView;
 
-    iget-object v1, p0, Lcom/android/internal/app/ResolverActivity;->mListView:Landroid/widget/ListView;
+    iget-object v1, p0, Lcom/android/internal/app/ResolverActivity;->mGridView:Landroid/widget/GridView;
 
     iget-object v2, p0, Lcom/android/internal/app/ResolverActivity;->mAdapter:Lcom/android/internal/app/ResolverActivity$ResolveListAdapter;
 
-    invoke-virtual {v1, v2}, Landroid/widget/ListView;->setAdapter(Landroid/widget/ListAdapter;)V
+    invoke-virtual {v1, v2}, Landroid/widget/GridView;->setAdapter(Landroid/widget/ListAdapter;)V
 
-    iget-object v1, p0, Lcom/android/internal/app/ResolverActivity;->mListView:Landroid/widget/ListView;
+    iget-object v1, p0, Lcom/android/internal/app/ResolverActivity;->mGridView:Landroid/widget/GridView;
 
-    invoke-virtual {v1, p0}, Landroid/widget/ListView;->setOnItemClickListener(Landroid/widget/AdapterView$OnItemClickListener;)V
+    invoke-virtual {v1, p0}, Landroid/widget/GridView;->setOnItemClickListener(Landroid/widget/AdapterView$OnItemClickListener;)V
 
-    iget-object v1, p0, Lcom/android/internal/app/ResolverActivity;->mListView:Landroid/widget/ListView;
+    iget-object v1, p0, Lcom/android/internal/app/ResolverActivity;->mGridView:Landroid/widget/GridView;
 
     new-instance v2, Lcom/android/internal/app/ResolverActivity$ItemLongClickListener;
 
     invoke-direct {v2, p0}, Lcom/android/internal/app/ResolverActivity$ItemLongClickListener;-><init>(Lcom/android/internal/app/ResolverActivity;)V
 
-    invoke-virtual {v1, v2}, Landroid/widget/ListView;->setOnItemLongClickListener(Landroid/widget/AdapterView$OnItemLongClickListener;)V
+    invoke-virtual {v1, v2}, Landroid/widget/GridView;->setOnItemLongClickListener(Landroid/widget/AdapterView$OnItemLongClickListener;)V
 
     if-eqz p6, :cond_3
 
-    iget-object v1, p0, Lcom/android/internal/app/ResolverActivity;->mListView:Landroid/widget/ListView;
+    iget-object v1, p0, Lcom/android/internal/app/ResolverActivity;->mGridView:Landroid/widget/GridView;
 
     const/4 v2, 0x1
 
-    invoke-virtual {v1, v2}, Landroid/widget/ListView;->setChoiceMode(I)V
+    invoke-virtual {v1, v2}, Landroid/widget/GridView;->setChoiceMode(I)V
 
     :cond_3
+    invoke-virtual {p0}, Lcom/android/internal/app/ResolverActivity;->resizeGrid()V
+
     :goto_2
     invoke-virtual {p0}, Lcom/android/internal/app/ResolverActivity;->setupAlert()V
 
     if-eqz p6, :cond_1
 
-    const v1, 0x1020281
+    sget v1, Landroid/miui/R$id;->always_option:I
 
     invoke-virtual {p0, v1}, Lcom/android/internal/app/ResolverActivity;->findViewById(I)Landroid/view/View;
 
-    move-result-object v10
+    move-result-object v8
 
-    check-cast v10, Landroid/view/ViewGroup;
+    check-cast v8, Landroid/widget/CheckBox;
 
-    .local v10, "buttonLayout":Landroid/view/ViewGroup;
-    if-eqz v10, :cond_6
+    .local v8, "alwaysOption":Landroid/widget/CheckBox;
+    if-eqz v8, :cond_6
 
     const/4 v1, 0x0
 
-    invoke-virtual {v10, v1}, Landroid/view/ViewGroup;->setVisibility(I)V
+    invoke-virtual {v8, v1}, Landroid/widget/CheckBox;->setVisibility(I)V
 
-    const v1, 0x1020305
+    const/4 v1, 0x0
 
-    invoke-virtual {v10, v1}, Landroid/view/ViewGroup;->findViewById(I)Landroid/view/View;
+    invoke-virtual {v8, v1}, Landroid/widget/CheckBox;->setChecked(Z)V
 
-    move-result-object v1
+    goto :goto_1
 
-    check-cast v1, Landroid/widget/Button;
-
-    iput-object v1, p0, Lcom/android/internal/app/ResolverActivity;->mAlwaysButton:Landroid/widget/Button;
-
-    const v1, 0x1020306
-
-    invoke-virtual {v10, v1}, Landroid/view/ViewGroup;->findViewById(I)Landroid/view/View;
-
-    move-result-object v1
-
-    check-cast v1, Landroid/widget/Button;
-
-    iput-object v1, p0, Lcom/android/internal/app/ResolverActivity;->mOnceButton:Landroid/widget/Button;
-
-    :goto_3
-    iget-object v1, p0, Lcom/android/internal/app/ResolverActivity;->mAdapter:Lcom/android/internal/app/ResolverActivity$ResolveListAdapter;
-
-    invoke-virtual {v1}, Lcom/android/internal/app/ResolverActivity$ResolveListAdapter;->getInitialHighlight()I
-
-    move-result v4
-
-    .local v4, "initialHighlight":I
-    if-ltz v4, :cond_1
-
-    iget-object v1, p0, Lcom/android/internal/app/ResolverActivity;->mListView:Landroid/widget/ListView;
-
-    const/4 v2, 0x1
-
-    invoke-virtual {v1, v4, v2}, Landroid/widget/ListView;->setItemChecked(IZ)V
-
-    const/4 v2, 0x0
-
-    const/4 v3, 0x0
-
-    const-wide/16 v5, 0x0
-
-    move-object v1, p0
-
-    invoke-virtual/range {v1 .. v6}, Lcom/android/internal/app/ResolverActivity;->onItemClick(Landroid/widget/AdapterView;Landroid/view/View;IJ)V
-
-    goto/16 :goto_1
-
-    .end local v4    # "initialHighlight":I
-    .end local v10    # "buttonLayout":Landroid/view/ViewGroup;
+    .end local v8    # "alwaysOption":Landroid/widget/CheckBox;
     :cond_4
     const/4 v1, 0x1
 
@@ -723,30 +625,30 @@
 
     invoke-virtual {p0}, Lcom/android/internal/app/ResolverActivity;->finish()V
 
-    goto/16 :goto_1
+    goto :goto_1
 
     :cond_5
     invoke-virtual {p0}, Lcom/android/internal/app/ResolverActivity;->getResources()Landroid/content/res/Resources;
 
     move-result-object v1
 
-    const v2, 0x10403fc
+    sget v2, Landroid/miui/R$string;->android_noApplications:I
 
     invoke-virtual {v1, v2}, Landroid/content/res/Resources;->getText(I)Ljava/lang/CharSequence;
 
     move-result-object v1
 
-    iput-object v1, v9, Lcom/android/internal/app/AlertController$AlertParams;->mMessage:Ljava/lang/CharSequence;
+    iput-object v1, v10, Lcom/android/internal/app/AlertController$AlertParams;->mMessage:Ljava/lang/CharSequence;
 
     goto :goto_2
 
-    .restart local v10    # "buttonLayout":Landroid/view/ViewGroup;
+    .restart local v8    # "alwaysOption":Landroid/widget/CheckBox;
     :cond_6
     const/4 v1, 0x0
 
     iput-boolean v1, p0, Lcom/android/internal/app/ResolverActivity;->mAlwaysUseOption:Z
 
-    goto :goto_3
+    goto/16 :goto_1
 .end method
 
 .method protected onIntentSelected(Landroid/content/pm/ResolveInfo;Landroid/content/Intent;Z)V
@@ -760,7 +662,7 @@
 
     iget-boolean v2, v0, Lcom/android/internal/app/ResolverActivity;->mAlwaysUseOption:Z
 
-    if-eqz v2, :cond_d
+    if-eqz v2, :cond_10
 
     move-object/from16 v0, p0
 
@@ -768,7 +670,7 @@
 
     iget-object v2, v2, Lcom/android/internal/app/ResolverActivity$ResolveListAdapter;->mOrigResolveList:Ljava/util/List;
 
-    if-eqz v2, :cond_d
+    if-eqz v2, :cond_10
 
     new-instance v6, Landroid/content/IntentFilter;
 
@@ -911,11 +813,18 @@
 
     iget-object v2, v0, Landroid/content/pm/ResolveInfo;->filter:Landroid/content/IntentFilter;
 
+    if-eqz v2, :cond_b
+
+    move-object/from16 v0, p1
+
+    iget-object v2, v0, Landroid/content/pm/ResolveInfo;->filter:Landroid/content/IntentFilter;
+
     invoke-virtual {v2}, Landroid/content/IntentFilter;->schemeSpecificPartsIterator()Ljava/util/Iterator;
 
     move-result-object v20
 
     .local v20, "pIt":Ljava/util/Iterator;, "Ljava/util/Iterator<Landroid/os/PatternMatcher;>;"
+    :goto_2
     if-eqz v20, :cond_5
 
     invoke-virtual {v14}, Landroid/net/Uri;->getSchemeSpecificPart()Ljava/lang/String;
@@ -966,11 +875,18 @@
 
     iget-object v2, v0, Landroid/content/pm/ResolveInfo;->filter:Landroid/content/IntentFilter;
 
+    if-eqz v2, :cond_c
+
+    move-object/from16 v0, p1
+
+    iget-object v2, v0, Landroid/content/pm/ResolveInfo;->filter:Landroid/content/IntentFilter;
+
     invoke-virtual {v2}, Landroid/content/IntentFilter;->authoritiesIterator()Ljava/util/Iterator;
 
     move-result-object v11
 
     .local v11, "aIt":Ljava/util/Iterator;, "Ljava/util/Iterator<Landroid/content/IntentFilter$AuthorityEntry;>;"
+    :goto_3
     if-eqz v11, :cond_7
 
     :cond_6
@@ -1002,18 +918,26 @@
 
     move-result-object v3
 
-    if-ltz v22, :cond_b
+    if-ltz v22, :cond_d
 
     invoke-static/range {v22 .. v22}, Ljava/lang/Integer;->toString(I)Ljava/lang/String;
 
     move-result-object v2
 
-    :goto_2
+    :goto_4
     invoke-virtual {v6, v3, v2}, Landroid/content/IntentFilter;->addDataAuthority(Ljava/lang/String;Ljava/lang/String;)V
 
     .end local v10    # "a":Landroid/content/IntentFilter$AuthorityEntry;
     .end local v22    # "port":I
     :cond_7
+    if-eqz p1, :cond_e
+
+    move-object/from16 v0, p1
+
+    iget-object v2, v0, Landroid/content/pm/ResolveInfo;->filter:Landroid/content/IntentFilter;
+
+    if-eqz v2, :cond_e
+
     move-object/from16 v0, p1
 
     iget-object v2, v0, Landroid/content/pm/ResolveInfo;->filter:Landroid/content/IntentFilter;
@@ -1022,6 +946,7 @@
 
     move-result-object v20
 
+    :goto_5
     if-eqz v20, :cond_9
 
     invoke-virtual {v14}, Landroid/net/Uri;->getPath()Ljava/lang/String;
@@ -1070,7 +995,7 @@
     .end local v20    # "pIt":Ljava/util/Iterator;, "Ljava/util/Iterator<Landroid/os/PatternMatcher;>;"
     .end local v21    # "path":Ljava/lang/String;
     :cond_9
-    if-eqz v6, :cond_d
+    if-eqz v6, :cond_10
 
     move-object/from16 v0, p0
 
@@ -1094,10 +1019,10 @@
     const/16 v16, 0x0
 
     .local v16, "i":I
-    :goto_3
+    :goto_6
     move/from16 v0, v16
 
-    if-ge v0, v9, :cond_c
+    if-ge v0, v9, :cond_f
 
     move-object/from16 v0, p0
 
@@ -1145,7 +1070,7 @@
     :cond_a
     add-int/lit8 v16, v16, 0x1
 
-    goto :goto_3
+    goto :goto_6
 
     .end local v7    # "bestMatch":I
     .end local v9    # "N":I
@@ -1167,25 +1092,40 @@
 
     .end local v15    # "e":Landroid/content/IntentFilter$MalformedMimeTypeException;
     .end local v18    # "mimeType":Ljava/lang/String;
-    .restart local v10    # "a":Landroid/content/IntentFilter$AuthorityEntry;
-    .restart local v11    # "aIt":Ljava/util/Iterator;, "Ljava/util/Iterator<Landroid/content/IntentFilter$AuthorityEntry;>;"
-    .restart local v20    # "pIt":Ljava/util/Iterator;, "Ljava/util/Iterator<Landroid/os/PatternMatcher;>;"
-    .restart local v22    # "port":I
     :cond_b
-    const/4 v2, 0x0
+    const/16 v20, 0x0
 
     goto/16 :goto_2
 
+    .restart local v20    # "pIt":Ljava/util/Iterator;, "Ljava/util/Iterator<Landroid/os/PatternMatcher;>;"
+    :cond_c
+    const/4 v11, 0x0
+
+    goto/16 :goto_3
+
+    .restart local v10    # "a":Landroid/content/IntentFilter$AuthorityEntry;
+    .restart local v11    # "aIt":Ljava/util/Iterator;, "Ljava/util/Iterator<Landroid/content/IntentFilter$AuthorityEntry;>;"
+    .restart local v22    # "port":I
+    :cond_d
+    const/4 v2, 0x0
+
+    goto/16 :goto_4
+
     .end local v10    # "a":Landroid/content/IntentFilter$AuthorityEntry;
+    .end local v22    # "port":I
+    :cond_e
+    const/16 v20, 0x0
+
+    goto/16 :goto_5
+
     .end local v11    # "aIt":Ljava/util/Iterator;, "Ljava/util/Iterator<Landroid/content/IntentFilter$AuthorityEntry;>;"
     .end local v20    # "pIt":Ljava/util/Iterator;, "Ljava/util/Iterator<Landroid/os/PatternMatcher;>;"
-    .end local v22    # "port":I
     .restart local v7    # "bestMatch":I
     .restart local v9    # "N":I
     .restart local v16    # "i":I
     .restart local v25    # "set":[Landroid/content/ComponentName;
-    :cond_c
-    if-eqz p3, :cond_f
+    :cond_f
+    if-eqz p3, :cond_12
 
     invoke-virtual/range {p0 .. p0}, Lcom/android/internal/app/ResolverActivity;->getPackageManager()Landroid/content/pm/PackageManager;
 
@@ -1207,9 +1147,9 @@
     .end local v14    # "data":Landroid/net/Uri;
     .end local v16    # "i":I
     .end local v25    # "set":[Landroid/content/ComponentName;
-    :cond_d
-    :goto_4
-    if-eqz p2, :cond_e
+    :cond_10
+    :goto_7
+    if-eqz p2, :cond_11
 
     move-object/from16 v0, p0
 
@@ -1217,7 +1157,7 @@
 
     invoke-virtual {v0, v1}, Lcom/android/internal/app/ResolverActivity;->startActivity(Landroid/content/Intent;)V
 
-    :cond_e
+    :cond_11
     return-void
 
     .restart local v6    # "filter":Landroid/content/IntentFilter;
@@ -1228,7 +1168,7 @@
     .restart local v14    # "data":Landroid/net/Uri;
     .restart local v16    # "i":I
     .restart local v25    # "set":[Landroid/content/ComponentName;
-    :cond_f
+    :cond_12
     :try_start_1
     invoke-static {}, Landroid/app/AppGlobals;->getPackageManager()Landroid/content/pm/IPackageManager;
 
@@ -1256,7 +1196,7 @@
     :try_end_1
     .catch Landroid/os/RemoteException; {:try_start_1 .. :try_end_1} :catch_1
 
-    goto :goto_4
+    goto :goto_7
 
     :catch_1
     move-exception v24
@@ -1286,11 +1226,11 @@
 
     invoke-static {v2, v3}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    goto :goto_4
+    goto :goto_7
 .end method
 
 .method public onItemClick(Landroid/widget/AdapterView;Landroid/view/View;IJ)V
-    .locals 4
+    .locals 3
     .param p2, "view"    # Landroid/view/View;
     .param p3, "position"    # I
     .param p4, "id"    # J
@@ -1306,72 +1246,39 @@
 
     .prologue
     .local p1, "parent":Landroid/widget/AdapterView;, "Landroid/widget/AdapterView<*>;"
-    const/4 v2, 0x0
+    const/4 v0, 0x0
 
-    iget-object v3, p0, Lcom/android/internal/app/ResolverActivity;->mListView:Landroid/widget/ListView;
+    .local v0, "always":Z
+    sget v2, Landroid/miui/R$id;->always_option:I
 
-    invoke-virtual {v3}, Landroid/widget/ListView;->getCheckedItemPosition()I
+    invoke-virtual {p0, v2}, Lcom/android/internal/app/ResolverActivity;->findViewById(I)Landroid/view/View;
+
+    move-result-object v1
+
+    check-cast v1, Landroid/widget/CheckBox;
+
+    .local v1, "alwaysOption":Landroid/widget/CheckBox;
+    invoke-virtual {v1}, Landroid/widget/CheckBox;->getVisibility()I
+
+    move-result v2
+
+    if-nez v2, :cond_0
+
+    invoke-virtual {v1}, Landroid/widget/CheckBox;->isChecked()Z
 
     move-result v0
 
-    .local v0, "checkedPos":I
-    const/4 v3, -0x1
-
-    if-eq v0, v3, :cond_2
-
-    const/4 v1, 0x1
-
-    .local v1, "hasValidSelection":Z
-    :goto_0
-    iget-boolean v3, p0, Lcom/android/internal/app/ResolverActivity;->mAlwaysUseOption:Z
-
-    if-eqz v3, :cond_3
-
-    if-eqz v1, :cond_0
-
-    iget v3, p0, Lcom/android/internal/app/ResolverActivity;->mLastSelected:I
-
-    if-eq v3, v0, :cond_3
-
     :cond_0
-    iget-object v2, p0, Lcom/android/internal/app/ResolverActivity;->mAlwaysButton:Landroid/widget/Button;
+    invoke-virtual {p0, p3, v0}, Lcom/android/internal/app/ResolverActivity;->startSelected(IZ)V
 
-    invoke-virtual {v2, v1}, Landroid/widget/Button;->setEnabled(Z)V
-
-    iget-object v2, p0, Lcom/android/internal/app/ResolverActivity;->mOnceButton:Landroid/widget/Button;
-
-    invoke-virtual {v2, v1}, Landroid/widget/Button;->setEnabled(Z)V
-
-    if-eqz v1, :cond_1
-
-    iget-object v2, p0, Lcom/android/internal/app/ResolverActivity;->mListView:Landroid/widget/ListView;
-
-    invoke-virtual {v2, v0}, Landroid/widget/ListView;->smoothScrollToPosition(I)V
-
-    :cond_1
-    iput v0, p0, Lcom/android/internal/app/ResolverActivity;->mLastSelected:I
-
-    :goto_1
     return-void
-
-    .end local v1    # "hasValidSelection":Z
-    :cond_2
-    move v1, v2
-
-    goto :goto_0
-
-    .restart local v1    # "hasValidSelection":Z
-    :cond_3
-    invoke-virtual {p0, p3, v2}, Lcom/android/internal/app/ResolverActivity;->startSelected(IZ)V
-
-    goto :goto_1
 .end method
 
 .method protected onRestart()V
     .locals 3
 
     .prologue
-    invoke-super {p0}, Lcom/android/internal/app/AlertActivity;->onRestart()V
+    invoke-super {p0}, Lcom/miui/internal/app/AlertActivity;->onRestart()V
 
     iget-boolean v0, p0, Lcom/android/internal/app/ResolverActivity;->mRegistered:Z
 
@@ -1404,15 +1311,15 @@
     .param p1, "savedInstanceState"    # Landroid/os/Bundle;
 
     .prologue
-    invoke-super {p0, p1}, Lcom/android/internal/app/AlertActivity;->onRestoreInstanceState(Landroid/os/Bundle;)V
+    invoke-super {p0, p1}, Lcom/miui/internal/app/AlertActivity;->onRestoreInstanceState(Landroid/os/Bundle;)V
 
     iget-boolean v2, p0, Lcom/android/internal/app/ResolverActivity;->mAlwaysUseOption:Z
 
     if-eqz v2, :cond_0
 
-    iget-object v2, p0, Lcom/android/internal/app/ResolverActivity;->mListView:Landroid/widget/ListView;
+    iget-object v2, p0, Lcom/android/internal/app/ResolverActivity;->mGridView:Landroid/widget/GridView;
 
-    invoke-virtual {v2}, Landroid/widget/ListView;->getCheckedItemPosition()I
+    invoke-virtual {v2}, Landroid/widget/GridView;->getCheckedItemPosition()I
 
     move-result v0
 
@@ -1425,21 +1332,11 @@
 
     .local v1, "enabled":Z
     :goto_0
-    iput v0, p0, Lcom/android/internal/app/ResolverActivity;->mLastSelected:I
-
-    iget-object v2, p0, Lcom/android/internal/app/ResolverActivity;->mAlwaysButton:Landroid/widget/Button;
-
-    invoke-virtual {v2, v1}, Landroid/widget/Button;->setEnabled(Z)V
-
-    iget-object v2, p0, Lcom/android/internal/app/ResolverActivity;->mOnceButton:Landroid/widget/Button;
-
-    invoke-virtual {v2, v1}, Landroid/widget/Button;->setEnabled(Z)V
-
     if-eqz v1, :cond_0
 
-    iget-object v2, p0, Lcom/android/internal/app/ResolverActivity;->mListView:Landroid/widget/ListView;
+    iget-object v2, p0, Lcom/android/internal/app/ResolverActivity;->mGridView:Landroid/widget/GridView;
 
-    invoke-virtual {v2, v0}, Landroid/widget/ListView;->setSelection(I)V
+    invoke-virtual {v2, v0}, Landroid/widget/GridView;->setSelection(I)V
 
     .end local v0    # "checkedPos":I
     .end local v1    # "enabled":Z
@@ -1457,7 +1354,7 @@
     .locals 2
 
     .prologue
-    invoke-super {p0}, Lcom/android/internal/app/AlertActivity;->onStop()V
+    invoke-super {p0}, Lcom/miui/internal/app/AlertActivity;->onStop()V
 
     iget-boolean v0, p0, Lcom/android/internal/app/ResolverActivity;->mRegistered:Z
 
@@ -1495,6 +1392,30 @@
     invoke-virtual {p0}, Lcom/android/internal/app/ResolverActivity;->finish()V
 
     :cond_1
+    return-void
+.end method
+
+.method resizeGrid()V
+    .locals 3
+
+    .prologue
+    iget-object v1, p0, Lcom/android/internal/app/ResolverActivity;->mAdapter:Lcom/android/internal/app/ResolverActivity$ResolveListAdapter;
+
+    invoke-virtual {v1}, Lcom/android/internal/app/ResolverActivity$ResolveListAdapter;->getCount()I
+
+    move-result v0
+
+    .local v0, "itemCount":I
+    iget-object v1, p0, Lcom/android/internal/app/ResolverActivity;->mGridView:Landroid/widget/GridView;
+
+    const/4 v2, 0x3
+
+    invoke-static {v0, v2}, Ljava/lang/Math;->min(II)I
+
+    move-result v2
+
+    invoke-virtual {v1, v2}, Landroid/widget/GridView;->setNumColumns(I)V
+
     return-void
 .end method
 
