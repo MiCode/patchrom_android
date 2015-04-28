@@ -1,4 +1,4 @@
-.class Lcom/android/internal/telephony/uicc/UiccCard$TimeTask;
+.class Lcom/android/internal/telephony/uicc/UiccCard$TimerTask;
 .super Ljava/util/TimerTask;
 .source "UiccCard.java"
 
@@ -27,11 +27,11 @@
     .locals 0
 
     .prologue
-    iput-object p1, p0, Lcom/android/internal/telephony/uicc/UiccCard$TimeTask;->this$0:Lcom/android/internal/telephony/uicc/UiccCard;
+    iput-object p1, p0, Lcom/android/internal/telephony/uicc/UiccCard$TimerTask;->this$0:Lcom/android/internal/telephony/uicc/UiccCard;
 
-    iput-object p2, p0, Lcom/android/internal/telephony/uicc/UiccCard$TimeTask;->val$dialog:Landroid/app/AlertDialog;
+    iput-object p2, p0, Lcom/android/internal/telephony/uicc/UiccCard$TimerTask;->val$dialog:Landroid/app/AlertDialog;
 
-    iput-object p3, p0, Lcom/android/internal/telephony/uicc/UiccCard$TimeTask;->val$t:Ljava/util/Timer;
+    iput-object p3, p0, Lcom/android/internal/telephony/uicc/UiccCard$TimerTask;->val$t:Ljava/util/Timer;
 
     invoke-direct {p0}, Ljava/util/TimerTask;-><init>()V
 
@@ -44,16 +44,16 @@
     .locals 1
 
     .prologue
-    iget-object v0, p0, Lcom/android/internal/telephony/uicc/UiccCard$TimeTask;->val$dialog:Landroid/app/AlertDialog;
+    iget-object v0, p0, Lcom/android/internal/telephony/uicc/UiccCard$TimerTask;->val$dialog:Landroid/app/AlertDialog;
 
     if-eqz v0, :cond_0
 
-    iget-object v0, p0, Lcom/android/internal/telephony/uicc/UiccCard$TimeTask;->val$dialog:Landroid/app/AlertDialog;
+    iget-object v0, p0, Lcom/android/internal/telephony/uicc/UiccCard$TimerTask;->val$dialog:Landroid/app/AlertDialog;
 
     invoke-virtual {v0}, Landroid/app/AlertDialog;->dismiss()V
 
     :cond_0
-    iget-object v0, p0, Lcom/android/internal/telephony/uicc/UiccCard$TimeTask;->val$t:Ljava/util/Timer;
+    iget-object v0, p0, Lcom/android/internal/telephony/uicc/UiccCard$TimerTask;->val$t:Ljava/util/Timer;
 
     invoke-virtual {v0}, Ljava/util/Timer;->cancel()V
 
