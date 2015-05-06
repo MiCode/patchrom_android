@@ -7337,10 +7337,10 @@
 
     invoke-static {v2, v4, v3}, Lcom/android/server/am/ExtraActivityManagerService;->checkAccessControl(Landroid/content/Context;Landroid/content/pm/ActivityInfo;Landroid/content/Intent;)Landroid/content/Intent;
 
-    move-result-object p4
+    move-result-object v3
 
-    .end local v3    # "intent":Landroid/content/Intent;
-    .restart local p4    # "intent":Landroid/content/Intent;
+    move-object/from16 p4, v3
+
     move-object/from16 v5, p4
 
     move-object/from16 v6, p0
