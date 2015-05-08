@@ -3681,6 +3681,19 @@
     goto :goto_0
 
     :cond_6
+    iget-object v5, p1, Lcom/android/server/am/ActivityRecord;->packageName:Ljava/lang/String;
+
+    invoke-static {v5, v0, v2, v1}, Landroid/app/MiuiThemeHelper;->canKeepActivityAlive(Ljava/lang/String;ILandroid/content/res/Configuration;Landroid/content/res/Configuration;)Z
+
+    move-result v5
+
+    if-eqz v5, :cond_miui_0
+
+    const/4 v5, 0x1
+
+    return v5
+
+    :cond_miui_0
     iget-object v5, p1, Lcom/android/server/am/ActivityRecord;->info:Landroid/content/pm/ActivityInfo;
 
     invoke-virtual {v5}, Landroid/content/pm/ActivityInfo;->getRealConfigChanged()I

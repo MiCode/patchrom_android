@@ -640,32 +640,6 @@
     return-void
 .end method
 
-.method private static createFromResourceStream(Landroid/content/res/Resources;Landroid/util/TypedValue;Ljava/io/InputStream;Ljava/lang/String;I)Landroid/graphics/drawable/Drawable;
-    .locals 2
-    .param p0, "res"    # Landroid/content/res/Resources;
-    .param p1, "value"    # Landroid/util/TypedValue;
-    .param p2, "is"    # Ljava/io/InputStream;
-    .param p3, "srcName"    # Ljava/lang/String;
-    .param p4, "id"    # I
-
-    .prologue
-    invoke-virtual {p0, p1, p4}, Landroid/content/res/Resources;->loadOverlayDrawable(Landroid/util/TypedValue;I)Landroid/graphics/drawable/Drawable;
-
-    move-result-object v0
-
-    .local v0, "dr":Landroid/graphics/drawable/Drawable;
-    if-nez v0, :cond_0
-
-    const/4 v1, 0x0
-
-    invoke-static {p0, p1, p2, p3, v1}, Landroid/graphics/drawable/Drawable;->createFromResourceStream(Landroid/content/res/Resources;Landroid/util/TypedValue;Ljava/io/InputStream;Ljava/lang/String;Landroid/graphics/BitmapFactory$Options;)Landroid/graphics/drawable/Drawable;
-
-    move-result-object v0
-
-    :cond_0
-    return-object v0
-.end method
-
 .method private getCachedColorStateList(J)Landroid/content/res/ColorStateList;
     .locals 4
     .param p1, "key"    # J
@@ -3934,6 +3908,25 @@
     throw v8
 .end method
 
+.method loadDrawable(Landroid/util/TypedValue;ILandroid/content/res/Resources$Theme;)Landroid/graphics/drawable/Drawable;
+    .locals 1
+    .param p1, "value"    # Landroid/util/TypedValue;
+    .param p2, "id"    # I
+    .param p3, "theme"    # Landroid/content/res/Resources$Theme;
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/content/res/Resources$NotFoundException;
+        }
+    .end annotation
+
+    .prologue
+    invoke-virtual {p0, p1, p2}, Landroid/content/res/Resources;->loadDrawable(Landroid/util/TypedValue;I)Landroid/graphics/drawable/Drawable;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
 .method loadDrawable(Landroid/util/TypedValue;I)Landroid/graphics/drawable/Drawable;
     .locals 21
     .param p1, "value"    # Landroid/util/TypedValue;
@@ -4288,7 +4281,11 @@
 
     move-object/from16 v1, v16
 
-    invoke-static {v0, v1}, Landroid/graphics/drawable/Drawable;->createFromXml(Landroid/content/res/Resources;Lorg/xmlpull/v1/XmlPullParser;)Landroid/graphics/drawable/Drawable;
+    move-object/from16 v2, p1
+
+    move/from16 v3, p2
+
+    invoke-virtual {v0, v2, v1, v3}, Landroid/content/res/Resources;->createFromXml(Landroid/util/TypedValue;Landroid/content/res/XmlResourceParser;I)Landroid/graphics/drawable/Drawable;
 
     move-result-object v6
 
@@ -4397,7 +4394,7 @@
 
     move/from16 v2, p2
 
-    invoke-static {v0, v1, v10, v9, v2}, Landroid/content/res/Resources;->createFromResourceStream(Landroid/content/res/Resources;Landroid/util/TypedValue;Ljava/io/InputStream;Ljava/lang/String;I)Landroid/graphics/drawable/Drawable;
+    invoke-virtual {v0, v1, v10, v9, v2}, Landroid/content/res/Resources;->createFromResourceStream(Landroid/util/TypedValue;Ljava/io/InputStream;Ljava/lang/String;I)Landroid/graphics/drawable/Drawable;
 
     move-result-object v6
 
@@ -6448,4 +6445,79 @@
     .catchall {:try_start_3 .. :try_end_3} :catchall_1
 
     throw v2
+.end method
+
+.method loadOverlayValue(Landroid/util/TypedValue;I)V
+    .locals 0
+    .param p1, "outValue"    # Landroid/util/TypedValue;
+    .param p2, "id"    # I
+
+    .prologue
+    .line 2475
+    return-void
+.end method
+
+
+
+.method loadOverlayValue(Landroid/util/TypedValue;I)V
+    .locals 0
+    .param p1, "outValue"    # Landroid/util/TypedValue;
+    .param p2, "id"    # I
+
+    .prologue
+    return-void
+.end method
+
+
+.method createFromXml(Landroid/util/TypedValue;Landroid/content/res/XmlResourceParser;I)Landroid/graphics/drawable/Drawable;
+    .locals 1
+    .param p1, "value"    # Landroid/util/TypedValue;
+    .param p2, "rp"    # Landroid/content/res/XmlResourceParser;
+    .param p3, "id"    # I
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Lorg/xmlpull/v1/XmlPullParserException;,
+            Ljava/io/IOException;
+        }
+    .end annotation
+
+    .prologue
+    invoke-virtual {p0, p1, p3}, Landroid/content/res/Resources;->loadOverlayDrawable(Landroid/util/TypedValue;I)Landroid/graphics/drawable/Drawable;
+
+    move-result-object v0
+
+    .local v0, "dr":Landroid/graphics/drawable/Drawable;
+    if-nez v0, :cond_0
+
+    invoke-static {p0, p2}, Landroid/graphics/drawable/Drawable;->createFromXml(Landroid/content/res/Resources;Lorg/xmlpull/v1/XmlPullParser;)Landroid/graphics/drawable/Drawable;
+
+    move-result-object v0
+
+    :cond_0
+    return-object v0
+.end method
+
+.method createFromResourceStream(Landroid/util/TypedValue;Ljava/io/InputStream;Ljava/lang/String;I)Landroid/graphics/drawable/Drawable;
+    .locals 2
+    .param p1, "value"    # Landroid/util/TypedValue;
+    .param p2, "is"    # Ljava/io/InputStream;
+    .param p3, "srcName"    # Ljava/lang/String;
+    .param p4, "id"    # I
+
+    .prologue
+    invoke-virtual {p0, p1, p4}, Landroid/content/res/Resources;->loadOverlayDrawable(Landroid/util/TypedValue;I)Landroid/graphics/drawable/Drawable;
+
+    move-result-object v0
+
+    .local v0, "dr":Landroid/graphics/drawable/Drawable;
+    if-nez v0, :cond_0
+
+    const/4 v1, 0x0
+
+    invoke-static {p0, p1, p2, p3, v1}, Landroid/graphics/drawable/Drawable;->createFromResourceStream(Landroid/content/res/Resources;Landroid/util/TypedValue;Ljava/io/InputStream;Ljava/lang/String;Landroid/graphics/BitmapFactory$Options;)Landroid/graphics/drawable/Drawable;
+
+    move-result-object v0
+
+    :cond_0
+    return-object v0
 .end method

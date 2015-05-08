@@ -264,6 +264,13 @@
     move-result v0
 
     .local v0, "got":Z
+    if-eqz v0, :cond_miui_0
+
+    iget-object v1, p0, Landroid/content/res/Resources$Theme;->this$0:Landroid/content/res/Resources;
+
+    invoke-virtual {v1, p2, p1}, Landroid/content/res/Resources;->loadOverlayValue(Landroid/util/TypedValue;I)V
+
+    :cond_miui_0
     return v0
 .end method
 
