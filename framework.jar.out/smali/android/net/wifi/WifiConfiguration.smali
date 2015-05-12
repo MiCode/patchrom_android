@@ -633,7 +633,7 @@
     :cond_4
     iget-object v0, p0, Landroid/net/wifi/WifiConfiguration;->allowedKeyManagement:Ljava/util/BitSet;
 
-    invoke-virtual {v0, v4}, Ljava/util/BitSet;->get(I)Z
+    invoke-virtual {v0, v5}, Ljava/util/BitSet;->get(I)Z
 
     move-result v0
 
