@@ -2753,21 +2753,6 @@
     return-object v0
 .end method
 
-.method static synthetic access$500(Lcom/android/server/ConnectivityService;Lcom/android/server/ConnectivityService$FeatureUser;Z)I
-    .locals 1
-    .param p0, "x0"    # Lcom/android/server/ConnectivityService;
-    .param p1, "x1"    # Lcom/android/server/ConnectivityService$FeatureUser;
-    .param p2, "x2"    # Z
-
-    .prologue
-    invoke-direct {p0, p1, p2}, Lcom/android/server/ConnectivityService;->stopUsingNetworkFeature(Lcom/android/server/ConnectivityService$FeatureUser;Z)I
-
-    move-result v0
-
-    return v0
-.end method
-
-
 .method static synthetic access$5000(Lcom/android/server/ConnectivityService;)Z
     .locals 1
     .param p0, "x0"    # Lcom/android/server/ConnectivityService;
