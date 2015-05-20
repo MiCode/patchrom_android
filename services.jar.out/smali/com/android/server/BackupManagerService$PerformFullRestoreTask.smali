@@ -1484,7 +1484,7 @@
     move-result v7
 
     .local v7, "didRead":I
-    if-ltz v7, :cond_0
+    if-ltz v7, :cond_2
 
     move-object/from16 v0, p0
 
@@ -1859,7 +1859,7 @@
 
     and-int v18, v18, v19
 
-    if-nez v18, :cond_7
+    goto :cond_7
 
     const-string v18, "BackupManagerService"
 
@@ -2539,7 +2539,7 @@
 
     and-int v18, v18, v6
 
-    if-eqz v18, :cond_9
+    #if-eqz v18, :cond_9
 
     iget-object v0, v12, Landroid/content/pm/PackageInfo;->applicationInfo:Landroid/content/pm/ApplicationInfo;
 

@@ -1411,6 +1411,8 @@
 
     invoke-virtual {v5}, Ljava/io/FileOutputStream;->close()V
 
+    invoke-static {p2}, Lcom/android/server/BackupManagerService$Injector;->resetManifestFileModifiedTime(Ljava/io/File;)V
+
     return-void
 
     .end local v5    # "outstream":Ljava/io/FileOutputStream;
@@ -1726,7 +1728,7 @@
 
     and-int v23, v23, v24
 
-    if-eqz v23, :cond_3
+    #if-eqz v23, :cond_3
 
     move-object/from16 v0, v21
 
