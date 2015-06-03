@@ -240,7 +240,7 @@
 
     iput-object v1, p0, Landroid/widget/EdgeEffect;->mInterpolator:Landroid/view/animation/Interpolator;
 
-    invoke-static {p1}, Lmiui/os/Build;->isUsingMiui(Landroid/content/Context;)Z
+    invoke-static {p1}, Lmiui/os/Environment;->isUsingMiui(Landroid/content/Context;)Z
 
     move-result v1
 

@@ -7245,6 +7245,10 @@
 
     invoke-static {v1, v0}, Landroid/os/SystemProperties;->set(Ljava/lang/String;Ljava/lang/String;)V
 
+    const-string v1, "gsm.apn.sim.operator.numeric"
+
+    invoke-direct {p0, v1, v0}, Lcom/android/internal/telephony/uicc/SIMRecords;->setSystemProperty(Ljava/lang/String;Ljava/lang/String;)V
+
     :goto_0
     iget-object v1, p0, Lcom/android/internal/telephony/uicc/SIMRecords;->mImsi:Ljava/lang/String;
 
@@ -7476,6 +7480,10 @@
     const-string v0, "gsm.sim.operator.numeric"
 
     invoke-static {v0, v1}, Landroid/os/SystemProperties;->set(Ljava/lang/String;Ljava/lang/String;)V
+
+    const-string v0, "gsm.apn.sim.operator.numeric"
+
+    invoke-direct {p0, v0, v1}, Lcom/android/internal/telephony/uicc/SIMRecords;->setSystemProperty(Ljava/lang/String;Ljava/lang/String;)V
 
     const-string v0, "gsm.sim.operator.alpha"
 
@@ -8365,6 +8373,42 @@
     move-result-object v0
 
     invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method private setSystemProperty(Ljava/lang/String;Ljava/lang/String;)V
+    .locals 2
+    .param p1, "key"    # Ljava/lang/String;
+    .param p2, "val"    # Ljava/lang/String;
+
+    .prologue
+    invoke-static {}, Lmiui/telephony/MultiSimManager;->getInstance()Lmiui/telephony/MultiSimManager;
+
+    move-result-object v0
+
+    const/4 v1, 0x0
+
+    invoke-virtual {v0, p1, v1, p2}, Lmiui/telephony/MultiSimManager;->setTelephonyProperty(Ljava/lang/String;ILjava/lang/String;)V
+
+    return-void
+.end method
+
+.method private getSystemProperty(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+    .locals 2
+    .param p1, "key"    # Ljava/lang/String;
+    .param p2, "def"    # Ljava/lang/String;
+
+    .prologue
+    invoke-static {}, Lmiui/telephony/MultiSimManager;->getInstance()Lmiui/telephony/MultiSimManager;
+
+    move-result-object v0
+
+    const/4 v1, 0x0
+
+    invoke-virtual {v0, p1, v1, p2}, Lmiui/telephony/MultiSimManager;->getTelephonyProperty(Ljava/lang/String;ILjava/lang/String;)Ljava/lang/String;
 
     move-result-object v0
 

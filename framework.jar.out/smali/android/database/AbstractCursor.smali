@@ -781,8 +781,6 @@
 
     const/4 v3, -0x1
 
-    invoke-static {p0, p1}, Landroid/database/AbstractCursorInjector;->before_moveToPosition(Landroid/database/AbstractCursor;I)V
-
     invoke-virtual {p0}, Landroid/database/AbstractCursor;->getCount()I
 
     move-result v0
@@ -827,6 +825,15 @@
     goto :goto_0
 
     :cond_4
+    invoke-static {p0, p1}, Landroid/database/AbstractCursorInjector;->checkPosition(Landroid/database/AbstractCursor;I)Z
+
+    move-result v2
+
+    if-nez v2, :cond_miui_0
+
+    return v2
+
+    :cond_miui_0
     iput p1, p0, Landroid/database/AbstractCursor;->mPos:I
 
     iget v2, p0, Landroid/database/AbstractCursor;->mRowIdColumnIndex:I
