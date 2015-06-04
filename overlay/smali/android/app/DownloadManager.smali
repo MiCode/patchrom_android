@@ -251,7 +251,7 @@
 
     sget-object v0, Landroid/app/DownloadManager;->UNDERLYING_COLUMNS:[Ljava/lang/String;
 
-    const/16 v1, 0xa
+    const/16 v1, 0xb
 
     new-array v1, v1, [Ljava/lang/String;
 
@@ -302,6 +302,12 @@
     const/16 v2, 0x9
 
     const-string v3, "download_task_thumbnail"
+
+    aput-object v3, v1, v2
+
+    const/16 v2, 0xa
+
+    const-string v3, "apk_package_name"
 
     aput-object v3, v1, v2
 

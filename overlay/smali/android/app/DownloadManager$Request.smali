@@ -39,6 +39,8 @@
 # instance fields
 .field private mAllowedNetworkTypes:I
 
+.field private mApkPackageName:Ljava/lang/String;
+
 .field private mAppointName:Ljava/lang/String;
 
 .field private mBypassRecommendedSizeLimit:Z
@@ -48,6 +50,10 @@
 .field private mDescription:Ljava/lang/CharSequence;
 
 .field private mDestinationUri:Landroid/net/Uri;
+
+.field private mFileIconUri:Landroid/net/Uri;
+
+.field private mFileSize:J
 
 .field private mIsVisibleInDownloadsUi:Z
 
@@ -119,9 +125,9 @@
     .param p1, "uri"    # Landroid/net/Uri;
 
     .prologue
-    const/4 v3, 0x1
+    const/4 v2, 0x1
 
-    const/4 v2, 0x0
+    const/4 v3, 0x0
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
@@ -135,19 +141,23 @@
 
     iput v1, p0, Landroid/app/DownloadManager$Request;->mAllowedNetworkTypes:I
 
-    iput-boolean v3, p0, Landroid/app/DownloadManager$Request;->mRoamingAllowed:Z
+    iput-boolean v2, p0, Landroid/app/DownloadManager$Request;->mRoamingAllowed:Z
 
-    iput-boolean v3, p0, Landroid/app/DownloadManager$Request;->mMeteredAllowed:Z
+    iput-boolean v2, p0, Landroid/app/DownloadManager$Request;->mMeteredAllowed:Z
 
-    iput-boolean v3, p0, Landroid/app/DownloadManager$Request;->mIsVisibleInDownloadsUi:Z
+    iput-boolean v2, p0, Landroid/app/DownloadManager$Request;->mIsVisibleInDownloadsUi:Z
 
-    iput-boolean v2, p0, Landroid/app/DownloadManager$Request;->mScannable:Z
+    iput-boolean v3, p0, Landroid/app/DownloadManager$Request;->mScannable:Z
 
-    iput-boolean v2, p0, Landroid/app/DownloadManager$Request;->mUseSystemCache:Z
+    iput-boolean v3, p0, Landroid/app/DownloadManager$Request;->mUseSystemCache:Z
 
-    iput v2, p0, Landroid/app/DownloadManager$Request;->mNotificationVisibility:I
+    iput v3, p0, Landroid/app/DownloadManager$Request;->mNotificationVisibility:I
 
-    iput v2, p0, Landroid/app/DownloadManager$Request;->mXlVipStatus:I
+    const-wide/16 v1, -0x1
+
+    iput-wide v1, p0, Landroid/app/DownloadManager$Request;->mFileSize:J
+
+    iput v3, p0, Landroid/app/DownloadManager$Request;->mXlVipStatus:I
 
     if-nez p1, :cond_0
 
@@ -217,9 +227,9 @@
     .param p1, "uriString"    # Ljava/lang/String;
 
     .prologue
-    const/4 v2, 0x1
+    const/4 v1, 0x1
 
-    const/4 v1, 0x0
+    const/4 v2, 0x0
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
@@ -233,19 +243,23 @@
 
     iput v0, p0, Landroid/app/DownloadManager$Request;->mAllowedNetworkTypes:I
 
-    iput-boolean v2, p0, Landroid/app/DownloadManager$Request;->mRoamingAllowed:Z
+    iput-boolean v1, p0, Landroid/app/DownloadManager$Request;->mRoamingAllowed:Z
 
-    iput-boolean v2, p0, Landroid/app/DownloadManager$Request;->mMeteredAllowed:Z
+    iput-boolean v1, p0, Landroid/app/DownloadManager$Request;->mMeteredAllowed:Z
 
-    iput-boolean v2, p0, Landroid/app/DownloadManager$Request;->mIsVisibleInDownloadsUi:Z
+    iput-boolean v1, p0, Landroid/app/DownloadManager$Request;->mIsVisibleInDownloadsUi:Z
 
-    iput-boolean v1, p0, Landroid/app/DownloadManager$Request;->mScannable:Z
+    iput-boolean v2, p0, Landroid/app/DownloadManager$Request;->mScannable:Z
 
-    iput-boolean v1, p0, Landroid/app/DownloadManager$Request;->mUseSystemCache:Z
+    iput-boolean v2, p0, Landroid/app/DownloadManager$Request;->mUseSystemCache:Z
 
-    iput v1, p0, Landroid/app/DownloadManager$Request;->mNotificationVisibility:I
+    iput v2, p0, Landroid/app/DownloadManager$Request;->mNotificationVisibility:I
 
-    iput v1, p0, Landroid/app/DownloadManager$Request;->mXlVipStatus:I
+    const-wide/16 v0, -0x1
+
+    iput-wide v0, p0, Landroid/app/DownloadManager$Request;->mFileSize:J
+
+    iput v2, p0, Landroid/app/DownloadManager$Request;->mXlVipStatus:I
 
     invoke-static {p1}, Landroid/net/Uri;->parse(Ljava/lang/String;)Landroid/net/Uri;
 
@@ -484,6 +498,16 @@
 
     .prologue
     iput-boolean p1, p0, Landroid/app/DownloadManager$Request;->mRoamingAllowed:Z
+
+    return-object p0
+.end method
+
+.method public setApkPackageName(Ljava/lang/String;)Landroid/app/DownloadManager$Request;
+    .locals 0
+    .param p1, "packageName"    # Ljava/lang/String;
+
+    .prologue
+    iput-object p1, p0, Landroid/app/DownloadManager$Request;->mApkPackageName:Ljava/lang/String;
 
     return-object p0
 .end method
@@ -756,6 +780,26 @@
     return-object p0
 .end method
 
+.method public setFileIconUri(Landroid/net/Uri;)Landroid/app/DownloadManager$Request;
+    .locals 0
+    .param p1, "uri"    # Landroid/net/Uri;
+
+    .prologue
+    iput-object p1, p0, Landroid/app/DownloadManager$Request;->mFileIconUri:Landroid/net/Uri;
+
+    return-object p0
+.end method
+
+.method public setFileSize(J)Landroid/app/DownloadManager$Request;
+    .locals 0
+    .param p1, "fileSize"    # J
+
+    .prologue
+    iput-wide p1, p0, Landroid/app/DownloadManager$Request;->mFileSize:J
+
+    return-object p0
+.end method
+
 .method public setMimeType(Ljava/lang/String;)Landroid/app/DownloadManager$Request;
     .locals 0
     .param p1, "mimeType"    # Ljava/lang/String;
@@ -907,7 +951,7 @@
 
     iget-object v1, p0, Landroid/app/DownloadManager$Request;->mDestinationUri:Landroid/net/Uri;
 
-    if-eqz v1, :cond_3
+    if-eqz v1, :cond_4
 
     const-string v1, "destination"
 
@@ -1048,14 +1092,45 @@
 
     invoke-direct {p0, v0, v1, v2}, Landroid/app/DownloadManager$Request;->putIfNonNull(Landroid/content/ContentValues;Ljava/lang/String;Ljava/lang/Object;)V
 
-    return-object v0
+    const-string v1, "total_bytes"
+
+    iget-wide v2, p0, Landroid/app/DownloadManager$Request;->mFileSize:J
+
+    invoke-static {v2, v3}, Ljava/lang/Long;->valueOf(J)Ljava/lang/Long;
+
+    move-result-object v2
+
+    invoke-virtual {v0, v1, v2}, Landroid/content/ContentValues;->put(Ljava/lang/String;Ljava/lang/Long;)V
+
+    iget-object v1, p0, Landroid/app/DownloadManager$Request;->mFileIconUri:Landroid/net/Uri;
+
+    if-eqz v1, :cond_3
+
+    const-string v1, "download_task_thumbnail"
+
+    iget-object v2, p0, Landroid/app/DownloadManager$Request;->mFileIconUri:Landroid/net/Uri;
+
+    invoke-virtual {v2}, Landroid/net/Uri;->toString()Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-virtual {v0, v1, v2}, Landroid/content/ContentValues;->put(Ljava/lang/String;Ljava/lang/String;)V
 
     :cond_3
+    const-string v1, "apk_package_name"
+
+    iget-object v2, p0, Landroid/app/DownloadManager$Request;->mApkPackageName:Ljava/lang/String;
+
+    invoke-direct {p0, v0, v1, v2}, Landroid/app/DownloadManager$Request;->putIfNonNull(Landroid/content/ContentValues;Ljava/lang/String;Ljava/lang/Object;)V
+
+    return-object v0
+
+    :cond_4
     const-string v3, "destination"
 
     iget-boolean v1, p0, Landroid/app/DownloadManager$Request;->mUseSystemCache:Z
 
-    if-eqz v1, :cond_4
+    if-eqz v1, :cond_5
 
     const/4 v1, 0x5
 
@@ -1068,7 +1143,7 @@
 
     goto/16 :goto_0
 
-    :cond_4
+    :cond_5
     move v1, v2
 
     goto :goto_1

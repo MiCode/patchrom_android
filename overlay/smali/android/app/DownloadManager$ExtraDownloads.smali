@@ -18,6 +18,8 @@
 
 
 # static fields
+.field public static final COLUMN_APK_PACKGENAME:Ljava/lang/String; = "apk_package_name"
+
 .field public static final COLUMN_APPOINT_NAME:Ljava/lang/String; = "appointname"
 
 .field public static final COLUMN_DOWNLOADED_TIME:Ljava/lang/String; = "downloaded_time"
