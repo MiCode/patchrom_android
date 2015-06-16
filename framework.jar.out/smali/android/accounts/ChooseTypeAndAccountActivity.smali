@@ -821,11 +821,7 @@
     invoke-direct {v0}, Landroid/content/Intent;-><init>()V
 
     .local v0, "intent":Landroid/content/Intent;
-    const-string v1, "com.miui.framework"
-
-    const-string v2, "miui.accounts.MiuiChooseAccountTypeActivity"
-
-    invoke-virtual {v0, v1, v2}, Landroid/content/Intent;->setClassName(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;
+    invoke-static {v0}, Landroid/accounts/ChooseTypeAndAccountActivityInjector;->toMiuiChooseAccountTypeActivity(Landroid/content/Intent;)V
 
     const/high16 v1, 0x80000
 
