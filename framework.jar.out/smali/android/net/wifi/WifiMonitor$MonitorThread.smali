@@ -118,6 +118,8 @@
 
     iget-object v6, p0, Landroid/net/wifi/WifiMonitor$MonitorThread;->mStateMachine:Lcom/android/internal/util/StateMachine;
 
+    const v7, 0x24007
+
     invoke-virtual {v6, v7}, Lcom/android/internal/util/StateMachine;->sendMessage(I)V
 
     goto :goto_0
