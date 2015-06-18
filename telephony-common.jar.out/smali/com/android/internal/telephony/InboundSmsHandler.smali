@@ -1104,7 +1104,7 @@
 
     move-result-object v7
 
-    invoke-static {v6, v0, v7}, Lcom/miui/internal/provider/MiCloudSmsCmd;->checkSmsCmd(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)Z
+    invoke-static {v6, v0, v7}, Lmiui/provider/MiCloudSmsCmd;->checkSmsCmd(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)Z
 
     move-result v6
 
@@ -1116,7 +1116,7 @@
 
     move-result-object v7
 
-    invoke-static {v6, v5, v0, v7}, Lcom/miui/internal/provider/MiCloudSmsCmd;->checkAndDispatchActivationSms(Landroid/content/Context;ILjava/lang/String;Ljava/lang/String;)Z
+    invoke-static {v6, v5, v0, v7}, Lmiui/provider/MiCloudSmsCmd;->checkAndDispatchActivationSms(Landroid/content/Context;ILjava/lang/String;Ljava/lang/String;)Z
 
     move-result v6
 
