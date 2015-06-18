@@ -1296,7 +1296,7 @@
     .line 669
     iget-object v3, p0, Lcom/android/internal/app/ResolverActivity$ResolveListAdapter;->mInflater:Landroid/view/LayoutInflater;
 
-    const v4, 0x11030007
+    sget v4, Landroid/miui/R$layout;->resolve_list_item:I
 
     const/4 v5, 0x0
 

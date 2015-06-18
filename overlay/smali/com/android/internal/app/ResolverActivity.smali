@@ -354,7 +354,7 @@
     if-eqz v0, :cond_0
 
     .line 110
-    const v8, 0x11070045
+    sget v8, Landroid/miui/R$string;->android_whichHomeApplication:I
 
     .line 115
     .local v8, "titleResource":I
@@ -381,7 +381,7 @@
     .line 112
     .end local v8    # "titleResource":I
     :cond_0
-    const v8, 0x11070046
+    sget v8, Landroid/miui/R$string;->android_whichApplication:I
 
     .restart local v8    # "titleResource":I
     goto :goto_0
@@ -578,7 +578,7 @@
 
     move-result-object v1
 
-    const v2, 0x11030008
+    sget v2, Landroid/miui/R$layout;->resolver_grid:I
 
     const/4 v3, 0x0
 
@@ -591,7 +591,7 @@
     .line 152
     iget-object v1, v10, Lcom/android/internal/app/AlertController$AlertParams;->mView:Landroid/view/View;
 
-    const v2, 0x110b001a
+    sget v2, Landroid/miui/R$id;->resolver_grid:I
 
     invoke-virtual {v1, v2}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -644,7 +644,7 @@
     if-eqz p6, :cond_1
 
     .line 175
-    const v1, 0x110b001c
+    sget v1, Landroid/miui/R$id;->always_option:I
 
     invoke-virtual {p0, v1}, Lcom/android/internal/app/ResolverActivity;->findViewById(I)Landroid/view/View;
 
@@ -707,7 +707,7 @@
 
     move-result-object v1
 
-    const v2, 0x11070047
+    sget v2, Landroid/miui/R$string;->android_noApplications:I
 
     invoke-virtual {v1, v2}, Landroid/content/res/Resources;->getText(I)Ljava/lang/CharSequence;
 
@@ -1390,7 +1390,7 @@
 
     .line 269
     .local v0, "always":Z
-    const v2, 0x110b001c
+     sget v2, Landroid/miui/R$id;->always_option:I
 
     invoke-virtual {p0, v2}, Lcom/android/internal/app/ResolverActivity;->findViewById(I)Landroid/view/View;
 
