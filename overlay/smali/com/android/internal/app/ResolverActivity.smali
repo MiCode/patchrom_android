@@ -1,5 +1,5 @@
 .class public Lcom/android/internal/app/ResolverActivity;
-.super Lcom/miui/internal/app/AlertActivity;
+.super Lmiui/app/AlertActivity;
 .source "ResolverActivity.java"
 
 # interfaces
@@ -53,7 +53,7 @@
     .locals 1
 
     .prologue
-    invoke-direct {p0}, Lcom/miui/internal/app/AlertActivity;-><init>()V
+    invoke-direct {p0}, Lmiui/app/AlertActivity;-><init>()V
 
     new-instance v0, Lcom/android/internal/app/ResolverActivity$1;
 
@@ -380,7 +380,7 @@
 
     invoke-virtual {p0, v1}, Lcom/android/internal/app/ResolverActivity;->setTheme(I)V
 
-    invoke-super {p0, p1}, Lcom/miui/internal/app/AlertActivity;->onCreate(Landroid/os/Bundle;)V
+    invoke-super {p0, p1}, Lmiui/app/AlertActivity;->onCreate(Landroid/os/Bundle;)V
 
     :try_start_0
     invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
@@ -1278,7 +1278,7 @@
     .locals 3
 
     .prologue
-    invoke-super {p0}, Lcom/miui/internal/app/AlertActivity;->onRestart()V
+    invoke-super {p0}, Lmiui/app/AlertActivity;->onRestart()V
 
     iget-boolean v0, p0, Lcom/android/internal/app/ResolverActivity;->mRegistered:Z
 
@@ -1311,7 +1311,7 @@
     .param p1, "savedInstanceState"    # Landroid/os/Bundle;
 
     .prologue
-    invoke-super {p0, p1}, Lcom/miui/internal/app/AlertActivity;->onRestoreInstanceState(Landroid/os/Bundle;)V
+    invoke-super {p0, p1}, Lmiui/app/AlertActivity;->onRestoreInstanceState(Landroid/os/Bundle;)V
 
     iget-boolean v2, p0, Lcom/android/internal/app/ResolverActivity;->mAlwaysUseOption:Z
 
@@ -1354,7 +1354,7 @@
     .locals 2
 
     .prologue
-    invoke-super {p0}, Lcom/miui/internal/app/AlertActivity;->onStop()V
+    invoke-super {p0}, Lmiui/app/AlertActivity;->onStop()V
 
     iget-boolean v0, p0, Lcom/android/internal/app/ResolverActivity;->mRegistered:Z
 
