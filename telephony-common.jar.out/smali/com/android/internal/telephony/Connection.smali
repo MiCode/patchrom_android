@@ -140,6 +140,39 @@
 .method public abstract getRemainingPostDialString()Ljava/lang/String;
 .end method
 
+.method public getRingDurationMillis()J
+    .locals 6
+
+    .prologue
+    invoke-virtual {p0}, Lcom/android/internal/telephony/Connection;->getCreateTime()J
+
+    move-result-wide v2
+
+    .local v2, "createTime":J
+    invoke-virtual {p0}, Lcom/android/internal/telephony/Connection;->getConnectTime()J
+
+    move-result-wide v0
+
+    .local v0, "connectionTime":J
+    cmp-long v4, v0, v2
+
+    if-lez v4, :cond_0
+
+    sub-long v4, v0, v2
+
+    :goto_0
+    return-wide v4
+
+    :cond_0
+    invoke-static {}, Ljava/lang/System;->currentTimeMillis()J
+
+    move-result-wide v4
+
+    sub-long/2addr v4, v2
+
+    goto :goto_0
+.end method
+
 .method public getState()Lcom/android/internal/telephony/Call$State;
     .locals 2
 
