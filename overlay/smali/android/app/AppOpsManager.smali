@@ -133,6 +133,8 @@
 
 .field public static final OP_VIBRATE:I = 0x3
 
+.field public static final OP_WAKEUP_ALARM:I = 0x3c
+
 .field public static final OP_WAKE_LOCK:I = 0x28
 
 .field public static final OP_WIFI_CHANGE:I = 0x2b
@@ -157,7 +159,7 @@
 
 .field public static final TAG:Ljava/lang/String; = "AppOps"
 
-.field public static final _NUM_OP:I = 0x3c
+.field public static final _NUM_OP:I = 0x3d
 
 .field private static sOpDefaultMode:[I
 
@@ -217,7 +219,7 @@
 
     const/4 v6, 0x0
 
-    const/16 v5, 0x3c
+    const/16 v5, 0x3d
 
     const/4 v4, 0x0
 
@@ -468,6 +470,10 @@
     aput-object v4, v1, v2
 
     const/16 v2, 0x3b
+
+    aput-object v4, v1, v2
+
+    const/16 v2, 0x3c
 
     aput-object v4, v1, v2
 
@@ -829,6 +835,12 @@
 
     aput-object v3, v1, v2
 
+    const/16 v2, 0x3c
+
+    const-string v3, "WAKEUP_ALARM"
+
+    aput-object v3, v1, v2
+
     sput-object v1, Landroid/app/AppOpsManager;->sOpNames:[Ljava/lang/String;
 
     new-array v1, v5, [Ljava/lang/String;
@@ -1140,6 +1152,10 @@
     aput-object v4, v1, v2
 
     const/16 v2, 0x3b
+
+    aput-object v4, v1, v2
+
+    const/16 v2, 0x3c
 
     aput-object v4, v1, v2
 
@@ -1578,6 +1594,7 @@
         0x39
         0x3a
         0x3b
+        0x3c
     .end array-data
 
     :array_1
@@ -1642,6 +1659,7 @@
         0x1
         0x0
         0x0
+        0x1
     .end array-data
 
     :array_2
@@ -1706,6 +1724,7 @@
         0x1
         0x3a
         0x3b
+        0x1
     .end array-data
 
     :array_3
@@ -1726,6 +1745,7 @@
         0x0t
         0x0t
         0x1t
+        0x0t
         0x0t
         0x0t
         0x0t

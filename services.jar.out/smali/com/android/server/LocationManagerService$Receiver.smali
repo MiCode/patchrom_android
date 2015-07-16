@@ -13,7 +13,7 @@
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
-    accessFlags = 0x12
+    accessFlags = 0x10
     name = "Receiver"
 .end annotation
 

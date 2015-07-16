@@ -16440,6 +16440,19 @@
     .restart local p1    # "pkg":Landroid/content/pm/PackageParser$Package;
     :cond_b
     :try_start_3
+    invoke-direct/range {p0 .. p1}, Lcom/android/server/pm/PackageManagerService;->checkMiuiSdk(Landroid/content/pm/PackageParser$Package;)Z
+
+    move-result v3
+
+    if-nez v3, :cond_miui_d
+
+    const/16 p1, 0x0
+
+    monitor-exit v15
+
+    goto/16 :goto_0
+
+    :cond_miui_d
     move-object/from16 v0, p1
 
     iget-object v3, v0, Landroid/content/pm/PackageParser$Package;->mSharedUserId:Ljava/lang/String;
@@ -41113,4 +41126,42 @@
     invoke-virtual {v2, v0}, Lcom/android/server/pm/PackageManagerService$PackageHandler;->sendMessage(Landroid/os/Message;)Z
 
     return-void
+.end method
+
+.method private checkMiuiSdk(Landroid/content/pm/PackageParser$Package;)Z
+    .locals 3
+    .param p1, "pkg"    # Landroid/content/pm/PackageParser$Package;
+
+    .prologue
+    :try_start_0
+    invoke-static {p1, p0}, Lcom/android/server/pm/PackageManagerServiceInjector;->checkMiuiSdk(Landroid/content/pm/PackageParser$Package;Lcom/android/server/pm/PackageManagerService;)Z
+    :try_end_0
+    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
+
+    move-result v1
+
+    if-nez v1, :cond_0
+
+    const/4 v1, 0x0
+
+    :goto_0
+    return v1
+
+    :catch_0
+    move-exception v0
+
+    .local v0, "ex":Ljava/lang/Exception;
+    const-string v1, "PackageManager"
+
+    invoke-virtual {v0}, Ljava/lang/Exception;->toString()Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-static {v1, v2}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+
+    .end local v0    # "ex":Ljava/lang/Exception;
+    :cond_0
+    const/4 v1, 0x1
+
+    goto :goto_0
 .end method

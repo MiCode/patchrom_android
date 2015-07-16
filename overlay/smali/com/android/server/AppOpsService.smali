@@ -1123,7 +1123,7 @@
     .prologue
     if-ltz p1, :cond_0
 
-    const/16 v0, 0x3c
+    const/16 v0, 0x3d
 
     if-ge p1, v0, :cond_0
 

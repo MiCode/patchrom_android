@@ -1770,6 +1770,14 @@
 
     invoke-static {v0, v1}, Landroid/app/ContextImpl;->registerService(Ljava/lang/String;Landroid/app/ContextImpl$ServiceFetcher;)V
 
+    const-string v0, "locationpolicy"
+
+    new-instance v1, Landroid/app/ContextImpl$LocationPolicyServiceFetcher;
+
+    invoke-direct {v1}, Landroid/app/ContextImpl$LocationPolicyServiceFetcher;-><init>()V
+
+    invoke-static {v0, v1}, Landroid/app/ContextImpl;->registerService(Ljava/lang/String;Landroid/app/ContextImpl$ServiceFetcher;)V
+
     return-void
 .end method
 
