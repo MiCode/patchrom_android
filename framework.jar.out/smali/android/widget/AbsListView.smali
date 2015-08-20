@@ -213,6 +213,10 @@
 
 .field private mLastHandledItemCount:I
 
+.field mLastPivotX:F
+
+.field mLastPivotY:F
+
 .field private mLastPositionDistanceGuess:I
 
 .field private mLastScrollState:I
@@ -281,6 +285,10 @@
 
 .field mResurrectToPosition:I
 
+.field mScaleY:F
+
+.field mScaleYDirty:Z
+
 .field mScrollDown:Landroid/view/View;
 
 .field private mScrollProfilingStarted:Z
@@ -347,7 +355,7 @@
 .end method
 
 .method public constructor <init>(Landroid/content/Context;)V
-    .locals 6
+    .locals 7
     .param p1, "context"    # Landroid/content/Context;
 
     .prologue
@@ -438,6 +446,10 @@
     iput v2, p0, Landroid/widget/AbsListView;->mInertia:I
 
     iput-boolean v2, p0, Landroid/widget/AbsListView;->mIsTouching:Z
+
+    const/high16 v6, 0x3f800000    # 1.0f
+
+    iput v6, p0, Landroid/widget/AbsListView;->mScaleY:F
 
     invoke-direct {p0}, Landroid/widget/AbsListView;->initAbsListView()V
 
@@ -616,6 +628,10 @@
     const/4 v9, 0x0
 
     iput-boolean v9, p0, Landroid/widget/AbsListView;->mIsTouching:Z
+
+    const/high16 v9, 0x3f800000    # 1.0f
+
+    iput v9, p0, Landroid/widget/AbsListView;->mScaleY:F
 
     invoke-direct {p0}, Landroid/widget/AbsListView;->initAbsListView()V
 
@@ -2405,9 +2421,11 @@
     invoke-virtual {p0}, Landroid/widget/AbsListView;->layoutChildren()V
 
     :cond_1
-    invoke-static {p0, p1, v1}, Landroid/widget/AbsListViewInjector;->getY(Landroid/widget/AbsListView;Landroid/view/MotionEvent;I)I
+    invoke-virtual {p1, v1}, Landroid/view/MotionEvent;->getY(I)F
 
-    move-result v3
+    move-result v4
+
+    float-to-int v3, v4
 
     .local v3, "y":I
     iget-boolean v5, p0, Landroid/widget/AbsListView;->mIsTouching:Z
@@ -5702,10 +5720,27 @@
 .end method
 
 .method protected dispatchDraw(Landroid/graphics/Canvas;)V
-    .locals 10
+    .locals 12
     .param p1, "canvas"    # Landroid/graphics/Canvas;
 
     .prologue
+    const/4 v10, 0x0
+
+    .local v10, "scaleSaveCount":I
+    const/4 v11, 0x0
+
+    .local v11, "cavasSaved":Z
+    if-eqz p1, :cond_miui_0
+
+    invoke-virtual {p1}, Landroid/graphics/Canvas;->save()I
+
+    move-result v10
+
+    const/4 v11, 0x1
+
+    invoke-static {p0, p1}, Landroid/widget/AbsListViewInjector;->onRenderTick(Landroid/widget/AbsListView;Landroid/graphics/Canvas;)V
+
+    :cond_miui_0
     const/4 v2, 0x0
 
     .local v2, "saveCount":I
@@ -5802,6 +5837,13 @@
     iput v5, p0, Landroid/widget/AbsListView;->mGroupFlags:I
 
     :cond_3
+    if-eqz p1, :cond_miui_1
+
+    if-eqz v11, :cond_miui_1
+
+    invoke-virtual {p1, v10}, Landroid/graphics/Canvas;->restoreToCount(I)V
+
+    :cond_miui_1
     return-void
 
     .end local v0    # "clipToPadding":Z
@@ -5826,8 +5868,6 @@
 
     .prologue
     const/4 v10, 0x0
-
-    invoke-static {p0}, Landroid/widget/AbsListViewInjector;->onRenderTick(Landroid/widget/AbsListView;)V
 
     invoke-super {p0, p1}, Landroid/widget/AdapterView;->draw(Landroid/graphics/Canvas;)V
 
@@ -10111,9 +10151,11 @@
     float-to-int v6, v10
 
     .restart local v6    # "x":I
-    invoke-static {p0, p1, v3}, Landroid/widget/AbsListViewInjector;->getY(Landroid/widget/AbsListView;Landroid/view/MotionEvent;I)I
+    invoke-virtual {p1, v3}, Landroid/view/MotionEvent;->getY(I)F
 
-    move-result v7
+    move-result v10
+
+    float-to-int v7, v10
 
     .restart local v7    # "y":I
     iput v8, p0, Landroid/widget/AbsListView;->mMotionCorrection:I
