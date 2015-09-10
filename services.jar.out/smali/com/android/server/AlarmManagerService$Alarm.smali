@@ -9,7 +9,7 @@
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
-    accessFlags = 0xa
+    accessFlags = 0x8                         # change 0xa -> 0x8
     name = "Alarm"
 .end annotation
 
@@ -21,10 +21,12 @@
 
 .field public operation:Landroid/app/PendingIntent;
 
+.field public pid:I                            # add
 .field public repeatInterval:J
 
 .field public type:I
 
+.field public uid:I                            # add
 .field public when:J
 
 .field public whenElapsed:J
@@ -36,7 +38,7 @@
 
 # direct methods
 .method public constructor <init>(IJJJJJLandroid/app/PendingIntent;Landroid/os/WorkSource;)V
-    .locals 0
+    .locals 1                             # change 0->1
     .param p1, "_type"    # I
     .param p2, "_when"    # J
     .param p4, "_whenElapsed"    # J
@@ -64,6 +66,20 @@
     iput-object p12, p0, Lcom/android/server/AlarmManagerService$Alarm;->operation:Landroid/app/PendingIntent;
 
     iput-object p13, p0, Lcom/android/server/AlarmManagerService$Alarm;->workSource:Landroid/os/WorkSource;
+
+    #add
+    invoke-static {}, Landroid/os/Binder;->getCallingUid()I
+
+    move-result v0
+
+    iput v0, p0, Lcom/android/server/AlarmManagerService$Alarm;->uid:I
+
+    invoke-static {}, Landroid/os/Binder;->getCallingPid()I
+
+    move-result v0
+
+    iput v0, p0, Lcom/android/server/AlarmManagerService$Alarm;->pid:I
+    #add
 
     return-void
 .end method
