@@ -435,6 +435,17 @@
     .locals 5
 
     .prologue
+    iget-object v3, p0, Landroid/widget/Toast;->mContext:Landroid/content/Context;
+
+    invoke-static {p0, v3}, Landroid/widget/ToastInjector;->interceptBackgroundToast(Landroid/widget/Toast;Landroid/content/Context;)Z
+
+    move-result v3
+
+    if-nez v3, :cond_miui
+
+    return-void
+
+    :cond_miui
     iget-object v3, p0, Landroid/widget/Toast;->mNextView:Landroid/view/View;
 
     if-nez v3, :cond_0
