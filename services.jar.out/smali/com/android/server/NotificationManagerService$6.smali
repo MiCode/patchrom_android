@@ -253,8 +253,19 @@
 
     iget-boolean v4, v0, Lcom/android/server/NotificationManagerService$6;->val$isSystemNotification:Z
 
-    if-nez v4, :cond_2
+    if-eqz v4, :cond_miui_00
 
+    move-object/from16 v0, p0
+
+    iget-object v4, v0, Lcom/android/server/NotificationManagerService$6;->val$pkg:Ljava/lang/String;
+
+    invoke-static {v4}, Lmiui/util/NotificationFilterHelper;->canSystemNotificationBeBlocked(Ljava/lang/String;)Z
+
+    move-result v4
+
+    if-eqz v4, :cond_2
+
+    :cond_miui_00
     const/16 v9, -0x3e8
 
     const-string v4, "NotificationService"
@@ -684,6 +695,23 @@
     .end local v28    # "resolver":Landroid/content/ContentResolver;
     :cond_b
     :goto_8
+    move-object/from16 v0, p0
+
+    iget-object v4, v0, Lcom/android/server/NotificationManagerService$6;->this$0:Lcom/android/server/NotificationManagerService;
+
+    iget-object v4, v4, Lcom/android/server/NotificationManagerService;->mContext:Landroid/content/Context;
+
+    move-object/from16 v0, v30
+
+    invoke-static {v4, v0, v3}, Lmiui/util/NotificationFilterHelper;->getCustomSoundUri(Landroid/content/Context;Landroid/net/Uri;Landroid/service/notification/StatusBarNotification;)Landroid/net/Uri;
+
+    move-result-object v30
+
+    if-eqz v30, :cond_miui_0
+
+    const/16 v18, 0x1
+
+    :goto_miui_0
     if-eqz v18, :cond_d
 
     move-object/from16 v0, p0
@@ -736,6 +764,20 @@
     move-result v4
 
     if-nez v4, :cond_d
+
+    move-object/from16 v0, p0
+
+    iget-object v4, v0, Lcom/android/server/NotificationManagerService$6;->this$0:Lcom/android/server/NotificationManagerService;
+
+    iget-object v4, v4, Lcom/android/server/NotificationManagerService;->mContext:Landroid/content/Context;
+
+    const-string v5, "_sound"
+
+    invoke-static {v4, v3, v5}, Lmiui/util/NotificationFilterHelper;->isAllowed(Landroid/content/Context;Landroid/service/notification/StatusBarNotification;Ljava/lang/String;)Z
+
+    move-result v4
+
+    if-eqz v4, :cond_d
 
     invoke-static {}, Landroid/os/Binder;->clearCallingIdentity()J
     :try_end_5
@@ -836,6 +878,20 @@
 
     :cond_e
     invoke-virtual {v12}, Landroid/media/AudioManager;->getRingerMode()I
+
+    move-result v4
+
+    if-eqz v4, :cond_10
+
+    move-object/from16 v0, p0
+
+    iget-object v4, v0, Lcom/android/server/NotificationManagerService$6;->this$0:Lcom/android/server/NotificationManagerService;
+
+    iget-object v4, v4, Lcom/android/server/NotificationManagerService;->mContext:Landroid/content/Context;
+
+    const-string v5, "_vibrate"
+
+    invoke-static {v4, v3, v5}, Lmiui/util/NotificationFilterHelper;->isAllowed(Landroid/content/Context;Landroid/service/notification/StatusBarNotification;Ljava/lang/String;)Z
 
     move-result v4
 
@@ -1328,6 +1384,11 @@
     const/16 v18, 0x0
 
     goto :goto_13
+
+    :cond_miui_0
+    const/16 v18, 0x0
+
+    goto/16 :goto_miui_0
 
     :cond_1d
     const/16 v24, 0x0

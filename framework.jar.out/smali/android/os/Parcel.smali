@@ -2840,6 +2840,50 @@
     goto/16 :goto_0
 .end method
 
+.method public final readPersistableBundle()Landroid/os/PersistableBundle;
+    .locals 1
+
+    .prologue
+    const/4 v0, 0x0
+
+    invoke-virtual {p0, v0}, Landroid/os/Parcel;->readPersistableBundle(Ljava/lang/ClassLoader;)Landroid/os/PersistableBundle;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public final readPersistableBundle(Ljava/lang/ClassLoader;)Landroid/os/PersistableBundle;
+    .locals 2
+    .param p1, "loader"    # Ljava/lang/ClassLoader;
+
+    .prologue
+    invoke-virtual {p0}, Landroid/os/Parcel;->readInt()I
+
+    move-result v1
+
+    .local v1, "length":I
+    if-gez v1, :cond_1
+
+    const/4 v0, 0x0
+
+    :cond_0
+    :goto_0
+    return-object v0
+
+    :cond_1
+    new-instance v0, Landroid/os/PersistableBundle;
+
+    invoke-direct {v0, p0, v1}, Landroid/os/PersistableBundle;-><init>(Landroid/os/Parcel;I)V
+
+    .local v0, "bundle":Landroid/os/PersistableBundle;
+    if-eqz p1, :cond_0
+
+    invoke-virtual {v0, p1}, Landroid/os/PersistableBundle;->setClassLoader(Ljava/lang/ClassLoader;)V
+
+    goto :goto_0
+.end method
+
 .method public final readRawFileDescriptor()Ljava/io/FileDescriptor;
     .locals 1
 
@@ -3678,6 +3722,13 @@
 
     goto/16 :goto_0
 
+    :pswitch_miui
+    invoke-virtual {p0, p1}, Landroid/os/Parcel;->readPersistableBundle(Ljava/lang/ClassLoader;)Landroid/os/PersistableBundle;
+
+    move-result-object v2
+
+    goto/16 :goto_0
+
     nop
 
     :pswitch_data_0
@@ -3708,6 +3759,7 @@
         :pswitch_18
         :pswitch_c
         :pswitch_f
+        :pswitch_miui
     .end packed-switch
 .end method
 
@@ -4815,6 +4867,28 @@
     return-void
 .end method
 
+.method public final writePersistableBundle(Landroid/os/PersistableBundle;)V
+    .locals 1
+    .param p1, "val"    # Landroid/os/PersistableBundle;
+
+    .prologue
+    if-nez p1, :cond_0
+
+    const/4 v0, -0x1
+
+    invoke-virtual {p0, v0}, Landroid/os/Parcel;->writeInt(I)V
+
+    :goto_0
+    return-void
+
+    :cond_0
+    const/4 v0, 0x0
+
+    invoke-virtual {p1, p0, v0}, Landroid/os/PersistableBundle;->writeToParcel(Landroid/os/Parcel;I)V
+
+    goto :goto_0
+.end method
+
 .method public final writeSerializable(Ljava/io/Serializable;)V
     .locals 7
     .param p1, "s"    # Ljava/io/Serializable;
@@ -5732,6 +5806,23 @@
 
     .restart local p1    # "v":Ljava/lang/Object;
     :cond_18
+    instance-of v0, p1, Landroid/os/PersistableBundle;
+
+    if-eqz v0, :cond_miui_0
+
+    const/16 v0, 0x19
+
+    invoke-virtual {p0, v0}, Landroid/os/Parcel;->writeInt(I)V
+
+    check-cast p1, Landroid/os/PersistableBundle;
+
+    .end local p1    # "v":Ljava/lang/Object;
+    invoke-virtual {p0, p1}, Landroid/os/Parcel;->writePersistableBundle(Landroid/os/PersistableBundle;)V
+
+    goto/16 :goto_0
+
+    .restart local p1    # "v":Ljava/lang/Object;
+    :cond_miui_0
     instance-of v0, p1, Ljava/io/Serializable;
 
     if-eqz v0, :cond_19

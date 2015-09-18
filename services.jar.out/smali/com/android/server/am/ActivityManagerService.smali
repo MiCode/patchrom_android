@@ -22849,6 +22849,23 @@
     invoke-virtual {v1, v2, v4}, Lcom/android/server/Watchdog;->processStarted(Ljava/lang/String;I)V
 
     :cond_c
+    move-object/from16 v0, p1
+
+    iget-object v1, v0, Lcom/android/server/am/ProcessRecord;->processName:Ljava/lang/String;
+
+    invoke-static {v1}, Lcom/miui/whetstone/client/WhetstoneClientManager;->isProtectImportantApp(Ljava/lang/String;)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_miui_1
+
+    const/4 v1, 0x4
+
+    move-object/from16 v0, p1
+
+    iput v1, v0, Lcom/android/server/am/ProcessRecord;->maxAdj:I
+
+    :cond_miui_1
     move-object/from16 v0, p0
 
     iget-object v12, v0, Lcom/android/server/am/ActivityManagerService;->mStringBuilder:Ljava/lang/StringBuilder;

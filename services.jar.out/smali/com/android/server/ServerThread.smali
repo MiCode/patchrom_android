@@ -14,6 +14,7 @@
 # instance fields
 .field mContentResolver:Landroid/content/ContentResolver;
 
+.field private mSystemServiceManager:Lcom/android/server/SystemServiceManager;
 
 # direct methods
 .method constructor <init>()V
@@ -23,6 +24,16 @@
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
+.end method
+
+.method static synthetic access$mSystemServiceManager(Lcom/android/server/ServerThread;)Lcom/android/server/SystemServiceManager;
+    .locals 1
+    .param p0, "x0"    # Lcom/android/server/ServerThread;
+
+    .prologue
+    iget-object v0, p0, Lcom/android/server/ServerThread;->mSystemServiceManager:Lcom/android/server/SystemServiceManager;
+
+    return-object v0
 .end method
 
 .method static final startSystemUi(Landroid/content/Context;)V
@@ -447,6 +458,22 @@
 
     .local v88, "disableNetwork":Z
     :try_start_3
+    new-instance v7, Lcom/android/server/SystemServiceManager;
+
+    invoke-direct {v7, v5}, Lcom/android/server/SystemServiceManager;-><init>(Landroid/content/Context;)V
+
+    move-object/from16 v0, p0
+
+    iput-object v7, v0, Lcom/android/server/ServerThread;->mSystemServiceManager:Lcom/android/server/SystemServiceManager;
+
+    const-class v7, Lcom/android/server/SystemServiceManager;
+
+    move-object/from16 v0, p0
+
+    iget-object v9, v0, Lcom/android/server/ServerThread;->mSystemServiceManager:Lcom/android/server/SystemServiceManager;
+
+    invoke-static {v7, v9}, Lcom/android/server/LocalServices;->addService(Ljava/lang/Class;Ljava/lang/Object;)V
+
     const-string v7, "SystemServer"
 
     const-string v9, "Display Manager"
@@ -2413,6 +2440,22 @@
 
     :cond_1e
     :goto_41
+    move-object/from16 v0, p0
+
+    iget-object v7, v0, Lcom/android/server/ServerThread;->mSystemServiceManager:Lcom/android/server/SystemServiceManager;
+
+    const-class v9, Lcom/android/server/job/JobSchedulerService;
+
+    invoke-virtual {v7, v9}, Lcom/android/server/SystemServiceManager;->startService(Ljava/lang/Class;)Lcom/android/server/SystemService;
+
+    move-object/from16 v0, p0
+
+    iget-object v7, v0, Lcom/android/server/ServerThread;->mSystemServiceManager:Lcom/android/server/SystemServiceManager;
+
+    const/16 v9, 0x1f4
+
+    invoke-virtual {v7, v9}, Lcom/android/server/SystemServiceManager;->startBootPhase(I)V
+
     :try_start_5c
     invoke-virtual/range {v156 .. v156}, Lcom/android/server/wm/WindowManagerService;->systemReady()V
     :try_end_5c

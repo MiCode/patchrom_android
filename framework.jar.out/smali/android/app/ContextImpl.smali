@@ -1762,6 +1762,14 @@
     .locals 2
 
     .prologue
+    const-string v0, "jobscheduler"
+
+    new-instance v1, Landroid/app/ContextImpl$JobSchedulerServiceFetcher;
+
+    invoke-direct {v1}, Landroid/app/ContextImpl$JobSchedulerServiceFetcher;-><init>()V
+
+    invoke-static {v0, v1}, Landroid/app/ContextImpl;->registerService(Ljava/lang/String;Landroid/app/ContextImpl$ServiceFetcher;)V
+
     const-string v0, "security"
 
     new-instance v1, Landroid/app/ContextImpl$SecurityServiceFetcher;

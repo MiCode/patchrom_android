@@ -151,6 +151,10 @@
     # setter for: Landroid/net/wifi/SupplicantStateTracker;->mAssociationRejectCount:I
     invoke-static {v2, v4}, Landroid/net/wifi/SupplicantStateTracker;->access$702(Landroid/net/wifi/SupplicantStateTracker;I)I
 
+    iget v2, p1, Landroid/os/Message;->arg1:I
+
+    invoke-static {v2}, Landroid/net/wifi/SupplicantStateTrackerInjector;->handleConnectNetwork(I)V
+
     goto :goto_0
 
     :sswitch_4
