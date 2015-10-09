@@ -3740,3 +3740,42 @@
 
     goto :goto_0
 .end method
+
+.method public static from(Landroid/content/Context;I)Landroid/telephony/TelephonyManager;
+    .locals 1
+    .param p0, "context"    # Landroid/content/Context;
+    .param p1, "slotId"    # I
+
+    .prologue
+    invoke-static {p0}, Landroid/telephony/TelephonyManager;->from(Landroid/content/Context;)Landroid/telephony/TelephonyManager;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public static getDefault(I)Landroid/telephony/TelephonyManager;
+    .locals 1
+    .param p0, "slotId"    # I
+
+    .prologue
+    sget-object v0, Landroid/telephony/TelephonyManager;->sInstance:Landroid/telephony/TelephonyManager;
+
+    return-object v0
+.end method
+
+.method public setDefaultDataSlotId(I)V
+    .locals 0
+    .param p1, "slotId"    # I
+
+    .prologue
+    return-void
+.end method
+
+.method public setDefaultVoiceSlotId(I)V
+    .locals 0
+    .param p1, "slotId"    # I
+
+    .prologue
+    return-void
+.end method

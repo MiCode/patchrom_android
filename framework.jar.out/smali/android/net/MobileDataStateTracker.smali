@@ -274,11 +274,11 @@
 
     invoke-direct {p0}, Landroid/net/BaseNetworkStateTracker;-><init>()V
 
-    invoke-static {}, Lmiui/telephony/MultiSimManager;->getInstance()Lmiui/telephony/MultiSimManager;
+    invoke-static {}, Lmiui/telephony/TelephonyManager;->getDefault()Lmiui/telephony/TelephonyManager;
 
     move-result-object v2
 
-    invoke-virtual {v2}, Lmiui/telephony/MultiSimManager;->getMultiSimCount()I
+    invoke-virtual {v2}, Lmiui/telephony/TelephonyManager;->getPhoneCount()I
 
     move-result v2
 
@@ -643,11 +643,11 @@
     .param p1, "forceRefresh"    # Z
 
     .prologue
-    invoke-static {}, Lmiui/telephony/MultiSimManager;->getInstance()Lmiui/telephony/MultiSimManager;
+    invoke-static {}, Lmiui/telephony/TelephonyManager;->getDefault()Lmiui/telephony/TelephonyManager;
 
     move-result-object v2
 
-    invoke-virtual {v2}, Lmiui/telephony/MultiSimManager;->getMultiSimCount()I
+    invoke-virtual {v2}, Lmiui/telephony/TelephonyManager;->getPhoneCount()I
 
     move-result v0
 
@@ -1160,11 +1160,11 @@
 
     invoke-direct {p0, v3}, Landroid/net/MobileDataStateTracker;->getPhoneService(Z)V
 
-    invoke-static {}, Lmiui/telephony/MultiSimManager;->getInstance()Lmiui/telephony/MultiSimManager;
+    invoke-static {}, Lmiui/telephony/SubscriptionManager;->getDefault()Lmiui/telephony/SubscriptionManager;
 
     move-result-object v3
 
-    invoke-virtual {v3}, Lmiui/telephony/MultiSimManager;->getPreferredDataSlotId()I
+    invoke-virtual {v3}, Lmiui/telephony/SubscriptionManager;->getDefaultDataSlotId()I
 
     move-result v0
 

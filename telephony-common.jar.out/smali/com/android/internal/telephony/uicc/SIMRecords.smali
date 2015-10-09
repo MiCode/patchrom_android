@@ -8385,13 +8385,13 @@
     .param p2, "val"    # Ljava/lang/String;
 
     .prologue
-    invoke-static {}, Lmiui/telephony/MultiSimManager;->getInstance()Lmiui/telephony/MultiSimManager;
+    invoke-static {}, Lmiui/telephony/TelephonyManagerEx;->getDefault()Lmiui/telephony/TelephonyManagerEx;
 
     move-result-object v0
 
     const/4 v1, 0x0
 
-    invoke-virtual {v0, p1, v1, p2}, Lmiui/telephony/MultiSimManager;->setTelephonyProperty(Ljava/lang/String;ILjava/lang/String;)V
+    invoke-virtual {v0, v1, p1, p2}, Lmiui/telephony/TelephonyManagerEx;->setTelephonyProperty(ILjava/lang/String;Ljava/lang/String;)V
 
     return-void
 .end method
@@ -8402,13 +8402,13 @@
     .param p2, "def"    # Ljava/lang/String;
 
     .prologue
-    invoke-static {}, Lmiui/telephony/MultiSimManager;->getInstance()Lmiui/telephony/MultiSimManager;
+    invoke-static {}, Lmiui/telephony/TelephonyManagerEx;->getDefault()Lmiui/telephony/TelephonyManagerEx;
 
     move-result-object v0
 
     const/4 v1, 0x0
 
-    invoke-virtual {v0, p1, v1, p2}, Lmiui/telephony/MultiSimManager;->getTelephonyProperty(Ljava/lang/String;ILjava/lang/String;)Ljava/lang/String;
+    invoke-virtual {v0, v1, p1, p2}, Lmiui/telephony/TelephonyManagerEx;->getTelephonyProperty(ILjava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v0
 

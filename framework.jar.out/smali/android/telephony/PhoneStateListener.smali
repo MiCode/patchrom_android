@@ -79,13 +79,16 @@
 
     iput-object v0, p0, Landroid/telephony/PhoneStateListener;->mHandler:Landroid/os/Handler;
 
-    new-instance v0, Landroid/telephony/PhoneStateListener;
-
-    invoke-direct {v0}, Landroid/telephony/PhoneStateListener;-><init>()V
-
     return-void
 .end method
 
+.method public updateSubscription(I)I
+    .locals 0
+    .param p1, "slotId"    # I
+
+    .prologue
+    return p1
+.end method
 
 # virtual methods
 .method public onCallForwardingIndicatorChanged(Z)V
