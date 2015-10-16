@@ -15511,6 +15511,12 @@
 
     iput-object v6, v0, Landroid/content/pm/PackageParser$Package;->mSignatures:[Landroid/content/pm/Signature;
 
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, v30
+
+    invoke-direct {v0, v1}, Landroid/content/pm/PackageParser;->doMiuiModify(Landroid/content/pm/PackageParser$Package;)V
+
     goto/16 :goto_0
 
     .end local v5    # "assmgr":Landroid/content/res/AssetManager;
@@ -15557,5 +15563,77 @@
     .prologue
     iput-object p1, p0, Landroid/content/pm/PackageParser;->mSeparateProcesses:[Ljava/lang/String;
 
+    return-void
+.end method
+
+.method private doMiuiModify(Landroid/content/pm/PackageParser$Package;)V
+    .locals 3
+    .param p1, "pkg"    # Landroid/content/pm/PackageParser$Package;
+
+    .prologue
+    const-string v1, "android"
+
+    iget-object v2, p1, Landroid/content/pm/PackageParser$Package;->packageName:Ljava/lang/String;
+
+    invoke-virtual {v1, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_1
+
+    iget-object v1, p1, Landroid/content/pm/PackageParser$Package;->requestedPermissions:Ljava/util/ArrayList;
+
+    const-string v2, "android.permission.BIND_JOB_SERVICE"
+
+    invoke-virtual {v1, v2}, Ljava/util/ArrayList;->indexOf(Ljava/lang/Object;)I
+
+    move-result v1
+
+    const/4 v2, -0x1
+
+    if-ne v1, v2, :cond_0
+
+    iget-object v1, p1, Landroid/content/pm/PackageParser$Package;->requestedPermissions:Ljava/util/ArrayList;
+
+    const-string v2, "android.permission.BIND_JOB_SERVICE"
+
+    invoke-virtual {v1, v2}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
+
+    iget-object v1, p1, Landroid/content/pm/PackageParser$Package;->requestedPermissionsRequired:Ljava/util/ArrayList;
+
+    sget-object v2, Ljava/lang/Boolean;->TRUE:Ljava/lang/Boolean;
+
+    invoke-virtual {v1, v2}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
+
+    :cond_0
+    new-instance v0, Landroid/content/pm/PackageParser$Permission;
+
+    invoke-direct {v0, p1}, Landroid/content/pm/PackageParser$Permission;-><init>(Landroid/content/pm/PackageParser$Package;)V
+
+    .local v0, "perm":Landroid/content/pm/PackageParser$Permission;
+    iget-object v1, v0, Landroid/content/pm/PackageParser$Permission;->info:Landroid/content/pm/PermissionInfo;
+
+    const-string v2, "android.permission.BIND_JOB_SERVICE"
+
+    iput-object v2, v1, Landroid/content/pm/PermissionInfo;->name:Ljava/lang/String;
+
+    iget-object v1, v0, Landroid/content/pm/PackageParser$Permission;->info:Landroid/content/pm/PermissionInfo;
+
+    iget-object v2, p1, Landroid/content/pm/PackageParser$Package;->packageName:Ljava/lang/String;
+
+    iput-object v2, v1, Landroid/content/pm/PermissionInfo;->packageName:Ljava/lang/String;
+
+    iget-object v1, v0, Landroid/content/pm/PackageParser$Permission;->info:Landroid/content/pm/PermissionInfo;
+
+    const/4 v2, 0x2
+
+    iput v2, v1, Landroid/content/pm/PermissionInfo;->protectionLevel:I
+
+    iget-object v1, p1, Landroid/content/pm/PackageParser$Package;->permissions:Ljava/util/ArrayList;
+
+    invoke-virtual {v1, v0}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
+
+    .end local v0    # "perm":Landroid/content/pm/PackageParser$Permission;
+    :cond_1
     return-void
 .end method

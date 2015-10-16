@@ -4,9 +4,11 @@
 
 android/app/AppOpsManager
 android/app/DownloadManager
+android/os/Parcel
 android/widget/DateTimeView
 android/widget/RemoteViews
 com/android/internal/app/ResolverActivity
+com/android/internal/util/XmlUtils
 com/android/server/am/AppErrorDialog
 com/android/server/am/AppNotRespondingDialog
 com/android/server/am/BaseErrorDialog
