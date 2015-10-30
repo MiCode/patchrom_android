@@ -673,6 +673,23 @@
     monitor-enter v11
 
     :try_start_0
+    move-object/from16 v0, p3
+
+    move-object/from16 v1, p5
+
+    move/from16 v2, p6
+
+    invoke-static {v0, v1, v2}, Lcom/android/server/power/PowerManagerServiceInjector;->checkWakelockBlocked(Ljava/lang/String;Landroid/os/WorkSource;I)Z
+
+    move-result v4
+
+    if-eqz v4, :cond_miui_0
+
+    monitor-exit v11
+
+    return-void
+
+    :cond_miui_0
     invoke-direct {p0, p1}, Lcom/android/server/power/PowerManagerService;->findWakeLockIndexLocked(Landroid/os/IBinder;)I
 
     move-result v10
@@ -2504,7 +2521,7 @@
     return-void
 .end method
 
-.method private releaseWakeLockInternal(Landroid/os/IBinder;I)V
+.method releaseWakeLockInternal(Landroid/os/IBinder;I)V
     .locals 5
     .param p1, "lock"    # Landroid/os/IBinder;
     .param p2, "flags"    # I
@@ -6649,7 +6666,7 @@
 
     .local v0, "ident":J
     :try_start_0
-    invoke-direct {p0, p1, p2}, Lcom/android/server/power/PowerManagerService;->releaseWakeLockInternal(Landroid/os/IBinder;I)V
+    invoke-virtual {p0, p1, p2}, Lcom/android/server/power/PowerManagerService;->releaseWakeLockInternal(Landroid/os/IBinder;I)V
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 

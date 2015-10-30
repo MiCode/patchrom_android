@@ -76,7 +76,7 @@
 
     iget-object v1, p0, Landroid/net/CaptivePortalTracker$DelayedCaptiveCheckState;->this$0:Landroid/net/CaptivePortalTracker;
 
-    const-wide/16 v2, 0x2710
+    const-wide/16 v2, 0x0
 
     invoke-virtual {v1, v0, v2, v3}, Landroid/net/CaptivePortalTracker;->sendMessageDelayed(Landroid/os/Message;J)V
 

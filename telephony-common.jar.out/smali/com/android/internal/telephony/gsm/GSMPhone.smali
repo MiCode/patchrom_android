@@ -2782,6 +2782,8 @@
     :cond_0
     :goto_0
     :pswitch_0
+    invoke-direct {p0, p1}, Lcom/android/internal/telephony/gsm/GSMPhone;->adjustServiceNotification(Landroid/os/Message;)V
+
     invoke-virtual {p0, p1}, Lcom/android/internal/telephony/gsm/GSMPhone;->checkAndNotifyDeviceId(Landroid/os/Message;)V
 	
     return-void
@@ -4548,4 +4550,129 @@
     invoke-virtual {v0}, Lcom/android/internal/telephony/gsm/GsmServiceStateTracker;->enableSingleLocationUpdate()V
 
     return-void
+.end method
+
+.method private adjustServiceNotification(Landroid/os/Message;)V
+    .locals 3
+    .param p1, "msg"    # Landroid/os/Message;
+
+    .prologue
+    iget v2, p1, Landroid/os/Message;->what:I
+
+    packed-switch v2, :pswitch_data_0
+
+    :cond_0
+    :goto_0
+    return-void
+
+    :pswitch_0
+    iget-object v0, p1, Landroid/os/Message;->obj:Ljava/lang/Object;
+
+    check-cast v0, Landroid/os/AsyncResult;
+
+    .local v0, "ar":Landroid/os/AsyncResult;
+    iget-object v1, v0, Landroid/os/AsyncResult;->result:Ljava/lang/Object;
+
+    check-cast v1, Lcom/android/internal/telephony/gsm/SuppServiceNotification;
+
+    .local v1, "not":Lcom/android/internal/telephony/gsm/SuppServiceNotification;
+    iget v2, v1, Lcom/android/internal/telephony/gsm/SuppServiceNotification;->notificationType:I
+
+    if-nez v2, :cond_3
+
+    invoke-virtual {p0}, Lcom/android/internal/telephony/gsm/GSMPhone;->getRingingCall()Lcom/android/internal/telephony/gsm/GsmCall;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Lcom/android/internal/telephony/gsm/GsmCall;->getState()Lcom/android/internal/telephony/Call$State;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Lcom/android/internal/telephony/Call$State;->isRinging()Z
+
+    move-result v2
+
+    if-eqz v2, :cond_1
+
+    invoke-virtual {p0}, Lcom/android/internal/telephony/gsm/GSMPhone;->getRingingCall()Lcom/android/internal/telephony/gsm/GsmCall;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Lcom/android/internal/telephony/gsm/GsmCall;->getLatestConnection()Lcom/android/internal/telephony/Connection;
+
+    move-result-object v2
+
+    check-cast v2, Lcom/android/internal/telephony/gsm/GsmConnection;
+
+    invoke-virtual {v2, v1}, Lcom/android/internal/telephony/gsm/GsmConnection;->setSuppServiceNotification(Lcom/android/internal/telephony/gsm/SuppServiceNotification;)V
+
+    goto :goto_0
+
+    :cond_1
+    invoke-virtual {p0}, Lcom/android/internal/telephony/gsm/GSMPhone;->getForegroundCall()Lcom/android/internal/telephony/gsm/GsmCall;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Lcom/android/internal/telephony/gsm/GsmCall;->getState()Lcom/android/internal/telephony/Call$State;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Lcom/android/internal/telephony/Call$State;->isAlive()Z
+
+    move-result v2
+
+    if-eqz v2, :cond_2
+
+    invoke-virtual {p0}, Lcom/android/internal/telephony/gsm/GSMPhone;->getForegroundCall()Lcom/android/internal/telephony/gsm/GsmCall;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Lcom/android/internal/telephony/gsm/GsmCall;->getLatestConnection()Lcom/android/internal/telephony/Connection;
+
+    move-result-object v2
+
+    check-cast v2, Lcom/android/internal/telephony/gsm/GsmConnection;
+
+    invoke-virtual {v2, v1}, Lcom/android/internal/telephony/gsm/GsmConnection;->setSuppServiceNotification(Lcom/android/internal/telephony/gsm/SuppServiceNotification;)V
+
+    goto :goto_0
+
+    :cond_2
+    invoke-virtual {p0}, Lcom/android/internal/telephony/gsm/GSMPhone;->getBackgroundCall()Lcom/android/internal/telephony/gsm/GsmCall;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Lcom/android/internal/telephony/gsm/GsmCall;->getState()Lcom/android/internal/telephony/Call$State;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Lcom/android/internal/telephony/Call$State;->isAlive()Z
+
+    move-result v2
+
+    if-eqz v2, :cond_0
+
+    invoke-virtual {p0}, Lcom/android/internal/telephony/gsm/GSMPhone;->getBackgroundCall()Lcom/android/internal/telephony/gsm/GsmCall;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Lcom/android/internal/telephony/gsm/GsmCall;->getLatestConnection()Lcom/android/internal/telephony/Connection;
+
+    move-result-object v2
+
+    check-cast v2, Lcom/android/internal/telephony/gsm/GsmConnection;
+
+    invoke-virtual {v2, v1}, Lcom/android/internal/telephony/gsm/GsmConnection;->setSuppServiceNotification(Lcom/android/internal/telephony/gsm/SuppServiceNotification;)V
+
+    goto :goto_0
+
+    :cond_3
+    invoke-static {v1}, Lcom/android/internal/telephony/gsm/GsmConnection;->setIncomingCallSuppServiceNotification(Lcom/android/internal/telephony/gsm/SuppServiceNotification;)V
+
+    goto :goto_0
+
+    :pswitch_data_0
+    .packed-switch 0x2
+        :pswitch_0
+    .end packed-switch
 .end method
