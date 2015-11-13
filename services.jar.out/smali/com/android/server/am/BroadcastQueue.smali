@@ -690,6 +690,23 @@
     invoke-virtual {v0, v1, v2}, Lcom/android/server/am/ActivityManagerService;->updateOomAdjLocked(Lcom/android/server/am/ProcessRecord;Z)Z
 
     :cond_6
+    iget-object v0, p0, Lcom/android/server/am/BroadcastQueue;->mService:Lcom/android/server/am/ActivityManagerService;
+
+    iget-object v1, p2, Lcom/android/server/am/BroadcastFilter;->receiverList:Lcom/android/server/am/ReceiverList;
+
+    iget-object v1, v1, Lcom/android/server/am/ReceiverList;->app:Lcom/android/server/am/ProcessRecord;
+
+    const/4 v2, 0x0
+
+    invoke-static {p0, v0, p1, v1, v2}, Lcom/android/server/am/BroadcastQueueInjector;->checkReceiverAppDealBroadcast(Lcom/android/server/am/BroadcastQueue;Lcom/android/server/am/ActivityManagerService;Lcom/android/server/am/BroadcastRecord;Lcom/android/server/am/ProcessRecord;Z)Z
+
+    move-result v0
+
+    if-nez v0, :cond_miui_9
+
+    return-void
+
+    :cond_miui_9
     :try_start_0
     iget-object v0, p2, Lcom/android/server/am/BroadcastFilter;->receiverList:Lcom/android/server/am/ReceiverList;
 
@@ -888,6 +905,19 @@
 
     iput-object p1, p2, Lcom/android/server/am/ProcessRecord;->curReceiver:Lcom/android/server/am/BroadcastRecord;
 
+    iget-object v0, p0, Lcom/android/server/am/BroadcastQueue;->mService:Lcom/android/server/am/ActivityManagerService;
+
+    const/4 v1, 0x1
+
+    invoke-static {p0, v0, p1, p2, v1}, Lcom/android/server/am/BroadcastQueueInjector;->checkReceiverAppDealBroadcast(Lcom/android/server/am/BroadcastQueue;Lcom/android/server/am/ActivityManagerService;Lcom/android/server/am/BroadcastRecord;Lcom/android/server/am/ProcessRecord;Z)Z
+
+    move-result v0
+
+    if-nez v0, :cond_miui_2
+
+    return-void
+
+    :cond_miui_2
     const/16 v0, 0x8
 
     invoke-virtual {p2, v0}, Lcom/android/server/am/ProcessRecord;->forceProcessStateUpTo(I)V
