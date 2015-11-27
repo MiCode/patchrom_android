@@ -4260,6 +4260,17 @@
     .local v0, "index":I
     if-gez v0, :cond_0
 
+    invoke-static {}, Lcom/android/server/power/PowerManagerServiceInjector;->checkWakelockBlockedEnabled()Z
+
+    move-result v2
+
+    if-eqz v2, :cond_miui_0
+
+    monitor-exit v3
+
+    return-void
+
+    :cond_miui_0
     new-instance v2, Ljava/lang/IllegalArgumentException;
 
     const-string v4, "Wake lock not active"

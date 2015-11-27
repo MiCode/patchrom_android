@@ -7361,18 +7361,13 @@
 
     iget-object v5, v0, Lcom/android/server/am/ActivityStackSupervisor;->mContext:Landroid/content/Context;
 
-    if-eqz v4, :cond_miui_0
-
-    iget-object v2, v4, Landroid/content/pm/ActivityInfo;->applicationInfo:Landroid/content/pm/ApplicationInfo;
-
-    :goto_miui_0
     move-object/from16 v0, p0
 
     iget-object v6, v0, Lcom/android/server/am/ActivityStackSupervisor;->mService:Lcom/android/server/am/ActivityManagerService;
 
     iget-boolean v6, v6, Lcom/android/server/am/ActivityManagerService;->mSystemReady:Z
 
-    invoke-static {v5, v2, v6}, Lcom/android/server/am/ExtraActivityManagerService;->checkRunningCompatibility(Landroid/content/Context;Landroid/content/pm/ApplicationInfo;Z)Z
+    invoke-static {v5, v4, v6}, Lcom/android/server/am/ExtraActivityManagerService;->checkRunningCompatibility(Landroid/content/Context;Landroid/content/pm/ActivityInfo;Z)Z
 
     move-result v2
 
@@ -7381,11 +7376,6 @@
     const/16 v32, 0x5
 
     return v32
-
-    :cond_miui_0
-    const/4 v2, 0x0
-
-    goto :goto_miui_0
 
     :cond_miui_1
     move-object/from16 v0, p0
