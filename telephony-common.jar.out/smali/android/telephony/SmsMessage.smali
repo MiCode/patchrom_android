@@ -829,6 +829,19 @@
     return-object v0
 .end method
 
+.method public getEncodingType()I
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Landroid/telephony/SmsMessage;->mWrappedSmsMessage:Lcom/android/internal/telephony/SmsMessageBase;
+
+    invoke-virtual {v0}, Lcom/android/internal/telephony/SmsMessageBase;->getEncodingType()I
+
+    move-result v0
+
+    return v0
+.end method
+
 .method public getIndexOnIcc()I
     .locals 1
 

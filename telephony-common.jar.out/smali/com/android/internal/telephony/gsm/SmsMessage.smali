@@ -21,6 +21,8 @@
 # instance fields
 .field private mDataCodingScheme:I
 
+.field private mEncodingType:I
+
 .field private mIsStatusReportMessage:Z
 
 .field private mMti:I
@@ -48,6 +50,8 @@
     iput-boolean v0, p0, Lcom/android/internal/telephony/gsm/SmsMessage;->mReplyPathPresent:Z
 
     iput-boolean v0, p0, Lcom/android/internal/telephony/gsm/SmsMessage;->mIsStatusReportMessage:Z
+
+    iput v0, p0, Lcom/android/internal/telephony/gsm/SmsMessage;->mEncodingType:I
 
     return-void
 .end method
@@ -1669,6 +1673,8 @@
 
     iput-object v5, p0, Lcom/android/internal/telephony/gsm/SmsMessage;->mUserDataHeader:Lcom/android/internal/telephony/SmsHeader;
 
+    iput v2, p0, Lcom/android/internal/telephony/gsm/SmsMessage;->mEncodingType:I
+
     packed-switch v2, :pswitch_data_0
 
     :goto_4
@@ -2102,6 +2108,15 @@
 
     .prologue
     iget v0, p0, Lcom/android/internal/telephony/gsm/SmsMessage;->mDataCodingScheme:I
+
+    return v0
+.end method
+
+.method public getEncodingType()I
+    .locals 1
+
+    .prologue
+    iget v0, p0, Lcom/android/internal/telephony/gsm/SmsMessage;->mEncodingType:I
 
     return v0
 .end method

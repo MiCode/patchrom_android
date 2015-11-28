@@ -171,6 +171,15 @@
     return-object v0
 .end method
 
+.method public getEncodingType()I
+    .locals 1
+
+    .prologue
+    const/4 v0, 0x0
+
+    return v0
+.end method
+
 .method public getIndexOnIcc()I
     .locals 1
 
