@@ -34,15 +34,15 @@
 
 .field public frequency:I
 
-.field public isWpsConfigured:Z
-
-.field public isXiaomiRouter:Z
-
 .field public level:I
 
 .field public timestamp:J
 
 .field public wifiSsid:Landroid/net/wifi/WifiSsid;
+
+.field public wpsDeviceName:Ljava/lang/String;
+
+.field public wpsState:Ljava/lang/String;
 
 
 # direct methods
@@ -104,13 +104,13 @@
 
     iput v0, p0, Landroid/net/wifi/ScanResult;->distanceSdCm:I
 
-    iget-boolean v0, p1, Landroid/net/wifi/ScanResult;->isWpsConfigured:Z
+    iget-object v0, p1, Landroid/net/wifi/ScanResult;->wpsState:Ljava/lang/String;
 
-    iput-boolean v0, p0, Landroid/net/wifi/ScanResult;->isWpsConfigured:Z
+    iput-object v0, p0, Landroid/net/wifi/ScanResult;->wpsState:Ljava/lang/String;
 
-    iget-boolean v0, p1, Landroid/net/wifi/ScanResult;->isXiaomiRouter:Z
+    iget-object v0, p1, Landroid/net/wifi/ScanResult;->wpsDeviceName:Ljava/lang/String;
 
-    iput-boolean v0, p0, Landroid/net/wifi/ScanResult;->isXiaomiRouter:Z
+    iput-object v0, p0, Landroid/net/wifi/ScanResult;->wpsDeviceName:Ljava/lang/String;
 
     :cond_0
     return-void
@@ -157,9 +157,9 @@
 
     const/4 v1, 0x0
 
-    iput-boolean v1, p0, Landroid/net/wifi/ScanResult;->isWpsConfigured:Z
+    iput-object v1, p0, Landroid/net/wifi/ScanResult;->wpsState:Ljava/lang/String;
 
-    iput-boolean v1, p0, Landroid/net/wifi/ScanResult;->isXiaomiRouter:Z
+    iput-object v1, p0, Landroid/net/wifi/ScanResult;->wpsDeviceName:Ljava/lang/String;
 
     return-void
 
@@ -169,7 +169,7 @@
     goto :goto_0
 .end method
 
-.method public constructor <init>(Landroid/net/wifi/WifiSsid;Ljava/lang/String;Ljava/lang/String;IIJZZ)V
+.method public constructor <init>(Landroid/net/wifi/WifiSsid;Ljava/lang/String;Ljava/lang/String;IIJLjava/lang/String;Ljava/lang/String;)V
     .locals 2
     .param p1, "wifiSsid"    # Landroid/net/wifi/WifiSsid;
     .param p2, "BSSID"    # Ljava/lang/String;
@@ -177,15 +177,15 @@
     .param p4, "level"    # I
     .param p5, "frequency"    # I
     .param p6, "tsf"    # J
-    .param p8, "isWpsConfigured"    # Z
-    .param p9, "isXiaomiRouter"    # Z
+    .param p8, "wpsState"    # Ljava/lang/String;
+    .param p9, "wpsDeviceName"    # Ljava/lang/String;
 
     .prologue
     invoke-direct/range {p0 .. p7}, Landroid/net/wifi/ScanResult;-><init>(Landroid/net/wifi/WifiSsid;Ljava/lang/String;Ljava/lang/String;IIJ)V
 
-    iput-boolean p8, p0, Landroid/net/wifi/ScanResult;->isWpsConfigured:Z
+    iput-object p8, p0, Landroid/net/wifi/ScanResult;->wpsState:Ljava/lang/String;
 
-    iput-boolean p9, p0, Landroid/net/wifi/ScanResult;->isXiaomiRouter:Z
+    iput-object p9, p0, Landroid/net/wifi/ScanResult;->wpsDeviceName:Ljava/lang/String;
 
     return-void
 .end method
@@ -231,9 +231,9 @@
 
     const/4 v0, 0x0
 
-    iput-boolean v0, p0, Landroid/net/wifi/ScanResult;->isWpsConfigured:Z
+    iput-object v0, p0, Landroid/net/wifi/ScanResult;->wpsState:Ljava/lang/String;
 
-    iput-boolean v0, p0, Landroid/net/wifi/ScanResult;->isXiaomiRouter:Z
+    iput-object v0, p0, Landroid/net/wifi/ScanResult;->wpsDeviceName:Ljava/lang/String;
 
     return-void
 
@@ -243,7 +243,7 @@
     goto :goto_0
 .end method
 
-.method public constructor <init>(Landroid/net/wifi/WifiSsid;Ljava/lang/String;Ljava/lang/String;IIJIIZZ)V
+.method public constructor <init>(Landroid/net/wifi/WifiSsid;Ljava/lang/String;Ljava/lang/String;IIJIILjava/lang/String;Ljava/lang/String;)V
     .locals 1
     .param p1, "wifiSsid"    # Landroid/net/wifi/WifiSsid;
     .param p2, "BSSID"    # Ljava/lang/String;
@@ -253,15 +253,15 @@
     .param p6, "tsf"    # J
     .param p8, "distCm"    # I
     .param p9, "distSdCm"    # I
-    .param p10, "isWpsConfigured"    # Z
-    .param p11, "isXiaomiRouter"    # Z
+    .param p10, "wpsState"    # Ljava/lang/String;
+    .param p11, "wpsDeviceName"    # Ljava/lang/String;
 
     .prologue
     invoke-direct/range {p0 .. p9}, Landroid/net/wifi/ScanResult;-><init>(Landroid/net/wifi/WifiSsid;Ljava/lang/String;Ljava/lang/String;IIJII)V
 
-    iput-boolean p10, p0, Landroid/net/wifi/ScanResult;->isWpsConfigured:Z
+    iput-object p10, p0, Landroid/net/wifi/ScanResult;->wpsState:Ljava/lang/String;
 
-    iput-boolean p11, p0, Landroid/net/wifi/ScanResult;->isXiaomiRouter:Z
+    iput-object p11, p0, Landroid/net/wifi/ScanResult;->wpsDeviceName:Ljava/lang/String;
 
     return-void
 .end method
@@ -425,27 +425,27 @@
 
     invoke-virtual {v2, v3}, Ljava/lang/StringBuffer;->append(Ljava/lang/String;)Ljava/lang/StringBuffer;
 
-    const-string v2, ", isWpsConfigured :"
+    const-string v2, ", wpsState :"
 
     invoke-virtual {v1, v2}, Ljava/lang/StringBuffer;->append(Ljava/lang/String;)Ljava/lang/StringBuffer;
 
     move-result-object v2
 
-    iget-boolean v3, p0, Landroid/net/wifi/ScanResult;->isWpsConfigured:Z
-
-    invoke-virtual {v2, v3}, Ljava/lang/StringBuffer;->append(Z)Ljava/lang/StringBuffer;
-
-    move-result-object v2
-
-    const-string v3, ", isXiaomiRouter :"
+    iget-object v3, p0, Landroid/net/wifi/ScanResult;->wpsState:Ljava/lang/String;
 
     invoke-virtual {v2, v3}, Ljava/lang/StringBuffer;->append(Ljava/lang/String;)Ljava/lang/StringBuffer;
 
     move-result-object v2
 
-    iget-boolean v3, p0, Landroid/net/wifi/ScanResult;->isXiaomiRouter:Z
+    const-string v3, ", wpsDeviceName :"
 
-    invoke-virtual {v2, v3}, Ljava/lang/StringBuffer;->append(Z)Ljava/lang/StringBuffer;
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuffer;->append(Ljava/lang/String;)Ljava/lang/StringBuffer;
+
+    move-result-object v2
+
+    iget-object v3, p0, Landroid/net/wifi/ScanResult;->wpsDeviceName:Ljava/lang/String;
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuffer;->append(Ljava/lang/String;)Ljava/lang/StringBuffer;
 
     invoke-virtual {v1}, Ljava/lang/StringBuffer;->toString()Ljava/lang/String;
 
@@ -528,23 +528,13 @@
 
     invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeInt(I)V
 
-    iget-boolean v0, p0, Landroid/net/wifi/ScanResult;->isWpsConfigured:Z
+    iget-object v0, p0, Landroid/net/wifi/ScanResult;->wpsState:Ljava/lang/String;
 
-    if-eqz v0, :cond_miui_0
+    invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
-    const/4 v0, 0x1
+    iget-object v0, p0, Landroid/net/wifi/ScanResult;->wpsDeviceName:Ljava/lang/String;
 
-    :goto_miui_0
-    invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeInt(I)V
-
-    iget-boolean v0, p0, Landroid/net/wifi/ScanResult;->isXiaomiRouter:Z
-
-    if-eqz v0, :cond_miui_1
-    
-    const/4 v0, 0x1
-
-    :goto_miui_1
-    invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeInt(I)V
+    invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
     return-void
 
@@ -554,13 +544,4 @@
     invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeInt(I)V
 
     goto :goto_0
-    :cond_miui_0
-    const/4 v0, 0x0
-
-    goto :goto_miui_0
-
-    :cond_miui_1
-    const/4 v0, 0x0
-
-    goto :goto_miui_1
 .end method

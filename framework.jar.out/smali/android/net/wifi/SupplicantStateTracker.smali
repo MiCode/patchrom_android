@@ -24,7 +24,7 @@
 
 .field private static final MAX_RETRIES_ON_ASSOCIATION_REJECT:I = 0x10
 
-.field private static final MAX_RETRIES_ON_AUTHENTICATION_FAILURE:I = 0x1
+.field private static final MAX_RETRIES_ON_AUTHENTICATION_FAILURE:I = 0x2
 
 .field private static final TAG:Ljava/lang/String; = "SupplicantStateTracker"
 
@@ -672,4 +672,14 @@
     invoke-virtual {p2}, Ljava/io/PrintWriter;->println()V
 
     return-void
+.end method
+
+.method static synthetic access_mAuthenticationFailuresCount(Landroid/net/wifi/SupplicantStateTracker;)I
+    .locals 1
+    .param p0, "x0"    # Landroid/net/wifi/SupplicantStateTracker;
+
+    .prologue
+    iget v0, p0, Landroid/net/wifi/SupplicantStateTracker;->mAuthenticationFailuresCount:I
+
+    return v0
 .end method
