@@ -171,6 +171,170 @@
 
 
 # virtual methods
+.method cleanupDisabledPackageReceiversLocked(Ljava/lang/String;Ljava/util/Set;IZ)Z
+    .locals 8
+    .param p1, "packageName"    # Ljava/lang/String;
+    .param p3, "userId"    # I
+    .param p4, "doit"    # Z
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(",
+            "Ljava/lang/String;",
+            "Ljava/util/Set",
+            "<",
+            "Ljava/lang/String;",
+            ">;IZ)Z"
+        }
+    .end annotation
+
+    .prologue
+    .local p2, "filterByClasses":Ljava/util/Set;, "Ljava/util/Set<Ljava/lang/String;>;"
+    const/4 v5, 0x1
+
+    const/4 v6, 0x0
+
+    const/4 v7, -0x1
+
+    if-eq p3, v7, :cond_0
+
+    iget v7, p0, Lcom/android/server/am/BroadcastRecord;->userId:I
+
+    if-ne v7, p3, :cond_1
+
+    :cond_0
+    iget-object v7, p0, Lcom/android/server/am/BroadcastRecord;->receivers:Ljava/util/List;
+
+    if-nez v7, :cond_2
+
+    :cond_1
+    move v0, v6
+
+    :goto_0
+    return v0
+
+    :cond_2
+    const/4 v0, 0x0
+
+    .local v0, "didSomething":Z
+    iget-object v7, p0, Lcom/android/server/am/BroadcastRecord;->receivers:Ljava/util/List;
+
+    invoke-interface {v7}, Ljava/util/List;->size()I
+
+    move-result v7
+
+    add-int/lit8 v1, v7, -0x1
+
+    .local v1, "i":I
+    :goto_1
+    if-ltz v1, :cond_8
+
+    iget-object v7, p0, Lcom/android/server/am/BroadcastRecord;->receivers:Ljava/util/List;
+
+    invoke-interface {v7, v1}, Ljava/util/List;->get(I)Ljava/lang/Object;
+
+    move-result-object v3
+
+    .local v3, "o":Ljava/lang/Object;
+    instance-of v7, v3, Landroid/content/pm/ResolveInfo;
+
+    if-nez v7, :cond_4
+
+    .end local v3    # "o":Ljava/lang/Object;
+    :cond_3
+    :goto_2
+    add-int/lit8 v1, v1, -0x1
+
+    goto :goto_1
+
+    .restart local v3    # "o":Ljava/lang/Object;
+    :cond_4
+    check-cast v3, Landroid/content/pm/ResolveInfo;
+
+    .end local v3    # "o":Ljava/lang/Object;
+    iget-object v2, v3, Landroid/content/pm/ResolveInfo;->activityInfo:Landroid/content/pm/ActivityInfo;
+
+    .local v2, "info":Landroid/content/pm/ActivityInfo;
+    if-eqz p1, :cond_5
+
+    iget-object v7, v2, Landroid/content/pm/ActivityInfo;->applicationInfo:Landroid/content/pm/ApplicationInfo;
+
+    iget-object v7, v7, Landroid/content/pm/ApplicationInfo;->packageName:Ljava/lang/String;
+
+    invoke-virtual {v7, p1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v7
+
+    if-eqz v7, :cond_6
+
+    if-eqz p2, :cond_5
+
+    iget-object v7, v2, Landroid/content/pm/ActivityInfo;->name:Ljava/lang/String;
+
+    invoke-interface {p2, v7}, Ljava/util/Set;->contains(Ljava/lang/Object;)Z
+
+    move-result v7
+
+    if-eqz v7, :cond_6
+
+    :cond_5
+    move v4, v5
+
+    .local v4, "sameComponent":Z
+    :goto_3
+    if-eqz v4, :cond_3
+
+    if-nez p4, :cond_7
+
+    move v0, v5
+
+    goto :goto_0
+
+    .end local v4    # "sameComponent":Z
+    :cond_6
+    move v4, v6
+
+    goto :goto_3
+
+    .restart local v4    # "sameComponent":Z
+    :cond_7
+    const/4 v0, 0x1
+
+    iget-object v7, p0, Lcom/android/server/am/BroadcastRecord;->receivers:Ljava/util/List;
+
+    invoke-interface {v7, v1}, Ljava/util/List;->remove(I)Ljava/lang/Object;
+
+    iget v7, p0, Lcom/android/server/am/BroadcastRecord;->nextReceiver:I
+
+    if-ge v1, v7, :cond_3
+
+    iget v7, p0, Lcom/android/server/am/BroadcastRecord;->nextReceiver:I
+
+    add-int/lit8 v7, v7, -0x1
+
+    iput v7, p0, Lcom/android/server/am/BroadcastRecord;->nextReceiver:I
+
+    goto :goto_2
+
+    .end local v2    # "info":Landroid/content/pm/ActivityInfo;
+    .end local v4    # "sameComponent":Z
+    :cond_8
+    iget v5, p0, Lcom/android/server/am/BroadcastRecord;->nextReceiver:I
+
+    iget-object v6, p0, Lcom/android/server/am/BroadcastRecord;->receivers:Ljava/util/List;
+
+    invoke-interface {v6}, Ljava/util/List;->size()I
+
+    move-result v6
+
+    invoke-static {v5, v6}, Ljava/lang/Math;->min(II)I
+
+    move-result v5
+
+    iput v5, p0, Lcom/android/server/am/BroadcastRecord;->nextReceiver:I
+
+    goto :goto_0
+.end method
+
 .method dump(Ljava/io/PrintWriter;Ljava/lang/String;)V
     .locals 13
     .param p1, "pw"    # Ljava/io/PrintWriter;

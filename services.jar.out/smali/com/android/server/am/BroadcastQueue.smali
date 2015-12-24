@@ -1844,6 +1844,114 @@
     goto/16 :goto_0
 .end method
 
+.method cleanupDisabledPackageReceiversLocked(Ljava/lang/String;Ljava/util/Set;IZ)Z
+    .locals 4
+    .param p1, "packageName"    # Ljava/lang/String;
+    .param p3, "userId"    # I
+    .param p4, "doit"    # Z
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(",
+            "Ljava/lang/String;",
+            "Ljava/util/Set",
+            "<",
+            "Ljava/lang/String;",
+            ">;IZ)Z"
+        }
+    .end annotation
+
+    .prologue
+    .local p2, "filterByClasses":Ljava/util/Set;, "Ljava/util/Set<Ljava/lang/String;>;"
+    const/4 v3, 0x1
+
+    const/4 v0, 0x0
+
+    .local v0, "didSomething":Z
+    iget-object v2, p0, Lcom/android/server/am/BroadcastQueue;->mParallelBroadcasts:Ljava/util/ArrayList;
+
+    invoke-virtual {v2}, Ljava/util/ArrayList;->size()I
+
+    move-result v2
+
+    add-int/lit8 v1, v2, -0x1
+
+    .local v1, "i":I
+    :goto_0
+    if-ltz v1, :cond_1
+
+    iget-object v2, p0, Lcom/android/server/am/BroadcastQueue;->mParallelBroadcasts:Ljava/util/ArrayList;
+
+    invoke-virtual {v2, v1}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
+
+    move-result-object v2
+
+    check-cast v2, Lcom/android/server/am/BroadcastRecord;
+
+    invoke-virtual {v2, p1, p2, p3, p4}, Lcom/android/server/am/BroadcastRecord;->cleanupDisabledPackageReceiversLocked(Ljava/lang/String;Ljava/util/Set;IZ)Z
+
+    move-result v2
+
+    or-int/2addr v0, v2
+
+    if-nez p4, :cond_0
+
+    if-eqz v0, :cond_0
+
+    move v2, v3
+
+    :goto_1
+    return v2
+
+    :cond_0
+    add-int/lit8 v1, v1, -0x1
+
+    goto :goto_0
+
+    :cond_1
+    iget-object v2, p0, Lcom/android/server/am/BroadcastQueue;->mOrderedBroadcasts:Ljava/util/ArrayList;
+
+    invoke-virtual {v2}, Ljava/util/ArrayList;->size()I
+
+    move-result v2
+
+    add-int/lit8 v1, v2, -0x1
+
+    :goto_2
+    if-ltz v1, :cond_3
+
+    iget-object v2, p0, Lcom/android/server/am/BroadcastQueue;->mOrderedBroadcasts:Ljava/util/ArrayList;
+
+    invoke-virtual {v2, v1}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
+
+    move-result-object v2
+
+    check-cast v2, Lcom/android/server/am/BroadcastRecord;
+
+    invoke-virtual {v2, p1, p2, p3, p4}, Lcom/android/server/am/BroadcastRecord;->cleanupDisabledPackageReceiversLocked(Ljava/lang/String;Ljava/util/Set;IZ)Z
+
+    move-result v2
+
+    or-int/2addr v0, v2
+
+    if-nez p4, :cond_2
+
+    if-eqz v0, :cond_2
+
+    move v2, v3
+
+    goto :goto_1
+
+    :cond_2
+    add-int/lit8 v1, v1, -0x1
+
+    goto :goto_2
+
+    :cond_3
+    move v2, v0
+
+    goto :goto_1
+.end method
+
 .method final dumpLocked(Ljava/io/FileDescriptor;Ljava/io/PrintWriter;[Ljava/lang/String;IZLjava/lang/String;Z)Z
     .locals 12
     .param p1, "fd"    # Ljava/io/FileDescriptor;

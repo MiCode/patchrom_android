@@ -14831,6 +14831,20 @@
 
     invoke-direct {v0, v1, v2, v4}, Lcom/android/server/am/ActivityManagerService;->removeUriPermissionsForPackageLocked(Ljava/lang/String;IZ)V
 
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, p1
+
+    move/from16 v2, p8
+
+    move/from16 v3, p5
+
+    move/from16 v4, v17
+
+    invoke-direct {v0, v1, v2, v3, v4}, Lcom/android/server/am/ActivityManagerService;->forceStopPackageLocked_Hook1(Ljava/lang/String;IZZ)Z
+
+    move-result v17
+
     if-eqz p1, :cond_13
 
     if-eqz p7, :cond_1b
@@ -69368,4 +69382,45 @@
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
     throw v1
+.end method
+
+.method private forceStopPackageLocked_Hook1(Ljava/lang/String;IZZ)Z
+    .locals 3
+    .param p1, "packageName"    # Ljava/lang/String;
+    .param p2, "userId"    # I
+    .param p3, "doit"    # Z
+    .param p4, "didSomething"    # Z
+
+    .prologue
+    if-eqz p3, :cond_0
+
+    iget-object v1, p0, Lcom/android/server/am/ActivityManagerService;->mBroadcastQueues:[Lcom/android/server/am/BroadcastQueue;
+
+    array-length v1, v1
+
+    add-int/lit8 v0, v1, -0x1
+
+    .local v0, "i":I
+    :goto_0
+    if-ltz v0, :cond_0
+
+    iget-object v1, p0, Lcom/android/server/am/ActivityManagerService;->mBroadcastQueues:[Lcom/android/server/am/BroadcastQueue;
+
+    aget-object v1, v1, v0
+
+    const/4 v2, 0x0
+
+    invoke-virtual {v1, p1, v2, p2, p3}, Lcom/android/server/am/BroadcastQueue;->cleanupDisabledPackageReceiversLocked(Ljava/lang/String;Ljava/util/Set;IZ)Z
+
+    move-result v1
+
+    or-int/2addr p4, v1
+
+    add-int/lit8 v0, v0, -0x1
+
+    goto :goto_0
+
+    .end local v0    # "i":I
+    :cond_0
+    return p4
 .end method
