@@ -197,7 +197,7 @@
 
     iput-object v1, p0, Lcom/android/server/TelephonyRegistry;->mBroadcastReceiver:Landroid/content/BroadcastReceiver;
 
-    iput-object v3, p0, Lcom/android/server/TelephonyRegistry;->mMiuiTelephony:Lmiui/telephony/IMiuiTelephony;
+    iput-object v2, p0, Lcom/android/server/TelephonyRegistry;->mMiuiTelephony:Lmiui/telephony/IMiuiTelephony;
 
     invoke-static {}, Landroid/telephony/CellLocation;->getEmpty()Landroid/telephony/CellLocation;
 
