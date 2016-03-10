@@ -7355,19 +7355,21 @@
 
     move-result-object v23
 
-    move-object/from16 v4, v23
+    move-object/from16 v8, v23
 
     move-object/from16 v0, p0
 
     iget-object v5, v0, Lcom/android/server/am/ActivityStackSupervisor;->mContext:Landroid/content/Context;
 
-    move-object/from16 v0, p0
-
     iget-object v6, v0, Lcom/android/server/am/ActivityStackSupervisor;->mService:Lcom/android/server/am/ActivityManagerService;
 
-    iget-boolean v6, v6, Lcom/android/server/am/ActivityManagerService;->mSystemReady:Z
+    iget-boolean v10, v6, Lcom/android/server/am/ActivityManagerService;->mSystemReady:Z
 
-    invoke-static {v5, v4, v6}, Lcom/android/server/am/ExtraActivityManagerService;->checkRunningCompatibility(Landroid/content/Context;Landroid/content/pm/ActivityInfo;Z)Z
+    move-object/from16 v9, p4
+
+    move-object/from16 v7, p1
+
+    invoke-static/range {v5 .. v10}, Lcom/android/server/am/ExtraActivityManagerService;->checkRunningCompatibility(Landroid/content/Context;Lcom/android/server/am/ActivityManagerService;Landroid/app/IApplicationThread;Landroid/content/pm/ActivityInfo;Landroid/content/Intent;Z)Z
 
     move-result v2
 

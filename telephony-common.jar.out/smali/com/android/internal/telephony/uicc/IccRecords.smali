@@ -2141,3 +2141,38 @@
 
     return-void
 .end method
+
+.method protected setSystemProperty(Ljava/lang/String;Ljava/lang/String;)V
+    .locals 2
+    .param p1, "property"    # Ljava/lang/String;
+    .param p2, "value"    # Ljava/lang/String;
+
+    .prologue
+    invoke-static {}, Lcom/android/internal/telephony/PhoneFactory;->getDefaultPhone()Lcom/android/internal/telephony/Phone;
+
+    move-result-object v0
+
+    .local v0, "phone":Lcom/android/internal/telephony/Phone;
+    :goto_0
+    instance-of v1, v0, Lcom/android/internal/telephony/PhoneProxy;
+
+    if-eqz v1, :cond_0
+
+    check-cast v0, Lcom/android/internal/telephony/PhoneProxy;
+
+    .end local v0    # "phone":Lcom/android/internal/telephony/Phone;
+    invoke-virtual {v0}, Lcom/android/internal/telephony/PhoneProxy;->getActivePhone()Lcom/android/internal/telephony/Phone;
+
+    move-result-object v0
+
+    .restart local v0    # "phone":Lcom/android/internal/telephony/Phone;
+    goto :goto_0
+
+    :cond_0
+    check-cast v0, Lcom/android/internal/telephony/PhoneBase;
+
+    .end local v0    # "phone":Lcom/android/internal/telephony/Phone;
+    invoke-virtual {v0, p1, p2}, Lcom/android/internal/telephony/PhoneBase;->setSystemProperty(Ljava/lang/String;Ljava/lang/String;)V
+
+    return-void
+.end method

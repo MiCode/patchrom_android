@@ -3848,7 +3848,7 @@
 .end method
 
 .method public setSystemProperty(Ljava/lang/String;Ljava/lang/String;)V
-    .locals 1
+    .locals 2
     .param p1, "property"    # Ljava/lang/String;
     .param p2, "value"    # Ljava/lang/String;
 
@@ -3863,6 +3863,50 @@
     return-void
 
     :cond_0
+    const-string v0, "gsm.sim.operator.alpha"
+
+    invoke-virtual {v0, p1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v0
+
+    if-nez v0, :cond_miui_1
+
+    const-string v0, "gsm.operator.alpha"
+
+    invoke-virtual {v0, p1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v0
+
+    if-nez v0, :cond_miui_1
+
+    const-string v0, "gsm.sim.operator.numeric"
+
+    invoke-virtual {v0, p1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v0
+
+    if-nez v0, :cond_miui_1
+
+    const-string v0, "gsm.operator.numeric"
+
+    invoke-virtual {v0, p1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_miui_2
+
+    :cond_miui_1
+    invoke-static {}, Lmiui/telephony/TelephonyManagerEx;->getDefault()Lmiui/telephony/TelephonyManagerEx;
+
+    move-result-object v0
+
+    const/4 v1, 0x0
+
+    invoke-virtual {v0, v1, p1, p2}, Lmiui/telephony/TelephonyManagerEx;->onOperatorNumericOrNameSet(ILjava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object p2
+
+    :cond_miui_2
     invoke-static {p1, p2}, Landroid/os/SystemProperties;->set(Ljava/lang/String;Ljava/lang/String;)V
 
     goto :goto_0

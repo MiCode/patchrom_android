@@ -1561,7 +1561,7 @@
     .param p2, "info"    # Landroid/content/pm/ResolveInfo;
 
     .prologue
-    const/4 v0, 0x1
+    const/4 v1, 0x1
 
     const/4 v6, 0x0
 
@@ -1570,13 +1570,13 @@
     invoke-direct {v8}, Landroid/app/ActivityManager$MemoryInfo;-><init>()V
 
     .local v8, "outInfo":Landroid/app/ActivityManager$MemoryInfo;
-    iget-object v1, p0, Lcom/android/server/am/BroadcastQueue;->mService:Lcom/android/server/am/ActivityManagerService;
+    iget-object v0, p0, Lcom/android/server/am/BroadcastQueue;->mService:Lcom/android/server/am/ActivityManagerService;
 
-    invoke-virtual {v1, v8}, Lcom/android/server/am/ActivityManagerService;->getMemoryInfo(Landroid/app/ActivityManager$MemoryInfo;)V
+    invoke-virtual {v0, v8}, Lcom/android/server/am/ActivityManagerService;->getMemoryInfo(Landroid/app/ActivityManager$MemoryInfo;)V
 
-    iget-boolean v1, v8, Landroid/app/ActivityManager$MemoryInfo;->lowMemory:Z
+    iget-boolean v0, v8, Landroid/app/ActivityManager$MemoryInfo;->lowMemory:Z
 
-    if-eqz v1, :cond_0
+    if-eqz v0, :cond_0
 
     const-string v0, "BroadcastQueue"
 
@@ -1664,21 +1664,21 @@
     return v6
 
     :cond_0
-    iget-object v1, p2, Landroid/content/pm/ResolveInfo;->activityInfo:Landroid/content/pm/ActivityInfo;
+    iget-object v0, p2, Landroid/content/pm/ResolveInfo;->activityInfo:Landroid/content/pm/ActivityInfo;
 
-    iget-object v1, v1, Landroid/content/pm/ActivityInfo;->applicationInfo:Landroid/content/pm/ApplicationInfo;
+    iget-object v0, v0, Landroid/content/pm/ActivityInfo;->applicationInfo:Landroid/content/pm/ApplicationInfo;
 
-    iget v1, v1, Landroid/content/pm/ApplicationInfo;->flags:I
+    iget v0, v0, Landroid/content/pm/ApplicationInfo;->flags:I
 
-    and-int/lit16 v1, v1, 0x81
+    and-int/lit16 v0, v0, 0x81
 
-    if-eqz v1, :cond_2
+    if-eqz v0, :cond_2
 
-    sget-boolean v1, Lmiui/os/Build;->IS_STABLE_VERSION:Z
+    sget-boolean v0, Lmiui/os/Build;->IS_STABLE_VERSION:Z
 
-    if-nez v1, :cond_1
+    if-nez v0, :cond_1
 
-    const-string v1, "BroadcastQueue"
+    const-string v0, "BroadcastQueue"
 
     new-instance v2, Ljava/lang/StringBuilder;
 
@@ -1716,30 +1716,58 @@
 
     move-result-object v2
 
-    invoke-static {v1, v2}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v0, v2}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
     :cond_1
-    move v6, v0
+    move v6, v1
 
     goto :goto_0
 
     :cond_2
-    iget-object v1, p1, Lcom/android/server/am/BroadcastRecord;->intent:Landroid/content/Intent;
+    invoke-static {}, Lmiui/security/WakePathChecker;->getInstance()Lmiui/security/WakePathChecker;
 
-    invoke-virtual {v1}, Landroid/content/Intent;->getComponent()Landroid/content/ComponentName;
+    move-result-object v2
 
-    move-result-object v1
+    iget-object v3, p1, Lcom/android/server/am/BroadcastRecord;->intent:Landroid/content/Intent;
 
-    if-eqz v1, :cond_3
+    iget-object v4, p1, Lcom/android/server/am/BroadcastRecord;->callerPackage:Ljava/lang/String;
 
-    move v6, v0
+    iget-object v0, p1, Lcom/android/server/am/BroadcastRecord;->callerApp:Lcom/android/server/am/ProcessRecord;
+
+    if-eqz v0, :cond_3
+
+    iget-object v0, p1, Lcom/android/server/am/BroadcastRecord;->callerApp:Lcom/android/server/am/ProcessRecord;
+
+    iget-object v0, v0, Lcom/android/server/am/ProcessRecord;->info:Landroid/content/pm/ApplicationInfo;
+
+    :goto_1
+    invoke-virtual {v2, v3, v4, v0}, Lmiui/security/WakePathChecker;->checkBroadcastWakePath(Landroid/content/Intent;Ljava/lang/String;Landroid/content/pm/ApplicationInfo;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_5
+
+    iget-object v0, p1, Lcom/android/server/am/BroadcastRecord;->intent:Landroid/content/Intent;
+
+    invoke-virtual {v0}, Landroid/content/Intent;->getComponent()Landroid/content/ComponentName;
+
+    move-result-object v0
+
+    if-eqz v0, :cond_4
+
+    move v6, v1
 
     goto :goto_0
 
     :cond_3
-    iget-object v1, p0, Lcom/android/server/am/BroadcastQueue;->mService:Lcom/android/server/am/ActivityManagerService;
+    const/4 v0, 0x0
 
-    iget-object v1, v1, Lcom/android/server/am/ActivityManagerService;->mContext:Landroid/content/Context;
+    goto :goto_1
+
+    :cond_4
+    iget-object v0, p0, Lcom/android/server/am/BroadcastQueue;->mService:Lcom/android/server/am/ActivityManagerService;
+
+    iget-object v0, v0, Lcom/android/server/am/ActivityManagerService;->mContext:Landroid/content/Context;
 
     iget-object v2, p2, Landroid/content/pm/ResolveInfo;->activityInfo:Landroid/content/pm/ActivityInfo;
 
@@ -1747,18 +1775,19 @@
 
     iget-object v2, v2, Landroid/content/pm/ApplicationInfo;->packageName:Ljava/lang/String;
 
-    invoke-static {v1, v2}, Landroid/miui/AppOpsUtils;->getApplicationAutoStart(Landroid/content/Context;Ljava/lang/String;)I
+    invoke-static {v0, v2}, Landroid/miui/AppOpsUtils;->getApplicationAutoStart(Landroid/content/Context;Ljava/lang/String;)I
 
     move-result v7
 
     .local v7, "autoStartMode":I
-    if-nez v7, :cond_4
+    if-nez v7, :cond_5
 
-    move v6, v0
+    move v6, v1
 
     goto :goto_0
 
-    :cond_4
+    .end local v7    # "autoStartMode":I
+    :cond_5
     const-string v0, "BroadcastQueue"
 
     new-instance v1, Ljava/lang/StringBuilder;

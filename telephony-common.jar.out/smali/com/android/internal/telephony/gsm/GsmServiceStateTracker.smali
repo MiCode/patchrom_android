@@ -8466,6 +8466,27 @@
 
     .local v5, "showSpn":Z
     :goto_4
+    iget-object v9, p0, Lcom/android/internal/telephony/gsm/GsmServiceStateTracker;->mSS:Landroid/telephony/ServiceState;
+
+    invoke-virtual {v9}, Landroid/telephony/ServiceState;->getOperatorNumeric()Ljava/lang/String;
+
+    move-result-object v9
+
+    invoke-static {v9, v7, v2}, Lmiui/telephony/ServiceProviderUtils;->get(Ljava/lang/String;ILjava/lang/String;)Ljava/lang/String;
+
+    move-result-object v2
+
+    if-eqz v0, :cond_miui_1
+
+    invoke-virtual {v0}, Lcom/android/internal/telephony/uicc/IccRecords;->getOperatorNumeric()Ljava/lang/String;
+
+    move-result-object v9
+
+    invoke-static {v9, v7, v6}, Lmiui/telephony/ServiceProviderUtils;->get(Ljava/lang/String;ILjava/lang/String;)Ljava/lang/String;
+
+    move-result-object v6
+
+    :cond_miui_1
     iget-boolean v9, p0, Lcom/android/internal/telephony/gsm/GsmServiceStateTracker;->mCurShowPlmn:Z
 
     if-ne v4, v9, :cond_1
