@@ -961,3 +961,20 @@
         :pswitch_2
     .end packed-switch
 .end method
+
+.method public static makeClipRevealAnimation(Landroid/view/View;IIII)Landroid/app/ActivityOptions;
+    .locals 1
+    .param p0, "source"    # Landroid/view/View;
+    .param p1, "startX"    # I
+    .param p2, "startY"    # I
+    .param p3, "width"    # I
+    .param p4, "height"    # I
+
+    .prologue
+    .line 237
+    invoke-static {p0, p1, p2, p3, p4}, Landroid/app/ActivityOptions;->makeScaleUpAnimation(Landroid/view/View;IIII)Landroid/app/ActivityOptions;
+
+    move-result-object v0
+
+    return-object v0
+.end method
