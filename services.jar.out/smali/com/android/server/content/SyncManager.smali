@@ -8425,3 +8425,13 @@
 
     return v0
 .end method
+
+.method static synthetic access_getContext(Lcom/android/server/content/SyncManager;)Landroid/content/Context;
+    .locals 1
+    .param p0, "x0"    # Lcom/android/server/content/SyncManager;
+
+    .prologue
+    iget-object v0, p0, Lcom/android/server/content/SyncManager;->mContext:Landroid/content/Context;
+
+    return-object v0
+.end method

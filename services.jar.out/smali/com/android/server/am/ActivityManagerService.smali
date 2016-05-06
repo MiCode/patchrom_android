@@ -16616,6 +16616,24 @@
     .restart local v31    # "proc":Lcom/android/server/am/ProcessRecord;
     :cond_17
     :try_start_10
+    move-object/from16 v0, p0
+
+    iget-object v5, v0, Lcom/android/server/am/ActivityManagerService;->mContext:Landroid/content/Context;
+
+    move-object/from16 v0, p0
+
+    iget-boolean v10, v0, Lcom/android/server/am/ActivityManagerService;->mSystemReady:Z
+
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, p1
+
+    invoke-static {v5, v0, v1, v4, v10}, Lcom/android/server/am/ExtraActivityManagerService;->checkRunningCompatibility(Landroid/content/Context;Lcom/android/server/am/ActivityManagerService;Landroid/app/IApplicationThread;Lcom/android/server/am/ContentProviderRecord;Z)Z
+
+    move-result v5
+
+    if-eqz v5, :cond_miui_18
+
     iget-object v11, v6, Landroid/content/pm/ProviderInfo;->processName:Ljava/lang/String;
 
     iget-object v12, v4, Lcom/android/server/am/ContentProviderRecord;->appInfo:Landroid/content/pm/ApplicationInfo;
@@ -16709,6 +16727,8 @@
     move-result-object v10
 
     invoke-static {v5, v10}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
+
+    :cond_miui_18
     :try_end_10
     .catchall {:try_start_10 .. :try_end_10} :catchall_2
 
@@ -27363,7 +27383,7 @@
 
     if-nez v0, :cond_1
 
-    const/4 v0, -0x1
+    const/4 v0, 0x0
 
     :goto_0
     return v0
