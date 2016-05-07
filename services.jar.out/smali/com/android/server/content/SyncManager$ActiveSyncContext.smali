@@ -223,7 +223,7 @@
     iget-object v0, p0, Lcom/android/server/content/SyncManager$ActiveSyncContext;->this$0:Lcom/android/server/content/SyncManager;
 
     # getter for: Lcom/android/server/content/SyncManager;->mContext:Landroid/content/Context;
-    invoke-static {v0}, Lcom/android/server/content/SyncManager;->access$1600(Lcom/android/server/content/SyncManager;)Landroid/content/Context;
+    invoke-static {v0}, Lcom/android/server/content/SyncManager;->access$1500(Lcom/android/server/content/SyncManager;)Landroid/content/Context;
 
     move-result-object v0
 
