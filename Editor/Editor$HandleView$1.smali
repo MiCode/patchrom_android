@@ -28,6 +28,7 @@
     .locals 0
 
     .prologue
+    .line 3867
     iput-object p1, p0, Landroid/widget/Editor$HandleView$1;->this$1:Landroid/widget/Editor$HandleView;
 
     iput-object p2, p0, Landroid/widget/Editor$HandleView$1;->val$this$0:Landroid/widget/Editor;
@@ -43,9 +44,11 @@
     .locals 1
 
     .prologue
+    .line 3870
     iget-object v0, p0, Landroid/widget/Editor$HandleView$1;->this$1:Landroid/widget/Editor$HandleView;
 
     invoke-virtual {v0}, Landroid/widget/Editor$HandleView;->onDetached()V
 
+    .line 3871
     return-void
 .end method

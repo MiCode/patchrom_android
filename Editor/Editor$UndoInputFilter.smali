@@ -27,10 +27,13 @@
     .param p1, "editor"    # Landroid/widget/Editor;
 
     .prologue
+    .line 5275
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
+    .line 5276
     iput-object p1, p0, Landroid/widget/Editor$UndoInputFilter;->mEditor:Landroid/widget/Editor;
 
+    .line 5277
     return-void
 .end method
 
@@ -50,10 +53,12 @@
 
     const/4 v6, 0x0
 
+    .line 5286
     iget-object v3, p0, Landroid/widget/Editor$UndoInputFilter;->mEditor:Landroid/widget/Editor;
 
     iget-object v2, v3, Landroid/widget/Editor;->mUndoManager:Landroid/content/UndoManager;
 
+    .line 5287
     .local v2, "um":Landroid/content/UndoManager;
     invoke-virtual {v2}, Landroid/content/UndoManager;->isInUndo()Z
 
@@ -61,14 +66,17 @@
 
     if-eqz v3, :cond_0
 
+    .line 5352
     :goto_0
     return-object v6
 
+    .line 5292
     :cond_0
     const-string v3, "Edit text"
 
     invoke-virtual {v2, v3}, Landroid/content/UndoManager;->beginUpdate(Ljava/lang/CharSequence;)V
 
+    .line 5293
     const-class v3, Landroid/widget/Editor$TextModifyOperation;
 
     iget-object v4, p0, Landroid/widget/Editor$UndoInputFilter;->mEditor:Landroid/widget/Editor;
@@ -83,13 +91,16 @@
 
     check-cast v0, Landroid/widget/Editor$TextModifyOperation;
 
+    .line 5295
     .local v0, "op":Landroid/widget/Editor$TextModifyOperation;
     if-eqz v0, :cond_6
 
+    .line 5299
     iget-object v3, v0, Landroid/widget/Editor$TextModifyOperation;->mOldText:Ljava/lang/CharSequence;
 
     if-nez v3, :cond_3
 
+    .line 5303
     if-ge p2, p3, :cond_5
 
     iget v3, v0, Landroid/widget/Editor$TextModifyOperation;->mRangeStart:I
@@ -109,6 +120,7 @@
 
     if-ne p6, v3, :cond_5
 
+    .line 5305
     :cond_2
     sub-int v3, p3, p2
 
@@ -116,10 +128,12 @@
 
     iput v3, v0, Landroid/widget/Editor$TextModifyOperation;->mRangeEnd:I
 
+    .line 5306
     invoke-virtual {v2}, Landroid/content/UndoManager;->endUpdate()V
 
     goto :goto_0
 
+    .line 5313
     :cond_3
     if-ne p2, p3, :cond_5
 
@@ -129,28 +143,35 @@
 
     if-ne p6, v3, :cond_5
 
+    .line 5315
     iget-object v3, v0, Landroid/widget/Editor$TextModifyOperation;->mOldText:Ljava/lang/CharSequence;
 
     instance-of v3, v3, Landroid/text/SpannableString;
 
     if-eqz v3, :cond_4
 
+    .line 5316
     iget-object v1, v0, Landroid/widget/Editor$TextModifyOperation;->mOldText:Ljava/lang/CharSequence;
 
     check-cast v1, Landroid/text/SpannableStringBuilder;
 
+    .line 5320
     .local v1, "str":Landroid/text/SpannableStringBuilder;
     :goto_1
     invoke-virtual {v1, v7, p4, p5, p6}, Landroid/text/SpannableStringBuilder;->insert(ILjava/lang/CharSequence;II)Landroid/text/SpannableStringBuilder;
 
+    .line 5321
     iput p5, v0, Landroid/widget/Editor$TextModifyOperation;->mRangeStart:I
 
+    .line 5322
     iput-object v1, v0, Landroid/widget/Editor$TextModifyOperation;->mOldText:Ljava/lang/CharSequence;
 
+    .line 5323
     invoke-virtual {v2}, Landroid/content/UndoManager;->endUpdate()V
 
     goto :goto_0
 
+    .line 5318
     .end local v1    # "str":Landroid/text/SpannableStringBuilder;
     :cond_4
     new-instance v1, Landroid/text/SpannableStringBuilder;
@@ -162,14 +183,17 @@
     .restart local v1    # "str":Landroid/text/SpannableStringBuilder;
     goto :goto_1
 
+    .line 5333
     .end local v1    # "str":Landroid/text/SpannableStringBuilder;
     :cond_5
     invoke-virtual {v2, v6}, Landroid/content/UndoManager;->commitState(Landroid/content/UndoOwner;)I
 
+    .line 5334
     const-string v3, "Edit text"
 
     invoke-virtual {v2, v3}, Landroid/content/UndoManager;->setUndoLabel(Ljava/lang/CharSequence;)V
 
+    .line 5338
     :cond_6
     new-instance v0, Landroid/widget/Editor$TextModifyOperation;
 
@@ -180,33 +204,41 @@
 
     invoke-direct {v0, v3}, Landroid/widget/Editor$TextModifyOperation;-><init>(Landroid/content/UndoOwner;)V
 
+    .line 5339
     .restart local v0    # "op":Landroid/widget/Editor$TextModifyOperation;
     iput p5, v0, Landroid/widget/Editor$TextModifyOperation;->mRangeStart:I
 
+    .line 5340
     if-ge p2, p3, :cond_8
 
+    .line 5341
     sub-int v3, p3, p2
 
     add-int/2addr v3, p5
 
     iput v3, v0, Landroid/widget/Editor$TextModifyOperation;->mRangeEnd:I
 
+    .line 5345
     :goto_2
     if-ge p5, p6, :cond_7
 
+    .line 5346
     invoke-interface {p4, p5, p6}, Landroid/text/Spanned;->subSequence(II)Ljava/lang/CharSequence;
 
     move-result-object v3
 
     iput-object v3, v0, Landroid/widget/Editor$TextModifyOperation;->mOldText:Ljava/lang/CharSequence;
 
+    .line 5350
     :cond_7
     invoke-virtual {v2, v0, v7}, Landroid/content/UndoManager;->addOperation(Landroid/content/UndoOperation;I)V
 
+    .line 5351
     invoke-virtual {v2}, Landroid/content/UndoManager;->endUpdate()V
 
     goto/16 :goto_0
 
+    .line 5343
     :cond_8
     iput p5, v0, Landroid/widget/Editor$TextModifyOperation;->mRangeEnd:I
 

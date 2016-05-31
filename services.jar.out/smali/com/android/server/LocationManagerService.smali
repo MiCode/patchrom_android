@@ -236,7 +236,7 @@
 .end method
 
 .method public constructor <init>(Landroid/content/Context;)V
-    .locals 2
+    .locals 4
     .param p1, "context"    # Landroid/content/Context;
 
     .prologue
@@ -338,9 +338,13 @@
 
     iget-object v0, p0, Lcom/android/server/LocationManagerService;->mLock:Ljava/lang/Object;
 
-    iget-object v1, p0, Lcom/android/server/LocationManagerService;->mReceivers:Ljava/util/HashMap;
+    iget-object v1, p0, Lcom/android/server/LocationManagerService;->mContext:Landroid/content/Context;
 
-    invoke-static {p0, v0, v1}, Lcom/android/server/LocationManagerServiceInjector;->init(Lcom/android/server/LocationManagerService;Ljava/lang/Object;Ljava/util/HashMap;)V
+    iget-object v2, p0, Lcom/android/server/LocationManagerService;->mRealProviders:Ljava/util/HashMap;
+
+    iget-object v3, p0, Lcom/android/server/LocationManagerService;->mReceivers:Ljava/util/HashMap;
+
+    invoke-static {p0, v0, v1, v2, v3}, Lcom/android/server/LocationManagerServiceInjector;->init(Lcom/android/server/LocationManagerService;Ljava/lang/Object;Landroid/content/Context;Ljava/util/HashMap;Ljava/util/HashMap;)V
 
     invoke-static {p1, p0}, Lcom/android/server/LocationPolicyManagerService;->newDefaultService(Landroid/content/Context;Landroid/location/ILocationManager;)Lcom/android/server/LocationPolicyManagerService;
 
@@ -634,6 +638,10 @@
     check-cast v5, Ljava/util/ArrayList;
 
     .local v5, "records":Ljava/util/ArrayList;, "Ljava/util/ArrayList<Lcom/android/server/LocationManagerService$UpdateRecord;>;"
+    invoke-static {p1, v5}, Lcom/android/server/LocationManagerServiceInjector;->takeOverLP(Ljava/lang/String;Ljava/util/ArrayList;)Ljava/util/ArrayList;
+
+    move-result-object v5
+
     new-instance v8, Landroid/os/WorkSource;
 
     invoke-direct {v8}, Landroid/os/WorkSource;-><init>()V
@@ -2260,6 +2268,10 @@
 
     if-eqz v2, :cond_2
 
+    invoke-static {p1}, Lcom/android/server/LocationManagerServiceInjector;->locationSanitized(Landroid/location/Location;)Landroid/location/Location;
+
+    move-result-object p1
+
     if-nez p2, :cond_1
 
     iget-object v2, p0, Lcom/android/server/LocationManagerService;->mPassiveProvider:Lcom/android/server/location/PassiveProvider;
@@ -3756,6 +3768,14 @@
     invoke-static {v2, v3}, Landroid/util/Slog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     :cond_5
+    const-string v2, "com.android.location.service.v3.NetworkLocationProvider"
+
+    move-object/from16 v0, p0
+
+    iget-object v3, v0, Lcom/android/server/LocationManagerService;->mLocationHandler:Lcom/android/server/LocationManagerService$LocationWorkerHandler;
+
+    invoke-static {v2, v3}, Lcom/android/server/LocationManagerServiceInjector;->createAndBindLP(Ljava/lang/String;Landroid/os/Handler;)V
+
     return-void
 
     .end local v9    # "flpHardwareProvider":Lcom/android/server/location/FlpHardwareProvider;
@@ -4736,6 +4756,10 @@
     invoke-virtual {v6, v7, v8}, Landroid/content/Context;->sendBroadcastAsUser(Landroid/content/Intent;Landroid/os/UserHandle;)V
 
     :cond_3
+    iget-object v6, p0, Lcom/android/server/LocationManagerService;->mProviders:Ljava/util/ArrayList;
+
+    invoke-static {v6}, Lcom/android/server/LocationManagerServiceInjector;->updateLpStatus(Ljava/util/ArrayList;)V
+
     return-void
 .end method
 
@@ -6094,6 +6118,8 @@
 
     .end local v10    # "provider":Lcom/android/server/location/LocationProviderInterface;
     :cond_b
+    invoke-static/range {p1 .. p3}, Lcom/android/server/LocationManagerServiceInjector;->dumpLp(Ljava/io/FileDescriptor;Ljava/io/PrintWriter;[Ljava/lang/String;)V
+
     monitor-exit v15
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
@@ -8692,4 +8718,24 @@
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
     throw v0
+.end method
+
+.method callIsCurrentProfile(I)Z
+    .locals 1
+    .param p1, "userId"    # I
+
+    .prologue
+    iget v0, p0, Lcom/android/server/LocationManagerService;->mCurrentUserId:I
+
+    if-ne p1, v0, :cond_0
+
+    const/4 v0, 0x1
+
+    :goto_0
+    return v0
+
+    :cond_0
+    const/4 v0, 0x0
+
+    goto :goto_0
 .end method
