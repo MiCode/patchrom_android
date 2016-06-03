@@ -251,6 +251,30 @@
 
     move-result-object v0
 
+    iget-object v2, p0, Lcom/android/server/content/SyncManager$ActiveSyncContext;->mSyncOperation:Lcom/android/server/content/SyncOperation;
+
+    iget v2, v2, Lcom/android/server/content/SyncOperation;->userId:I
+
+    invoke-static {v0, v7, v2}, Lcom/android/server/content/SyncManagerInjector;->canBindService(Landroid/content/Context;Landroid/content/Intent;I)Z
+
+    move-result v0
+
+    if-nez v0, :cond_miui_1
+
+    const/4 v1, 0x0
+
+    iput-boolean v1, p0, Lcom/android/server/content/SyncManager$ActiveSyncContext;->mBound:Z
+
+    return v1
+
+    :cond_miui_1
+    iget-object v0, p0, Lcom/android/server/content/SyncManager$ActiveSyncContext;->this$0:Lcom/android/server/content/SyncManager;
+
+    # getter for: Lcom/android/server/content/SyncManager;->mContext:Landroid/content/Context;
+    invoke-static {v0}, Lcom/android/server/content/SyncManager;->access$1500(Lcom/android/server/content/SyncManager;)Landroid/content/Context;
+
+    move-result-object v0
+
     const/16 v2, 0x15
 
     new-instance v3, Landroid/os/UserHandle;
