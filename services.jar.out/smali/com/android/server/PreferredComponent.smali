@@ -841,6 +841,142 @@
     return-object v0
 .end method
 
+.method public sameSet(Ljava/util/List;)Z
+    .locals 12
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(",
+            "Ljava/util/List",
+            "<",
+            "Landroid/content/pm/ResolveInfo;",
+            ">;)Z"
+        }
+    .end annotation
+
+    .prologue
+    .local p1, "query":Ljava/util/List;, "Ljava/util/List<Landroid/content/pm/ResolveInfo;>;"
+    const/4 v8, 0x1
+
+    const/4 v9, 0x0
+
+    iget-object v10, p0, Lcom/android/server/PreferredComponent;->mSetPackages:[Ljava/lang/String;
+
+    if-nez v10, :cond_2
+
+    if-nez p1, :cond_1
+
+    :cond_0
+    :goto_0
+    return v8
+
+    :cond_1
+    move v8, v9
+
+    goto :goto_0
+
+    :cond_2
+    if-nez p1, :cond_3
+
+    move v8, v9
+
+    goto :goto_0
+
+    :cond_3
+    invoke-interface {p1}, Ljava/util/List;->size()I
+
+    move-result v0
+
+    .local v0, "NQ":I
+    iget-object v10, p0, Lcom/android/server/PreferredComponent;->mSetPackages:[Ljava/lang/String;
+
+    array-length v1, v10
+
+    .local v1, "NS":I
+    const/4 v6, 0x0
+
+    .local v6, "numMatch":I
+    const/4 v4, 0x0
+
+    .local v4, "i":I
+    :goto_1
+    if-ge v4, v0, :cond_7
+
+    invoke-interface {p1, v4}, Ljava/util/List;->get(I)Ljava/lang/Object;
+
+    move-result-object v7
+
+    check-cast v7, Landroid/content/pm/ResolveInfo;
+
+    .local v7, "ri":Landroid/content/pm/ResolveInfo;
+    iget-object v2, v7, Landroid/content/pm/ResolveInfo;->activityInfo:Landroid/content/pm/ActivityInfo;
+
+    .local v2, "ai":Landroid/content/pm/ActivityInfo;
+    const/4 v3, 0x0
+
+    .local v3, "good":Z
+    const/4 v5, 0x0
+
+    .local v5, "j":I
+    :goto_2
+    if-ge v5, v1, :cond_4
+
+    iget-object v10, p0, Lcom/android/server/PreferredComponent;->mSetPackages:[Ljava/lang/String;
+
+    aget-object v10, v10, v5
+
+    iget-object v11, v2, Landroid/content/pm/ActivityInfo;->packageName:Ljava/lang/String;
+
+    invoke-virtual {v10, v11}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v10
+
+    if-eqz v10, :cond_5
+
+    iget-object v10, p0, Lcom/android/server/PreferredComponent;->mSetClasses:[Ljava/lang/String;
+
+    aget-object v10, v10, v5
+
+    iget-object v11, v2, Landroid/content/pm/ActivityInfo;->name:Ljava/lang/String;
+
+    invoke-virtual {v10, v11}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v10
+
+    if-eqz v10, :cond_5
+
+    add-int/lit8 v6, v6, 0x1
+
+    const/4 v3, 0x1
+
+    :cond_4
+    if-nez v3, :cond_6
+
+    move v8, v9
+
+    goto :goto_0
+
+    :cond_5
+    add-int/lit8 v5, v5, 0x1
+
+    goto :goto_2
+
+    :cond_6
+    add-int/lit8 v4, v4, 0x1
+
+    goto :goto_1
+
+    .end local v2    # "ai":Landroid/content/pm/ActivityInfo;
+    .end local v3    # "good":Z
+    .end local v5    # "j":I
+    .end local v7    # "ri":Landroid/content/pm/ResolveInfo;
+    :cond_7
+    if-eq v6, v1, :cond_0
+
+    move v8, v9
+
+    goto :goto_0
+.end method
+
 .method public sameSet(Ljava/util/List;I)Z
     .locals 11
     .param p2, "priority"    # I

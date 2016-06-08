@@ -31057,9 +31057,7 @@
 
     move-object/from16 v0, p4
 
-    move/from16 v1, p5
-
-    invoke-virtual {v5, v0, v1}, Lcom/android/server/PreferredComponent;->sameSet(Ljava/util/List;I)Z
+    invoke-virtual {v5, v0}, Lcom/android/server/PreferredComponent;->sameSet(Ljava/util/List;)Z
 
     move-result v5
 
