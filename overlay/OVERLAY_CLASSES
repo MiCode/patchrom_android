@@ -1,8 +1,8 @@
 #
 # Overlay classes
 #
-android/app/AppOpsManager
 android/app/DownloadManager
+com/android/internal/app/ChooserActivity
 com/android/internal/app/ResolverActivity
 com/android/server/AppOpsService
 com/android/internal/app/IAppOpsService
