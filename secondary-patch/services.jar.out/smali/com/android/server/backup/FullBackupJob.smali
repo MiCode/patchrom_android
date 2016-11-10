@@ -54,6 +54,8 @@
     .param p1, "minDelay"    # J
 
     .prologue
+    return-void
+    
     const/4 v5, 0x1
 
     const-string v2, "jobscheduler"

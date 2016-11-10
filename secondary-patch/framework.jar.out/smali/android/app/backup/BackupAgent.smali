@@ -1113,7 +1113,7 @@
 
     iget v1, v0, Landroid/system/StructStat;->st_mode:I
 
-    invoke-static {v1}, Landroid/system/OsConstants;->S_ISLNK(I)Z
+    invoke-static {v1}, Landroid/app/backup/BackupAgentInjector;->shouldSkip(I)Z
 
     move-result v1
 
