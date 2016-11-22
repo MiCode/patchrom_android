@@ -10168,6 +10168,10 @@
     move-result-object v3
 
     .local v3, "plmn":Ljava/lang/String;
+    invoke-static {p0}, Lcom/android/internal/telephony/ServiceStateTrackerInjector;->getPlmn(Lcom/android/internal/telephony/ServiceStateTracker;)Ljava/lang/String;
+
+    move-result-object v3
+
     const/4 v2, 0x0
 
     .local v2, "showPlmn":Z
@@ -10242,7 +10246,9 @@
 
     new-instance v6, Landroid/content/Intent;
 
-    const-string v0, "android.provider.Telephony.SPN_STRINGS_UPDATED"
+    invoke-static {p0}, Lcom/android/internal/telephony/ServiceStateTrackerInjector;->getSpnUpdateActionName(Lcom/android/internal/telephony/ServiceStateTracker;)Ljava/lang/String;
+
+    move-result-object v0
 
     invoke-direct {v6, v0}, Landroid/content/Intent;-><init>(Ljava/lang/String;)V
 
