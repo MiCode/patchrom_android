@@ -1601,7 +1601,7 @@
 
     aput-object v6, v1, v4
 
-    invoke-static {p1, p2}, Lcom/android/server/am/ActivityStackHook;->writeAmRelaunchActivityEventLog(Lcom/android/server/am/ActivityRecord;Z)V
+    invoke-static {p1, p3}, Lcom/android/server/am/ActivityStackHook;->writeAmRelaunchActivityEventLog(Lcom/android/server/am/ActivityRecord;Z)V
 
     iget-object v0, p1, Lcom/android/server/am/ActivityRecord;->app:Lcom/android/server/am/ProcessRecord;
 
