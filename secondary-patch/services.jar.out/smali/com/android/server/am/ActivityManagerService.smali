@@ -5127,6 +5127,10 @@
 
     .end local p3    # "intent":Landroid/content/Intent;
     .local v14, "intent":Landroid/content/Intent;
+    move-object/from16 v0, p2
+
+    invoke-virtual {v14, v0}, Landroid/content/Intent;->setSender(Ljava/lang/String;)V
+
     const/16 v4, 0x10
 
     invoke-virtual {v14, v4}, Landroid/content/Intent;->addFlags(I)Landroid/content/Intent;
