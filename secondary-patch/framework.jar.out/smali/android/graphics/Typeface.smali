@@ -1058,6 +1058,12 @@
     .param p0, "family"    # Landroid/graphics/FontListParser$Family;
 
     .prologue
+    invoke-static {p0}, Landroid/graphics/TypefaceHook;->makeFontFamily(Landroid/graphics/FontListParser$Family;)Landroid/graphics/FontFamily;
+
+    move-result-object v0
+
+    return-object v0
+
     new-instance v1, Landroid/graphics/FontFamily;
 
     iget-object v3, p0, Landroid/graphics/FontListParser$Family;->lang:Ljava/lang/String;
