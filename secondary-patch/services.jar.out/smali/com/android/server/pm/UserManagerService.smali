@@ -736,7 +736,7 @@
 .end method
 
 .method private createUserInternal(Ljava/lang/String;II)Landroid/content/pm/UserInfo;
-    .locals 37
+    .locals 30
     .param p1, "name"    # Ljava/lang/String;
     .param p2, "flags"    # I
     .param p3, "parentId"    # I
